@@ -1,0 +1,146 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rw_g_r_o_m_a_c_s_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/rwGROMACS.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/rwGROMACS.h</primary></indexterm>
+<para>
+
+<para>Header file for reading and writing GROMACS coordinate files. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmolecule.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_g_r_o_m_a_c_s_8h_1ac6839d070b38d971e38d33c119c74cc6">readGROMACS</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Reads a Gromacs coordinate file. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_g_r_o_m_a_c_s_8h_1ab36fce1e8aaae38ee51cef4d20df25e5">writeGROMACS</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Writes a Gromacs coordinate file. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for reading and writing GROMACS coordinate files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19980822 </para>
+
+<para>Modified: 20000729 <literallayout><computeroutput>Format: Atomic coordinate file format for the GROMACS package
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rw_g_r_o_m_a_c_s_8h_1ac6839d070b38d971e38d33c119c74cc6"/>    <section>
+    <title>readGROMACS()</title>
+<indexterm><primary>readGROMACS</primary><secondary>rwGROMACS.h</secondary></indexterm>
+<indexterm><primary>rwGROMACS.h</primary><secondary>readGROMACS</secondary></indexterm>
+<para><computeroutput>int readGROMACS (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Reads a Gromacs coordinate file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>coordinate file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of molecules read (&lt;0 if reading failed). <literallayout><computeroutput>Gromacs format:
+01234567890123456789012345678901234567890123456789012345678901234567890
+MD of 2 waters, t= 0.0
+    6
+    1WATER  OW1    1   0.126   1.624   1.679  0.1227 -0.0580  0.0434
+    1WATER  HW2    2   0.190   1.661   1.747  0.8085  0.3191 -0.7791
+    1WATER  HW3    3   0.177   1.568   1.613 -0.9045 -2.6469  1.3180
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 31 of file rwGROMACS.cpp.</para>
+    </section><anchor xml:id="_rw_g_r_o_m_a_c_s_8h_1ab36fce1e8aaae38ee51cef4d20df25e5"/>    <section>
+    <title>writeGROMACS()</title>
+<indexterm><primary>writeGROMACS</primary><secondary>rwGROMACS.h</secondary></indexterm>
+<indexterm><primary>rwGROMACS.h</primary><secondary>writeGROMACS</secondary></indexterm>
+<para><computeroutput>int writeGROMACS (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Writes a Gromacs coordinate file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>coordinate file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of molecules written (&lt;0 if writing failed). <literallayout><computeroutput>Gromacs format:
+01234567890123456789012345678901234567890123456789012345678901234567890
+MD of 2 waters, t= 0.0
+    6
+    1WATER  OW1    1   0.126   1.624   1.679  0.1227 -0.0580  0.0434
+    1WATER  HW2    2   0.190   1.661   1.747  0.8085  0.3191 -0.7791
+    1WATER  HW3    3   0.177   1.568   1.613 -0.9045 -2.6469  1.3180
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 143 of file rwGROMACS.cpp.</para>
+</section>
+</section>
+</section>

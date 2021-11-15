@@ -1,0 +1,248 @@
+.TH "/Users/bernard/b20/bsoft/src/rwparam/rwsymop.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/rwparam/rwsymop.cpp \- Library routines to read and write symmetry operators\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwsymop\&.h'\fP
+.br
+\fC#include 'star\&.h'\fP
+.br
+\fC#include 'sym_tags\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "char * \fBread_symop_star\fP (\fBBstring\fP &filename, int spacegroup, int &nsym)"
+.br
+.ti -1c
+.RI "char * \fBread_symop_lib\fP (\fBBstring\fP &filename, int spacegroup, int &nsym)"
+.br
+.ti -1c
+.RI "int \fBwrite_symop_star\fP (\fBBstring\fP &filename, int spacegroup, int nsym, char *symop, int line_len)"
+.br
+.ti -1c
+.RI "int \fBwrite_pointgroup_star\fP (\fBBstring\fP &filename, \fBBsymmetry\fP &sym, \fBView\fP ref_view)"
+.br
+.ti -1c
+.RI "float * \fBsym_matrices_from_text_list\fP (int nsym, char *symop, int line_len)"
+.br
+.RI "Calculates symmetry matrices from a list of strings\&. "
+.ti -1c
+.RI "float * \fBread_symat\fP (\fBBstring\fP &filename, int spacegroup, int &nsym)"
+.br
+.RI "Reading crystallographic symmetry operators\&. "
+.ti -1c
+.RI "char * \fBread_symop\fP (\fBBstring\fP &symopfile, int spacegroup, int &nsym)"
+.br
+.RI "Reading crystallographic symmetry operators\&. "
+.ti -1c
+.RI "int \fBwrite_symat\fP (\fBBstring\fP &filename, int spacegroup)"
+.br
+.RI "Writing crystallographic symmetry operators\&. "
+.ti -1c
+.RI "int \fBwrite_pointgroup\fP (\fBBstring\fP &filename, \fBBstring\fP &symmetry_string, \fBView\fP ref_view)"
+.br
+.RI "Writing point group symmetry operators\&. "
+.ti -1c
+.RI "int \fBwrite_pointgroup\fP (\fBBstring\fP &filename, \fBBsymmetry\fP &sym, \fBView\fP ref_view)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines to read and write symmetry operators\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19991225 
+.PP
+Modified: 20210328 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwsymop\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "float* read_symat (\fBBstring\fP & filename, int spacegroup, int & nsym)"
+
+.PP
+Reading crystallographic symmetry operators\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name\&. 
+.br
+\fIspacegroup\fP crystal space group number\&. 
+.br
+\fI&nsym\fP number of symmetry operators\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+float* set of 12-value symmetry matrices\&. 
+.PP
+.nf
+The symmetry operators are encoded as a set of matrices.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 35 of file rwsymop\&.cpp\&.
+.SS "char* read_symop (\fBBstring\fP & symopfile, int spacegroup, int & nsym)"
+
+.PP
+Reading crystallographic symmetry operators\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&symopfile\fP file name\&. 
+.br
+\fIspacegroup\fP crystal space group number\&. 
+.br
+\fI&nsym\fP number of symmetry operators\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char* set of 12-value symmetry matrices\&. 
+.PP
+.nf
+The symmetry operators are encoded as 80 character lines.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 60 of file rwsymop\&.cpp\&.
+.SS "char * read_symop_lib (\fBBstring\fP & filename, int spacegroup, int & nsym)"
+
+.PP
+Definition at line 182 of file rwsymop\&.cpp\&.
+.SS "char * read_symop_star (\fBBstring\fP & filename, int spacegroup, int & nsym)"
+
+.PP
+Definition at line 146 of file rwsymop\&.cpp\&.
+.SS "float * sym_matrices_from_text_list (int nsym, char * symop, int line_len)"
+
+.PP
+Calculates symmetry matrices from a list of strings\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fInsym\fP number of symmetry operators\&. 
+.br
+\fI*symop\fP array of symmetry operator lines\&. 
+.br
+\fIline_len\fP length of text line in the array\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+float* a set of 12-value symmetry matrices\&. 
+.PP
+.nf
+The list of strings is expected to be packed into a single character
+array with a fixed length for each string. Each string encodes a
+symmetry operation in terms of x, y and z operations in reciprocal
+space.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 326 of file rwsymop\&.cpp\&.
+.SS "int write_pointgroup (\fBBstring\fP & filename, \fBBstring\fP & symmetry_string, \fBView\fP ref_view)"
+
+.PP
+Writing point group symmetry operators\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name\&. 
+.br
+\fI&symmetry_string\fP symmetry string\&. 
+.br
+\fIref_view\fP reference view\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 122 of file rwsymop\&.cpp\&.
+.SS "int write_pointgroup (\fBBstring\fP & filename, \fBBsymmetry\fP & sym, \fBView\fP ref_view)"
+
+.PP
+Definition at line 131 of file rwsymop\&.cpp\&.
+.SS "int write_pointgroup_star (\fBBstring\fP & filename, \fBBsymmetry\fP & sym, \fBView\fP ref_view)"
+
+.PP
+Definition at line 280 of file rwsymop\&.cpp\&.
+.SS "int write_symat (\fBBstring\fP & filename, int spacegroup)"
+
+.PP
+Writing crystallographic symmetry operators\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name\&. 
+.br
+\fIspacegroup\fP crystal space group number\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 99 of file rwsymop\&.cpp\&.
+.SS "int write_symop_star (\fBBstring\fP & filename, int spacegroup, int nsym, char * symop, int line_len)"
+
+.PP
+Definition at line 254 of file rwsymop\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

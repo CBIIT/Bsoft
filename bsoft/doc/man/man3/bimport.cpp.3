@@ -1,0 +1,130 @@
+.TH "/Users/bernard/b20/bsoft/src/bimport.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/bimport.cpp \- Generate parameter files from a cisTEM hierarchy\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'mg_ctf\&.h'\fP
+.br
+\fC#include 'file_util\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBproject\fP * \fBgenerate_project_from_files\fP (\fBBstring\fP &framepath, \fBBstring\fP &mgpath, \fBBstring\fP &partpath, \fBBstring\fP &pspath, long mg_per_field, int flags)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBpath_and_extension\fP (\fBBstring\fP &fn)"
+.br
+.ti -1c
+.RI "long \fBproject_add_files\fP (\fBBproject\fP *\fBproject\fP, vector< string > &files, int ftype, long number)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Generate parameter files from a cisTEM hierarchy\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20210412 
+.PP
+Modified: 20210413 
+.RE
+.PP
+
+.PP
+Definition in file \fBbimport\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBproject\fP * generate_project_from_files (\fBBstring\fP & framepath, \fBBstring\fP & mgpath, \fBBstring\fP & partpath, \fBBstring\fP & pspath, long mg_per_field, int flags)"
+
+.PP
+Definition at line 208 of file bimport\&.cpp\&.
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 52 of file bimport\&.cpp\&.
+.SS "\fBBstring\fP path_and_extension (\fBBstring\fP & fn)"
+
+.PP
+Definition at line 121 of file bimport\&.cpp\&.
+.SS "long project_add_files (\fBBproject\fP * project, vector< string > & files, int ftype, long number)"
+
+.PP
+Definition at line 135 of file bimport\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+" ",
+"Usage: bimport [options] Assets",
+"-------------------------------",
+"Generates a micrograph parameter file from directories of files\&.",
+" ",
+"Parameters:",
+"-verbose 7               Verbosity of output\&.",
+"-sampling 1\&.5,1\&.5,1      Sampling (A/pixel, one value sets all)\&.",
+"-assets Assets           Generate from cisTEM assets (modified by specifying other paths)\&.",
+"-framepath movies,tif    Path for movie frames and extension\&.",
+"-mgpath images,mrc       Path for micrographs and extension\&.",
+"-partpath images,pif     Path for particles and extension\&.",
+"-pspath powerspec,map    Path for power spectra and extension\&.",
+"-numberperfield 3        Number of micrographs per field-of-view (default 1)\&.",
+
+" ",
+
+
+
+"Output:",
+"-output file\&.star        Output parameter file\&.",
+" ",
+NULL
+}
+.fi
+.PP
+Definition at line 26 of file bimport\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

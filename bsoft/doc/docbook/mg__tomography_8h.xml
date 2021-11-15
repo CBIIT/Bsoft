@@ -1,0 +1,2404 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__tomography_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/mg_tomography.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/mg_tomography.h</primary></indexterm>
+<para>
+
+<para>Header file for single particle image processing in Bsoft. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+#include &quot;rwimg.h&quot;
+#include &quot;Matrix3.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1a8bee33760df19c6133130807a28235a3">mg_marker_init</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_struct_bmarker">Bmarker</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Initializes markers from the reference. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1aa397461450bca7ac6f6de5ec36eeb3ca">mg_marker_update</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_struct_bmarker">Bmarker</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; oriref, int update_location)</para>
+
+<para>Calculates the predicted positions of markers from the reference. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_mg__tomography_8h_1a6f9a7913f6471e2119c559e5777baa3a">mg_location_from_3D_model</link> (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; loc, <link linkend="_class_matrix3">Matrix3</link> mat, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; ori)</para>
+
+<para>Calculates the 2D location of a marker from a 3D model. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_mg__tomography_8h_1a7ae4597ec3109aec387315c446c14922">mg_location_from_3D_model</link> (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; loc, <link linkend="_class_matrix3">Matrix3</link> mat, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; ori, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; scale)</para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_mg__tomography_8h_1a0583eb4e54ad0675c0652f6aabfb73e3">mg_location_from_3D_model</link> (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; loc3D, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; ori3D, <link linkend="_class_matrix3">Matrix3</link> mat, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; ori)</para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_mg__tomography_8h_1a64b81b5999710b94408f68a843e8c62a">mg_location_from_3D_model</link> (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; loc3D, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; ori3D, <link linkend="_class_matrix3">Matrix3</link> mat, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; ori, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; scale)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__tomography_8h_1aa709c2e22557113cbd82ed6c0e63f302">img_gold_particle</link> (<link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, double radius)</para>
+
+<para>Generates an image representing a gold particle. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmarker">Bmarker</link> * <link linkend="_mg__tomography_8h_1a3cbfb5d1b39c729f6860723388029604">img_find_gold_particles</link> (<link linkend="_class_bimage">Bimage</link> *p, int img_select, double radius, long edge, double cutoff)</para>
+
+<para>Finds gold particles in micrograph images. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1ae55798b2369a30df2764330b9069ed0b">project_mass_normalize</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double avg, double std, int norm_type, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> datatype, int setinputZslices, int setoutputZslices, double cutmin, double cutmax, double replace_threshold)</para>
+
+<para>Normalizes a set of images in a project to a desired average and standard deviation. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bplot">Bplot</link> * <link linkend="_mg__tomography_8h_1a9d4983496a520a28c88a9ca8b8fa61b1">project_intensity_plot</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Transfers the micrograph intensities for a field into a plot. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__tomography_8h_1a5f935bf86da54c5945c6b6ee102d649b">project_fit_intensities</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bplot">Bplot</link> *plot=NULL, int flag=0)</para>
+
+<para>Determines the thickness to mean free path ratio from a tilt series. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__tomography_8h_1a84bad8eaa12e190f226bf4bef6e0455d">project_thickness_to_lambda_ratio</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Determines the thickness to mean free path ratio from a tilt series. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__tomography_8h_1a355aef1d7a77bc17cbb4d9222675e596">project_lambda</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double thickness)</para>
+
+<para>Determines the mean free path from a tilt series and thickness. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__tomography_8h_1a3a11c19cded4a93d377c2351754b79bb">project_thickness</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double lambda)</para>
+
+<para>Determines the thickness from a tilt series and mean free path. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1af8f20b4fd0eab2ea8eda879885df369a">project_sort_markers_by_id</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Sorts markers for each micrograph by ID number. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__tomography_8h_1a58ee095db140de241e686da21034aa08">project_tomo_residuals</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int <link linkend="_rw_d_m_8cpp_1ae83c07067345faf98c959261a0b7db76">show</link>)</para>
+
+<para>Calculates the residuals for an alignment solution. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__tomography_8h_1a35acd266a623683fccfa228fcf3724d8">mg_tomo_residuals</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_struct_bmarker">Bmarker</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; oriref)</para>
+
+<para>Calculates the residuals for an alignment solution of one micrograph. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__tomography_8h_1a1baa2229f1d1a350aa4394e14f67f8a4">project_tomo_errors</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Analyzes marker errors. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1a7c13263ba603eab1b18a77fbc4f65a07">project_calculate_model</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Calculates the z-coordinates of the marker model. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1aa70c7d25aba27871780f47a241d430e9">project_generate_markers</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Generates missing micrograph and model markers. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__tomography_8h_1af1300cec87b8e42cfbf04320e094271e">img_erase_markers</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_struct_bmarker">Bmarker</link> *mark, double marker_radius)</para>
+
+<para>Erases or paints markers in an image. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__tomography_8h_1aeb164a6845eb5e06f84edb1f87066935">mg_erase_markers</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, double marker_radius)</para>
+
+<para>Erases or paints markers in micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1a445475a388bfa040cc100fe9cc9d3d5c">project_erase_markers</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double marker_radius)</para>
+
+<para>Erases or paints markers in micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1a890b77b4268ed3c89eb52bfe034eca0b">mg_reset_model</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_struct_bmarker">Bmarker</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Resets the model x and y coordinates from the zero-tilt micrograph. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__tomography_8h_1a856a0d46dbcdf7d1590dbeb704d4fe9f">project_find_markers</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long edge, int add)</para>
+
+<para>Finds all markers in a project. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__tomography_8h_1a447fe455a3322d928e5b1479886ac57b">mg_find_markers</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, long edge, int add)</para>
+
+<para>Finds markers in a micrograph. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__tomography_8h_1a65e7b819970fa4f1b5f3ab1d47751e8d">mg_composite_particle</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size)</para>
+
+<para>Generates an average particle image from a micrograph. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__tomography_8h_1a24ee66b4a1d0f09a9a823ae2fa4cb532">project_count_markers</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Counts the markers in a project hierarchy. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__tomography_8h_1a969b5685360f1a90df70473909cd6136">project_show_markers</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Shows the markers in a project hierarchy. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__tomography_8h_1a513bc3d514f37647251c717216fbfa5c">project_show_errors</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double error_cutoff)</para>
+
+<para>Shows the errors in marker coordinates in a project hierarchy. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__tomography_8h_1a2aa3bb3be6ac685dc6ab19c5afeff26a">project_deselect_markers</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;deselect_list)</para>
+
+<para>Deletes selected markers in a project hierarchy. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__tomography_8h_1a629025eac9db3cb649a2599717dd23dd">project_delete_markers</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;delete_list)</para>
+
+<para>Deletes selected markers in a project hierarchy. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__tomography_8h_1aec5abf93bda339eed0b728c43ef60374">project_renumber_markers</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Renumbers the markers in a project hierarchy. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__tomography_8h_1a8f575f1863c971822dd1a9ce0987c3f6">project_mg_select</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;mg_select)</para>
+
+<para>Selects micrographs in a project hierarchy. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__tomography_8h_1a5b53ab97b8ffc76d1eceff0062a64008">project_mg_exclude</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;mg_exclude)</para>
+
+<para>Deselects micrographs in a project hierarchy. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1a75cc90ae38094c732ddf78fa788fb930">project_set_tilt_axis</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double tilt_axis)</para>
+
+<para>Sets the tilt axis angle in a project parameter structure. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1a3b8be7f402877d082ef8d57e40f57707">project_invert_tilt_axis</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Inverts the tilt axis in a project parameter structure. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1a33b446c701cc194f546d6531c523431f">project_set_tilt_angles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double tilt_start, double tilt_step)</para>
+
+<para>Sets the tilt and tilt axis angles in a project parameter structure. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1a5ae3ebfe7f08b5a17b3595c3e91826bf">project_mg_tilt_to_matrix</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Sets the matrix from the tilt and axis angles for each micrograph. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1aeb8ce2b0fae4f766524176e01e28e7a0">project_calculate_angles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Calculates tilt and tilt axis angles from matrices in a project parameter structure. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1a380c84ee3d5a401a935858b6c9e0e7ce">project_invert_matrices</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Inverts the micrograph matrices in a project parameter structure. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1a363474272a58fcfe9cacc0dd8aeaf307">project_mg_marker_select</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double fom)</para>
+
+<para>Selects markers. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1a823b5aca015bf764abd7639f1dfdf999">project_set_marker_radius</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double mark_radius)</para>
+
+<para>Sets the marker radius in a project parameter structure. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1a2cde09c79b9468784cb075e1e3816ced">project_check_markers</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int flags)</para>
+
+<para>Checks if the markers in a project parameter structure fall within micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1a38c93151295afdf4c7d8574876a549ad">project_fix_markers</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Checks if the markers in a project parameter structure fall within micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1ac5fd9a7bee507bb30166bdfa2d9a9be6">img_clear_extraneous_areas</link> (<link linkend="_class_bimage">Bimage</link> *p, double tilt_axis, double tilt_angle, long thickness, double width)</para>
+
+<para>Clears extraneous areas from a micrograph. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1a83e4af8a8ee31bf3923d424348253bea">micrograph_clear_extraneous_areas</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_bimage">Bimage</link> *p, long thickness, double width)</para>
+
+<para>Clears extraneous areas from a micrograph. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1a84a8b6d40e464660aaf12ee27e1b268b">project_clear_extraneous_areas</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long thickness, double width)</para>
+
+<para>Clears areas from a tilt series not used in a reconstruction. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__tomography_8h_1a851f1b07e3b4e2c9de0a5de15f3e7876">project_marker_rotation_axis</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Determines the most likely rotation axis location for a tilt series. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__tomography_8h_1a1d88d5b3cc5df87a44cd41b1f289b594">project_merge_rec_markers</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Merges the markers for two reconstructions. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for single particle image processing in Bsoft. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20020416 </para>
+
+<para>Modified: 20210706 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__tomography_8h_1ac5fd9a7bee507bb30166bdfa2d9a9be6"/>    <section>
+    <title>img_clear_extraneous_areas()</title>
+<indexterm><primary>img_clear_extraneous_areas</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>img_clear_extraneous_areas</secondary></indexterm>
+<para><computeroutput>int img_clear_extraneous_areas (<link linkend="_class_bimage">Bimage</link> * p, double tilt_axis, double tilt_angle, long thickness, double width)</computeroutput></para><para>
+
+<para>Clears extraneous areas from a micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>micrograph image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tilt_axis</entry>
+                                <entry>
+<para>tilt axis angle (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tilt_angle</entry>
+                                <entry>
+<para>tilt angle (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>thickness</entry>
+                                <entry>
+<para>intended thickness of reconstruction. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>width</entry>
+                                <entry>
+<para>edge smoothing width. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2213 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1af1300cec87b8e42cfbf04320e094271e"/>    <section>
+    <title>img_erase_markers()</title>
+<indexterm><primary>img_erase_markers</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>img_erase_markers</secondary></indexterm>
+<para><computeroutput>long img_erase_markers (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_struct_bmarker">Bmarker</link> * mark, double marker_radius)</computeroutput></para><para>
+
+<para>Erases or paints markers in an image. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*mark</entry>
+                                <entry>
+<para>linked list of markers. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>marker_radius</entry>
+                                <entry>
+<para>radius to mask out markers. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of markers erased. <literallayout><computeroutput>Markers can be either erased to a background value or painted in with
+a set value.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1236 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a3cbfb5d1b39c729f6860723388029604"/>    <section>
+    <title>img_find_gold_particles()</title>
+<indexterm><primary>img_find_gold_particles</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>img_find_gold_particles</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmarker">Bmarker</link>* img_find_gold_particles (<link linkend="_class_bimage">Bimage</link> * p, int img_select, double radius, long edge, double cutoff)</computeroutput></para><para>
+
+<para>Finds gold particles in micrograph images. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>img_select</entry>
+                                <entry>
+<para>selected subimage, -1 if all. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>radius</entry>
+                                <entry>
+<para>gold particle radius in voxel units. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>edge</entry>
+                                <entry>
+<para>edge width to eliminate particles. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>cutoff</entry>
+                                <entry>
+<para>FOM cutoff, if 0 then half of maximum FOM. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmarker* list of markers. <literallayout><computeroutput>An image of the size of an input sub-image is generated with a gold
+particle (black or negative density) at its center.
+Each sub-image is cross-correlated with the gold particle image
+and the position within the image reported.
+The FOM cutoff is used to select cross-correlation peaks, except it
+is reset for the following:
+    cutoff == 0 ==&gt; cutoff = FOMavg + FOMstd
+    cutoff &lt;  0 ==&gt; cutoff = FOMmax/2
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 228 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1aa709c2e22557113cbd82ed6c0e63f302"/>    <section>
+    <title>img_gold_particle()</title>
+<indexterm><primary>img_gold_particle</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>img_gold_particle</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_gold_particle (<link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, double radius)</computeroutput></para><para>
+
+<para>Generates an image representing a gold particle. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of image to generate. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>radius</entry>
+                                <entry>
+<para>gold particle radius in voxel units. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* gold particle image. <literallayout><computeroutput>An image of the size of an input sub-image is generated with a gold
+particle (black or negative density) at its center.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 188 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a65e7b819970fa4f1b5f3ab1d47751e8d"/>    <section>
+    <title>mg_composite_particle()</title>
+<indexterm><primary>mg_composite_particle</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>mg_composite_particle</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* mg_composite_particle (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size)</computeroutput></para><para>
+
+<para>Generates an average particle image from a micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph to extract marker images from. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of image. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* composite marker projection image. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1459 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1aeb164a6845eb5e06f84edb1f87066935"/>    <section>
+    <title>mg_erase_markers()</title>
+<indexterm><primary>mg_erase_markers</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>mg_erase_markers</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* mg_erase_markers (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, double marker_radius)</computeroutput></para><para>
+
+<para>Erases or paints markers in micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>marker_radius</entry>
+                                <entry>
+<para>radius to mask out markers. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* new micrograph image with erased markers. <literallayout><computeroutput>Markers can be either erased to a background value or painted in with
+a set value.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1260 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a447fe455a3322d928e5b1479886ac57b"/>    <section>
+    <title>mg_find_markers()</title>
+<indexterm><primary>mg_find_markers</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>mg_find_markers</secondary></indexterm>
+<para><computeroutput>long mg_find_markers (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, long edge, int add)</computeroutput></para><para>
+
+<para>Finds markers in a micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>edge</entry>
+                                <entry>
+<para>edge to exclude. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>add</entry>
+                                <entry>
+<para>flag to add rather than replace the markers. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of markers. <literallayout><computeroutput>The markers are located by cross-correlation with a synthetic reference
+whose size is defined by the marker radius. Markers close to the edge
+are eliminated using the given edge size. The main intent is to find 
+the seed for a 3D marker model in a zero degree tilt micrograph. 
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1419 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a6f9a7913f6471e2119c559e5777baa3a"/>    <section>
+    <title>mg_location_from_3D_model()<computeroutput>[1/4]</computeroutput></title>
+<indexterm><primary>mg_location_from_3D_model</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>mg_location_from_3D_model</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; mg_location_from_3D_model (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; loc3D, <link linkend="_class_matrix3">Matrix3</link> mat, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; ori)</computeroutput></para><para>
+
+<para>Calculates the 2D location of a marker from a 3D model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>loc3D</entry>
+                                <entry>
+<para>3D marker location. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mat</entry>
+                                <entry>
+<para>micrograph view matrix. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ori</entry>
+                                <entry>
+<para>micrograph origin. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> transformed 2D marker location. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 140 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a7ae4597ec3109aec387315c446c14922"/>    <section>
+    <title>mg_location_from_3D_model()<computeroutput>[2/4]</computeroutput></title>
+<indexterm><primary>mg_location_from_3D_model</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>mg_location_from_3D_model</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; mg_location_from_3D_model (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; loc, <link linkend="_class_matrix3">Matrix3</link> mat, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; ori, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; scale)</computeroutput></para><para>
+Definition at line 151 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a0583eb4e54ad0675c0652f6aabfb73e3"/>    <section>
+    <title>mg_location_from_3D_model()<computeroutput>[3/4]</computeroutput></title>
+<indexterm><primary>mg_location_from_3D_model</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>mg_location_from_3D_model</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; mg_location_from_3D_model (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; loc3D, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; ori3D, <link linkend="_class_matrix3">Matrix3</link> mat, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; ori)</computeroutput></para><para>
+Definition at line 163 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a64b81b5999710b94408f68a843e8c62a"/>    <section>
+    <title>mg_location_from_3D_model()<computeroutput>[4/4]</computeroutput></title>
+<indexterm><primary>mg_location_from_3D_model</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>mg_location_from_3D_model</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; mg_location_from_3D_model (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; loc3D, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; ori3D, <link linkend="_class_matrix3">Matrix3</link> mat, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; ori, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; scale)</computeroutput></para><para>
+Definition at line 170 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a8bee33760df19c6133130807a28235a3"/>    <section>
+    <title>mg_marker_init()</title>
+<indexterm><primary>mg_marker_init</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>mg_marker_init</secondary></indexterm>
+<para><computeroutput>int mg_marker_init (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_struct_bmarker">Bmarker</link> * model)</computeroutput></para><para>
+
+<para>Initializes markers from the reference. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph to initialize. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>marker model. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 30 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1aa397461450bca7ac6f6de5ec36eeb3ca"/>    <section>
+    <title>mg_marker_update()</title>
+<indexterm><primary>mg_marker_update</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>mg_marker_update</secondary></indexterm>
+<para><computeroutput>int mg_marker_update (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_struct_bmarker">Bmarker</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; oriref, int update_location)</computeroutput></para><para>
+
+<para>Calculates the predicted positions of markers from the reference. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph to update. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>marker model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>oriref</entry>
+                                <entry>
+<para>reference origin. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>update_location</entry>
+                                <entry>
+<para>flag to update location based on marker model. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>If the marker does not exist in the micrograph, a new one is generated.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 60 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a890b77b4268ed3c89eb52bfe034eca0b"/>    <section>
+    <title>mg_reset_model()</title>
+<indexterm><primary>mg_reset_model</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>mg_reset_model</secondary></indexterm>
+<para><computeroutput>int mg_reset_model (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_struct_bmarker">Bmarker</link> * model)</computeroutput></para><para>
+
+<para>Resets the model x and y coordinates from the zero-tilt micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>reference micrograph parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model marker list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int markers selected in model. <literallayout><computeroutput>Missing model markers are added in and excessive model markers deleted.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1349 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a35acd266a623683fccfa228fcf3724d8"/>    <section>
+    <title>mg_tomo_residuals()</title>
+<indexterm><primary>mg_tomo_residuals</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>mg_tomo_residuals</secondary></indexterm>
+<para><computeroutput>double mg_tomo_residuals (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_struct_bmarker">Bmarker</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; oriref)</computeroutput></para><para>
+
+<para>Calculates the residuals for an alignment solution of one micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model marker list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>oriref</entry>
+                                <entry>
+<para>reference origin. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double average residual. <literallayout><computeroutput>Requires the matrices in the micrograph structures to be defined.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1006 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a83e4af8a8ee31bf3923d424348253bea"/>    <section>
+    <title>micrograph_clear_extraneous_areas()</title>
+<indexterm><primary>micrograph_clear_extraneous_areas</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>micrograph_clear_extraneous_areas</secondary></indexterm>
+<para><computeroutput>int micrograph_clear_extraneous_areas (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_bimage">Bimage</link> * p, long thickness, double width)</computeroutput></para><para>
+
+<para>Clears extraneous areas from a micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>micrograph image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>thickness</entry>
+                                <entry>
+<para>intended thickness of reconstruction. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>width</entry>
+                                <entry>
+<para>edge smoothing width. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2264 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1aeb8ce2b0fae4f766524176e01e28e7a0"/>    <section>
+    <title>project_calculate_angles()</title>
+<indexterm><primary>project_calculate_angles</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_calculate_angles</secondary></indexterm>
+<para><computeroutput>int project_calculate_angles (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Calculates tilt and tilt axis angles from matrices in a project parameter structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>From each matrix, a quaternion is calculated, giving the tilt axis
+and rotation angle.
+The level angle is calculated as the arcsin of the z-coordinate of the axis.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1993 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a7c13263ba603eab1b18a77fbc4f65a07"/>    <section>
+    <title>project_calculate_model()</title>
+<indexterm><primary>project_calculate_model</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_calculate_model</secondary></indexterm>
+<para><computeroutput>int project_calculate_model (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Calculates the z-coordinates of the marker model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>If the project does not have markers, it returns without any change.
+If the reconstruction model is not defined, it is created.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1083 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a2cde09c79b9468784cb075e1e3816ced"/>    <section>
+    <title>project_check_markers()</title>
+<indexterm><primary>project_check_markers</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_check_markers</secondary></indexterm>
+<para><computeroutput>int project_check_markers (<link linkend="_class_bproject">Bproject</link> * project, int flags)</computeroutput></para><para>
+
+<para>Checks if the markers in a project parameter structure fall within micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>flags to modify actions. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Markers outside the boundaries are dealt with based on the flags variable:
+1   show markers outside the image boundaries.
+2   set marker selections to zero.
+4   set marker fom&apos;s to zero.
+8   set marker errors to zero.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2143 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a84a8b6d40e464660aaf12ee27e1b268b"/>    <section>
+    <title>project_clear_extraneous_areas()</title>
+<indexterm><primary>project_clear_extraneous_areas</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_clear_extraneous_areas</secondary></indexterm>
+<para><computeroutput>int project_clear_extraneous_areas (<link linkend="_class_bproject">Bproject</link> * project, long thickness, double width)</computeroutput></para><para>
+
+<para>Clears areas from a tilt series not used in a reconstruction. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>thickness</entry>
+                                <entry>
+<para>intended thickness of reconstruction. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>width</entry>
+                                <entry>
+<para>edge smoothing width. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2285 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a24ee66b4a1d0f09a9a823ae2fa4cb532"/>    <section>
+    <title>project_count_markers()</title>
+<indexterm><primary>project_count_markers</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_count_markers</secondary></indexterm>
+<para><computeroutput>long project_count_markers (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Counts the markers in a project hierarchy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of markers. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1512 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a629025eac9db3cb649a2599717dd23dd"/>    <section>
+    <title>project_delete_markers()</title>
+<indexterm><primary>project_delete_markers</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_delete_markers</secondary></indexterm>
+<para><computeroutput>long project_delete_markers (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; delete_list)</computeroutput></para><para>
+
+<para>Deletes selected markers in a project hierarchy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;delete_list</entry>
+                                <entry>
+<para>list of markers to deselect. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of markers. <literallayout><computeroutput>All the occurrences of selected markers in the tilt series are deleted.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1665 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a2aa3bb3be6ac685dc6ab19c5afeff26a"/>    <section>
+    <title>project_deselect_markers()</title>
+<indexterm><primary>project_deselect_markers</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_deselect_markers</secondary></indexterm>
+<para><computeroutput>long project_deselect_markers (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; deselect_list)</computeroutput></para><para>
+
+<para>Deletes selected markers in a project hierarchy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;deselect_list</entry>
+                                <entry>
+<para>list of markers to deselect. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of markers. <literallayout><computeroutput>All the occurrences of selected markers in the tilt series are deleted.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1608 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a445475a388bfa040cc100fe9cc9d3d5c"/>    <section>
+    <title>project_erase_markers()</title>
+<indexterm><primary>project_erase_markers</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_erase_markers</secondary></indexterm>
+<para><computeroutput>int project_erase_markers (<link linkend="_class_bproject">Bproject</link> * project, double marker_radius)</computeroutput></para><para>
+
+<para>Erases or paints markers in micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>marker_radius</entry>
+                                <entry>
+<para>radius to mask out markers. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>Markers can be either erased to a background value or painted in with
+a set value.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1294 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a856a0d46dbcdf7d1590dbeb704d4fe9f"/>    <section>
+    <title>project_find_markers()</title>
+<indexterm><primary>project_find_markers</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_find_markers</secondary></indexterm>
+<para><computeroutput>long project_find_markers (<link linkend="_class_bproject">Bproject</link> * project, long edge, int add)</computeroutput></para><para>
+
+<para>Finds all markers in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>edge</entry>
+                                <entry>
+<para>edge to exclude. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>add</entry>
+                                <entry>
+<para>flag to add rather than replace the markers. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of markers. <literallayout><computeroutput>Markers are located in each micrograph by cross-correlation.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1394 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a5f935bf86da54c5945c6b6ee102d649b"/>    <section>
+    <title>project_fit_intensities()</title>
+<indexterm><primary>project_fit_intensities</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_fit_intensities</secondary></indexterm>
+<para><computeroutput>double project_fit_intensities (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bplot">Bplot</link> * plot, int flag)</computeroutput></para><para>
+
+<para>Determines the thickness to mean free path ratio from a tilt series. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*plot</entry>
+                                <entry>
+<para>plot structure with intensity-tilt data. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flag</entry>
+                                <entry>
+<para>flag to apply tilt angle adjustment. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double ratio. <literallayout><computeroutput>The micrographs should be unmodified gain-corrected images obtained from the detector.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 619 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a38c93151295afdf4c7d8574876a549ad"/>    <section>
+    <title>project_fix_markers()</title>
+<indexterm><primary>project_fix_markers</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_fix_markers</secondary></indexterm>
+<para><computeroutput>int project_fix_markers (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Checks if the markers in a project parameter structure fall within micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2178 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1aa70c7d25aba27871780f47a241d430e9"/>    <section>
+    <title>project_generate_markers()</title>
+<indexterm><primary>project_generate_markers</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_generate_markers</secondary></indexterm>
+<para><computeroutput>int project_generate_markers (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Generates missing micrograph and model markers. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>First the 3D model is updated to represent all markers from all micrographs.
+Then the missing markers in the micrographs are generated from the
+updated model.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1204 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a9d4983496a520a28c88a9ca8b8fa61b1"/>    <section>
+    <title>project_intensity_plot()</title>
+<indexterm><primary>project_intensity_plot</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_intensity_plot</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bplot">Bplot</link>* project_intensity_plot (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Transfers the micrograph intensities for a field into a plot. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bplot* plot structure. <literallayout><computeroutput>The micrographs should be unmodified gain-corrected images obtained from the detector.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 515 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a380c84ee3d5a401a935858b6c9e0e7ce"/>    <section>
+    <title>project_invert_matrices()</title>
+<indexterm><primary>project_invert_matrices</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_invert_matrices</secondary></indexterm>
+<para><computeroutput>int project_invert_matrices (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Inverts the micrograph matrices in a project parameter structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The tilt axis angle for all the micrographs are set to the same value.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2071 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a3b8be7f402877d082ef8d57e40f57707"/>    <section>
+    <title>project_invert_tilt_axis()</title>
+<indexterm><primary>project_invert_tilt_axis</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_invert_tilt_axis</secondary></indexterm>
+<para><computeroutput>int project_invert_tilt_axis (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Inverts the tilt axis in a project parameter structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The tilt axis angle for all the micrographs are set to the same value.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1916 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a355aef1d7a77bc17cbb4d9222675e596"/>    <section>
+    <title>project_lambda()</title>
+<indexterm><primary>project_lambda</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_lambda</secondary></indexterm>
+<para><computeroutput>double project_lambda (<link linkend="_class_bproject">Bproject</link> * project, double thickness)</computeroutput></para><para>
+
+<para>Determines the mean free path from a tilt series and thickness. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>thickness</entry>
+                                <entry>
+<para>tomogram thickness (in angstrom). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double ratio. <literallayout><computeroutput>The micrographs should be unmodified gain-corrected images obtained from the detector.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 795 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a851f1b07e3b4e2c9de0a5de15f3e7876"/>    <section>
+    <title>project_marker_rotation_axis()</title>
+<indexterm><primary>project_marker_rotation_axis</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_marker_rotation_axis</secondary></indexterm>
+<para><computeroutput>double project_marker_rotation_axis (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Determines the most likely rotation axis location for a tilt series. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double average z offset from marker z average. <literallayout><computeroutput>All micrographs must have associated markers.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2369 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1ae55798b2369a30df2764330b9069ed0b"/>    <section>
+    <title>project_mass_normalize()</title>
+<indexterm><primary>project_mass_normalize</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_mass_normalize</secondary></indexterm>
+<para><computeroutput>int project_mass_normalize (<link linkend="_class_bproject">Bproject</link> * project, double avg, double std, int norm_type, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> datatype, int setinputZslices, int setoutputZslices, double cutmin, double cutmax, double replace_threshold)</computeroutput></para><para>
+
+<para>Normalizes a set of images in a project to a desired average and standard deviation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>avg</entry>
+                                <entry>
+<para>desired average. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>std</entry>
+                                <entry>
+<para>desired standard deviation (if 0, use defaults). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>norm_type</entry>
+                                <entry>
+<para>type of determining the effective average and standard deviation: 0=simple, 1=Gaussian, 2=Poisson. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>datatype</entry>
+                                <entry>
+<para>data type for normalized images. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>setinputZslices</entry>
+                                <entry>
+<para>convert z-slices in the input to 2D images. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>setoutputZslices</entry>
+                                <entry>
+<para>convert output image back to z-slices. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>cutmin</entry>
+                                <entry>
+<para>truncate to minimum. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>cutmax</entry>
+                                <entry>
+<para>truncate to maximum. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>replace_threshold</entry>
+                                <entry>
+<para>replace maxima above this threshold. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>The effective average and standard deviation for each image is obtained
+in one of three ways:
+    0.      The simple avergae and standard devaition for the image.
+    1.      Gaussian fit of the histogram.
+    2.      Poisson fit of the histogram.
+A histogram of an image is calculated with a given number of bins.
+The histogram is fit to a Gaussian or Poisson function with exclusion of a
+small number of bins in the histogram (defined as outliers).
+The effective average and standard deviation are used to 
+rescale the data for each image.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 379 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a1d88d5b3cc5df87a44cd41b1f289b594"/>    <section>
+    <title>project_merge_rec_markers()</title>
+<indexterm><primary>project_merge_rec_markers</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_merge_rec_markers</secondary></indexterm>
+<para><computeroutput>int project_merge_rec_markers (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Merges the markers for two reconstructions. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of markers merged. <literallayout><computeroutput>The reconstructions must have corresponding markers.
+The marker locations are set to the average of the two.
+The second reconstruction is removed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2408 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a5b53ab97b8ffc76d1eceff0062a64008"/>    <section>
+    <title>project_mg_exclude()</title>
+<indexterm><primary>project_mg_exclude</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_mg_exclude</secondary></indexterm>
+<para><computeroutput>long project_mg_exclude (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; mg_exclude)</computeroutput></para><para>
+
+<para>Deselects micrographs in a project hierarchy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;mg_exclude</entry>
+                                <entry>
+<para>list of micrograph numbers. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of micrographs excluded. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1844 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a363474272a58fcfe9cacc0dd8aeaf307"/>    <section>
+    <title>project_mg_marker_select()</title>
+<indexterm><primary>project_mg_marker_select</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_mg_marker_select</secondary></indexterm>
+<para><computeroutput>int project_mg_marker_select (<link linkend="_class_bproject">Bproject</link> * project, double fom)</computeroutput></para><para>
+
+<para>Selects markers. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom</entry>
+                                <entry>
+<para>fom cutoff. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Selects all micrograph markers above the given fom cutoff.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2093 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a8f575f1863c971822dd1a9ce0987c3f6"/>    <section>
+    <title>project_mg_select()</title>
+<indexterm><primary>project_mg_select</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_mg_select</secondary></indexterm>
+<para><computeroutput>long project_mg_select (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; mg_select)</computeroutput></para><para>
+
+<para>Selects micrographs in a project hierarchy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;mg_select</entry>
+                                <entry>
+<para>list of micrograph numbers. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of micrographs selected. <literallayout><computeroutput>A micrograph is only selected when it has its selection already set
+and it is in the list of numbers.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1806 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a5ae3ebfe7f08b5a17b3595c3e91826bf"/>    <section>
+    <title>project_mg_tilt_to_matrix()</title>
+<indexterm><primary>project_mg_tilt_to_matrix</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_mg_tilt_to_matrix</secondary></indexterm>
+<para><computeroutput>int project_mg_tilt_to_matrix (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Sets the matrix from the tilt and axis angles for each micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>This is in preparation for reconstruction.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1969 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1aec5abf93bda339eed0b728c43ef60374"/>    <section>
+    <title>project_renumber_markers()</title>
+<indexterm><primary>project_renumber_markers</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_renumber_markers</secondary></indexterm>
+<para><computeroutput>long project_renumber_markers (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Renumbers the markers in a project hierarchy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of markers. <literallayout><computeroutput>The markers are assumed to correspond across micrographs and reconstructions.
+The existing marker ids are mapped to an array, and new marker ids generated.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1737 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a823b5aca015bf764abd7639f1dfdf999"/>    <section>
+    <title>project_set_marker_radius()</title>
+<indexterm><primary>project_set_marker_radius</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_set_marker_radius</secondary></indexterm>
+<para><computeroutput>int project_set_marker_radius (<link linkend="_class_bproject">Bproject</link> * project, double mark_radius)</computeroutput></para><para>
+
+<para>Sets the marker radius in a project parameter structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mark_radius</entry>
+                                <entry>
+<para>gold fiducial marker radius (voxels). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2114 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a33b446c701cc194f546d6531c523431f"/>    <section>
+    <title>project_set_tilt_angles()</title>
+<indexterm><primary>project_set_tilt_angles</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_set_tilt_angles</secondary></indexterm>
+<para><computeroutput>int project_set_tilt_angles (<link linkend="_class_bproject">Bproject</link> * project, double tilt_start, double tilt_step)</computeroutput></para><para>
+
+<para>Sets the tilt and tilt axis angles in a project parameter structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tilt_start</entry>
+                                <entry>
+<para>starting tilt angle (usually negative). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tilt_step</entry>
+                                <entry>
+<para>tilt increment angle. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The single tilt series is defined by a starting tilt angle and a
+tilt increment angle, as well as the tilt axis angle.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1941 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a75cc90ae38094c732ddf78fa788fb930"/>    <section>
+    <title>project_set_tilt_axis()</title>
+<indexterm><primary>project_set_tilt_axis</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_set_tilt_axis</secondary></indexterm>
+<para><computeroutput>int project_set_tilt_axis (<link linkend="_class_bproject">Bproject</link> * project, double tilt_axis)</computeroutput></para><para>
+
+<para>Sets the tilt axis angle in a project parameter structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tilt_axis</entry>
+                                <entry>
+<para>tilt axis angle (wrt x-axis). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The tilt axis angle for all the micrographs are set to the same value.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1894 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a513bc3d514f37647251c717216fbfa5c"/>    <section>
+    <title>project_show_errors()</title>
+<indexterm><primary>project_show_errors</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_show_errors</secondary></indexterm>
+<para><computeroutput>long project_show_errors (<link linkend="_class_bproject">Bproject</link> * project, double error_cutoff)</computeroutput></para><para>
+
+<para>Shows the errors in marker coordinates in a project hierarchy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>error_cutoff</entry>
+                                <entry>
+<para>threshold to show errors (distance in pixels). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of errors above threshold. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1570 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a969b5685360f1a90df70473909cd6136"/>    <section>
+    <title>project_show_markers()</title>
+<indexterm><primary>project_show_markers</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_show_markers</secondary></indexterm>
+<para><computeroutput>long project_show_markers (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Shows the markers in a project hierarchy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of markers. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1540 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1af8f20b4fd0eab2ea8eda879885df369a"/>    <section>
+    <title>project_sort_markers_by_id()</title>
+<indexterm><primary>project_sort_markers_by_id</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_sort_markers_by_id</secondary></indexterm>
+<para><computeroutput>int project_sort_markers_by_id (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Sorts markers for each micrograph by ID number. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>micrograph project. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Requires the matrices in the micrograph structures to be defined.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 844 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a3a11c19cded4a93d377c2351754b79bb"/>    <section>
+    <title>project_thickness()</title>
+<indexterm><primary>project_thickness</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_thickness</secondary></indexterm>
+<para><computeroutput>double project_thickness (<link linkend="_class_bproject">Bproject</link> * project, double lambda)</computeroutput></para><para>
+
+<para>Determines the thickness from a tilt series and mean free path. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lambda</entry>
+                                <entry>
+<para>proportionality parameter (in angstrom). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double ratio. <literallayout><computeroutput>The micrographs should be unmodified gain-corrected images obtained from the detector.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 820 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a84bad8eaa12e190f226bf4bef6e0455d"/>    <section>
+    <title>project_thickness_to_lambda_ratio()</title>
+<indexterm><primary>project_thickness_to_lambda_ratio</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_thickness_to_lambda_ratio</secondary></indexterm>
+<para><computeroutput>double project_thickness_to_lambda_ratio (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Determines the thickness to mean free path ratio from a tilt series. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double ratio. <literallayout><computeroutput>The micrographs should be unmodified gain-corrected images obtained from the detector.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 696 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a1baa2229f1d1a350aa4394e14f67f8a4"/>    <section>
+    <title>project_tomo_errors()</title>
+<indexterm><primary>project_tomo_errors</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_tomo_errors</secondary></indexterm>
+<para><computeroutput>double project_tomo_errors (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Analyzes marker errors. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>micrograph project. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double 0. <literallayout><computeroutput>Requires the marker errors to be calculated.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1040 of file mg_tomography.cpp.</para>
+    </section><anchor xml:id="_mg__tomography_8h_1a58ee095db140de241e686da21034aa08"/>    <section>
+    <title>project_tomo_residuals()</title>
+<indexterm><primary>project_tomo_residuals</primary><secondary>mg_tomography.h</secondary></indexterm>
+<indexterm><primary>mg_tomography.h</primary><secondary>project_tomo_residuals</secondary></indexterm>
+<para><computeroutput>double project_tomo_residuals (<link linkend="_class_bproject">Bproject</link> * project, int show)</computeroutput></para><para>
+
+<para>Calculates the residuals for an alignment solution. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>micrograph project. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>show</entry>
+                                <entry>
+<para>flag to indicate showing lists. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double average residual. <literallayout><computeroutput>Requires the matrices in the micrograph structures to be defined.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 868 of file mg_tomography.cpp.</para>
+</section>
+</section>
+</section>

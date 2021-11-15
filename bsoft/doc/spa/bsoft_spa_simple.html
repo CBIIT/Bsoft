@@ -1,0 +1,488 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/bsoft.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: SPA</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="../Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Single Particle Analysis - Resolution-limited version</h1>
+<br />
+<center><img alt="SPA flowchart" src="SPA_flowchart.png"/></center>
+<br />
+Note that the following protocol assumes that focal pairs of
+micrographs were taken. In the event that only single micrographs were
+taken of each field-of-view, the step to align micrographs with
+bmgalign can be omitted.<br />
+<br />
+<h2>1. Preparation</h2>
+SPA in Bsoft has been designed to fit nicely into a specific workflow
+and a specific directory organization. Within a particular project, a
+set of subdirectories at a single level should be created&nbsp; to deal
+with the different stages of processing. Table 1 shows&nbsp; the list
+of directories typically used.<br />
+<br />
+<table border="1" cellpadding="2" cellspacing="2">
+<caption>Table 1: Suggested directories for SPA in Bsoft</caption>
+  <thead>
+    <tr>
+      <th>Directory</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>mg</td>
+      <td>Raw micrographs</td>
+    </tr>
+    <tr>
+      <td>mg_b2</td>
+      <td>Micrographs binned two-fold</td>
+    </tr>
+    <tr>
+      <td>part</td>
+      <td>Particle images extracted from the micrographs</td>
+    </tr>
+    <tr>
+      <td>ctf</td>
+      <td>CTF-corrected particle images</td>
+    </tr>
+    <tr>
+      <td>ref</td>
+      <td>Initial reference map(s) for orientation-finding</td>
+    </tr>
+    <tr>
+      <td>run1</td>
+      <td>First run of determining particle orientations with the resultant reconstruction(s)</td>
+    </tr>
+    <tr>
+      <td>run2</td>
+      <td>Second run of determining particle orientations with the resultant reconstruction(s)</td>
+    </tr>
+    <tr>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<br />
+Put all the micrographs in the mg directory.<br />
+<br />
+All programs handling parameter files (i.e., STAR files) can read
+multiple files and concatenate them into one large internal parameter
+database. The whole internal database is then written out into one
+parameter file by specifying the &quot;-output&quot; option. If the user requires
+individual parameter files for each micrograph, the program bmg has a
+&quot;-split&quot; option to generate one parameter file per micrograph. Some of
+the programs also allow the user to set the path for files, which
+becomes very important to ensure a smooth and easy workflow.<br />
+<br />
+
+<br />
+<h2>2. Options to generate the first parameter files</h2>
+<p>The first micrograph parameter files can be generated in various ways
+as follows:</p>
+<br />
+<h3>2.1. Generating parameter files from micrograph images:</h3>
+<p>The simplest is to use the micrographs themselves to write new
+parameter files:</p>
+<div id="command"><p>bmg -v 7 -number 2 -mgpath ../mg -partpath ../part -Pixel 2.2 -Volt 120
+-Cs 2 -Amp 0.07 -out klh.star klh_*.mrc</p></div>
+<p>
+This will generate the first parameter file with the micrographs
+arranged as pairs in each field-of-view (option -number) with the
+correct pixel size (option -Pixelsize), voltage (option -Volt), Cs
+(option Cs), amplitude contribution (option -Amplitude) and the
+appropriate paths for the micrographs (option -mgpath) and the particle
+images (option -partpath). The parameter file can be split into
+multiple files, each referencing just one micrograph:<br />
+</p>
+<div id="command"><p>bmg -v 7 -split id -out t.star klh.star</p></div>
+<br />
+Parameter files now have names corresponding to the original input
+micrograph files, and each can be opened in <b>bshow</b> to determine the CTF
+parameters.<br />
+<br />
+<h3>2.2. Generating parameter files from bshow:</h3>
+The second way is to open each micrograph individually in <b>bshow</b>,
+calculate the power spectrum, and fit the CTF parameters. After fitting
+the CTF, the parameters are written to a new parameter file.<br />
+<br />
+<h3>2.3. Automated CTF fitting and generating parameter files:</h3>
+The most advanced way is to run an automated CTF fitting first on
+each micrograph, generating a parameter file for each. The resultant
+fits need to be checked and refined in bshow. The micrographs can be
+processed one at a time:<br />
+<br />
+<div id="command"><p>bctf -v 7 -datatype float -action prepfit -sampling 2.2 -out
+klh_000239.star klh_000239.mrc klh_000239_ps.map</p></div>
+<br />
+Alternatively, a script can take care of the whole set (see the script
+<a href="../scripts/prepfit.html">prepfit</a>).<br />
+<br />
+In every case, individual parameter files are generated, one for each
+micrograph, in the mg directory. In the last two cases, the paths for
+the micrographs and particle images needs to be set in the parameter
+files:<br />
+<br />
+<div id="command"><p>bmg -v 7 -number 2 -mgpath ../mg -partpath ../part -Pixel 2.2 -Volt 120
+-Cs 2 -Amp 0.07 -out klh.star klh_??????.star</p></div>
+<div id="command"><p>bmg -v 7 -split id -out t.star klh.star</p></div>
+<br />
+<h2>3. CTF fitting in bshow<br />
+</h2>
+<h3>3.1 Setup</h3>
+Depending on the option chosen in the previous section, start in the
+following way:<br />
+<br />
+<h3>3.1.1. Existing parameter file for the micrograph:</h3>
+Open the micrograph parameter file in bshow:<br />
+<br />
+<div id="command"><p>bshow klh_000239.star &amp;</p></div>
+<br />
+Select the micrograph image to open. Then calculate the power spectrum
+(see below).<br />
+<br />
+<h3>3.1.2. Using bshow directly:</h3>
+Open the micrograph file in bshow:<br />
+<br />
+<div id="command"><p>bshow klh_000239.mrc &amp;</p></div>
+<br />
+Then calculate the power spectrum (see below).<br />
+<br />
+<h3>3.1.3. Existing parameter file and calculated power spectrum:</h3>
+The power spectrum is already calculated and an initial fit done.
+Open the micrograph parameter file in bshow:<br />
+<br />
+<div id="command"><p>bshow klh_000239.star &amp;</p></div>
+<br />
+Select the power spectrum to open.<br />
+<br />
+<h3>3.2. Calculating the power spectrum</h3>
+The micrograph image is opened in bshow, and the power spectrum is
+calculated (menu item &#8220;Image/Power spectrum&#8221;). The power spectrum can
+be calculated in different ways, but for fitting the CTF the best is to
+calculate tiles, and to average these to obtain a good estimate of the
+power spectrum (don&#8217;t calculate the logarithm of the power spectrum, as
+this would not allow an accurate baseline to be fitted). The default
+size for the tiles is typically sufficient, although smaller tiles will
+give a better estimate of the power spectrum with a decrease in the
+sampling of the radial power spectrum. The power spectrum can be saved
+for future reference (menu item &quot;File/Save&quot;).<br />
+<br />
+<h3>3.3. Fitting the CTF</h3>
+Once the power spectrum is calculated, the CTF can be fitted in bshow
+(menu item &#8220;Micrograph/Fit CTF&#8221;). After setting the accelerating
+voltage, Cs (typically 2 mm ) and amplitude contribution (typically 0.2
+for negative stain and 0.07 for vitrous ice) to the correct values, the
+quick
+fit button provides for a fast initial attempt to fit the radial power
+spectrum. If it does not give a reasonable initial fit, the user can
+manipulate the defocus until the first zero agrees with the first
+minimum in the radial power spectrum. The fit can be refined by
+successively going through the three buttons for baseline, envelope and
+defocus, each controlling only one aspect of the fit at a time. Once a
+good fit is obtained, the astigmatism button allows for an estimation
+of the astigmatism, only modifying the defocus deviation and
+astigmatism angle. The radial power spectrum is adjusted for
+astigmatism. At every stage, the user has full control over the fit and
+can improve it by hand. The extent to which the fitted CTF curve agrees
+with the radial power spectrum, gives the information limit. In other
+words, the point at which the last zero agrees with an apparent minimum
+in the radial power spectrum, gives the approximate maximum resolution
+with significant information above the background noise. This measure
+can be used to eliminate bad micrographs from further processing.<br />
+<br />
+<h2>4. Particle picking<br />
+</h2>
+<h3>4.1. Picking particles in bshow</h3>
+Each further-from-focus micrograph (usually the second one in each
+pair) parameter file is opened in bshow (be sure
+to open the parameter file and not the micrograph image). To activate
+the creation of boxes for picking, click on the boxing tool in the tool
+panel (menu item &quot;Window/Tools&quot;). This will bring up a dialog box where
+the box radii and bad area radius can be set. A typical particle can be
+selected and radii set appropriately (the bad area radius is usually
+about half of the box radius). All the particles can be picked (left
+button) and deleted (shift-left button), and bad areas selected
+(control-left button or right button).<br />
+<br />
+<h3>4.2. The size of particle images</h3>
+One aspect is the size of the particles picked and how efficient a
+Fourier transform can be calculated for this size. The program bfft has
+an option to test the speed of Fourier transformation for different
+image sizes. Picking the size corresponding to the fastest
+transformation will decrease the time required for orientation-finding
+later on. (Note that simply expanding the image size to a power-of-two
+size does not necessarily mean the fastest transformation).<br />
+<br />
+<div id="command"><p>bfft -test 2,140,150</p></div>
+<br />
+Timing the execution of fast Fourier transforms:<br />
+Number of
+dimensions:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2<br />
+Size
+range:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+250 - 260<br />
+<br />
+Size&nbsp;&nbsp;&nbsp; Time&nbsp;&nbsp;&nbsp; Prime factors<br />
+250&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.003
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5<br />
+251&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.019 251<br />
+252&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.005
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 7<br />
+253&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.019
+11&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 23<br />
+254&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.019
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 127<br />
+255&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.019
+3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 17<br />
+256&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.008
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2<br />
+257&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.021 257<br />
+258&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.016
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 43<br />
+259&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.015
+7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 37<br />
+260&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.004
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 13<br />
+<br />
+(Note that an image size of 250 is actually faster than 256)<br />
+<br />
+<h3>4.3. Finding particle locations in the closer-to-focus micrographs</h3>
+Once all the
+particles have been picked in the further-from-focus micrographs, the
+closer-to-focus micrographs need to be aligned to the
+further-from-focus micrographs and the corresponding particle
+coordinates transformed:<br />
+<br />
+<div id="command"><p>bmgalign -v 7 -align mic -ref 2 -resol 2000,30 -correlate 1024,1024,1
+-out klh_aln.star klh_*.star &gt; klh_aln.log &amp;</p></div>
+<br />
+To check the alignment, look for the key word &quot;Best fit&quot; in the log
+file:<br />
+<br />
+<div id="command"><p>grep Best klh_aln.log</p></div>
+<br />
+The last number on each line gives the RMSD in pixels of the alignment,
+where values below 5 pixels represent good fits, below 10 is still
+acceptable, but any larger values indicate incorrect alignment. Visual
+inspection of the particle coordinates in the closer-to-focus
+micrographs should be used to assess the success of alignment.<br />
+<br />
+This alignment is not always successful, and the parameters that can be
+adjusted to improve it are the resolution limits (option -resolution)
+and the size of the tiles used for correlation (option -correlate,
+typically adjust it to larger tile sizes).<br />
+<br />
+<h3>4.4. Particle extraction</h3>
+Once all the particle coordinates are specified in the parameter files,
+the
+particle images can be extracted (change to the part directory first):<br />
+<br />
+<div id="command"><p>bpick -v 7 -extract 100 -back -norm -partpath ../part -partext pif -out
+klh_pick.star ../mg/klh_aln.star</p></div>
+<br />
+All the particle image files should be written to the part directory.<br />
+<br />
+<h2>5. CTF correction</h2>
+<br />
+The extracted particle images can then be corrected in some way for the
+CTF (change to the ctf directory first):<br />
+<br />
+<div id="command"><p>bctf -v 3 -data float -back -action flip -resol 2000,10 -partpath
+../ctf -out klh_ctf.star ../part/klh_pick.star</p></div>
+<br />
+All the modified particle image files should be written to the ctf
+directory.<br />
+<br />
+<br />
+<h2>6. Determining particle orientations</h2>
+<p>A reference map consistent with the size of the particle images is required. This map can be from a previous reconstruction of the same type of particles, a map generated from an atomic structure, or a synthetic map generated from geometric shapes (see the <a href="../general/bsoft_synmap.html">Synthetic Map</a> part for more information).</p>
+There are two programs for particle alignment: borient and brefine. borient
+does a global search of orientations in the asymmetric unit while brefine
+improves the already existing orientations locally.
+  <br />
+  <h3>a. borient:</h3>
+  <p>For each run of orientation-finding, create one directory such as run1,
+  run2, etc. Change to the next run directory and launch borient to
+  determine particle orientations:</p>
+  <div id="command"><p>borient -v 1 -sym D5 -angle 2 -resol 25,150 -ann 10,90 -mode ccc -ref
+  klh_ref.pif -out klh_run1.star ../klh_ctf.star &gt; klh_run1.log &amp;</p></div>
+  <p>Depending on the particle size and the search grid (determined by the option -angles), this
+  can run for a long time (smaller angles mean more projections and
+  longer runtimes).</p>
+  <p>The algorithm in borient determines the orientations of the particles
+  using a reference-based projection-matching algorithm. Projection
+  images are produced from a reference map for all views within the
+  asymmetric unit for the specified point group. For every comparison of
+  a particle image to a projection image, the best matching in-plane
+  rotation angle and the best particle origin are determined. The
+  in-plane rotation matching is done by using polar images of both the
+  projection and the particle. Because this is dependent on the origin if
+  done in real space, the first determination of the in-plane rotation
+  angle is done on polar power spectra of the projection and the
+  particle. The projection is rotated by the in-plane rotation angle and
+  cross-correlated with the particle to find the first estimate of the
+  origin. This provides a reasonable origin for generating the polar
+  image of the particle, which is then used to find the next estimate of
+  the in-plane rotation angle. The origin and angle determinations are
+  done iteratively until the result stabilizes (typically only 2-4
+  iterations). The projection image giving the best correlation
+  coefficient for a specific particle image determines the view
+  parameters for that particle. The key parameters are the angular
+  increments between views (option -angles; typically 0.5 &#8211; 3&#730;), the
+  annuli used for the real space polar image matching (option -annuli;
+  usually include the whole particle image) and the resolution limits for
+  reciprocal space polar image matching and cross-correlation (option
+  -resolution). A particular range of annuli can be specified for
+  determining the in-plane rotation angle, allowing exclusion of
+  especially the center of the particle which may not contribute to an
+  accurate determination of this angle.</p>
+  <p>The output from orientation-finding is a new parameter file with the
+  following new parameters for the best fit of the particle images to the
+  projection images:</p>
+<ul>
+  <li>Particle origins</li>
+  <li>Particle views</li>
+  <li>FOMs: Figures-of-merit based on the correlation coefficient for
+the bets fit</li>
+  <li>Projection index for the best fit: this appears in the selection
+column <br />
+  </li>
+</ul>
+<p>The orientation-finding should only be run once per reference map,
+because the existing parameters in the input parameter files are not
+used in subsequent runs. (The reason is that iterative refinement has
+already been incorporated in borient and multiple runs on the same
+reference map will just give the same results.)</p>
+<h3>b. brefine</h3>
+<p>After a previous run to find the rough particle orientations in the
+asymmetric unit, brefine can be used to improve the orientations locally.
+It is run the same way as borient, typically in a new directory:</p>
+  <div id="command"><p>brefine -v 1 -grid 2,0.2 -res 20 -mag 0.03 -kernel 6,2 -ref
+  ../run1/klh_run1.pif -out klh_run2.star ../run1/klh_run1.star &gt; klh_run2.log &amp;</p></div>
+<p>The refinement algorithm runs in reciprocal space, extracting a central section
+from the Fourier transform of the reference map with kernel-based interpolation.
+The central section is then compared with the particle transform and a figure-of-measure (FOM)
+calculated (-fomtype option) to the specified resolution (-resolution option).
+This comparison is repeated in a small grid around the current view,
+starting at an initial stepsize and contracting around the best solution
+to a minimum step size (the step sizes are the two values for option -grid).
+Refinement of the magnification can also be turned on, specifying the maximum
+adjustment in magnification to consider (-magnification option).</p>
+<p>brefine can be run in a different mode:</p>
+  <div id="command"><p>brefine -v 1 -monte 10 -res 25 -kernel 8,2 -ref
+  ../run1/klh_run1.pif -out klh_run2.star ../run1/klh_run1.star &gt; klh_run2.log &amp;</p></div>
+<p>Here the orientation parameters are adjusted using a Monte Carlo approach to
+find views close to the input that improve the FOM's. The more iterations are run
+(value for the -monte option) the more likely that good solutions will be found,
+but at the cost of longer runs. The extent of changes in this algorithm can
+controlled through the options -shift, -view and -angle.</p>
+<br />
+<h2>7. Particle selection</h2>
+<p>The selection of particles for reconstruction can be done in several
+ways.</p>
+a. Particles can be selected by the correlation coefficients (FOMs)
+generated during
+orientation-finding:<br />
+<br />
+<div id="command"><p>bpartsel -v 7 -all -fom 0.34 -out klh_run1_sel.star klh_run1.star</p></div>
+<br />
+b. The FOMs are typically related to the defocus, and this can be used
+to select particles with a varying FOM cutoff based on a linear fit
+between the FOM and defocus values. This is turned on by adding a flag
+to the &quot;-fom&quot; option:<br />
+<br />
+<div id="command"><p>bpartsel -v 7 -all -fom 0.2,1 -out klh_run1_sel.star klh_run1.star</p></div>
+<br />
+c. A given percentage of the particles ranked by FOMs can be selected:<br />
+<br />
+<div id="command"><p>bpartsel -v 7 -all -top 70 -out klh_run1_sel.star klh_run1.star</p></div>
+<br />
+d. The FOM cutoff for selection can be based on the standard deviation
+of the FOMs:<br />
+<br />
+<div id="command"><p>bpartsel -v 7 -all -deviation -1.5 -out klh_run1_sel.star klh_run1.star</p></div>
+<br />
+e. The FOMs can be ranked and grouped into sets of decreasing FOMs to
+be able to generate several reconstructions:<br />
+<br />
+<div id="command"><p>bpartsel -v 7 -all -rank 5 -out klh_run1_sel.star klh_run1.star</p></div>
+<br />
+There are several other particle selection schemes that can also be
+used.<br />
+<br />
+<h2>8. Reconstruction</h2>
+The reconstruction can then be done from the selected particles.
+Typically, two maps from different halves of the selected particles
+need to be generated to determine resolution. These two maps can be added
+afterwards to give the full map. The program breconstruct has several options
+to do the reconstruction in different ways, depending on the desired outcome
+as well as the capabilities of the computer being used. Here are a few cases:</p>
+<h3>a. A simple reconstruction:</h3>
+<p>The main decision is to what resolution the reconstruction should be calculated:</p>
+<div id="command"><p>breconstruct -v 3 -resol 15 -rescale 0,1 -sym D5 -recon
+klh_run1.pif klh_run1_sel.star &gt;&amp; klh_run1_rec.log &amp;</p></div>
+<h3>b. Two half set reconstructions and a full set reconstruction:</h3>
+<p>All three maps can be calculated at the same time:</p>
+<div id="command"><p>breconstruct -v 3 -resol 15 -full -half -rescale 0,1 -sym D5 -recon
+klh_run1.pif klh_run1_sel.star &gt;&amp; klh_run1_rec.log &amp;</p></div>
+<p>The resultant maps from the half sets have the inserts &quot;_01&quot; and &quot;_02&quot; before
+the extension. These maps can be added to generate a single reconstruction
+that is the same as the full set map:</p>
+<div id="command"><p>bop -v 7 -add 1,0 klh_run1_01.pif klh_run1_02.pif klh_run1.pif</p></div>
+<h3>c. Threaded reconstruction:</h3>
+<p>If Bsoft was compiled with OpenMP and FFTW3 support, the reconstruction can be run with multiple threads:</p>
+<div id="command"><p>breconstruct -v 3 -resol 15 -full -half -threads 8 -rescale 0,1 -sym D5 -recon
+klh_run1.pif klh_run1_sel.star &gt;&amp; klh_run1_rec.log &amp;</p></div>
+<p>Be aware that this is very memory-intensive, requiring 20 times the map volume per thread.
+For example, a map of size 500^3 will require about 2.5 Gb per thread.</p>
+<h3>d. Selected reconstructions:</h3>
+<p>Reconstructions can also be done from specific selection numbers in
+the parameter file using the &quot;-classes&quot; option:</p>
+<div id="command"><p>breconstruct -v 3 -resol 15 -full -half -classes 1,3-5 -threads 2 -rescale 0,1 -sym D5 -recon
+klh_run1.pif klh_run1_sel.star &gt;&amp; klh_run1_rec.log &amp;</p></div>
+<p>In this case the threads are per class, and for calculating halfmaps in each class, the number of threads should be even.
+Because of memory limitations, it is likely better to specify only one class per run.</p>
+<br />
+<h2>9. Resolution determination</h2>
+The two reconstructions are then compared to determine the resolution:<br />
+<br />
+<div id="command"><p>bresolve -v 7 -resol 15 -Post klh_run1_resol.ps -map klh_run1_01.pif
+klh_run1_02.pif</p></div>
+<br />
+The resolution curves for FSC (Fourier shell correlation) and DPR
+(differential phase residual) are written into the postscript file in
+such a way that it can be opened in a graphing program that can
+interpret text files (Kaleidagraph or Excel).<br />
+<br />
+</div>
+<div id="footer">
+  Bernard Heymann  20120913
+</div>
+</body>
+</html>

@@ -1,0 +1,127 @@
+.TH "/Users/bernard/b20/bsoft/include/Transform.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/Transform.h \- Class for a generalized transform object\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Vector3\&.h'\fP
+.br
+\fC#include 'Quaternion\&.h'\fP
+.br
+\fC#include 'Matrix3\&.h'\fP
+.br
+\fC#include 'Matrix\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBTransform\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTransform\fP \fBtransform_matrix_solve\fP (\fBMatrix\fP a, vector< double > &bx, vector< double > &by, vector< double > &bz, int flag)"
+.br
+.RI "Solves a 3D geometry fit matrix\&. "
+.ti -1c
+.RI "\fBTransform\fP \fBtransform_find\fP (int n, \fBVector3\fP< double > *vector1, \fBVector3\fP< double > *vector2, int shift)"
+.br
+.RI "Determines the transformation between two sets of vectors\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Class for a generalized transform object\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20000501 
+.PP
+Modified: 20150526 
+.RE
+.PP
+
+.PP
+Definition in file \fBTransform\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBTransform\fP transform_find (int n, \fBVector3\fP< double > * vector1, \fBVector3\fP< double > * vector2, int shift)"
+
+.PP
+Determines the transformation between two sets of vectors\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP number of vectors in each set\&. 
+.br
+\fI*vector1\fP first vector set\&. 
+.br
+\fI*vector2\fP second vector set\&. 
+.br
+\fIshift\fP flag to indicate determining shift\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBTransform\fP transform structure\&. 
+.PP
+.nf
+The two sets must have the same number of vectors.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 109 of file Transform\&.cpp\&.
+.SS "\fBTransform\fP transform_matrix_solve (\fBMatrix\fP a, vector< double > & bx, vector< double > & by, vector< double > & bz, int flag)"
+
+.PP
+Solves a 3D geometry fit matrix\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIa\fP nxn matrix\&. 
+.br
+\fIbx\fP x-dimension n-vector\&. 
+.br
+\fIby\fP y-dimension n-vector\&. 
+.br
+\fIbz\fP z-dimension n-vector\&. 
+.br
+\fIflag\fP type of decomposition: 0=LUD, 1=SVD\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBTransform\fP transform structure\&. 
+.PP
+.nf
+The matrix is inverted and solutions for the three vectors generated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 30 of file Transform\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

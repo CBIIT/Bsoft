@@ -1,0 +1,194 @@
+.TH "/Users/bernard/b20/bsoft/src/ps/ps_marker.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/ps/ps_marker.cpp \- Methods for postscript tools dealing with markers\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'ps_marker\&.h'\fP
+.br
+\fC#include 'ps_plot\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBps_marker_plots\fP (ofstream *fps, \fBBstring\fP &title, \fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Postscript plot of the errors associated with fiducial markers\&. "
+.ti -1c
+.RI "int \fBps_marker_errors\fP (\fBBstring\fP &filename, \fBBmarker\fP *set1, \fBBmarker\fP *set2, \fBTransform\fP t, \fBVector3\fP< long > size, double err_scale)"
+.br
+.RI "Output a postscript file that graphs the deviations of points in a \fBBmarker\fP from their predicted location (using the transform parameters)\&. "
+.ti -1c
+.RI "int \fBps_marker_errors\fP (ofstream *fps, \fBBmarker\fP *set1, \fBBmarker\fP *set2, \fBTransform\fP t, \fBVector3\fP< long > size, double err_scale)"
+.br
+.ti -1c
+.RI "int \fBps_marker_match\fP (\fBBmarker\fP *set1, \fBBmarker\fP *set2, \fBBstring\fP &filename)"
+.br
+.RI "Output a postscript file that draws a line between matching features in a pair of coordinate sets\&. "
+.ti -1c
+.RI "int \fBps_dual_zcompare\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Generates a PostScript file that displays X by X, Y by Y, and Z by Z plots for diagnostic purposes\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Methods for postscript tools dealing with markers\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Samuel Payne and Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010725 
+.PP
+Modified: 20200312 (BH) 
+.RE
+.PP
+
+.PP
+Definition in file \fBps_marker\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int ps_dual_zcompare (\fBBstring\fP & filename, \fBBproject\fP * project)"
+
+.PP
+Generates a PostScript file that displays X by X, Y by Y, and Z by Z plots for diagnostic purposes\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Jessica Mavadia, Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+20080610 - 20100211 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP PostScript file name\&. 
+.br
+\fI*project\fP project with two tilt series reconstructions\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error 
+.RE
+.PP
+
+.PP
+Definition at line 424 of file ps_marker\&.cpp\&.
+.SS "int ps_marker_errors (\fBBstring\fP & filename, \fBBmarker\fP * set1, \fBBmarker\fP * set2, \fBTransform\fP t, \fBVector3\fP< long > size, double err_scale)"
+
+.PP
+Output a postscript file that graphs the deviations of points in a \fBBmarker\fP from their predicted location (using the transform parameters)\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Samuel Payne & Bernard Heymann 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIfilename\fP 
+.br
+\fI*set1\fP the first set of point(refset)\&. 
+.br
+\fI*set2\fP the second set of point(applyset)\&. 
+.br
+\fIt\fP the transform parameters\&. 
+.br
+\fIsize\fP size of image or frame around markers\&. 
+.br
+\fIerr_scale\fP scaling factor for the error\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 252 of file ps_marker\&.cpp\&.
+.SS "int ps_marker_errors (ofstream * fps, \fBBmarker\fP * set1, \fBBmarker\fP * set2, \fBTransform\fP t, \fBVector3\fP< long > size, double err_scale)"
+
+.PP
+Definition at line 272 of file ps_marker\&.cpp\&.
+.SS "int ps_marker_match (\fBBmarker\fP * set1, \fBBmarker\fP * set2, \fBBstring\fP & filename)"
+
+.PP
+Output a postscript file that draws a line between matching features in a pair of coordinate sets\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Samuel Payne 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*set1\fP the first set of coordinates 
+.br
+\fI*set2\fP second set of coordinates 
+.br
+\fI&filename\fP name of file to be written 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 351 of file ps_marker\&.cpp\&.
+.SS "int ps_marker_plots (ofstream * fps, \fBBstring\fP & title, \fBBproject\fP * project)"
+
+.PP
+Postscript plot of the errors associated with fiducial markers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fps\fP output stream\&. 
+.br
+\fI&title\fP title\&. 
+.br
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, error if <0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 24 of file ps_marker\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

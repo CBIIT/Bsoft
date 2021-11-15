@@ -1,0 +1,261 @@
+.TH "/Users/bernard/b20/bsoft/tcltk/tcltk_bbox.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/tcltk/tcltk_bbox.cpp \- A shared object to manage micrograph parameter files in TCL/Tk\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <tk\&.h>\fP
+.br
+\fC#include 'tcltk_bbox\&.h'\fP
+.br
+\fC#include 'tcltk_bimage\&.h'\fP
+.br
+\fC#include 'mg_img_proc\&.h'\fP
+.br
+\fC#include 'mg_select\&.h'\fP
+.br
+\fC#include 'mg_particle_select\&.h'\fP
+.br
+\fC#include 'mg_pick\&.h'\fP
+.br
+\fC#include 'mg_ctf\&.h'\fP
+.br
+\fC#include 'mg_extract\&.h'\fP
+.br
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "Tcl_Obj * \fBbox_count\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_count\fP (\fBBparticle\fP *part, \fBBbadarea\fP *bad, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_ids\fP (\fBBparticle\fP *part, \fBBbadarea\fP *bad, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_location\fP (\fBBparticle\fP *part, \fBBbadarea\fP *bad, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_fom\fP (\fBBparticle\fP *part, \fBBbadarea\fP *bad, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_fom_min\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_fom_max\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_select\fP (\fBBparticle\fP *part, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_select\fP (\fBBparticle\fP *part, \fBBbadarea\fP *bad, \fBVector3\fP< float > rad, double badrad, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_select_min\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_select_max\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_move\fP (\fBBparticle\fP *part, \fBBbadarea\fP *bad, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_create\fP (\fBBmicrograph\fP *mg, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_create\fP (\fBBreconstruction\fP *rec, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_renumber\fP (\fBBparticle\fP *part, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_delete\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_delete\fP (\fBBmicrograph\fP *mg, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_delete\fP (\fBBreconstruction\fP *rec, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_center\fP (\fBBmicrograph\fP *mg, \fBBreconstruction\fP *rec, \fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_update_template\fP (\fBBmicrograph\fP *mg, \fBBreconstruction\fP *rec, \fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_pickcc\fP (\fBBmicrograph\fP *mg, \fBBreconstruction\fP *rec, \fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_pickvar\fP (\fBBmicrograph\fP *mg, \fBBreconstruction\fP *rec, \fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBbox_extract\fP (\fBBmicrograph\fP *mg, \fBBreconstruction\fP *rec, \fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_box\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBimglist\fP"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBimgtemp\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A shared object to manage micrograph parameter files in TCL/Tk\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20030813 
+.PP
+Modified: 20200512 
+.RE
+.PP
+
+.PP
+Definition in file \fBtcltk_bbox\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "Tcl_Obj * box_center (\fBBmicrograph\fP * mg, \fBBreconstruction\fP * rec, \fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 805 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_count (\fBBparticle\fP * part, \fBBbadarea\fP * bad, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 264 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_count (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 253 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_create (\fBBmicrograph\fP * mg, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 565 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_create (\fBBreconstruction\fP * rec, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 604 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_delete (\fBBmicrograph\fP * mg, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 716 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_delete (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 654 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_delete (\fBBreconstruction\fP * rec, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 760 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_extract (\fBBmicrograph\fP * mg, \fBBreconstruction\fP * rec, \fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 974 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_fom (\fBBparticle\fP * part, \fBBbadarea\fP * bad, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 337 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_fom_max (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 388 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_fom_min (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 360 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_ids (\fBBparticle\fP * part, \fBBbadarea\fP * bad, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 281 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_location (\fBBparticle\fP * part, \fBBbadarea\fP * bad, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 309 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_move (\fBBparticle\fP * part, \fBBbadarea\fP * bad, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 538 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_pickcc (\fBBmicrograph\fP * mg, \fBBreconstruction\fP * rec, \fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 900 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_pickvar (\fBBmicrograph\fP * mg, \fBBreconstruction\fP * rec, \fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 935 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_renumber (\fBBparticle\fP * part, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 643 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_select (\fBBparticle\fP * part, \fBBbadarea\fP * bad, \fBVector3\fP< float > rad, double badrad, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 438 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_select (\fBBparticle\fP * part, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 416 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_select_max (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 511 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_select_min (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 484 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj * box_update_template (\fBBmicrograph\fP * mg, \fBBreconstruction\fP * rec, \fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 846 of file tcltk_bbox\&.cpp\&.
+.SS "Tcl_Obj* do_box (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 115 of file tcltk_bbox\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "\fBBimage\fP* imglist\fC [extern]\fP"
+
+.PP
+Definition at line 32 of file bshow\&.cpp\&.
+.SS "\fBBimage\fP* imgtemp\fC [extern]\fP"
+
+.PP
+Definition at line 36 of file bshow\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

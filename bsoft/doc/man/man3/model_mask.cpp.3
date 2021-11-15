@@ -1,0 +1,365 @@
+.TH "/Users/bernard/b20/bsoft/src/model/model_mask.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/model/model_mask.cpp \- Generating a mask from an atomic model\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel\&.h'\fP
+.br
+\fC#include 'model_mask\&.h'\fP
+.br
+\fC#include 'model_shell\&.h'\fP
+.br
+\fC#include 'model_util\&.h'\fP
+.br
+\fC#include 'matrix_linear\&.h'\fP
+.br
+\fC#include 'Vector3\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBimage\fP * \fBmodel_create_mask\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< long > size, \fBVector3\fP< double > ori, \fBVector3\fP< double > sam, double edge)"
+.br
+.RI "Calculates a mask of the components and links of a model structure\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBmodel_create_hull_mask\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< long > size, \fBVector3\fP< double > ori, \fBVector3\fP< double > sam, int curv_flag, int fast)"
+.br
+.RI "Calculates a mask based on the periphery of a model structure\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBmodel_create_shell_mask\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< long > size, \fBVector3\fP< double > ori, \fBVector3\fP< double > sam, double shell_width, int curv_flag, int fast)"
+.br
+.RI "Calculates a shell mask covering a model structure\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBmodel_create_level_mask\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< long > size, \fBVector3\fP< double > ori, \fBVector3\fP< double > sam)"
+.br
+.RI "Calculates a mask with one level per model\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_extract_segments_using_model\fP (\fBBimage\fP *p, \fBBmodel\fP *\fBmodel\fP, int multi_level)"
+.br
+.RI "Extracts segmentss from a multi-level mask around points defined by a model\&. 
+.br
+ "
+.ti -1c
+.RI "int \fBimg_add_model_to_mask\fP (\fBBimage\fP *p, \fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Adds to the mask the component locations\&. 
+.br
+ "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_from_multilevel_mask\fP (\fBBimage\fP *p)"
+.br
+.RI "Generates components at the center of mass of each mask level\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBmodel_create_projected_mask\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< long > size, \fBVector3\fP< double > ori, \fBVector3\fP< double > sam, double dang, \fBBsymmetry\fP &sym)"
+.br
+.RI "Calculates a set of 2D masks for the projections of a model structure\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Generating a mask from an atomic model\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20060301 
+.PP
+Modified: 20200329 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_mask\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int img_add_model_to_mask (\fBBimage\fP * p, \fBBmodel\fP * model)"
+
+.PP
+Adds to the mask the component locations\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP mask\&. 
+.br
+\fI*model\fP model\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+At each component location, the voxel is added to the mask.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 406 of file model_mask\&.cpp\&.
+.SS "\fBBimage\fP* img_extract_segments_using_model (\fBBimage\fP * p, \fBBmodel\fP * model, int multi_level)"
+
+.PP
+Extracts segmentss from a multi-level mask around points defined by a model\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP multi-level mask\&. 
+.br
+\fI*model\fP model marking regions in mask\&. 
+.br
+\fImulti_level\fP flag to retain multiple levels\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* new mask from marked segments\&. 
+.PP
+.nf
+Each segment should only be marked by a maximum of one component.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 335 of file model_mask\&.cpp\&.
+.SS "\fBBimage\fP* model_create_hull_mask (\fBBmodel\fP * model, \fBVector3\fP< long > size, \fBVector3\fP< double > ori, \fBVector3\fP< double > sam, int curv_flag, int fast)"
+
+.PP
+Calculates a mask based on the periphery of a model structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIsize\fP size of the new mask\&. 
+.br
+\fIori\fP origin of the new mask\&. 
+.br
+\fIsam\fP pixel size of the new mask\&. 
+.br
+\fIcurv_flag\fP flag to indicate curved surface\&. 
+.br
+\fIfast\fP flag to use fast algorithm\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* new mask\&. 
+.PP
+.nf
+Each point in the new image is tested for inclusion in the mask,
+by calculating whether it falls inside the closest 3 vertices.
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 104 of file model_mask\&.cpp\&.
+.SS "\fBBimage\fP* model_create_level_mask (\fBBmodel\fP * model, \fBVector3\fP< long > size, \fBVector3\fP< double > ori, \fBVector3\fP< double > sam)"
+
+.PP
+Calculates a mask with one level per model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIsize\fP size of the new mask\&. 
+.br
+\fIori\fP origin of the new mask\&. 
+.br
+\fIsam\fP pixel size of the new mask\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* new mask\&. 
+.PP
+.nf
+A level is defined as those voxels closest to the vertices of one model.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 286 of file model_mask\&.cpp\&.
+.SS "\fBBimage\fP* model_create_mask (\fBBmodel\fP * model, \fBVector3\fP< long > size, \fBVector3\fP< double > ori, \fBVector3\fP< double > sam, double edge)"
+
+.PP
+Calculates a mask of the components and links of a model structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIsize\fP size of the new mask\&. 
+.br
+\fIori\fP origin of the new mask\&. 
+.br
+\fIsam\fP pixel size of the new mask\&. 
+.br
+\fIedge\fP edge width in angstrom\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* new mask\&. 
+.PP
+.nf
+Each component is used to generate a sphere and each link a bar.
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 35 of file model_mask\&.cpp\&.
+.SS "\fBBimage\fP* model_create_projected_mask (\fBBmodel\fP * model, \fBVector3\fP< long > size, \fBVector3\fP< double > ori, \fBVector3\fP< double > sam, double dang, \fBBsymmetry\fP & sym)"
+
+.PP
+Calculates a set of 2D masks for the projections of a model structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIsize\fP size of the new mask\&. 
+.br
+\fIori\fP origin of the new mask\&. 
+.br
+\fIsam\fP pixel size of the new mask\&. 
+.br
+\fIdang\fP angular step size\&. 
+.br
+\fIsym\fP point group symmetry\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* new mask\&. 
+.PP
+.nf
+Each component is used to set  the corresponding projected pixel in each 2D image.
+The projection directions are calculated within the asymmetric unit.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 537 of file model_mask\&.cpp\&.
+.SS "\fBBimage\fP* model_create_shell_mask (\fBBmodel\fP * model, \fBVector3\fP< long > size, \fBVector3\fP< double > ori, \fBVector3\fP< double > sam, double shell_width, int curv_flag, int fast)"
+
+.PP
+Calculates a shell mask covering a model structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIsize\fP size of the new mask\&. 
+.br
+\fIori\fP origin of the new mask\&. 
+.br
+\fIsam\fP pixel size of the new mask\&. 
+.br
+\fIshell_width\fP width of shell mask\&. 
+.br
+\fIcurv_flag\fP flag to indicate curved surface\&. 
+.br
+\fIfast\fP flag to use fast algorithm\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* new mask\&. 
+.PP
+.nf
+Each point in the new image is tested for inclusion in the mask,
+by calculating whether it falls inside the closest 3 vertices.
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 192 of file model_mask\&.cpp\&.
+.SS "\fBBmodel\fP* model_from_multilevel_mask (\fBBimage\fP * p)"
+
+.PP
+Generates components at the center of mass of each mask level\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP multi-level mask\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model\&. 
+.PP
+.nf
+The mask is expected to be of integer data type.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 453 of file model_mask\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

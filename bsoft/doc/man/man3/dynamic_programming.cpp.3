@@ -1,0 +1,130 @@
+.TH "/Users/bernard/b20/bsoft/src/util/dynamic_programming.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/util/dynamic_programming.cpp \- Library functions for dynamic programming\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'dynamic_programming\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "long \fBdp_matrix_scoring\fP (\fBMatrix\fP mat, double gapopen, double gapextend)"
+.br
+.RI "Calculates the scoring matrix in dynamic programming\&. "
+.ti -1c
+.RI "int * \fBdp_matrix_backtrace\fP (\fBMatrix\fP mat, double gapopen, double gapextend, long &\fBlength\fP)"
+.br
+.RI "Backtraces the scoring matrix in dynamic programming\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library functions for dynamic programming\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20050622 
+.PP
+Modified: 20110810 
+.RE
+.PP
+
+.PP
+Definition in file \fBdynamic_programming\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int* dp_matrix_backtrace (\fBMatrix\fP mat, double gapopen, double gapextend, long & length)"
+
+.PP
+Backtraces the scoring matrix in dynamic programming\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImat\fP matrix\&. 
+.br
+\fIgapopen\fP gap opening penalty\&. 
+.br
+\fIgapextend\fP gap extension penalty\&. 
+.br
+\fI*length\fP length of alignment\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int* alignment array with indices\&. 
+.PP
+.nf
+Implementation of the Needleman-Wunsch algorithm.
+The scoring matrix for dynamic programming is backtraced into an integer 
+array holding the indices from the corresponding sequences, or -1 for gaps. 
+The array is double the length of the alignment and holds two sets of 
+indices, the first in the first half and the second in last half.
+The length of the alignment is returned in the pointer of the last argument.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 84 of file dynamic_programming\&.cpp\&.
+.SS "long dp_matrix_scoring (\fBMatrix\fP mat, double gapopen, double gapextend)"
+
+.PP
+Calculates the scoring matrix in dynamic programming\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImat\fP matrix\&. 
+.br
+\fIgapopen\fP gap opening penalty\&. 
+.br
+\fIgapextend\fP gap extension penalty\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long index of the maximum in the matrix\&. 
+.PP
+.nf
+Implementation of the Needleman-Wunsch algorithm.
+The input matrix can be any form of similarity or coincidence matrix, and
+is modified by dynamic programming in preparation for backtracing.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 27 of file dynamic_programming\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

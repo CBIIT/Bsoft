@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Bshow CTF fitting</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<style type="text/css">
+<!--
+.style1 {color: #0033CC}
+-->
+</style>
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+  <h1>Preparation</h1>
+  <p>Starting with a new micrograph, the following steps are required for preparation:</p>
+  <ol>
+    <li>Read in the micrograph image using the &quot;File/Open&quot; menu
+      item, or read a STAR parameter file using the &quot;Micrograph/Read
+      parameters&quot; menu item. </li>
+    <li>Make sure the pixel size (middle right side) is
+      set correctly.      </li>
+    <li>Save the parameter file using the &quot;Micrograph/Write parameters&quot; menu item. This ensures that the micrograph image file name is written into the parameter file.</li>
+    <li>Calculate the power spectrum using the &quot;Image/Power spectrum&quot;
+      menu item. If a micrograph is open choose the &quot;Average multiple power
+      spectra&quot; and &quot;Tiles&quot; options, and set the tile size to the desired
+      size. If a stack of particle images is open, only choose the &quot;Average
+      multiple power spectra&quot; option.</li>
+    <li>Save the powerspectrum using the &quot;File/Save...&quot; menu item. (I typically save it using the micrograph file name with the extension &quot;_ps.mrc&quot;.)</li>
+    <li>Select the &quot;Micrograph/Fit CTF&quot; menu item - this will
+      open a new window used for CTF fitting. </li>
+  </ol>
+  <center>
+      <img src="bshow_ctf1.png" alt="Power spectrum" width="600" />
+	  <p>Power spectrum average from tiles extracted from a micrograph</p>
+	  <br />
+	</center>
+      <h2>Layout of the CTF fitting window</h2>
+    <center><img alt="Bshow: CTF fitting" src="bshow_ctf2.png" width="600" />
+	<p>Initial fit using the "Quick" button</p>
+	<br />
+	</center>
+<h2>Curves:</h2>
+<ul>
+<li>green: baseline </li>
+<li>orange: envelope </li>
+<li>red: model curve (including CTF) that should fit the radial power spectrum</li>
+<li>blue: radial power spectrum (RPS) calculated with consideration of astigmatism</li>
+</ul>
+      <br />
+      <h2>Plot controls</h2>
+<ul>
+<li>Origin: The origin of the plot can be set in screen pixel units relative to the
+lower-left corner</li>
+<li>Scale: The scale can be set to expand the plot horizontally
+and vertically</li>
+<li>Resolution: The resolution limits (vertical green lines in the
+plot) can be set and are used to calculate measures of fit.</li>
+</ul>
+<br />
+      <h2>Fitting the CTF</h2>
+	All of the curves except the radial power spectrum (blue) are updated
+	continuously as the scale bars are changed. The radial power spectrum is
+	updated on clicking the &quot;updateCTF&quot; button in the bottom left corner.
+	In some entry boxes, pressing the return key will also change the
+	radial power spectrum. </p>
+    <p>The defocus deviation is not allowed to be larger than 90% of
+	the defocus average. </p>
+      <p>The baseline and envelope equations can be changed to any form. The
+	independent variable is the reciprocal space distance, s, which must be
+	written as &quot;$s&quot; or its square as &quot;$s2&quot;.
+	Valid equations are for
+	example: <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.2*exp(-5000*$s2) + 0.14*exp(-300*$s2) <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.2*exp(-1000*$s2) </p>
+      <p>The fitting typically proceeds with the &quot;Fit&quot; buttons from the
+	left to the right. The &quot;Quick&quot; button does a quick fit without
+	astigmatism and should always be done first. The &quot;Baseline&quot;, &quot;Envelope&quot;
+	and &quot;Defocus&quot; buttons refine the fit for each curve separately and can be
+	used multiple times in any order. The &quot;Astigmatism&quot; button starts an
+	attempt to refine the defocus deviation and astigmatism angle.</p>
+      <p>Please note, the automatic fitting is not always accurate and the
+	  result should not be blindly accepted! It is important to finally refine
+	  the fit by hand and make sure the parameters are reasonable.
+      </p>
+    <p>The R value should not be taken as a definitive measure of fit. A better
+	measure of fit is to find those CTF parameters that best fit the minima
+	or zeroes of the CTF curve. </p>
+	<br />
+      <h2>Reading and saving CTF parameters</h2>
+	The &quot;Micrograph/Read parameters&quot; and &quot;Micrograph/Write 
+	parameters&quot; menu items are used to read and write parameter files
+	with all the current CTF fitting parameters (usually in
+	STAR or XML formats).<br />
+</p>
+  <center>
+<img alt="Bshow: CTF fitting" src="bshow_ctf3.png" width="600" />
+<p>Final fit including astigmatism</p>
+        <br />
+
+  </center>
+</div>
+<div id="footer">
+  Bernard Heymann  20130906
+</div>
+</body>
+</html>

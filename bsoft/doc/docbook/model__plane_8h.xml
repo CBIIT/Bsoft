@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_model__plane_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/model_plane.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/model_plane.h</primary></indexterm>
+<para>
+
+<para>Library routines used for plane models. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmodel.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_model__plane_8h_1aa4bf3a90d9e9da054e3167a87549bd95">model_fit_plane</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Fits a plane through a model. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__plane_8h_1a2bd8e7825c989ab9f9979753e3c1e735">model_generate_from_plane_guide</link> (<link linkend="_class_bmodel">Bmodel</link> *guide, double separation, double sigma)</para>
+
+<para>Generates a plane model and fits a plane through it. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines used for plane models. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20140925 </para>
+
+<para>Modified: 20141008 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_model__plane_8h_1aa4bf3a90d9e9da054e3167a87549bd95"/>    <section>
+    <title>model_fit_plane()</title>
+<indexterm><primary>model_fit_plane</primary><secondary>model_plane.h</secondary></indexterm>
+<indexterm><primary>model_plane.h</primary><secondary>model_fit_plane</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; model_fit_plane (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Fits a plane through a model. </para>
+</para>
+
+<para><literallayout><computeroutput>A plane is fit through the components and the normal calculated from:
+    n•p = d
+where n is the normal vector, p is a point in the plane, and d is the offset.
+Only the first model is fit.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> plane normal. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 30 of file model_plane.cpp.</para>
+    </section><anchor xml:id="_model__plane_8h_1a2bd8e7825c989ab9f9979753e3c1e735"/>    <section>
+    <title>model_generate_from_plane_guide()</title>
+<indexterm><primary>model_generate_from_plane_guide</primary><secondary>model_plane.h</secondary></indexterm>
+<indexterm><primary>model_plane.h</primary><secondary>model_generate_from_plane_guide</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_generate_from_plane_guide (<link linkend="_class_bmodel">Bmodel</link> * guide, double separation, double sigma)</computeroutput></para><para>
+
+<para>Generates a plane model and fits a plane through it. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*guide</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>separation</entry>
+                                <entry>
+<para>separation between components for new model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sigma</entry>
+                                <entry>
+<para>smoothness of model. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new model based on input model. <literallayout><computeroutput>The principal axes of a planar model are calculated and a new plane model
+generated with the given separation between components.
+The components of the new model are then adjusted to fit the guide model.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 186 of file model_plane.cpp.</para>
+</section>
+</section>
+</section>

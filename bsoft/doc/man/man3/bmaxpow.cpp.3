@@ -1,0 +1,241 @@
+.TH "/Users/bernard/b20/bsoft/src/bmaxpow.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/bmaxpow.cpp \- Determining orientations by maximum power of 3D reconstruction from single particle images\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_particles\&.h'\fP
+.br
+\fC#include 'mg_particle_select\&.h'\fP
+.br
+\fC#include 'mg_ctf\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+\fC#include <fcntl\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBproject_maximum_power\fP (\fBBproject\fP *\fBproject\fP, \fBBsymmetry\fP &sym, double theta_step, double phi_step, double alpha_step, int \fBpart_select\fP, double hi_res, double lo_res, double scale, \fBVector3\fP< long > size, \fBBimage\fP *pmask, int pad_factor, int ctf_action, double wiener, int flags)"
+.br
+.RI "Determines the orientation of each particle from the maximum power of its reconstruction\&. 
+.br
+ "
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.ti -1c
+.RI "double \fBimg_reconstruct_one\fP (\fBBimage\fP *p, \fBVector3\fP< long > size, \fBBsymmetry\fP &sym, \fBView\fP view, double hi_res, double lo_res, double scale)"
+.br
+.ti -1c
+.RI "double \fBimg_reconstruct_one_v3\fP (\fBBimage\fP *p, \fBVector3\fP< long > size, \fBBsymmetry\fP &sym, \fBView\fP view, double hi_res, double lo_res, double scale)"
+.br
+.ti -1c
+.RI "double \fBimg_reconstruct_one_v2\fP (\fBBimage\fP *p, \fBVector3\fP< long > size, \fBBsymmetry\fP &sym, \fBView\fP view, double hi_res, double lo_res, double scale)"
+.br
+.ti -1c
+.RI "double \fBimg_reconstruct_one_v1\fP (\fBBimage\fP *p, \fBVector3\fP< long > size, \fBBsymmetry\fP &sym, \fBView\fP view, double hi_res, double lo_res, double scale)"
+.br
+.ti -1c
+.RI "double \fBimg_find_maximum_power\fP (\fBBimage\fP *p, \fBVector3\fP< long > size, \fBBsymmetry\fP &sym, double theta_step, double phi_step, double alpha_step, double hi_res, double lo_res, double scale, int pad_factor)"
+.br
+.RI "Determines the orientation of a particle image by maximum power\&. 
+.br
+ "
+.ti -1c
+.RI "double \fBpart_find_maximum_power\fP (\fBBparticle\fP *part, \fBVector3\fP< long > size, \fBBimage\fP *pmask, long ft_size, \fBBsymmetry\fP &sym, double theta_step, double phi_step, double alpha_step, double hi_res, double lo_res, double scale, int pad_factor, int ctf_action, double wiener, int flags)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Determining orientations by maximum power of 3D reconstruction from single particle images\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20080424 
+.PP
+Modified: 20190516 
+.RE
+.PP
+
+.PP
+Definition in file \fBbmaxpow\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double img_find_maximum_power (\fBBimage\fP * p, \fBVector3\fP< long > size, \fBBsymmetry\fP & sym, double theta_step, double phi_step, double alpha_step, double hi_res, double lo_res, double scale, int pad_factor)"
+
+.PP
+Determines the orientation of a particle image by maximum power\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP particle image\&. 
+.br
+\fIsize\fP reconstruction size\&. 
+.br
+\fI*sym\fP point group symmetry\&. 
+.br
+\fItheta_step\fP theta angular step size\&. 
+.br
+\fIphi_step\fP phi angular step size\&. 
+.br
+\fIalpha_step\fP alpha angular step size (in-plane)\&. 
+.br
+\fIhi_res\fP high resolution limit\&. 
+.br
+\fIlo_res\fP low resolution limit (infinite if 0)\&. 
+.br
+\fIscale\fP scale of reconstruction and particle magnification\&. 
+.br
+\fIpad_factor\fP factor that determines image padding\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double best FOM\&. 
+.PP
+.nf
+For each view, a reconstruction is generated using the given symmetry.
+The reconstruction with the maximum power is selected and the
+corresponding view assigned to the particle.
+    P = sum(|F|^2)
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 355 of file bmaxpow\&.cpp\&.
+.SS "double img_reconstruct_one (\fBBimage\fP * p, \fBVector3\fP< long > size, \fBBsymmetry\fP & sym, \fBView\fP view, double hi_res, double lo_res, double scale)"
+
+.PP
+Definition at line 197 of file bmaxpow\&.cpp\&.
+.SS "double img_reconstruct_one_v1 (\fBBimage\fP * p, \fBVector3\fP< long > size, \fBBsymmetry\fP & sym, \fBView\fP view, double hi_res, double lo_res, double scale)"
+
+.PP
+Definition at line 298 of file bmaxpow\&.cpp\&.
+.SS "double img_reconstruct_one_v2 (\fBBimage\fP * p, \fBVector3\fP< long > size, \fBBsymmetry\fP & sym, \fBView\fP view, double hi_res, double lo_res, double scale)"
+
+.PP
+Definition at line 261 of file bmaxpow\&.cpp\&.
+.SS "double img_reconstruct_one_v3 (\fBBimage\fP * p, \fBVector3\fP< long > size, \fBBsymmetry\fP & sym, \fBView\fP view, double hi_res, double lo_res, double scale)"
+
+.PP
+Definition at line 228 of file bmaxpow\&.cpp\&.
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 67 of file bmaxpow\&.cpp\&.
+.SS "double part_find_maximum_power (\fBBparticle\fP * part, \fBVector3\fP< long > size, \fBBimage\fP * pmask, long ft_size, \fBBsymmetry\fP & sym, double theta_step, double phi_step, double alpha_step, double hi_res, double lo_res, double scale, int pad_factor, int ctf_action, double wiener, int flags)"
+
+.PP
+Definition at line 420 of file bmaxpow\&.cpp\&.
+.SS "int project_maximum_power (\fBBproject\fP * project, \fBBsymmetry\fP & sym, double theta_step, double phi_step, double alpha_step, int part_select, double hi_res, double lo_res, double scale, \fBVector3\fP< long > size, \fBBimage\fP * pmask, int pad_factor, int ctf_action, double wiener, int flags)"
+
+.PP
+Determines the orientation of each particle from the maximum power of its reconstruction\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP image processing parameter structure\&. 
+.br
+\fI*sym\fP point group symmetry\&. 
+.br
+\fItheta_step\fP theta angular step size\&. 
+.br
+\fIphi_step\fP phi angular step size\&. 
+.br
+\fIalpha_step\fP alpha angular step size (in-plane)\&. 
+.br
+\fIpart_select\fP selection number from the selection column\&. 
+.br
+\fIhi_res\fP high resolution limit\&. 
+.br
+\fIlo_res\fP low resolution limit (infinite if 0)\&. 
+.br
+\fIscale\fP scale of reconstruction\&. 
+.br
+\fIsize\fP size of reconstruction\&. 
+.br
+\fI*pmask\fP mask to eliminate unwanted parts (can be NULL)\&. 
+.br
+\fIpad_factor\fP factor that determines image padding\&. 
+.br
+\fIctf_action\fP type of CTF calculated (1-8)\&. 
+.br
+\fIwiener\fP Wiener factor (fraction)\&. 
+.br
+\fIflags\fP option flags\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Each particle is transformed to a view on a grid and a reconstruction
+generated. The view associated with the reconstruction with the highest
+power is accepted.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 519 of file bmaxpow\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+
+.PP
+Definition at line 34 of file bmaxpow\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

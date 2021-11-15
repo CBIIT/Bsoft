@@ -1,0 +1,908 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_model__poly__spiral_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/model/model_poly_spiral.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/model/model_poly_spiral.cpp</primary></indexterm>
+<para>
+
+<para>Functions to generate polyhedra using the spiral algorithm. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmodel.h&quot;
+#include &quot;model_poly.h&quot;
+#include &quot;model_poly_spiral.h&quot;
+#include &quot;model_mechanics.h&quot;
+#include &quot;model_links.h&quot;
+#include &quot;model_transform.h&quot;
+#include &quot;model_util.h&quot;
+#include &quot;Matrix.h&quot;
+#include &quot;math_util.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;Vector3.h&quot;
+#include &quot;utilities.h&quot;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_model__poly__spiral_8cpp_1a8e8a834fe65865a720079252548f99e0">polygon_add</link> (int n, int valence, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_model__poly__spiral_8cpp_1a47101421f2497fd16573eb8fb19b8fb4">seq_count_adj_pentagons</link> (<link linkend="_class_bstring">Bstring</link> &amp;seq)</para>
+</listitem>
+            <listitem><para>int <link linkend="_model__poly__spiral_8cpp_1acbc6b0b372b54016e70a8e9e2cce3492">model_vertex_types_in_first_polygons</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, int npoly)</para>
+</listitem>
+            <listitem><para>int <link linkend="_model__poly__spiral_8cpp_1af74575372ab64ca215bf8a23e827d0c5">model_adjacent_pentagons</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_model__poly__spiral_8cpp_1a127b30dc31e893604cbd407db21b0bee">model_adjacent_pentagons_in_first_polygons</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, int npoly)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__poly__spiral_8cpp_1a94aa29f3818547ac22efeb38db444d37">model_poly_spiral</link> (<link linkend="_class_bstring">Bstring</link> &amp;seq, int valence, int requirements)</para>
+
+<para>Generates a polyhedron using the spiral algorithm. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__poly__spiral_8cpp_1a18d333a2fdabca8e708dc0b4d59d789b">model_poly_spiral_regularize</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_model__poly__spiral_8cpp_1aadff1b321cd023456e809983b6551b24">model_polyhedron_check</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, int valence)</para>
+
+<para>Checks a polyhedron for accuracy and completeness. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__poly__spiral_8cpp_1afdeba537907ce8e5ea7cc928a36de471">model_poly_gen_sequence</link> (<link linkend="_class_bstring">Bstring</link> &amp;seq, int valence, int enantiomorph, int requirements, int nm)</para>
+
+<para>Generates a polyhedron using a given sequence. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__poly__spiral_8cpp_1a70f4df1bfffb9f7ef1c9b422bcc51b77">model_poly_gen_sequence</link> (<link linkend="_class_bstring">Bstring</link> &amp;seq, int valence, int enantiomorph, int requirements, int nm, vector&lt; double &gt; &amp;table)</para>
+
+<para>Generates a polyhedron using a given sequence. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__poly__spiral_8cpp_1a548f3b2e36ccb7364616744ab81c4102">model_poly_gen_permutations</link> (int vertices, int valence, int enantiomorph)</para>
+
+<para>All polyhedra are generated for a given number of vertices. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__poly__spiral_8cpp_1a7589ef5933d56b2ba8968ad602abba4b">model_poly_gen_cone</link> (int tip, int body, int <link linkend="_string__util_8cpp_1ae1cd0165442272bf85dc2d9461080a30">base</link>, int valence, int enantiomorph, int requirements)</para>
+
+<para>A cone tip with 5 pentagons and a base with 7 pentagons are use to generate polyhedra. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__poly__spiral_8cpp_1a8d89e4741005820fdfc93c054a681ac4">model_poly_gen_lozenge</link> (int ttop, int tbody, int valence, int enantiomorph, int requirements)</para>
+
+<para>Two icosahedral tips are set up and polyhedra generated by rotating the 2 tips. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__poly__spiral_8cpp_1adcc2d57399dd17d61e43617e4ae3cb8e">model_poly_gen_coffin</link> (int ttop, int tbody, int tbase, int valence, int enantiomorph, int requirements)</para>
+
+<para>An icosahedral tip and a 6-fold base is set up and polyhedra generated by rotating the tip and base. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__poly__spiral_8cpp_1a645b8d35eb949aa30e16e65e6058b633">model_poly_gen_coffin_loose</link> (int ttop, int tbody, int tbase, int valence, int enantiomorph, int requirements)</para>
+
+<para>An icosahedral tip and a 6-fold base is set up and polyhedra generated by permuting the tip and base. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__poly__spiral_8cpp_1a6ab5cfc15f5a2082f2f422082e33a4f0">model_poly_gen_coffin_jiggle</link> (int ttop, int tbody, int tbase, int valence, int enantiomorph, int requirements)</para>
+
+<para>An icosahedral tip and a 6-fold base is set up and polyhedra generated by moving pentagons around. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__poly__spiral_8cpp_1a3174c70b3be17eda9534bf23ed422ace">model_poly_gen_3part</link> (<link linkend="_class_bstring">Bstring</link> stip, <link linkend="_class_bstring">Bstring</link> sbody, <link linkend="_class_bstring">Bstring</link> sbase, int valence, int enantiomorph, int requirements)</para>
+
+<para>Generates several polyhedra by permuting the first and last parts of a three-part sequence. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__poly__spiral_8cpp_1a3824edd8a344c8e46a32f505c7175e0e">move_pentagons</link> (int len, int p[12], int n, int valence, int enantiomorph, int requirements, int *nm)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__poly__spiral_8cpp_1a3e83c3ea74392e28fba92c4f2a73decb">model_poly_gen_move_pentagons</link> (<link linkend="_class_bstring">Bstring</link> &amp;seq, int valence, int enantiomorph, int requirements)</para>
+
+<para>Generates many polyhedrons using a given sequence and moving pentagons around. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_model__poly__spiral_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions to generate polyhedra using the spiral algorithm. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20071127 </para>
+
+<para>Modified: 20210124 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_model__poly__spiral_8cpp_1af74575372ab64ca215bf8a23e827d0c5"/>    <section>
+    <title>model_adjacent_pentagons()</title>
+<indexterm><primary>model_adjacent_pentagons</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>model_adjacent_pentagons</secondary></indexterm>
+<para><computeroutput>int model_adjacent_pentagons (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+Definition at line 229 of file model_poly_spiral.cpp.</para>
+    </section><anchor xml:id="_model__poly__spiral_8cpp_1a127b30dc31e893604cbd407db21b0bee"/>    <section>
+    <title>model_adjacent_pentagons_in_first_polygons()</title>
+<indexterm><primary>model_adjacent_pentagons_in_first_polygons</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>model_adjacent_pentagons_in_first_polygons</secondary></indexterm>
+<para><computeroutput>int model_adjacent_pentagons_in_first_polygons (<link linkend="_class_bmodel">Bmodel</link> * model, int npoly)</computeroutput></para><para>
+Definition at line 244 of file model_poly_spiral.cpp.</para>
+    </section><anchor xml:id="_model__poly__spiral_8cpp_1a3174c70b3be17eda9534bf23ed422ace"/>    <section>
+    <title>model_poly_gen_3part()</title>
+<indexterm><primary>model_poly_gen_3part</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>model_poly_gen_3part</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_poly_gen_3part (<link linkend="_class_bstring">Bstring</link> stip, <link linkend="_class_bstring">Bstring</link> sbody, <link linkend="_class_bstring">Bstring</link> sbase, int valence, int enantiomorph, int requirements)</computeroutput></para><para>
+
+<para>Generates several polyhedra by permuting the first and last parts of a three-part sequence. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>stip</entry>
+                                <entry>
+<para>tip sequence (permuted). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sbody</entry>
+                                <entry>
+<para>body sequence (all hexagons). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sbase</entry>
+                                <entry>
+<para>base/end sequence (permuted). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>valence</entry>
+                                <entry>
+<para>vertex valence. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>enantiomorph</entry>
+                                <entry>
+<para>flag to generate enantiomorphs. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>requirements</entry>
+                                <entry>
+<para>polyhedron requirements. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new model, NULL if generation failed. <literallayout><computeroutput>A recursive algorithm is used to generate several models by shifting the
+positions of pentagons in a sequence.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 813 of file model_poly_spiral.cpp.</para>
+    </section><anchor xml:id="_model__poly__spiral_8cpp_1adcc2d57399dd17d61e43617e4ae3cb8e"/>    <section>
+    <title>model_poly_gen_coffin()</title>
+<indexterm><primary>model_poly_gen_coffin</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>model_poly_gen_coffin</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_poly_gen_coffin (int ttop, int tbody, int tbase, int valence, int enantiomorph, int requirements)</computeroutput></para><para>
+
+<para>An icosahedral tip and a 6-fold base is set up and polyhedra generated by rotating the tip and base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>ttop</entry>
+                                <entry>
+<para>number of polygons between pentagons in the tip. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tbody</entry>
+                                <entry>
+<para>number of body rings. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tbase</entry>
+                                <entry>
+<para>number of polygons between pentagons in the base </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>valence</entry>
+                                <entry>
+<para>vertex valence. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>enantiomorph</entry>
+                                <entry>
+<para>flag to generate enantiomorphs. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>requirements</entry>
+                                <entry>
+<para>polyhedron requirements. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new model, NULL if generation failed. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 672 of file model_poly_spiral.cpp.</para>
+    </section><anchor xml:id="_model__poly__spiral_8cpp_1a6ab5cfc15f5a2082f2f422082e33a4f0"/>    <section>
+    <title>model_poly_gen_coffin_jiggle()</title>
+<indexterm><primary>model_poly_gen_coffin_jiggle</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>model_poly_gen_coffin_jiggle</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_poly_gen_coffin_jiggle (int ttop, int tbody, int tbase, int valence, int enantiomorph, int requirements)</computeroutput></para><para>
+
+<para>An icosahedral tip and a 6-fold base is set up and polyhedra generated by moving pentagons around. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>ttop</entry>
+                                <entry>
+<para>number of polygons between pentagons in the tip. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tbody</entry>
+                                <entry>
+<para>number of body rings. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tbase</entry>
+                                <entry>
+<para>number of polygons between pentagons in the base </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>valence</entry>
+                                <entry>
+<para>vertex valence. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>enantiomorph</entry>
+                                <entry>
+<para>flag to generate enantiomorphs. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>requirements</entry>
+                                <entry>
+<para>polyhedron requirements. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new model, NULL if generation failed. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 772 of file model_poly_spiral.cpp.</para>
+    </section><anchor xml:id="_model__poly__spiral_8cpp_1a645b8d35eb949aa30e16e65e6058b633"/>    <section>
+    <title>model_poly_gen_coffin_loose()</title>
+<indexterm><primary>model_poly_gen_coffin_loose</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>model_poly_gen_coffin_loose</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_poly_gen_coffin_loose (int ttop, int tbody, int tbase, int valence, int enantiomorph, int requirements)</computeroutput></para><para>
+
+<para>An icosahedral tip and a 6-fold base is set up and polyhedra generated by permuting the tip and base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>ttop</entry>
+                                <entry>
+<para>number of polygons between pentagons in the tip. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tbody</entry>
+                                <entry>
+<para>number of body rings. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tbase</entry>
+                                <entry>
+<para>number of polygons between pentagons in the base </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>valence</entry>
+                                <entry>
+<para>vertex valence. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>enantiomorph</entry>
+                                <entry>
+<para>flag to generate enantiomorphs. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>requirements</entry>
+                                <entry>
+<para>polyhedron requirements. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new model, NULL if generation failed. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 737 of file model_poly_spiral.cpp.</para>
+    </section><anchor xml:id="_model__poly__spiral_8cpp_1a7589ef5933d56b2ba8968ad602abba4b"/>    <section>
+    <title>model_poly_gen_cone()</title>
+<indexterm><primary>model_poly_gen_cone</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>model_poly_gen_cone</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_poly_gen_cone (int tip, int body, int base, int valence, int enantiomorph, int requirements)</computeroutput></para><para>
+
+<para>A cone tip with 5 pentagons and a base with 7 pentagons are use to generate polyhedra. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>tip</entry>
+                                <entry>
+<para>number of vertices in the tip. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>body</entry>
+                                <entry>
+<para>number of vertices in the body. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>base</entry>
+                                <entry>
+<para>number of vertices in the base. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>valence</entry>
+                                <entry>
+<para>vertex valence. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>enantiomorph</entry>
+                                <entry>
+<para>flag to generate enantiomorphs. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>requirements</entry>
+                                <entry>
+<para>polyhedron requirements. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new model, NULL if generation failed. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 569 of file model_poly_spiral.cpp.</para>
+    </section><anchor xml:id="_model__poly__spiral_8cpp_1a8d89e4741005820fdfc93c054a681ac4"/>    <section>
+    <title>model_poly_gen_lozenge()</title>
+<indexterm><primary>model_poly_gen_lozenge</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>model_poly_gen_lozenge</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_poly_gen_lozenge (int ttop, int tbody, int valence, int enantiomorph, int requirements)</computeroutput></para><para>
+
+<para>Two icosahedral tips are set up and polyhedra generated by rotating the 2 tips. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>ttop</entry>
+                                <entry>
+<para>number of polygons between pentagons in the tip. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tbody</entry>
+                                <entry>
+<para>number of body rings. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>valence</entry>
+                                <entry>
+<para>vertex valence. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>enantiomorph</entry>
+                                <entry>
+<para>flag to generate enantiomorphs. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>requirements</entry>
+                                <entry>
+<para>polyhedron requirements. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new model, NULL if generation failed. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 607 of file model_poly_spiral.cpp.</para>
+    </section><anchor xml:id="_model__poly__spiral_8cpp_1a3e83c3ea74392e28fba92c4f2a73decb"/>    <section>
+    <title>model_poly_gen_move_pentagons()</title>
+<indexterm><primary>model_poly_gen_move_pentagons</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>model_poly_gen_move_pentagons</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_poly_gen_move_pentagons (<link linkend="_class_bstring">Bstring</link> &amp; seq, int valence, int enantiomorph, int requirements)</computeroutput></para><para>
+
+<para>Generates many polyhedrons using a given sequence and moving pentagons around. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;seq</entry>
+                                <entry>
+<para>polygon sequence. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>valence</entry>
+                                <entry>
+<para>vertex valence. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>enantiomorph</entry>
+                                <entry>
+<para>flag to generate enantiomorphs. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>requirements</entry>
+                                <entry>
+<para>polyhedron requirements. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new model, NULL if generation failed. <literallayout><computeroutput>A recursive algorithm is used to generate several models by shifting the
+positions of pentagons in a sequence.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 915 of file model_poly_spiral.cpp.</para>
+    </section><anchor xml:id="_model__poly__spiral_8cpp_1a548f3b2e36ccb7364616744ab81c4102"/>    <section>
+    <title>model_poly_gen_permutations()</title>
+<indexterm><primary>model_poly_gen_permutations</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>model_poly_gen_permutations</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_poly_gen_permutations (int vertices, int valence, int enantiomorph)</computeroutput></para><para>
+
+<para>All polyhedra are generated for a given number of vertices. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>vertices</entry>
+                                <entry>
+<para>number of vertices. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>valence</entry>
+                                <entry>
+<para>vertex valence. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>enantiomorph</entry>
+                                <entry>
+<para>flag to generate enantiomorphs. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new model, NULL if generation failed. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 506 of file model_poly_spiral.cpp.</para>
+    </section><anchor xml:id="_model__poly__spiral_8cpp_1afdeba537907ce8e5ea7cc928a36de471"/>    <section>
+    <title>model_poly_gen_sequence()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>model_poly_gen_sequence</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>model_poly_gen_sequence</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_poly_gen_sequence (<link linkend="_class_bstring">Bstring</link> &amp; seq, int valence, int enantiomorph, int requirements, int nm)</computeroutput></para><para>
+
+<para>Generates a polyhedron using a given sequence. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;seq</entry>
+                                <entry>
+<para>polygon sequence. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>valence</entry>
+                                <entry>
+<para>vertex valence. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>enantiomorph</entry>
+                                <entry>
+<para>flag to generate enantiomorphs. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>requirements</entry>
+                                <entry>
+<para>polyhedron requirements. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nm</entry>
+                                <entry>
+<para>current number of models (before creating this one). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new model, NULL if generation failed. <literallayout><computeroutput>A single model is generated based on the sequence.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 407 of file model_poly_spiral.cpp.</para>
+    </section><anchor xml:id="_model__poly__spiral_8cpp_1a70f4df1bfffb9f7ef1c9b422bcc51b77"/>    <section>
+    <title>model_poly_gen_sequence()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>model_poly_gen_sequence</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>model_poly_gen_sequence</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_poly_gen_sequence (<link linkend="_class_bstring">Bstring</link> &amp; seq, int valence, int enantiomorph, int requirements, int nm, vector&lt; double &gt; &amp; table)</computeroutput></para><para>
+
+<para>Generates a polyhedron using a given sequence. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;seq</entry>
+                                <entry>
+<para>polygon sequence. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>valence</entry>
+                                <entry>
+<para>vertex valence. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>enantiomorph</entry>
+                                <entry>
+<para>flag to generate enantiomorphs. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>requirements</entry>
+                                <entry>
+<para>polyhedron requirements. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nm</entry>
+                                <entry>
+<para>current number of models (before creating this one). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;table</entry>
+                                <entry>
+<para>table for sets of eigenvalues. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new model, NULL if generation failed. <literallayout><computeroutput>A single model is generated based on the sequence.
+A table is used to keep track of sets of eigenvalues of previous models
+to avoid generating redundant models.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 429 of file model_poly_spiral.cpp.</para>
+    </section><anchor xml:id="_model__poly__spiral_8cpp_1a94aa29f3818547ac22efeb38db444d37"/>    <section>
+    <title>model_poly_spiral()</title>
+<indexterm><primary>model_poly_spiral</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>model_poly_spiral</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_poly_spiral (<link linkend="_class_bstring">Bstring</link> &amp; seq, int valence, int requirements)</computeroutput></para><para>
+
+<para>Generates a polyhedron using the spiral algorithm. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;seq</entry>
+                                <entry>
+<para>polygon sequence. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>valence</entry>
+                                <entry>
+<para>vertex valence. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>requirements</entry>
+                                <entry>
+<para>polyhedron requirements. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new model, NULL if generation failed. <literallayout><computeroutput>Polygons are added based on the given sequence.
+The success of the algorithm is checked using the indicated requirements:
+    0       only a polyhedron consistency check is done
+    1       the exact number of vertices must be obtained
+    2       only a polyhedron with isolated pentagons is accepted
+The generation fails when an incorrect number of vertices are added
+or some of the vertices have incorrect valency.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 275 of file model_poly_spiral.cpp.</para>
+    </section><anchor xml:id="_model__poly__spiral_8cpp_1a18d333a2fdabca8e708dc0b4d59d789b"/>    <section>
+    <title>model_poly_spiral_regularize()</title>
+<indexterm><primary>model_poly_spiral_regularize</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>model_poly_spiral_regularize</secondary></indexterm>
+<para><computeroutput>int model_poly_spiral_regularize (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+Definition at line 325 of file model_poly_spiral.cpp.</para>
+    </section><anchor xml:id="_model__poly__spiral_8cpp_1aadff1b321cd023456e809983b6551b24"/>    <section>
+    <title>model_polyhedron_check()</title>
+<indexterm><primary>model_polyhedron_check</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>model_polyhedron_check</secondary></indexterm>
+<para><computeroutput>int model_polyhedron_check (<link linkend="_class_bmodel">Bmodel</link> * model, int valence)</computeroutput></para><para>
+
+<para>Checks a polyhedron for accuracy and completeness. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>valence</entry>
+                                <entry>
+<para>vertex valence. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of failed conditions. <literallayout><computeroutput>Every component must have the required number of links = valence.
+Every component must have the required number of polygons = valence.
+The polyhedron must adhere to Euler&apos;s formula:
+    components + polygons - links = 2
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 344 of file model_poly_spiral.cpp.</para>
+    </section><anchor xml:id="_model__poly__spiral_8cpp_1acbc6b0b372b54016e70a8e9e2cce3492"/>    <section>
+    <title>model_vertex_types_in_first_polygons()</title>
+<indexterm><primary>model_vertex_types_in_first_polygons</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>model_vertex_types_in_first_polygons</secondary></indexterm>
+<para><computeroutput>int model_vertex_types_in_first_polygons (<link linkend="_class_bmodel">Bmodel</link> * model, int npoly)</computeroutput></para><para>
+Definition at line 207 of file model_poly_spiral.cpp.</para>
+    </section><anchor xml:id="_model__poly__spiral_8cpp_1a3824edd8a344c8e46a32f505c7175e0e"/>    <section>
+    <title>move_pentagons()</title>
+<indexterm><primary>move_pentagons</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>move_pentagons</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* move_pentagons (int len, int p[12], int n, int valence, int enantiomorph, int requirements, int * nm)</computeroutput></para><para>
+Definition at line 864 of file model_poly_spiral.cpp.</para>
+    </section><anchor xml:id="_model__poly__spiral_8cpp_1a8e8a834fe65865a720079252548f99e0"/>    <section>
+    <title>polygon_add()</title>
+<indexterm><primary>polygon_add</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>polygon_add</secondary></indexterm>
+<para><computeroutput>int polygon_add (int n, int valence, <link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+Definition at line 39 of file model_poly_spiral.cpp.</para>
+    </section><anchor xml:id="_model__poly__spiral_8cpp_1a47101421f2497fd16573eb8fb19b8fb4"/>    <section>
+    <title>seq_count_adj_pentagons()</title>
+<indexterm><primary>seq_count_adj_pentagons</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>seq_count_adj_pentagons</secondary></indexterm>
+<para><computeroutput>int seq_count_adj_pentagons (<link linkend="_class_bstring">Bstring</link> &amp; seq)</computeroutput></para><para>
+Definition at line 197 of file model_poly_spiral.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_model__poly__spiral_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>model_poly_spiral.cpp</secondary></indexterm>
+<indexterm><primary>model_poly_spiral.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

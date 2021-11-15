@@ -1,0 +1,323 @@
+.TH "/Users/bernard/b20/bsoft/src/model/model_color.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/model/model_color.cpp \- Functions to color models\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel\&.h'\fP
+.br
+\fC#include 'model_poly\&.h'\fP
+.br
+\fC#include 'model_shell\&.h'\fP
+.br
+\fC#include 'model_views\&.h'\fP
+.br
+\fC#include 'model_util\&.h'\fP
+.br
+\fC#include 'Color\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmodel_color_uniformly\fP (\fBBmodel\fP *\fBmodel\fP, \fBRGBA\fP< float > color)"
+.br
+.RI "Colors model components uniformly\&. "
+.ti -1c
+.RI "int \fBmodel_color_selected\fP (\fBBmodel\fP *\fBmodel\fP, \fBRGBA\fP< float > color)"
+.br
+.RI "Colors selected model components\&. "
+.ti -1c
+.RI "int \fBmodel_color_by_order\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Colors model components in order from red to blue\&. "
+.ti -1c
+.RI "int \fBmodel_color_by_density\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Colors model components by density\&. "
+.ti -1c
+.RI "int \fBmodel_color_by_fom\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Colors model components by fom\&. "
+.ti -1c
+.RI "int \fBmodel_color_by_selection\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Colors model components by the selection number\&. "
+.ti -1c
+.RI "int \fBmodel_color_selected_types\fP (\fBBmodel\fP *\fBmodel\fP, \fBRGBA\fP< float > rgba)"
+.br
+.RI "Colors model components by fom\&. "
+.ti -1c
+.RI "int \fBmodel_color_curvature\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Colors model vertices and links as a function of curvature\&. "
+.ti -1c
+.RI "int \fBmodel_color_chiral_vertices\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Colors model vertices as a function of chirality\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to color models\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20080206 
+.PP
+Modified: 20210319 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_color\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int model_color_by_density (\fBBmodel\fP * model)"
+
+.PP
+Colors model components by density\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model to color\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Color assignments are:
+    density = 0     blue
+    density = 0.5   green
+    density = 1     red
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 118 of file model_color\&.cpp\&.
+.SS "int model_color_by_fom (\fBBmodel\fP * model)"
+
+.PP
+Colors model components by fom\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model to color\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Color assignments are:
+    FOM = 0     blue
+    FOM = 0.5   green
+    FOM = 1     red
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 159 of file model_color\&.cpp\&.
+.SS "int model_color_by_order (\fBBmodel\fP * model)"
+
+.PP
+Colors model components in order from red to blue\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model to color\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 82 of file model_color\&.cpp\&.
+.SS "int model_color_by_selection (\fBBmodel\fP * model)"
+
+.PP
+Colors model components by the selection number\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model to color\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Color assignments are:
+    FOM = 0     blue
+    FOM = 0.5   green
+    FOM = 1     red
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 200 of file model_color\&.cpp\&.
+.SS "int model_color_chiral_vertices (\fBBmodel\fP * model)"
+
+.PP
+Colors model vertices as a function of chirality\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model to color\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of chiral vertices\&. 
+.PP
+.nf
+Chiral vertices are colored blue for + and red for - handedness.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 301 of file model_color\&.cpp\&.
+.SS "int model_color_curvature (\fBBmodel\fP * model)"
+
+.PP
+Colors model vertices and links as a function of curvature\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model to color\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 270 of file model_color\&.cpp\&.
+.SS "int model_color_selected (\fBBmodel\fP * model, \fBRGBA\fP< float > color)"
+
+.PP
+Colors selected model components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model to color\&. 
+.br
+\fIcolor\fP 4-value color vector ([0,1])\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 55 of file model_color\&.cpp\&.
+.SS "int model_color_selected_types (\fBBmodel\fP * model, \fBRGBA\fP< float > rgba)"
+
+.PP
+Colors model components by fom\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model to color\&. 
+.br
+\fIrgba\fP \fBRGBA\fP color\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Color assignments are:
+    FOM = 0     blue
+    FOM = 0.5   green
+    FOM = 1     red
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 243 of file model_color\&.cpp\&.
+.SS "int model_color_uniformly (\fBBmodel\fP * model, \fBRGBA\fP< float > color)"
+
+.PP
+Colors model components uniformly\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model to color\&. 
+.br
+\fIcolor\fP 4-value color vector ([0,1])\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Both selected and non-selected elements are colored.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 29 of file model_color\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

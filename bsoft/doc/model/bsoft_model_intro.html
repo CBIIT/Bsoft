@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Model</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h2>Modeling supermolecular complexes</h2>
+<p>The concept of a model in Bsoft is simply a collection of components and associated information. Each component can be a single atom or pseudo-atom, an atomic structure, a density, or another model. Each component has a type, a location and an orientation, and may be linked to other components within the same model.</p>
+<center><img src="model.png" alt="Model" width="498" height="386" /></center>
+<h2>Model storage formats</h2>
+<p>Bsoft supports several model storage formats, and the user need to be aware of the type of information stored in each and their limitations.</p>
+<ul>
+  <li>STAR: Self-defining Text Archiving and Retrieval.</li>
+  <li>XML: Extensible Markup Language.</li>
+  <li>CMM: Chimera Marker Model.</li>
+  <li>PDB: Protein Data Bank.</li>
+  <li>Vega: Format used by CaGe, extension: &quot;.v3d&quot; (<a href="http://caagt.ugent.be/CaGe/" target="_blank">http://caagt.ugent.be/CaGe/</a>).</li>
+  </ul>
+<p>The STAR and XML formats are the most comprehensive descriptions of models and should be used as much as possible. The CMM format is technically also XML, although it follows the schema used in UCSF Chimera and is included in Bsoft to allow exchange with Chimera. The support for PDB as a model format different from traditional atomic models is included to allow import from other sources, although it should not be used in normal workflows to avoid confusion with true atomic models. The Vega 3D format is used in the CaGe package for generating and examining polyhedra, and was used in the development of polyhedral capabilities in Bsoft.</p>
+<p>&nbsp;</p>
+<h2>Bsoft modeling programs</h2>
+<ul>
+  <li>bmodel - manipulate models<br />
+    </li>
+  <li>bmodsel - select components and models<br />
+    </li>
+  <li>bmodcol - color models <br />
+    </li>
+  <li>bmodcomp - compare models to reference models<br />
+    </li>
+  <li>bpoly - analyze and refine polyhedral models<br />
+    </li>
+  <li>bspiral - generate polyhedral models using the spiral algorithm<br />
+    </li>
+  <li>bdelta - generate tubular polyhedral models<br />
+    </li>
+  <li>bxb - extract, refine and build components of models<br />
+    </li>
+  <li>bmultifit - fit multiple components into a map<br />
+    </li>
+  <li>bmodmap - generate a density map from a model<br />
+    </li>
+  <li>bmod2part - reinterpret model components as particles <br />
+    </li>
+  <li>bmodmask - generate a mask from a model<br />
+    </li>
+  <li>bmodview - analyze and manipulate component orientations<br />
+    </li>
+  <li>bshell - generate and fit spherical point sets<br />
+  </li>
+</ul>
+<h2>&nbsp;</h2>
+<h2>Building a model</h2>
+<h3>Manual model building</h3>
+<p>Bshow can be used to build a model, overlaying components and links over a 3D map (see <a href="../bshow/bshow_model.html">here</a>). However, it is often difficult to get an impression of the shape of the model in the z-direction, even though the &quot;Magnify&quot; window does provide some access to orthogonal views.</p>
+<p>A more convenient way to manually build models into maps is to use the UCSF Chimera tool, Volume tracer. The model can then be saved in CMM format and further used in Bsoft modeling programs.</p>
+<h3>Shell models </h3>
+<p>Closed membranes and protein shells can be modeled as spherical or close-to-spherical point sets. As a starting point, a perfectly spherical component set can be generated in two ways:</p>
+<p>A spherical point set with defined average distance between the points:</p>
+<div id="command"><p>bshell -verb 7 -sphere 100 -sep 30 -comp 10 -id Shell -rdf 2 -output sph.cmm</p></div>
+<p>The -rdf option generates a radial distribution function, where the first peak should be at the distance given for the -separation option.</p>
+<p>An icosahedrally arranged set of points:</p>
+<div id="command"><p>bshell -verb 7 -ico 480,4 -comp 30 -id IcoSphere -views -out ico_sph.cmm</p></div>
+<p>The -views option sets the view vector for each component to the normalized vector of its location relative to the center-of-mass of the model. The center-of-mass is the average of the component locations.</p>
+<h3>Polyhedral models</h3>
+<p>(Also see the page on <a href="bsoft_poly.html">polyhedra</a>)</p>
+<p>All fullerene type polyhedral models (those with only 12 pentagonal and an even number of hexagonal faces) can be generated with the spiral algorithm:</p>
+<div id="command"><p>bspiral -verb 1 -vert 36 36.star</p></div>
+<p>This algorithm is comprehensive for polyhedra with fewer than 388 vertices.</p>
+<p>&nbsp;</p>
+<h2>Modifying model properties</h2>
+<h3>Selecting model elements</h3>
+<p>There are various ways to select models and their components. A generalized syntax for selection is offered in the programs <em>bmodel</em> and <em>bmodsel</em>:</p>
+<p>Selection syntax:<br />
+</p>
+<ul>
+  <li>#model_id<br />
+  </li>
+  <li>^model_type_id<br />
+  </li>
+  <li>@component_id<br />
+  </li>
+  <li>%component_type_id<br />
+  </li>
+  <li>#model_id@component_id<br />
+  </li>
+  <li>#model_id%component_type_id<br />
+  </li>
+  <li>^model_type_id@component_id</li>
+  <li>^model_type_id%component_type_id<br />
+    </li>
+</ul>
+<p>wild cards allowed: .</p>
+<p>Only a single  id or type can be used in the specification:</p>
+<div id="command"><p>bmodsel -verb 1 -select ^36_0010 -out 36_sel.star 36.star</p></div>
+<p>Other ways to select models or parts thereof:</p>
+<ul>
+  <li>-number 24,36            Select models based on the number of components.<br />
+    </li>
+  <li>-sets 20,1               Generate sets of this size of selected components, with a flag not to select across model boundaries.</li>
+  <li>-closed order,3          Select models based on valency (valency,&lt;n&gt;) or polygon order (order,&lt;n&gt;).<br />
+  </li>
+  <li>-fullerene               Select fullerene type models.<br />
+    </li>
+  <li>-nonfullerene            Select non-fullerene type models.</li>
+  <li>-fom 0.25                Select: FOM cutoff.</li>
+  <li>-fraction 0.6            Select: FOM/FOMmax ratio cutoff.</li>
+  <li>-prune fom               Type of pruning: simple(default), fom, fit, similar, large.</li>
+</ul>
+<p>In some cases it is necessary to delete the models or components not selected:</p>
+<div id="command"><p>bmodsel -verb 1 -select ^36_0010 -delete -out 36_10.star 36.star</p></div>
+<h3>Component types</h3>
+<p>Component types are included in a model to reference models or maps associated with those types, providing a non-redundant mechanism to encode model information at different levels.</p>
+<h3>Component and link radii</h3>
+<p>Component and link radii are specified for each component or link in a model for two reasons:</p>
+<ul>
+  <li>Display in a visualizing program such as UCSF Chimera.</li>
+  <li>Defining the extent of the element for interactive selection in a program such as Bshow, as well as masking in a program such as bmodmask.</li>
+</ul>
+<p>&nbsp;</p>
+<h3>Coloring</h3>
+<p>A model can be colored to show different types of components, the progression of components in a model, the selection of components, or the FOM attached to components.</p>
+<h3>Transformations</h3>
+<p>Models can be scaled and rotated. When a model is scaled, it is a good idea to also reset the component and link radii:</p>
+<div id="command"><p>bmodel -verb 1 -scale 20 -comp 5 -linkrad 2 -out 36_10_s.star 36_10.star</p></div>
+<p><br />
+      </p>
+</div>
+<div id="footer">
+  Bernard Heymann  20120126
+</div>
+</body>
+</html>

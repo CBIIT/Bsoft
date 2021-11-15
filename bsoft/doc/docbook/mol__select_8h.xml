@@ -1,0 +1,361 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mol__select_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/mol_select.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/mol_select.h</primary></indexterm>
+<para>
+
+<para>Library routines to select atomic coordinates. </para>
+ 
+</para>
+<programlisting>#include &quot;Vector3.h&quot;
+#include &quot;rwmolecule.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>long <link linkend="_mol__select_8h_1acd941d27caff2ccae8c0edaf8f888cad">molgroup_select</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bstring">Bstring</link> selstr)</para>
+
+<para>Sets selection based on a specification. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mol__select_8h_1a1c6fb4f33748033b74c7c805eeb46ec8">molgroup_atoms_selected</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Returns the number of atoms selected. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mol__select_8h_1a49a1d3acf53bd2d139656fe242997111">molgroup_select_all</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Sets selection for all atoms. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mol__select_8h_1abca5cbb03baa9ebb172f811726332a81">molgroup_deselect_all</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Unsets selection for all atoms. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__select_8h_1a6466885e6213db132dc134dfcb4d2bd6">molgroup_select_chains</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bstring">Bstring</link> chains)</para>
+
+<para>Selects molecules. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__select_8h_1aaf208b3ef78dfe0e8a5ae381b1954abb">molgroup_coor_select_ring</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double rmin, double rmax)</para>
+
+<para>Selects atoms in a ring. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__select_8h_1a568d1b6062fa23a145bcefcef111f9c6">molgroup_coor_select</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; min, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; max)</para>
+
+<para>Selects atoms within a box. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines to select atomic coordinates. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19980214 </para>
+
+<para>Modified: 20170118 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mol__select_8h_1a1c6fb4f33748033b74c7c805eeb46ec8"/>    <section>
+    <title>molgroup_atoms_selected()</title>
+<indexterm><primary>molgroup_atoms_selected</primary><secondary>mol_select.h</secondary></indexterm>
+<indexterm><primary>mol_select.h</primary><secondary>molgroup_atoms_selected</secondary></indexterm>
+<para><computeroutput>long molgroup_atoms_selected (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Returns the number of atoms selected. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of atoms selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 27 of file mol_select.cpp.</para>
+    </section><anchor xml:id="_mol__select_8h_1a568d1b6062fa23a145bcefcef111f9c6"/>    <section>
+    <title>molgroup_coor_select()</title>
+<indexterm><primary>molgroup_coor_select</primary><secondary>mol_select.h</secondary></indexterm>
+<indexterm><primary>mol_select.h</primary><secondary>molgroup_coor_select</secondary></indexterm>
+<para><computeroutput>int molgroup_coor_select (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; min, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; max)</computeroutput></para><para>
+
+<para>Selects atoms within a box. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>min</entry>
+                                <entry>
+<para>three-valued vector of minima. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max</entry>
+                                <entry>
+<para>three-valued vector of maxima. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 233 of file mol_select.cpp.</para>
+    </section><anchor xml:id="_mol__select_8h_1aaf208b3ef78dfe0e8a5ae381b1954abb"/>    <section>
+    <title>molgroup_coor_select_ring()</title>
+<indexterm><primary>molgroup_coor_select_ring</primary><secondary>mol_select.h</secondary></indexterm>
+<indexterm><primary>mol_select.h</primary><secondary>molgroup_coor_select_ring</secondary></indexterm>
+<para><computeroutput>int molgroup_coor_select_ring (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double rmin, double rmax)</computeroutput></para><para>
+
+<para>Selects atoms in a ring. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rmin</entry>
+                                <entry>
+<para>minimum radius. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rmax</entry>
+                                <entry>
+<para>maximum radius. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 195 of file mol_select.cpp.</para>
+    </section><anchor xml:id="_mol__select_8h_1abca5cbb03baa9ebb172f811726332a81"/>    <section>
+    <title>molgroup_deselect_all()</title>
+<indexterm><primary>molgroup_deselect_all</primary><secondary>mol_select.h</secondary></indexterm>
+<indexterm><primary>mol_select.h</primary><secondary>molgroup_deselect_all</secondary></indexterm>
+<para><computeroutput>long molgroup_deselect_all (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Unsets selection for all atoms. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of atoms. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 147 of file mol_select.cpp.</para>
+    </section><anchor xml:id="_mol__select_8h_1acd941d27caff2ccae8c0edaf8f888cad"/>    <section>
+    <title>molgroup_select()</title>
+<indexterm><primary>molgroup_select</primary><secondary>mol_select.h</secondary></indexterm>
+<indexterm><primary>mol_select.h</primary><secondary>molgroup_select</secondary></indexterm>
+<para><computeroutput>long molgroup_select (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bstring">Bstring</link> selstr)</computeroutput></para><para>
+
+<para>Sets selection based on a specification. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>selstr</entry>
+                                <entry>
+<para>selection specification. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of atoms selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 51 of file mol_select.cpp.</para>
+    </section><anchor xml:id="_mol__select_8h_1a49a1d3acf53bd2d139656fe242997111"/>    <section>
+    <title>molgroup_select_all()</title>
+<indexterm><primary>molgroup_select_all</primary><secondary>mol_select.h</secondary></indexterm>
+<indexterm><primary>mol_select.h</primary><secondary>molgroup_select_all</secondary></indexterm>
+<para><computeroutput>long molgroup_select_all (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Sets selection for all atoms. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of atoms. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 125 of file mol_select.cpp.</para>
+    </section><anchor xml:id="_mol__select_8h_1a6466885e6213db132dc134dfcb4d2bd6"/>    <section>
+    <title>molgroup_select_chains()</title>
+<indexterm><primary>molgroup_select_chains</primary><secondary>mol_select.h</secondary></indexterm>
+<indexterm><primary>mol_select.h</primary><secondary>molgroup_select_chains</secondary></indexterm>
+<para><computeroutput>int molgroup_select_chains (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bstring">Bstring</link> chains)</computeroutput></para><para>
+
+<para>Selects molecules. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>chains</entry>
+                                <entry>
+<para>comma-separated list of molecule ids. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int chains selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 168 of file mol_select.cpp.</para>
+</section>
+</section>
+</section>

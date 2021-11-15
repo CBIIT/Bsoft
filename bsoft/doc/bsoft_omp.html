@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Unix install</title>
+<link href="bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+    <h1>Installation for parallel processing using OpenMP (Unix only)</h1>
+	<br/>
+	<h2>Compiling and installing FFTW3</h2>
+    <p>Version 3.3.3 or later of FFTW3 can be obtained from
+		<a href="http://www.fftw.org">http://www.fftw.org</a></p>
+	<p>For gcc, this requires version 4.2 or later (note that LLVM on Mac OS X 10.7+ does not support OpenMP).
+		FFTW version 3.3.3 or later need to be installed with single precision and OpenMP enabled,
+		preferably in its default location (/usr/local):</p>
+    <div id="command"><p>./configure --enable-float --enable-openmp --enable-shared --disable-fortran --with-pic</p></div>
+    <p>On Mac OS X before 10.8, a universal library should be compiled by explicitly specifying the architectures (note on 10.6+ the ppc versions won't compile):</p>
+    <div id="command"><p>./configure --enable-float --enable-openmp --enable-shared --disable-fortran CC=&quot;gcc -arch i386 -arch x86_64 -arch ppc -arch ppc64&quot; CXX=&quot;g++ -arch i386 -arch x86_64 -arch ppc -arch ppc64&quot; CPP=&quot;gcc -E&quot; CXXCPP=&quot;g++ -E&quot;</p></div>
+	<div id="note"><p>See the note on the configure script for Mac OSX at the bottom</p></div>
+
+	<br/>
+    <p>The compilation and installation should then be simply:</p>
+    <div id="command"><p>make</p>
+    <p>sudo make install</p></div>
+	</br>
+	<h2>Compiling parallel Bsoft with OpenMP</h2>
+    <p>As for the serial version of Bsoft, the recommended location for Bsoft
+	is in /usr/local. Most of the instructions for the serial version also
+	applies here. For parallel processing, Bsoft uses OpenMP for Linux and
+	Mac OS X prior to 10.7, and Grand Central Dispatch for Mac OS X 10.7+.
+    The compilation requires two additional flags:</p>
+    <div id="command"><p>bmake omp fftw3</p></div>
+    <p>A custom location for FFTW3 can also be specified:</p>
+    <div id="command"><p>bmake omp fftw3=/somedisk/mydirectory</p></div>
+	</br>
+	
+<h2>Fixing the configure script for Mac OSX and OpenMP</h2>
+<div id="note"><p>Note: On Mac OS X the configure script exit with an error. To have it behave, replace to following section:</p>
+<pre>
+char omp_set_num_threads ();
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+return omp_set_num_threads ();
+  ;
+  return 0;
+}
+</pre>
+
+	<p>with the following:</p>
+<pre>
+char omp_set_num_threads ();
+int opm_get_thread_num();
+#ifdef F77_DUMMY_MAIN
+
+#  ifdef __cplusplus
+     extern "C"
+#  endif
+   int F77_DUMMY_MAIN() { return 1; }
+
+#endif
+int
+main ()
+{
+        int     tid;
+        omp_set_num_threads(2);
+        tid = omp_get_thread_num();
+  return 0;
+}
+</pre>
+</div>
+
+</div>
+<div id="footer">
+  Bernard Heymann  20150223
+</div>
+</body>
+</html>

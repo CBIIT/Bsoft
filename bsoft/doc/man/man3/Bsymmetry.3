@@ -1,0 +1,157 @@
+.TH "Bsymmetry" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Bsymmetry
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <symmetry\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBsymmetry\fP ()"
+.br
+.ti -1c
+.RI "\fBBsymmetry\fP (\fBBstring\fP sym)"
+.br
+.RI "Symmetry constructor from a symmetry identifier\&. "
+.ti -1c
+.RI "void \fBpoint\fP (int i)"
+.br
+.ti -1c
+.RI "int \fBpoint\fP ()"
+.br
+.ti -1c
+.RI "int \fBpoint\fP () const"
+.br
+.ti -1c
+.RI "void \fBspace\fP (int i)"
+.br
+.ti -1c
+.RI "int \fBspace\fP ()"
+.br
+.ti -1c
+.RI "void \fBlabel\fP (\fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "\fBBstring\fP & \fBlabel\fP ()"
+.br
+.ti -1c
+.RI "int \fBorder\fP ()"
+.br
+.ti -1c
+.RI "int \fBoperations\fP ()"
+.br
+.ti -1c
+.RI "\fBBsymop\fP & \fBoperator[]\fP (int i)"
+.br
+.ti -1c
+.RI "vector< \fBMatrix3\fP > \fBmatrices\fP ()"
+.br
+.ti -1c
+.RI "void \fBtransform\fP (\fBMatrix3\fP &mat)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 61 of file symmetry\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Bsymmetry::Bsymmetry ()\fC [inline]\fP"
+
+.PP
+Definition at line 101 of file symmetry\&.h\&.
+.SS "Bsymmetry::Bsymmetry (\fBBstring\fP sym)"
+
+.PP
+Symmetry constructor from a symmetry identifier\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsym\fP string containing point group identifier\&. 
+.PP
+.nf
+The point group symmetries are identified by the following strings:
+    C<n>        cyclic point group of order n.
+    D<n>            dihedral point group of order n.
+    T           tetrahedral point group.
+    O           octahedral/cubic point group.
+    I           icosahedral/dodecahedral point group.
+    H<r>,<a>,<d>    helical symmetry with rise r, rise angle a and dyad d (1/2).
+For the higher symmetries the following adjustments are available:
+    T-3         no three-fold operator.
+    O-2         no two-fold operator.
+    O-3         no three-fold operator.
+    O-4         no four-fold operator.
+    I-2         no two-fold operator.
+    I-3         no three-fold operator.
+    I-5         no five-fold operator.
+    I90         90 degrees rotated around z-axis.
+    I90-3           90 degrees rotated around z-axis and no three-fold operator.
+If the point group string is empty, the default is C1 (asymmetric).
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 42 of file symmetry\&.cpp\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBBstring\fP& Bsymmetry::label ()\fC [inline]\fP"
+
+.PP
+Definition at line 110 of file symmetry\&.h\&.
+.SS "void Bsymmetry::label (\fBBstring\fP & s)\fC [inline]\fP"
+
+.PP
+Definition at line 109 of file symmetry\&.h\&.
+.SS "vector<\fBMatrix3\fP> Bsymmetry::matrices ()\fC [inline]\fP"
+
+.PP
+Definition at line 118 of file symmetry\&.h\&.
+.SS "int Bsymmetry::operations ()\fC [inline]\fP"
+
+.PP
+Definition at line 116 of file symmetry\&.h\&.
+.SS "\fBBsymop\fP& Bsymmetry::operator[] (int i)\fC [inline]\fP"
+
+.PP
+Definition at line 117 of file symmetry\&.h\&.
+.SS "int Bsymmetry::order ()\fC [inline]\fP"
+
+.PP
+Definition at line 111 of file symmetry\&.h\&.
+.SS "int Bsymmetry::point ()\fC [inline]\fP"
+
+.PP
+Definition at line 105 of file symmetry\&.h\&.
+.SS "int Bsymmetry::point () const\fC [inline]\fP"
+
+.PP
+Definition at line 106 of file symmetry\&.h\&.
+.SS "void Bsymmetry::point (int i)\fC [inline]\fP"
+
+.PP
+Definition at line 104 of file symmetry\&.h\&.
+.SS "int Bsymmetry::space ()\fC [inline]\fP"
+
+.PP
+Definition at line 108 of file symmetry\&.h\&.
+.SS "void Bsymmetry::space (int i)\fC [inline]\fP"
+
+.PP
+Definition at line 107 of file symmetry\&.h\&.
+.SS "void Bsymmetry::transform (\fBMatrix3\fP & mat)\fC [inline]\fP"
+
+.PP
+Definition at line 126 of file symmetry\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

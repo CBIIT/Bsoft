@@ -1,0 +1,378 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rwmodel__param_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/rwmodel/rwmodel_param.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/rwmodel/rwmodel_param.cpp</primary></indexterm>
+<para>
+
+<para>Library routines to read and write model dynamics parameters in STAR format. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmodel_param.h&quot;
+#include &quot;rwmodel_star.h&quot;
+#include &quot;rwstar.h&quot;
+#include &quot;star.h&quot;
+#include &quot;json.h&quot;
+#include &quot;model_tags.h&quot;
+#include &quot;mol_tags.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;string_util.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bmodparam">Bmodparam</link> <link linkend="_rwmodel__param_8cpp_1ae900f41ca71eb66aa03acc60e21579ed">model_param_generate</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Generates a model parameter file from a model. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel__param_8cpp_1a25b0d81f58e52671f75789521bb1202d">model_param_generate</link> (<link linkend="_class_bmodparam">Bmodparam</link> &amp;md, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel__param_8cpp_1a3bbd9068c46716d52361d05ebafed725">model_param_set_type_indices</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bmodparam">Bmodparam</link> &amp;md)</para>
+
+<para>Sets the component type indices from the model parameters. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bstar2">Bstar2</link> <link linkend="_rwmodel__param_8cpp_1aae86f70514f8fd4b3f988a500d145a88">read_parameter_file</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+</listitem>
+            <listitem><para>map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; <link linkend="_rwmodel__param_8cpp_1ab12a71fcbf56303a0e1a5c451ee71e71">read_atom_properties</link> (<link linkend="_class_bstar2">Bstar2</link> &amp;star)</para>
+</listitem>
+            <listitem><para>map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; <link linkend="_rwmodel__param_8cpp_1aa2354dc926b2b7baaa9ef6aa75831baf">read_atom_properties</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+</listitem>
+            <listitem><para>map&lt; string, <link linkend="_class_bmaterial">Bmaterial</link> &gt; <link linkend="_rwmodel__param_8cpp_1a837c9adbd7ede089c821f3de47ce3863">read_material_star</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+</listitem>
+            <listitem><para>map&lt; string, <link linkend="_class_bmaterial">Bmaterial</link> &gt; <link linkend="_rwmodel__param_8cpp_1a862460ff38a3c7d3e62d9979da739416">read_material_json</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+</listitem>
+            <listitem><para>map&lt; string, <link linkend="_class_bmaterial">Bmaterial</link> &gt; <link linkend="_rwmodel__param_8cpp_1a4478aca7214ff83ccde4c51058f17b27">read_material_properties</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel__param_8cpp_1a8abd957828f81a5cc95631b31b22026f">write_material_star</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, map&lt; string, <link linkend="_class_bmaterial">Bmaterial</link> &gt; material)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel__param_8cpp_1a650ad23c12feb27e918c90365c3b4a6e">write_material_json</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, map&lt; string, <link linkend="_class_bmaterial">Bmaterial</link> &gt; material)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel__param_8cpp_1a9e68f97fbf05898df750952e412a34bd">write_material_properties</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, map&lt; string, <link linkend="_class_bmaterial">Bmaterial</link> &gt; material)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodparam">Bmodparam</link> <link linkend="_rwmodel__param_8cpp_1a84dd6f185b8a5b304288409f88aa60ae">read_dynamics_parameters</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+
+<para>Reads a model parameter file. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel__param_8cpp_1a3fcbcbcff9070dfa1a2d4abe6d027aba">update_dynamics_parameters</link> (<link linkend="_class_bmodparam">Bmodparam</link> &amp;md, <link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+
+<para>Updates model parameters from a parameter file. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel__param_8cpp_1a01807d6670aa2ea133625e38a154f6a2">write_dynamics_parameters</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bmodparam">Bmodparam</link> &amp;md)</para>
+
+<para>Writes a model parameter file. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rwmodel__param_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines to read and write model dynamics parameters in STAR format. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20100305 </para>
+
+<para>Modified: 20210326 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rwmodel__param_8cpp_1ae900f41ca71eb66aa03acc60e21579ed"/>    <section>
+    <title>model_param_generate()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>model_param_generate</primary><secondary>rwmodel_param.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_param.cpp</primary><secondary>model_param_generate</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodparam">Bmodparam</link> model_param_generate (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Generates a model parameter file from a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>linked list of models. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodparam* new model parameter structure. <literallayout><computeroutput>All the types in a list of models are collated into a string list of
+types for a new model parameter structure.
+The distances between component types in the matrix is set to the
+smallest such distance between components of the relevant types.
+The distance constant is set to 1.
+The distance potential type is set to 2 (soft sphere).
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 37 of file rwmodel_param.cpp.</para>
+    </section><anchor xml:id="_rwmodel__param_8cpp_1a25b0d81f58e52671f75789521bb1202d"/>    <section>
+    <title>model_param_generate()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>model_param_generate</primary><secondary>rwmodel_param.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_param.cpp</primary><secondary>model_param_generate</secondary></indexterm>
+<para><computeroutput>int model_param_generate (<link linkend="_class_bmodparam">Bmodparam</link> &amp; md, <link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+Definition at line 44 of file rwmodel_param.cpp.</para>
+    </section><anchor xml:id="_rwmodel__param_8cpp_1a3bbd9068c46716d52361d05ebafed725"/>    <section>
+    <title>model_param_set_type_indices()</title>
+<indexterm><primary>model_param_set_type_indices</primary><secondary>rwmodel_param.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_param.cpp</primary><secondary>model_param_set_type_indices</secondary></indexterm>
+<para><computeroutput>int model_param_set_type_indices (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bmodparam">Bmodparam</link> &amp; md)</computeroutput></para><para>
+
+<para>Sets the component type indices from the model parameters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>linked list of models. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;md</entry>
+                                <entry>
+<para>model parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The position of a type in the distance matrix type list determines
+the type index within the distance matrix itself.
+The indices of the component types within each model is then set
+to the corresponding index for the distance matrix.
+If the type is not represented in the distance matrix, its index
+is set to -1.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 202 of file rwmodel_param.cpp.</para>
+    </section><anchor xml:id="_rwmodel__param_8cpp_1ab12a71fcbf56303a0e1a5c451ee71e71"/>    <section>
+    <title>read_atom_properties()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>read_atom_properties</primary><secondary>rwmodel_param.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_param.cpp</primary><secondary>read_atom_properties</secondary></indexterm>
+<para><computeroutput>map&lt;string,<link linkend="_class_bcomptype">Bcomptype</link>&gt; read_atom_properties (<link linkend="_class_bstar2">Bstar2</link> &amp; star)</computeroutput></para><para>
+Definition at line 252 of file rwmodel_param.cpp.</para>
+    </section><anchor xml:id="_rwmodel__param_8cpp_1aa2354dc926b2b7baaa9ef6aa75831baf"/>    <section>
+    <title>read_atom_properties()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>read_atom_properties</primary><secondary>rwmodel_param.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_param.cpp</primary><secondary>read_atom_properties</secondary></indexterm>
+<para><computeroutput>map&lt;string,<link linkend="_class_bcomptype">Bcomptype</link>&gt; read_atom_properties (<link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+Definition at line 305 of file rwmodel_param.cpp.</para>
+    </section><anchor xml:id="_rwmodel__param_8cpp_1a84dd6f185b8a5b304288409f88aa60ae"/>    <section>
+    <title>read_dynamics_parameters()</title>
+<indexterm><primary>read_dynamics_parameters</primary><secondary>rwmodel_param.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_param.cpp</primary><secondary>read_dynamics_parameters</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodparam">Bmodparam</link> read_dynamics_parameters (<link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+
+<para>Reads a model parameter file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_bmodparam">Bmodparam</link> new model parameter structure. <literallayout><computeroutput>The only format supported is a STAR format.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 540 of file rwmodel_param.cpp.</para>
+    </section><anchor xml:id="_rwmodel__param_8cpp_1a862460ff38a3c7d3e62d9979da739416"/>    <section>
+    <title>read_material_json()</title>
+<indexterm><primary>read_material_json</primary><secondary>rwmodel_param.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_param.cpp</primary><secondary>read_material_json</secondary></indexterm>
+<para><computeroutput>map&lt;string,<link linkend="_class_bmaterial">Bmaterial</link>&gt; read_material_json (<link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+Definition at line 382 of file rwmodel_param.cpp.</para>
+    </section><anchor xml:id="_rwmodel__param_8cpp_1a4478aca7214ff83ccde4c51058f17b27"/>    <section>
+    <title>read_material_properties()</title>
+<indexterm><primary>read_material_properties</primary><secondary>rwmodel_param.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_param.cpp</primary><secondary>read_material_properties</secondary></indexterm>
+<para><computeroutput>map&lt;string,<link linkend="_class_bmaterial">Bmaterial</link>&gt; read_material_properties (<link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+Definition at line 439 of file rwmodel_param.cpp.</para>
+    </section><anchor xml:id="_rwmodel__param_8cpp_1a837c9adbd7ede089c821f3de47ce3863"/>    <section>
+    <title>read_material_star()</title>
+<indexterm><primary>read_material_star</primary><secondary>rwmodel_param.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_param.cpp</primary><secondary>read_material_star</secondary></indexterm>
+<para><computeroutput>map&lt;string,<link linkend="_class_bmaterial">Bmaterial</link>&gt; read_material_star (<link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+Definition at line 312 of file rwmodel_param.cpp.</para>
+    </section><anchor xml:id="_rwmodel__param_8cpp_1aae86f70514f8fd4b3f988a500d145a88"/>    <section>
+    <title>read_parameter_file()</title>
+<indexterm><primary>read_parameter_file</primary><secondary>rwmodel_param.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_param.cpp</primary><secondary>read_parameter_file</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstar2">Bstar2</link> read_parameter_file (<link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+Definition at line 222 of file rwmodel_param.cpp.</para>
+    </section><anchor xml:id="_rwmodel__param_8cpp_1a3fcbcbcff9070dfa1a2d4abe6d027aba"/>    <section>
+    <title>update_dynamics_parameters()</title>
+<indexterm><primary>update_dynamics_parameters</primary><secondary>rwmodel_param.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_param.cpp</primary><secondary>update_dynamics_parameters</secondary></indexterm>
+<para><computeroutput>int update_dynamics_parameters (<link linkend="_class_bmodparam">Bmodparam</link> &amp; md, <link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+
+<para>Updates model parameters from a parameter file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;md</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The only format supported is a STAR format.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 556 of file rwmodel_param.cpp.</para>
+    </section><anchor xml:id="_rwmodel__param_8cpp_1a01807d6670aa2ea133625e38a154f6a2"/>    <section>
+    <title>write_dynamics_parameters()</title>
+<indexterm><primary>write_dynamics_parameters</primary><secondary>rwmodel_param.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_param.cpp</primary><secondary>write_dynamics_parameters</secondary></indexterm>
+<para><computeroutput>int write_dynamics_parameters (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bmodparam">Bmodparam</link> &amp; md)</computeroutput></para><para>
+
+<para>Writes a model parameter file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;md</entry>
+                                <entry>
+<para>model parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0.</para>
+</formalpara>
+The only format supported is a STAR format. </para>
+<para>
+Definition at line 726 of file rwmodel_param.cpp.</para>
+    </section><anchor xml:id="_rwmodel__param_8cpp_1a650ad23c12feb27e918c90365c3b4a6e"/>    <section>
+    <title>write_material_json()</title>
+<indexterm><primary>write_material_json</primary><secondary>rwmodel_param.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_param.cpp</primary><secondary>write_material_json</secondary></indexterm>
+<para><computeroutput>int write_material_json (<link linkend="_class_bstring">Bstring</link> &amp; filename, map&lt; string, <link linkend="_class_bmaterial">Bmaterial</link> &gt; material)</computeroutput></para><para>
+Definition at line 486 of file rwmodel_param.cpp.</para>
+    </section><anchor xml:id="_rwmodel__param_8cpp_1a9e68f97fbf05898df750952e412a34bd"/>    <section>
+    <title>write_material_properties()</title>
+<indexterm><primary>write_material_properties</primary><secondary>rwmodel_param.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_param.cpp</primary><secondary>write_material_properties</secondary></indexterm>
+<para><computeroutput>int write_material_properties (<link linkend="_class_bstring">Bstring</link> &amp; filename, map&lt; string, <link linkend="_class_bmaterial">Bmaterial</link> &gt; material)</computeroutput></para><para>
+Definition at line 514 of file rwmodel_param.cpp.</para>
+    </section><anchor xml:id="_rwmodel__param_8cpp_1a8abd957828f81a5cc95631b31b22026f"/>    <section>
+    <title>write_material_star()</title>
+<indexterm><primary>write_material_star</primary><secondary>rwmodel_param.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_param.cpp</primary><secondary>write_material_star</secondary></indexterm>
+<para><computeroutput>int write_material_star (<link linkend="_class_bstring">Bstring</link> &amp; filename, map&lt; string, <link linkend="_class_bmaterial">Bmaterial</link> &gt; material)</computeroutput></para><para>
+Definition at line 457 of file rwmodel_param.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_rwmodel__param_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>rwmodel_param.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_param.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

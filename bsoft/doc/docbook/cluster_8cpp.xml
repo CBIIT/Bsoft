@@ -1,0 +1,184 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_cluster_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/util/cluster.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/util/cluster.cpp</primary></indexterm>
+<para>
+
+<para>Clustering functions. </para>
+ 
+</para>
+<programlisting>#include &quot;cluster.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>vector&lt; long &gt; <link linkend="_cluster_8cpp_1a944632c85d319b4fdc4a1a8b10ada92a">k_means</link> (long n, float *data, long k)</para>
+
+<para>Generate clusters using a K-means algorithm. </para>
+</listitem>
+            <listitem><para>vector&lt; long &gt; <link linkend="_cluster_8cpp_1a6b4ef7e5bcead4853b8d61403338d0dc">affin_prop_clustering</link> (<link linkend="_class_matrix">Matrix</link> s, long maxit, long convit, double lambda, long &amp;ncluster)</para>
+
+<para>Generate clusters from a similarity matrix using affinity propagation. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_cluster_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Clustering functions. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20070417 </para>
+
+<para>Modified: 20210508 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_cluster_8cpp_1a6b4ef7e5bcead4853b8d61403338d0dc"/>    <section>
+    <title>affin_prop_clustering()</title>
+<indexterm><primary>affin_prop_clustering</primary><secondary>cluster.cpp</secondary></indexterm>
+<indexterm><primary>cluster.cpp</primary><secondary>affin_prop_clustering</secondary></indexterm>
+<para><computeroutput>vector&lt;long&gt; affin_prop_clustering (<link linkend="_class_matrix">Matrix</link> s, long maxit, long convit, double lambda, long &amp; ncluster)</computeroutput></para><para>
+
+<para>Generate clusters from a similarity matrix using affinity propagation. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>s</entry>
+                                <entry>
+<para>n x n similarity matrix. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>maxit</entry>
+                                <entry>
+<para>maximum iterations. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>convit</entry>
+                                <entry>
+<para>convergence iterations. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lambda</entry>
+                                <entry>
+<para>damping factor. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;ncluster</entry>
+                                <entry>
+<para>number of clusters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;long&gt; vector of cluster memberships. <literallayout><computeroutput>Frey, B. J. and D. Dueck (2007). &quot;Clustering by passing messages between 
+data points.&quot; Science 315(5814): 972-6.
+The clustering algorithm proceeds iteratively for a given maximum iterations.
+If the cluster solution does not change for a given number of iterations
+(convit), convergence is assumed and the function finishes.
+The damping factor should be ~0.5, or at least between 0.1 and 0.9.
+For larger damping factors, more convergence iterations are required.
+The diagonal of the matrix should be set to preferences for exemplars
+(typically the average or median of the similarities).
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 258 of file cluster.cpp.</para>
+    </section><anchor xml:id="_cluster_8cpp_1a944632c85d319b4fdc4a1a8b10ada92a"/>    <section>
+    <title>k_means()</title>
+<indexterm><primary>k_means</primary><secondary>cluster.cpp</secondary></indexterm>
+<indexterm><primary>cluster.cpp</primary><secondary>k_means</secondary></indexterm>
+<para><computeroutput>vector&lt;long&gt; k_means (long n, float * data, long k)</computeroutput></para><para>
+
+<para>Generate clusters using a K-means algorithm. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>number of data elements. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*data</entry>
+                                <entry>
+<para>floating point array. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>k</entry>
+                                <entry>
+<para>number of classes. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;long&gt; vector of cluster memberships. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 28 of file cluster.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_cluster_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>cluster.cpp</secondary></indexterm>
+<indexterm><primary>cluster.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

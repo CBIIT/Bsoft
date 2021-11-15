@@ -1,0 +1,713 @@
+.TH "/Users/bernard/b20/bsoft/include/mol_util.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/mol_util.h \- Library routines used for atomic coordinates\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Vector3\&.h'\fP
+.br
+\fC#include 'rwmolecule\&.h'\fP
+.br
+\fC#include 'json\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBLatom\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmolgroup_Bfactors\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Calculates the average Bfactors for residues in molecules\&. "
+.ti -1c
+.RI "int \fBmolgroup_print_sequence\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Prints the sequence of a molecule as a single letter code string\&. "
+.ti -1c
+.RI "int \fBmolgroup_set_radius\fP (\fBBmolgroup\fP *molgroup, double radius)"
+.br
+.RI "Shifts all coordinates to a given radius\&. "
+.ti -1c
+.RI "int \fBmolgroup_rename\fP (\fBBmolgroup\fP *molgroup, char first_name)"
+.br
+.RI "Renames molecules\&. "
+.ti -1c
+.RI "int \fBmolgroup_residue_renumber\fP (\fBBmolgroup\fP *molgroup, int first)"
+.br
+.RI "Renumbers residues\&. "
+.ti -1c
+.RI "int \fBmolgroup_atom_renumber\fP (\fBBmolgroup\fP *molgroup, int first)"
+.br
+.RI "Renumbers all atoms, disregarding molecule distinction\&. "
+.ti -1c
+.RI "int \fBmolgroup_coor_reset_occupancy\fP (\fBBmolgroup\fP *molgroup, int range_first, int range_last, double occupancy)"
+.br
+.RI "Sets occupancies to new values\&.\&. "
+.ti -1c
+.RI "double \fBmolgroup_weight_from_atoms\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Calculates the weight of each molecule\&. "
+.ti -1c
+.RI "double \fBmolgroup_weight_from_sequence\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Calculates the weight of each molecule\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmolgroup_center_of_mass\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Calculates the center of mass of a molecule group\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmolgroup_selected_center_of_mass\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Calculates the center of mass of a molecule group\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmolgroup_show_center_of_mass\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Calculates the center of mass of a molecule group\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmol_center_of_mass\fP (\fBBmolecule\fP *mol)"
+.br
+.RI "Calculates the center of mass of a molecule\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmol_show_center_of_mass\fP (\fBBmolecule\fP *mol)"
+.br
+.RI "Calculates the center of mass of a molecule\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmolgroup_principal_axes\fP (\fBBmolgroup\fP *molgroup, \fBVector3\fP< double > *eigenvec)"
+.br
+.RI "Calculates the principal axes of a molecule group\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmol_principal_axes\fP (\fBBmolecule\fP *mol, \fBVector3\fP< double > *eigenvec)"
+.br
+.RI "Calculates the principal axes of a molecule\&. "
+.ti -1c
+.RI "double \fBmolgroup_sphericity\fP (\fBBmolgroup\fP *molgroup, double da)"
+.br
+.RI "Calculates how close the coordinate set is to a spherical shape\&. "
+.ti -1c
+.RI "double \fBmolgroup_density\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Calculates the number and mass density of a molecular system\&. "
+.ti -1c
+.RI "double \fBmolgroup_volume\fP (\fBBmolgroup\fP *molgroup, \fBBstring\fP &paramfile, int wrap)"
+.br
+.RI "Calculates the volume of a molecular system\&. "
+.ti -1c
+.RI "int \fBmolgroup_composition\fP (\fBBmolgroup\fP *molgroup, \fBBstring\fP &paramfile)"
+.br
+.RI "Calculates the elemental composition of a molecular system\&. "
+.ti -1c
+.RI "\fBJSvalue\fP \fBmolgroup_elements\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Calculates the elemental composition\&. "
+.ti -1c
+.RI "\fBJSvalue\fP \fBmolgroup_elements\fP (\fBBmolgroup\fP *molgroup, \fBBstring\fP &paramfile)"
+.br
+.RI "Calculates the elemental composition from residue compositions\&. "
+.ti -1c
+.RI "\fBJSvalue\fP \fBprotein_composition_default\fP (double mass)"
+.br
+.RI "Default protein composition adjusted by mass\&. "
+.ti -1c
+.RI "int \fBmolgroup_radial_density\fP (\fBBmolgroup\fP *molgroup, double interval, double cutoff, int wrap)"
+.br
+.RI "Calculates a radial distribution function\&. "
+.ti -1c
+.RI "\fBLatom\fP ** \fBmolgroup_atom_mesh_lists\fP (\fBBmolgroup\fP *molgroup, \fBVector3\fP< int > size, \fBVector3\fP< double > sampling)"
+.br
+.RI "Generates lists of atoms based on a grid\&. "
+.ti -1c
+.RI "vector< \fBBatom\fP * > \fBatom_get_array\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Generates an array of pointers to atom structures\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines used for atomic coordinates\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19980214 
+.PP
+Modified: 20210512 
+.RE
+.PP
+
+.PP
+Definition in file \fBmol_util\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "vector<\fBBatom\fP*> atom_get_array (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Generates an array of pointers to atom structures\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure to be modified\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<Batom*> array of pointers to atoms\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1224 of file mol_util\&.cpp\&.
+.SS "\fBVector3\fP<double> mol_center_of_mass (\fBBmolecule\fP * mol)"
+
+.PP
+Calculates the center of mass of a molecule\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol\fP molecule structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP 3-valued center of mass vector\&. 
+.RE
+.PP
+
+.PP
+Definition at line 445 of file mol_util\&.cpp\&.
+.SS "\fBVector3\fP<double> mol_principal_axes (\fBBmolecule\fP * mol, \fBVector3\fP< double > * eigenvec)"
+
+.PP
+Calculates the principal axes of a molecule\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol\fP molecule structure\&. 
+.br
+\fI*eigenvec\fP eigen vectors (can be NULL)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP 3-valued vector of principal axes\&. 
+.RE
+.PP
+
+.PP
+Definition at line 544 of file mol_util\&.cpp\&.
+.SS "\fBVector3\fP<double> mol_show_center_of_mass (\fBBmolecule\fP * mol)"
+
+.PP
+Calculates the center of mass of a molecule\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol\fP molecule structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP 3-valued center of mass vector\&. 
+.RE
+.PP
+
+.PP
+Definition at line 483 of file mol_util\&.cpp\&.
+.SS "\fBLatom\fP** molgroup_atom_mesh_lists (\fBBmolgroup\fP * molgroup, \fBVector3\fP< int > size, \fBVector3\fP< double > sampling)"
+
+.PP
+Generates lists of atoms based on a grid\&. 
+.PP
+.nf
+The coordinates must be positive to fit into a grid starting at {0,0,0}.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure to be modified\&. 
+.br
+\fIsize\fP size of grid\&. 
+.br
+\fIsampling\fP spacing in each dimension\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Latom** array of linked lists of atoms\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1176 of file mol_util\&.cpp\&.
+.SS "int molgroup_atom_renumber (\fBBmolgroup\fP * molgroup, int first)"
+
+.PP
+Renumbers all atoms, disregarding molecule distinction\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIfirst\fP number of first atom\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 211 of file mol_util\&.cpp\&.
+.SS "int molgroup_Bfactors (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Calculates the average Bfactors for residues in molecules\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 28 of file mol_util\&.cpp\&.
+.SS "\fBVector3\fP<double> molgroup_center_of_mass (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Calculates the center of mass of a molecule group\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP 3-valued center of mass vector\&. 
+.RE
+.PP
+
+.PP
+Definition at line 351 of file mol_util\&.cpp\&.
+.SS "int molgroup_composition (\fBBmolgroup\fP * molgroup, \fBBstring\fP & paramfile)"
+
+.PP
+Calculates the elemental composition of a molecular system\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fI&paramfile\fP atomic parameter file\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 861 of file mol_util\&.cpp\&.
+.SS "int molgroup_coor_reset_occupancy (\fBBmolgroup\fP * molgroup, int range_first, int range_last, double occupancy)"
+
+.PP
+Sets occupancies to new values\&.\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIrange_first\fP first residue in range to change\&. 
+.br
+\fIrange_last\fP last residue in range to change\&. 
+.br
+\fIoccupancy\fP value to set occupancy to\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 243 of file mol_util\&.cpp\&.
+.SS "double molgroup_density (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Calculates the number and mass density of a molecular system\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double density: Da/A^3\&. 
+.PP
+.nf
+Requirement: The box size must be correctly specified in the
+molecular group structure.
+The number of molecules, residues and atoms are calculated and the
+density for each number reported.
+The total mass is calculated and the mass density reported as
+Da/A^3 and g/ml.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 710 of file mol_util\&.cpp\&.
+.SS "\fBJSvalue\fP molgroup_elements (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Calculates the elemental composition\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBJSvalue\fP composition\&. 
+.RE
+.PP
+
+.PP
+Definition at line 936 of file mol_util\&.cpp\&.
+.SS "\fBJSvalue\fP molgroup_elements (\fBBmolgroup\fP * molgroup, \fBBstring\fP & paramfile)"
+
+.PP
+Calculates the elemental composition from residue compositions\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fI&paramfile\fP residue parameter file\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBJSvalue\fP composition\&. 
+.RE
+.PP
+
+.PP
+Definition at line 963 of file mol_util\&.cpp\&.
+.SS "\fBVector3\fP<double> molgroup_principal_axes (\fBBmolgroup\fP * molgroup, \fBVector3\fP< double > * eigenvec)"
+
+.PP
+Calculates the principal axes of a molecule group\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fI*eigenvec\fP eigen vectors (can be NULL)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP 3-valued vector of principal axes\&. 
+.RE
+.PP
+
+.PP
+Definition at line 499 of file mol_util\&.cpp\&.
+.SS "int molgroup_print_sequence (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Prints the sequence of a molecule as a single letter code string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 92 of file mol_util\&.cpp\&.
+.SS "int molgroup_radial_density (\fBBmolgroup\fP * molgroup, double interval, double cutoff, int wrap)"
+
+.PP
+Calculates a radial distribution function\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fIinterval\fP interval between bins\&. 
+.br
+\fIcutoff\fP distance cutoff\&. 
+.br
+\fIwrap\fP flag to use periodic boundaries\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The atoms are not distinguished by type or properties.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1074 of file mol_util\&.cpp\&.
+.SS "int molgroup_rename (\fBBmolgroup\fP * molgroup, char first_name)"
+
+.PP
+Renames molecules\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIfirst_name\fP letter of first molecule\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Letters are assigned to the molecules in sequence starting from the
+given first letter. If it extends beyond 'Z', it restarts at 'A'.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 161 of file mol_util\&.cpp\&.
+.SS "int molgroup_residue_renumber (\fBBmolgroup\fP * molgroup, int first)"
+
+.PP
+Renumbers residues\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIfirst\fP number of first residue\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 182 of file mol_util\&.cpp\&.
+.SS "\fBVector3\fP<double> molgroup_selected_center_of_mass (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Calculates the center of mass of a molecule group\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP 3-valued center of mass vector\&. 
+.RE
+.PP
+
+.PP
+Definition at line 391 of file mol_util\&.cpp\&.
+.SS "int molgroup_set_radius (\fBBmolgroup\fP * molgroup, double radius)"
+
+.PP
+Shifts all coordinates to a given radius\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIradius\fP spherical radius\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 114 of file mol_util\&.cpp\&.
+.SS "\fBVector3\fP<double> molgroup_show_center_of_mass (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Calculates the center of mass of a molecule group\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP 3-valued center of mass vector\&. 
+.RE
+.PP
+
+.PP
+Definition at line 431 of file mol_util\&.cpp\&.
+.SS "double molgroup_sphericity (\fBBmolgroup\fP * molgroup, double da)"
+
+.PP
+Calculates how close the coordinate set is to a spherical shape\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIda\fP angular step size\&. (in radians) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double sphericity\&. 
+.PP
+.nf
+For each solid angle, the algorithm finds the coordinates with the
+maximum distance from the center-of-mass.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 589 of file mol_util\&.cpp\&.
+.SS "double molgroup_volume (\fBBmolgroup\fP * molgroup, \fBBstring\fP & paramfile, int wrap)"
+
+.PP
+Calculates the volume of a molecular system\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fI&paramfile\fP atomic parameter file\&. 
+.br
+\fIwrap\fP flag to turn on wrapping\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double volume in angstrom^3\&. 
+.PP
+.nf
+The volume occupied by all the atoms is estimated from the footprint
+under the Van der Waals volume of each atom.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 748 of file mol_util\&.cpp\&.
+.SS "double molgroup_weight_from_atoms (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Calculates the weight of each molecule\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double total mass of the molecule group\&. 
+.RE
+.PP
+
+.PP
+Definition at line 270 of file mol_util\&.cpp\&.
+.SS "double molgroup_weight_from_sequence (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Calculates the weight of each molecule\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double total mass of the molecule group\&. 
+.RE
+.PP
+
+.PP
+Definition at line 310 of file mol_util\&.cpp\&.
+.SS "\fBJSvalue\fP protein_composition_default (double mass)"
+
+.PP
+Default protein composition adjusted by mass\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImass\fP molecular weight\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBJSvalue\fP composition\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1035 of file mol_util\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

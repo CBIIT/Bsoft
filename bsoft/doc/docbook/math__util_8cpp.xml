@@ -1,0 +1,645 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_math__util_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/util/math_util.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/util/math_util.cpp</primary></indexterm>
+<para>
+
+<para>Mathematics utility functions. </para>
+ 
+</para>
+<programlisting>#include &quot;math_util.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>double <link linkend="_math__util_8cpp_1a8d93c5b970542c080733b7cd9f82bd5b">bfloor</link> (double value, int places)</para>
+
+<para>Truncates a value to a specified number of decimal places. </para>
+</listitem>
+            <listitem><para>double <link linkend="_math__util_8cpp_1a1f36c65fe9a1e4c0e04cfc0ce818892b">bround</link> (double value, int places)</para>
+
+<para>Rounds a value to a specified number of decimal places. </para>
+</listitem>
+            <listitem><para>double <link linkend="_math__util_8cpp_1a73776fd605fa19612cdeaa699c517cf8">factorial</link> (int n)</para>
+
+<para>Calculates the factorial of n. </para>
+</listitem>
+            <listitem><para>double <link linkend="_math__util_8cpp_1a8b9a449a7c73665653c53e8a611f1b64">number_of_combinations</link> (int n, int r)</para>
+
+<para>Calculates the number of combinations of size r in set of size n. </para>
+</listitem>
+            <listitem><para>int <link linkend="_math__util_8cpp_1ae08e883616c016c794dd48f4c8844a8a">partition</link> (vector&lt; double &gt; &amp;a, int n, int k)</para>
+
+<para>Determines the index k&apos;th value in the array. </para>
+</listitem>
+            <listitem><para>long * <link linkend="_math__util_8cpp_1aa834c8621784ec9a55bb926a6f9855fb">prime_factors</link> (long number, long &amp;n)</para>
+
+<para>Finds all the prime factor for the input number. </para>
+</listitem>
+            <listitem><para>long <link linkend="_math__util_8cpp_1a0ef20e14605490f07837761bd514fe14">smallest_prime</link> (long number)</para>
+
+<para>Finds the smallest prime number factor of the input number. </para>
+</listitem>
+            <listitem><para>int <link linkend="_math__util_8cpp_1a64e1c4c1524165dbe16c0d45914d98d1">next_permutation</link> (<link linkend="_class_bstring">Bstring</link> &amp;s)</para>
+
+<para>Produces the next permutation in lexical order. </para>
+</listitem>
+            <listitem><para>double <link linkend="_math__util_8cpp_1ad9df1adf12cc7902d0c493ef917aefe0">fishers_z_transform</link> (double value)</para>
+
+<para>Calculates Fisher&apos;s z-transform. </para>
+</listitem>
+            <listitem><para>double <link linkend="_math__util_8cpp_1a1d6e649feccbc1d73424037ed02d7418">betacf</link> (double a, double b, double x)</para>
+
+<para>Evaluates the continued fraction for the incomplete beta function. </para>
+</listitem>
+            <listitem><para>double <link linkend="_math__util_8cpp_1aff974d448122c33ebffbaf2666c42092">betai</link> (double a, double b, double x)</para>
+
+<para>Calculates the incomplete beta function Ix(a,b). </para>
+</listitem>
+            <listitem><para>double <link linkend="_math__util_8cpp_1a3f7f52bdf9577a757dcaeb5e13de1e3a">kmeans_threshold</link> (long n, double *v)</para>
+
+<para>Finds a threshold that partitions an array into foreground and background clusters. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_math__util_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Mathematics utility functions. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20030414 </para>
+
+<para>Modified: 20151203 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_math__util_8cpp_1a1d6e649feccbc1d73424037ed02d7418"/>    <section>
+    <title>betacf()</title>
+<indexterm><primary>betacf</primary><secondary>math_util.cpp</secondary></indexterm>
+<indexterm><primary>math_util.cpp</primary><secondary>betacf</secondary></indexterm>
+<para><computeroutput>double betacf (double a, double b, double x)</computeroutput></para><para>
+
+<para>Evaluates the continued fraction for the incomplete beta function. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>a</entry>
+                                <entry>
+<para>first parameter. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>b</entry>
+                                <entry>
+<para>second parameter. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>x</entry>
+                                <entry>
+<para>domain variable [0,1]. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double 
+<literallayout>&#160;&#xa;</literallayout>
+ <literallayout><computeroutput>Lentz&apos;s method.
+</computeroutput></literallayout> Reference: Press W.H. et al (1992) Numerical Recipes in C. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 268 of file math_util.cpp.</para>
+    </section><anchor xml:id="_math__util_8cpp_1aff974d448122c33ebffbaf2666c42092"/>    <section>
+    <title>betai()</title>
+<indexterm><primary>betai</primary><secondary>math_util.cpp</secondary></indexterm>
+<indexterm><primary>math_util.cpp</primary><secondary>betai</secondary></indexterm>
+<para><computeroutput>double betai (double a, double b, double x)</computeroutput></para><para>
+
+<para>Calculates the incomplete beta function Ix(a,b). </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>a</entry>
+                                <entry>
+<para>first parameter. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>b</entry>
+                                <entry>
+<para>second parameter. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>x</entry>
+                                <entry>
+<para>domain variable [0,1]. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double 
+<literallayout>&#160;&#xa;</literallayout>
+ <literallayout><computeroutput>Limiting values: I0(a,b) = 0, I1(a,b) = 1.
+Symmetry relation: Ix(a,b) = 1 - I1-x(b,a).
+</computeroutput></literallayout> Reference: Press W.H. et al (1992) Numerical Recipes in C. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 320 of file math_util.cpp.</para>
+    </section><anchor xml:id="_math__util_8cpp_1a8d93c5b970542c080733b7cd9f82bd5b"/>    <section>
+    <title>bfloor()</title>
+<indexterm><primary>bfloor</primary><secondary>math_util.cpp</secondary></indexterm>
+<indexterm><primary>math_util.cpp</primary><secondary>bfloor</secondary></indexterm>
+<para><computeroutput>double bfloor (double value, int places)</computeroutput></para><para>
+
+<para>Truncates a value to a specified number of decimal places. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>value</entry>
+                                <entry>
+<para>value to be truncated. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>places</entry>
+                                <entry>
+<para>number of decimal places. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 21 of file math_util.cpp.</para>
+    </section><anchor xml:id="_math__util_8cpp_1a1f36c65fe9a1e4c0e04cfc0ce818892b"/>    <section>
+    <title>bround()</title>
+<indexterm><primary>bround</primary><secondary>math_util.cpp</secondary></indexterm>
+<indexterm><primary>math_util.cpp</primary><secondary>bround</secondary></indexterm>
+<para><computeroutput>double bround (double value, int places)</computeroutput></para><para>
+
+<para>Rounds a value to a specified number of decimal places. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>value</entry>
+                                <entry>
+<para>value to be rounded. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>places</entry>
+                                <entry>
+<para>number of decimal places. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double rounded value. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 39 of file math_util.cpp.</para>
+    </section><anchor xml:id="_math__util_8cpp_1a73776fd605fa19612cdeaa699c517cf8"/>    <section>
+    <title>factorial()</title>
+<indexterm><primary>factorial</primary><secondary>math_util.cpp</secondary></indexterm>
+<indexterm><primary>math_util.cpp</primary><secondary>factorial</secondary></indexterm>
+<para><computeroutput>double factorial (int n)</computeroutput></para><para>
+
+<para>Calculates the factorial of n. </para>
+</para>
+
+<para><literallayout><computeroutput>All values of n less than 1 returns 1.
+An exact calculation is done for 1 &lt; n &lt;= 50.
+The Lancos approximation is used for n &gt; 50.
+Factorials of integers larger than 170 exceeds the capacity of a 
+double and causes program termination.
+The largest relative error is for 170: 1.22378e-13.
+</computeroutput></literallayout> Reference: Press W.H. et al (1992) Numerical Recipes in C.</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>integer. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double factorial of n, &lt;0 on error. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 66 of file math_util.cpp.</para>
+    </section><anchor xml:id="_math__util_8cpp_1ad9df1adf12cc7902d0c493ef917aefe0"/>    <section>
+    <title>fishers_z_transform()</title>
+<indexterm><primary>fishers_z_transform</primary><secondary>math_util.cpp</secondary></indexterm>
+<indexterm><primary>math_util.cpp</primary><secondary>fishers_z_transform</secondary></indexterm>
+<para><computeroutput>double fishers_z_transform (double value)</computeroutput></para><para>
+
+<para>Calculates Fisher&apos;s z-transform. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>value</entry>
+                                <entry>
+<para>a value. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double z value. <literallayout><computeroutput>Fisher&apos;s z-transform is given by:
+    z = 0.5*log((1+v)/(1-v))
+</computeroutput></literallayout> Reference: Press W.H. et al (1992) Numerical Recipes in C. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 249 of file math_util.cpp.</para>
+    </section><anchor xml:id="_math__util_8cpp_1a3f7f52bdf9577a757dcaeb5e13de1e3a"/>    <section>
+    <title>kmeans_threshold()</title>
+<indexterm><primary>kmeans_threshold</primary><secondary>math_util.cpp</secondary></indexterm>
+<indexterm><primary>math_util.cpp</primary><secondary>kmeans_threshold</secondary></indexterm>
+<para><computeroutput>double kmeans_threshold (long n, double * v)</computeroutput></para><para>
+
+<para>Finds a threshold that partitions an array into foreground and background clusters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>number of array elements. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>v</entry>
+                                <entry>
+<para>array. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double threshold. 
+<literallayout>&#160;&#xa;</literallayout>
+ <literallayout><computeroutput>Limiting values: I0(a,b) = 0, I1(a,b) = 1.
+Symmetry relation: Ix(a,b) = 1 - I1-x(b,a).
+</computeroutput></literallayout> Reference: Press W.H. et al (1992) Numerical Recipes in C. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 345 of file math_util.cpp.</para>
+    </section><anchor xml:id="_math__util_8cpp_1a64e1c4c1524165dbe16c0d45914d98d1"/>    <section>
+    <title>next_permutation()</title>
+<indexterm><primary>next_permutation</primary><secondary>math_util.cpp</secondary></indexterm>
+<indexterm><primary>math_util.cpp</primary><secondary>next_permutation</secondary></indexterm>
+<para><computeroutput>int next_permutation (<link linkend="_class_bstring">Bstring</link> &amp; s)</computeroutput></para><para>
+
+<para>Produces the next permutation in lexical order. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;s</entry>
+                                <entry>
+<para>string of symbols to permute. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 1 = success, 0 = no next permutation. <literallayout><computeroutput>To get all permutations, the first string needs
+to be ordered in ascending order.
+</computeroutput></literallayout> Reference: Press W.H. et al (1992) Numerical Recipes in C. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 220 of file math_util.cpp.</para>
+    </section><anchor xml:id="_math__util_8cpp_1a8b9a449a7c73665653c53e8a611f1b64"/>    <section>
+    <title>number_of_combinations()</title>
+<indexterm><primary>number_of_combinations</primary><secondary>math_util.cpp</secondary></indexterm>
+<indexterm><primary>math_util.cpp</primary><secondary>number_of_combinations</secondary></indexterm>
+<para><computeroutput>double number_of_combinations (int n, int r)</computeroutput></para><para>
+
+<para>Calculates the number of combinations of size r in set of size n. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>number in set. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>r</entry>
+                                <entry>
+<para>number in subset. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double number of combinations, &lt;0 on error. <literallayout><computeroutput>All values of n less than 1 returns 1.
+An exact calculation is done for 1 &lt; n &lt;= 50.
+The Lancos approximation is used for n &gt; 50.
+</computeroutput></literallayout> Reference: Press W.H. et al (1992) Numerical Recipes in C. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 97 of file math_util.cpp.</para>
+    </section><anchor xml:id="_math__util_8cpp_1ae08e883616c016c794dd48f4c8844a8a"/>    <section>
+    <title>partition()</title>
+<indexterm><primary>partition</primary><secondary>math_util.cpp</secondary></indexterm>
+<indexterm><primary>math_util.cpp</primary><secondary>partition</secondary></indexterm>
+<para><computeroutput>int partition (vector&lt; double &gt; &amp; a, int n, int k)</computeroutput></para><para>
+
+<para>Determines the index k&apos;th value in the array. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*a</entry>
+                                <entry>
+<para>array. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>number of array elements. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>k</entry>
+                                <entry>
+<para>rank index to look for. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>0 <literallayout><computeroutput>The array is partioned into 2 sides, with the left side lower or equal 
+to and the right side higher or equal to the k&apos;th element.
+This is useful to determine the median without full sorting.
+</computeroutput></literallayout> Reference: Press W.H. et al (1992) Numerical Recipes in C. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 123 of file math_util.cpp.</para>
+    </section><anchor xml:id="_math__util_8cpp_1aa834c8621784ec9a55bb926a6f9855fb"/>    <section>
+    <title>prime_factors()</title>
+<indexterm><primary>prime_factors</primary><secondary>math_util.cpp</secondary></indexterm>
+<indexterm><primary>math_util.cpp</primary><secondary>prime_factors</secondary></indexterm>
+<para><computeroutput>long* prime_factors (long number, long &amp; n)</computeroutput></para><para>
+
+<para>Finds all the prime factor for the input number. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>integer. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;n</entry>
+                                <entry>
+<para>number of prime factors. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long* array of prime factors (can be NULL). <literallayout><computeroutput>Calculates the prime factors from the smallest to the largest.
+</computeroutput></literallayout> Reference: Press W.H. et al (1992) Numerical Recipes in C. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 152 of file math_util.cpp.</para>
+    </section><anchor xml:id="_math__util_8cpp_1a0ef20e14605490f07837761bd514fe14"/>    <section>
+    <title>smallest_prime()</title>
+<indexterm><primary>smallest_prime</primary><secondary>math_util.cpp</secondary></indexterm>
+<indexterm><primary>math_util.cpp</primary><secondary>smallest_prime</secondary></indexterm>
+<para><computeroutput>long smallest_prime (long number)</computeroutput></para><para>
+
+<para>Finds the smallest prime number factor of the input number. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>integer. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long smallest prime factor. <literallayout><computeroutput>Tries to divide the given positive integer number by 
+primes from 2 to the square root of the integer.
+Returns the first prime divisor found, which may be the 
+input number if it is prime.
+</computeroutput></literallayout> Reference: Press W.H. et al (1992) Numerical Recipes in C. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 191 of file math_util.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_math__util_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>math_util.cpp</secondary></indexterm>
+<indexterm><primary>math_util.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

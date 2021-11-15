@@ -1,0 +1,727 @@
+.TH "CTFparam" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+CTFparam
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ctf\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBCTFparam\fP ()"
+.br
+.ti -1c
+.RI "\fBCTFparam\fP (double v, double sa, double ac)"
+.br
+.ti -1c
+.RI "int \fBupdate\fP (\fBCTFparam\fP *ctf)"
+.br
+.ti -1c
+.RI "int \fBupdate\fP (\fBCTFparam\fP &ctf)"
+.br
+.RI "Updates a CTF structure from another\&. "
+.ti -1c
+.RI "double \fBvolt\fP ()"
+.br
+.ti -1c
+.RI "void \fBvolt\fP (double v)"
+.br
+.ti -1c
+.RI "double \fBfocal_length\fP ()"
+.br
+.ti -1c
+.RI "void \fBfocal_length\fP (double v)"
+.br
+.ti -1c
+.RI "double \fBCs\fP ()"
+.br
+.ti -1c
+.RI "void \fBCs\fP (double v)"
+.br
+.ti -1c
+.RI "double \fBCc\fP ()"
+.br
+.ti -1c
+.RI "void \fBCc\fP (double v)"
+.br
+.ti -1c
+.RI "double \fBalpha\fP ()"
+.br
+.ti -1c
+.RI "void \fBalpha\fP (double v)"
+.br
+.ti -1c
+.RI "double \fBdE\fP ()"
+.br
+.ti -1c
+.RI "void \fBdE\fP (double v)"
+.br
+.ti -1c
+.RI "double \fBamp_shift\fP ()"
+.br
+.ti -1c
+.RI "void \fBamp_shift\fP (double v)"
+.br
+.ti -1c
+.RI "double \fBobjective_aperture\fP ()"
+.br
+.ti -1c
+.RI "void \fBobjective_aperture\fP (double v)"
+.br
+.ti -1c
+.RI "double \fBslit_width\fP ()"
+.br
+.ti -1c
+.RI "void \fBslit_width\fP (double v)"
+.br
+.ti -1c
+.RI "double \fBdefocus_average\fP ()"
+.br
+.ti -1c
+.RI "void \fBdefocus_average\fP (double v)"
+.br
+.ti -1c
+.RI "double \fBdefocus_deviation\fP ()"
+.br
+.ti -1c
+.RI "void \fBdefocus_deviation\fP (double v)"
+.br
+.ti -1c
+.RI "double \fBastigmatism_angle\fP ()"
+.br
+.ti -1c
+.RI "void \fBastigmatism_angle\fP (double v)"
+.br
+.ti -1c
+.RI "long \fBbaseline_type\fP ()"
+.br
+.ti -1c
+.RI "void \fBbaseline_type\fP (long t)"
+.br
+.ti -1c
+.RI "vector< double > & \fBbaseline\fP ()"
+.br
+.ti -1c
+.RI "double \fBbaseline\fP (int i)"
+.br
+.ti -1c
+.RI "void \fBbaseline\fP (int i, double d)"
+.br
+.ti -1c
+.RI "void \fBbaseline\fP (double *b)"
+.br
+.ti -1c
+.RI "void \fBbaseline\fP (vector< double > &b)"
+.br
+.ti -1c
+.RI "long \fBenvelope_type\fP ()"
+.br
+.ti -1c
+.RI "void \fBenvelope_type\fP (long t)"
+.br
+.ti -1c
+.RI "vector< double > & \fBenvelope\fP ()"
+.br
+.ti -1c
+.RI "double \fBenvelope\fP (int i)"
+.br
+.ti -1c
+.RI "void \fBenvelope\fP (int i, double d)"
+.br
+.ti -1c
+.RI "void \fBenvelope\fP (double *v)"
+.br
+.ti -1c
+.RI "void \fBenvelope\fP (vector< double > &v)"
+.br
+.ti -1c
+.RI "double \fBfom\fP ()"
+.br
+.ti -1c
+.RI "void \fBfom\fP (double v)"
+.br
+.ti -1c
+.RI "bool \fBcheck_defocus\fP ()"
+.br
+.ti -1c
+.RI "bool \fBcheck_Cs\fP ()"
+.br
+.ti -1c
+.RI "double \fBlambda\fP ()"
+.br
+.ti -1c
+.RI "double \fBfrequency_cutoff\fP ()"
+.br
+.ti -1c
+.RI "double \fBterm1\fP ()"
+.br
+.ti -1c
+.RI "double \fBterm2\fP ()"
+.br
+.ti -1c
+.RI "long double \fBdelta_phi\fP (double s2, double \fBangle\fP)"
+.br
+.ti -1c
+.RI "long double \fBcalculate\fP (double s2, double \fBangle\fP)"
+.br
+.ti -1c
+.RI "vector< double > \fBcalculate\fP (int nrad, int npsi, double step_size)"
+.br
+.RI "Calculates a CTF curve\&. "
+.ti -1c
+.RI "\fBComplex\fP< double > \fBcalculate_complex\fP (double s2, double \fBangle\fP)"
+.br
+.ti -1c
+.RI "double \fBcalc_baseline\fP (double s)"
+.br
+.ti -1c
+.RI "double \fBcalc_envelope\fP (double s)"
+.br
+.ti -1c
+.RI "vector< double > \fBzeroes\fP (double max_s)"
+.br
+.RI "Calculates the zeroes of a CTF curve on the spatial frequency scale\&. "
+.ti -1c
+.RI "vector< double > \fBmaxima\fP (double max_s)"
+.br
+.RI "Calculates the maxima of a CTF curve on the spatial frequency scale\&. "
+.ti -1c
+.RI "\fBBstring\fP \fBbaseline_equation\fP ()"
+.br
+.RI "Generates a baseline equation string from 4 to 10 coefficients\&. "
+.ti -1c
+.RI "\fBBstring\fP \fBenvelope_equation\fP ()"
+.br
+.RI "Generates an envelope equation string from 4 coefficients\&. "
+.ti -1c
+.RI "int \fBparse_baseline_equation\fP (\fBBstring\fP base_eq)"
+.br
+.RI "Extracts the coefficients from the baseline string\&. "
+.ti -1c
+.RI "int \fBparse_envelope_equation\fP (\fBBstring\fP env_eq)"
+.br
+.RI "Extracts the coefficients from the envelope string\&. "
+.ti -1c
+.RI "vector< double > \fBenvelope_partial_coherence\fP (long n, double freq_step)"
+.br
+.RI "Calculates the envelope curve based on partial coherence\&. "
+.ti -1c
+.RI "vector< double > \fBenvelope_energy_spread\fP (long n, double freq_step)"
+.br
+.RI "Calculates the envelope curve based on energy spread\&. "
+.ti -1c
+.RI "double \fBzero\fP (int i)"
+.br
+.ti -1c
+.RI "double \fBdefocus_for_first_zero\fP (double s)"
+.br
+.ti -1c
+.RI "void \fBshow\fP ()"
+.br
+.ti -1c
+.RI "void \fBshow_baseline\fP ()"
+.br
+.ti -1c
+.RI "void \fBshow_envelope\fP ()"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 28 of file ctf\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "CTFparam::CTFparam ()\fC [inline]\fP"
+
+.PP
+Definition at line 76 of file ctf\&.h\&.
+.SS "CTFparam::CTFparam (double v, double sa, double ac)\fC [inline]\fP"
+
+.PP
+Definition at line 77 of file ctf\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "double CTFparam::alpha ()\fC [inline]\fP"
+
+.PP
+Definition at line 95 of file ctf\&.h\&.
+.SS "void CTFparam::alpha (double v)\fC [inline]\fP"
+
+.PP
+Definition at line 96 of file ctf\&.h\&.
+.SS "double CTFparam::amp_shift ()\fC [inline]\fP"
+
+.PP
+Definition at line 99 of file ctf\&.h\&.
+.SS "void CTFparam::amp_shift (double v)\fC [inline]\fP"
+
+.PP
+Definition at line 100 of file ctf\&.h\&.
+.SS "double CTFparam::astigmatism_angle ()\fC [inline]\fP"
+
+.PP
+Definition at line 110 of file ctf\&.h\&.
+.SS "void CTFparam::astigmatism_angle (double v)\fC [inline]\fP"
+
+.PP
+Definition at line 111 of file ctf\&.h\&.
+.SS "vector<double>& CTFparam::baseline ()\fC [inline]\fP"
+
+.PP
+Definition at line 114 of file ctf\&.h\&.
+.SS "void CTFparam::baseline (double * b)\fC [inline]\fP"
+
+.PP
+Definition at line 117 of file ctf\&.h\&.
+.SS "double CTFparam::baseline (int i)\fC [inline]\fP"
+
+.PP
+Definition at line 115 of file ctf\&.h\&.
+.SS "void CTFparam::baseline (int i, double d)\fC [inline]\fP"
+
+.PP
+Definition at line 116 of file ctf\&.h\&.
+.SS "void CTFparam::baseline (vector< double > & b)\fC [inline]\fP"
+
+.PP
+Definition at line 118 of file ctf\&.h\&.
+.SS "\fBBstring\fP CTFparam::baseline_equation ()"
+
+.PP
+Generates a baseline equation string from 4 to 10 coefficients\&. 
+.PP
+\fBReturns\fP
+.RS 4
+\fBBstring\fP baseline equation\&. 
+.PP
+.nf
+The baseline string is constructed from the 4 to 10 coefficients
+according to the specified type.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 204 of file ctf\&.cpp\&.
+.SS "long CTFparam::baseline_type ()\fC [inline]\fP"
+
+.PP
+Definition at line 112 of file ctf\&.h\&.
+.SS "void CTFparam::baseline_type (long t)\fC [inline]\fP"
+
+.PP
+Definition at line 113 of file ctf\&.h\&.
+.SS "double CTFparam::calc_baseline (double s)\fC [inline]\fP"
+
+.PP
+Definition at line 175 of file ctf\&.h\&.
+.SS "double CTFparam::calc_envelope (double s)\fC [inline]\fP"
+
+.PP
+Definition at line 203 of file ctf\&.h\&.
+.SS "long double CTFparam::calculate (double s2, double angle)\fC [inline]\fP"
+
+.PP
+Definition at line 163 of file ctf\&.h\&.
+.SS "vector< double > CTFparam::calculate (int nrad, int npsi, double step_size)"
+
+.PP
+Calculates a CTF curve\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fInrad\fP number of radii\&. 
+.br
+\fInpsi\fP number of angular segments\&. 
+.br
+\fIstep_size\fP reciprocal space step size (1/angstrom)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<double> new CTF array\&. 
+.PP
+.nf
+Defocus values are positive for underfocus.
+Functions:
+    angle = atan(y/x)
+    s2 = reciprocal space distance squared
+    defocus_average = (defocus_max + defocus_min)/2
+    defocus_deviation = (defocus_max - defocus_min)/2
+    defocus = defocus_average + defocus_deviation*cos(2*(angle - astigmatism_angle))
+    phase = 0.5*PI*lambda*lambda*lambda*Cs*s2*s2 - PI*lambda*defocus*s2 - amp_shift;
+    CTF = sin(phase)
+The new CTF curve is returned.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 69 of file ctf\&.cpp\&.
+.SS "\fBComplex\fP<double> CTFparam::calculate_complex (double s2, double angle)\fC [inline]\fP"
+
+.PP
+Definition at line 170 of file ctf\&.h\&.
+.SS "double CTFparam::Cc ()\fC [inline]\fP"
+
+.PP
+Definition at line 93 of file ctf\&.h\&.
+.SS "void CTFparam::Cc (double v)\fC [inline]\fP"
+
+.PP
+Definition at line 94 of file ctf\&.h\&.
+.SS "bool CTFparam::check_Cs ()\fC [inline]\fP"
+
+.PP
+Definition at line 137 of file ctf\&.h\&.
+.SS "bool CTFparam::check_defocus ()\fC [inline]\fP"
+
+.PP
+Definition at line 129 of file ctf\&.h\&.
+.SS "double CTFparam::Cs ()\fC [inline]\fP"
+
+.PP
+Definition at line 91 of file ctf\&.h\&.
+.SS "void CTFparam::Cs (double v)\fC [inline]\fP"
+
+.PP
+Definition at line 92 of file ctf\&.h\&.
+.SS "double CTFparam::dE ()\fC [inline]\fP"
+
+.PP
+Definition at line 97 of file ctf\&.h\&.
+.SS "void CTFparam::dE (double v)\fC [inline]\fP"
+
+.PP
+Definition at line 98 of file ctf\&.h\&.
+.SS "double CTFparam::defocus_average ()\fC [inline]\fP"
+
+.PP
+Definition at line 106 of file ctf\&.h\&.
+.SS "void CTFparam::defocus_average (double v)\fC [inline]\fP"
+
+.PP
+Definition at line 107 of file ctf\&.h\&.
+.SS "double CTFparam::defocus_deviation ()\fC [inline]\fP"
+
+.PP
+Definition at line 108 of file ctf\&.h\&.
+.SS "void CTFparam::defocus_deviation (double v)\fC [inline]\fP"
+
+.PP
+Definition at line 109 of file ctf\&.h\&.
+.SS "double CTFparam::defocus_for_first_zero (double s)\fC [inline]\fP"
+
+.PP
+Definition at line 247 of file ctf\&.h\&.
+.SS "long double CTFparam::delta_phi (double s2, double angle)\fC [inline]\fP"
+
+.PP
+Definition at line 155 of file ctf\&.h\&.
+.SS "vector<double>& CTFparam::envelope ()\fC [inline]\fP"
+
+.PP
+Definition at line 121 of file ctf\&.h\&.
+.SS "void CTFparam::envelope (double * v)\fC [inline]\fP"
+
+.PP
+Definition at line 124 of file ctf\&.h\&.
+.SS "double CTFparam::envelope (int i)\fC [inline]\fP"
+
+.PP
+Definition at line 122 of file ctf\&.h\&.
+.SS "void CTFparam::envelope (int i, double d)\fC [inline]\fP"
+
+.PP
+Definition at line 123 of file ctf\&.h\&.
+.SS "void CTFparam::envelope (vector< double > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 125 of file ctf\&.h\&.
+.SS "vector< double > CTFparam::envelope_energy_spread (long n, double freq_step)"
+
+.PP
+Calculates the envelope curve based on energy spread\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP number of spatial frequency steps\&. 
+.br
+\fIfreq_step\fP size of spatial frequency step\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<double> curve\&.
+.RE
+.PP
+The curve is calculated at frequency s as: Ees(s) = exp(-0\&.5*(pi*lambda*Cc*(dE/V)*s^2)^2) where Cc: Chromatic aberation (~2e7 A) dE: Energy spread (~1 eV) V: Acceleration voltage (~1e5 V) lamda: electron wavelength (~0\&.03 A)
+.PP
+References: Freitag et al\&. (2005) Ultramicroscopy 102, 209-14\&. Zhu et al\&. (1997) JSB 118, 197-219\&. 
+.PP
+Definition at line 420 of file ctf\&.cpp\&.
+.SS "\fBBstring\fP CTFparam::envelope_equation ()"
+
+.PP
+Generates an envelope equation string from 4 coefficients\&. 
+.PP
+\fBReturns\fP
+.RS 4
+\fBBstring\fP envelope equation\&. 
+.PP
+.nf
+The envelope string is constructed from the 4 double gaussian parameters.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 248 of file ctf\&.cpp\&.
+.SS "vector< double > CTFparam::envelope_partial_coherence (long n, double freq_step)"
+
+.PP
+Calculates the envelope curve based on partial coherence\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP number of spatial frequency steps\&. 
+.br
+\fIfreq_step\fP size of spatial frequency step\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<double> curve\&.
+.RE
+.PP
+The curve is calculated at frequency s as: Epc(s) = exp(-(pi*alpha*(Cs*lamda^2*s^2 - def)*s)^2) where Cs: Spherical aberation (~2e7 A) alpha: Beam spread/source size (~0\&.1 mrad) def: Defocus (~1e4 A) lamda: electron wavelength (~0\&.03 A)
+.PP
+References: Zhu et al\&. (1997) JSB 118, 197-219\&. 
+.PP
+Definition at line 386 of file ctf\&.cpp\&.
+.SS "long CTFparam::envelope_type ()\fC [inline]\fP"
+
+.PP
+Definition at line 119 of file ctf\&.h\&.
+.SS "void CTFparam::envelope_type (long t)\fC [inline]\fP"
+
+.PP
+Definition at line 120 of file ctf\&.h\&.
+.SS "double CTFparam::focal_length ()\fC [inline]\fP"
+
+.PP
+Definition at line 89 of file ctf\&.h\&.
+.SS "void CTFparam::focal_length (double v)\fC [inline]\fP"
+
+.PP
+Definition at line 90 of file ctf\&.h\&.
+.SS "double CTFparam::fom ()\fC [inline]\fP"
+
+.PP
+Definition at line 126 of file ctf\&.h\&.
+.SS "void CTFparam::fom (double v)\fC [inline]\fP"
+
+.PP
+Definition at line 127 of file ctf\&.h\&.
+.SS "double CTFparam::frequency_cutoff ()\fC [inline]\fP"
+
+.PP
+Definition at line 150 of file ctf\&.h\&.
+.SS "double CTFparam::lambda ()\fC [inline]\fP"
+
+.PP
+Definition at line 145 of file ctf\&.h\&.
+.SS "vector< double > CTFparam::maxima (double max_s)"
+
+.PP
+Calculates the maxima of a CTF curve on the spatial frequency scale\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImax_s\fP maximum spatial frequency\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<double> array of spatial frequencies for maxima, NULL on error\&. 
+.PP
+.nf
+Thus uses the zeroes function to find the maxima.
+Defocus values are positive for underfocus.
+The array returned start with the first zero at index 0.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 177 of file ctf\&.cpp\&.
+.SS "double CTFparam::objective_aperture ()\fC [inline]\fP"
+
+.PP
+Definition at line 102 of file ctf\&.h\&.
+.SS "void CTFparam::objective_aperture (double v)\fC [inline]\fP"
+
+.PP
+Definition at line 103 of file ctf\&.h\&.
+.SS "int CTFparam::parse_baseline_equation (\fBBstring\fP base_eq)"
+
+.PP
+Extracts the coefficients from the baseline string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIbase_eq\fP baseline equation string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int equation type\&. 
+.PP
+.nf
+The baseline string is scanned in one of the three supported formats.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 281 of file ctf\&.cpp\&.
+.SS "int CTFparam::parse_envelope_equation (\fBBstring\fP env_eq)"
+
+.PP
+Extracts the coefficients from the envelope string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIenv_eq\fP envelope equation string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The envelope string is scanned to get the 4 double gaussian parameters.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 330 of file ctf\&.cpp\&.
+.SS "void CTFparam::show ()\fC [inline]\fP"
+
+.PP
+Definition at line 252 of file ctf\&.h\&.
+.SS "void CTFparam::show_baseline ()\fC [inline]\fP"
+
+.PP
+Definition at line 267 of file ctf\&.h\&.
+.SS "void CTFparam::show_envelope ()\fC [inline]\fP"
+
+.PP
+Definition at line 290 of file ctf\&.h\&.
+.SS "double CTFparam::slit_width ()\fC [inline]\fP"
+
+.PP
+Definition at line 104 of file ctf\&.h\&.
+.SS "void CTFparam::slit_width (double v)\fC [inline]\fP"
+
+.PP
+Definition at line 105 of file ctf\&.h\&.
+.SS "double CTFparam::term1 ()\fC [inline]\fP"
+
+.PP
+Definition at line 153 of file ctf\&.h\&.
+.SS "double CTFparam::term2 ()\fC [inline]\fP"
+
+.PP
+Definition at line 154 of file ctf\&.h\&.
+.SS "int CTFparam::update (\fBCTFparam\fP & ctf)"
+
+.PP
+Updates a CTF structure from another\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIctf\fP CTF structure with new information\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.RE
+.PP
+
+.PP
+Definition at line 20 of file ctf\&.cpp\&.
+.SS "int CTFparam::update (\fBCTFparam\fP * ctf)\fC [inline]\fP"
+
+.PP
+Definition at line 81 of file ctf\&.h\&.
+.SS "double CTFparam::volt ()\fC [inline]\fP"
+
+.PP
+Definition at line 87 of file ctf\&.h\&.
+.SS "void CTFparam::volt (double v)\fC [inline]\fP"
+
+.PP
+Definition at line 88 of file ctf\&.h\&.
+.SS "double CTFparam::zero (int i)\fC [inline]\fP"
+
+.PP
+Definition at line 233 of file ctf\&.h\&.
+.SS "vector< double > CTFparam::zeroes (double max_s)"
+
+.PP
+Calculates the zeroes of a CTF curve on the spatial frequency scale\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImax_s\fP maximum spatial frequency\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<double> array of spatial frequencies for zeroes, NULL on error\&. 
+.PP
+.nf
+The nth zero is given by the reciprocal space distance where the
+phase shift term is equal to -n*PI:
+phase = 0.5*PI*lambda^3*Cs*s^4 - PI*lambda*defocus*s^2 = -n*PI
+ctf_fz = defocus/(Cs*lambda^2)
+zero(n) = sqrt(ctf_fz - sqrt(ctf_fz^2 - 2.0*n/(Cs*lambda^3)))
+Defocus values are positive for underfocus.
+The array returned start with the first zero at index 0.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 117 of file ctf\&.cpp\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

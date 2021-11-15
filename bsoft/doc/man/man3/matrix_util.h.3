@@ -1,0 +1,234 @@
+.TH "/Users/bernard/b20/bsoft/include/matrix_util.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/matrix_util.h \- Utility functions for matrices\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Matrix\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmatrix_normalize\fP (\fBMatrix\fP &m)"
+.br
+.RI "Normalizes a matrix\&. "
+.ti -1c
+.RI "double \fBmatrix_find_cutoff_for_number\fP (\fBMatrix\fP m, int n)"
+.br
+.RI "Calculates a cutoff to ensure that the given number of elements fall below it\&. "
+.ti -1c
+.RI "int \fBmatrix_log_1_R\fP (\fBMatrix\fP matrix)"
+.br
+.RI "Calculates the logarithmic derivative of an R-factor in a matrix\&. "
+.ti -1c
+.RI "int * \fBmatrix_find_linear_sequence\fP (\fBMatrix\fP, int window)"
+.br
+.RI "Finds a linear sequence of elements based on a pairwise matrix\&. "
+.ti -1c
+.RI "int \fBmatrix_permute\fP (int i, int j, \fBMatrix\fP, int *order, double *best_R, int *best_order)"
+.br
+.RI "Permutes the order of a pairwise matrix and calculate a distance criterion\&. "
+.ti -1c
+.RI "double \fBmatrix_calc_dist_fit\fP (\fBMatrix\fP, int *order)"
+.br
+.RI "Calculates an R-factor for a specific order of elements in a pairwise matrix\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Utility functions for matrices\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010723 
+.PP
+Modified: 20190911 
+.RE
+.PP
+
+.PP
+Definition in file \fBmatrix_util\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double matrix_calc_dist_fit (\fBMatrix\fP matrix, int * order)"
+
+.PP
+Calculates an R-factor for a specific order of elements in a pairwise matrix\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImatrix\fP pairwise square matrix\&. 
+.br
+\fI*order\fP n-value array holding the order\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double the R-factor\&. 
+.PP
+.nf
+A new matrix is composed with the lower triangle taken from the input
+matrix in the given order, and the upper triangle calculated as the 
+sum of the diagonal elements between the indices of the element. 
+I.e, if i and j are the indices of an upper triangle element, then 
+it is the sum of all the diagonal elements from i to j:
+    up(i,j) = sum(mat(k,k+1)) for i<=k<j
+The difference between the lower and upper triangles is then calculated
+as:
+              1      up(i,j) - upmin   lo(j,i) - lomin
+    R = sum(----- * (--------------- - ---------------) )
+            i - j     upmax - upmin     lomax - lomin
+where upmin, upmax, lomin, and lomax are the extremes in each triangle.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 232 of file matrix_util\&.cpp\&.
+.SS "double matrix_find_cutoff_for_number (\fBMatrix\fP m, int n)"
+
+.PP
+Calculates a cutoff to ensure that the given number of elements fall below it\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIm\fP pairwise square matrix\&. 
+.br
+\fIn\fP number of elements below cutoff\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double cutoff\&. 
+.PP
+.nf
+Each column is scanned and the cutoff adjusted so that at least the
+given number of elements will fall below it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 78 of file matrix_util\&.cpp\&.
+.SS "int* matrix_find_linear_sequence (\fBMatrix\fP matrix, int window)"
+
+.PP
+Finds a linear sequence of elements based on a pairwise matrix\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImatrix\fP pairwise square matrix\&. 
+.br
+\fIwindow\fP range of elements to permute\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int* the best order, NULL on error\&. 
+.RE
+.PP
+
+.PP
+Definition at line 129 of file matrix_util\&.cpp\&.
+.SS "int matrix_log_1_R (\fBMatrix\fP matrix)"
+
+.PP
+Calculates the logarithmic derivative of an R-factor in a matrix\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImatrix\fP pairwise square matrix\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 107 of file matrix_util\&.cpp\&.
+.SS "int matrix_normalize (\fBMatrix\fP & m)"
+
+.PP
+Normalizes a matrix\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&m\fP matrix\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The rows and columns are alternatively iteratively normalized until
+the error is small enough.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 27 of file matrix_util\&.cpp\&.
+.SS "int matrix_permute (int i, int j, \fBMatrix\fP matrix, int * order, double * best_R, int * best_order)"
+
+.PP
+Permutes the order of a pairwise matrix and calculate a distance criterion\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIi\fP start of window within the order array\&. 
+.br
+\fIj\fP end of window within the order array\&. 
+.br
+\fImatrix\fP pairwise square matrix\&. 
+.br
+\fI*order\fP n-value array holding the current order\&. 
+.br
+\fI*best_R\fP R-factor for the best order\&. 
+.br
+\fI*best_order\fP n-value array holding the best order\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+A recursive function to pass through all possible permutations
+within a given window.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 182 of file matrix_util\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

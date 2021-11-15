@@ -1,0 +1,437 @@
+.TH "/Users/bernard/b20/bsoft/src/util/View.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/util/View.cpp \- \fBView\fP functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'View\&.h'\fP
+.br
+\fC#include 'View2\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "ostream & \fBoperator<<\fP (ostream &output, \fBView\fP v)"
+.br
+.ti -1c
+.RI "ostream & \fBoperator<<\fP (ostream &output, \fBView2\fP< float > v)"
+.br
+.ti -1c
+.RI "ostream & \fBoperator<<\fP (ostream &output, \fBView2\fP< double > v)"
+.br
+.ti -1c
+.RI "int \fBshow_views\fP (\fBView\fP *v)"
+.br
+.RI "Displays a linked list of views\&. "
+.ti -1c
+.RI "\fBView\fP * \fBview_array\fP (\fBView\fP *v, long &n)"
+.br
+.RI "Copies views from a list into an array\&. "
+.ti -1c
+.RI "\fBView\fP * \fBtilt_views\fP (double ang_min, double ang_max, double ang_step, double axis)"
+.br
+.RI "Initializes a set of views tilted around the y axis\&. "
+.ti -1c
+.RI "\fBView\fP \fBrandom_view\fP ()"
+.br
+.RI "Calculates a random view\&. "
+.ti -1c
+.RI "\fBView\fP \fBview_random_reslice\fP ()"
+.br
+.RI "Generates a random reslicing 3x3 rotation matrix\&. "
+.ti -1c
+.RI "\fBView\fP * \fBrandom_views\fP (int nviews)"
+.br
+.RI "Calculates a set of random views\&. "
+.ti -1c
+.RI "double \fBrandom_view_error\fP (\fBView\fP &v, double std)"
+.br
+.RI "Calculates a new view with a random error from the given view\&. "
+.ti -1c
+.RI "\fBView\fP * \fBviews_within_limits\fP (\fBView\fP theview, double theta_step, double phi_step, double alpha_step, double view_angle_limit, double alpha_angle_limit)"
+.br
+.RI "Generates a list of views within an angular distance from the input view\&. "
+.ti -1c
+.RI "list< \fBView2\fP< float > > \fBviews_within_limits2\fP (\fBView2\fP< float > theview, double theta_step, double phi_step, double alpha_step, double view_angle_limit, double alpha_angle_limit)"
+.br
+.ti -1c
+.RI "\fBView\fP * \fBviews_for_refinement\fP (\fBView\fP theview, double alpha_step)"
+.br
+.RI "Generates a 3x3 grid of views around an input view\&. "
+.ti -1c
+.RI "\fBView\fP * \fBviews_for_refinement\fP (\fBView\fP theview, double alpha_step1, double alpha_step2, double alpha_step3, double max_alpha3)"
+.br
+.RI "Generates a 3x3 grid of views around an input view\&. "
+.ti -1c
+.RI "\fBView\fP * \fBview_list_expand_angles\fP (\fBView\fP *views, double amin, double amax, double astep)"
+.br
+.RI "Expands each view to several views with different rotation angles\&. "
+.ti -1c
+.RI "int \fBview_list_subset\fP (\fBView\fP **view_list, int start, int size)"
+.br
+.RI "Replaces a view list with a subset of it\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fBView\fP functions\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010420 
+.PP
+Modified: 20160708 
+.RE
+.PP
+
+.PP
+Definition in file \fBView\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "ostream& operator<< (ostream & output, \fBView\fP v)"
+
+.PP
+Definition at line 18 of file View\&.cpp\&.
+.SS "ostream& operator<< (ostream & output, \fBView2\fP< double > v)"
+
+.PP
+Definition at line 32 of file View\&.cpp\&.
+.SS "ostream& operator<< (ostream & output, \fBView2\fP< float > v)"
+
+.PP
+Definition at line 26 of file View\&.cpp\&.
+.SS "\fBView\fP random_view ()"
+
+.PP
+Calculates a random view\&. 
+.PP
+\fBReturns\fP
+.RS 4
+\fBView\fP random view\&. 
+.PP
+.nf
+A random seed should already have been generated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 116 of file View\&.cpp\&.
+.SS "double random_view_error (\fBView\fP & v, double std)"
+
+.PP
+Calculates a new view with a random error from the given view\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&v\fP given view (modified)\&. 
+.br
+\fIstd\fP standard deviation of gaussian distribution\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double random angle\&. 
+.PP
+.nf
+The rotation between the given and new views is defined by the 
+gaussian distributed random angle and a random axis.
+A random seed should already have been generated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 195 of file View\&.cpp\&.
+.SS "\fBView\fP* random_views (int nviews)"
+
+.PP
+Calculates a set of random views\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fInviews\fP number of views\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+View* list of random views\&. 
+.RE
+.PP
+
+.PP
+Definition at line 162 of file View\&.cpp\&.
+.SS "int show_views (\fBView\fP * v)"
+
+.PP
+Displays a linked list of views\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*v\fP the linked list of views\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of views\&. 
+.RE
+.PP
+
+.PP
+Definition at line 43 of file View\&.cpp\&.
+.SS "\fBView\fP* tilt_views (double ang_min, double ang_max, double ang_step, double axis)"
+
+.PP
+Initializes a set of views tilted around the y axis\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIang_min\fP starting angle (radians)\&. 
+.br
+\fIang_max\fP ending angle (radians)\&. 
+.br
+\fIang_step\fP angular step size (radians)\&. 
+.br
+\fIaxis\fP tilt axis angle (radians)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+View* a set of 4-value views\&. 
+.PP
+.nf
+A set of views is calculated corresponding to tilted views imaged
+during tomography. The tilt axis angle is taken as a counter-clockwise
+rotation from the x-axis.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 85 of file View\&.cpp\&.
+.SS "\fBView\fP* view_array (\fBView\fP * v, long & n)"
+
+.PP
+Copies views from a list into an array\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*v\fP the linked list of views\&. 
+.br
+\fIn\fP number of views\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+View* view array\&. 
+.RE
+.PP
+
+.PP
+Definition at line 59 of file View\&.cpp\&.
+.SS "\fBView\fP* view_list_expand_angles (\fBView\fP * views, double amin, double amax, double astep)"
+
+.PP
+Expands each view to several views with different rotation angles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*views\fP view list\&. 
+.br
+\fIamin\fP minimum angle\&. 
+.br
+\fIamax\fP maximum angle\&. 
+.br
+\fIastep\fP angular step\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+View* new view list\&. 
+.PP
+.nf
+The new angles are added to the existing angles of the view.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 519 of file View\&.cpp\&.
+.SS "int view_list_subset (\fBView\fP ** view_list, int start, int size)"
+
+.PP
+Replaces a view list with a subset of it\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**view_list\fP view list\&. 
+.br
+\fIstart\fP offset of first view of subset\&. 
+.br
+\fIsize\fP number of views in subset\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of views selected, <0 on error\&. 
+.PP
+.nf
+The old view list is destroyed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 558 of file View\&.cpp\&.
+.SS "\fBView\fP view_random_reslice ()"
+
+.PP
+Generates a random reslicing 3x3 rotation matrix\&. 
+.PP
+\fBReturns\fP
+.RS 4
+\fBView\fP new view\&. 
+.PP
+.nf
+The view represents any one or more 90 degree rotations,
+randomly chosen.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 138 of file View\&.cpp\&.
+.SS "\fBView\fP* views_for_refinement (\fBView\fP theview, double alpha_step)"
+
+.PP
+Generates a 3x3 grid of views around an input view\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fItheview\fP the input view\&. 
+.br
+\fIalpha_step\fP angular step size around view vector (radians)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+View* a list of views\&. 
+.RE
+.PP
+
+.PP
+Definition at line 371 of file View\&.cpp\&.
+.SS "\fBView\fP* views_for_refinement (\fBView\fP theview, double alpha_step1, double alpha_step2, double alpha_step3, double max_alpha3)"
+
+.PP
+Generates a 3x3 grid of views around an input view\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fItheview\fP the input view\&. 
+.br
+\fIalpha_step1\fP angular step size for view vector in one direction (radians)\&. 
+.br
+\fIalpha_step2\fP angular step size for view vector in second direction (radians)\&. 
+.br
+\fIalpha_step3\fP angular step size around view vector (radians)\&. 
+.br
+\fImax_alpha3\fP maximum for step 3\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+View* a list of views\&. 
+.RE
+.PP
+
+.PP
+Definition at line 438 of file View\&.cpp\&.
+.SS "\fBView\fP* views_within_limits (\fBView\fP theview, double theta_step, double phi_step, double alpha_step, double view_angle_limit, double alpha_angle_limit)"
+
+.PP
+Generates a list of views within an angular distance from the input view\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fItheview\fP the input view\&. 
+.br
+\fItheta_step\fP theta step size (radians)\&. 
+.br
+\fIphi_step\fP phi step size (radians)\&. 
+.br
+\fIalpha_step\fP alpha step size (radians)\&. 
+.br
+\fIview_angle_limit\fP angular distance limit from view vector (radians)\&. 
+.br
+\fIalpha_angle_limit\fP angular distance limit from view rotation angle (radians)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+View* a list of views\&. 
+.PP
+.nf
+The list of views forms a 3D search grid in orientation space.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 222 of file View\&.cpp\&.
+.SS "list<\fBView2\fP<float> > views_within_limits2 (\fBView2\fP< float > theview, double theta_step, double phi_step, double alpha_step, double view_angle_limit, double alpha_angle_limit)"
+
+.PP
+Definition at line 294 of file View\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

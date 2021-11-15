@@ -1,0 +1,221 @@
+.TH "/Users/bernard/b20/bsoft/include/Bstring.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/Bstring.h \- Header file for the string class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <iostream>\fP
+.br
+\fC#include <cstdio>\fP
+.br
+\fC#include <vector>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBBstring\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMAX_FORMAT_SIZE\fP   64"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "istream & \fBoperator>>\fP (istream &input, \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "ostream & \fBoperator<<\fP (ostream &output, \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "\fBBstring\fP * \fBstring_add\fP (\fBBstring\fP **list, const char *string)"
+.br
+.RI "Adds a string to a linked list\&. "
+.ti -1c
+.RI "\fBBstring\fP * \fBstring_add\fP (\fBBstring\fP **list, \fBBstring\fP &string)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBstring_catenate\fP (\fBBstring\fP *list)"
+.br
+.RI "Catenates a string linked list into one string\&. "
+.ti -1c
+.RI "int \fBstring_kill\fP (\fBBstring\fP *list)"
+.br
+.RI "Kills a string linked list\&. "
+.ti -1c
+.RI "\fBBstring\fP \fBparameter_file_path\fP (\fBBstring\fP filename)"
+.br
+.RI "Finds the parameter file path\&. "
+.ti -1c
+.RI "int \fBstring_sort\fP (\fBBstring\fP *slist, int descending, int value)"
+.br
+.RI "Sorts a list of strings in ascending (descending) lexical or value order\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for the string class\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20051020 
+.PP
+Modified: 20190208 
+.RE
+.PP
+
+.PP
+Definition in file \fBBstring\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define MAX_FORMAT_SIZE   64"
+
+.PP
+Definition at line 18 of file Bstring\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "ostream& operator<< (ostream & output, \fBBstring\fP & s)"
+
+.PP
+Definition at line 695 of file Bstring\&.cpp\&.
+.SS "istream& operator>> (istream & input, \fBBstring\fP & s)"
+
+.PP
+Definition at line 688 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP parameter_file_path (\fBBstring\fP filename)"
+
+.PP
+Finds the parameter file path\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP the parameter filename\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBBstring\fP the full path and file name\&. 
+.PP
+.nf
+The parameter file path should primarily be defined in the environmental
+variable "BPARAM".
+Otherwise a default is used which may or may not be valid.
+The string returned has a length containing the path plus one byte.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 788 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP* string_add (\fBBstring\fP ** list, \fBBstring\fP & string)"
+
+.PP
+Definition at line 712 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP* string_add (\fBBstring\fP ** list, const char * string)"
+
+.PP
+Adds a string to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**list\fP the string linked list\&. 
+.br
+\fI&string\fP string - unchanged\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bstring* new string structure\&. 
+.RE
+.PP
+
+.PP
+Definition at line 706 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP string_catenate (\fBBstring\fP * list)"
+
+.PP
+Catenates a string linked list into one string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*list\fP the string linked list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBBstring\fP new string\&. 
+.RE
+.PP
+
+.PP
+Definition at line 740 of file Bstring\&.cpp\&.
+.SS "int string_kill (\fBBstring\fP * list)"
+
+.PP
+Kills a string linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*list\fP the string linked list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 761 of file Bstring\&.cpp\&.
+.SS "int string_sort (\fBBstring\fP * slist, int descending, int value)"
+
+.PP
+Sorts a list of strings in ascending (descending) lexical or value order\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*slist\fP string list\&. 
+.br
+\fIdescending\fP flag to do a descending sort\&. 
+.br
+\fIvalue\fP sort in value order\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The string list is first convert to an array, quicksorted, and
+written back into the string list.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 876 of file Bstring\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

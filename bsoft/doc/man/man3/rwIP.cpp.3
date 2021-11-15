@@ -1,0 +1,101 @@
+.TH "/Users/bernard/b20/bsoft/src/rwimg/rwIP.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/rwimg/rwIP.cpp \- Functions for reading and writing image plate reader files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwIP\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBreadIP\fP (\fBBimage\fP *p, int readdata)"
+.br
+.RI "Reading an image plate reader file format\&. "
+.ti -1c
+.RI "int \fBwriteIP\fP (\fBBimage\fP *p)"
+.br
+.RI "Writing an image plate reader file format\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for reading and writing image plate reader files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20041110 
+.PP
+Modified: 20111217 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwIP\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int readIP (\fBBimage\fP * p, int readdata)"
+
+.PP
+Reading an image plate reader file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.br
+\fIreaddata\fP flag to activate reading of image data\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. An image format used in the Ditabis image plate reader\&. The header is text with tag-value pairs\&. Required tags: CREATED = time and date string HEADER = length of header, typically 2048 XPIXEL = x size YPIXEL = y size BYTE PER PIXEL = 2,3,4 XRESOLUTION = x pixel size in um YRESOLUTION = y pixel size in um THUMB-NAIL-ZOOM = zoom factor for preview, typically 10 Additional tags: MAGNIFICATION = microscope magnification OFFSET = zero dose value OFFSET CORRECTION = flag to indicate correction GAIN = gain setting LASER = laser setting PARAMS = settings file FORMAT = format file CHANNEL = data channel MICRON-MARK = position, length and text of micron mark overlay Final tag: COMMENT = comment, always last, terminated by NULL\&. File format extensions: \&.IPL, \&.IPH, \&.IPR, \&.IPC Byte order: Always little endian because the IP software runs on Intel machines and there is no way to detect byte order from the text header\&. Data type: short\&. 
+.RE
+.PP
+
+.PP
+Definition at line 50 of file rwIP\&.cpp\&.
+.SS "int writeIP (\fBBimage\fP * p)"
+
+.PP
+Writing an image plate reader file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. A 2D image format used with the image plate reader\&. 
+.RE
+.PP
+
+.PP
+Definition at line 116 of file rwIP\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

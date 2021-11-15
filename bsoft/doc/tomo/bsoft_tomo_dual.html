@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/bsoft.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Dual tilt tomography</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Tomographic dual tilt series alignment and reconstruction</h1>
+<center><img src="Tomo_dual_flowchart.png" alt="Tomo dual flow chart" width="500" height="483" /></center>
+    <p>The aim in aligning a dual tilt series is similar to that of two single tilt series. The difference is that the numbering of the fiducial markers in two series should correspond. The program <b>bdual</b> provides a way to transfer the seed markers from the first to the second series after fitting the zero-tilt micrographs to each other. After tracking the markers and aligning the micrographs, the 3D marker models are fit to each other and the transformations for the second series of micrographs adjusted to correspond to the first, again with the program <b>bdual</b>. A single reconstruction is then calculated from both series.<br />
+      </p>
+<h2>1. Setup and seed markers</h2>
+<p>The two tilt series should be set up separtely with the normalized micrographs:
+<div id="command"><p>btomo -verb 7 -axis 90 -tilt -60,2 -gold 7 -out ser1.star ser1.pif</p></div>
+<div id="command"><p>btomo -verb 7 -axis 90 -tilt -60,2 -gold 7 -out ser2.star ser2.pif</p></div>
+
+<p>A fiducial marker seed is then selected for the zero-tilt micrograph of the first series in bshow, and saved to a new parameter file (ser1_seed.star). The marker seed is transfered to the second series:</p>
+<div id="command"><p>bdual -v 1 -seed 1,-100,-80 -refine -out ser2_seed.star ser1_seed.star ser2.star
+  </p></div>
+<p>The first argument of the -seed option sets the angular increment (in degrees) to search for the rotation angle that will superimpose the first zero-tilt micrograph onto the second zero-tilt micrograph. The other two arguments set the range of angles to be tested (the default is 360 degrees). The -refine option refines the positions of the markers after the transfer. The markers for the second series are then checked in bshow to correspond to the fiducials.
+</p>
+  <br />
+<h2>2. Tracking the markers</h2>
+<p>The two series are tracked independently:</p>
+<div id="command"><p>btrack -verb 1 -reset -track 5 -refine markers -resol 30,300 -out ser1_trk.star ser1_seed.star</p></div>
+<div id="command"><p>btrack -verb 1 -reset -track 5 -refine markers -resol 30,300 -out ser2_trk.star ser2_seed.star</p></div>
+<p>The -resetmodel options ensures that any adjustments in the seed marker positions are transferred to the 3D marker model.</p>
+<br/>
+<h2>3. Refining the alignment</h2>
+<p>Each alignment can be refined in bshow separately for the two tilt series (ser1_ref.star and ser2_ref.star). The parameter files are then combined with proper adjustments for the second series derived from a fit of the 3D marker models:</p>
+<div id="command"><p>bdual -v 1 -transform -zcomp -bild dual_tx.bld -Post dual_tx.ps -out sets.star set1_ref.star set2_ref.star</p></div>
+<p>The -bild output generates a BILD file with the two marker models that can be displayed in UCSF Chimera to assess the quality of the fit. The -Postscript option plots the the x, y and z coordinates of the fitted models to further assess the quality of the fit.</p>
+<p>The combined alignment for both series can then be further refined in bshow. While it is dangerous to use the scale refinement too much, it may be necessary to use it one final time in the refinement to adjust for small scaling distortions between the two tilt series.</p>
+      <br />
+<h2>4. Dual tilt reconstruction</h2>
+<p>The reconstruction is done as for a single-tilt series, but using the parameter file referencing both tilt series:</p>
+<div id="command"><p>btomrec -v 1 -rescale 0,1 -trans full -resol 30 -size 1024,1024,260 -rec dual_rec.pif -out dual_rec.star sets.star</p></div>
+</div>
+<div id="footer">
+  Bernard Heymann  20141104
+</div>
+</body>
+</html>

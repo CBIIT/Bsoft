@@ -1,0 +1,559 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rwmodel__bild_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/rwmodel/rwmodel_bild.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/rwmodel/rwmodel_bild.cpp</primary></indexterm>
+<para>
+
+<para>Library routines to read and write Chimera BILD model parameters. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmodel.h&quot;
+#include &quot;model_neighbors.h&quot;
+#include &quot;model_poly.h&quot;
+#include &quot;Color.h&quot;
+#include &quot;string_util.h&quot;
+#include &quot;utilities.h&quot;
+#include &quot;timer.h&quot;
+#include &lt;fstream&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bcomponent">Bcomponent</link> * <link linkend="_rwmodel__bild_8cpp_1a4020c99244d64626c676ddedced14956">component_add_if_not_exist</link> (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; loc, <link linkend="_class_bcomponent">Bcomponent</link> **comp, int &amp;number)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_rwmodel__bild_8cpp_1a4860aaca357985b9d9efce7a48ad70ee">read_model_bild</link> (<link linkend="_class_bstring">Bstring</link> *<link linkend="_file__util_8cpp_1a3c3411ced4b9632566ecc66ffa64a72a">file_list</link>)</para>
+
+<para>Reads Chimera BILD model parameters. </para>
+</listitem>
+            <listitem><para>void <link linkend="_rwmodel__bild_8cpp_1a0380ac1e0e9b33e44fab887c0b790f2c">bild_color</link> (ofstream &amp;fbld, <link linkend="_class_r_g_b">RGB</link>&lt; float &gt; rgb)</para>
+</listitem>
+            <listitem><para>void <link linkend="_rwmodel__bild_8cpp_1ac8f4598d89cff68f9123de0f9a03a647">bild_color</link> (ofstream &amp;fbld, <link linkend="_class_r_g_b_a">RGBA</link>&lt; float &gt; rgba)</para>
+</listitem>
+            <listitem><para>void <link linkend="_rwmodel__bild_8cpp_1a935335a6a7028b07f7c6367d40d30268">bild_sphere</link> (ofstream &amp;fbld, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; loc, double radius)</para>
+</listitem>
+            <listitem><para>void <link linkend="_rwmodel__bild_8cpp_1add824c3e86aef28373d379afae4c8ece">bild_cylinder</link> (ofstream &amp;fbld, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; start, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; end, double radius)</para>
+</listitem>
+            <listitem><para>void <link linkend="_rwmodel__bild_8cpp_1af1ee3ccc41014a49f7f6961f6dcdba0e">bild_polygon_start</link> (ofstream &amp;fbld, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; vertex)</para>
+</listitem>
+            <listitem><para>void <link linkend="_rwmodel__bild_8cpp_1a655aeba2ef77a2eb1b0f84f982fc280c">bild_polygon_add</link> (ofstream &amp;fbld, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; vertex)</para>
+</listitem>
+            <listitem><para>void <link linkend="_rwmodel__bild_8cpp_1a1f77585fa443a8492d5273060cdb0a51">bild_polygon_end</link> (ofstream &amp;fbld, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; vertex)</para>
+</listitem>
+            <listitem><para>void <link linkend="_rwmodel__bild_8cpp_1aaa25e0d3aefc1f684751c7ee914c7231">bild_arrow</link> (ofstream &amp;fbld, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; start, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; end, double cylrad, double conerad, double rho)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel__bild_8cpp_1aee5f32ef4b7ede2128e09c96be9aed97">write_model_bild</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Writes Chimera BILD model parameters. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel__bild_8cpp_1ae6bab230a8bd45a44739abefc70e9ef3">model_to_bild_orientations</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, int vec_type, int color_type)</para>
+
+<para>Converts a model into a representation with views. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel__bild_8cpp_1abdb2fe00ab1a841720f4eb92aee04ff2">model_to_bild_view_sphere</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, int color_type)</para>
+
+<para>Converts a model into a representation with views. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel__bild_8cpp_1a177ac8e7facf754b5e03e3547c2f749c">model_to_bild_force_vectors</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, int color_type)</para>
+
+<para>Converts a model into a representation with views. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel__bild_8cpp_1af6738624ffd062eb05a425684928a8d1">model_to_bild_view_polygons</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, int order, int color_type)</para>
+
+<para>Converts a model into a representation with view polygons. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel__bild_8cpp_1a35269022e5a7c8023d82b72a632f39c5">model_to_bild_polygons</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, int color_type)</para>
+
+<para>Converts a model into a bild polygon representation. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel__bild_8cpp_1a0b6c27c31979b64a961b23a34b31789f">model_to_bild_neighbor_planes</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, int color_type)</para>
+
+<para>Converts a model into a bild neighbor plane representation. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rwmodel__bild_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines to read and write Chimera BILD model parameters. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20080521 </para>
+
+<para>Modified: 20210305 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rwmodel__bild_8cpp_1aaa25e0d3aefc1f684751c7ee914c7231"/>    <section>
+    <title>bild_arrow()</title>
+<indexterm><primary>bild_arrow</primary><secondary>rwmodel_bild.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_bild.cpp</primary><secondary>bild_arrow</secondary></indexterm>
+<para><computeroutput>void bild_arrow (ofstream &amp; fbld, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; start, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; end, double cylrad, double conerad, double rho)</computeroutput></para><para>
+Definition at line 225 of file rwmodel_bild.cpp.</para>
+    </section><anchor xml:id="_rwmodel__bild_8cpp_1a0380ac1e0e9b33e44fab887c0b790f2c"/>    <section>
+    <title>bild_color()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>bild_color</primary><secondary>rwmodel_bild.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_bild.cpp</primary><secondary>bild_color</secondary></indexterm>
+<para><computeroutput>void bild_color (ofstream &amp; fbld, <link linkend="_class_r_g_b">RGB</link>&lt; float &gt; rgb)</computeroutput></para><para>
+Definition at line 190 of file rwmodel_bild.cpp.</para>
+    </section><anchor xml:id="_rwmodel__bild_8cpp_1ac8f4598d89cff68f9123de0f9a03a647"/>    <section>
+    <title>bild_color()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>bild_color</primary><secondary>rwmodel_bild.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_bild.cpp</primary><secondary>bild_color</secondary></indexterm>
+<para><computeroutput>void bild_color (ofstream &amp; fbld, <link linkend="_class_r_g_b_a">RGBA</link>&lt; float &gt; rgba)</computeroutput></para><para>
+Definition at line 195 of file rwmodel_bild.cpp.</para>
+    </section><anchor xml:id="_rwmodel__bild_8cpp_1add824c3e86aef28373d379afae4c8ece"/>    <section>
+    <title>bild_cylinder()</title>
+<indexterm><primary>bild_cylinder</primary><secondary>rwmodel_bild.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_bild.cpp</primary><secondary>bild_cylinder</secondary></indexterm>
+<para><computeroutput>void bild_cylinder (ofstream &amp; fbld, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; start, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; end, double radius)</computeroutput></para><para>
+Definition at line 205 of file rwmodel_bild.cpp.</para>
+    </section><anchor xml:id="_rwmodel__bild_8cpp_1a655aeba2ef77a2eb1b0f84f982fc280c"/>    <section>
+    <title>bild_polygon_add()</title>
+<indexterm><primary>bild_polygon_add</primary><secondary>rwmodel_bild.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_bild.cpp</primary><secondary>bild_polygon_add</secondary></indexterm>
+<para><computeroutput>void bild_polygon_add (ofstream &amp; fbld, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; vertex)</computeroutput></para><para>
+Definition at line 216 of file rwmodel_bild.cpp.</para>
+    </section><anchor xml:id="_rwmodel__bild_8cpp_1a1f77585fa443a8492d5273060cdb0a51"/>    <section>
+    <title>bild_polygon_end()</title>
+<indexterm><primary>bild_polygon_end</primary><secondary>rwmodel_bild.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_bild.cpp</primary><secondary>bild_polygon_end</secondary></indexterm>
+<para><computeroutput>void bild_polygon_end (ofstream &amp; fbld, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; vertex)</computeroutput></para><para>
+Definition at line 220 of file rwmodel_bild.cpp.</para>
+    </section><anchor xml:id="_rwmodel__bild_8cpp_1af1ee3ccc41014a49f7f6961f6dcdba0e"/>    <section>
+    <title>bild_polygon_start()</title>
+<indexterm><primary>bild_polygon_start</primary><secondary>rwmodel_bild.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_bild.cpp</primary><secondary>bild_polygon_start</secondary></indexterm>
+<para><computeroutput>void bild_polygon_start (ofstream &amp; fbld, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; vertex)</computeroutput></para><para>
+Definition at line 212 of file rwmodel_bild.cpp.</para>
+    </section><anchor xml:id="_rwmodel__bild_8cpp_1a935335a6a7028b07f7c6367d40d30268"/>    <section>
+    <title>bild_sphere()</title>
+<indexterm><primary>bild_sphere</primary><secondary>rwmodel_bild.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_bild.cpp</primary><secondary>bild_sphere</secondary></indexterm>
+<para><computeroutput>void bild_sphere (ofstream &amp; fbld, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; loc, double radius)</computeroutput></para><para>
+Definition at line 200 of file rwmodel_bild.cpp.</para>
+    </section><anchor xml:id="_rwmodel__bild_8cpp_1a4020c99244d64626c676ddedced14956"/>    <section>
+    <title>component_add_if_not_exist()</title>
+<indexterm><primary>component_add_if_not_exist</primary><secondary>rwmodel_bild.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_bild.cpp</primary><secondary>component_add_if_not_exist</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bcomponent">Bcomponent</link>* component_add_if_not_exist (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; loc, <link linkend="_class_bcomponent">Bcomponent</link> ** comp, int &amp; number)</computeroutput></para><para>
+Definition at line 22 of file rwmodel_bild.cpp.</para>
+    </section><anchor xml:id="_rwmodel__bild_8cpp_1a177ac8e7facf754b5e03e3547c2f749c"/>    <section>
+    <title>model_to_bild_force_vectors()</title>
+<indexterm><primary>model_to_bild_force_vectors</primary><secondary>rwmodel_bild.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_bild.cpp</primary><secondary>model_to_bild_force_vectors</secondary></indexterm>
+<para><computeroutput>int model_to_bild_force_vectors (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bmodel">Bmodel</link> * model, int color_type)</computeroutput></para><para>
+
+<para>Converts a model into a representation with views. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>bild format file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>color_type</entry>
+                                <entry>
+<para>flag to color components. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>A sphere is drawn for every component with a cylinder indicating its view.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 457 of file rwmodel_bild.cpp.</para>
+    </section><anchor xml:id="_rwmodel__bild_8cpp_1a0b6c27c31979b64a961b23a34b31789f"/>    <section>
+    <title>model_to_bild_neighbor_planes()</title>
+<indexterm><primary>model_to_bild_neighbor_planes</primary><secondary>rwmodel_bild.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_bild.cpp</primary><secondary>model_to_bild_neighbor_planes</secondary></indexterm>
+<para><computeroutput>int model_to_bild_neighbor_planes (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bmodel">Bmodel</link> * model, int color_type)</computeroutput></para><para>
+
+<para>Converts a model into a bild neighbor plane representation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>bild format file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>color_type</entry>
+                                <entry>
+<para>flag to color planes. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>Color scheme types:
+    1   spectrum/rainbow.
+    2   fom.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 684 of file rwmodel_bild.cpp.</para>
+    </section><anchor xml:id="_rwmodel__bild_8cpp_1ae6bab230a8bd45a44739abefc70e9ef3"/>    <section>
+    <title>model_to_bild_orientations()</title>
+<indexterm><primary>model_to_bild_orientations</primary><secondary>rwmodel_bild.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_bild.cpp</primary><secondary>model_to_bild_orientations</secondary></indexterm>
+<para><computeroutput>int model_to_bild_orientations (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bmodel">Bmodel</link> * model, int vec_type, int color_type)</computeroutput></para><para>
+
+<para>Converts a model into a representation with views. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>bild format file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>vec_type</entry>
+                                <entry>
+<para>0=views, 1=vectors, 2=velocity vectors. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>color_type</entry>
+                                <entry>
+<para>flag to color components. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>A sphere is drawn for every component with a cylinder indicating its view.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 287 of file rwmodel_bild.cpp.</para>
+    </section><anchor xml:id="_rwmodel__bild_8cpp_1a35269022e5a7c8023d82b72a632f39c5"/>    <section>
+    <title>model_to_bild_polygons()</title>
+<indexterm><primary>model_to_bild_polygons</primary><secondary>rwmodel_bild.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_bild.cpp</primary><secondary>model_to_bild_polygons</secondary></indexterm>
+<para><computeroutput>int model_to_bild_polygons (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bmodel">Bmodel</link> * model, int color_type)</computeroutput></para><para>
+
+<para>Converts a model into a bild polygon representation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>bild format file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>color_type</entry>
+                                <entry>
+<para>flag to color polygons. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>Color scheme types:
+    1   spectrum/rainbow.
+    2   fom.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 614 of file rwmodel_bild.cpp.</para>
+    </section><anchor xml:id="_rwmodel__bild_8cpp_1af6738624ffd062eb05a425684928a8d1"/>    <section>
+    <title>model_to_bild_view_polygons()</title>
+<indexterm><primary>model_to_bild_view_polygons</primary><secondary>rwmodel_bild.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_bild.cpp</primary><secondary>model_to_bild_view_polygons</secondary></indexterm>
+<para><computeroutput>int model_to_bild_view_polygons (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bmodel">Bmodel</link> * model, int order, int color_type)</computeroutput></para><para>
+
+<para>Converts a model into a representation with view polygons. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>bild format file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>order</entry>
+                                <entry>
+<para>polygon order. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>color_type</entry>
+                                <entry>
+<para>flag to color components. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>A sphere is drawn for every component with a cylinder indicating its view.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 535 of file rwmodel_bild.cpp.</para>
+    </section><anchor xml:id="_rwmodel__bild_8cpp_1abdb2fe00ab1a841720f4eb92aee04ff2"/>    <section>
+    <title>model_to_bild_view_sphere()</title>
+<indexterm><primary>model_to_bild_view_sphere</primary><secondary>rwmodel_bild.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_bild.cpp</primary><secondary>model_to_bild_view_sphere</secondary></indexterm>
+<para><computeroutput>int model_to_bild_view_sphere (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bmodel">Bmodel</link> * model, int color_type)</computeroutput></para><para>
+
+<para>Converts a model into a representation with views. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>bild format file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>color_type</entry>
+                                <entry>
+<para>flag to color components. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>A sphere is drawn for every component with a cylinder indicating its view.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 374 of file rwmodel_bild.cpp.</para>
+    </section><anchor xml:id="_rwmodel__bild_8cpp_1a4860aaca357985b9d9efce7a48ad70ee"/>    <section>
+    <title>read_model_bild()</title>
+<indexterm><primary>read_model_bild</primary><secondary>rwmodel_bild.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_bild.cpp</primary><secondary>read_model_bild</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* read_model_bild (<link linkend="_class_bstring">Bstring</link> * file_list)</computeroutput></para><para>
+
+<para>Reads Chimera BILD model parameters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*file_list</entry>
+                                <entry>
+<para>list of model parameter file names. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* model parameters. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 47 of file rwmodel_bild.cpp.</para>
+    </section><anchor xml:id="_rwmodel__bild_8cpp_1aee5f32ef4b7ede2128e09c96be9aed97"/>    <section>
+    <title>write_model_bild()</title>
+<indexterm><primary>write_model_bild</primary><secondary>rwmodel_bild.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_bild.cpp</primary><secondary>write_model_bild</secondary></indexterm>
+<para><computeroutput>int write_model_bild (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Writes Chimera BILD model parameters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>model parameter file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int models written. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 238 of file rwmodel_bild.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_rwmodel__bild_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>rwmodel_bild.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel_bild.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

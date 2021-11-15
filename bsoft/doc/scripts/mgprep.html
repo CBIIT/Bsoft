@@ -1,0 +1,81 @@
+<textarea name="textarea" cols="80" rows="60" readonly>
+#!/usr/bin/perl -w
+
+# Preparing a set of micrograph frames for SPA
+# Bernard Heymann
+# 20160309 - 20170223
+#
+# usage: mgprep.pl in1.mrc [in2.mrc ...]
+#
+# The output will have file names that are derived from the imput base names.
+
+use strict;
+
+# @ARGV: Input STAR file(s)
+
+# These parameters should be adapted for each specific case
+my $px = 1.28;				# Pixel size after binning
+my $volt = 300;				# Accelartion voltage in kV
+my $cs = 2.7;				# Spherical aberration in mm
+my $amp = 0.07;				# Amplitude fraction
+my $refnum = 5;				# Initial frame to choose as alignment reference
+my $tile = "512,512,1";		# Tile size for power spectrum calculation
+my $resaln = "20,1000";		# Limits for frame alignment
+my $resctf = "5,20";		# Limits for CTF fitting
+my $defrange = "0.5,3.5";	# Defocus range for CTF fitting
+
+#my $gr = "../mg/gain_20160902.dm4";	# Gain reference image
+my $gr = "";	# Gain reference image
+
+foreach my $f (@ARGV) {
+	print "$f\n";
+	my $b = $f;
+	$b =~ s{\.[^.]+$}{};
+	my $cmd;
+	my $pf;
+	my $fgc = $b . "_gc.mrc";
+	my $fb2 = $b . "_gc_b2.mrc";
+	my $pfa = $b . "_aln.star";
+	my $pfaa = $b . "_aln_avg.star";
+	my $pfc = $b . "_ctf.star";
+	if ( ! -f $f ) {
+		print "Error: File not found! ($f)\n";
+		exit;
+	} elsif ( $f =~ /star/ ) {
+		$pf = $f;
+	} elsif ( $f =~ /[tif|mrc|dm4]/ ) {
+		$pf = $b . ".star";
+		if ( $gr ) {
+			$cmd = "bop -verb 7 -mult 1,0 $f $gr $fgc";
+			run($cmd) if ! -f $fgc;
+		} else {
+			$fgc = $f;
+			$fb2 = $b . "_b2.mrc";
+		}
+		$cmd = "bint -v 7 -bin 2 $fgc $fb2";
+		run($cmd) if ! -f $fb2;
+		$cmd = "bmg -verb 7 -extract frame -Pixel $px -Volt $volt -Amp $amp -Cs $cs -out $pf $fb2";
+		run($cmd) if ! -f $pf;
+	} else {
+		print "Error: No useful filename specified! ($f)\n";
+		exit;
+	}
+	$cmd = "bseries -verb 1 -frames -align $refnum -resol $resaln -shift 100 -bin 2 -out $pfa -average t.pif $pf";
+	run($cmd) if ! -f $pfaa;
+	$cmd = "bctf -verb 1 -action prepfit -Range $defrange -basetype 4 -envtype 4 -frames -tile $tile -sam $px -resol $resctf -Volt $volt -Amp $amp -Cs $cs -out $pfc $pfaa";
+	run($cmd) if ! -f $pfc;
+}
+
+sub run {
+	my $cmd = shift @_;
+	
+	print "\n$cmd\n";
+
+	open my $fh, "$cmd|" or die $!;
+	while ( <$fh> ) {
+    	print;
+	}
+	close $fh;
+}
+</textarea>
+

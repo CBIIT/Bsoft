@@ -1,0 +1,288 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_model__occupancy_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/model_occupancy.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/model_occupancy.h</primary></indexterm>
+<para>
+
+<para>Library routines to count components in maps. </para>
+ 
+</para>
+<programlisting>#include &quot;rwimg.h&quot;
+#include &quot;rwmodel.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_model__occupancy_8h_1a5e18955e312d0c875b8b35271e4b0c9a">model_occupancy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bimage">Bimage</link> *pmask, double mol_weight, double rho, double cutoff, int invert_flag)</para>
+
+<para>Calculates the occupancy of components in a map. </para>
+</listitem>
+            <listitem><para>vector&lt; double &gt; <link linkend="_model__occupancy_8h_1aaf6a57e45c2efdefa1a287f8d9333860">model_occupancy_distribution</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double cutoff, int nfit, long &amp;ncomp, vector&lt; double &gt; &amp;prob, double &amp;R)</para>
+
+<para>Calculates the occupancy distribution of models. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__occupancy_8h_1a0ce52ade541b979afcf3d66483c75b61">model_refine_comp_for_occupancy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bimage">Bimage</link> *pmask2, <link linkend="_class_bimage">Bimage</link> *ptemp, <link linkend="_class_bimage">Bimage</link> *pmask, double hires, double lores, double max_shift)</para>
+
+<para>Refines component views and positions by cross-correlation. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines to count components in maps. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Daniel Nemecek and Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20091202 </para>
+
+<para>Modified: 20190201 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_model__occupancy_8h_1a5e18955e312d0c875b8b35271e4b0c9a"/>    <section>
+    <title>model_occupancy()</title>
+<indexterm><primary>model_occupancy</primary><secondary>model_occupancy.h</secondary></indexterm>
+<indexterm><primary>model_occupancy.h</primary><secondary>model_occupancy</secondary></indexterm>
+<para><computeroutput>int model_occupancy (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bimage">Bimage</link> * pmask, double mol_weight, double rho, double cutoff, int invert_flag)</computeroutput></para><para>
+
+<para>Calculates the occupancy of components in a map. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Daniel Nemecek and Bernard Heymann </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure to be modified. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mol_weight</entry>
+                                <entry>
+<para>molecular weight to determine threshold. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rho</entry>
+                                <entry>
+<para>protein density in Da/A3. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>cutoff</entry>
+                                <entry>
+<para>coverage cutoff to use for assigning occupancy. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>invert_flag</entry>
+                                <entry>
+<para>flag to invert map density. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The map must have positive density (higher values are considered density).
+The coverage for a component is defined as the fraction of voxels within
+a sphere around the component location that is above the threshold.
+The threshold can be derived from the molecular weight or is taken as
+the sum of the map average and standard deviation.
+The radius of the sphere is taken from the component radius.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 45 of file model_occupancy.cpp.</para>
+    </section><anchor xml:id="_model__occupancy_8h_1aaf6a57e45c2efdefa1a287f8d9333860"/>    <section>
+    <title>model_occupancy_distribution()</title>
+<indexterm><primary>model_occupancy_distribution</primary><secondary>model_occupancy.h</secondary></indexterm>
+<indexterm><primary>model_occupancy.h</primary><secondary>model_occupancy_distribution</secondary></indexterm>
+<para><computeroutput>vector&lt;double&gt; model_occupancy_distribution (<link linkend="_class_bmodel">Bmodel</link> * model, double cutoff, int nfit, long &amp; ncomp, vector&lt; double &gt; &amp; prob, double &amp; R)</computeroutput></para><para>
+
+<para>Calculates the occupancy distribution of models. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Daniel Nemecek and Bernard Heymann </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure to be modified. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>cutoff</entry>
+                                <entry>
+<para>coverage cutoff to determine occupancy. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nfit</entry>
+                                <entry>
+<para>number of binomial curves to fit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;ncomp</entry>
+                                <entry>
+<para>maximum number of components in a model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*prob</entry>
+                                <entry>
+<para>weight and probability array (2*nfit). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;R</entry>
+                                <entry>
+<para>pointer to fit residual. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;double&gt;&amp; occupancy distribution histogram and fits. <literallayout><computeroutput>The component coverage must already be calculated and stored in the
+FOM property of each component. A component is considered occupied
+if its coverage exceeds the given cutoff value.
+The distribution, error and fit array is set up with 3+nfit columns:
+    Column1:    Distribution histogram
+    Column2:    Standard deviations
+    Column3:    Overall binomial fit curve (sum of remaining columns)
+    Column4+:   nfit individual binomial curves
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 126 of file model_occupancy.cpp.</para>
+    </section><anchor xml:id="_model__occupancy_8h_1a0ce52ade541b979afcf3d66483c75b61"/>    <section>
+    <title>model_refine_comp_for_occupancy()</title>
+<indexterm><primary>model_refine_comp_for_occupancy</primary><secondary>model_occupancy.h</secondary></indexterm>
+<indexterm><primary>model_occupancy.h</primary><secondary>model_refine_comp_for_occupancy</secondary></indexterm>
+<para><computeroutput>int model_refine_comp_for_occupancy (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bimage">Bimage</link> * pmask2, <link linkend="_class_bimage">Bimage</link> * ptemp, <link linkend="_class_bimage">Bimage</link> * pmask, double hires, double lores, double max_shift)</computeroutput></para><para>
+
+<para>Refines component views and positions by cross-correlation. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Daniel Nemecek and Bernard Heymann </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask2</entry>
+                                <entry>
+<para>mask for the input image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*ptemp</entry>
+                                <entry>
+<para>density template. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask</entry>
+                                <entry>
+<para>cross-correlation mask. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit for cross-correlation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit for cross-correlation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_shift</entry>
+                                <entry>
+<para>maximum shift in coordinates (angstrom). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The density origin is positioned on the component.
+The component views must already be set.
+The density and search radii are derived from the radius of each component.
+When a shift is out-of-range, returns to the initial position.
+The size of the template determines the search area.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 237 of file model_occupancy.cpp.</para>
+</section>
+</section>
+</section>

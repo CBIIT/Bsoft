@@ -1,0 +1,254 @@
+.TH "/Users/bernard/b20/bsoft/src/util/moving_average.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/util/moving_average.cpp \- Functions for moving average calculations\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'moving_average\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "double * \fBmoving_average\fP (long number, double *x, long window)"
+.br
+.RI "Calculates a moving average over an array of data\&. "
+.ti -1c
+.RI "vector< double > \fBmoving_average\fP (vector< double > &x, long window)"
+.br
+.RI "Calculates a moving average over an array of data\&. "
+.ti -1c
+.RI "\fBComplex\fP< float > * \fBmoving_average_complex\fP (long number, \fBComplex\fP< float > *x, long window)"
+.br
+.RI "Calculates a moving average over an array of complex data\&. "
+.ti -1c
+.RI "vector< \fBComplex\fP< float > > \fBmoving_average_complex\fP (vector< \fBComplex\fP< float >> &x, long window)"
+.br
+.RI "Calculates a moving average over an array of complex data\&. "
+.ti -1c
+.RI "vector< double > \fBmoving_polynomial\fP (long order, long number, double *x, long window)"
+.br
+.RI "Calculates a moving polynomial fit over an array of data\&. "
+.ti -1c
+.RI "vector< double > \fBmoving_polynomial\fP (long order, vector< double > &x, long window)"
+.br
+.ti -1c
+.RI "vector< double > \fBmoving_gradient\fP (vector< double > &x, long window)"
+.br
+.ti -1c
+.RI "vector< double > \fBmoving_curvature\fP (vector< double > &x, long window)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for moving average calculations\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20000430 
+.PP
+Modified: 20210404 
+.RE
+.PP
+
+.PP
+Definition in file \fBmoving_average\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double* moving_average (long number, double * x, long window)"
+
+.PP
+Calculates a moving average over an array of data\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fInumber\fP number of values in the array\&. 
+.br
+\fI*x\fP the array\&. 
+.br
+\fIwindow\fP sliding window length\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double* the moving average array\&. 
+.PP
+.nf
+All data points within a sliding window are averaged.
+The window moves over the ends of the array and averages only the 
+available points.
+A new array is allocated and the moving averages returned.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 28 of file moving_average\&.cpp\&.
+.SS "vector<double> moving_average (vector< double > & x, long window)"
+
+.PP
+Calculates a moving average over an array of data\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*x\fP the array\&. 
+.br
+\fIwindow\fP sliding window length\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double* the moving average array\&. 
+.PP
+.nf
+All data points within a sliding window are averaged.
+The window moves over the ends of the array and averages only the
+available points.
+A new array is allocated and the moving averages returned.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 73 of file moving_average\&.cpp\&.
+.SS "\fBComplex\fP<float>* moving_average_complex (long number, \fBComplex\fP< float > * x, long window)"
+
+.PP
+Calculates a moving average over an array of complex data\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fInumber\fP number of values in the array\&. 
+.br
+\fI*x\fP the array\&. 
+.br
+\fIwindow\fP sliding window length\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Complex<float>* the moving average complex array\&. 
+.PP
+.nf
+All data points within a sliding window are averaged.
+The window moves over the ends of the array and averages only the 
+available points.
+A new array is allocated and the moving averages returned in it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 120 of file moving_average\&.cpp\&.
+.SS "vector<\fBComplex\fP<float> > moving_average_complex (vector< \fBComplex\fP< float >> & x, long window)"
+
+.PP
+Calculates a moving average over an array of complex data\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*x\fP the array\&. 
+.br
+\fIwindow\fP sliding window length\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Complex<float>* the moving average complex array\&. 
+.PP
+.nf
+All data points within a sliding window are averaged.
+The window moves over the ends of the array and averages only the
+available points.
+A new array is allocated and the moving averages returned in it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 165 of file moving_average\&.cpp\&.
+.SS "vector<double> moving_curvature (vector< double > & x, long window)"
+
+.PP
+Definition at line 296 of file moving_average\&.cpp\&.
+.SS "vector<double> moving_gradient (vector< double > & x, long window)"
+
+.PP
+Definition at line 271 of file moving_average\&.cpp\&.
+.SS "vector<double> moving_polynomial (long order, long number, double * x, long window)"
+
+.PP
+Calculates a moving polynomial fit over an array of data\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIorder\fP polynomial order\&. 
+.br
+\fInumber\fP number of values in the array\&. 
+.br
+\fI*x\fP the array\&. 
+.br
+\fIwindow\fP sliding window length\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double* the moving polynomial fit array\&. 
+.PP
+.nf
+All data points within a sliding window are fit to a polynomial.
+The window moves over the ends of the array and fits only the 
+available points.
+A new array is allocated and the moving polynomial fit values returned.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 212 of file moving_average\&.cpp\&.
+.SS "vector<double> moving_polynomial (long order, vector< double > & x, long window)"
+
+.PP
+Definition at line 241 of file moving_average\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

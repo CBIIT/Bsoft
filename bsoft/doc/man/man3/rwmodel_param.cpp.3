@@ -1,0 +1,295 @@
+.TH "/Users/bernard/b20/bsoft/src/rwmodel/rwmodel_param.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/rwmodel/rwmodel_param.cpp \- Library routines to read and write model dynamics parameters in STAR format\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel_param\&.h'\fP
+.br
+\fC#include 'rwmodel_star\&.h'\fP
+.br
+\fC#include 'rwstar\&.h'\fP
+.br
+\fC#include 'star\&.h'\fP
+.br
+\fC#include 'json\&.h'\fP
+.br
+\fC#include 'model_tags\&.h'\fP
+.br
+\fC#include 'mol_tags\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'string_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBmodparam\fP \fBmodel_param_generate\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Generates a model parameter file from a model\&. "
+.ti -1c
+.RI "int \fBmodel_param_generate\fP (\fBBmodparam\fP &md, \fBBmodel\fP *\fBmodel\fP)"
+.br
+.ti -1c
+.RI "int \fBmodel_param_set_type_indices\fP (\fBBmodel\fP *\fBmodel\fP, \fBBmodparam\fP &md)"
+.br
+.RI "Sets the component type indices from the model parameters\&. "
+.ti -1c
+.RI "\fBBstar2\fP \fBread_parameter_file\fP (\fBBstring\fP &filename)"
+.br
+.ti -1c
+.RI "map< string, \fBBcomptype\fP > \fBread_atom_properties\fP (\fBBstar2\fP &star)"
+.br
+.ti -1c
+.RI "map< string, \fBBcomptype\fP > \fBread_atom_properties\fP (\fBBstring\fP &filename)"
+.br
+.ti -1c
+.RI "map< string, \fBBmaterial\fP > \fBread_material_star\fP (\fBBstring\fP &filename)"
+.br
+.ti -1c
+.RI "map< string, \fBBmaterial\fP > \fBread_material_json\fP (\fBBstring\fP &filename)"
+.br
+.ti -1c
+.RI "map< string, \fBBmaterial\fP > \fBread_material_properties\fP (\fBBstring\fP &filename)"
+.br
+.ti -1c
+.RI "int \fBwrite_material_star\fP (\fBBstring\fP &filename, map< string, \fBBmaterial\fP > material)"
+.br
+.ti -1c
+.RI "int \fBwrite_material_json\fP (\fBBstring\fP &filename, map< string, \fBBmaterial\fP > material)"
+.br
+.ti -1c
+.RI "int \fBwrite_material_properties\fP (\fBBstring\fP &filename, map< string, \fBBmaterial\fP > material)"
+.br
+.ti -1c
+.RI "\fBBmodparam\fP \fBread_dynamics_parameters\fP (\fBBstring\fP &filename)"
+.br
+.RI "Reads a model parameter file\&. "
+.ti -1c
+.RI "int \fBupdate_dynamics_parameters\fP (\fBBmodparam\fP &md, \fBBstring\fP &filename)"
+.br
+.RI "Updates model parameters from a parameter file\&. "
+.ti -1c
+.RI "int \fBwrite_dynamics_parameters\fP (\fBBstring\fP &filename, \fBBmodparam\fP &md)"
+.br
+.RI "Writes a model parameter file\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines to read and write model dynamics parameters in STAR format\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20100305 
+.PP
+Modified: 20210326 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwmodel_param\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBmodparam\fP model_param_generate (\fBBmodel\fP * model)"
+
+.PP
+Generates a model parameter file from a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP linked list of models\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodparam* new model parameter structure\&. 
+.PP
+.nf
+All the types in a list of models are collated into a string list of
+types for a new model parameter structure.
+The distances between component types in the matrix is set to the
+smallest such distance between components of the relevant types.
+The distance constant is set to 1.
+The distance potential type is set to 2 (soft sphere).
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 37 of file rwmodel_param\&.cpp\&.
+.SS "int model_param_generate (\fBBmodparam\fP & md, \fBBmodel\fP * model)"
+
+.PP
+Definition at line 44 of file rwmodel_param\&.cpp\&.
+.SS "int model_param_set_type_indices (\fBBmodel\fP * model, \fBBmodparam\fP & md)"
+
+.PP
+Sets the component type indices from the model parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP linked list of models\&. 
+.br
+\fI&md\fP model parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The position of a type in the distance matrix type list determines
+the type index within the distance matrix itself.
+The indices of the component types within each model is then set
+to the corresponding index for the distance matrix.
+If the type is not represented in the distance matrix, its index
+is set to -1.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 202 of file rwmodel_param\&.cpp\&.
+.SS "map<string,\fBBcomptype\fP> read_atom_properties (\fBBstar2\fP & star)"
+
+.PP
+Definition at line 252 of file rwmodel_param\&.cpp\&.
+.SS "map<string,\fBBcomptype\fP> read_atom_properties (\fBBstring\fP & filename)"
+
+.PP
+Definition at line 305 of file rwmodel_param\&.cpp\&.
+.SS "\fBBmodparam\fP read_dynamics_parameters (\fBBstring\fP & filename)"
+
+.PP
+Reads a model parameter file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBBmodparam\fP new model parameter structure\&. 
+.PP
+.nf
+The only format supported is a STAR format.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 540 of file rwmodel_param\&.cpp\&.
+.SS "map<string,\fBBmaterial\fP> read_material_json (\fBBstring\fP & filename)"
+
+.PP
+Definition at line 382 of file rwmodel_param\&.cpp\&.
+.SS "map<string,\fBBmaterial\fP> read_material_properties (\fBBstring\fP & filename)"
+
+.PP
+Definition at line 439 of file rwmodel_param\&.cpp\&.
+.SS "map<string,\fBBmaterial\fP> read_material_star (\fBBstring\fP & filename)"
+
+.PP
+Definition at line 312 of file rwmodel_param\&.cpp\&.
+.SS "\fBBstar2\fP read_parameter_file (\fBBstring\fP & filename)"
+
+.PP
+Definition at line 222 of file rwmodel_param\&.cpp\&.
+.SS "int update_dynamics_parameters (\fBBmodparam\fP & md, \fBBstring\fP & filename)"
+
+.PP
+Updates model parameters from a parameter file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&md\fP model parameters\&. 
+.br
+\fI&filename\fP file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The only format supported is a STAR format.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 556 of file rwmodel_param\&.cpp\&.
+.SS "int write_dynamics_parameters (\fBBstring\fP & filename, \fBBmodparam\fP & md)"
+
+.PP
+Writes a model parameter file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name\&. 
+.br
+\fI&md\fP model parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&.
+.RE
+.PP
+The only format supported is a STAR format\&. 
+.PP
+Definition at line 726 of file rwmodel_param\&.cpp\&.
+.SS "int write_material_json (\fBBstring\fP & filename, map< string, \fBBmaterial\fP > material)"
+
+.PP
+Definition at line 486 of file rwmodel_param\&.cpp\&.
+.SS "int write_material_properties (\fBBstring\fP & filename, map< string, \fBBmaterial\fP > material)"
+
+.PP
+Definition at line 514 of file rwmodel_param\&.cpp\&.
+.SS "int write_material_star (\fBBstring\fP & filename, map< string, \fBBmaterial\fP > material)"
+
+.PP
+Definition at line 457 of file rwmodel_param\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

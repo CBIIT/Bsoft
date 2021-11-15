@@ -1,0 +1,26 @@
+var class_bsimplex2 =
+[
+    [ "Bsimplex2", "class_bsimplex2.html#a37320c2b410f9f8123a608e93a532a4a", null ],
+    [ "Bsimplex2", "class_bsimplex2.html#a74cd8e08da0fe3097ae46a93c63cda20", null ],
+    [ "amotry", "class_bsimplex2.html#acb8407b57ed5791a9431820d1354bbf0", null ],
+    [ "constant", "class_bsimplex2.html#a57fe0d895ed060cad56e9a931d05d4ac", null ],
+    [ "constant", "class_bsimplex2.html#a4eb84c30fbd9d6b8256e9ca5899e7760", null ],
+    [ "constants", "class_bsimplex2.html#a5bbf17381cfbe40b5d981943a98267f1", null ],
+    [ "limits", "class_bsimplex2.html#a9c9f32b7b86433c2d3b276cb55306376", null ],
+    [ "limits_high", "class_bsimplex2.html#a50fc8d306650d6a17b7711257d8f0257", null ],
+    [ "limits_low", "class_bsimplex2.html#a871d01e3fd300116f91e23ee1b9ca97f", null ],
+    [ "parameter", "class_bsimplex2.html#a54ac89dc9c8a7b851a6400b98970da57", null ],
+    [ "parameter", "class_bsimplex2.html#aaa8eb6de11e4b6c66d82ecbb4c30c8eb", null ],
+    [ "parameters", "class_bsimplex2.html#a53fb6d4c3541a9236f2b878e5e8f7f46", null ],
+    [ "run", "class_bsimplex2.html#a985afcb5c5684834b84bbacf81ca0b99", null ],
+    [ "c", "class_bsimplex2.html#a48f8231bb4f9c1c27bb9e0701104a4b0", null ],
+    [ "fx", "class_bsimplex2.html#aa000d61bc206486cf06b869474698546", null ],
+    [ "hi", "class_bsimplex2.html#a031c983d5d795348466e594ee777a12a", null ],
+    [ "lo", "class_bsimplex2.html#a8796b1ce264a1814563bfd90cdbf7211", null ],
+    [ "nconstant", "class_bsimplex2.html#a4cb24486fba19a746b564382e95e8d05", null ],
+    [ "nparam", "class_bsimplex2.html#a18dfc6a203012f29ab5102e5a4d88f15", null ],
+    [ "npoint", "class_bsimplex2.html#a926aec796cbbb5fa1f82890b908121f2", null ],
+    [ "nvar", "class_bsimplex2.html#a8e80350950d3bd6e198deca4e985c682", null ],
+    [ "param", "class_bsimplex2.html#a1df84015dd0946cf82ddf0a5b33fc8fa", null ],
+    [ "x", "class_bsimplex2.html#a8fe39e861165b293cc526b449790c3d8", null ]
+];

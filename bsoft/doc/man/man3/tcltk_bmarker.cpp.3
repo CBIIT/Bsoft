@@ -1,0 +1,395 @@
+.TH "/Users/bernard/b20/bsoft/tcltk/tcltk_bmarker.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/tcltk/tcltk_bmarker.cpp \- A shared object to manage markers in micrograph parameter files in TCL/Tk\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <tk\&.h>\fP
+.br
+\fC#include 'tcltk_bmarker\&.h'\fP
+.br
+\fC#include 'mg_img_proc\&.h'\fP
+.br
+\fC#include 'mg_extract\&.h'\fP
+.br
+\fC#include 'mg_tomography\&.h'\fP
+.br
+\fC#include 'mg_tomo_track\&.h'\fP
+.br
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_count\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_count\fP (\fBBfield\fP *field)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_count\fP (\fBBmicrograph\fP *mg)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_count\fP (\fBBreconstruction\fP *rec)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_ids\fP (\fBBproject\fP *\fBproject\fP, double fom_cut)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_ids\fP (\fBBfield\fP *field, double fom_cut)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_ids\fP (\fBBmicrograph\fP *mg, double fom_cut)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_ids\fP (\fBBreconstruction\fP *rec, double fom_cut)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_list\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_list\fP (\fBBfield\fP *field)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_list\fP (\fBBmicrograph\fP *mg)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_list\fP (\fBBreconstruction\fP *rec)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_location\fP (\fBBmarker\fP *mark)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_residual\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_residual\fP (\fBBmarker\fP *mark)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_fom\fP (\fBBmarker\fP *mark)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_fom_maximum\fP (\fBBmarker\fP *mark)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_select\fP (\fBBmarker\fP *marklist, double rad, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_select_rectangle\fP (\fBBmarker\fP *marklist, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_get_selection_flag\fP (\fBBmarker\fP *marklist, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_set_selection_flag\fP (\fBBmarker\fP *marklist, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_clear_selection_flag\fP (\fBBmarker\fP *marklist, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_move\fP (\fBBmarker\fP *marklist, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_create\fP (\fBBmicrograph\fP *mg, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_create\fP (\fBBreconstruction\fP *rec, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_center\fP (\fBBmarker\fP *mark, \fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_generate_from_seed\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_find\fP (\fBBmicrograph\fP *mg, \fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_snap\fP (\fBBmicrograph\fP *mg, \fBBimage\fP *p, long mid, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_extract\fP (\fBBmicrograph\fP *mg, \fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_extract\fP (\fBBreconstruction\fP *rec, \fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_delete\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_delete\fP (\fBBfield\fP *field, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_delete\fP (\fBBmicrograph\fP *mg, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_delete\fP (\fBBreconstruction\fP *rec, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_edge\fP (\fBBmarker\fP *mark, \fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBmarker_accept\fP (\fBBmarker\fP *mark, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_tomo_thickness\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_tomo_transfer_seed\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_tomo_findaxis\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_tomo_track\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_tomo_refine\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_tomo_refine_one\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_marker\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBmarker_create\fP (\fBBmarker\fP *mark, int objc, Tcl_Obj *CONST objv[])"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBimglist\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A shared object to manage markers in micrograph parameter files in TCL/Tk\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20030813 
+.PP
+Modified: 20200513 
+.RE
+.PP
+
+.PP
+Definition in file \fBtcltk_bmarker\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "Tcl_Obj* do_marker (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 279 of file tcltk_bmarker\&.cpp\&.
+.SS "int do_tomo_findaxis (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 131 of file tcltk_bmarker\&.cpp\&.
+.SS "int do_tomo_refine (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 179 of file tcltk_bmarker\&.cpp\&.
+.SS "int do_tomo_refine_one (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 216 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj* do_tomo_thickness (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 68 of file tcltk_bmarker\&.cpp\&.
+.SS "int do_tomo_track (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 154 of file tcltk_bmarker\&.cpp\&.
+.SS "int do_tomo_transfer_seed (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 102 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_accept (\fBBmarker\fP * mark, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1295 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_center (\fBBmarker\fP * mark, \fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 944 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_clear_selection_flag (\fBBmarker\fP * marklist, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 825 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_count (\fBBfield\fP * field)"
+
+.PP
+Definition at line 458 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_count (\fBBmicrograph\fP * mg)"
+
+.PP
+Definition at line 474 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_count (\fBBproject\fP * project)"
+
+.PP
+Definition at line 434 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_count (\fBBreconstruction\fP * rec)"
+
+.PP
+Definition at line 488 of file tcltk_bmarker\&.cpp\&.
+.SS "int marker_create (\fBBmarker\fP * mark, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 875 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_create (\fBBmicrograph\fP * mg, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 894 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_create (\fBBreconstruction\fP * rec, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 919 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_delete (\fBBfield\fP * field, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1153 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_delete (\fBBmicrograph\fP * mg, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1196 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_delete (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1089 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_delete (\fBBreconstruction\fP * rec, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1234 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_edge (\fBBmarker\fP * mark, \fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1269 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_extract (\fBBmicrograph\fP * mg, \fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1035 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_extract (\fBBreconstruction\fP * rec, \fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1062 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_find (\fBBmicrograph\fP * mg, \fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 976 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_fom (\fBBmarker\fP * mark)"
+
+.PP
+Definition at line 697 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_fom_maximum (\fBBmarker\fP * mark)"
+
+.PP
+Definition at line 710 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_generate_from_seed (\fBBproject\fP * project)"
+
+.PP
+Definition at line 955 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_get_selection_flag (\fBBmarker\fP * marklist, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 786 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_ids (\fBBfield\fP * field, double fom_cut)"
+
+.PP
+Definition at line 532 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_ids (\fBBmicrograph\fP * mg, double fom_cut)"
+
+.PP
+Definition at line 551 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_ids (\fBBproject\fP * project, double fom_cut)"
+
+.PP
+Definition at line 502 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_ids (\fBBreconstruction\fP * rec, double fom_cut)"
+
+.PP
+Definition at line 566 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_list (\fBBfield\fP * field)"
+
+.PP
+Definition at line 610 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_list (\fBBmicrograph\fP * mg)"
+
+.PP
+Definition at line 627 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_list (\fBBproject\fP * project)"
+
+.PP
+Definition at line 581 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_list (\fBBreconstruction\fP * rec)"
+
+.PP
+Definition at line 642 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_location (\fBBmarker\fP * mark)"
+
+.PP
+Definition at line 657 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_move (\fBBmarker\fP * marklist, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 847 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_residual (\fBBmarker\fP * mark)"
+
+.PP
+Definition at line 684 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_residual (\fBBproject\fP * project)"
+
+.PP
+Definition at line 673 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_select (\fBBmarker\fP * marklist, double rad, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 724 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_select_rectangle (\fBBmarker\fP * marklist, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 756 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_set_selection_flag (\fBBmarker\fP * marklist, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 805 of file tcltk_bmarker\&.cpp\&.
+.SS "Tcl_Obj * marker_snap (\fBBmicrograph\fP * mg, \fBBimage\fP * p, long mid, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1001 of file tcltk_bmarker\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "\fBBimage\fP* imglist\fC [extern]\fP"
+
+.PP
+Definition at line 32 of file bshow\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

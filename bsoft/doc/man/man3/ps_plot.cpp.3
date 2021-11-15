@@ -1,0 +1,337 @@
+.TH "/Users/bernard/b20/bsoft/src/ps/ps_plot.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/ps/ps_plot.cpp \- Postscript output functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'ps_plot\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include <iostream>\fP
+.br
+\fC#include <time\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "ofstream * \fBps_open_and_init\fP (\fBBstring\fP filename, \fBBstring\fP title, int npages, int width, int height)"
+.br
+.RI "Opens and initializes a postscript file\&. "
+.ti -1c
+.RI "ofstream * \fBps_open_and_init\fP (\fBBstring\fP filename, \fBBplot\fP *plot)"
+.br
+.RI "Opens and initializes a postscript file\&. "
+.ti -1c
+.RI "int \fBps_close\fP (ofstream *fps)"
+.br
+.RI "Closes a postscript file\&. "
+.ti -1c
+.RI "int \fBps_plot\fP (\fBBstring\fP filename, \fBBplot\fP *plot)"
+.br
+.RI "Generates postscript graphs\&. "
+.ti -1c
+.RI "\fBBplot\fP * \fBps_read\fP (\fBBstring\fP &filename)"
+.br
+.RI "Reads a postscript file with a data table\&. "
+.ti -1c
+.RI "int \fBps_graph\fP (ofstream *fps, \fBBplot\fP *plot, int page_number)"
+.br
+.RI "Generates postscript graphs\&. "
+.ti -1c
+.RI "int \fBps_scale\fP (ofstream *fps, double x1, double y1, double x2, double y2, double min, double max, double increment, double tick_length, double tick_angle, int digits, int fontsize, int inverse)"
+.br
+.RI "Generates a scale for a postscript graph\&. "
+.ti -1c
+.RI "\fBBplot\fP * \fBplot_curve\fP (long nrow, double *c0, double *c1, double *c2, double *c3)"
+.br
+.RI "Generates 1-3 line plot\&. "
+.ti -1c
+.RI "int \fBps_define_arrowline\fP (ofstream *fps)"
+.br
+.RI "Generates an arrow and line\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "string \fBcommand\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Postscript output functions\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010515 
+.PP
+Modified: 20200312 
+.RE
+.PP
+
+.PP
+Definition in file \fBps_plot\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBplot\fP* plot_curve (long nrow, double * c0, double * c1, double * c2, double * c3)"
+
+.PP
+Generates 1-3 line plot\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fInrow\fP number of points\&. 
+.br
+\fI*c0\fP independent variable\&. 
+.br
+\fI*c1\fP curve 1\&. 
+.br
+\fI*c2\fP curve 2\&. 
+.br
+\fI*c3\fP curve 3\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bplot* plot structure\&. 
+.RE
+.PP
+
+.PP
+Definition at line 563 of file ps_plot\&.cpp\&.
+.SS "int ps_close (ofstream * fps)"
+
+.PP
+Closes a postscript file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fps\fP file handle\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Closes a file and writes the postscript trailer line.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 106 of file ps_plot\&.cpp\&.
+.SS "int ps_define_arrowline (ofstream * fps)"
+
+.PP
+Generates an arrow and line\&. 
+.PP
+Definition at line 604 of file ps_plot\&.cpp\&.
+.SS "int ps_graph (ofstream * fps, \fBBplot\fP * plot, int page_number)"
+
+.PP
+Generates postscript graphs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fps\fP output postscript file descriptor\&. 
+.br
+\fI*plot\fP plot information\&. 
+.br
+\fIpage_number\fP page number (starts at 1)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+Any number of functions of a single independant variable (x) can be plot.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 248 of file ps_plot\&.cpp\&.
+.SS "ofstream* ps_open_and_init (\fBBstring\fP filename, \fBBplot\fP * plot)"
+
+.PP
+Opens and initializes a postscript file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP output postscript file name\&. 
+.br
+\fI*plot\fP plot information\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+ofstream* postscript file stream\&. 
+.PP
+.nf
+Opens a file and writes the postscript header line, the creator and 
+creation date lines, and a document data specifier.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 71 of file ps_plot\&.cpp\&.
+.SS "ofstream* ps_open_and_init (\fBBstring\fP filename, \fBBstring\fP title, int npages, int width, int height)"
+
+.PP
+Opens and initializes a postscript file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP output postscript file name\&. 
+.br
+\fI&title\fP title\&. 
+.br
+\fInpages\fP number of pages\&. 
+.br
+\fIwidth\fP page width\&. 
+.br
+\fIheight\fP page height\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+ofstream* postscript file descriptor\&. 
+.PP
+.nf
+Opens a stream and writes the postscript header line, the creator and
+creation date lines, and a document data specifier.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 33 of file ps_plot\&.cpp\&.
+.SS "int ps_plot (\fBBstring\fP filename, \fBBplot\fP * plot)"
+
+.PP
+Generates postscript graphs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP output postscript file name\&. 
+.br
+\fI*plot\fP plot information\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+Any number of functions of a single independant variable (x) can be plot.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 130 of file ps_plot\&.cpp\&.
+.SS "\fBBplot\fP* ps_read (\fBBstring\fP & filename)"
+
+.PP
+Reads a postscript file with a data table\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP input postscript file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bplot* new plot\&. 
+.RE
+.PP
+
+.PP
+Definition at line 150 of file ps_plot\&.cpp\&.
+.SS "int ps_scale (ofstream * fps, double x1, double y1, double x2, double y2, double min, double max, double increment, double tick_length, double tick_angle, int digits, int fontsize, int inverse)"
+
+.PP
+Generates a scale for a postscript graph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fps\fP postscript file descriptor\&. 
+.br
+\fIx1\fP starting x coordinate\&. 
+.br
+\fIy1\fP starting y coordinate\&. 
+.br
+\fIx2\fP ending x coordinate\&. 
+.br
+\fIy2\fP ending y coordinate\&. 
+.br
+\fImin\fP minimum value\&. 
+.br
+\fImax\fP maximum value\&. 
+.br
+\fIincrement\fP value increment\&. 
+.br
+\fItick_length\fP length of ticks\&. 
+.br
+\fItick_angle\fP angle of ticks relative to horizontal axis\&. 
+.br
+\fIdigits\fP number of decimal digits for labels\&. 
+.br
+\fIfontsize\fP font size for labels\&. 
+.br
+\fIinverse\fP flag for inverse values\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 489 of file ps_plot\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "string command\fC [extern]\fP"
+
+.PP
+Definition at line 20 of file utilities\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,473 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__tomo__resol_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/mg_tomo_resol.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/mg_tomo_resol.h</primary></indexterm>
+<para>
+
+<para>Functions to assess the resoltion of a tomographic tilt series. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+#include &quot;ps_plot.h&quot;
+#include &quot;rwimg.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__tomo__resol_8h_1a86cb3e10d14f0a8382c86b18042f6d31">mg_tomo_resolution</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int micrograph_id, double hi_res, double sampling_ratio, double scale, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, double fast_angle, int action, double wiener, double cutoff, <link linkend="_class_bstring">Bstring</link> &amp;psfile)</para>
+
+<para>Estimating the resolution of one micrograph in an aligned tilt series. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para>vector&lt; <link linkend="_class_bplot">Bplot</link> * &gt; <link linkend="_mg__tomo__resol_8h_1a517ee0ae669dd7a32a922b1a9df3c813">project_tomo_resolution</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double hi_res, double sampling_ratio, double scale, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, double fast_angle, int action, double wiener, double cutoff)</para>
+
+<para>Estimating the resolution of the tomogram from an aligned tilt series. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bplot">Bplot</link> * <link linkend="_mg__tomo__resol_8h_1a589cbd81f87144a20d9e261248535dca">project_tomo_particle_resolution</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double hi_res, double sampling_ratio, double fast_angle, double cutoff)</para>
+
+<para>Estimates the resolution for each particle image in each micrograph. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__tomo__resol_8h_1a8789d31ce267667e92cf614797e3a850">img_pack_2D_into_central_section</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bimage">Bimage</link> *prec, <link linkend="_class_bimage">Bimage</link> *prec2, long ft_size, double scale, double hi_res, <link linkend="_class_matrix3">Matrix3</link> matr, <link linkend="_class_matrix3">Matrix3</link> mat, int inplane)</para>
+
+<para>Packs a 2D Fourier transform into a 3D reciprocal space volume. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para><link linkend="_class_bplot">Bplot</link> * <link linkend="_mg__tomo__resol_8h_1a096513b378792bdc4ce5d720039d4d60">plot_tilt_resolution</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Plots the estimated resolution against the tilt angle. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions to assess the resoltion of a tomographic tilt series. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20031205 </para>
+
+<para>Modified: 20200723 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__tomo__resol_8h_1a8789d31ce267667e92cf614797e3a850"/>    <section>
+    <title>img_pack_2D_into_central_section()</title>
+<indexterm><primary>img_pack_2D_into_central_section</primary><secondary>mg_tomo_resol.h</secondary></indexterm>
+<indexterm><primary>mg_tomo_resol.h</primary><secondary>img_pack_2D_into_central_section</secondary></indexterm>
+<para><computeroutput>long img_pack_2D_into_central_section (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bimage">Bimage</link> * prec, <link linkend="_class_bimage">Bimage</link> * prec2, long ft_size, double scale, double hi_res, <link linkend="_class_matrix3">Matrix3</link> matr, <link linkend="_class_matrix3">Matrix3</link> mat, int inplane)</computeroutput></para><para>
+
+<para>Packs a 2D Fourier transform into a 3D reciprocal space volume. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>2D Fourier transform. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*prec</entry>
+                                <entry>
+<para>3D central section. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*prec2</entry>
+                                <entry>
+<para>3D central section with in-plane micrograph omitted. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ft_size</entry>
+                                <entry>
+<para>Fourier transform size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>reconstruction scale. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hi_res</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>matr</entry>
+                                <entry>
+<para>in plane or reference matrix. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mat</entry>
+                                <entry>
+<para>matrix of image being packed. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>inplane</entry>
+                                <entry>
+<para>flag to indicate an in plane image. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number voxels packed. <literallayout><computeroutput>The rotation matrix is used to determine the plane in reciprocal space
+to which the 2D transform data is added. The map is assumed to be cubic
+and the 2D transform square. The orientation parameters must be written
+into the image structure. The real space 2D image must be supplied.
+This is then padded to more than twice its original size, fourier
+transformed, and packed into the 3D reciprocal space block.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 712 of file mg_tomo_resol.cpp.</para>
+    </section><anchor xml:id="_mg__tomo__resol_8h_1a86cb3e10d14f0a8382c86b18042f6d31"/>    <section>
+    <title>mg_tomo_resolution()</title>
+<indexterm><primary>mg_tomo_resolution</primary><secondary>mg_tomo_resol.h</secondary></indexterm>
+<indexterm><primary>mg_tomo_resol.h</primary><secondary>mg_tomo_resolution</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* mg_tomo_resolution (<link linkend="_class_bproject">Bproject</link> * project, int micrograph_id, double hi_res, double sampling_ratio, double scale, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, double fast_angle, int action, double wiener, double cutoff, <link linkend="_class_bstring">Bstring</link> &amp; psfile)</computeroutput></para><para>
+
+<para>Estimating the resolution of one micrograph in an aligned tilt series. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>image processing parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>micrograph_id</entry>
+                                <entry>
+<para>micrograph number to use for resolution test. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hi_res</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sampling_ratio</entry>
+                                <entry>
+<para>ratio for averaging window. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>reconstruction scale. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>reconstruction size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fast_angle</entry>
+                                <entry>
+<para>angle to select micrographs for reconstruction. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>action</entry>
+                                <entry>
+<para>flag to apply CTF to projections. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wiener</entry>
+                                <entry>
+<para>Wiener factor. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>cutoff</entry>
+                                <entry>
+<para>FRC cutoff. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;psfile</entry>
+                                <entry>
+<para>postscript output file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* micrograph reconstruction, NULL on error. <literallayout><computeroutput>The orientation parameters, view vector, angle of rotation and origin,
+must all be set. Each image is padded to at least two times its size 
+and its Fourier transform packed into 3D reciprocal space.
+The figure-of-merit calculated for each reciprocal space voxel is:
+           sum(w*re)^2 + sum(w*im)^2
+    FOM = ---------------------------
+          sum(w)*sum(w*(re^2 + im^2))
+where
+    re  real part
+    im  imaginary part
+    w   weight (inverse distance of image pixel to closest grid point)
+For voxels with only one data pixel contributing to it, FOM(0).
+An image is used in the reconstruction if its selection flag has been set.
+If the selection number is less than zero, all particles with selection flags
+greater than zero are used. If the selection number is zero or above, all
+particles with the selection flag set to the same number are used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 267 of file mg_tomo_resol.cpp.</para>
+    </section><anchor xml:id="_mg__tomo__resol_8h_1a096513b378792bdc4ce5d720039d4d60"/>    <section>
+    <title>plot_tilt_resolution()</title>
+<indexterm><primary>plot_tilt_resolution</primary><secondary>mg_tomo_resol.h</secondary></indexterm>
+<indexterm><primary>mg_tomo_resol.h</primary><secondary>plot_tilt_resolution</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bplot">Bplot</link>* plot_tilt_resolution (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Plots the estimated resolution against the tilt angle. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>*plot new plot. <literallayout><computeroutput>The resolution estimates must be encoded in the micrograph FOM&apos;s.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1112 of file mg_tomo_resol.cpp.</para>
+    </section><anchor xml:id="_mg__tomo__resol_8h_1a589cbd81f87144a20d9e261248535dca"/>    <section>
+    <title>project_tomo_particle_resolution()</title>
+<indexterm><primary>project_tomo_particle_resolution</primary><secondary>mg_tomo_resol.h</secondary></indexterm>
+<indexterm><primary>mg_tomo_resol.h</primary><secondary>project_tomo_particle_resolution</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bplot">Bplot</link>* project_tomo_particle_resolution (<link linkend="_class_bproject">Bproject</link> * project, double hi_res, double sampling_ratio, double fast_angle, double cutoff)</computeroutput></para><para>
+
+<para>Estimates the resolution for each particle image in each micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>micrograph project. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hi_res</entry>
+                                <entry>
+<para>high resolution limit for resolution estimation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sampling_ratio</entry>
+                                <entry>
+<para>ratio for averaging window. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fast_angle</entry>
+                                <entry>
+<para>angle to select micrographs for reconstruction. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>cutoff</entry>
+                                <entry>
+<para>FRC cutoff to use. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bplot* plot with average particle resolutions. <literallayout><computeroutput>Requires the particles to be defined in all micrographs.
+The NLOO algorithm is used for each particle.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 431 of file mg_tomo_resol.cpp.</para>
+    </section><anchor xml:id="_mg__tomo__resol_8h_1a517ee0ae669dd7a32a922b1a9df3c813"/>    <section>
+    <title>project_tomo_resolution()</title>
+<indexterm><primary>project_tomo_resolution</primary><secondary>mg_tomo_resol.h</secondary></indexterm>
+<indexterm><primary>mg_tomo_resol.h</primary><secondary>project_tomo_resolution</secondary></indexterm>
+<para><computeroutput>vector&lt;<link linkend="_class_bplot">Bplot</link>*&gt; project_tomo_resolution (<link linkend="_class_bproject">Bproject</link> * project, double hi_res, double sampling_ratio, double scale, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, double fast_angle, int action, double wiener, double cutoff)</computeroutput></para><para>
+
+<para>Estimating the resolution of the tomogram from an aligned tilt series. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>image processing parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hi_res</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sampling_ratio</entry>
+                                <entry>
+<para>ratio for averaging window. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>reconstruction scale. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>reconstruction size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fast_angle</entry>
+                                <entry>
+<para>angle to select micrographs for reconstruction. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>action</entry>
+                                <entry>
+<para>flag to apply CTF to projections. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wiener</entry>
+                                <entry>
+<para>Wiener factor. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>cutoff</entry>
+                                <entry>
+<para>FRC cutoff. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;Bplot*&gt; Two plots: Tilt-resolution and NLOO-3D. <literallayout><computeroutput>The orientation parameters, view vector, angle of rotation and origin,
+must all be set. Each image is padded to at least two times its size
+and its Fourier transform packed into 3D reciprocal space.
+The figure-of-merit calculated for each reciprocal space voxel is:
+           sum(w*re)^2 + sum(w*im)^2
+    FOM = ---------------------------
+          sum(w)*sum(w*(re^2 + im^2))
+where
+    re  real part
+    im  imaginary part
+    w   weight (inverse distance of image pixel to closest grid point)
+For voxels with only one data pixel contributing to it, FOM(0).
+An image is used in the reconstruction if its selection flag has been set.
+If the selection number is less than zero, all particles with selection flags
+greater than zero are used. If the selection number is zero or above, all
+particles with the selection flag set to the same number are used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 346 of file mg_tomo_resol.cpp.</para>
+</section>
+</section>
+</section>

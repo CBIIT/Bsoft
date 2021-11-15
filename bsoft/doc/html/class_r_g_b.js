@@ -1,0 +1,25 @@
+var class_r_g_b =
+[
+    [ "RGB", "class_r_g_b.html#a761dcbddf06f851cf139d8702d0b11c3", null ],
+    [ "RGB", "class_r_g_b.html#a1d4ef4f6af8105f9c0eff324191182a5", null ],
+    [ "RGB", "class_r_g_b.html#af5b99355a3f9b4d8384841d4ae04dad3", null ],
+    [ "RGB", "class_r_g_b.html#a6e3ed7d196643f6692a72acf26cd27a6", null ],
+    [ "RGB", "class_r_g_b.html#a814f30921e3ba0cb7db251aab4ef0328", null ],
+    [ "RGB", "class_r_g_b.html#a7a15a2b29fa6ecc614785ae209141ac8", null ],
+    [ "RGB", "class_r_g_b.html#ad50e480b1b1f43fba284e0ca318b38f9", null ],
+    [ "average", "class_r_g_b.html#a1c2f8fa272d4064835cc4c38ec21c974", null ],
+    [ "b", "class_r_g_b.html#ad5493272dd7a53c67af873a9a92b6803", null ],
+    [ "g", "class_r_g_b.html#a8a053d272a3c150523ffe93ebb61b952", null ],
+    [ "hex", "class_r_g_b.html#a1b1e3734f52d36001536204e9f257192", null ],
+    [ "operator RGB< T2 >", "class_r_g_b.html#a7d7c612fa78c5aef534c3ef278179b71", null ],
+    [ "operator-", "class_r_g_b.html#a3d8173183356bac79b5621a02bac513f", null ],
+    [ "operator=", "class_r_g_b.html#a3e4c8ed8cf9b6138d33fb2ee688ef23a", null ],
+    [ "operator=", "class_r_g_b.html#ac4c7f73c4e88094fc33c7da7d32c117f", null ],
+    [ "operator[]", "class_r_g_b.html#a6a4d0931ef2ae45da9820fe6461c4197", null ],
+    [ "phase", "class_r_g_b.html#a4ab9dacb9b0db968b4cbc191433b0888", null ],
+    [ "r", "class_r_g_b.html#abb43bd1c84a0025d07c65dbfe64a6218", null ],
+    [ "random_color", "class_r_g_b.html#a2484ec68d17a31fbd752e0de1993850e", null ],
+    [ "red", "class_r_g_b.html#ac0354bcdc742c545d6a7f6a41d915782", null ],
+    [ "rms", "class_r_g_b.html#a54e931abb6bb7c1ad93848cf573ed3f7", null ],
+    [ "spectrum", "class_r_g_b.html#a646f779055b10fc5e4db98694f2e4eca", null ]
+];

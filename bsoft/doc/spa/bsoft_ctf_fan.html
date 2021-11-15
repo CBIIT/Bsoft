@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Fan CTF</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="../Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Fan example</h1>
+<p>The program <b>bctf</b> can be run in different ways:</p>
+<ul>
+	<li> Flip phases (multiply each structure factor with the sign of the CTF)</li>
+	<li> Apply (multiply each structure factor with the CTF)</li>
+	<li> Correct (divide each structure factor with the CTF, using a wiener factor for small values)</li>
+	<li>Fit parameters (not shown here)</li>
+</ul>
+<h3>Flipping phases</h3>
+<p>Phase flipping only involves a change of sign, and therefore the
+operation is a toggle, so that flipping the phases twice with the same
+parameters recover the original image:</p>
+<div id="command"><p>bctf -verbose 7 -action flip -Defocus 0.9 fan.jpg fan_flip.jpg</p></div>
+<div id="command"><p>bctf -verbose 7 -action flip -Defocus 0.9 fan_flip.jpg fan_flip2.jpg</p></div>
+<p><u>Options:</u> <br />
+-verbose 7&nbsp;&nbsp;&nbsp; Verbosity: The amount of information printed to the shell. <br />
+-action flip&nbsp;&nbsp; Sets the &quot;mode&quot; to flipping phases. <br />
+-Defocus 0.9&nbsp;&nbsp; Up to three input values: defocus minimum, defocus
+maximum and the astigmatism angle.&nbsp; Giving only the first value implies that there is no astigmatism. </p>
+      <center>
+      <p><img width=256 src="fan.jpg" alt="" /><img
+ width=256 src="fan_flip.jpg" alt="" /><img
+ width=256 src="fan_flip2.jpg" alt="" /> </p>
+<p>The 3 images: fan.jpg, fan_flip.jpg and fan_flip2.jpg</p>
+      </center>
+<p>A fan-like radiation of black and white panels gives a spectrum of
+frequencies. Flipping the phases inverts contrast at certain annuli
+which can be recovered by a second flipping. </p>
+
+<h3>Applying a CTF</h3>
+<br />
+<div id="command"><p>bctf -verbose 7 -action apply -Defocus 0.9 fan.jpg fan_apply.jpg</p></div>
+<p><u>New option:</u> </p>
+<p>-action apply&nbsp;&nbsp; Sets the &quot;mode&quot; to multiplication with the CTF. </p>
+<center>
+<p><img width=256 src="fan.jpg" alt="" /><img width=256 src="fan_apply.jpg" alt="" /> </p>
+<p>The input and output: fan.jpg and fan_apply.jpg</p>
+</center>
+<br/>
+<hr width="100%" />
+<h3> Correction for the CTF</h3>
+<p>The correction for the CTF involves a division which means that small
+values near the nodes of the CTF will amplify any noise in those
+amplitudes to unacceptable values: The correction therefore uses a
+wiener factor to substitute for these small values:</p>
+<div id="command"><p>bctf -verbose 7 -action correct -Defocus 0.9 -wiener 0.1
+fan_apply.jpg fan_correct.jpg</p></div>
+<p><u>New option:</u> </p>
+<p>-wiener 0.1&nbsp;&nbsp;&nbsp; Sets the wiener factor (a value between 0.001 and 1). </p>
+<br />
+<center>
+<p><img width=256 src="fan_apply.jpg" alt="" /><img width=256 src="fan_correct.jpg" alt="" /> </p>
+<p>The input and output: fan_apply.jpg and fan_correct.jpg</p>
+</center>
+</div>
+<div id="footer">
+  Bernard Heymann  20141223
+</div>
+</body>
+</html>

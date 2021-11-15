@@ -1,0 +1,470 @@
+.TH "/Users/bernard/b20/bsoft/src/mg/mg_multislice.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mg/mg_multislice.cpp \- Generates and manipulates projects for multislice calculations\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_ctf\&.h'\fP
+.br
+\fC#include 'molecule_to_map\&.h'\fP
+.br
+\fC#include 'mol_transform\&.h'\fP
+.br
+\fC#include 'mol_edit\&.h'\fP
+.br
+\fC#include 'Complex\&.h'\fP
+.br
+\fC#include 'Vector3\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_calc_wave_propagator\fP (\fBVector3\fP< long > size, \fBVector3\fP< double > sam, double thickness, double volt, double resolution)"
+.br
+.RI "Calculates the wave propagation function between slices\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_calc_multi_slice\fP (\fBBimage\fP *pgrate, double thickness, double volt, double resolution)"
+.br
+.RI "Simulates the electron imaging process using a multi-slice approach\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_calc_potential\fP (\fBBmolgroup\fP *molgroup, \fBVector3\fP< long > size, \fBVector3\fP< double > origin, \fBVector3\fP< double > sam, double thickness, double resolution, double Bfactor, \fBBstring\fP &paramfile, int type)"
+.br
+.RI "Calculates the atomic potential\&. "
+.ti -1c
+.RI "int \fBimg_calc_phase_grating\fP (\fBBimage\fP *p, double volt)"
+.br
+.RI "Calculates the phase grating approximation from the atomic potential\&. "
+.ti -1c
+.RI "int \fBimg_apply_complex_CTF\fP (\fBBimage\fP *p, double def_avg, double def_dev, double ast_angle, double volts, double Cs, double Cc, double amp_shift, double alpha, double energy_spread)"
+.br
+.RI "Applies a complex CTF function to a Fourier transform\&. "
+.ti -1c
+.RI "\fBBproject\fP * \fBproject_generate\fP (int nfield, int nmg, int npart, \fBVector3\fP< double > pixel_size, double img_origin, double volt, double Cs, double Cc, double alpha, double energy_spread, double amp_shift, double def_min, double def_max, double dose, double tsigma, \fBBstring\fP &fieldbase, \fBBstring\fP &mgbase, \fBBstring\fP &partbase, int fieldnumber, int mgnumber, int partnumber)"
+.br
+.RI "Generates a project for multislice simulations\&. "
+.ti -1c
+.RI "\fBBproject\fP * \fBproject_generate_asu\fP (\fBBstring\fP &symmetry_string, \fBVector3\fP< double > pixel_size, double img_origin, double theta_step, double phi_step, double volt, double Cs, double Cc, double alpha, double energy_spread, double amp_shift, double defocus, double dose, \fBBstring\fP &mgbase, \fBBstring\fP &partbase)"
+.br
+.RI "Generates a project for multislice calculations of an asymmetric unit\&. "
+.ti -1c
+.RI "int \fBproject_generate_potential\fP (\fBBmolgroup\fP *molgroup, \fBBmolgroup\fP *water, \fBBproject\fP *\fBproject\fP, \fBBstring\fP &fieldname, \fBBstring\fP &mgname, int partselect, \fBVector3\fP< long > size, double thickness, double resolution, double Bfactor, int pottype, \fBBstring\fP &paramfile)"
+.br
+.RI "Generates potential images using a multislice calculation\&. "
+.ti -1c
+.RI "int \fBproject_generate_image\fP (\fBBproject\fP *\fBproject\fP, double thickness, double resolution)"
+.br
+.RI "Generates final images from a multislice calculation\&. "
+.ti -1c
+.RI "int \fBproject_apply_distortions\fP (\fBBproject\fP *\fBproject\fP, int poisson, double gauss, double kmtf)"
+.br
+.RI "Applies imaging distortions to the final images from a multislice calculation\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Generates and manipulates projects for multislice calculations\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20030805 
+.PP
+Modified: 20160604 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_multislice\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int img_apply_complex_CTF (\fBBimage\fP * p, double def_avg, double def_dev, double ast_angle, double volts, double Cs, double Cc, double amp_shift, double alpha, double energy_spread)"
+
+.PP
+Applies a complex CTF function to a Fourier transform\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP complex Fourier transform (modified)\&. 
+.br
+\fIdef_avg\fP defocus minimum (angstrom)\&. 
+.br
+\fIdef_dev\fP defocus maximum (angstrom)\&. 
+.br
+\fIast_angle\fP astigmatism angle (radians)\&. 
+.br
+\fIvolts\fP acceleration voltage (volts)\&. 
+.br
+\fICs\fP spherical aberration (angstrom)\&. 
+.br
+\fICc\fP chromatic aberration (angstrom)\&. 
+.br
+\fIamp_shift\fP amplitude contrast phase shift (radian)\&. 
+.br
+\fIalpha\fP beam source size (radians)\&. 
+.br
+\fIenergy_spread\fP effective energy spread (fraction: typically 10^-5) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&.
+.RE
+.PP
+.PP
+.nf
+The CTF is applied as a multiplication with a complex number:
+    new_datum.re = datum.re*amp_fac*cos(dphi) - datum.im*phi_fac*sin(dphi)
+    new_datum.re = datum.re*phi_fac*sin(dphi) + datum.im*amp_fac*cos(dphi)
+Both input and output are complex transforms.
+.fi
+.PP
+ 
+.PP
+Definition at line 252 of file mg_multislice\&.cpp\&.
+.SS "\fBBimage\fP* img_calc_multi_slice (\fBBimage\fP * pgrate, double thickness, double volt, double resolution)"
+
+.PP
+Simulates the electron imaging process using a multi-slice approach\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*pgrate\fP phase grating multi-image\&. 
+.br
+\fIthickness\fP slice thickness (in angstrom)\&. 
+.br
+\fIvolt\fP acceleration voltage (volt)\&. 
+.br
+\fIresolution\fP resolution limit (angstrom)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* simulated projection image transform\&. 
+.PP
+.nf
+The passage of the electron beam is simulated as the interaction of
+a planar wave with successive planar phase gratings spaced at regular 
+intervals, with the wave propagated between the 2D gratings. The
+phase gratings are derived from slabs of the atomic potential 
+calculated from the atomic structure using scattering profiles.
+Note: The final product is a 2D transform of the exit wave.
+Reference: Cowley, J. M. (1995) Diffraction Physics. 3rd Rev. Ed. 
+    Elsevier Science, Amsterdam.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 89 of file mg_multislice\&.cpp\&.
+.SS "int img_calc_phase_grating (\fBBimage\fP * p, double volt)"
+
+.PP
+Calculates the phase grating approximation from the atomic potential\&. 
+.PP
+.nf
+All calculations are complex.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP atomic potential image (modified)\&. 
+.br
+\fIvolt\fP acceleration voltage (volt)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 206 of file mg_multislice\&.cpp\&.
+.SS "\fBBimage\fP* img_calc_potential (\fBBmolgroup\fP * molgroup, \fBVector3\fP< long > size, \fBVector3\fP< double > origin, \fBVector3\fP< double > sam, double thickness, double resolution, double Bfactor, \fBBstring\fP & paramfile, int type)"
+
+.PP
+Calculates the atomic potential\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP set of molecules\&. 
+.br
+\fIsize\fP size of projection image (z = 1)\&. 
+.br
+\fIorigin\fP origin in x and y\&. 
+.br
+\fIsam\fP voxel size\&. 
+.br
+\fIthickness\fP slice thickness (in angstrom)\&. 
+.br
+\fIresolution\fP resolution limit (angstrom)\&. 
+.br
+\fIBfactor\fP overall temperature factor\&. 
+.br
+\fI&paramfile\fP parameter file for atomic scattering coefficients\&. 
+.br
+\fItype\fP type of potential calculation: 0=reciprocal space, 1=real space, 2=gaussian 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* complex potential image\&. 
+.RE
+.PP
+
+.PP
+Definition at line 139 of file mg_multislice\&.cpp\&.
+.SS "\fBBimage\fP* img_calc_wave_propagator (\fBVector3\fP< long > size, \fBVector3\fP< double > sam, double thickness, double volt, double resolution)"
+
+.PP
+Calculates the wave propagation function between slices\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsize\fP size of projection image (z = 1)\&. 
+.br
+\fIsam\fP pixel size in x and y, slice thickness in z\&. 
+.br
+\fIthickness\fP slice thickness (in angstrom)\&. 
+.br
+\fIvolt\fP acceleration voltage (volt)\&. 
+.br
+\fIresolution\fP resolution limit (angstrom)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* wave propagation function image\&. 
+.RE
+.PP
+
+.PP
+Definition at line 32 of file mg_multislice\&.cpp\&.
+.SS "int project_apply_distortions (\fBBproject\fP * project, int poisson, double gauss, double kmtf)"
+
+.PP
+Applies imaging distortions to the final images from a multislice calculation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project structure with parameters\&. 
+.br
+\fIpoisson\fP flag to add Poisson noise\&. 
+.br
+\fIgauss\fP width of gaussian noise to add (0=no noise)\&. 
+.br
+\fIkmtf\fP mass transfer decay constant (0=no decay)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 675 of file mg_multislice\&.cpp\&.
+.SS "\fBBproject\fP* project_generate (int nfield, int nmg, int npart, \fBVector3\fP< double > pixel_size, double img_origin, double volt, double Cs, double Cc, double alpha, double energy_spread, double amp_shift, double def_min, double def_max, double dose, double tsigma, \fBBstring\fP & fieldbase, \fBBstring\fP & mgbase, \fBBstring\fP & partbase, int fieldnumber, int mgnumber, int partnumber)"
+
+.PP
+Generates a project for multislice simulations\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fInfield\fP number of fields-of-view\&. 
+.br
+\fInmg\fP number of micrographs per field-of-view\&. 
+.br
+\fInpart\fP number of particles per micrograph\&. 
+.br
+\fIpixel_size\fP micrograph pixel size\&. 
+.br
+\fIimg_origin\fP image origin within the simulation box\&. 
+.br
+\fIvolt\fP acceleration voltage (volts)\&. 
+.br
+\fICs\fP spherical aberration coefficient (angstrom)\&. 
+.br
+\fICc\fP chromatic aberration coefficient (angstrom)\&. 
+.br
+\fIalpha\fP beam divergence angle (radians)\&. 
+.br
+\fIenergy_spread\fP energy spread (relative units)\&. 
+.br
+\fIamp_shift\fP amplitude contribution phase shift (radian)\&. 
+.br
+\fIdef_min\fP defocus minimum (angstrom)\&. 
+.br
+\fIdef_max\fP defocus maximum (angstrom)\&. 
+.br
+\fIdose\fP electron dose (e/angstrom^2)\&. 
+.br
+\fItsigma\fP translation standard deviation (pixels)\&. 
+.br
+\fI&fieldbase\fP field base name\&. 
+.br
+\fI&mgbase\fP micrograph base name\&. 
+.br
+\fI&partbase\fP particle image base name\&. 
+.br
+\fIfieldnumber\fP field-of-view number\&. 
+.br
+\fImgnumber\fP micrograph number\&. 
+.br
+\fIpartnumber\fP particle number\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bproject* project structure\&. 
+.RE
+.PP
+
+.PP
+Definition at line 344 of file mg_multislice\&.cpp\&.
+.SS "\fBBproject\fP* project_generate_asu (\fBBstring\fP & symmetry_string, \fBVector3\fP< double > pixel_size, double img_origin, double theta_step, double phi_step, double volt, double Cs, double Cc, double alpha, double energy_spread, double amp_shift, double defocus, double dose, \fBBstring\fP & mgbase, \fBBstring\fP & partbase)"
+
+.PP
+Generates a project for multislice calculations of an asymmetric unit\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&symmetry_string\fP symmetry designation\&. 
+.br
+\fIpixel_size\fP micrograph pixel size\&. 
+.br
+\fIimg_origin\fP image origin within the simulation box\&. 
+.br
+\fItheta_step\fP step size in theta (radians)\&. 
+.br
+\fIphi_step\fP step size in phi (radians)\&. 
+.br
+\fIvolt\fP acceleration voltage (volts)\&. 
+.br
+\fICs\fP spherical aberration coefficient (angstrom)\&. 
+.br
+\fICc\fP chromatic aberration coefficient (angstrom)\&. 
+.br
+\fIalpha\fP beam divergence angle (radians)\&. 
+.br
+\fIenergy_spread\fP energy spread (relative units)\&. 
+.br
+\fIamp_shift\fP amplitude contribution (fraction)\&. 
+.br
+\fIdefocus\fP defocus minimum (angstrom)\&. 
+.br
+\fIdose\fP electron dose (e/angstrom^2)\&. 
+.br
+\fI&mgbase\fP micrograph base name\&. 
+.br
+\fI&partbase\fP particle image base name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bproject* project structure\&. 
+.RE
+.PP
+
+.PP
+Definition at line 442 of file mg_multislice\&.cpp\&.
+.SS "int project_generate_image (\fBBproject\fP * project, double thickness, double resolution)"
+
+.PP
+Generates final images from a multislice calculation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project structure with parameters\&. 
+.br
+\fIthickness\fP thickness of slices for the multislice calculation (angstrom)\&. 
+.br
+\fIresolution\fP resolution for the multislice calculation (angstrom)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 603 of file mg_multislice\&.cpp\&.
+.SS "int project_generate_potential (\fBBmolgroup\fP * molgroup, \fBBmolgroup\fP * water, \fBBproject\fP * project, \fBBstring\fP & fieldname, \fBBstring\fP & mgname, int partselect, \fBVector3\fP< long > size, double thickness, double resolution, double Bfactor, int pottype, \fBBstring\fP & paramfile)"
+
+.PP
+Generates potential images using a multislice calculation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fI*water\fP block of water as solvent\&. 
+.br
+\fI*project\fP project structure with parameters\&. 
+.br
+\fI&fieldname\fP selected field name (if '' do all)\&. 
+.br
+\fI&mgname\fP selected micrograph (if '' do all)\&. 
+.br
+\fIpartselect\fP selected particle ( if <1 do all)\&. 
+.br
+\fIsize\fP size of simulation block (angstrom)\&. 
+.br
+\fIthickness\fP thickness of slices for the multislice calculation (angstrom)\&. 
+.br
+\fIresolution\fP resolution for the multislice calculation (angstrom)\&. 
+.br
+\fIBfactor\fP B-factor to apply to the multislice calculation (angstrom^2)\&. 
+.br
+\fIpottype\fP type of potential to calculate (???)\&. 
+.br
+\fI&paramfile\fP parameter file for scattering curves (???)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 503 of file mg_multislice\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

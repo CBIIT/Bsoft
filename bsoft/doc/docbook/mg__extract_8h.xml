@@ -1,0 +1,1443 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__extract_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/mg_extract.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/mg_extract.h</primary></indexterm>
+<para>
+
+<para>Header file for functions to extract particles from micrographs. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+#include &quot;rwimg.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mg__extract_8h_1a52cdb0e5f1258b74a7deebfae262354d">particle_setup_filenames</link> (<link linkend="_class_bparticle">Bparticle</link> *part, <link linkend="_class_bstring">Bstring</link> filename, <link linkend="_class_bstring">Bstring</link> partpath)</para>
+
+<para>Sets up individual particle file names for extraction. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__extract_8h_1a56857662e7ec02cbcbd636eabb81085a">filament_setup_filenames</link> (<link linkend="_class_bfilament">Bfilament</link> *fil, <link linkend="_class_bstring">Bstring</link> filename, <link linkend="_class_bstring">Bstring</link> filpath)</para>
+
+<para>Sets up individual filament file names for extraction. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; * <link linkend="_mg__extract_8h_1aec90ecc0487320283bc31f566b8cddbc">vector3_spline_from_nodes</link> (<link linkend="_class_bfilnode">Bfilnode</link> *fnode, long &amp;nspline)</para>
+
+<para>Calculates a spline curve from a set of filament nodes. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__extract_8h_1a51fbf589e7048a0a43ae9980b02c843f">project_extract_particles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double scale, int back_flag, int norm_flag, int fill_type, double fill, int mask_width, int <link linkend="_string__util_8cpp_1add313f0fe82466f4c1c4622307d928bc">split</link>, <link linkend="_class_bstring">Bstring</link> &amp;partbase, <link linkend="_class_bstring">Bstring</link> &amp;partpath, <link linkend="_class_bstring">Bstring</link> &amp;partext)</para>
+
+<para>Extracts particle images from micrographs defined in a project. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__extract_8h_1a70e9d9f1721954bae56fc67f7e87f56e">micrograph_extract_particles</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_bimage">Bimage</link> *p, double scale, int back_flag, int norm_flag, double fill, int mask_width)</para>
+
+<para>Extracts particle images from a micrograph. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__extract_8h_1abad317d61b8f91053e91bd5b2df0f1dc">reconstruction_extract_particles</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_bimage">Bimage</link> *p, double scale, int back_flag, int norm_flag, double fill, int mask_width)</para>
+
+<para>Extracts particle images from a reconstruction. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> * <link linkend="_mg__extract_8h_1a0d6cee70c6af497ac29027f0785e7386">reconstruction_project_extract_particles</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_bimage">Bimage</link> *p, double scale, int back_flag, int norm_flag, double fill, int mask_width)</para>
+
+<para>Extracts and projects 3D particle images from a reconstruction and return a 2D list. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__extract_8h_1a0ec9c62b2b79fc55187151ce525034af">particle_extract</link> (<link linkend="_class_bparticle">Bparticle</link> *particles, <link linkend="_class_bbadarea">Bbadarea</link> *bad_areas, <link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, double scale, double bad_radius, int back_flag, int norm_flag, double fill, int mask_width)</para>
+
+<para>Extracts particle images from an image. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__extract_8h_1ad149a6b8b077f6fb0ca159b30011a08e">micrograph_extract_gold</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_bimage">Bimage</link> *p, double radius)</para>
+
+<para>Extracts gold particle images from a micrograph. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__extract_8h_1ae956c9add4c8e7e6c575b30e0f65e61b">reconstruction_extract_gold</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_bimage">Bimage</link> *p, double radius)</para>
+
+<para>Extracts gold particle images from a reconstruction. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__extract_8h_1a252fc71654a1ec7e205d2fa694fa7319">marker_extract_gold</link> (<link linkend="_struct_bmarker">Bmarker</link> *<link linkend="_tcltk__bmarker_8cpp_1a1b8b1622a4b6e00330913aab6d5d941a">marker_list</link>, <link linkend="_class_bimage">Bimage</link> *p, int img_num, double radius)</para>
+
+<para>Extracts gold particle images from an image. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__extract_8h_1a78275ddef801badc9e9a1ee7edf8cae7">project_extract_filaments</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int filament_width, int axis, <link linkend="_class_bstring">Bstring</link> &amp;<link linkend="_string__util_8cpp_1ae1cd0165442272bf85dc2d9461080a30">base</link>, <link linkend="_class_bstring">Bstring</link> &amp;path, <link linkend="_class_bstring">Bstring</link> &amp;ext, int <link linkend="_string__util_8cpp_1add313f0fe82466f4c1c4622307d928bc">split</link>)</para>
+
+<para>Extracts filament images from micrographs defined in a project. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__extract_8h_1a77fbf79a9b6b82f3a809ec39831711ea">micrograph_extract_filaments</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_bimage">Bimage</link> *p, double width, int axis)</para>
+
+<para>Extracts filament images from a micrograph. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__extract_8h_1a23613b2d1fcd883f893fe2a6c2ea3e25">reconstruction_extract_filaments</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_bimage">Bimage</link> *p, double width, int axis)</para>
+
+<para>Extracts filament images from a micrograph. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__extract_8h_1aa2a5f14d23705a074f0a6cf534a99339">filament_extract</link> (<link linkend="_class_bfilament">Bfilament</link> *filaments, <link linkend="_class_bimage">Bimage</link> *p, double width, int axis)</para>
+
+<para>Extracts filament images from a micrograph. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__extract_8h_1a4fda7f0af4198d127fd4f89902d0d8f6">project_filaments_to_particles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; box_size, double boxing_interval, double rise, double <link linkend="__vector3_8h_1a4d0ad562e2f2e87c018fe778805aa3cf">angle</link>)</para>
+
+<para>Converts filaments to sets of particles. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__extract_8h_1a9c814f94135d307b754b970c523efc7a">micrograph_filaments_to_particles</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; box_size, double boxing_interval, double rise, double <link linkend="__vector3_8h_1a4d0ad562e2f2e87c018fe778805aa3cf">angle</link>)</para>
+
+<para>Converts filaments to sets of particles. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__extract_8h_1a2fabeb0772dc3329e43794da9f9b198f">reconstruction_filaments_to_particles</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; box_size, double boxing_interval, double rise, double <link linkend="__vector3_8h_1a4d0ad562e2f2e87c018fe778805aa3cf">angle</link>)</para>
+
+<para>Converts filaments to sets of particles. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> * <link linkend="_mg__extract_8h_1a816a05a202b42f8ccbf059d469c9b6d4">filaments_to_particles</link> (<link linkend="_class_bfilament">Bfilament</link> *filaments, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; pixel_size, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; box_size, double boxing_interval, double rise, double <link linkend="__vector3_8h_1a4d0ad562e2f2e87c018fe778805aa3cf">angle</link>)</para>
+
+<para>Converts filaments to sets of particles. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__extract_8h_1a95d641567edbbbf61afdd28bca22d0ce">project_mask_filament_particles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int mask_width)</para>
+
+<para>Masks particles extracted from filaments. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__extract_8h_1a38cbca2c6f7b445bcc2eb87b10a698b5">project_rotate_mask_filament_particles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int rotation_axis, int back_flag, int mask_width)</para>
+
+<para>Rotates and masks particles extracted from filaments. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for functions to extract particles from micrographs. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20040406 </para>
+
+<para>Modified: 20200616 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__extract_8h_1aa2a5f14d23705a074f0a6cf534a99339"/>    <section>
+    <title>filament_extract()</title>
+<indexterm><primary>filament_extract</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>filament_extract</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* filament_extract (<link linkend="_class_bfilament">Bfilament</link> * filaments, <link linkend="_class_bimage">Bimage</link> * p, double width, int axis)</computeroutput></para><para>
+
+<para>Extracts filament images from a micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*filaments</entry>
+                                <entry>
+<para>filament parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>width</entry>
+                                <entry>
+<para>width of box around filament to extract. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>axis</entry>
+                                <entry>
+<para>helical axis alignment: x=1, y=2, z=3. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* multi-filament image. <literallayout><computeroutput>If the file names for individual filaments are specified, they are
+used to write individual filaments to files.
+Default axis alignment (for axis==0):
+    2D images:  x-axis (1)
+    3D images:  z-axis (3)
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 934 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1a56857662e7ec02cbcbd636eabb81085a"/>    <section>
+    <title>filament_setup_filenames()</title>
+<indexterm><primary>filament_setup_filenames</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>filament_setup_filenames</secondary></indexterm>
+<para><computeroutput>int filament_setup_filenames (<link linkend="_class_bfilament">Bfilament</link> * fil, <link linkend="_class_bstring">Bstring</link> filename, <link linkend="_class_bstring">Bstring</link> filpath)</computeroutput></para><para>
+
+<para>Sets up individual filament file names for extraction. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*fil</entry>
+                                <entry>
+<para>filament list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>filename</entry>
+                                <entry>
+<para>filament file name base. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>filpath</entry>
+                                <entry>
+<para>filament path with optional wild card characters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of filaments. <literallayout><computeroutput>The filament path can have wildcard characters (&apos;?&apos;) that specify
+the number of digits to use to insert numbers in the path and
+the file name.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 86 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1a816a05a202b42f8ccbf059d469c9b6d4"/>    <section>
+    <title>filaments_to_particles()</title>
+<indexterm><primary>filaments_to_particles</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>filaments_to_particles</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>* filaments_to_particles (<link linkend="_class_bfilament">Bfilament</link> * filaments, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; pixel_size, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; box_size, double boxing_interval, double rise, double angle)</computeroutput></para><para>
+
+<para>Converts filaments to sets of particles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*filaments</entry>
+                                <entry>
+<para>filament parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pixel_size</entry>
+                                <entry>
+<para>sampling. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>box_size</entry>
+                                <entry>
+<para>size of particle box. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>boxing_interval</entry>
+                                <entry>
+<para>step size between boxes. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rise</entry>
+                                <entry>
+<para>rise per asymmetric unit in angstrom. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>angle</entry>
+                                <entry>
+<para>angular rotation per asymmetric unit in radians. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bparticle* pointer to new list of particles. <literallayout><computeroutput>Particle coordinates are calculated along a spline curve through
+the filament nodes, separated by half the given width.
+Different filaments in a micrograph are indicated by the selection number.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1113 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1a252fc71654a1ec7e205d2fa694fa7319"/>    <section>
+    <title>marker_extract_gold()</title>
+<indexterm><primary>marker_extract_gold</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>marker_extract_gold</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* marker_extract_gold (<link linkend="_struct_bmarker">Bmarker</link> * marker_list, <link linkend="_class_bimage">Bimage</link> * p, int img_num, double radius)</computeroutput></para><para>
+
+<para>Extracts gold particle images from an image. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*marker_list</entry>
+                                <entry>
+<para>marker parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>img_num</entry>
+                                <entry>
+<para>sub-image number. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>radius</entry>
+                                <entry>
+<para>radius of gold particle. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* multi-particle image. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 702 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1a77fbf79a9b6b82f3a809ec39831711ea"/>    <section>
+    <title>micrograph_extract_filaments()</title>
+<indexterm><primary>micrograph_extract_filaments</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>micrograph_extract_filaments</secondary></indexterm>
+<para><computeroutput>long micrograph_extract_filaments (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_bimage">Bimage</link> * p, double width, int axis)</computeroutput></para><para>
+
+<para>Extracts filament images from a micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>micrograph image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>width</entry>
+                                <entry>
+<para>width of box around filament to extract. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>axis</entry>
+                                <entry>
+<para>helical axis alignment: x=1, y=2, z=3. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of filaments. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 875 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1ad149a6b8b077f6fb0ca159b30011a08e"/>    <section>
+    <title>micrograph_extract_gold()</title>
+<indexterm><primary>micrograph_extract_gold</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>micrograph_extract_gold</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* micrograph_extract_gold (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_bimage">Bimage</link> * p, double radius)</computeroutput></para><para>
+
+<para>Extracts gold particle images from a micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>micrograph image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>radius</entry>
+                                <entry>
+<para>radius of gold particle. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* multi-particle image. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 665 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1a70e9d9f1721954bae56fc67f7e87f56e"/>    <section>
+    <title>micrograph_extract_particles()</title>
+<indexterm><primary>micrograph_extract_particles</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>micrograph_extract_particles</secondary></indexterm>
+<para><computeroutput>long micrograph_extract_particles (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_bimage">Bimage</link> * p, double scale, int back_flag, int norm_flag, double fill, int mask_width)</computeroutput></para><para>
+
+<para>Extracts particle images from a micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>micrograph image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>scale to extract (usually 1). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>back_flag</entry>
+                                <entry>
+<para>background correction flag. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>norm_flag</entry>
+                                <entry>
+<para>normalization flag. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fill</entry>
+                                <entry>
+<para>value to fill in new regions. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mask_width</entry>
+                                <entry>
+<para>filament mask width, if 0, don&apos;t apply. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 352 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1a9c814f94135d307b754b970c523efc7a"/>    <section>
+    <title>micrograph_filaments_to_particles()</title>
+<indexterm><primary>micrograph_filaments_to_particles</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>micrograph_filaments_to_particles</secondary></indexterm>
+<para><computeroutput>int micrograph_filaments_to_particles (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; box_size, double boxing_interval, double rise, double angle)</computeroutput></para><para>
+
+<para>Converts filaments to sets of particles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>box_size</entry>
+                                <entry>
+<para>size of particle box. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>boxing_interval</entry>
+                                <entry>
+<para>step size between boxes. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rise</entry>
+                                <entry>
+<para>rise per asymmetric unit in angstrom. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>angle</entry>
+                                <entry>
+<para>angular rotation per asymmetric unit in radians. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of filaments converted. <literallayout><computeroutput>Particle coordinates are calculated along a spline curve through
+the filament nodes, separated by half the given width.
+Different filaments in a micrograph are indicated by the selection number.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1040 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1a0ec9c62b2b79fc55187151ce525034af"/>    <section>
+    <title>particle_extract()</title>
+<indexterm><primary>particle_extract</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>particle_extract</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* particle_extract (<link linkend="_class_bparticle">Bparticle</link> * particles, <link linkend="_class_bbadarea">Bbadarea</link> * bad_areas, <link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, double scale, double bad_radius, int back_flag, int norm_flag, double fill, int mask_width)</computeroutput></para><para>
+
+<para>Extracts particle images from an image. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*particles</entry>
+                                <entry>
+<para>particle parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*bad_areas</entry>
+                                <entry>
+<para>bad area parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of box to extract. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>scale to extract (usually 1). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bad_radius</entry>
+                                <entry>
+<para>radius of bad area. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>back_flag</entry>
+                                <entry>
+<para>background correction flag. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>norm_flag</entry>
+                                <entry>
+<para>normalization flag. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fill</entry>
+                                <entry>
+<para>value to fill in new regions. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mask_width</entry>
+                                <entry>
+<para>filament mask width, if 0, don&apos;t apply. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* multi-particle image. <literallayout><computeroutput>If the background flag is specified, the particle mask is set in the 
+background, defined as outside the inscribing circle.
+The mask is set within every bad area in the micrograph and
+transferred to the mask for a particle where it overlaps.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 491 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1a52cdb0e5f1258b74a7deebfae262354d"/>    <section>
+    <title>particle_setup_filenames()</title>
+<indexterm><primary>particle_setup_filenames</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>particle_setup_filenames</secondary></indexterm>
+<para><computeroutput>int particle_setup_filenames (<link linkend="_class_bparticle">Bparticle</link> * part, <link linkend="_class_bstring">Bstring</link> filename, <link linkend="_class_bstring">Bstring</link> partpath)</computeroutput></para><para>
+
+<para>Sets up individual particle file names for extraction. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*part</entry>
+                                <entry>
+<para>particle list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>filename</entry>
+                                <entry>
+<para>particle file name base. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>partpath</entry>
+                                <entry>
+<para>particle path with optional wild card characters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles. <literallayout><computeroutput>The particle path can have wildcard characters (&apos;?&apos;) that specify
+the number of digits to use to insert numbers in the path and
+the file name.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 36 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1a78275ddef801badc9e9a1ee7edf8cae7"/>    <section>
+    <title>project_extract_filaments()</title>
+<indexterm><primary>project_extract_filaments</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>project_extract_filaments</secondary></indexterm>
+<para><computeroutput>long project_extract_filaments (<link linkend="_class_bproject">Bproject</link> * project, int filament_width, int axis, <link linkend="_class_bstring">Bstring</link> &amp; base, <link linkend="_class_bstring">Bstring</link> &amp; path, <link linkend="_class_bstring">Bstring</link> &amp; ext, int split)</computeroutput></para><para>
+
+<para>Extracts filament images from micrographs defined in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>micrograph project. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>filament_width</entry>
+                                <entry>
+<para>extracted filament width. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>axis</entry>
+                                <entry>
+<para>helical axis alignment: x=1, y=2, z=3. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;base</entry>
+                                <entry>
+<para>file name base. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;path</entry>
+                                <entry>
+<para>path to filament file. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;ext</entry>
+                                <entry>
+<para>filament file extension. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>split</entry>
+                                <entry>
+<para>flag to split filaments into individual files. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of filaments, &lt;0 on error. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 766 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1a51fbf589e7048a0a43ae9980b02c843f"/>    <section>
+    <title>project_extract_particles()</title>
+<indexterm><primary>project_extract_particles</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>project_extract_particles</secondary></indexterm>
+<para><computeroutput>long project_extract_particles (<link linkend="_class_bproject">Bproject</link> * project, double scale, int back_flag, int norm_flag, int fill_type, double fill, int mask_width, int split, <link linkend="_class_bstring">Bstring</link> &amp; partbase, <link linkend="_class_bstring">Bstring</link> &amp; partpath, <link linkend="_class_bstring">Bstring</link> &amp; partext)</computeroutput></para><para>
+
+<para>Extracts particle images from micrographs defined in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>micrograph project. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>scale to extract (usually 1). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>back_flag</entry>
+                                <entry>
+<para>background correction flag. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>norm_flag</entry>
+                                <entry>
+<para>normalization flag. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fill_type</entry>
+                                <entry>
+<para>FILL_AVERAGE, FILL_BACKGROUND, FILL_USER. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fill</entry>
+                                <entry>
+<para>value to fill in new regions. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mask_width</entry>
+                                <entry>
+<para>filament mask width, if 0, don&apos;t apply. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>split</entry>
+                                <entry>
+<para>flag to split images into separate files. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;partbase</entry>
+                                <entry>
+<para>file name base. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;partpath</entry>
+                                <entry>
+<para>path to particle file. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;partext</entry>
+                                <entry>
+<para>particle file extension. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles, &lt;0 on error. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 161 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1a4fda7f0af4198d127fd4f89902d0d8f6"/>    <section>
+    <title>project_filaments_to_particles()</title>
+<indexterm><primary>project_filaments_to_particles</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>project_filaments_to_particles</secondary></indexterm>
+<para><computeroutput>int project_filaments_to_particles (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; box_size, double boxing_interval, double rise, double angle)</computeroutput></para><para>
+
+<para>Converts filaments to sets of particles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>box_size</entry>
+                                <entry>
+<para>size of particle box. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>boxing_interval</entry>
+                                <entry>
+<para>step size between boxes. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rise</entry>
+                                <entry>
+<para>rise per asymmetric unit in angstrom. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>angle</entry>
+                                <entry>
+<para>angular rotation per asymmetric unit in radians. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of filaments converted. <literallayout><computeroutput>Particle coordinates are calculated along a spline curve through
+the filament nodes, separated by half the given width.
+Different filaments in a micrograph are indicated by the selection number.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1006 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1a95d641567edbbbf61afdd28bca22d0ce"/>    <section>
+    <title>project_mask_filament_particles()</title>
+<indexterm><primary>project_mask_filament_particles</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>project_mask_filament_particles</secondary></indexterm>
+<para><computeroutput>int project_mask_filament_particles (<link linkend="_class_bproject">Bproject</link> * project, int mask_width)</computeroutput></para><para>
+
+<para>Masks particles extracted from filaments. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mask_width</entry>
+                                <entry>
+<para>width of mask to apply. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of particles masked. <literallayout><computeroutput>The orientation of the filament is inferred from the view angle and
+the adjacent regions are set to the background.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1176 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1a38cbca2c6f7b445bcc2eb87b10a698b5"/>    <section>
+    <title>project_rotate_mask_filament_particles()</title>
+<indexterm><primary>project_rotate_mask_filament_particles</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>project_rotate_mask_filament_particles</secondary></indexterm>
+<para><computeroutput>int project_rotate_mask_filament_particles (<link linkend="_class_bproject">Bproject</link> * project, int rotation_axis, int back_flag, int mask_width)</computeroutput></para><para>
+
+<para>Rotates and masks particles extracted from filaments. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rotation_axis</entry>
+                                <entry>
+<para>axis to rotate to: 1=x, 2=y, 3=z. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>back_flag</entry>
+                                <entry>
+<para>background correction flag. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mask_width</entry>
+                                <entry>
+<para>width of mask to apply. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of particles masked. <literallayout><computeroutput>The orientation of the filament is inferred from the view angle and
+the particle is rotated to orient the filament axis along a cartesian axis. 
+The mask is applied and adjacent regions are set to the background.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1208 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1a23613b2d1fcd883f893fe2a6c2ea3e25"/>    <section>
+    <title>reconstruction_extract_filaments()</title>
+<indexterm><primary>reconstruction_extract_filaments</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>reconstruction_extract_filaments</secondary></indexterm>
+<para><computeroutput>long reconstruction_extract_filaments (<link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_bimage">Bimage</link> * p, double width, int axis)</computeroutput></para><para>
+
+<para>Extracts filament images from a micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*rec</entry>
+                                <entry>
+<para>reconstruction parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>reconstruction image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>width</entry>
+                                <entry>
+<para>width of box around filament to extract. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>axis</entry>
+                                <entry>
+<para>helical axis alignment: x=1, y=2, z=3. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of filaments. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 901 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1ae956c9add4c8e7e6c575b30e0f65e61b"/>    <section>
+    <title>reconstruction_extract_gold()</title>
+<indexterm><primary>reconstruction_extract_gold</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>reconstruction_extract_gold</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* reconstruction_extract_gold (<link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_bimage">Bimage</link> * p, double radius)</computeroutput></para><para>
+
+<para>Extracts gold particle images from a reconstruction. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*rec</entry>
+                                <entry>
+<para>reconstruction parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>reconstruction image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>radius</entry>
+                                <entry>
+<para>radius of gold particle. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* multi-particle image. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 683 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1abad317d61b8f91053e91bd5b2df0f1dc"/>    <section>
+    <title>reconstruction_extract_particles()</title>
+<indexterm><primary>reconstruction_extract_particles</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>reconstruction_extract_particles</secondary></indexterm>
+<para><computeroutput>long reconstruction_extract_particles (<link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_bimage">Bimage</link> * p, double scale, int back_flag, int norm_flag, double fill, int mask_width)</computeroutput></para><para>
+
+<para>Extracts particle images from a reconstruction. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*rec</entry>
+                                <entry>
+<para>reconstruction parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>micrograph image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>scale to extract (usually 1). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>back_flag</entry>
+                                <entry>
+<para>background correction flag. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>norm_flag</entry>
+                                <entry>
+<para>normalization flag. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fill</entry>
+                                <entry>
+<para>value to fill in new regions. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mask_width</entry>
+                                <entry>
+<para>filament mask width, if 0, don&apos;t apply. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 386 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1a2fabeb0772dc3329e43794da9f9b198f"/>    <section>
+    <title>reconstruction_filaments_to_particles()</title>
+<indexterm><primary>reconstruction_filaments_to_particles</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>reconstruction_filaments_to_particles</secondary></indexterm>
+<para><computeroutput>int reconstruction_filaments_to_particles (<link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; box_size, double boxing_interval, double rise, double angle)</computeroutput></para><para>
+
+<para>Converts filaments to sets of particles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*rec</entry>
+                                <entry>
+<para>reconstruction parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>box_size</entry>
+                                <entry>
+<para>size of particle box. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>boxing_interval</entry>
+                                <entry>
+<para>step size between boxes. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rise</entry>
+                                <entry>
+<para>rise per asymmetric unit in angstrom. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>angle</entry>
+                                <entry>
+<para>angular rotation per asymmetric unit in radians. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of filaments converted. <literallayout><computeroutput>Particle coordinates are calculated along a spline curve through
+the filament nodes, separated by half the given width.
+Different filaments in a micrograph are indicated by the selection number.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1076 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1a0d6cee70c6af497ac29027f0785e7386"/>    <section>
+    <title>reconstruction_project_extract_particles()</title>
+<indexterm><primary>reconstruction_project_extract_particles</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>reconstruction_project_extract_particles</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>* reconstruction_project_extract_particles (<link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_bimage">Bimage</link> * p, double scale, int back_flag, int norm_flag, double fill, int mask_width)</computeroutput></para><para>
+
+<para>Extracts and projects 3D particle images from a reconstruction and return a 2D list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*rec</entry>
+                                <entry>
+<para>reconstruction parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>micrograph image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>scale to extract (usually 1). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>back_flag</entry>
+                                <entry>
+<para>background correction flag. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>norm_flag</entry>
+                                <entry>
+<para>normalization flag. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fill</entry>
+                                <entry>
+<para>value to fill in new regions. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mask_width</entry>
+                                <entry>
+<para>filament mask width, if 0, don&apos;t apply. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bparticle* list of 2D particles. <literallayout><computeroutput>The file name of the new particles is returned in the image file name.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 423 of file mg_extract.cpp.</para>
+    </section><anchor xml:id="_mg__extract_8h_1aec90ecc0487320283bc31f566b8cddbc"/>    <section>
+    <title>vector3_spline_from_nodes()</title>
+<indexterm><primary>vector3_spline_from_nodes</primary><secondary>mg_extract.h</secondary></indexterm>
+<indexterm><primary>mg_extract.h</primary><secondary>vector3_spline_from_nodes</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt;* vector3_spline_from_nodes (<link linkend="_class_bfilnode">Bfilnode</link> * fnode, long &amp; nspline)</computeroutput></para><para>
+
+<para>Calculates a spline curve from a set of filament nodes. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*fnode</entry>
+                                <entry>
+<para>node list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;nspline</entry>
+                                <entry>
+<para>number of elements in the spline array. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link>* array of spline coordinates. <literallayout><computeroutput>The node coordinates are copied into a new array used to calculate the spline array.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 128 of file mg_extract.cpp.</para>
+</section>
+</section>
+</section>

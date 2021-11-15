@@ -1,0 +1,570 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_model__extract__build_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/model_extract_build.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/model_extract_build.h</primary></indexterm>
+<para>
+
+<para>Functions to extract subvolumes and build new maps. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmodel.h&quot;
+#include &quot;rwimg.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_model__extract__build_8h_1a02d5cd39753e8c746ff8c773b39c42e3">model_refine_components</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bstring">Bstring</link> *ct_names, <link linkend="_class_bimage">Bimage</link> *ptemp, <link linkend="_class_bimage">Bimage</link> *pmask, <link linkend="_class_bimage">Bimage</link> *pfsmask, int max_iter, double viewstep, double rotstep, double hires, double lores, double accuracy, double max_shift, double max_view_angle, double max_rot_angle, int shift_flag)</para>
+
+<para>Refines component views and positions by cross-correlation. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__extract__build_8h_1a37849696f03b788d6bd64a265cc7142e">model_refine_link_positions</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bimage">Bimage</link> *ptemp, <link linkend="_class_bimage">Bimage</link> *pmask, <link linkend="_class_bimage">Bimage</link> *pfsmask, double hires, double lores, double max_shift, int shift_flag, double bias)</para>
+
+<para>Refines link positions by cross-correlation. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_model__extract__build_8h_1a7dad1a41652fa29a8466fa378740ad9e">model_average_component_density</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, int npt)</para>
+
+<para>Averages the density associated with each component type in a model. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_model__extract__build_8h_1a4cf616d1096e9c64df95a4df36faa4ef">model_extract_component_densities</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</para>
+
+<para>Extracts all densities associated with components in a model. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_model__extract__build_8h_1ac60402ba574d137327a1e56c974d5bdd">model_average_link_density</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</para>
+
+<para>Extracts a density associated with each link in a model. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_model__extract__build_8h_1aabcb8625b685dbec1604485128e8f884">model_build_from_component_density</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, int flags)</para>
+
+<para>Builds a new map from a densities of components in a model. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_model__extract__build_8h_1ae2491a359325a848d4afddef81ffa78c">model_build_from_link_density</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bstring">Bstring</link> &amp;linkmap, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, int <link linkend="_tcltk__bmodel_8cpp_1a55eeb63c8d2cfc98606c77453b480295">link_select</link>, int flags)</para>
+
+<para>Builds a new map from a density of a link in a model. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions to extract subvolumes and build new maps. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20060411 </para>
+
+<para>Modified: 20190821 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_model__extract__build_8h_1a7dad1a41652fa29a8466fa378740ad9e"/>    <section>
+    <title>model_average_component_density()</title>
+<indexterm><primary>model_average_component_density</primary><secondary>model_extract_build.h</secondary></indexterm>
+<indexterm><primary>model_extract_build.h</primary><secondary>model_average_component_density</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* model_average_component_density (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, int npt)</computeroutput></para><para>
+
+<para>Averages the density associated with each component type in a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of component density to extract. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>origin of new component density image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>npt</entry>
+                                <entry>
+<para>number per type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* average density around a component. <literallayout><computeroutput>The densities associated with each vertex type is extracted and averaged.
+The extracted density origin is placed on the component coordinates.
+The component views must already be set.
+Only the first model in the list is processed.
+The map file for the model must exist.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 707 of file model_extract_build.cpp.</para>
+    </section><anchor xml:id="_model__extract__build_8h_1ac60402ba574d137327a1e56c974d5bdd"/>    <section>
+    <title>model_average_link_density()</title>
+<indexterm><primary>model_average_link_density</primary><secondary>model_extract_build.h</secondary></indexterm>
+<indexterm><primary>model_extract_build.h</primary><secondary>model_average_link_density</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* model_average_link_density (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</computeroutput></para><para>
+
+<para>Extracts a density associated with each link in a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of link density to extract. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>origin of new link density image. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* new image with the density around the link. <literallayout><computeroutput>The link density origin is positioned on the center of the link.
+The component views must already be set.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 923 of file model_extract_build.cpp.</para>
+    </section><anchor xml:id="_model__extract__build_8h_1aabcb8625b685dbec1604485128e8f884"/>    <section>
+    <title>model_build_from_component_density()</title>
+<indexterm><primary>model_build_from_component_density</primary><secondary>model_extract_build.h</secondary></indexterm>
+<indexterm><primary>model_extract_build.h</primary><secondary>model_build_from_component_density</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* model_build_from_component_density (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, int flags)</computeroutput></para><para>
+
+<para>Builds a new map from a densities of components in a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of new map. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>origin of new map with respect to the model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>flags to weigh by contributions (1) and build separate maps (2). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* new map. <literallayout><computeroutput>The number of new maps depends on the number of selected component types
+and access to their density maps.
+The component views must already be set.
+The sampling must be the same for all component type maps.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1015 of file model_extract_build.cpp.</para>
+    </section><anchor xml:id="_model__extract__build_8h_1ae2491a359325a848d4afddef81ffa78c"/>    <section>
+    <title>model_build_from_link_density()</title>
+<indexterm><primary>model_build_from_link_density</primary><secondary>model_extract_build.h</secondary></indexterm>
+<indexterm><primary>model_extract_build.h</primary><secondary>model_build_from_link_density</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* model_build_from_link_density (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bstring">Bstring</link> &amp; linkmap, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, int link_select, int flags)</computeroutput></para><para>
+
+<para>Builds a new map from a density of a link in a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;linkmap</entry>
+                                <entry>
+<para>link map filename. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of new map. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>origin of new map with respect to the model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>link_select</entry>
+                                <entry>
+<para>link selection number to build (first = 1). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>flags to weigh by contributions (1) and build separate maps (2). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* new map. <literallayout><computeroutput>The component views must already be set.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1146 of file model_extract_build.cpp.</para>
+    </section><anchor xml:id="_model__extract__build_8h_1a4cf616d1096e9c64df95a4df36faa4ef"/>    <section>
+    <title>model_extract_component_densities()</title>
+<indexterm><primary>model_extract_component_densities</primary><secondary>model_extract_build.h</secondary></indexterm>
+<indexterm><primary>model_extract_build.h</primary><secondary>model_extract_component_densities</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* model_extract_component_densities (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</computeroutput></para><para>
+
+<para>Extracts all densities associated with components in a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of component density to extract. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>origin of new component density image. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* all densities around components. <literallayout><computeroutput>The densities associated with each component is extracted.
+The extracted density origin is placed on the component coordinates.
+The component views must already be set.
+Only the first model in the list is processed.
+The map file for the model must exist.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 841 of file model_extract_build.cpp.</para>
+    </section><anchor xml:id="_model__extract__build_8h_1a02d5cd39753e8c746ff8c773b39c42e3"/>    <section>
+    <title>model_refine_components()</title>
+<indexterm><primary>model_refine_components</primary><secondary>model_extract_build.h</secondary></indexterm>
+<indexterm><primary>model_extract_build.h</primary><secondary>model_refine_components</secondary></indexterm>
+<para><computeroutput>int model_refine_components (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bstring">Bstring</link> * ct_names, <link linkend="_class_bimage">Bimage</link> * ptemp, <link linkend="_class_bimage">Bimage</link> * pmask, <link linkend="_class_bimage">Bimage</link> * pfsmask, int max_iter, double viewstep, double rotstep, double hires, double lores, double accuracy, double max_shift, double max_view_angle, double max_rot_angle, int shift_flag)</computeroutput></para><para>
+
+<para>Refines component views and positions by cross-correlation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*ct_names</entry>
+                                <entry>
+<para>list of names associated with template sub-images. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*ptemp</entry>
+                                <entry>
+<para>density template. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask</entry>
+                                <entry>
+<para>real space mask. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pfsmask</entry>
+                                <entry>
+<para>cross-correlation mask. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_iter</entry>
+                                <entry>
+<para>maximum number of iterations, 0 means only positional refinement. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>viewstep</entry>
+                                <entry>
+<para>first view direction angular step size (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rotstep</entry>
+                                <entry>
+<para>rotation around view angular step size (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit for cross-correlation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit for cross-correlation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>accuracy</entry>
+                                <entry>
+<para>angular accuracy (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_shift</entry>
+                                <entry>
+<para>maximum shift in coordinates (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_view_angle</entry>
+                                <entry>
+<para>maximum angular change in view vector (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_rot_angle</entry>
+                                <entry>
+<para>maximum angular change in rotation around view vector (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_flag</entry>
+                                <entry>
+<para>flag to shift only along the normal (1) or perpendicular to it (2). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>The density origin is positioned on the component.
+The component views must already be set.
+The number of component type names should be equal to the number of 
+sub-images in the template.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 301 of file model_extract_build.cpp.</para>
+    </section><anchor xml:id="_model__extract__build_8h_1a37849696f03b788d6bd64a265cc7142e"/>    <section>
+    <title>model_refine_link_positions()</title>
+<indexterm><primary>model_refine_link_positions</primary><secondary>model_extract_build.h</secondary></indexterm>
+<indexterm><primary>model_extract_build.h</primary><secondary>model_refine_link_positions</secondary></indexterm>
+<para><computeroutput>int model_refine_link_positions (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bimage">Bimage</link> * ptemp, <link linkend="_class_bimage">Bimage</link> * pmask, <link linkend="_class_bimage">Bimage</link> * pfsmask, double hires, double lores, double max_shift, int shift_flag, double bias)</computeroutput></para><para>
+
+<para>Refines link positions by cross-correlation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*ptemp</entry>
+                                <entry>
+<para>density template. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask</entry>
+                                <entry>
+<para>real space mask. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pfsmask</entry>
+                                <entry>
+<para>cross-correlation mask. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit for cross-correlation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit for cross-correlation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_shift</entry>
+                                <entry>
+<para>maximum shift in coordinates (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_flag</entry>
+                                <entry>
+<para>flag to shift only along the normal (1) or perpendicular to it (2). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bias</entry>
+                                <entry>
+<para>bias to apply to first correlation coefficient. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* density around the component. <literallayout><computeroutput>The density origin is positioned on the link center.
+The component views must already be set.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 563 of file model_extract_build.cpp.</para>
+</section>
+</section>
+</section>

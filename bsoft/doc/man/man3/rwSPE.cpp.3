@@ -1,0 +1,112 @@
+.TH "/Users/bernard/b20/bsoft/src/rwimg/rwSPE.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/rwimg/rwSPE.cpp \- Functions for reading and writing SPE CCD files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwSPE\&.h'\fP
+.br
+\fC#include 'file_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBreadSPE\fP (\fBBimage\fP *p, int readdata, int img_select)"
+.br
+.RI "Reading a SPE image file format\&. "
+.ti -1c
+.RI "int \fBwriteSPE\fP (\fBBimage\fP *p)"
+.br
+.RI "Writing a SPE image file format\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "char * \fBmonth\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for reading and writing SPE CCD files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20081105 
+.PP
+Modified: 20120409 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwSPE\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int readSPE (\fBBimage\fP * p, int readdata, int img_select)"
+
+.PP
+Reading a SPE image file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.br
+\fIreaddata\fP flag to activate reading of image data\&. 
+.br
+\fIimg_select\fP image selection in multi-image file (-1 = all images)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. A Princeton Instruments CCD image file format\&. Header size: 4100 bytes (fixed)\&. File format extension: \&.SPE\&. Byte order determination: data type field\&. Data types: 0 = float, 1 = int, 2 = short, 3 = unsigned short, 4 = string/char, 5 = double, 6 = char, 7 = unsigned char/byte\&. 
+.RE
+.PP
+
+.PP
+Definition at line 33 of file rwSPE\&.cpp\&.
+.SS "int writeSPE (\fBBimage\fP * p)"
+
+.PP
+Writing a SPE image file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. A Princeton Instruments CCD image file format\&. 
+.RE
+.PP
+
+.PP
+Definition at line 119 of file rwSPE\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "char* month[]\fC [extern]\fP"
+
+.PP
+Definition at line 58 of file rwimg\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

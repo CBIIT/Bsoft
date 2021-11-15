@@ -1,0 +1,1208 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_scatter_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/util/scatter.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/util/scatter.cpp</primary></indexterm>
+<para>
+
+<para>Functions for calculating electron scattering profiles. </para>
+ 
+</para>
+<programlisting>#include &quot;scatter.h&quot;
+#include &quot;rwmodel_param.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>double <link linkend="_scatter_8cpp_1a2c4814a6af47f04d0bc2065f2188d03a">signal_integrated</link> (double emu, double imu, double ke, double ki, int ef)</para>
+</listitem>
+            <listitem><para>double <link linkend="_scatter_8cpp_1aeda720e54f495604410689f729a500f1">signal_integrated_new</link> (double emu, double imu, double k, int ef)</para>
+</listitem>
+            <listitem><para>vector&lt; string &gt; <link linkend="_scatter_8cpp_1aef8a592eb74de783c73a3a893b7a69cd">all_elements</link> (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp;types)</para>
+</listitem>
+            <listitem><para><link linkend="_class_j_svalue">JSvalue</link> <link linkend="_scatter_8cpp_1aa3849b54b1d9e2812134eaa42311c92e">js_all_elements</link> (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp;types)</para>
+</listitem>
+            <listitem><para><link linkend="_class_j_svalue">JSvalue</link> <link linkend="_scatter_8cpp_1a84837e67dbee3695dcb935d7d3c2c09d">js_composition</link> (vector&lt; string &gt; &amp;vs)</para>
+</listitem>
+            <listitem><para><link linkend="_class_j_svalue">JSvalue</link> <link linkend="_scatter_8cpp_1a88d7a695a980467ebddfd0155a540979">js_composition</link> (string s)</para>
+</listitem>
+            <listitem><para>vector&lt; double &gt; <link linkend="_scatter_8cpp_1af4d3260a4b036ce817cd4228959e060e">calculate_scattering_curve</link> (<link linkend="_class_bcomptype">Bcomptype</link> &amp;ct, double ds, double scut)</para>
+
+<para>Calculates an elastic electron scattering profile for an component type. </para>
+</listitem>
+            <listitem><para>map&lt; string, vector&lt; double &gt; &gt; <link linkend="_scatter_8cpp_1a9d68af13d60cec12f9c5fa5a44a40f96">calculate_scattering_curves</link> (<link linkend="_class_j_svalue">JSvalue</link> &amp;el, map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp;types, double ds, double scut)</para>
+
+<para>Calculates elastic electron scattering profiles for a subset of component types. </para>
+</listitem>
+            <listitem><para>map&lt; string, vector&lt; double &gt; &gt; <link linkend="_scatter_8cpp_1ae204f4c89a34c8e0f1c71801528d5e53">calculate_scattering_curves</link> (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp;types, double ds, double scut)</para>
+</listitem>
+            <listitem><para>double <link linkend="_scatter_8cpp_1a239df0be03092e5ecd070689e8c9fc56">scatter_curve_integral</link> (<link linkend="_class_bcomptype">Bcomptype</link> &amp;ct)</para>
+
+<para>Calculates the integral of the whole curve. </para>
+</listitem>
+            <listitem><para>double <link linkend="_scatter_8cpp_1af04e672500eeff3d6814433b02cd6f64">elastic_cross_section</link> (<link linkend="_class_bcomptype">Bcomptype</link> &amp;ct, double volt)</para>
+
+<para>Calculates the full elastic cross section (no aperture). </para>
+</listitem>
+            <listitem><para>double <link linkend="_scatter_8cpp_1a882f0097bc8a9e248182ba0a059743f8">elastic_cross_section_integrated</link> (<link linkend="_class_bcomptype">Bcomptype</link> &amp;ct, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf)</para>
+
+<para>Integrates the elastic scattering curve up to the aperture cutoff. </para>
+</listitem>
+            <listitem><para>double <link linkend="_scatter_8cpp_1ae30113e980c5bd1cef84f5dfe0b0beb2">elastic_cross_section</link> (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp;types, double volt)</para>
+
+<para>Calculates the combined elastic cross section for a defined composition. </para>
+</listitem>
+            <listitem><para>double <link linkend="_scatter_8cpp_1a9797038083b4d03efabeb9d0f50940e4">elastic_cross_section_integrated</link> (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp;types, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf)</para>
+
+<para>Calculates the combined elastic cross section for a defined composition. </para>
+</listitem>
+            <listitem><para>double <link linkend="_scatter_8cpp_1a25fb12434bbf91df242865860068a0c9">inelastic_cross_section_langmore</link> (long Z, double volt)</para>
+
+<para>Calculates the inelastic cross section for an component type. </para>
+</listitem>
+            <listitem><para>double <link linkend="_scatter_8cpp_1af52ba3103d7380ea816d530b03a89892">inelastic_cross_section_langmore</link> (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp;types, double volt)</para>
+
+<para>Calculates the combined inelastic cross section for a defined composition. </para>
+</listitem>
+            <listitem><para>double <link linkend="_scatter_8cpp_1a3f44f2dd6850fdb9dd708a0c8419af27">cross_section</link> (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp;types, double volt)</para>
+
+<para>Calculates the combined total cross section for a defined composition. </para>
+</listitem>
+            <listitem><para>double <link linkend="_scatter_8cpp_1ae52c959540dfa4f24b939d4c289392af">cross_section_integrated</link> (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp;types, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf)</para>
+
+<para>Calculates the combined total cross section for a defined composition. </para>
+</listitem>
+            <listitem><para>double <link linkend="_scatter_8cpp_1ae52a580e43424e059875a71bd8903b85">cross_section_half_maximal_frequency</link> (<link linkend="_class_bcomptype">Bcomptype</link> &amp;ct)</para>
+
+<para>Calculates the half-maximal frequency for an component type. </para>
+</listitem>
+            <listitem><para>double <link linkend="_scatter_8cpp_1ab06d027654fe8c11692dcf087ff77a74">cross_section_half_maximal_frequency</link> (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp;types)</para>
+
+<para>Calculates the half-maximal frequency for an component type. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmaterial">Bmaterial</link> <link linkend="_scatter_8cpp_1a3d1f34a0388856c501022dd75ba1247b">material_combine</link> (vector&lt; <link linkend="_class_bmaterial">Bmaterial</link> &gt; &amp;mlist, vector&lt; double &gt; fractions)</para>
+
+<para>Creates a newAssembles a component composition from a set of materials with fractional contributions. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmaterial">Bmaterial</link> <link linkend="_scatter_8cpp_1a7135c2365f8c280d9a6213f627e4e049">material_ice</link> (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp;types)</para>
+
+<para>Returns vitreous ice density. </para>
+</listitem>
+            <listitem><para>double <link linkend="_scatter_8cpp_1aa471254806fd2c58f95f114b62c95d48">gold_density</link> ()</para>
+
+<para>Returns gold density. </para>
+</listitem>
+            <listitem><para>double <link linkend="_scatter_8cpp_1aff91ca8154dce67488f69fb0b2191ce3">ice_cross_section</link> (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp;types, double volt)</para>
+
+<para>Calculates the total cross section for ice up to the aperture cutoff. </para>
+</listitem>
+            <listitem><para>double <link linkend="_scatter_8cpp_1abdfc273ec4269d3647b1f650e25d59be">effective_mean_free_path</link> (<link linkend="_class_bmaterial">Bmaterial</link> &amp;material, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf)</para>
+
+<para>Calculates the average effective mean free path. </para>
+</listitem>
+            <listitem><para>double <link linkend="_scatter_8cpp_1ab7d4707a5130e49e51343f5babb91785">effective_mean_free_path</link> (vector&lt; <link linkend="_class_bmaterial">Bmaterial</link> &gt; &amp;materials, vector&lt; double &gt; fractions, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf)</para>
+
+<para>Calculates the expected intensity given a thickness of vitreous ice. </para>
+</listitem>
+            <listitem><para>double <link linkend="_scatter_8cpp_1aa582a4622bc3a81efea95ea7c0db9842">ice_intensity</link> (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp;types, double thickness, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf)</para>
+
+<para>Calculates the expected intensity given a thickness of vitreous ice. </para>
+</listitem>
+            <listitem><para>double <link linkend="_scatter_8cpp_1abea29ac90a53108ecb181bcbe177ea0d">signal_intensity</link> (<link linkend="_class_bmaterial">Bmaterial</link> &amp;material, double thickness, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf)</para>
+
+<para>Calculates the expected intensity given a thickness of vitreous ice. </para>
+</listitem>
+            <listitem><para>vector&lt; double &gt; <link linkend="_scatter_8cpp_1ae919efab6aeb3f3295ca75e62eb7b063">signal_intensity</link> (<link linkend="_class_bmaterial">Bmaterial</link> &amp;material, double thick_step, double thick_max, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf)</para>
+
+<para>Calculates the expected intensity vs thickness of vitreous ice. </para>
+</listitem>
+            <listitem><para>int <link linkend="_scatter_8cpp_1a96a78513215696f59337cc56eb92f911">write_scattering_curves</link> (<link linkend="_class_bstring">Bstring</link> &amp;paramfile, <link linkend="_class_bstring">Bstring</link> &amp;outfile, <link linkend="_class_bstring">Bstring</link> &amp;selection)</para>
+
+<para>Calculates and writes atomic scattering profiles to a file. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_scatter_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>auto <link linkend="_scatter_8cpp_1adeeef9c94ab043ee0d1eca1006158096">string_is_empty</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions for calculating electron scattering profiles. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20190521 </para>
+
+<para>Modified: 20210311 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_scatter_8cpp_1aef8a592eb74de783c73a3a893b7a69cd"/>    <section>
+    <title>all_elements()</title>
+<indexterm><primary>all_elements</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>all_elements</secondary></indexterm>
+<para><computeroutput>vector&lt;string&gt; all_elements (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp; types)</computeroutput></para><para>
+Definition at line 63 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1af4d3260a4b036ce817cd4228959e060e"/>    <section>
+    <title>calculate_scattering_curve()</title>
+<indexterm><primary>calculate_scattering_curve</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>calculate_scattering_curve</secondary></indexterm>
+<para><computeroutput>vector&lt;double&gt; calculate_scattering_curve (<link linkend="_class_bcomptype">Bcomptype</link> &amp; ct, double ds, double scut)</computeroutput></para><para>
+
+<para>Calculates an elastic electron scattering profile for an component type. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;ct</entry>
+                                <entry>
+<para>component type. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ds</entry>
+                                <entry>
+<para>frequency space sampling increment. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scut</entry>
+                                <entry>
+<para>maximum spacial frequency. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;double&gt; array with scattering profile. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 116 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1a9d68af13d60cec12f9c5fa5a44a40f96"/>    <section>
+    <title>calculate_scattering_curves()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>calculate_scattering_curves</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>calculate_scattering_curves</secondary></indexterm>
+<para><computeroutput>map&lt;string, vector&lt;double&gt; &gt; calculate_scattering_curves (<link linkend="_class_j_svalue">JSvalue</link> &amp; el, map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp; types, double ds, double scut)</computeroutput></para><para>
+
+<para>Calculates elastic electron scattering profiles for a subset of component types. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;el</entry>
+                                <entry>
+<para>elements to calculate curves for. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;types</entry>
+                                <entry>
+<para>component type. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ds</entry>
+                                <entry>
+<para>frequency space sampling increment. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scut</entry>
+                                <entry>
+<para>maximum spacial frequency. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>map&lt;string, vector&lt;double&gt;&gt; array with scattering profile. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 149 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1ae204f4c89a34c8e0f1c71801528d5e53"/>    <section>
+    <title>calculate_scattering_curves()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>calculate_scattering_curves</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>calculate_scattering_curves</secondary></indexterm>
+<para><computeroutput>map&lt;string, vector&lt;double&gt; &gt; calculate_scattering_curves (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp; types, double ds, double scut)</computeroutput></para><para>
+Definition at line 168 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1a3f44f2dd6850fdb9dd708a0c8419af27"/>    <section>
+    <title>cross_section()</title>
+<indexterm><primary>cross_section</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>cross_section</secondary></indexterm>
+<para><computeroutput>double cross_section (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp; types, double volt)</computeroutput></para><para>
+
+<para>Calculates the combined total cross section for a defined composition. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;types</entry>
+                                <entry>
+<para>component types. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>volt</entry>
+                                <entry>
+<para>acceleration voltage. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double integral. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 321 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1ae52a580e43424e059875a71bd8903b85"/>    <section>
+    <title>cross_section_half_maximal_frequency()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>cross_section_half_maximal_frequency</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>cross_section_half_maximal_frequency</secondary></indexterm>
+<para><computeroutput>double cross_section_half_maximal_frequency (<link linkend="_class_bcomptype">Bcomptype</link> &amp; ct)</computeroutput></para><para>
+
+<para>Calculates the half-maximal frequency for an component type. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;ct</entry>
+                                <entry>
+<para>component type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double half-maximal frequency. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 362 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1ab06d027654fe8c11692dcf087ff77a74"/>    <section>
+    <title>cross_section_half_maximal_frequency()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>cross_section_half_maximal_frequency</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>cross_section_half_maximal_frequency</secondary></indexterm>
+<para><computeroutput>double cross_section_half_maximal_frequency (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp; types)</computeroutput></para><para>
+
+<para>Calculates the half-maximal frequency for an component type. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;types</entry>
+                                <entry>
+<para>component types. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double half-maximal frequency. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 382 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1ae52c959540dfa4f24b939d4c289392af"/>    <section>
+    <title>cross_section_integrated()</title>
+<indexterm><primary>cross_section_integrated</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>cross_section_integrated</secondary></indexterm>
+<para><computeroutput>double cross_section_integrated (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp; types, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf)</computeroutput></para><para>
+
+<para>Calculates the combined total cross section for a defined composition. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;types</entry>
+                                <entry>
+<para>component types. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;ctf</entry>
+                                <entry>
+<para>CTF and microscope parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double integral. <literallayout><computeroutput>If the slit width is specified, the energy filter is assumed to be used
+and only the elastic cross section is returned.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 343 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1abdfc273ec4269d3647b1f650e25d59be"/>    <section>
+    <title>effective_mean_free_path()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>effective_mean_free_path</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>effective_mean_free_path</secondary></indexterm>
+<para><computeroutput>double effective_mean_free_path (<link linkend="_class_bmaterial">Bmaterial</link> &amp; material, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf)</computeroutput></para><para>
+
+<para>Calculates the average effective mean free path. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;material</entry>
+                                <entry>
+<para>material with types. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;ctf</entry>
+                                <entry>
+<para>microscope parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double EMFP average. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 515 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1ab7d4707a5130e49e51343f5babb91785"/>    <section>
+    <title>effective_mean_free_path()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>effective_mean_free_path</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>effective_mean_free_path</secondary></indexterm>
+<para><computeroutput>double effective_mean_free_path (vector&lt; <link linkend="_class_bmaterial">Bmaterial</link> &gt; &amp; materials, vector&lt; double &gt; fractions, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf)</computeroutput></para><para>
+
+<para>Calculates the expected intensity given a thickness of vitreous ice. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;materials</entry>
+                                <entry>
+<para>list of materials with types. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;fractions</entry>
+                                <entry>
+<para>fractional contributions. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;ctf</entry>
+                                <entry>
+<para>microscope parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double effective mean free path. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 572 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1af04e672500eeff3d6814433b02cd6f64"/>    <section>
+    <title>elastic_cross_section()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>elastic_cross_section</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>elastic_cross_section</secondary></indexterm>
+<para><computeroutput>double elastic_cross_section (<link linkend="_class_bcomptype">Bcomptype</link> &amp; ct, double volt)</computeroutput></para><para>
+
+<para>Calculates the full elastic cross section (no aperture). </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;ct</entry>
+                                <entry>
+<para>component type. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>volt</entry>
+                                <entry>
+<para>acceleration voltage. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double integral. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 209 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1ae30113e980c5bd1cef84f5dfe0b0beb2"/>    <section>
+    <title>elastic_cross_section()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>elastic_cross_section</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>elastic_cross_section</secondary></indexterm>
+<para><computeroutput>double elastic_cross_section (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp; types, double volt)</computeroutput></para><para>
+
+<para>Calculates the combined elastic cross section for a defined composition. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;types</entry>
+                                <entry>
+<para>component types. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>volt</entry>
+                                <entry>
+<para>acceleration voltage. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double integral. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 252 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1a882f0097bc8a9e248182ba0a059743f8"/>    <section>
+    <title>elastic_cross_section_integrated()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>elastic_cross_section_integrated</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>elastic_cross_section_integrated</secondary></indexterm>
+<para><computeroutput>double elastic_cross_section_integrated (<link linkend="_class_bcomptype">Bcomptype</link> &amp; ct, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf)</computeroutput></para><para>
+
+<para>Integrates the elastic scattering curve up to the aperture cutoff. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;ct</entry>
+                                <entry>
+<para>component type. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ctf</entry>
+                                <entry>
+<para>CTF and microscope parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double integral. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 226 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1a9797038083b4d03efabeb9d0f50940e4"/>    <section>
+    <title>elastic_cross_section_integrated()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>elastic_cross_section_integrated</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>elastic_cross_section_integrated</secondary></indexterm>
+<para><computeroutput>double elastic_cross_section_integrated (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp; types, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf)</computeroutput></para><para>
+
+<para>Calculates the combined elastic cross section for a defined composition. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;types</entry>
+                                <entry>
+<para>component types. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ctf</entry>
+                                <entry>
+<para>CTF and microscope parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double integral. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 269 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1aa471254806fd2c58f95f114b62c95d48"/>    <section>
+    <title>gold_density()</title>
+<indexterm><primary>gold_density</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>gold_density</secondary></indexterm>
+<para><computeroutput>double gold_density ( )</computeroutput></para><para>
+
+<para>Returns gold density. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para>double density in molecules/A3. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 477 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1aff91ca8154dce67488f69fb0b2191ce3"/>    <section>
+    <title>ice_cross_section()</title>
+<indexterm><primary>ice_cross_section</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>ice_cross_section</secondary></indexterm>
+<para><computeroutput>double ice_cross_section (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp; types, double volt)</computeroutput></para><para>
+
+<para>Calculates the total cross section for ice up to the aperture cutoff. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;types</entry>
+                                <entry>
+<para>component types. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>volt</entry>
+                                <entry>
+<para>acceleration voltage. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double cross section. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 499 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1aa582a4622bc3a81efea95ea7c0db9842"/>    <section>
+    <title>ice_intensity()</title>
+<indexterm><primary>ice_intensity</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>ice_intensity</secondary></indexterm>
+<para><computeroutput>double ice_intensity (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp; types, double thickness, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf)</computeroutput></para><para>
+
+<para>Calculates the expected intensity given a thickness of vitreous ice. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>thickness</entry>
+                                <entry>
+<para>component types. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;types</entry>
+                                <entry>
+<para>component types. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ctf</entry>
+                                <entry>
+<para>microscope parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double intensity. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 586 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1a25fb12434bbf91df242865860068a0c9"/>    <section>
+    <title>inelastic_cross_section_langmore()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>inelastic_cross_section_langmore</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>inelastic_cross_section_langmore</secondary></indexterm>
+<para><computeroutput>double inelastic_cross_section_langmore (long Z, double volt)</computeroutput></para><para>
+
+<para>Calculates the inelastic cross section for an component type. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>Z</entry>
+                                <entry>
+<para>atomic number. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>volt</entry>
+                                <entry>
+<para>acceleration voltage. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double integral. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 285 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1af52ba3103d7380ea816d530b03a89892"/>    <section>
+    <title>inelastic_cross_section_langmore()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>inelastic_cross_section_langmore</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>inelastic_cross_section_langmore</secondary></indexterm>
+<para><computeroutput>double inelastic_cross_section_langmore (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp; types, double volt)</computeroutput></para><para>
+
+<para>Calculates the combined inelastic cross section for a defined composition. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;types</entry>
+                                <entry>
+<para>component types. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>volt</entry>
+                                <entry>
+<para>acceleration voltage. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double integral. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 304 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1aa3849b54b1d9e2812134eaa42311c92e"/>    <section>
+    <title>js_all_elements()</title>
+<indexterm><primary>js_all_elements</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>js_all_elements</secondary></indexterm>
+<para><computeroutput><link linkend="_class_j_svalue">JSvalue</link> js_all_elements (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp; types)</computeroutput></para><para>
+Definition at line 82 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1a88d7a695a980467ebddfd0155a540979"/>    <section>
+    <title>js_composition()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>js_composition</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>js_composition</secondary></indexterm>
+<para><computeroutput><link linkend="_class_j_svalue">JSvalue</link> js_composition (string s)</computeroutput></para><para>
+Definition at line 103 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1a84837e67dbee3695dcb935d7d3c2c09d"/>    <section>
+    <title>js_composition()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>js_composition</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>js_composition</secondary></indexterm>
+<para><computeroutput><link linkend="_class_j_svalue">JSvalue</link> js_composition (vector&lt; string &gt; &amp; vs)</computeroutput></para><para>
+Definition at line 93 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1a3d1f34a0388856c501022dd75ba1247b"/>    <section>
+    <title>material_combine()</title>
+<indexterm><primary>material_combine</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>material_combine</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmaterial">Bmaterial</link> material_combine (vector&lt; <link linkend="_class_bmaterial">Bmaterial</link> &gt; &amp; mlist, vector&lt; double &gt; fractions)</computeroutput></para><para>
+
+<para>Creates a newAssembles a component composition from a set of materials with fractional contributions. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;mlist</entry>
+                                <entry>
+<para>list of materials. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;fractions</entry>
+                                <entry>
+<para>fractional contributions. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_bmaterial">Bmaterial</link> new combined material. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 405 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1a7135c2365f8c280d9a6213f627e4e049"/>    <section>
+    <title>material_ice()</title>
+<indexterm><primary>material_ice</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>material_ice</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmaterial">Bmaterial</link> material_ice (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp; types)</computeroutput></para><para>
+
+<para>Returns vitreous ice density. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>types</entry>
+                                <entry>
+<para>reference parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double density in molecules/A3. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 437 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1a239df0be03092e5ecd070689e8c9fc56"/>    <section>
+    <title>scatter_curve_integral()</title>
+<indexterm><primary>scatter_curve_integral</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>scatter_curve_integral</secondary></indexterm>
+<para><computeroutput>double scatter_curve_integral (<link linkend="_class_bcomptype">Bcomptype</link> &amp; ct)</computeroutput></para><para>
+
+<para>Calculates the integral of the whole curve. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;ct</entry>
+                                <entry>
+<para>component type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double integral. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 188 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1a2c4814a6af47f04d0bc2065f2188d03a"/>    <section>
+    <title>signal_integrated()</title>
+<indexterm><primary>signal_integrated</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>signal_integrated</secondary></indexterm>
+<para><computeroutput>double signal_integrated (double emu, double imu, double ke, double ki, int ef)</computeroutput></para><para>
+Definition at line 21 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1aeda720e54f495604410689f729a500f1"/>    <section>
+    <title>signal_integrated_new()</title>
+<indexterm><primary>signal_integrated_new</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>signal_integrated_new</secondary></indexterm>
+<para><computeroutput>double signal_integrated_new (double emu, double imu, double k, int ef)</computeroutput></para><para>
+Definition at line 39 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1ae919efab6aeb3f3295ca75e62eb7b063"/>    <section>
+    <title>signal_intensity()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>signal_intensity</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>signal_intensity</secondary></indexterm>
+<para><computeroutput>vector&lt;double&gt; signal_intensity (<link linkend="_class_bmaterial">Bmaterial</link> &amp; material, double thick_step, double thick_max, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf)</computeroutput></para><para>
+
+<para>Calculates the expected intensity vs thickness of vitreous ice. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;material</entry>
+                                <entry>
+<para>material with types. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>thick_step</entry>
+                                <entry>
+<para>specimen tickness step size (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>thick_max</entry>
+                                <entry>
+<para>maximum specimen thickness (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;ctf</entry>
+                                <entry>
+<para>microscope parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;double&gt; array of intensities. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 653 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1abea29ac90a53108ecb181bcbe177ea0d"/>    <section>
+    <title>signal_intensity()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>signal_intensity</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>signal_intensity</secondary></indexterm>
+<para><computeroutput>double signal_intensity (<link linkend="_class_bmaterial">Bmaterial</link> &amp; material, double thickness, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf)</computeroutput></para><para>
+
+<para>Calculates the expected intensity given a thickness of vitreous ice. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;material</entry>
+                                <entry>
+<para>material with types. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>thickness</entry>
+                                <entry>
+<para>specimen thickness. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ctf</entry>
+                                <entry>
+<para>microscope parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double intensity. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 602 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1a96a78513215696f59337cc56eb92f911"/>    <section>
+    <title>write_scattering_curves()</title>
+<indexterm><primary>write_scattering_curves</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>write_scattering_curves</secondary></indexterm>
+<para><computeroutput>int write_scattering_curves (<link linkend="_class_bstring">Bstring</link> &amp; paramfile, <link linkend="_class_bstring">Bstring</link> &amp; outfile, <link linkend="_class_bstring">Bstring</link> &amp; selection)</computeroutput></para><para>
+
+<para>Calculates and writes atomic scattering profiles to a file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;paramfile</entry>
+                                <entry>
+<para>file with scattering coefficients. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;outfile</entry>
+                                <entry>
+<para>file to write curves to. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;selection</entry>
+                                <entry>
+<para>element selection. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The scattering coefficients are obtained from an input parameter file.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 701 of file scatter.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_scatter_8cpp_1adeeef9c94ab043ee0d1eca1006158096"/>    <section>
+    <title>string_is_empty</title>
+<indexterm><primary>string_is_empty</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>string_is_empty</secondary></indexterm>
+<para><computeroutput>auto string_is_empty</computeroutput></para><emphasis role="strong">Initial value:</emphasis><programlisting>=&#32;[](&#32;<emphasis role="keyword">const</emphasis>&#32;std::string&#32;&amp;s&#32;)
+{
+&#32;&#32;&#32;&#32;<emphasis role="keywordflow">return</emphasis>&#32;s.size()&#32;&lt;&#32;1;
+}
+</programlisting><para>
+Definition at line 58 of file scatter.cpp.</para>
+    </section><anchor xml:id="_scatter_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>scatter.cpp</secondary></indexterm>
+<indexterm><primary>scatter.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

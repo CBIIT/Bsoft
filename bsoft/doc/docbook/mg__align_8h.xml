@@ -1,0 +1,1058 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__align_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/mg_align.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/mg_align.h</primary></indexterm>
+<para>
+
+<para>Header file for functions to align micrographs or coordinates from micrographs and apply the resultant transformation. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+#include &quot;Bimage.h&quot;
+#include &quot;Vector3.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mg__align_8h_1a9662f805dd1b4f10fb35674c1d8fa69b">mg_align_coordinates</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int refset)</para>
+
+<para>Aligns the particle coordinates of a series of micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__align_8h_1a0fe2a50ea1061b8f0363d1fec7330524">mg_align_micrographs</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int refset, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; tile_size, double res_lo, double res_hi, double max_shift, int filter_flag, int refine_flag)</para>
+
+<para>Aligns a focal series of micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__align_8h_1a5d2476a740a9726a32dc3b6015793e4a">mg_align_feature_extraction</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int max_features, double res_low, double res_high, double thresh, int extract_method)</para>
+
+<para>Aligns images by feature extraction. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__align_8h_1a0a1dc07a0b30cc4755662a41bb53f4fd">mg_apply_transform</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg_ref, <link linkend="_class_bmicrograph">Bmicrograph</link> *mg_apply)</para>
+
+<para>Applies a transformation to particle coordinates in a reference micrograph and writes them into an application micrograph structure. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__align_8h_1a464413c7113e0c2f2da01c8164d4f5a1">mg_merge_focal_series</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int use_old_origins)</para>
+
+<para>Merges corresponding particle images in each focal series. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__align_8h_1ace439539f332c99632dcc732f9c9968a">project_write_aligned_averages</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bimage">Bimage</link> *pgr, <link linkend="_class_bstring">Bstring</link> &amp;imgfile, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> datatype, <link linkend="_class_bstring">Bstring</link> &amp;subset)</para>
+
+<para>Calculates aligned micrograph images and write them to a file. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__align_8h_1a7754952d044cebe0d3a2661e8d6af68a">project_write_aligned_images</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bimage">Bimage</link> *pgr, <link linkend="_class_bstring">Bstring</link> &amp;imgfile, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> datatype)</para>
+
+<para>Calculates aligned micrograph images and write them to a file. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__align_8h_1a8af9c3c5398e68320b9aa88a9bf8a843">project_write_frame_sums</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bimage">Bimage</link> *pgr, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> datatype, <link linkend="_class_bstring">Bstring</link> &amp;subset, int flag)</para>
+
+<para>Sums aligned micrograph frames and write them to files. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__align_8h_1a2d30ced1e779ece210b97432bc464a86">project_align_frames</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int ref_img, long window, long step, <link linkend="_class_bimage">Bimage</link> *pgr, <link linkend="_class_bimage">Bimage</link> *pmask, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, double hi_res, double lo_res, double shift_limit, double edge_width, double gauss_width, long bin, <link linkend="_class_bstring">Bstring</link> &amp;subset, int flag)</para>
+
+<para>Aligns a series of micrographs by cross-correlation. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__align_8h_1ac102016c32c7fa2b5d72c778168982fe">project_align_series</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int ref_img, <link linkend="_class_bimage">Bimage</link> *pgr, <link linkend="_class_bimage">Bimage</link> *pmask, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, double hi_res, double lo_res, double shift_limit, double edge_width, double gauss_width, long bin, <link linkend="_class_bstring">Bstring</link> &amp;subset, int flag)</para>
+
+<para>Aligns a series of micrographs by cross-correlation. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__align_8h_1a18bf12d13294a4ea9db00e47cd5e7e23">mg_tomo_reconstruct2D</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long dimg, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, double scale, double hi_res)</para>
+
+<para>Reconstructs the zero-tilt image of a tilt-series. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__align_8h_1a286ff99aa89b275a1b02a048b80e05c3">project_tomo_align</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long thickness, long iter, double dchange, long dimg, double resolution, double shift_limit, double edge_width, double gauss_width)</para>
+
+<para>Aligns a series of micrographs by cross-correlation sequentially. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__align_8h_1a652a4146eb754826c2dac44f7e9fae7d">project_ssnr</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__align_8h_1ada9c136fd7095cb136327087a9096656">project_frames_snr</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double res_hi, double sampling_ratio, long window, <link linkend="_class_bstring">Bstring</link> &amp;subset, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; tile_size, int flag)</para>
+
+<para>Calculates the estimated SNR from aligned movie frames. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for functions to align micrographs or coordinates from micrographs and apply the resultant transformation. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann and Samuel Payne </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20000505 </para>
+
+<para>Modified: 20210805 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__align_8h_1a9662f805dd1b4f10fb35674c1d8fa69b"/>    <section>
+    <title>mg_align_coordinates()</title>
+<indexterm><primary>mg_align_coordinates</primary><secondary>mg_align.h</secondary></indexterm>
+<indexterm><primary>mg_align.h</primary><secondary>mg_align_coordinates</secondary></indexterm>
+<para><computeroutput>int mg_align_coordinates (<link linkend="_class_bproject">Bproject</link> * project, int refset)</computeroutput></para><para>
+
+<para>Aligns the particle coordinates of a series of micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>refset</entry>
+                                <entry>
+<para>reference image or set of coordinates (-1 means undefined). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The sets of micrograph coordinates of a focal series in an image 
+processing parameter structure are fitted to each other, giving a 
+rotation angle, and shifting and scaling in x and y for each pair 
+of micrographs.
+There must be the same number of particles in each micrograph
+of a focal series.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 43 of file mg_align.cpp.</para>
+    </section><anchor xml:id="_mg__align_8h_1a5d2476a740a9726a32dc3b6015793e4a"/>    <section>
+    <title>mg_align_feature_extraction()</title>
+<indexterm><primary>mg_align_feature_extraction</primary><secondary>mg_align.h</secondary></indexterm>
+<indexterm><primary>mg_align.h</primary><secondary>mg_align_feature_extraction</secondary></indexterm>
+<para><computeroutput>int mg_align_feature_extraction (<link linkend="_class_bproject">Bproject</link> * project, int max_features, double res_low, double res_high, double thresh, int extract_method)</computeroutput></para><para>
+
+<para>Aligns images by feature extraction. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Samuel Payne </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>the set of image parameters </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_features</entry>
+                                <entry>
+<para>the maximum number of features to extract </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_low</entry>
+                                <entry>
+<para>the low resolution limit </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_high</entry>
+                                <entry>
+<para>the high resolution limit </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>thresh</entry>
+                                <entry>
+<para>threshold used for feature extraction </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>extract_method</entry>
+                                <entry>
+<para>method used for finding the center of particles </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code.</para>
+</formalpara>
+Calculates the transformation parameters for each set images, by picking features in the images and finding the best fit for the matching of the features.</para>
+
+<para>The features are picked and returned using function <link linkend="_mg__align_8cpp_1acb712377db79369631608242a639a93b">img_extract_features()</link>. The set of features is sent to find_transform_params() that finds the transformation parameters that relate the images to each other. The shift in xy directions, the scale in xy directions, and rotation angle is returned. The program works best if the images have at least 40 distinct features. </para>
+<para>
+Definition at line 550 of file mg_align.cpp.</para>
+    </section><anchor xml:id="_mg__align_8h_1a0fe2a50ea1061b8f0363d1fec7330524"/>    <section>
+    <title>mg_align_micrographs()</title>
+<indexterm><primary>mg_align_micrographs</primary><secondary>mg_align.h</secondary></indexterm>
+<indexterm><primary>mg_align.h</primary><secondary>mg_align_micrographs</secondary></indexterm>
+<para><computeroutput>int mg_align_micrographs (<link linkend="_class_bproject">Bproject</link> * project, int refset, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; tile_size, double res_lo, double res_hi, double max_shift, int filter_flag, int refine_flag)</computeroutput></para><para>
+
+<para>Aligns a focal series of micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>refset</entry>
+                                <entry>
+<para>reference image or set of coordinates (&lt; 1 means undefined). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tile_size</entry>
+                                <entry>
+<para>3-valued vector for the size of sub-images. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_lo</entry>
+                                <entry>
+<para>low resolution limit for cross-correlation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_hi</entry>
+                                <entry>
+<para>high resolution limit for cross-correlation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_shift</entry>
+                                <entry>
+<para>maximum shift allowed (default 1/4 of tile). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>filter_flag</entry>
+                                <entry>
+<para>flag to filter micrograph extremes. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>refine_flag</entry>
+                                <entry>
+<para>flag to turn on refinement of shift. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>A series of micrograph images specified in an image processing 
+parameter structure are aligned by segmented cross-correlation. The 
+micrograph data blocks are assumed to be arranged with a series in
+consequent data blocks. The micrographs are segmented into tiles 
+and the tile shifts with respect to each other determined by 
+cross-correlation. The shifts are assumed to most accurately 
+represent the displacement of the center of one tile with respect 
+to the center of the corresponding tile in the other micrograph.
+The resultant sets of coordinates are fitted to each
+other, giving a 3-value shift vector, a 3-value scale vector,
+and a rotation angle for each pair of micrographs.
+A reference micrograph is chosen as:
+    1.  the first micrograph with particle coordinates
+    2.  otherwise, the first micrograph
+If coordinates are supplied for particles in the reference micrograph,
+the determined transformation parameters are applied and written into
+the other micrograph structures.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 324 of file mg_align.cpp.</para>
+    </section><anchor xml:id="_mg__align_8h_1a0a1dc07a0b30cc4755662a41bb53f4fd"/>    <section>
+    <title>mg_apply_transform()</title>
+<indexterm><primary>mg_apply_transform</primary><secondary>mg_align.h</secondary></indexterm>
+<indexterm><primary>mg_align.h</primary><secondary>mg_apply_transform</secondary></indexterm>
+<para><computeroutput>int mg_apply_transform (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg_ref, <link linkend="_class_bmicrograph">Bmicrograph</link> * mg_apply)</computeroutput></para><para>
+
+<para>Applies a transformation to particle coordinates in a reference micrograph and writes them into an application micrograph structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg_ref</entry>
+                                <entry>
+<para>micrograph used as reference. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*mg_apply</entry>
+                                <entry>
+<para>micrograph to apply transformation to. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The transformation parameters specified in the second micrograph
+are used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 639 of file mg_align.cpp.</para>
+    </section><anchor xml:id="_mg__align_8h_1a464413c7113e0c2f2da01c8164d4f5a1"/>    <section>
+    <title>mg_merge_focal_series()</title>
+<indexterm><primary>mg_merge_focal_series</primary><secondary>mg_align.h</secondary></indexterm>
+<indexterm><primary>mg_align.h</primary><secondary>mg_merge_focal_series</secondary></indexterm>
+<para><computeroutput>int mg_merge_focal_series (<link linkend="_class_bproject">Bproject</link> * project, int use_old_origins)</computeroutput></para><para>
+
+<para>Merges corresponding particle images in each focal series. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>use_old_origins</entry>
+                                <entry>
+<para>flag to use old origins rather than cross-correlation. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 771 of file mg_align.cpp.</para>
+    </section><anchor xml:id="_mg__align_8h_1a18bf12d13294a4ea9db00e47cd5e7e23"/>    <section>
+    <title>mg_tomo_reconstruct2D()</title>
+<indexterm><primary>mg_tomo_reconstruct2D</primary><secondary>mg_align.h</secondary></indexterm>
+<indexterm><primary>mg_align.h</primary><secondary>mg_tomo_reconstruct2D</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* mg_tomo_reconstruct2D (<link linkend="_class_bproject">Bproject</link> * project, long dimg, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, double scale, double hi_res)</computeroutput></para><para>
+
+<para>Reconstructs the zero-tilt image of a tilt-series. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>dimg</entry>
+                                <entry>
+<para>number of adjacent images in reconstructions. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>reconstruction size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>reconstruction scale. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hi_res</entry>
+                                <entry>
+<para>high resolution limit (angstrom). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* new 2D image. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1705 of file mg_align.cpp.</para>
+    </section><anchor xml:id="_mg__align_8h_1a2d30ced1e779ece210b97432bc464a86"/>    <section>
+    <title>project_align_frames()</title>
+<indexterm><primary>project_align_frames</primary><secondary>mg_align.h</secondary></indexterm>
+<indexterm><primary>mg_align.h</primary><secondary>project_align_frames</secondary></indexterm>
+<para><computeroutput>double project_align_frames (<link linkend="_class_bproject">Bproject</link> * project, int ref_img, long window, long step, <link linkend="_class_bimage">Bimage</link> * pgr, <link linkend="_class_bimage">Bimage</link> * pmask, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, double hi_res, double lo_res, double shift_limit, double edge_width, double gauss_width, long bin, <link linkend="_class_bstring">Bstring</link> &amp; subset, int flag)</computeroutput></para><para>
+
+<para>Aligns a series of micrographs by cross-correlation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ref_img</entry>
+                                <entry>
+<para>reference frame number (starts from 0). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>window</entry>
+                                <entry>
+<para>moving sum window (default 1, no moving sum). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>step</entry>
+                                <entry>
+<para>moving sum interval (default 1). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pgr</entry>
+                                <entry>
+<para>gain reference. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask</entry>
+                                <entry>
+<para>reciprocal space mask, 0&apos;s and 1&apos;s. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>tilt origin. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hi_res</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lo_res</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_limit</entry>
+                                <entry>
+<para>maximum shift from nominal origin of image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>edge_width</entry>
+                                <entry>
+<para>edge smoothing width (not done if 0). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>gauss_width</entry>
+                                <entry>
+<para>edge decay width. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>integer bin factor. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>subset</entry>
+                                <entry>
+<para>a subset to sum. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flag</entry>
+                                <entry>
+<para>options flag. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double root-mean-square of offsets. <literallayout><computeroutput>Each micrograph frame is cross-correlated with the reference
+frame and the shift determined.
+Options encoded in the flag:
+1   rescale image based on histogram.
+2   weigh by accumulated dose.
+4   write aligned frames with insert &quot;_aln&quot;.
+8   write aligned frame sum with insert &quot;_sum&quot;.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1310 of file mg_align.cpp.</para>
+    </section><anchor xml:id="_mg__align_8h_1ac102016c32c7fa2b5d72c778168982fe"/>    <section>
+    <title>project_align_series()</title>
+<indexterm><primary>project_align_series</primary><secondary>mg_align.h</secondary></indexterm>
+<indexterm><primary>mg_align.h</primary><secondary>project_align_series</secondary></indexterm>
+<para><computeroutput>double project_align_series (<link linkend="_class_bproject">Bproject</link> * project, int ref_img, <link linkend="_class_bimage">Bimage</link> * pgr, <link linkend="_class_bimage">Bimage</link> * pmask, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, double hi_res, double lo_res, double shift_limit, double edge_width, double gauss_width, long bin, <link linkend="_class_bstring">Bstring</link> &amp; subset, int flag)</computeroutput></para><para>
+
+<para>Aligns a series of micrographs by cross-correlation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ref_img</entry>
+                                <entry>
+<para>reference micrograph number (starts from 0). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pgr</entry>
+                                <entry>
+<para>gain reference. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask</entry>
+                                <entry>
+<para>reciprocal space mask, 0&apos;s and 1&apos;s. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>tilt origin. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hi_res</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lo_res</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_limit</entry>
+                                <entry>
+<para>maximum shift from nominal origin of image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>edge_width</entry>
+                                <entry>
+<para>edge smoothing width (not done if 0). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>gauss_width</entry>
+                                <entry>
+<para>edge decay width. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>3-value vector of integer bin factors. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;subset</entry>
+                                <entry>
+<para>subset to average (all if empty) </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flag</entry>
+                                <entry>
+<para>options flag. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double root-mean-square of offsets. <literallayout><computeroutput>Each micrograph in the series is cross-correlated with the reference
+micrograph and the shift determined.
+Options encoded in the flag:
+1   rescale image based on histogram.
+2   weigh by accumulated dose.
+4   write aligned frames with insert &quot;_aln&quot;.
+8   write aligned frame sum with insert &quot;_avg&quot;.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1533 of file mg_align.cpp.</para>
+    </section><anchor xml:id="_mg__align_8h_1ada9c136fd7095cb136327087a9096656"/>    <section>
+    <title>project_frames_snr()</title>
+<indexterm><primary>project_frames_snr</primary><secondary>mg_align.h</secondary></indexterm>
+<indexterm><primary>mg_align.h</primary><secondary>project_frames_snr</secondary></indexterm>
+<para><computeroutput>int project_frames_snr (<link linkend="_class_bproject">Bproject</link> * project, double res_hi, double sampling_ratio, long window, <link linkend="_class_bstring">Bstring</link> &amp; subset, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; tile_size, int flag)</computeroutput></para><para>
+
+<para>Calculates the estimated SNR from aligned movie frames. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_hi</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sampling_ratio</entry>
+                                <entry>
+<para>radial sampling ratio (1 or larger). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>window</entry>
+                                <entry>
+<para>number of frames to sum for each curve. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;subset</entry>
+                                <entry>
+<para>subset to average (all if empty). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tile_size</entry>
+                                <entry>
+<para>tile size for tiled SNR. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flag</entry>
+                                <entry>
+<para>flag to convert to counts (1) and calculate a progressive sum (2). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on failure. <literallayout><computeroutput>The SNR is calculated as for reconstructions.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2253 of file mg_align.cpp.</para>
+    </section><anchor xml:id="_mg__align_8h_1a652a4146eb754826c2dac44f7e9fae7d"/>    <section>
+    <title>project_ssnr()</title>
+<indexterm><primary>project_ssnr</primary><secondary>mg_align.h</secondary></indexterm>
+<indexterm><primary>mg_align.h</primary><secondary>project_ssnr</secondary></indexterm>
+<para><computeroutput>double project_ssnr (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+Definition at line 2037 of file mg_align.cpp.</para>
+    </section><anchor xml:id="_mg__align_8h_1a286ff99aa89b275a1b02a048b80e05c3"/>    <section>
+    <title>project_tomo_align()</title>
+<indexterm><primary>project_tomo_align</primary><secondary>mg_align.h</secondary></indexterm>
+<indexterm><primary>mg_align.h</primary><secondary>project_tomo_align</secondary></indexterm>
+<para><computeroutput>long project_tomo_align (<link linkend="_class_bproject">Bproject</link> * project, long thickness, long iter, double dchange, long dimg, double resolution, double shift_limit, double edge_width, double gauss_width)</computeroutput></para><para>
+
+<para>Aligns a series of micrographs by cross-correlation sequentially. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>thickness</entry>
+                                <entry>
+<para>reconstruction thickness. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>iter</entry>
+                                <entry>
+<para>number of alignment iterations. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>dchange</entry>
+                                <entry>
+<para>threshold change in origin. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>dimg</entry>
+                                <entry>
+<para>number of adjacent images in reconstructions. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>resolution</entry>
+                                <entry>
+<para>high resolution limit (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_limit</entry>
+                                <entry>
+<para>limit on shift search (pixels). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>edge_width</entry>
+                                <entry>
+<para>smoothing edge width. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>gauss_width</entry>
+                                <entry>
+<para>smoothing edge decay. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long 0, &lt;0 on failure. <literallayout><computeroutput>Each pair of adjacent micrographs in the series is cross-correlated
+and the relative shift determined. The relative shifts are adjusted
+relative to the reference micrograph, defined as the one closest
+to a zero degree tilt.
+The images are stretched to compensate for tilt difference.
+The relationship between an euler representation of the view and
+the tilt axis and tilt angle is:
+    tilt_axis = phi - 90 = - psi - 90
+    tilt_angle = theta
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1876 of file mg_align.cpp.</para>
+    </section><anchor xml:id="_mg__align_8h_1ace439539f332c99632dcc732f9c9968a"/>    <section>
+    <title>project_write_aligned_averages()</title>
+<indexterm><primary>project_write_aligned_averages</primary><secondary>mg_align.h</secondary></indexterm>
+<indexterm><primary>mg_align.h</primary><secondary>project_write_aligned_averages</secondary></indexterm>
+<para><computeroutput>double project_write_aligned_averages (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bimage">Bimage</link> * pgr, <link linkend="_class_bstring">Bstring</link> &amp; imgfile, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> datatype, <link linkend="_class_bstring">Bstring</link> &amp; subset)</computeroutput></para><para>
+
+<para>Calculates aligned micrograph images and write them to a file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>micrograph project. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pgr</entry>
+                                <entry>
+<para>gain reference. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;imgfile</entry>
+                                <entry>
+<para>output image file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>datatype</entry>
+                                <entry>
+<para>output data type. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;subset</entry>
+                                <entry>
+<para>subset to average (all if empty) </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double average SNR. <literallayout><computeroutput>Only the origin is adjusted.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1029 of file mg_align.cpp.</para>
+    </section><anchor xml:id="_mg__align_8h_1a7754952d044cebe0d3a2661e8d6af68a"/>    <section>
+    <title>project_write_aligned_images()</title>
+<indexterm><primary>project_write_aligned_images</primary><secondary>mg_align.h</secondary></indexterm>
+<indexterm><primary>mg_align.h</primary><secondary>project_write_aligned_images</secondary></indexterm>
+<para><computeroutput>double project_write_aligned_images (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bimage">Bimage</link> * pgr, <link linkend="_class_bstring">Bstring</link> &amp; imgfile, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> datatype)</computeroutput></para><para>
+
+<para>Calculates aligned micrograph images and write them to a file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>micrograph project. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pgr</entry>
+                                <entry>
+<para>gain reference. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;imgfile</entry>
+                                <entry>
+<para>output image file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>datatype</entry>
+                                <entry>
+<para>output data type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double 0. <literallayout><computeroutput>Only the origin is adjusted.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 957 of file mg_align.cpp.</para>
+    </section><anchor xml:id="_mg__align_8h_1a8af9c3c5398e68320b9aa88a9bf8a843"/>    <section>
+    <title>project_write_frame_sums()</title>
+<indexterm><primary>project_write_frame_sums</primary><secondary>mg_align.h</secondary></indexterm>
+<indexterm><primary>mg_align.h</primary><secondary>project_write_frame_sums</secondary></indexterm>
+<para><computeroutput>double project_write_frame_sums (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bimage">Bimage</link> * pgr, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> datatype, <link linkend="_class_bstring">Bstring</link> &amp; subset, int flag)</computeroutput></para><para>
+
+<para>Sums aligned micrograph frames and write them to files. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>micrograph project. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pgr</entry>
+                                <entry>
+<para>gain reference. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>datatype</entry>
+                                <entry>
+<para>output data type. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;subset</entry>
+                                <entry>
+<para>subset to average (all if empty). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flag</entry>
+                                <entry>
+<para>flag to calculate counts from histogram. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double average SNR. <literallayout><computeroutput>Only the origin is adjusted.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1172 of file mg_align.cpp.</para>
+</section>
+</section>
+</section>

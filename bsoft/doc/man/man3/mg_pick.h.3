@@ -1,0 +1,523 @@
+.TH "/Users/bernard/b20/bsoft/include/mg_pick.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/mg_pick.h \- Header file for single particle picking functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'marker\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBparticle\fP * \fBparticles_from_peaks\fP (\fBBimage\fP *pcc, long bin, double excl_dist, double part_ori, double &fommin, double fommax=1e30, long maxnum=1000000, double pix_min=2, double pix_max=10)"
+.br
+.RI "Finds the peaks in a cross-correlation map corresponding to particles\&. "
+.ti -1c
+.RI "\fBBparticle\fP * \fBparticles_pick_cc\fP (\fBBimage\fP *p, \fBBimage\fP *ptemp, \fBBimage\fP *pmask, double hires, double lores, double fommin, double fommax, double excl_dist, long bin=1)"
+.br
+.RI "Picks particles using cross-correlation\&. "
+.ti -1c
+.RI "\fBBparticle\fP * \fBparticles_pick_var\fP (\fBBimage\fP *p, long average_kernel, long var_kernel, double nsig, double part_ori, double excl_dist, long bin)"
+.br
+.RI "Picks particles in variance map\&. "
+.ti -1c
+.RI "\fBBparticle\fP * \fBparticles_pick_var\fP (\fBBimage\fP *p, long average_kernel, long var_kernel, double cutmin, double cutmax, double part_ori, double excl_dist, long bin)"
+.br
+.ti -1c
+.RI "\fBBparticle\fP * \fBparticles_pick_cc\fP (\fBBstring\fP &filename, long img_num, \fBBimage\fP *ptemp, \fBBimage\fP *pmask, double hires, double lores, double fommin, double fommax, double excl_dist, long bin=1)"
+.br
+.RI "Picks particles using cross-correlation\&. "
+.ti -1c
+.RI "\fBBparticle\fP * \fBparticles_pick_var\fP (\fBBstring\fP &filename, long img_num, long average_kernel, long var_kernel, double nsig, double part_ori, double excl_dist, long bin)"
+.br
+.RI "Picks particles in variance map\&. "
+.ti -1c
+.RI "double \fBproject_pick_particles\fP (\fBBproject\fP *\fBproject\fP, \fBBimage\fP *ptemp, \fBBimage\fP *pmask, double hires, double lores, double fommin, double fommax, double excl_dist, long bin)"
+.br
+.RI "Picks particles using cross-correlation\&. "
+.ti -1c
+.RI "double \fBproject_pick_particles\fP (\fBBproject\fP *\fBproject\fP, long average_kernel, long var_kernel, double nsig, double part_ori, double excl_dist, long bin)"
+.br
+.RI "Picks particles in variance map\&. "
+.ti -1c
+.RI "long \fBproject_pick_particles\fP (\fBBproject\fP *\fBproject\fP, double din, double dout, int avg_kernel, double ainc, int flags, int contrast)"
+.br
+.RI "Locates particles using a fore/background difference measure\&. "
+.ti -1c
+.RI "long \fBproject_pick_background\fP (\fBBproject\fP *\fBproject\fP, long number, long average_kernel, long var_kernel, double excl_dist)"
+.br
+.RI "Picks background areas not overlapping existing particles\&. "
+.ti -1c
+.RI "long \fBproject_pick_sym_axis\fP (\fBBproject\fP *\fBproject\fP, \fBBsymmetry\fP &sym, int sym_axis, double axis_dist)"
+.br
+.RI "Picks subregions in 3D particles on the given symmetry axis\&. "
+.ti -1c
+.RI "double \fBproject_extract_orient_particles\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &tempfile, \fBBsymmetry\fP &sym, double hires, double lores, long bin)"
+.br
+.RI "Picks particles using cross-correlation\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for single particle picking functions\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20000505 
+.PP
+Modified: 20190912 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_pick\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBparticle\fP* particles_from_peaks (\fBBimage\fP * pcc, long bin, double excl_dist, double part_ori, double & fommin, double fommax, long maxnum, double pix_min, double pix_max)"
+
+.PP
+Finds the peaks in a cross-correlation map corresponding to particles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*pcc\fP peak map (after binning)\&. 
+.br
+\fIbin\fP binning to speed up calculations\&. 
+.br
+\fIexcl_dist\fP distance between peaks\&. 
+.br
+\fIpart_ori\fP particle origin\&. 
+.br
+\fIfommin\fP minimum threshold to accept peaks\&. 
+.br
+\fIfommax\fP maximum threshold to accept peaks\&. 
+.br
+\fImaxnum\fP maximum number of peaks to pick\&. 
+.br
+\fIpix_min\fP minimum peak width\&. 
+.br
+\fIpix_max\fP maximum peak width\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bparticle* list of particles\&. 
+.PP
+.nf
+The map is searched in increments of the particle radius to identify
+peaks above the threshold and within a box the size of the
+particle radius. The identified peaks are further examined to eliminate 
+ones that are too close to a higher scoring peak. The acceptable distance
+between peaks is set to 1.8 times the particle radius.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 75 of file mg_pick\&.cpp\&.
+.SS "\fBBparticle\fP* particles_pick_cc (\fBBimage\fP * p, \fBBimage\fP * ptemp, \fBBimage\fP * pmask, double hires, double lores, double fommin, double fommax, double excl_dist, long bin)"
+
+.PP
+Picks particles using cross-correlation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image to pick from\&. 
+.br
+\fI*ptemp\fP template image\&. 
+.br
+\fI*pmask\fP frequency space mask\&. 
+.br
+\fIhires\fP high resolution limit\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fIfommin\fP minimum FOM cutoff\&. 
+.br
+\fIfommax\fP maximum FOM cutoff\&. 
+.br
+\fIexcl_dist\fP minimum distance between particles\&. 
+.br
+\fIbin\fP level of image binning\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bparticle* list of particles\&. 
+.PP
+.nf
+A template is cross-correlated with the input image including
+bandpass filtering to target the size of the particle.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 141 of file mg_pick\&.cpp\&.
+.SS "\fBBparticle\fP* particles_pick_cc (\fBBstring\fP & filename, long img_num, \fBBimage\fP * ptemp, \fBBimage\fP * pmask, double hires, double lores, double fommin, double fommax, double excl_dist, long bin)"
+
+.PP
+Picks particles using cross-correlation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP image to pick from\&. 
+.br
+\fIimg_num\fP sub-image number\&. 
+.br
+\fI*ptemp\fP template image\&. 
+.br
+\fI*pmask\fP frequency space mask\&. 
+.br
+\fIhires\fP high resolution limit\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fIfommin\fP minimum FOM cutoff\&. 
+.br
+\fIfommax\fP maximum FOM cutoff\&. 
+.br
+\fIexcl_dist\fP minimum distance between particles\&. 
+.br
+\fIbin\fP level of image binning\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bparticle* list of particles\&. 
+.PP
+.nf
+A template is cross-correlated with the input image including
+bandpass filtering to target the size of the particle.
+The template must have the correct pixel size.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 338 of file mg_pick\&.cpp\&.
+.SS "\fBBparticle\fP* particles_pick_var (\fBBimage\fP * p, long average_kernel, long var_kernel, double cutmin, double cutmax, double part_ori, double excl_dist, long bin)"
+
+.PP
+Definition at line 288 of file mg_pick\&.cpp\&.
+.SS "\fBBparticle\fP* particles_pick_var (\fBBimage\fP * p, long avg_kernel, long var_kernel, double nsig, double part_ori, double excl_dist, long bin)"
+
+.PP
+Picks particles in variance map\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image to pick from\&. 
+.br
+\fIavg_kernel\fP averaging kernel size\&. 
+.br
+\fIvar_kernel\fP variance kernel size\&. 
+.br
+\fInsig\fP multiple of sigma above variance average to accept peaks\&. 
+.br
+\fIpart_ori\fP particle origin\&. 
+.br
+\fIexcl_dist\fP minimum distance between particles\&. 
+.br
+\fIbin\fP level of image binning\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bparticle* list of particles\&. 
+.PP
+.nf
+A copy of the micrograph is filtered with an averaging kernel
+and a variance map calculated. The variance map is then used to
+find high variance peaks as candidate locations for particles.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 222 of file mg_pick\&.cpp\&.
+.SS "\fBBparticle\fP* particles_pick_var (\fBBstring\fP & filename, long img_num, long avg_kernel, long var_kernel, double nsig, double part_ori, double excl_dist, long bin)"
+
+.PP
+Picks particles in variance map\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP image to pick from\&. 
+.br
+\fIimg_num\fP sub-image number\&. 
+.br
+\fIavg_kernel\fP averaging kernel size\&. 
+.br
+\fIvar_kernel\fP variance kernel size\&. 
+.br
+\fInsig\fP multiple of sigma above variance average to accept peaks\&. 
+.br
+\fIpart_ori\fP particle origin\&. 
+.br
+\fIexcl_dist\fP minimum distance between particles\&. 
+.br
+\fIbin\fP level of image binning\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bparticle* list of particles\&. 
+.PP
+.nf
+A copy of the micrograph is filtered with an averaging kernel
+and a variance map calculated. The variance map is then used to
+find high variance peaks as candidate locations for particles.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 372 of file mg_pick\&.cpp\&.
+.SS "double project_extract_orient_particles (\fBBproject\fP * project, \fBBstring\fP & tempfile, \fBBsymmetry\fP & sym, double hires, double lores, long bin)"
+
+.PP
+Picks particles using cross-correlation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&tempfile\fP template image\&. 
+.br
+\fIsym\fP point group symmetry\&. 
+.br
+\fIhires\fP high resolution limit\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fIbin\fP level of image binning\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double minimum threshold used to accept peaks\&. 
+.PP
+.nf
+Each micrograph is cross-correlated with the template image including
+bandpass filtering and frequency space masking.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1303 of file mg_pick\&.cpp\&.
+.SS "long project_pick_background (\fBBproject\fP * project, long number, long avg_kernel, long var_kernel, double excl_dist)"
+
+.PP
+Picks background areas not overlapping existing particles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fInumber\fP maximum number of background images to pick\&. 
+.br
+\fIavg_kernel\fP averaging kernel to smooth the image\&. 
+.br
+\fIvar_kernel\fP kernel to calculate a local variance image\&. 
+.br
+\fIexcl_dist\fP exclusion distance between areas\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of background areas\&. 
+.RE
+.PP
+
+.PP
+Definition at line 850 of file mg_pick\&.cpp\&.
+.SS "double project_pick_particles (\fBBproject\fP * project, \fBBimage\fP * ptemp, \fBBimage\fP * pmask, double hires, double lores, double fommin, double fommax, double excl_dist, long bin)"
+
+.PP
+Picks particles using cross-correlation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI*ptemp\fP template image\&. 
+.br
+\fI*pmask\fP frequency space mask\&. 
+.br
+\fIhires\fP high resolution limit\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fIfommin\fP minimum FOM cutoff\&. 
+.br
+\fIfommax\fP maximum FOM cutoff\&. 
+.br
+\fIexcl_dist\fP minimum distance between particles\&. 
+.br
+\fIbin\fP level of image binning\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double minimum threshold used to accept peaks\&. 
+.PP
+.nf
+Each micrograph is cross-correlated with the template image including
+bandpass filtering and frequency space masking.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 535 of file mg_pick\&.cpp\&.
+.SS "long project_pick_particles (\fBBproject\fP * project, double din, double dout, int avg_kernel, double ainc, int flags, int contrast)"
+
+.PP
+Locates particles using a fore/background difference measure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIdin\fP inner diameter corresponding to particle edge\&. 
+.br
+\fIdout\fP outer diameter corresponding to background\&. 
+.br
+\fIavg_kernel\fP averaging kernle to smooth difference map\&. 
+.br
+\fIainc\fP angular increment\&. 
+.br
+\fIflags\fP flags: bit 1 = filter extremes\&. 
+.br
+\fIcontrast\fP contrast direction (foreground: white=1, black=0)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles\&. 
+.PP
+.nf
+Two marker sets are generated at the indicated diameters.
+At each pixel, the marker sets are used to calculate a difference
+between the foreground and background as an estimate of the
+presence of a particle.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 678 of file mg_pick\&.cpp\&.
+.SS "double project_pick_particles (\fBBproject\fP * project, long avg_kernel, long var_kernel, double nsig, double part_ori, double excl_dist, long bin)"
+
+.PP
+Picks particles in variance map\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIavg_kernel\fP averaging kernel size\&. 
+.br
+\fIvar_kernel\fP variance kernel size\&. 
+.br
+\fInsig\fP multiple of sigma above variance average to accept peaks\&. 
+.br
+\fIpart_ori\fP particle origin\&. 
+.br
+\fIexcl_dist\fP minimum distance between particles\&. 
+.br
+\fIbin\fP level of image binning\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double minimum threshold used to accept peaks\&. 
+.PP
+.nf
+A copy of the micrograph is filtered with an averaging kernel
+and a variance map calculated. The variance map is then used to
+find high variance peaks as candidate locations for particles.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 607 of file mg_pick\&.cpp\&.
+.SS "long project_pick_sym_axis (\fBBproject\fP * project, \fBBsymmetry\fP & sym, int sym_axis, double axis_dist)"
+
+.PP
+Picks subregions in 3D particles on the given symmetry axis\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fIsym\fP point group symmetry\&. 
+.br
+\fIsym_axis\fP symmetry axis to pick subregions\&. 
+.br
+\fIaxis_dist\fP distance along symmetry axis\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of new particles\&. 
+.PP
+.nf
+The existing particles are replaced by the new particles.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 946 of file mg_pick\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

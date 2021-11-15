@@ -1,0 +1,205 @@
+.TH "/Users/bernard/b20/bsoft/include/matrix_linear.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/matrix_linear.h \- Header file for matrix functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Matrix\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "double \fBlinear_least_squares\fP (int n1, int n2, double *x, double *y, double &a, double &b)"
+.br
+.RI "Does a linear least squares fit between two vectors\&. "
+.ti -1c
+.RI "double \fBlinear_least_squares\fP (int n1, int n2, vector< double > &x, vector< double > &y, double &a, double &b)"
+.br
+.ti -1c
+.RI "double \fBfit_polynomial\fP (int n, double *x, double *y, int order, double *coeff)"
+.br
+.RI "Fits a data set to a polynomial function\&. "
+.ti -1c
+.RI "double \fBfit_polynomial\fP (int n, vector< double > &x, vector< double > &y, int order, vector< double > &coeff)"
+.br
+.RI "Fits a data set to a polynomial function\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBfit_plane\fP (\fBMatrix\fP a, vector< double > b)"
+.br
+.RI "Solves for fitting a plane through a model\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for matrix functions\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20000501 
+.PP
+Modified: 20210728 
+.RE
+.PP
+
+.PP
+Definition in file \fBmatrix_linear\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBVector3\fP<double> fit_plane (\fBMatrix\fP a, vector< double > b)"
+
+.PP
+Solves for fitting a plane through a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIa\fP 3x3 matrix with cross-terms\&. 
+.br
+\fIb\fP 3 vector with averages\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP plane normal\&. 
+.PP
+.nf
+A plane is fit through the components and the normal calculated from:
+    n•p = d
+where n is the normal vector, p is a point in the plane, and d is the offset.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 285 of file matrix_linear\&.cpp\&.
+.SS "double fit_polynomial (int n, double * x, double * y, int order, double * coeff)"
+
+.PP
+Fits a data set to a polynomial function\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP number of data points\&. 
+.br
+\fI*x\fP x array (at least order+1 values)\&. 
+.br
+\fI*y\fP y array (at least order+1 values)\&. 
+.br
+\fIorder\fP polynomial order\&. 
+.br
+\fI*coeff\fP array in which coefficients are returned (order+1 values) (if NULL, no coefficients returned)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double the deviation\&. 
+.PP
+.nf
+A polynomial of any order is fitted to the data using a least squares.
+The polynomial is defined as:
+    f(x) = a0 + a1*x + a2*x^2 + ...
+The number of coefficients returned is the order plus one.
+The deviation is defined as:
+    R = sqrt(sum(y - f(x))^2/n)
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 224 of file matrix_linear\&.cpp\&.
+.SS "double fit_polynomial (int n, vector< double > & x, vector< double > & y, int order, vector< double > & coeff)"
+
+.PP
+Fits a data set to a polynomial function\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP number of data points\&. 
+.br
+\fI&x\fP x array (at least order+1 values)\&. 
+.br
+\fI&y\fP y array (at least order+1 values)\&. 
+.br
+\fIorder\fP polynomial order\&. 
+.br
+\fI&coeff\fP array in which coefficients are returned (order+1 values) (if NULL, no coefficients returned)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double the deviation\&. 
+.PP
+.nf
+A polynomial of any order is fitted to the data using a least squares.
+The polynomial is defined as:
+    f(x) = a0 + a1*x + a2*x^2 + ...
+The number of coefficients returned is the order plus one.
+The deviation is defined as:
+    R = sqrt(sum(y - f(x))^2/n)
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 157 of file matrix_linear\&.cpp\&.
+.SS "double linear_least_squares (int n1, int n2, double * x, double * y, double & a, double & b)"
+
+.PP
+Does a linear least squares fit between two vectors\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn1\fP the starting index in each vector (usually 0)\&. 
+.br
+\fIn2\fP the final index in each vector\&. 
+.br
+\fI*x\fP x vector (at least n2+1 elements)\&. 
+.br
+\fI*y\fP y vector (at least n2+1 elements)\&. 
+.br
+\fI&a\fP the intercept\&. 
+.br
+\fI&b\fP the slope\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double the correlation index\&. 
+.PP
+.nf
+The two input vectors must have elements between indices n1 and n2.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 28 of file matrix_linear\&.cpp\&.
+.SS "double linear_least_squares (int n1, int n2, vector< double > & x, vector< double > & y, double & a, double & b)"
+
+.PP
+Definition at line 81 of file matrix_linear\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

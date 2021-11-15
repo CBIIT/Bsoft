@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: VMS install</title>
+<link href="bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+    <h1>Installation on VMS</h1>
+    <div id="note"><p>Note: Bsoft has not been tested extensively on VMS for a long time. It is very likely that it will not compile properly, and even if it does, it may not run properly.</p></div>
+    <p>Unpack the tar file (it will unpack into a subdirectory named [BSOFT]):<br />
+    </p>
+    <div id="command"><p>vmstar -xvf bsoft1_6_0 .tar</p></div>
+    <p><br />
+      All programs are compiled with the &quot;BMAKE.COM&quot; script in the main bsoft directory:</p>
+    <div id="command"><p>rename bmake_com.txt bmake.com</p></div>
+    <p>@BMAKE</p>
+    <h2>Environment </h2>
+    <p>The binary executables are installed in the [BSOFT.BIN] directory by default by the script. The BBIN variable can be set in the script to any other directory desired. Paths to the executables must be set (typically in the LOGIN.COM script) as follows:</p>
+    <div id="command"><p>BIMG == &quot;$ $DISK:[BSOFT.BIN]BIMG.EXE&quot;</p></div>
+    <p>OR</p>
+    <div id="command"><p>DEFINE DCL$PATH $DISK:[BSOFT.BIN]</p></div>
+    <p><br />
+      Parameters such as atomic masses, structure factors, symmetry parameters and residue properties are needed for several programs, and the following environmental variable must be set:</p>
+    <div id="command"><p>BPARAM == &quot;[BSOFT.PARAMETERS]&quot;</p></div>
+    <p>Documentation is provided as HTML files with the top level file:</p>
+    <p>[BSOFT.DOC]BSOFT.HTML</p>
+    <p>&nbsp;</p>
+</div>
+<div id="footer">
+  Bernard Heymann  20071017
+</div>
+</body>
+</html>

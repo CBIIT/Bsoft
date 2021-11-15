@@ -1,0 +1,225 @@
+<textarea readonly rows="60" cols="80">
+#!/bin/tcsh -f
+
+# tomrec
+# A script to do a tomographic reconstruction:
+#	1.	bmgft: Generate Fourier transforms from all micrographs
+#	2.	btomrec: Calculate slabs in Fourier space and back-transform slices
+#	3.	bzfft: Assemble slabs and back-transform z-lines
+# Usage:
+#	tomrec -reconstruction <file> -resolution <angstrom> -size <x,y,z>
+#			-thickness <pixels> -scale <number> -rescale <avg,std>
+#			-remove <marker_radius> -output <file> <file> [<file> ...]
+#	Requirement: At least the size must be specified.
+#	Note: The disk space requirements are very large - typically 40 times the size of the tomogram!
+#	Distributed processing: The lines with "psubmit" can be used with the Peach distributed system.
+# Examples:
+#	tomrec -rec map.pif -resol 45 -size 1024,1024,120 -thick 20 -scale 1 -rescale 127,25 -remove 14 -out out.star input.star
+#	psubmit tomrec -rec map.pif -resol 45 -size 1024,1024,120 -thick 20 -scale 1 -rescale 127,25 -remove 14 -out out.star input.star -ss
+# Author: Bernard Heymann
+# 20060106 - 20101203
+
+# Defaults
+set REC = "rec.pif"
+set OPF = "out.star"
+set RES = 30
+set X = 256
+set Y = $X
+set Z = 200
+set TH = 20
+set SC = 1
+set YSIZE = 200
+set RESCALE = 127,20
+set MARKRAD = 0
+
+# Peach switch
+set PSWITCH = 0
+if ( $?HASH_WORD ) set PSWITCH = 1
+
+# Command line
+echo -n tomrec
+set a = 1
+while ( $a <= $#argv )
+	echo -n " $argv[$a]"
+	@ a++
+end
+echo " "
+
+if ( $#argv < 1 ) then
+	echo "No input!"
+	exit
+endif
+
+# Interpret options
+set a = 1
+while ( "x$argv[$a]" =~ x-* )
+#	echo $a $argv[$a]
+	if ( "x$argv[$a]" =~ x-rec* ) then
+		@ a++
+		set REC = $argv[$a]
+	endif
+	if ( "x$argv[$a]" =~ x-out* ) then
+		@ a++
+		set OPF = $argv[$a]
+	endif
+	if ( "x$argv[$a]" =~ x-reso* ) then
+		@ a++
+		set RES = $argv[$a]
+	endif
+	if ( "x$argv[$a]" =~ x-siz* ) then
+		@ a++
+		set SIZE = $argv[$a]
+		set X = `echo $SIZE | cut -f1 -d","`
+		set Y = `echo $SIZE | cut -f2 -d","`
+		set Z = `echo $SIZE | cut -f3 -d","`
+	endif
+	if ( "x$argv[$a]" =~ x-thi* ) then
+		@ a++
+		set TH = $argv[$a]
+	endif
+	if ( "x$argv[$a]" =~ x-sca* ) then
+		@ a++
+		set SC = $argv[$a]
+	endif
+	if ( "x$argv[$a]" =~ x-resc* ) then
+		@ a++
+		set RESCALE = $argv[$a]
+	endif
+	if ( "x$argv[$a]" =~ x-rem* ) then
+		@ a++
+		set MARKRAD = $argv[$a]
+	endif
+	@ a++
+end
+
+set PF = $argv[$a]
+
+set SF = "ft.star"
+set SBASE = "slab"
+set YBASE = "ytile"
+set DOT = "-trans slices"
+
+rm -rf ${SBASE}????.sup
+
+set NMG = `btomo -v 7 $PF | awk '$1=="Micrographs:" { print $2 }'`
+set NSEL = `btomo -v 7 $PF | awk '$1=="Micrographs:" { print $4 }'`
+
+echo "Reconstruction parameters:"
+echo "-------------------------"
+date
+echo "Micrographs    = $NMG"
+echo "Selected       = $NSEL"
+echo "Size           = ${X},${Y},${Z}"
+echo "Scale          = $SC"
+echo "Resolution     = $RES"
+echo "Marker radius  = $MARKRAD"
+echo "Slab base      = $SBASE"
+echo "Slab thickness = $TH"
+echo "Y tile base    = $YBASE"
+echo "Y tile size    = $YSIZE"
+echo "Rescale        = $RESCALE"
+echo "Output STAR    = $OPF"
+echo "Reconstruction = $REC"
+echo ""
+
+# Fourier transform all the micrographs
+set N = 0
+while ( $N < $NMG )
+	set NN = `printf "%03d" $N`
+	set JOB = "ft$NN"
+	set SFNAME = `echo $SF | cut -f1 -d"."`"_$NN.star"
+	if ( ! -e $SFNAME ) then
+		set CMD = "bmgft -v 1 -select $N -size ${X},${Y},${Z} -scale $SC -remove $MARKRAD -out $SFNAME $PF"
+		echo $CMD
+		if ( $PSWITCH ) then
+			psubmit $CMD -jn $JOB
+		else
+			$CMD
+		endif
+	endif
+	@ N++
+end
+
+set SFNAME = `echo $SF | cut -f1 -d"."`
+
+# Check if all the micrographs have been transformed
+set NTR = 0
+while ( $NTR < $NSEL )
+	sleep 10
+	set NTR = `ls -1 ${SFNAME}_???.star | wc -l`
+	echo "$NTR micrographs transformed"
+end
+
+# Re-integrate all STAR files
+echo bmg -v 7 -in $PF -out $SF ${SFNAME}_???.star
+bmg -v 7 -in $PF -out $SF ${SFNAME}_???.star
+
+#exit
+
+# Slab reconstructions
+set SL = 0
+set NSL = 0
+while ( $SL < $Z )
+	set JOB = ${SBASE}`printf %04d ${SL}`
+	set SMAP = ${JOB}".sup"
+	set SSTAR = ${JOB}".star"
+	@ SLE = $SL + $TH - 1
+	if ( ! -e $SMAP ) then
+		set CMD = "btomrec -v 1 -slab ${SL},${SLE} $DOT -scale $SC -rec $SMAP -resol $RES -size ${X},${Y},${Z} -out $SSTAR $SF"
+		echo 
+		if ( $PSWITCH ) then
+			psubmit $CMD -jn $JOB -mem 4
+		else
+			$CMD
+		endif
+	endif
+	@ SL = $SL + $TH
+	@ NSL++
+end
+
+# Check if all the slabs have been generated
+set NSLG = 0
+while ( $NSLG < $NSL )
+	sleep 10
+	set NSLG = `ls -1 ${SBASE}????.sup | wc -l`
+	echo "$NSLG slabs generated"
+end
+
+# Z-line backtransform y tiles
+set NT = 0
+set YS = 0
+while ( $YS < $Y )
+	set JOB = ${YBASE}`printf %04d ${YS}`
+	set YMAP = "${JOB}.pif"
+	set YSTAR = "${JOB}.star"
+	if ( ! -e $YMAP ) then
+		set CMD = "bzfft -v 1 -ytile ${YS},${YSIZE} -rec $YMAP -out $YSTAR ${SBASE}????.star"
+		echo $CMD
+		if ( $PSWITCH ) then
+			psubmit $CMD -jn $JOB -mem 2
+		else
+			$CMD
+		endif
+	endif
+	@ NT++
+	@ YS = $YS + $YSIZE
+end
+
+# Check if all the ytiles have been generated
+set NTG = 0
+while ( $NTG < $NT )
+	sleep 10
+	set NTG = `ls -1 ${YBASE}????.star | wc -l`
+	echo "$NTG ytiles generated"
+end
+
+# Re-assemble tomogram
+@ M = ($X * $Y * $Z) / 200000000
+set CMD = "bpatch -v 7 -tiles y.tiles -out $REC -param $OPF ${YBASE}????.star"
+if ( $PSWITCH ) then
+	psubmit $CMD -jn patch -mem $M
+else
+	$CMD
+endif
+
+</textarea>

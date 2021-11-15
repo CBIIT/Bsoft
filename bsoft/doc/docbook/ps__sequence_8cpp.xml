@@ -1,0 +1,224 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_ps__sequence_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/ps/ps_sequence.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/ps/ps_sequence.cpp</primary></indexterm>
+<para>
+
+<para>Postscript output for sequence analysis functions. </para>
+ 
+</para>
+<programlisting>#include &quot;ps_plot.h&quot;
+#include &quot;Complex.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_ps__sequence_8cpp_1a5c95022a1d61647cae8ce28ae91ce3ea">ps_seq_representation</link> (ofstream *fps, vector&lt; double &gt; &amp;nseq)</para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__sequence_8cpp_1a817b01cb2a9857bb489110319b896b37">ps_seq_periodicity</link> (ofstream *fps, vector&lt; <link linkend="_class_complex">Complex</link>&lt; float &gt;&gt; &amp;per)</para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__sequence_8cpp_1a8de24dc052072407bd9761a00717d6a0">ps_seq_info</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bstring">Bstring</link> &amp;title, int nres, vector&lt; double &gt; &amp;info, vector&lt; double &gt; &amp;nseq, vector&lt; <link linkend="_class_complex">Complex</link>&lt; float &gt;&gt; &amp;per, vector&lt; double &gt; &amp;freq, string &amp;pattern)</para>
+
+<para>Generates a postscript plot from an information content analysis of a protein sequence alignment. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__sequence_8cpp_1a0fb703deaa5bc16aa04302c6f3aa6408">ps_seq_hydrophob</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bstring">Bstring</link> &amp;title, vector&lt; double &gt; &amp;Hphob, vector&lt; int &gt; &amp;HPseg, vector&lt; double &gt; &amp;nseq, vector&lt; <link linkend="_class_complex">Complex</link>&lt; float &gt;&gt; &amp;per)</para>
+
+<para>Generates a postscript plot from a hydrophobicity analysis of a protein sequence alignment. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_ps__sequence_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Postscript output for sequence analysis functions. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010515 </para>
+
+<para>Modified: 20210426 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_ps__sequence_8cpp_1a0fb703deaa5bc16aa04302c6f3aa6408"/>    <section>
+    <title>ps_seq_hydrophob()</title>
+<indexterm><primary>ps_seq_hydrophob</primary><secondary>ps_sequence.cpp</secondary></indexterm>
+<indexterm><primary>ps_sequence.cpp</primary><secondary>ps_seq_hydrophob</secondary></indexterm>
+<para><computeroutput>int ps_seq_hydrophob (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bstring">Bstring</link> &amp; title, vector&lt; double &gt; &amp; Hphob, vector&lt; int &gt; &amp; HPseg, vector&lt; double &gt; &amp; nseq, vector&lt; <link linkend="_class_complex">Complex</link>&lt; float &gt;&gt; &amp; per)</computeroutput></para><para>
+
+<para>Generates a postscript plot from a hydrophobicity analysis of a protein sequence alignment. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;title</entry>
+                                <entry>
+<para>title. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*Hphob</entry>
+                                <entry>
+<para>moving average of average hydrophobicity at each position. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*HPseg</entry>
+                                <entry>
+<para>assignment of hydrophobic segments. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*nseq</entry>
+                                <entry>
+<para>number of sequences represented at each position. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*per</entry>
+                                <entry>
+<para>periodicity analysis. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 193 of file ps_sequence.cpp.</para>
+    </section><anchor xml:id="_ps__sequence_8cpp_1a8de24dc052072407bd9761a00717d6a0"/>    <section>
+    <title>ps_seq_info()</title>
+<indexterm><primary>ps_seq_info</primary><secondary>ps_sequence.cpp</secondary></indexterm>
+<indexterm><primary>ps_sequence.cpp</primary><secondary>ps_seq_info</secondary></indexterm>
+<para><computeroutput>int ps_seq_info (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bstring">Bstring</link> &amp; title, int nres, vector&lt; double &gt; &amp; info, vector&lt; double &gt; &amp; nseq, vector&lt; <link linkend="_class_complex">Complex</link>&lt; float &gt;&gt; &amp; per, vector&lt; double &gt; &amp; freq, string &amp; pattern)</computeroutput></para><para>
+
+<para>Generates a postscript plot from an information content analysis of a protein sequence alignment. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;title</entry>
+                                <entry>
+<para>title. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nres</entry>
+                                <entry>
+<para>number of residue types. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;info</entry>
+                                <entry>
+<para>moving average of information content. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;nseq</entry>
+                                <entry>
+<para>number of sequences represented at each position. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;per</entry>
+                                <entry>
+<para>periodicity analysis. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;freq</entry>
+                                <entry>
+<para>frequence of each residue type at each position. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;pattern</entry>
+                                <entry>
+<para>residue types at each position, in frequency order. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 32 of file ps_sequence.cpp.</para>
+    </section><anchor xml:id="_ps__sequence_8cpp_1a817b01cb2a9857bb489110319b896b37"/>    <section>
+    <title>ps_seq_periodicity()</title>
+<indexterm><primary>ps_seq_periodicity</primary><secondary>ps_sequence.cpp</secondary></indexterm>
+<indexterm><primary>ps_sequence.cpp</primary><secondary>ps_seq_periodicity</secondary></indexterm>
+<para><computeroutput>int ps_seq_periodicity (ofstream * fps, vector&lt; <link linkend="_class_complex">Complex</link>&lt; float &gt;&gt; &amp; per)</computeroutput></para><para>
+Definition at line 327 of file ps_sequence.cpp.</para>
+    </section><anchor xml:id="_ps__sequence_8cpp_1a5c95022a1d61647cae8ce28ae91ce3ea"/>    <section>
+    <title>ps_seq_representation()</title>
+<indexterm><primary>ps_seq_representation</primary><secondary>ps_sequence.cpp</secondary></indexterm>
+<indexterm><primary>ps_sequence.cpp</primary><secondary>ps_seq_representation</secondary></indexterm>
+<para><computeroutput>int ps_seq_representation (ofstream * fps, vector&lt; double &gt; &amp; nseq)</computeroutput></para><para>
+Definition at line 282 of file ps_sequence.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_ps__sequence_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>ps_sequence.cpp</secondary></indexterm>
+<indexterm><primary>ps_sequence.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

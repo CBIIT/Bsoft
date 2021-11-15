@@ -1,0 +1,161 @@
+.TH "/Users/bernard/b20/bsoft/src/mg/mg_xtal.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mg/mg_xtal.cpp \- Functions to process crystallographic data\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_xtal\&.h'\fP
+.br
+\fC#include 'matrix_linear\&.h'\fP
+.br
+\fC#include 'Matrix\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'Complex\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmg_unitcell_vectors\fP (\fBBmicrograph\fP *mg)"
+.br
+.RI "Calculates the unit cell vectors for a 2D crystal\&. "
+.ti -1c
+.RI "long \fBmg_generate_reflections\fP (\fBBmicrograph\fP *mg, \fBVector3\fP< double > real_size, double resolution)"
+.br
+.RI "Generates reflections given the unit cell vectors\&. "
+.ti -1c
+.RI "int \fBimg_mask_reflections\fP (\fBBimage\fP *p, \fBBstrucfac\fP *sflist, double radius)"
+.br
+.RI "Masks the image using the list of reflections\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to process crystallographic data\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20061110 
+.PP
+Modified: 20181030 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_xtal\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int img_mask_reflections (\fBBimage\fP * p, \fBBstrucfac\fP * sflist, double radius)"
+
+.PP
+Masks the image using the list of reflections\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP complex image\&. 
+.br
+\fI*sflist\fP reflection list\&. 
+.br
+\fIradius\fP radius around reflection to mask\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code\&. 
+.RE
+.PP
+
+.PP
+Definition at line 153 of file mg_xtal\&.cpp\&.
+.SS "long mg_generate_reflections (\fBBmicrograph\fP * mg, \fBVector3\fP< double > real_size, double resolution)"
+
+.PP
+Generates reflections given the unit cell vectors\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph\&. 
+.br
+\fIreal_size\fP physical image size\&. 
+.br
+\fIresolution\fP resolution limit\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of reflections generated, <0 on error\&. 
+.PP
+.nf
+The structure factor location is given by:
+    x = uh + vk
+where u and v are the unit cell vectors,
+and h and k are the associated Miller indices.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 80 of file mg_xtal\&.cpp\&.
+.SS "int mg_unitcell_vectors (\fBBmicrograph\fP * mg)"
+
+.PP
+Calculates the unit cell vectors for a 2D crystal\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+Finds the unit cell vectors u and v by solving the equation:
+    x = uh + vk
+where x is the location of the reflection or structure factor,
+and h and k are the associated Miller indices.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 32 of file mg_xtal\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

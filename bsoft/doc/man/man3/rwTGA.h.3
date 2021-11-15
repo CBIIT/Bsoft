@@ -1,0 +1,115 @@
+.TH "/Users/bernard/b20/bsoft/include/rwTGA.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/rwTGA.h \- Header file for reading and writing Truevision TGA files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBTGASIZE\fP   18"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "struct \fB__attribute__\fP ((packed)) TGAhead"
+.br
+.ti -1c
+.RI "int \fBreadTGA\fP (\fBBimage\fP *p, int readdata)"
+.br
+.RI "Reading a Truevision TGA image file format\&. "
+.ti -1c
+.RI "int \fBwriteTGA\fP (\fBBimage\fP *p)"
+.br
+.RI "Writing a Truevision TGA map image file format\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for reading and writing Truevision TGA files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20150811 
+.PP
+Modified: 20150815 
+.PP
+.nf
+Format: Truevision image file format
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwTGA\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define TGASIZE   18"
+
+.PP
+Definition at line 13 of file rwTGA\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "struct __attribute__ ((packed))"
+
+.PP
+Definition at line 1 of file rwTGA\&.h\&.
+.SS "int readTGA (\fBBimage\fP * p, int readdata)"
+
+.PP
+Reading a Truevision TGA image file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.br
+\fIreaddata\fP flag to activate reading of image data\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. A color image format\&. Header size: 18 bytes (fixed)\&. File format extensions: \&.tga The identifier is ???\&. Byte order: Little endian\&. Data types: 1 = byte, 2 = float, 3 = complex float 4 = 3-value vector, 5 = view 
+.RE
+.PP
+
+.PP
+Definition at line 134 of file rwTGA\&.cpp\&.
+.SS "int writeTGA (\fBBimage\fP * p)"
+
+.PP
+Writing a Truevision TGA map image file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 266 of file rwTGA\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

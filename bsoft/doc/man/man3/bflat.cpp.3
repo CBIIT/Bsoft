@@ -1,0 +1,114 @@
+.TH "/Users/bernard/b20/bsoft/src/bflat.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/bflat.cpp \- Solvent flattening\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'symmetry\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Solvent flattening\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20041113 
+.PP
+Modified: 20150717 
+.PP
+.nf
+An implementation based on the method proposed in:
+van Heel, M. (2001). "Do single (ribosome) molecules phase themselves?" Cold Spring Harb Symp Quant Biol 66: 77-86.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition in file \fBbflat\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 51 of file bflat\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+" ",
+"Usage: bflat [options] input\&.img output\&.img",
+"-------------------------------------------",
+"Does phase extension by solvent flattening\&.",
+"The amplitudes are defined in three possible mutually exclusive ways:",
+"1\&. Derived from the input map (default)\&.",
+"2\&. Derived from a reference map\&.",
+"3\&. Specified in an external amplitude map\&.",
+" ",
+"Actions:",
+"-symmetrize C5           Apply point group symmetry\&.",
+" ",
+"Parameters:",
+"-verbose 7               Verbosity of output\&.",
+"-datatype u              Force writing of a new data type\&.",
+"-resolution 35,15\&.5,1\&.5  Resolution limit start, end and step (default 30,20,1)\&.",
+"-iterations 80           Iterations (default 1)\&.",
+"-exit 0\&.1                Exit condition based on amplitude RMSD (default 0\&.01)\&.",
+"-output 5                Number of iterations between writing output maps (default 100)\&.",
+" ",
+"Input:",
+"-Reference file\&.map      File to generate amplitudes from (default amplitudes from input map)\&.",
+"-Amplitudes file\&.map     File with amplitudes (default amplitudes from input map)\&.",
+"-Mask mask\&.tif           Mask file\&.",
+" ",
+NULL
+}
+.fi
+.PP
+Definition at line 22 of file bflat\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

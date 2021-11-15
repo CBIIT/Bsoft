@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_bdual_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/bdual.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/bdual.cpp</primary></indexterm>
+<para>
+
+<para>Program to handle dual tomographic tilt series. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmg.h&quot;
+#include &quot;mg_processing.h&quot;
+#include &quot;mg_img_proc.h&quot;
+#include &quot;mg_tomography.h&quot;
+#include &quot;mg_tomo_track.h&quot;
+#include &quot;ps_marker.h&quot;
+#include &quot;utilities.h&quot;
+#include &quot;options.h&quot;
+#include &quot;timer.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_bdual_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_bdual_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>const char * <link linkend="_bdual_8cpp_1a4de0ad4c7190962494815c0fa7f948df">use</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Program to handle dual tomographic tilt series. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann, Jessica Mavadia, Charith Jayasinghe </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20071114 </para>
+
+<para>Modified: 20160617 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_bdual_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>bdual.cpp</secondary></indexterm>
+<indexterm><primary>bdual.cpp</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 56 of file bdual.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_bdual_8cpp_1a4de0ad4c7190962494815c0fa7f948df"/>    <section>
+    <title>use</title>
+<indexterm><primary>use</primary><secondary>bdual.cpp</secondary></indexterm>
+<indexterm><primary>bdual.cpp</primary><secondary>use</secondary></indexterm>
+<para><computeroutput>const char* use[]</computeroutput></para><emphasis role="strong">Initial value:</emphasis><programlisting>=&#32;{
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Usage:&#32;bdual&#32;[options]&#32;input1.star&#32;[input2.star]&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;------------------------------------------------&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Handles&#32;dual&#32;tomographic&#32;tilt&#32;series&#32;of&#32;micrographs.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Expects&#32;exactly&#32;two&#32;input&#32;parameter&#32;files&#32;corresponding&#32;to&#32;the&#32;two&#32;tilt&#32;series.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Outputs&#32;only&#32;the&#32;second&#32;series&#32;to&#32;a&#32;parameter&#32;file.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Actions:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-seed&#32;1.3,-95,75&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Transfers&#32;seed&#32;markers&#32;from&#32;first&#32;to&#32;second&#32;series,&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;using&#32;the&#32;angular&#32;increment&#32;to&#32;test&#32;for&#32;rotation&#32;angle,&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;within&#32;the&#32;angular&#32;limits&#32;(default&#32;-180,180).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-refine&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Refines&#32;markers&#32;from&#32;the&#32;second&#32;series&#32;after&#32;transfer.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-transform&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Calculates&#32;the&#32;correct&#32;micrograph&#32;transformations&#32;for&#32;the&#32;2nd&#32;series.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-deselect&#32;5-9,33&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Deselect&#32;markers&#32;by&#32;id&#32;from&#32;all&#32;micrographs&#32;and&#32;models.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-zcompare&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Compare&#32;Z&#32;coordinates&#32;of&#32;the&#32;first&#32;and&#32;second&#32;series.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Parameters:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-verbose&#32;7&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Verbosity&#32;of&#32;output.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-sampling&#32;1.5,1.5,1.5&#32;&#32;&#32;&#32;Sampling&#32;(A/pixel;&#32;a&#32;single&#32;value&#32;can&#32;be&#32;given).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-resolution&#32;900,300&#32;&#32;&#32;&#32;&#32;&#32;High&#32;and&#32;low&#32;resolution&#32;limits&#32;for&#32;cross-correlation&#32;(default&#32;0.1,1000&#32;angstrom).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-shiftlimit&#32;155.5&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Limit&#32;on&#32;micrograph&#32;shift&#32;search&#32;in&#32;pixels&#32;(default&#32;20%&#32;of&#32;micrograph&#32;width).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Output:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-output&#32;file.star&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Output&#32;parameter&#32;file&#32;for&#32;2nd&#32;series.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-Postscript&#32;out.ps&#32;&#32;&#32;&#32;&#32;&#32;&#32;Postscript&#32;output&#32;with&#32;Z&#32;coordinate&#32;error&#32;plots.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-bild&#32;out.bld&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;BILD&#32;output&#32;with&#32;fitted&#32;marker&#32;models.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+NULL
+}
+</programlisting><para>
+Definition at line 24 of file bdual.cpp.</para>
+    </section><anchor xml:id="_bdual_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>bdual.cpp</secondary></indexterm>
+<indexterm><primary>bdual.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

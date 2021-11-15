@@ -1,0 +1,117 @@
+.TH "/Users/bernard/b20/bsoft/include/cluster.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/cluster.h \- Header file for clustering functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Matrix\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "vector< long > \fBk_means\fP (long n, float *data, long k)"
+.br
+.RI "Generate clusters using a K-means algorithm\&. "
+.ti -1c
+.RI "vector< long > \fBaffin_prop_clustering\fP (\fBMatrix\fP s, long maxit, long convit, double lambda, long &ncluster)"
+.br
+.RI "Generate clusters from a similarity matrix using affinity propagation\&. 
+.br
+ "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for clustering functions\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20070417 
+.PP
+Modified: 20210508 
+.RE
+.PP
+
+.PP
+Definition in file \fBcluster\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "vector<long> affin_prop_clustering (\fBMatrix\fP s, long maxit, long convit, double lambda, long & ncluster)"
+
+.PP
+Generate clusters from a similarity matrix using affinity propagation\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fIs\fP n x n similarity matrix\&. 
+.br
+\fImaxit\fP maximum iterations\&. 
+.br
+\fIconvit\fP convergence iterations\&. 
+.br
+\fIlambda\fP damping factor\&. 
+.br
+\fI&ncluster\fP number of clusters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<long> vector of cluster memberships\&. 
+.PP
+.nf
+Frey, B. J. and D. Dueck (2007). "Clustering by passing messages between 
+data points." Science 315(5814): 972-6.
+The clustering algorithm proceeds iteratively for a given maximum iterations.
+If the cluster solution does not change for a given number of iterations
+(convit), convergence is assumed and the function finishes.
+The damping factor should be ~0.5, or at least between 0.1 and 0.9.
+For larger damping factors, more convergence iterations are required.
+The diagonal of the matrix should be set to preferences for exemplars
+(typically the average or median of the similarities).
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 258 of file cluster\&.cpp\&.
+.SS "vector<long> k_means (long n, float * data, long k)"
+
+.PP
+Generate clusters using a K-means algorithm\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP number of data elements\&. 
+.br
+\fI*data\fP floating point array\&. 
+.br
+\fIk\fP number of classes\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<long> vector of cluster memberships\&. 
+.RE
+.PP
+
+.PP
+Definition at line 28 of file cluster\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

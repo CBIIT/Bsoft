@@ -1,0 +1,199 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/bsoft.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: SPA preparation</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="../Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Single Particle Analysis Preparation</h1>
+<p>The advent of direct detectors and automated data acquisition
+	means that large amounts of data are acquired in a relatively
+	short time. Most of the preprocessing can be done automatically,
+	either streaming or as a batch of files. The following
+	operations are typically done:</p>
+<ul>
+	<li>Gain correction</li>
+	<li>Binning/Size changes</li>
+	<li>Frame alignment</li>
+	<li>Dose adjustment</li>
+	<li>Summation</li>
+	<li>Thickness estimation</li>
+	<li>CTF determination</li>
+</ul>
+<p>All except the last can be combined in a single command line.</p>
+<br/>
+<h2>1 Directory layout and parameter files</h2>
+<p>The user must make a decision as to the organization of files.
+	The aim is to group files together in directories that have
+	some relationship to the stage of processing. This also
+	allows the user to try different processing strategies with
+	the results deposited in separate directories.</p>
+<p>It is recommended that a layout similar to that shown in
+	Table 1 be adopted for processing in Bsoft. In the case of
+	independent data sets ("golden standard"), the best is to
+	split the full data set into two or more major directories
+	and process each completely separately.</p>
+<p>The parameter files (typically STAR files) embed the image
+	paths relative to its location. So it is best not to move
+	the parameter files once they have been created. To move
+	a parameter file to a different location, copy it by using
+	a program such as <b>bmg</b> and write the new file in
+	the desired place. The intent is that this will modify the
+	image paths so they remain correctly specified in the
+	parameter file.</p>
+<br />
+<table border="1" cellpadding="2" cellspacing="2">
+<caption>Table 1: Suggested directories for SPA in Bsoft</caption>
+  <thead>
+    <tr>
+      <th>Directory</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>mg</td>
+      <td>Raw micrographs/Frames</td>
+    </tr>
+    <tr>
+      <td>mg_b2</td>
+      <td>Micrographs binned two-fold</td>
+    </tr>
+    <tr>
+      <td>part</td>
+      <td>Particle images extracted from the micrographs</td>
+    </tr>
+    <tr>
+      <td>ctf</td>
+      <td>CTF-corrected particle images</td>
+    </tr>
+    <tr>
+      <td>ref</td>
+      <td>Initial reference map(s) for orientation-finding</td>
+    </tr>
+    <tr>
+      <td>run1</td>
+      <td>First run of determining particle orientations with the resultant reconstruction(s)</td>
+    </tr>
+    <tr>
+      <td>run2</td>
+      <td>Second run of determining particle orientations with the resultant reconstruction(s)</td>
+    </tr>
+    <tr>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+  </tbody>
+</table>
+<br />
+<p>All programs handling parameter files (such as
+	<b>bmg, bpartsel, borient,</b> etc.)
+	can read multiple files and concatenate them into one
+	large internal parameter database. The whole internal
+	database is then written out into one parameter file by
+	specifying the &quot;-output&quot; option. If the user
+	requires individual parameter files for each micrograph,
+	the program <b>bmg</b> has a &quot;-split&quot; option
+	to generate one parameter file per micrograph. Some of
+	the programs also allow the user to set the path for files,
+	which is very important to ensure a smooth and easy workflow.</p>
+<p>The concept of a micrograph used in Bsoft is the equivalent
+	of taking a single 2D image on a photographic film and
+	scanning it in a digitization device. Single images taken
+	on CCD or direct cameras qualify as simple micrographs.
+	Dose-fractionation (also called movie mode) results
+	in a series of 2D images (frames) where the aligned
+	average is considered equivalent to a micrograph. The initial
+	processing of the micrographs  therefore depends on how they
+	were acquired. The best advice is to keep the individual
+	micrographs and their derivatives separate and use a script to
+	automate all the initial processing up to fitting the CTF
+	parameters. Each micrograph is typically preprocessed
+	separately and the parameter files combined afterwards.</p>
+<br/>
+<h2>2. Gain-correction</h2>
+<p>In a CCD or direct detector, the gain is typically automatically
+	corrected and this step can be skipped. However, sometimes gain
+	correction is not done to speed up acquisition. In this case
+	gain correction becomes part of the preprocessing.</p>
+<p>Unfortunately, the gain reference image is not guaranteed
+	to be oriented in the same way as the micrograph images.
+	Every camera has blemishes that show up in both the gain
+	reference and micrographs. The orientation is therefore
+	determined by comparing the gain reference with a micrograph
+	and finding the corresponding blemishes. When each micrograph
+	is a set of movie frames, these can be summed to increase
+	the signal to be able to see the blemishes:</p>
+<div id="command"><p>bimg -verb 7 -sum mg2304.tif mg2304_sum.mrc</p></div>
+<p>The gain reference should then be oriented to agree with the
+	micrograph:</p>
+<div id="command"><p>bimg -verb 7 -reslice x-yz gain.tif gain_resliced.mrc</p></div>
+<p>Multiplication of the micrograph with the gain reference should
+	now remove the features of the camera chip:</p>
+<div id="command"><p>bop -verb 7 -sam 0.537 -mult 1,0 mrc2304_sum.mrc mrc2304_gc.mrc</p></div>
+<p>The oriented gain reference is now suitable for use during
+	movie frame alignment.</p>
+<br/>
+
+<h3>3. Movie frame alignment and summation</h3>
+<p>This step is only required where micrographs are acquired
+	as movie frames (dose-fractionated). It combines several
+	subprocesses in one to speed it up and conserve disk space.</p>
+<p>The frames are first aligned progressively, starting from
+	a chosen frame, usually not the first frame because of severe
+	initial beam-induced movement. The reference is progressively
+	averaged from already aligned frames to improve subsequent
+	frame alignment. This is then followed by several iterations
+	of alignment to the average until the shifts decrease below
+	a threshold.</p>
+<p>A typical command line is:</p>
+<div id="command"><p>bseries -verb 1 -frames -counts -Gainref gain.mrc -dose 0.35 -rate 4 -align 5 -resol 20,1000 -shift 100 -bin 2 -write sum -out mg5523.star mg5523.tif</p></div>
+<p>Options:</p>
+<ul>
+	<li>-frames: Align frames rather than micrographs.</li>
+	<li>-counts: Rescale to represent accurate counts of electrons/pixel.</li>
+	<li>-Gainreference: Do gain correction with the appropriately oriented gain reference image.</li>
+	<li>-dose: The dose per frame in electrons/Å2 to do exposure filtering.</li>
+	<li>-rate: The frames per second to estimate drift speed.</li>
+	<li>-align: Align starting with the indicated reference frame.</li>
+	<li>-resolution: Resolution limits for cross-correlation.</li>
+	<li>-shift: Limit on translation during cross-correlation.</li>
+	<li>-bin: Binning level to decrease image size and increase processing speed.</li>
+	<li>-write sum: Write out summed micrographs after alignment.</li>
+	<li>-output: Output parameter file.</li>
+<ul>
+<br />
+<h2>4. CTF parameter fitting</h2>
+<p>The most efficient way is to run an automated CTF fitting first on
+each micrograph, generating an output parameter file for each:</p>
+<div id="command"><p>bctf -verb 1 -action prepfit -Range 0.5,3.5 -envtype 4 -frames -tile 512,512,1 -sam 0.537 -resol 5,20 -Volt 300 -Amp 0.07 -Cs 2.7 -out klh_aln_ctf.star klh_aln.star</p></div>
+<p>The resultant fits need to be checked and refined in <b>bshow</b>.</p>
+<br />
+<h2>5. Examining micrographs and CTF fits</h2>
+<p>All the output STAR files from the previous steps should be combined
+in one large parameter file:</p>
+<div id="command"><p>bmg -verb 7 -out klh_all.star *ctf.star</p></div>
+<p>The combined parameter file can be opened in <b>bshow</b>:</p>
+<div id="command"><p>bshow klh_all.star</p></div>
+<p>This will present the user with a list of image files referenced in
+the parameter file. At this stage the CTF fits should be examined to make
+sure they are the best possible. Therefore, choose a power spectrum from
+the list of images (indicated by a "ps" in the file specification).
+Then choose the "Micrograph/Fit CTF" option and follow instructions
+as described <a href="../bshow/bshow_ctf.html" onclick="return changeIframeContent('ifrm2', this.href)">here</a>.</p>
+<br />
+<h2>6. Preprocessing script</h2>
+<p><a href="../scripts/prepfit.html">prepfit</a>).</p>
+</div>
+<div id="footer">
+  Bernard Heymann  20200331
+</div>
+</body>
+</html>

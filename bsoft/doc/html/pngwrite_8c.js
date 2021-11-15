@@ -1,0 +1,28 @@
+var pngwrite_8c =
+[
+    [ "png_convert_from_struct_tm", "pngwrite_8c.html#aef0c8151f089cf091a35efd465276f79", null ],
+    [ "png_convert_from_time_t", "pngwrite_8c.html#aa9d902a2c38cd57146363e4502cb463c", null ],
+    [ "png_destroy_write_struct", "pngwrite_8c.html#a7fd7eae2e3177be04f49c03bf6f647ff", null ],
+    [ "PNG_FUNCTION", "pngwrite_8c.html#aa0f1474105dd4f5304aab40af1e06a4e", null ],
+    [ "PNG_FUNCTION", "pngwrite_8c.html#aee691444ddda5a8a9e6bb83be649952a", null ],
+    [ "png_set_compression_level", "pngwrite_8c.html#a9d879bc695715f297d4341e10a3f3729", null ],
+    [ "png_set_compression_mem_level", "pngwrite_8c.html#ad2146d0a99fb74749ff525d16b2f30d6", null ],
+    [ "png_set_compression_method", "pngwrite_8c.html#a6dbf0e256bfe00ff5c85ab97ba200884", null ],
+    [ "png_set_compression_strategy", "pngwrite_8c.html#a4d849eb826fd1f0e30166d758470f72b", null ],
+    [ "png_set_compression_window_bits", "pngwrite_8c.html#ab3432c930e2cef6ef73b7ba7327cee55", null ],
+    [ "png_set_filter", "pngwrite_8c.html#a56248fba579be3143455a30b74b48fff", null ],
+    [ "png_set_filter_heuristics", "pngwrite_8c.html#a853912bc195b4c9c96f5de90d1175da2", null ],
+    [ "png_set_filter_heuristics_fixed", "pngwrite_8c.html#ad1d6dea2fdb5c2d688b57d75f01aaa90", null ],
+    [ "png_set_flush", "pngwrite_8c.html#a245fd5b66ff91c29575f013f7f584331", null ],
+    [ "png_set_write_status_fn", "pngwrite_8c.html#ac1bc039970c69be7d8479e68cfbe863b", null ],
+    [ "png_set_write_user_transform_fn", "pngwrite_8c.html#a5f4affa870880c6469273bfb95b45374", null ],
+    [ "png_write_destroy", "pngwrite_8c.html#abee18e8bd3d24c2699f9595d60107ea8", null ],
+    [ "png_write_end", "pngwrite_8c.html#a7f4d49e4d761688c284ccc2176ad7521", null ],
+    [ "png_write_flush", "pngwrite_8c.html#abf58454d229992e4d8b4fd01da06edc0", null ],
+    [ "png_write_image", "pngwrite_8c.html#a47efd9dcfb311058eb9799269a49c3b3", null ],
+    [ "png_write_info", "pngwrite_8c.html#a235653b681745e984b3af5ec1d0d06a2", null ],
+    [ "png_write_info_before_PLTE", "pngwrite_8c.html#a3e10ce7f73c49323469464b193af125f", null ],
+    [ "png_write_png", "pngwrite_8c.html#a4fac21cd25c4d50c19a83e132b41cc43", null ],
+    [ "png_write_row", "pngwrite_8c.html#ab6471af0bedc199c46dc18e41e818612", null ],
+    [ "png_write_rows", "pngwrite_8c.html#ab44d30914ee565c6b269715d10e79194", null ]
+];

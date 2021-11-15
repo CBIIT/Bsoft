@@ -1,0 +1,1385 @@
+.TH "/Users/bernard/b20/bsoft/include/rwstar.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/rwstar.h \- A header file for STAR format files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Bstring\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBBstar_item\fP"
+.br
+.ti -1c
+.RI "class \fBBstar_block\fP"
+.br
+.RI "Structure for a data block with multiple items in a STAR database\&. "
+.ti -1c
+.RI "class \fBBstar\fP"
+.br
+.RI "Overall STAR class to hold all data blocks and options for I/O\&.\&. "
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBLINELENGTH\fP   80"
+.br
+.ti -1c
+.RI "#define \fB_STAR_\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBStarType\fP { \fBCommentItem\fP = 0, \fBStringItem\fP = 1, \fBNumberItem\fP = 2 }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBstar\fP * \fBinit_star\fP ()"
+.br
+.RI "Creates a STAR data base\&. "
+.ti -1c
+.RI "int \fBkill_star\fP (\fBBstar\fP *star)"
+.br
+.RI "Destroys a STAR data base\&. "
+.ti -1c
+.RI "int \fBkill_block\fP (\fBBstar_block\fP *block)"
+.br
+.RI "Destroys a STAR data block\&. "
+.ti -1c
+.RI "int \fBkill_item\fP (\fBBstar_item\fP *item)"
+.br
+.RI "Destroys an item in a data block in a STAR data base\&. "
+.ti -1c
+.RI "int \fBread_star\fP (const char *filename, \fBBstar\fP *star)"
+.br
+.RI "Reads paramaters and data into a STAR data base from a list of files\&. "
+.ti -1c
+.RI "int \fBread_star\fP (\fBBstring\fP &filename, \fBBstar\fP *star)"
+.br
+.ti -1c
+.RI "int \fBread_star\fP (\fBBstring\fP *\fBfile_list\fP, \fBBstar\fP *star)"
+.br
+.ti -1c
+.RI "\fBBstar_block\fP * \fBread_block\fP (ifstream *fstar, char *aptr, \fBBstring\fP &filename)"
+.br
+.RI "Reads paramaters and data into a STAR data block from an open file\&. "
+.ti -1c
+.RI "\fBBstar_item\fP * \fBread_single_item\fP (ifstream *fstar, char *aline)"
+.br
+.RI "Reads a single-valued item or comment line into a STAR data block from an open file\&. "
+.ti -1c
+.RI "\fBBstar_item\fP * \fBread_loop_items\fP (ifstream *fstar)"
+.br
+.RI "Reads a loop structure with multiple items into a STAR data block from an open file\&. "
+.ti -1c
+.RI "int \fBwrite_star\fP (const char *filename, \fBBstar\fP *star)"
+.br
+.RI "Writes a STAR data base to one or more STAR format files\&. "
+.ti -1c
+.RI "int \fBwrite_star\fP (\fBBstring\fP &filename, \fBBstar\fP *star)"
+.br
+.ti -1c
+.RI "int \fBwrite_block\fP (ofstream *fstar, \fBBstar_block\fP *block, int linelength)"
+.br
+.RI "Writes paramaters and data from a STAR data block into an open file\&. "
+.ti -1c
+.RI "int \fBstar_update_comment\fP (\fBBstar\fP *star, int n, char **strings)"
+.br
+.RI "Puts a set of strings and time in the main comment of the STAR data base\&. "
+.ti -1c
+.RI "long \fBstar_list_comments\fP (\fBBstar\fP *star, long len)"
+.br
+.RI "Lists the command lines in the STAR header\&. "
+.ti -1c
+.RI "int \fBstar_set_string_lengths\fP (\fBBstar\fP *star)"
+.br
+.RI "Sets the maximum string lengths for each item in each block\&. "
+.ti -1c
+.RI "int \fBitem_change_tag\fP (\fBBstar\fP *star, const char *tag, const char *newtag)"
+.br
+.RI "Replaces one tag with another in the STAR data base\&. "
+.ti -1c
+.RI "int \fBshow_tags\fP (\fBBstar\fP *star)"
+.br
+.RI "Prints the list of tags in the STAR data base\&. "
+.ti -1c
+.RI "int \fBitem_index\fP (\fBBstar_block\fP *block, const char *tag)"
+.br
+.RI "Gets the STAR item associated with a tag in a STAR data block\&. "
+.ti -1c
+.RI "\fBBstar_block\fP * \fBblock_find_with_tag\fP (\fBBstar\fP *star, const char *tag)"
+.br
+.RI "Gets the first block associated with a tag in a STAR data base\&. "
+.ti -1c
+.RI "\fBBstar_item\fP * \fBitem_find\fP (\fBBstar_block\fP *block, \fBBstring\fP tag)"
+.br
+.RI "Gets the STAR item associated with a tag in a STAR data block\&. "
+.ti -1c
+.RI "\fBBstar_item\fP * \fBitem_find_or_make\fP (\fBBstar_block\fP *block, const char *tag)"
+.br
+.RI "Gets the STAR item associated with a tag in a STAR data block\&. "
+.ti -1c
+.RI "long \fBitem_get_number\fP (\fBBstar\fP *star, const char *tag)"
+.br
+.RI "Gets the number of values associated with a tag in a STAR data base\&. "
+.ti -1c
+.RI "long \fBitem_get_number_for_block\fP (\fBBstar_block\fP *block, const char *tag)"
+.br
+.RI "Gets the number of values associated with a tag in a STAR data block\&. "
+.ti -1c
+.RI "char * \fBitem_get_string\fP (\fBBstar_block\fP *block, const char *tag)"
+.br
+.RI "Gets a string value associated with a tag in a STAR data block\&. "
+.ti -1c
+.RI "int \fBitem_copy_string\fP (char *string, \fBBstar_block\fP *block, const char *tag)"
+.br
+.RI "Copies a string value associated with a tag in a STAR data block\&. "
+.ti -1c
+.RI "int \fBitem_get_integer\fP (\fBBstar_block\fP *block, const char *tag)"
+.br
+.RI "Gets an integer value associated with a tag in a STAR data block\&. "
+.ti -1c
+.RI "float \fBitem_get_float\fP (\fBBstar_block\fP *block, const char *tag)"
+.br
+.RI "Gets a floating point value associated with a tag in a STAR data block\&. "
+.ti -1c
+.RI "int \fBitem_put_string\fP (\fBBstar_block\fP *block, const char *tag, char *string)"
+.br
+.RI "Writes a string into a data item associated with a specific data block and tag in a STAR data base\&. "
+.ti -1c
+.RI "int \fBitem_put_string\fP (\fBBstar_block\fP *block, const char *tag, \fBBstring\fP &string)"
+.br
+.ti -1c
+.RI "int \fBitem_put_string_list\fP (\fBBstar_block\fP *block, const char *tag, \fBBstring\fP *list)"
+.br
+.RI "Writes a list of strings into a data item associated with a specific data block and tag in a STAR data base\&. "
+.ti -1c
+.RI "int \fBitem_put_integer\fP (\fBBstar_block\fP *block, const char *tag, int value, const char *format)"
+.br
+.RI "Writes a integer into a data item associated with a specific data block and tag in a STAR data base\&. "
+.ti -1c
+.RI "int \fBitem_put_float\fP (\fBBstar_block\fP *block, const char *tag, float value, const char *format)"
+.br
+.RI "Writes a floating point value into a data item associated with a specific data block and tag in a STAR data base\&. "
+.ti -1c
+.RI "int \fBitem_put_list\fP (\fBBstar_block\fP *block, const char *tag, char *list, size_t offset, const char *format)"
+.br
+.RI "Writes a list of string or numeric values into a data item associated with a specific data block and tag in a STAR data base\&. "
+.ti -1c
+.RI "int \fBitem_put_float_array\fP (\fBBstar_block\fP *block, const char *tag, int number, float *value, const char *format)"
+.br
+.RI "Writes a list of floating point numbers into a data item associated with a specific data block and tag in a STAR data base\&. "
+.ti -1c
+.RI "int \fBitem_put_angle_list\fP (\fBBstar_block\fP *block, const char *tag, char *list, size_t offset, const char *format)"
+.br
+.RI "Writes a list of angular values in degrees into a data item associated with a specific data block and tag in a STAR data base\&. "
+.ti -1c
+.RI "int \fBitem_list\fP (\fBBstar\fP *star, \fBBstring\fP &tag)"
+.br
+.RI "Lists all items associated with a given tag from the STAR data base\&. "
+.ti -1c
+.RI "int \fBitem_delete_all\fP (\fBBstar\fP *star, const char *tag)"
+.br
+.RI "Deletes all items associated with a given tag from the STAR data base\&. "
+.ti -1c
+.RI "int \fBitem_delete_from_block\fP (\fBBstar_block\fP *block, const char *tag)"
+.br
+.RI "Deletes an item associated with a given tag from a block in the STAR data base\&. "
+.ti -1c
+.RI "int \fBblock_delete\fP (\fBBstar\fP *star, \fBBstring\fP &tag)"
+.br
+.RI "Deletes all blocks with a given tag from the STAR data base\&. "
+.ti -1c
+.RI "int \fBitem_integer_scale_shift\fP (\fBBstar\fP *star, \fBBstring\fP &tag, int iscale, int ishift)"
+.br
+.RI "Scales and shifts all items associated with a given tag from the STAR data base\&. "
+.ti -1c
+.RI "int \fBitem_float_scale_shift\fP (\fBBstar\fP *star, \fBBstring\fP &tag, float scale, float shift)"
+.br
+.RI "Scales and shifts all items associated with a given tag from the STAR data base\&. "
+.ti -1c
+.RI "int \fBloop_set_identifier\fP (\fBBstar_block\fP *block, int loop, int n,\&.\&.\&.)"
+.br
+.RI "Assigns a loop identification number to items\&. "
+.ti -1c
+.RI "int \fBitem_get_format\fP (\fBBstar_item\fP *item, char *format)"
+.br
+.RI "Gets the format from the item\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+A header file for STAR format files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19990605 
+.PP
+Modified: 20190819 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwstar\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _STAR_"
+
+.PP
+Definition at line 84 of file rwstar\&.h\&.
+.SS "#define LINELENGTH   80"
+
+.PP
+Definition at line 12 of file rwstar\&.h\&.
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBStarType\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fICommentItem \fP\fP
+.TP
+\fB\fIStringItem \fP\fP
+.TP
+\fB\fINumberItem \fP\fP
+.PP
+Definition at line 23 of file rwstar\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int block_delete (\fBBstar\fP * star, \fBBstring\fP & tag)"
+
+.PP
+Deletes all blocks with a given tag from the STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*star\fP the STAR database\&. 
+.br
+\fI&tag\fP tag for blocks to be deleted\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of blocks deleted\&. 
+.PP
+.nf
+The blocks containing a given tag are deleted and the
+block pointers are rearranged to fill in the gap.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1675 of file rwstar\&.cpp\&.
+.SS "\fBBstar_block\fP* block_find_with_tag (\fBBstar\fP * star, const char * tag)"
+
+.PP
+Gets the first block associated with a tag in a STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*star\fP the STAR data base\&. 
+.br
+\fI*tag\fP a STAR tag string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bstar_block* the block, NULL if not found\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1051 of file rwstar\&.cpp\&.
+.SS "\fBBstar\fP* init_star ()"
+
+.PP
+Creates a STAR data base\&. 
+.PP
+\fBReturns\fP
+.RS 4
+Bstar* the new STAR data base\&. 
+.PP
+.nf
+A STAR structure is allocated.
+This function should be called before reading a STAR file, or before
+composing a STAR database for writing.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 111 of file rwstar\&.cpp\&.
+.SS "int item_change_tag (\fBBstar\fP * star, const char * tag, const char * newtag)"
+
+.PP
+Replaces one tag with another in the STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*star\fP the STAR database\&. 
+.br
+\fI*tag\fP old tag\&. 
+.br
+\fI*newtag\fP new tag\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The item with a given tag has the tag replaced with a new one.
+If an item with the new tag exists, it is deleted first.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 967 of file rwstar\&.cpp\&.
+.SS "int item_copy_string (char * string, \fBBstar_block\fP * block, const char * tag)"
+
+.PP
+Copies a string value associated with a tag in a STAR data block\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*string\fP destination string - must exist on stack or allocated\&. 
+.br
+\fI*block\fP block in the STAR database\&. 
+.br
+\fI*tag\fP a STAR tag string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The STAR data blocks is traversed to obtain the string
+value associated with a STAR tag defined in a header file.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1233 of file rwstar\&.cpp\&.
+.SS "int item_delete_all (\fBBstar\fP * star, const char * tag)"
+
+.PP
+Deletes all items associated with a given tag from the STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*star\fP the STAR database\&. 
+.br
+\fI*tag\fP tag for items to be deleted\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The item with a given tag is deleted in all blocks it is found
+and the item pointers are rearranged to fill in the gap.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1616 of file rwstar\&.cpp\&.
+.SS "int item_delete_from_block (\fBBstar_block\fP * block, const char * tag)"
+
+.PP
+Deletes an item associated with a given tag from a block in the STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*block\fP block in the STAR database\&. 
+.br
+\fI*tag\fP tag for items to be deleted\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The item with a given tag is deleted in the specified block it is found
+and the item pointers are rearranged to fill in the gap.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1639 of file rwstar\&.cpp\&.
+.SS "\fBBstar_item\fP* item_find (\fBBstar_block\fP * block, \fBBstring\fP tag)"
+
+.PP
+Gets the STAR item associated with a tag in a STAR data block\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*block\fP a STAR data block\&. 
+.br
+\fI*tag\fP a STAR tag string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bstar_item* the STAR item, NULL if the tag doesn't exist\&. 
+.PP
+.nf
+The items in the STAR data block are traversed to find the item
+associated with a STAR tag defined in a header file.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1096 of file rwstar\&.cpp\&.
+.SS "\fBBstar_item\fP* item_find_or_make (\fBBstar_block\fP * block, const char * tag)"
+
+.PP
+Gets the STAR item associated with a tag in a STAR data block\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*block\fP a STAR data block\&. 
+.br
+\fI*tag\fP a STAR tag string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bstar_item* the STAR item, NULL if the tag doesn't exist\&. 
+.PP
+.nf
+The items in the STAR data block are traversed to find the item
+associated with a STAR tag defined in a header file.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1118 of file rwstar\&.cpp\&.
+.SS "int item_float_scale_shift (\fBBstar\fP * star, \fBBstring\fP & tag, float scale, float shift)"
+
+.PP
+Scales and shifts all items associated with a given tag from the STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*star\fP the STAR database\&. 
+.br
+\fI&tag\fP tag for items to be modified\&. 
+.br
+\fIscale\fP multiplier\&. 
+.br
+\fIshift\fP value added\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int total number of values changed\&. 
+.PP
+.nf
+The item must be numeric and is modified as:
+    new_value = old_value*scale + shift.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1764 of file rwstar\&.cpp\&.
+.SS "float item_get_float (\fBBstar_block\fP * block, const char * tag)"
+
+.PP
+Gets a floating point value associated with a tag in a STAR data block\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*block\fP block in the STAR database\&. 
+.br
+\fI*tag\fP a STAR tag string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+float the floating point value, 0 if the tag doesn't exist\&. 
+.PP
+.nf
+The STAR data block is traversed to obtain the floating point
+value associated with a STAR tag defined in a header file.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1286 of file rwstar\&.cpp\&.
+.SS "int item_get_format (\fBBstar_item\fP * item, char * format)"
+
+.PP
+Gets the format from the item\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*item\fP STAR item\&. 
+.br
+\fI*format\fP pointer to pre-allocated format string (modified)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int data type: 0=string, 1=integer, 2=float\&. 
+.PP
+.nf
+Returns the format in the given format string.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1850 of file rwstar\&.cpp\&.
+.SS "int item_get_integer (\fBBstar_block\fP * block, const char * tag)"
+
+.PP
+Gets an integer value associated with a tag in a STAR data block\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*block\fP block in the STAR database\&. 
+.br
+\fI*tag\fP a STAR tag string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int the integer value, 0 if the tag doesn't exist\&. 
+.PP
+.nf
+The STAR data block is traversed to obtain the first integer
+value associated with a STAR tag defined in a header file.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1258 of file rwstar\&.cpp\&.
+.SS "long item_get_number (\fBBstar\fP * star, const char * tag)"
+
+.PP
+Gets the number of values associated with a tag in a STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*star\fP the STAR data base\&. 
+.br
+\fI*tag\fP a STAR tag string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long the number of values\&. 
+.PP
+.nf
+All STAR data blocks are traversed to count the number of
+values associated with a STAR tag defined in a header file.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1147 of file rwstar\&.cpp\&.
+.SS "long item_get_number_for_block (\fBBstar_block\fP * block, const char * tag)"
+
+.PP
+Gets the number of values associated with a tag in a STAR data block\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*block\fP block in the STAR database\&. 
+.br
+\fI*tag\fP a STAR tag string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long the number of values\&. 
+.PP
+.nf
+The STAR data block is traversed to count the number of
+values associated with a STAR tag defined in a header file.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1176 of file rwstar\&.cpp\&.
+.SS "char* item_get_string (\fBBstar_block\fP * block, const char * tag)"
+
+.PP
+Gets a string value associated with a tag in a STAR data block\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*block\fP block in the STAR database\&. 
+.br
+\fI*tag\fP a STAR tag string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char* the string value, NULL if the tag doesn't exist\&. 
+.PP
+.nf
+The STAR data block is traversed to obtain the string
+value associated with a STAR tag defined in a header file.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1202 of file rwstar\&.cpp\&.
+.SS "int item_index (\fBBstar_block\fP * block, const char * tag)"
+
+.PP
+Gets the STAR item associated with a tag in a STAR data block\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*block\fP a STAR data block\&. 
+.br
+\fI*tag\fP a STAR tag string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int the STAR item index, -1 if the tag doesn't exist\&. 
+.PP
+.nf
+The items in the STAR data block are traversed to find the item
+associated with a STAR tag defined in a header file.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1030 of file rwstar\&.cpp\&.
+.SS "int item_integer_scale_shift (\fBBstar\fP * star, \fBBstring\fP & tag, int iscale, int ishift)"
+
+.PP
+Scales and shifts all items associated with a given tag from the STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*star\fP the STAR database\&. 
+.br
+\fI&tag\fP tag for items to be modified\&. 
+.br
+\fIiscale\fP multiplier\&. 
+.br
+\fIishift\fP value added\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int total number of values changed\&. 
+.PP
+.nf
+The item must be integer and is modified as:
+    new_value = old_value*scale + shift.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1722 of file rwstar\&.cpp\&.
+.SS "int item_list (\fBBstar\fP * star, \fBBstring\fP & tag)"
+
+.PP
+Lists all items associated with a given tag from the STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*star\fP the STAR database\&. 
+.br
+\fI&tag\fP tag for items to be listed\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The item with a given tag is listed to standard output as an end-of-line
+delimited array.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1584 of file rwstar\&.cpp\&.
+.SS "int item_put_angle_list (\fBBstar_block\fP * block, const char * tag, char * list, size_t offset, const char * format)"
+
+.PP
+Writes a list of angular values in degrees into a data item associated with a specific data block and tag in a STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*block\fP block in the STAR database\&. 
+.br
+\fI*tag\fP a STAR tag string\&. 
+.br
+\fI*list\fP linked list\&. 
+.br
+\fIoffset\fP offset of structure element\&. 
+.br
+\fI*format\fP string format\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code\&. 
+.PP
+.nf
+Each angle in radians is first converted to degrees before writing it
+into a string.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1541 of file rwstar\&.cpp\&.
+.SS "int item_put_float (\fBBstar_block\fP * block, const char * tag, float value, const char * format)"
+
+.PP
+Writes a floating point value into a data item associated with a specific data block and tag in a STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*block\fP block in the STAR database\&. 
+.br
+\fI*tag\fP a STAR tag string\&. 
+.br
+\fIvalue\fP integer value\&. 
+.br
+\fI*format\fP string format\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1414 of file rwstar\&.cpp\&.
+.SS "int item_put_float_array (\fBBstar_block\fP * block, const char * tag, int number, float * value, const char * format)"
+
+.PP
+Writes a list of floating point numbers into a data item associated with a specific data block and tag in a STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*block\fP block in the STAR database\&. 
+.br
+\fI*tag\fP a STAR tag string\&. 
+.br
+\fInumber\fP the number of values\&. 
+.br
+\fI*value\fP a list of floating point values\&. 
+.br
+\fI*format\fP string format\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+NaN values are taken as missing numbers and indicated by a '.' in the
+STAR file.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1499 of file rwstar\&.cpp\&.
+.SS "int item_put_integer (\fBBstar_block\fP * block, const char * tag, int value, const char * format)"
+
+.PP
+Writes a integer into a data item associated with a specific data block and tag in a STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*block\fP block in the STAR database\&. 
+.br
+\fI*tag\fP a STAR tag string\&. 
+.br
+\fIvalue\fP integer value\&. 
+.br
+\fI*format\fP string format\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1381 of file rwstar\&.cpp\&.
+.SS "int item_put_list (\fBBstar_block\fP * block, const char * tag, char * list, size_t offset, const char * format)"
+
+.PP
+Writes a list of string or numeric values into a data item associated with a specific data block and tag in a STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*block\fP block in the STAR database\&. 
+.br
+\fI*tag\fP a STAR tag string\&. 
+.br
+\fI*list\fP linked list\&. 
+.br
+\fIoffset\fP offset of structure element\&. 
+.br
+\fI*format\fP string format\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1449 of file rwstar\&.cpp\&.
+.SS "int item_put_string (\fBBstar_block\fP * block, const char * tag, \fBBstring\fP & string)"
+
+.PP
+Definition at line 1319 of file rwstar\&.cpp\&.
+.SS "int item_put_string (\fBBstar_block\fP * block, const char * tag, char * string)"
+
+.PP
+Writes a string into a data item associated with a specific data block and tag in a STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*block\fP block in the STAR database\&. 
+.br
+\fI*tag\fP a STAR tag string\&. 
+.br
+\fI*string\fP string value\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1313 of file rwstar\&.cpp\&.
+.SS "int item_put_string_list (\fBBstar_block\fP * block, const char * tag, \fBBstring\fP * list)"
+
+.PP
+Writes a list of strings into a data item associated with a specific data block and tag in a STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*block\fP block in the STAR database\&. 
+.br
+\fI*tag\fP a STAR tag string\&. 
+.br
+\fI*list\fP list of strings\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1350 of file rwstar\&.cpp\&.
+.SS "int kill_block (\fBBstar_block\fP * block)"
+
+.PP
+Destroys a STAR data block\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*block\fP pointer to the STAR data block\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+A data block in a STAR data base structure and all of the items 
+associated with that data block are freed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 164 of file rwstar\&.cpp\&.
+.SS "int kill_item (\fBBstar_item\fP * item)"
+
+.PP
+Destroys an item in a data block in a STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*item\fP the item\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+An item and all of the items referenced are freed. 
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 198 of file rwstar\&.cpp\&.
+.SS "int kill_star (\fBBstar\fP * star)"
+
+.PP
+Destroys a STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*star\fP the STAR data base\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+A STAR data base structure and all of the data blocks and items are freed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 133 of file rwstar\&.cpp\&.
+.SS "int loop_set_identifier (\fBBstar_block\fP * block, int loop, int n,  \&.\&.\&.)"
+
+.PP
+Assigns a loop identification number to items\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*block\fP block in the STAR database\&. 
+.br
+\fIloop\fP loop identifier to use\&. 
+.br
+\fIn\fP number of patterns to test for\&. 
+.br
+\fI\&.\&.\&.\fP (tag_pattern) tag pattern to match to set the loop identifier\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number assigned\&. 
+.PP
+.nf
+The items in the data block are rearranged so that the item assigned to 
+the loop follows the other loop items.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1816 of file rwstar\&.cpp\&.
+.SS "\fBBstar_block\fP* read_block (ifstream * fstar, char * aptr, \fBBstring\fP & filename)"
+
+.PP
+Reads paramaters and data into a STAR data block from an open file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fstar\fP an open STAR format file\&. 
+.br
+\fI*aptr\fP a pointer to the current line in the file\&. 
+.br
+\fI&filename\fP file containing this block\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bstar_block* new block read\&. 
+.PP
+.nf
+A block defines a unit of parameters or a unit of data. Every data 
+block is read separately and comments are preserved as far as possible.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 357 of file rwstar\&.cpp\&.
+.SS "\fBBstar_item\fP* read_loop_items (ifstream * fstar)"
+
+.PP
+Reads a loop structure with multiple items into a STAR data block from an open file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fstar\fP an open STAR format file\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bstar_item* first new item in list\&. 
+.PP
+.nf
+The loop is read line by line, checking to get every column value in a row.
+A row may extend over multiple lines, as long as it contains the number values
+specified by the number of tags at the beginning of the loop.
+A multiple line string value must be enclosed in ";" as the first character
+in the lines before and after the string.
+The loop ends with an empty line or when too few values occur in a row.
+An empty line at the end of a loop is required.
+Note: The loop flag field of the STAR item is equal to the item index
+of the first item in the loop.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 529 of file rwstar\&.cpp\&.
+.SS "\fBBstar_item\fP* read_single_item (ifstream * fstar, char * aline)"
+
+.PP
+Reads a single-valued item or comment line into a STAR data block from an open file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fstar\fP an open STAR format file\&. 
+.br
+\fI*aline\fP a pointer to the current line in the file\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bstar_item* new STAR item\&. 
+.PP
+.nf
+All tags with single values and outside loops are interpreted here.
+A single item is defined where the first non-space character on a
+line is an underscore. A comment is defined by a '#' or ';' as the
+first character on the line.
+Note: The loop flag field of the STAR item is equal to -1.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 428 of file rwstar\&.cpp\&.
+.SS "int read_star (\fBBstring\fP & filename, \fBBstar\fP * star)"
+
+.PP
+Definition at line 240 of file rwstar\&.cpp\&.
+.SS "int read_star (\fBBstring\fP * file_list, \fBBstar\fP * star)"
+
+.PP
+Definition at line 246 of file rwstar\&.cpp\&.
+.SS "int read_star (const char * filename, \fBBstar\fP * star)"
+
+.PP
+Reads paramaters and data into a STAR data base from a list of files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*filename\fP a list of file names separated by commas\&. 
+.br
+\fI*star\fP an existing STAR data base\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.PP
+.nf
+Every data block is read separately and comments are preserved as far 
+as possible.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 225 of file rwstar\&.cpp\&.
+.SS "int show_tags (\fBBstar\fP * star)"
+
+.PP
+Prints the list of tags in the STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*star\fP the STAR database 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of tags\&. 
+.RE
+.PP
+
+.PP
+Definition at line 992 of file rwstar\&.cpp\&.
+.SS "long star_list_comments (\fBBstar\fP * star, long len)"
+
+.PP
+Lists the command lines in the STAR header\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*star\fP the STAR data base\&. 
+.br
+\fIlen\fP maximum line length, infinite if zero\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long the number of command lines\&. 
+.RE
+.PP
+
+.PP
+Definition at line 908 of file rwstar\&.cpp\&.
+.SS "int star_set_string_lengths (\fBBstar\fP * star)"
+
+.PP
+Sets the maximum string lengths for each item in each block\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*star\fP the STAR data base\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+This is designed to clean up after creating a STAR database.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 939 of file rwstar\&.cpp\&.
+.SS "int star_update_comment (\fBBstar\fP * star, int n, char ** strings)"
+
+.PP
+Puts a set of strings and time in the main comment of the STAR data base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*star\fP the STAR data base\&. 
+.br
+\fIn\fP the number of strings\&. 
+.br
+\fI**strings\fP an array of strings\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int string length of the new comment\&. 
+.PP
+.nf
+This is designed to pack the command line into a string followed by
+a second string for the time.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 881 of file rwstar\&.cpp\&.
+.SS "int write_block (ofstream * fstar, \fBBstar_block\fP * block, int linelength)"
+
+.PP
+Writes paramaters and data from a STAR data block into an open file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fstar\fP an open STAR format file\&. 
+.br
+\fI*block\fP a data block\&. 
+.br
+\fIlinelength\fP output maximum line length\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 on error)\&. 
+.PP
+.nf
+A block defines a unit of parameters or a unit of data.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 751 of file rwstar\&.cpp\&.
+.SS "int write_star (\fBBstring\fP & filename, \fBBstar\fP * star)"
+
+.PP
+Definition at line 673 of file rwstar\&.cpp\&.
+.SS "int write_star (const char * filename, \fBBstar\fP * star)"
+
+.PP
+Writes a STAR data base to one or more STAR format files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*filename\fP the base file name (can be NULL if star->split == 9)\&. 
+.br
+\fI*star\fP the STAR data base\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.PP
+.nf
+The STAR data base structure contains a flag (star->split) to indicate
+whether one or multiple files should be written.  In the case of multiple
+files, the base name is taken from the input file name, with an underscore
+and a number appended. The length of the number is determined by the
+star->split variable.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 667 of file rwstar\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

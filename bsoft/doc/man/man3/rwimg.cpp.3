@@ -1,0 +1,267 @@
+.TH "/Users/bernard/b20/bsoft/src/rwimg/rwimg.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/rwimg/rwimg.cpp \- Library for 2D and 3D image I/O\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'file_util\&.h'\fP
+.br
+\fC#include 'UnitCell\&.h'\fP
+.br
+\fC#include 'Complex\&.h'\fP
+.br
+\fC#include 'Vector3\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'rwRAW\&.h'\fP
+.br
+\fC#include 'rwASCII\&.h'\fP
+.br
+\fC#include 'rwBCR\&.h'\fP
+.br
+\fC#include 'rwBIORAD\&.h'\fP
+.br
+\fC#include 'rwBRIX\&.h'\fP
+.br
+\fC#include 'rwBrookhavenSTEM\&.h'\fP
+.br
+\fC#include 'rwCCP4\&.h'\fP
+.br
+\fC#include 'rwDI\&.h'\fP
+.br
+\fC#include 'rwDM\&.h'\fP
+.br
+\fC#include 'rwDSN6\&.h'\fP
+.br
+\fC#include 'rwDX\&.h'\fP
+.br
+\fC#include 'rwEER\&.h'\fP
+.br
+\fC#include 'rwEM\&.h'\fP
+.br
+\fC#include 'rwGOODFORD\&.h'\fP
+.br
+\fC#include 'rwGRD\&.h'\fP
+.br
+\fC#include 'rwHKL\&.h'\fP
+.br
+\fC#include 'rwIMAGIC\&.h'\fP
+.br
+\fC#include 'rwIP\&.h'\fP
+.br
+\fC#include 'rwJPEG\&.h'\fP
+.br
+\fC#include 'rwkernel\&.h'\fP
+.br
+\fC#include 'rwMFF\&.h'\fP
+.br
+\fC#include 'rwMIFF\&.h'\fP
+.br
+\fC#include 'rwMRC\&.h'\fP
+.br
+\fC#include 'rwND2\&.h'\fP
+.br
+\fC#include 'rwPIC\&.h'\fP
+.br
+\fC#include 'rwPIF\&.h'\fP
+.br
+\fC#include 'rwPNG\&.h'\fP
+.br
+\fC#include 'rwPNM\&.h'\fP
+.br
+\fC#include 'rwPostScript\&.h'\fP
+.br
+\fC#include 'rwSER\&.h'\fP
+.br
+\fC#include 'rwSitus\&.h'\fP
+.br
+\fC#include 'rwSPE\&.h'\fP
+.br
+\fC#include 'rwSPIDER\&.h'\fP
+.br
+\fC#include 'rwSUPRIM\&.h'\fP
+.br
+\fC#include 'rwTGA\&.h'\fP
+.br
+\fC#include 'rwTIFF\&.h'\fP
+.br
+\fC#include 'rwXPLOR\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBimage\fP * \fBread_img\fP (char *filename, int readdata, int img_select)"
+.br
+.RI "General driver function to read multiple image formats\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBread_img\fP (\fBBstring\fP filename, int readdata, int img_select)"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBread_img\fP (string filename, int readdata, int img_select)"
+.br
+.ti -1c
+.RI "int \fBwrite_img\fP (const char *filename, \fBBimage\fP *p, int compression)"
+.br
+.RI "General driver function to write multiple image formats\&. "
+.ti -1c
+.RI "int \fBwrite_img\fP (\fBBstring\fP filename, \fBBimage\fP *p, int compression)"
+.br
+.ti -1c
+.RI "int \fBwrite_img\fP (string filename, \fBBimage\fP *p, int compression)"
+.br
+.ti -1c
+.RI "int \fBimg_convert_fourier_one\fP (\fBBimage\fP *p, \fBComplex\fP< float > *nufdata, int n, long hermx, long friedel, long oldx, long nux, long xo1, long xo2, long yo1, long yo2, long zo1, long zo2, int z_even, int y_even)"
+.br
+.ti -1c
+.RI "int \fBimg_convert_fourier\fP (\fBBimage\fP *p, \fBFourierType\fP nutransform)"
+.br
+.RI "Converts Fourier transform types\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "string \fBcommand\fP"
+.br
+.ti -1c
+.RI "const char * \fBmonth\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library for 2D and 3D image I/O\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19990321 
+.PP
+Modified: 20210628 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwimg\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int img_convert_fourier (\fBBimage\fP * p, \fBFourierType\fP nutransform)"
+
+.PP
+Converts Fourier transform types\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image\&. 
+.br
+\fInutransform\fP new transform type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. Fourier transform classification: 0=NoTransform: No transform: Just a complex data set 1=Standard: Standard transform with origin = (0,0,0) (Suprim) 2=Centered: Centered transform with origin = (nx/2,ny/2,nz/2) (Imagic) 3=Hermitian: Hermitian transform with origin = (0,0,0) and size (nx/2+1,ny,nz) (Spider, EM) 4=CentHerm: Centered hermitian transform with origin = (0,ny/2,nz/2) and size (nx/2+1,ny,nz) (MRC) Assumption: The correct dimensions for a standard transform is stored in the x, y, and z fields\&. 
+.RE
+.PP
+
+.PP
+Definition at line 550 of file rwimg\&.cpp\&.
+.SS "int img_convert_fourier_one (\fBBimage\fP * p, \fBComplex\fP< float > * nufdata, int n, long hermx, long friedel, long oldx, long nux, long xo1, long xo2, long yo1, long yo2, long zo1, long zo2, int z_even, int y_even)"
+
+.PP
+Definition at line 456 of file rwimg\&.cpp\&.
+.SS "\fBBimage\fP* read_img (\fBBstring\fP filename, int readdata, int img_select)"
+
+.PP
+Definition at line 85 of file rwimg\&.cpp\&.
+.SS "\fBBimage\fP* read_img (char * filename, int readdata, int img_select)"
+
+.PP
+General driver function to read multiple image formats\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIfilename\fP file name (plus any tags for the RAW format)\&. 
+.br
+\fIreaddata\fP flag to activate reading of image data\&. 
+.br
+\fIimg_select\fP image selection in multi-image file (-1 = all images)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* the image structure, NULL if reading failed\&. This is the only image reading function that should be called from programs\&. A \fBBimage\fP structure is initialized with default values\&. The file format is deduced from the file name extension\&. Every file format has its own funtion to read the file\&. The selection argument is used to read only one image from a multi-image file if it is greater than -1\&. This selection must be handled within each format to ensure the correct allocation of the sub-image structure\&. If the requested selection is equal or larger than the number of images, the selection is set to the last image\&. 
+.RE
+.PP
+
+.PP
+Definition at line 79 of file rwimg\&.cpp\&.
+.SS "\fBBimage\fP* read_img (string filename, int readdata, int img_select)"
+
+.PP
+Definition at line 90 of file rwimg\&.cpp\&.
+.SS "int write_img (\fBBstring\fP filename, \fBBimage\fP * p, int compression)"
+
+.PP
+Definition at line 293 of file rwimg\&.cpp\&.
+.SS "int write_img (const char * filename, \fBBimage\fP * p, int compression)"
+
+.PP
+General driver function to write multiple image formats\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIfilename\fP file name (plus any tags for the RAW format)\&. 
+.br
+\fI*p\fP the image structure\&. 
+.br
+\fIcompression\fP compression type: 0=none, 5=LZW(Tiff) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. This is the only image writing function that should be called from programs\&. The file format is deduced from the file name extension\&. Every file format has its own funtion to write the file\&. 
+.RE
+.PP
+
+.PP
+Definition at line 286 of file rwimg\&.cpp\&.
+.SS "int write_img (string filename, \fBBimage\fP * p, int compression)"
+
+.PP
+Definition at line 298 of file rwimg\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "string command\fC [extern]\fP"
+
+.PP
+Definition at line 20 of file utilities\&.cpp\&.
+.SS "const char* month[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {"Jan","Feb","Mar","Apr","May","Jun",
+                    "Jul","Aug","Sep","Oct","Nov","Dec"}
+.fi
+.PP
+Definition at line 58 of file rwimg\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

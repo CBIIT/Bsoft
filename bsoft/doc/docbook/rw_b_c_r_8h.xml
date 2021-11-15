@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rw_b_c_r_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/rwBCR.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/rwBCR.h</primary></indexterm>
+<para>
+
+<para>Header file for reading and writing AFM BCR-STM files. </para>
+ 
+</para>
+<programlisting>#include &quot;rwimg.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_rw_b_c_r_8h_1a60acf18a9dcaca7b2ac349cb332f531b">BCRSIZE</link>   2048</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_b_c_r_8h_1ad778830057398150ee17db4d8e2f3e57">readBCR</link> (<link linkend="_class_bimage">Bimage</link> *p, int readdata)</para>
+
+<para>Reading a BCR-STM image format. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_b_c_r_8h_1a3854c13472654ced729cf209d6823b6d">writeBCR</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>Writing a BCR-STM image format. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for reading and writing AFM BCR-STM files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20170214 </para>
+
+<para>Modified: 20170214 <literallayout><computeroutput>Format: BCR-STM image file format
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_rw_b_c_r_8h_1a60acf18a9dcaca7b2ac349cb332f531b"/>    <section>
+    <title>BCRSIZE</title>
+<indexterm><primary>BCRSIZE</primary><secondary>rwBCR.h</secondary></indexterm>
+<indexterm><primary>rwBCR.h</primary><secondary>BCRSIZE</secondary></indexterm>
+<para><computeroutput>#define BCRSIZE   2048</computeroutput></para><para>
+Definition at line 13 of file rwBCR.h.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rw_b_c_r_8h_1ad778830057398150ee17db4d8e2f3e57"/>    <section>
+    <title>readBCR()</title>
+<indexterm><primary>readBCR</primary><secondary>rwBCR.h</secondary></indexterm>
+<indexterm><primary>rwBCR.h</primary><secondary>readBCR</secondary></indexterm>
+<para><computeroutput>int readBCR (<link linkend="_class_bimage">Bimage</link> * p, int readdata)</computeroutput></para><para>
+
+<para>Reading a BCR-STM image format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>readdata</entry>
+                                <entry>
+<para>flag to activate reading of image data. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure).</para>
+</formalpara>
+A 2D image format intended for atomic force microscopy. The format starts with a 2048 or 4096 byte text header, composed of tag = value pairs: Tag Value(s) Remark fileformat bcrstm 16 bit unsigned short bcrf 32 bit float bcrstm_unicode 16 bit unsigned short bcrf_unicode 32 bit float headersize 2048, 4096 (unicode) xpixels x-size ypixels y-size xlength x-scanrange ylength y-scanrange xunit, yunit, zunit units for the three axes. If not defined nm will be the default unit. xlabel, ylabel, zlabel labels for the three axes. current tunneling current in nA (optional) bias bias voltage in V (optional). starttime starting time of the scanning (MM DD YY hh:mm:ss:hh) (optional). scanspeed measured in nm/sec (optional). intelmode 1: Little Endian; 0: Big Endian forcecurve 1: indicates that the data contain force curves with the approach curve followed by the retraction curve (optional) bit2nm scale factor for scaling the integer height data to nm. xoffset, yoffset physical offset in nm (optional). voidpixels number of void pixels, if the field is not present the number is set to zero. For the 16 bit integer bcrstm format void pixels should be set equal to 32767. For the 32 bit floating point bcrf format void pixels are set to 3.402823466E+38. </para>
+<para>
+Definition at line 48 of file rwBCR.cpp.</para>
+    </section><anchor xml:id="_rw_b_c_r_8h_1a3854c13472654ced729cf209d6823b6d"/>    <section>
+    <title>writeBCR()</title>
+<indexterm><primary>writeBCR</primary><secondary>rwBCR.h</secondary></indexterm>
+<indexterm><primary>rwBCR.h</primary><secondary>writeBCR</secondary></indexterm>
+<para><computeroutput>int writeBCR (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>Writing a BCR-STM image format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 121 of file rwBCR.cpp.</para>
+</section>
+</section>
+</section>

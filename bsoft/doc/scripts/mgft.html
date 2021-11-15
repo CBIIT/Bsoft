@@ -1,0 +1,101 @@
+<textarea readonly rows="60" cols="80">
+#!/bin/tcsh -f
+
+# mgft
+# A script to generate micrograph Fourier transforms using distributed processing
+# Usage:
+#	mgft -size <x>,<y>,<z> -pad <integer> -output <file> <files>
+#	Distributed processing: The lines with "psubmit" can be used with the Peach distributed system.
+# Example:
+#	mgft -size 2048,2048,200 -pad 2 -output ft.star "c*.star"
+#	psubmit mgft -size 2048,2048,200 -pad 2 -output ft.star "c*.star" -ss
+# Author: Bernard Heymann
+# 20070210 - 20101203
+
+# Defaults
+set SIZE = "2048,2048,240"
+set PAD = 0
+set OF = "ft.star"
+
+# Peach switch
+set PSWITCH = 0
+if ( $?HASH_WORD ) set PSWITCH = 1
+
+# Command line
+echo -n mgft
+set a = 1
+while ( $a <= $#argv )
+	echo -n " $argv[$a]"
+	@ a++
+end
+echo " "
+
+if ( $#argv < 1 ) then
+	echo "No input!"
+	exit
+endif
+
+# Interpret options
+set a = 1
+while ( "x$argv[$a]" =~ x-* )
+#	echo $a $argv[$a]
+	if ( "x$argv[$a]" =~ x-siz* ) then
+		@ a++
+		set SIZE = $argv[$a]
+	endif
+	if ( "x$argv[$a]" =~ x-pad* ) then
+		@ a++
+		set PAD = $argv[$a]
+	endif
+	if ( "x$argv[$a]" =~ x-out* ) then
+		@ a++
+		set OF = $argv[$a]
+	endif
+	@ a++
+end
+
+set PF = $argv[$a]
+set NMG = `btomo -v 7 $PF | awk '$1=="Micrographs:" { print $2 }'`
+set NSEL = `btomo -v 7 $PF | awk '$1=="Micrographs:" { print $4 }'`
+
+echo "Fourier transform parameters:"
+echo "----------------------------"
+date
+echo "Micrographs    = $NMG"
+echo "Selected       = $NSEL"
+echo "Size           = $SIZE"
+echo "Padding        = $PAD"
+echo "Output file    = $OF"
+echo ""
+
+set OFB = `echo $OF | cut -f1 -d"."`
+
+# Fourier transform all the micrographs
+set N = 0
+while ( $N < $NMG )
+	set JN = `printf "%s_%03d" $OFB $N`
+	set CMD = "bmgft -select $N -pad $PAD -size $SIZE -out $JN.star $PF"
+	echo $CMD
+	if ( $PSWITCH ) then
+		psubmit $CMD -jn $JN
+		sleep 1
+	else
+		$CMD
+	endif
+	@ N++
+end
+
+# Check if all the micrographs have been transformed
+set NTR = 0
+while ( $NTR < $NSEL )
+	sleep 10
+	set NTR = `ls -1 ${OFB}_???.star | wc -l`
+	echo "$NTR micrographs transformed"
+end
+
+# Re-integrate all STAR files
+set CMD = "bpartmulti -v 1 -merge -out $OF ${OFB}_???.star"
+echo $CMD
+$CMD
+
+</textarea>

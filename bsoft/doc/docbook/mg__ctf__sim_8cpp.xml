@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__ctf__sim_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mg/mg_ctf_sim.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mg/mg_ctf_sim.cpp</primary></indexterm>
+<para>
+
+<para>Functions to simulate tilted micrographs. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_ctf.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mg__ctf__sim_8cpp_1afeba19a4d2ba979f9c65cc0a917179f6">img_ttf_simulate_line</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bimage">Bimage</link> *pn, long img_num, long i, char ax, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf, int action, double wiener, double scale, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> plan)</para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__ctf__sim_8cpp_1acc2ed1c19d7824c6b704137f92da8236">img_ttf_simulate_one</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bimage">Bimage</link> *pn, long img_num, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf, int action, double wiener, double tilt, double axis, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> plan)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__ctf__sim_8cpp_1a5d218f3065100bd57969451dfa4ba8a5">img_ttf_simulate</link> (<link linkend="_class_bimage">Bimage</link> *pn, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf, int action, double wiener, double tilt, double tilt_inc, double axis)</para>
+
+<para>Calculates an exact tilted CTF imposed image. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mg__ctf__sim_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions to simulate tilted micrographs. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20150224 </para>
+
+<para>Modified: 20200525 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__ctf__sim_8cpp_1a5d218f3065100bd57969451dfa4ba8a5"/>    <section>
+    <title>img_ttf_simulate()</title>
+<indexterm><primary>img_ttf_simulate</primary><secondary>mg_ctf_sim.cpp</secondary></indexterm>
+<indexterm><primary>mg_ctf_sim.cpp</primary><secondary>img_ttf_simulate</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_ttf_simulate (<link linkend="_class_bimage">Bimage</link> * pn, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf, int action, double wiener, double tilt, double tilt_inc, double axis)</computeroutput></para><para>
+
+<para>Calculates an exact tilted CTF imposed image. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*pn</entry>
+                                <entry>
+<para>image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;ctf</entry>
+                                <entry>
+<para>CTF parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>action</entry>
+                                <entry>
+<para>0=apply, 1=flip. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wiener</entry>
+                                <entry>
+<para>Wiener factor. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tilt</entry>
+                                <entry>
+<para>tilt angle in radians. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tilt_inc</entry>
+                                <entry>
+<para>tilt increment per sub-image in radians. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>axis</entry>
+                                <entry>
+<para>tilt axis direction in radians. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* new image. <literallayout><computeroutput>A CTF function is calculated for each line parallel to the tilt axis,
+applied to the whole image, and the transformed line written into a new image.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 109 of file mg_ctf_sim.cpp.</para>
+    </section><anchor xml:id="_mg__ctf__sim_8cpp_1afeba19a4d2ba979f9c65cc0a917179f6"/>    <section>
+    <title>img_ttf_simulate_line()</title>
+<indexterm><primary>img_ttf_simulate_line</primary><secondary>mg_ctf_sim.cpp</secondary></indexterm>
+<indexterm><primary>mg_ctf_sim.cpp</primary><secondary>img_ttf_simulate_line</secondary></indexterm>
+<para><computeroutput>int img_ttf_simulate_line (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bimage">Bimage</link> * pn, long img_num, long i, char ax, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf, int action, double wiener, double scale, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> plan)</computeroutput></para><para>
+Definition at line 17 of file mg_ctf_sim.cpp.</para>
+    </section><anchor xml:id="_mg__ctf__sim_8cpp_1acc2ed1c19d7824c6b704137f92da8236"/>    <section>
+    <title>img_ttf_simulate_one()</title>
+<indexterm><primary>img_ttf_simulate_one</primary><secondary>mg_ctf_sim.cpp</secondary></indexterm>
+<indexterm><primary>mg_ctf_sim.cpp</primary><secondary>img_ttf_simulate_one</secondary></indexterm>
+<para><computeroutput>long img_ttf_simulate_one (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bimage">Bimage</link> * pn, long img_num, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf, int action, double wiener, double tilt, double axis, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> plan)</computeroutput></para><para>
+Definition at line 51 of file mg_ctf_sim.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_mg__ctf__sim_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>mg_ctf_sim.cpp</secondary></indexterm>
+<indexterm><primary>mg_ctf_sim.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

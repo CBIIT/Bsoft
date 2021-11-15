@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rw_brookhaven_s_t_e_m_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/rwBrookhavenSTEM.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/rwBrookhavenSTEM.h</primary></indexterm>
+<para>
+
+<para>Header file for reading and writing Brookhaven STEM files. </para>
+ 
+</para>
+<programlisting>#include &quot;rwimg.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_rw_brookhaven_s_t_e_m_8h_1aecb2e3c700ca62eed81b268050c04f07">BrookhavenSTEMSIZE</link>   4096</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_brookhaven_s_t_e_m_8h_1a5bdc7beb7d0d87f8702a1412591da02a">readBrookhavenSTEM</link> (<link linkend="_class_bimage">Bimage</link> *p, int readdata)</para>
+
+<para>Reading a BrookhavenSTEM image file format. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_brookhaven_s_t_e_m_8h_1a25a225528507424bd187a1045e897acc">writeBrookhavenSTEM</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>Writing a BrookhavenSTEM image file format. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for reading and writing Brookhaven STEM files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20050729 </para>
+
+<para>Modified: 20111217 <literallayout><computeroutput>Format: 2D STEM image file format
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_rw_brookhaven_s_t_e_m_8h_1aecb2e3c700ca62eed81b268050c04f07"/>    <section>
+    <title>BrookhavenSTEMSIZE</title>
+<indexterm><primary>BrookhavenSTEMSIZE</primary><secondary>rwBrookhavenSTEM.h</secondary></indexterm>
+<indexterm><primary>rwBrookhavenSTEM.h</primary><secondary>BrookhavenSTEMSIZE</secondary></indexterm>
+<para><computeroutput>#define BrookhavenSTEMSIZE   4096</computeroutput></para><para>
+Definition at line 13 of file rwBrookhavenSTEM.h.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rw_brookhaven_s_t_e_m_8h_1a5bdc7beb7d0d87f8702a1412591da02a"/>    <section>
+    <title>readBrookhavenSTEM()</title>
+<indexterm><primary>readBrookhavenSTEM</primary><secondary>rwBrookhavenSTEM.h</secondary></indexterm>
+<indexterm><primary>rwBrookhavenSTEM.h</primary><secondary>readBrookhavenSTEM</secondary></indexterm>
+<para><computeroutput>int readBrookhavenSTEM (<link linkend="_class_bimage">Bimage</link> * p, int readdata)</computeroutput></para><para>
+
+<para>Reading a BrookhavenSTEM image file format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>readdata</entry>
+                                <entry>
+<para>flag to activate reading of image data. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). A 2D image format used for the Brookhaven STEM. It has a text header of 4096 bytes (fixed size). The default size is 512x512. File format extension: .dat. Data type: unsigned char. The header specifies the following keywords: SCAN: pixel size in internal units The data is packed into two interleaved channels which are unpacked into two separate images in this function. The first image contains the signal from the LA (large area) detector and the second image contains the signal from either the SA (small area) detector, or the BF (bright field) detector. The data is corrected for signal non-linearity on the fly when read in. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 101 of file rwBrookhavenSTEM.cpp.</para>
+    </section><anchor xml:id="_rw_brookhaven_s_t_e_m_8h_1a25a225528507424bd187a1045e897acc"/>    <section>
+    <title>writeBrookhavenSTEM()</title>
+<indexterm><primary>writeBrookhavenSTEM</primary><secondary>rwBrookhavenSTEM.h</secondary></indexterm>
+<indexterm><primary>rwBrookhavenSTEM.h</primary><secondary>writeBrookhavenSTEM</secondary></indexterm>
+<para><computeroutput>int writeBrookhavenSTEM (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>Writing a BrookhavenSTEM image file format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). A 2D image format used for the Brookhaven STEM. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 188 of file rwBrookhavenSTEM.cpp.</para>
+</section>
+</section>
+</section>

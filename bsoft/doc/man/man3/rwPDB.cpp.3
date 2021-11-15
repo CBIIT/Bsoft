@@ -1,0 +1,131 @@
+.TH "/Users/bernard/b20/bsoft/src/rwmol/rwPDB.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/rwmol/rwPDB.cpp \- Library routines to read and write PDB coordinate files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwPDB\&.h'\fP
+.br
+\fC#include 'Matrix\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include <fstream>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBreadPDB\fP (\fBBstring\fP &filename, \fBBmolgroup\fP *molgroup)"
+.br
+.RI "Reads a PDB format coordinate file\&. "
+.ti -1c
+.RI "int \fBwritePDB\fP (\fBBstring\fP &filename, \fBBmolgroup\fP *molgroup)"
+.br
+.RI "Writes a PDB format coordinate file\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines to read and write PDB coordinate files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19980822 
+.PP
+Modified: 20110623 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwPDB\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int readPDB (\fBBstring\fP & filename, \fBBmolgroup\fP * molgroup)"
+
+.PP
+Reads a PDB format coordinate file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP coordinate file name\&. 
+.br
+\fI*molgroup\fP molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of molecules read (<0 if reading failed)\&. 
+.PP
+.nf
+PDB fixed format:
+01234567890123456789012345678901234567890123456789012345678901234567890
+ATOM      1  N   ASP     1     -45.145   1.941 -34.322  1.00  0.00
+ATOM      2  OD2 ASP     1     -44.830   3.862 -30.017  1.00  0.00
+ATOM      3  OD1 ASP     1     -45.547   1.817 -29.798  1.00  0.00
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 31 of file rwPDB\&.cpp\&.
+.SS "int writePDB (\fBBstring\fP & filename, \fBBmolgroup\fP * molgroup)"
+
+.PP
+Writes a PDB format coordinate file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP coordinate file name\&. 
+.br
+\fI*molgroup\fP molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of molecules written (<0 if writing failed)\&. 
+.PP
+.nf
+PDB fixed format:
+01234567890123456789012345678901234567890123456789012345678901234567890
+ATOM      1  N   ASP     1     -45.145   1.941 -34.322  1.00  0.00
+ATOM      2  OD2 ASP     1     -44.830   3.862 -30.017  1.00  0.00
+ATOM      3  OD1 ASP     1     -45.547   1.817 -29.798  1.00  0.00
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 330 of file rwPDB\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

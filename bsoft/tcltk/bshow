@@ -1,0 +1,561 @@
+#!/bin/sh
+# the next line restarts using wish \
+exec wish "$0" "$@" -visual "truecolor 24"
+
+#----------------------------------------------------------------
+# bshow - An image display and manipulation script
+#
+# Bernard Heymann
+# Created: 19990723
+#----------------------------------------------------------------
+
+set Modified "2020-03-29"
+
+package require Tk
+package require Ttk
+
+# Setup and globals
+set debug(enabled) 1
+set helv12 {-*-Helvetica-Medium-R-Normal--*-120-*-*-*-*-*-*}
+set helv14 {Helvetica 14}
+set cour12 {Courier 12}
+eval destroy [winfo child .]
+set datatype "unknown"
+set imgtype ""
+set mode 0
+set window_width 1
+set window_height 1
+wm title . "Bshow"
+wm minsize . 200 200
+wm focusmodel . active
+menu .menuBar -tearoff 0
+
+#----------------------------------------------------------------
+# Interpreting the arguments - only file name input supported
+# The conditional is to work around a Tru64 oddity when no file name is given
+#----------------------------------------------------------------
+set filename [lindex $argv 0]
+if { $filename == "{}" } {
+	set filename ""
+}
+if { [string match -* $filename] } {
+	set filename ""
+}
+#set imgdir [pwd]
+if { [string length $filename] > 0 } {
+#	set imgdir [file dirname $filename]
+	set truename $filename
+	set i [expr [string first "@" $filename] - 1]
+	if { $i > 0 } { set truename [string range $filename 0 $i] }
+	set i [expr [string first ":" $filename] - 1]
+	if { $i > 0 } { set truename [string range $filename 0 $i] }
+	set i [expr [string first "#" $filename] - 1]
+	if { $i > 0 } { set truename [string range $filename 0 $i] }
+	if ![file exists $truename] {
+		set msg "File $truename not found!\n"
+		puts "Bshow Error: $msg"
+		tk_messageBox -icon info -type ok -title "Error" -message $msg
+		exit -1
+	}
+}
+
+
+#----------------------------------------------------------------
+# The path to the source code and libraries
+#----------------------------------------------------------------
+set Bsoft ""
+if { $tcl_platform(wordSize) < 8 && [array names env BSOFT32] > "" } {
+	set Bsoft $env(BSOFT32)
+} else {
+	if { [array names env BSOFT] > "" } {
+		set Bsoft $env(BSOFT)
+	}
+}
+
+# Check if the string specifies anything
+if { [string length $Bsoft] < 2 } {
+	puts "Environmental variable BSOFT not found: Set to /usr/local/bsoft"
+	set Bsoft /usr/local/bsoft
+}
+
+# Get the first directory in the path
+foreach f [split $Bsoft ":"] {
+	if [file exists $f] {
+		if [string match "*/bsoft" $f] {
+			set Bsoft $f
+			break
+		}
+	}
+}
+
+# Check if the directory exists
+if { [file exists $Bsoft] == 0 } {
+#	puts "Error: The environmental variable BSOFT does not point to a Bsoft installation:"
+#	puts "BSOFT = $Bsoft"
+	set msg "Error: \
+The environmental variable BSOFT does not point to a Bsoft installation:\n\
+BSOFT = $Bsoft"
+
+	puts $msg
+
+	tk_messageBox -icon info -type ok -title "Error" -message $msg
+	
+	exit -1
+}
+
+# Set the library and script paths
+append env(LD_LIBRARY_PATH) ":$Bsoft/lib"
+append env(DYLD_LIBRARY_PATH) ":$Bsoft/lib"
+set bshow_script $Bsoft/tcltk
+set bshow_lib $Bsoft/lib
+
+#puts $Bsoft
+
+#bgerror $env(DYLD_LIBRARY_PATH)
+#set env(TCLLIBPATH) "$Bsoft/lib"
+#bgerror $env(TCLLIBPATH)
+#set auto_path [linsert $auto_path 0 "$Bsoft/lib"]
+#bgerror $auto_path
+#bgerror $tcl_library
+#bgerror "BPARAM: $env(BPARAM)"
+
+#----------------------------------------------------------------
+# The help file
+#----------------------------------------------------------------
+set helpfile "$bshow_script/bshow.hlp"
+
+#----------------------------------------------------------------
+# Loading required shared object libraries
+#----------------------------------------------------------------
+set tlib $bshow_lib/libbshow[info sharedlibextension]
+set blib $bshow_lib/libbsoft[info sharedlibextension]
+
+set err ""
+if { [file exists $tlib] == 0 } {
+	bgerror "Error: Cannot find $tlib"
+}
+if { [file exists $blib] == 0 } {
+	bgerror "Error: Cannot find $blib"
+}
+if { [catch { load $blib Bsoft_tcl }] } {
+	if { [catch { load $tlib } err] } {
+		bgerror "1: $err"
+	}
+	if { [catch { load $blib Bsoft_tcl  } err] } {
+		bgerror "2: $err"
+	}
+} else {
+	if { [catch { load $tlib } err] } {
+		bgerror "3: $err"
+	}
+}
+
+#----------------------------------------------------------------
+# Loading procedures in other script files
+#----------------------------------------------------------------
+source $bshow_script/bshow_tools.tcl
+source $bshow_script/bshow_file.tcl
+source $bshow_script/bshow_image.tcl
+source $bshow_script/bshow_magnify.tcl
+source $bshow_script/bshow_param.tcl
+source $bshow_script/bshow_model.tcl
+source $bshow_script/bshow_scales.tcl
+source $bshow_script/bshow_boxes.tcl
+source $bshow_script/bshow_filament.tcl
+source $bshow_script/bshow_ctf.tcl
+source $bshow_script/bshow_tomo.tcl
+source $bshow_script/bshow_xtal.tcl
+source $bshow_script/bshow_helix.tcl
+source $bshow_script/bshow_graph.tcl
+source $bshow_script/bshow_select.tcl
+source $bshow_script/bshow_voxels.tcl
+source $bshow_script/bshow_misc.tcl
+source $bshow_script/btext.tcl
+
+#----------------------------------------------------------------
+# Loading the settings file
+#----------------------------------------------------------------
+if { [file exists .bshow] } { source .bshow }
+
+#----------------------------------------------------------------
+# Functions
+#----------------------------------------------------------------
+
+proc tkAboutDialog { } {
+     aboutBox
+}
+
+# aboutBox
+#
+#	Pops up a message box with an "about" message
+#
+proc aboutBox {} {
+	global Bsoft Modified tk_patchLevel
+	set bits [bitSize]
+	set msg "Bshow\n\
+Image display in Tcl/Tk $tk_patchLevel\n\
+using the Bsoft library ($bits bit)\n\
+Path: $Bsoft\n\
+Bernard Heymann\n\
+$Modified"
+
+    tk_messageBox -icon info -type ok -title "About Bshow" -message $msg
+}
+
+# setupImageCanvas
+#
+#	Creates the image display canvas
+#
+proc setupImageCanvas {} {
+	global theimg window_width window_height 
+    global cursorName tcl_platform
+
+	set c .frame.c
+	frame .frame
+
+	canvas $c  -width $window_width -height $window_height \
+		-relief sunken -borderwidth 2 \
+		-xscrollcommand ".frame.hscroll set" \
+		-yscrollcommand ".frame.vscroll set"
+	scrollbar .frame.vscroll -orient vertical -command "$c yview"
+	scrollbar .frame.hscroll -orient horizontal -command "$c xview"
+
+	grid $c -in .frame \
+		-row 0 -column 0 -rowspan 1 -columnspan 1 -sticky news
+	grid .frame.vscroll \
+		-row 0 -column 1 -rowspan 1 -columnspan 1 -sticky news
+	grid .frame.hscroll \
+		-row 1 -column 0 -rowspan 1 -columnspan 1 -sticky news
+	grid rowconfig    .frame 0 -weight 1 -minsize 0
+	grid columnconfig .frame 0 -weight 1 -minsize 0
+
+	# Create a photo image object and place it at {0,0}
+	set theimg "theimg"
+	image create photo $theimg
+	$c create image 0 0 -image $theimg -anchor nw -tags theimage
+
+	pack .frame -side left -fill both -expand yes
+#	pack .frame -side left -fill both
+#	pack .frame -side left -expand yes
+
+	bind $c <1> "mousePressed %W %x %y"
+	bind $c <Motion> "mouseMoved %W %x %y 0"
+	bind $c <Shift-Motion> { %W config -cursor X_cursor }
+	bind $c <B1-Motion> "mouseMoved %W %x %y 1"
+	bind $c <B1-ButtonRelease> "mouseReleased %W"
+#	$c bind marker <Any-Enter> { if { [$c type current] != "text" } { $c itemconfig current -outline red } }
+#	$c bind marker <Any-Leave> { if { [$c type current] != "text" } { $c itemconfig current -outline yellow } }
+
+#	$c config -cursor {crosshair black yellow}
+	configCursor $c $cursorName
+#	configCursor . $cursorName
+}
+
+
+# Update
+#
+#	A general updating procedure
+#
+# Argument:
+# img_flag		flag to indicate a required update of image content
+
+proc Update { img_flag } {
+	global filename theimg imgtype project_item
+	global px py mode
+	global ll_selected
+	global diffplot montover
+	if { [string length $filename] < 1 } { return }
+	set c [getImageCanvas $theimg]
+	set wc [getControlWindow $theimg]
+	set scale [$wc.scale.scale get]
+	set slice_num [$wc.slice.scale get]
+	set img_num [$wc.image.scale get]
+#	puts "Updating $filename"
+	if { $img_flag } {
+		Bimage show $theimg $img_num $slice_num $scale $mode
+	}
+#	if [Bmg exists] {
+#		set project_item [Bmg item $img_num]
+#	}
+	showCoords
+	updateSelection
+	updatePixelSizeEntry
+	drawOrigin
+	drawScaleBar
+	if [array exists montover] {
+		if { $montover(ncol) > 0 } {
+			drawMontageOverlay
+		} else {
+			unsetMontage
+		}
+	}
+#	puts "Polling other windows"
+#	set width [Bimage get $theimg width]
+#	set height [Bimage get $theimg height]
+	if [winfo exists .wctf] {
+		if { $imgtype == "ps" } {
+			drawEllipse $theimg
+			drawCTF
+#			setCTFparam
+		}
+	} else {
+		$c delete ellipse
+	}
+	if ![winfo exists .wsel] {
+		$c delete rect
+		.menuBar.window entryconfigure "Selection" -state disabled
+	}
+	if ![winfo exists .wdif] {
+		$c delete center
+	}
+	if [winfo exists .wmag] {
+#		puts "coordinates $px $py"
+		updateMagnify $px $py default mouse
+	}
+	if [winfo exists .wbox] {
+		boxesDrawAll
+	} else {
+		$c delete box bad
+		.menuBar.window entryconfigure "Particles" -state disabled
+	}
+	if [winfo exists .wfil] {
+		filamentsDrawAll
+	} else {
+		$c delete node selnode spline fil
+		.menuBar.window entryconfigure "Filaments" -state disabled
+	}
+	if [winfo exists .wdif] {
+		calcRadialAverage .wdif diffplot 0
+#		drawGraph $w diffplot "line" "Frequency" "Intensity"
+	} else {
+		if { [info exists diffplot] } { unset diffplot }
+	}
+	if [winfo exists .wtomo] {
+		markerDrawAll
+		drawTiltAxis
+	} else {
+		$c delete marker tilt_axis
+		.menuBar.window entryconfigure "Tomography" -state disabled
+	}
+	if [winfo exists .wxtal] {
+		spotsDrawAll
+	} else {
+		$c delete spot
+		.menuBar.window entryconfigure "Crystallography" -state disabled
+	}
+	if [winfo exists .whel] {
+		layerLinesDrawAll
+		drawHelixAxis
+		layerLinePlot $ll_selected [.whel.selected.order_entry get] [.whel.radius.entry get]
+	} else {
+		$c delete ll helix_axis
+		.menuBar.window entryconfigure "Helix" -state disabled
+	}
+	if [winfo exists .wmod] {
+		if { $img_num != [Bmodel get $project_item number] } {
+			set item [Bmodel find $filename $img_num]
+			set list [split $item ":"]
+			set project_item "[lindex $list 2]:[lindex $list 3]"
+		}
+		objectsDrawAll
+	} else {
+		$c delete component link
+		.menuBar.window entryconfigure "Model" -state disabled
+	}
+#	puts "Done polling"
+}
+
+
+proc imageType args {
+	global imgtype imgbigtype
+	set imgtype [Bmg image_type $imgbigtype]
+#	puts "$imgtype $imgbigtype"
+}
+
+proc setupControlKeyBindings {} {
+	global theimg
+
+	# Files
+	bind all <Control-o> { fileDialog "open" }
+	bind all <Control-s> { fileDialog "saveAs" }
+	bind all <Control-u> { loadImage $filename -1 }
+	bind all <Control-i> { getInfo $filename }
+#	bind . <Control-p> { writePostScript }
+	bind all <Control-q> { Quit }
+	bind all <Command-q> { Quit }
+
+	# Images
+	bind . <Control-z> { setScaleDialog }
+#	bind . <Control-M> { modifyImage }
+#	bind . <Control-H> { Histogram }
+#	bind . <Control-F> { FourierTransform }
+#	bind . <Control-P> { PowerSpectrum }
+#	bind . <Control-D> { Diffraction }
+
+	# Micrographs
+	bind all <Control-r> { openParam }
+	bind all <Control-w> { writeParam }
+	bind all <Control-e> { editParam }
+	bind all <Control-a> { selectAFile }
+	bind all <Control-c> { CTF $theimg }
+	bind all <Control-p> { Particles }
+	bind all <Control-f> { Filaments }
+	bind all <Control-t> { Tomography }
+	bind all <Control-x> { Crystallography }
+	bind all <Control-h> { Helix }
+
+	# Models
+	bind . <Control-m> { Model }
+}
+
+# Quit
+#
+#	Deallocating memory and exiting cleanly
+#
+
+proc Quit { } {
+	global histplot
+#   puts "Exiting"
+#	Bimage kill
+#	Bmg kill
+#	Bmodel kill
+#	destroy .
+	if { [info exists histplot] } { unset histplot }
+    exit
+}
+
+proc setupMenuBar {} {
+	global theimg
+
+	. configure -menu .menuBar
+
+	# On the Mac use the special .apple menu for the about item
+#	if {[tk windowingsystem] eq "aqua"} {
+#		menu .menuBar.apple -tearoff 0
+#		.menuBar add cascade -menu .menuBar.apple
+#		.menuBar.apple add command -label "About Bshow ..." -command aboutBox
+#		.menuBar.apple add separator
+	#} else {
+	#	.menuBar.help add command -label "About Bshow..." -command "aboutBox"
+#	}
+
+	setupFileMenu
+
+	setupImageMenu
+
+	setupParameterMenu
+
+	setupModelMenu
+
+	.menuBar add cascade -menu .menuBar.window -label "Window" -underline 0
+	menu .menuBar.window -tearoff 0
+	.menuBar.window add command -label "Main" -underline 0 \
+		-command {
+					wm deiconify .
+					raise .
+				}
+	.menuBar.window add command -label "Tools" -underline 0 \
+		-command { Toolbox }
+	.menuBar.window add command -label "Magnify" -underline 0 \
+		-command { Magnify %x %y }
+	.menuBar.window add command -label "Voxels" -underline 0 \
+		-state disabled -command { Voxels }
+	.menuBar.window add command -label "Selection" -underline 0 \
+		-state disabled -command { Selection }
+	.menuBar.window add command -label "CTF" -underline 0 \
+		-state disabled -command { CTF $theimg }
+	.menuBar.window add command -label "Particles" -underline 0 \
+		-state disabled -command { Particles }
+	.menuBar.window add command -label "Filaments" -underline 0 \
+		-state disabled -command { Filaments }
+	.menuBar.window add command -label "Helix" -underline 0 \
+		-state disabled -command { Helix }
+	.menuBar.window add command -label "Crystallography" -underline 0 \
+		-state disabled -command { Crystallography }
+	.menuBar.window add command -label "Tomography" -underline 0 \
+		-state disabled -command { Tomography }
+	.menuBar.window add command -label "Model" -underline 0 \
+		-state disabled -command { Model }
+
+	.menuBar add cascade -menu .menuBar.help -label "Help" -underline 0
+	menu .menuBar.help -tearoff 0
+	.menuBar.help add command -label "About Bshow..." -command "aboutBox"
+	if {[tk windowingsystem] ne "aqua"} {
+		.menuBar.help add command -label "Bshow documentation" -command { showURL "file://$Bsoft/doc/bshow/bshow.html" }
+	}
+	.menuBar.help add command -label "Change cursor" -command { selectCursor } -underline 0
+	.menuBar.help add command -label "Preferences" -command { setPreferences } -underline 0
+	.menuBar.help add command -label "Save settings" -command { writeSettingsFile } -underline 0
+}
+
+#################################################################
+# Main script
+#################################################################
+
+#----------------------------------------------------------------
+# The code below creates the main window, consisting of a menu bar,
+# a canvas widget for the image, and a status bar.
+#----------------------------------------------------------------
+setupImageCanvas
+
+setupControls ""
+
+Toolbox
+
+setupMenuBar
+
+setupControlKeyBindings
+
+bind . <Return> { Update 0 }
+#bind . <ButtonRelease> { Update 0 }
+#bind . <KeyPress> {puts %K}
+
+
+set imgdir [pwd]
+if { [string length $imgdir] < 2 } {
+	if { [array names env HOME] > "" } {
+		set imgdir $env(HOME)
+	}
+}
+
+#tk_messageBox -icon info -type ok -title "imgdir" -message "$imgdir"
+
+#if { [string length $filename] < 1 } {
+#	fileDialog "open"
+#	set filename [tk_getOpenFile -title "Open image file" \
+#		-filetypes $filetypes -initialdir $imgdir]
+#}
+
+set file_type 0
+if { [string length $filename] > 0 } {
+	set file_type [fileType $filename]
+}
+
+#puts "File name: $filename"
+#puts "File type = $file_type"
+#puts "Image directory: $imgdir"
+
+if { $project_root eq "" } {
+	set project_root [file rootname [file tail $filename]]
+}
+
+if { $file_type == 1 } {
+	set paramdir [file dirname $filename]
+	set modeldir [file dirname $filename]
+	loadImage $filename -1
+} elseif { $file_type == 2 } {
+	set paramfile $filename
+	set paramdir [file dirname $filename]
+	set filename ""
+	loadParam $paramfile
+} elseif { $file_type == 4 } {
+	set modelfile $filename
+	set modeldir [file dirname $filename]
+	set filename ""
+	loadModel $modelfile
+}
+
+focus .
+
+
+

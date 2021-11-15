@@ -1,0 +1,114 @@
+.TH "/Users/bernard/b20/bsoft/tcltk/tcltk_bmodel.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/tcltk/tcltk_bmodel.h \- A shared object to manage model parameter files in TCL/Tk\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <tk\&.h>\fP
+.br
+\fC#include 'rwmodel\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'mg_processing\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmodel_processing\fP (Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[])"
+.br
+.RI "Implements the 'Bmodel' command in Tcl/Tk to access model parameter files through Bsoft\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+A shared object to manage model parameter files in TCL/Tk\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20071002 
+.PP
+Modified: 20130924 
+.RE
+.PP
+
+.PP
+Definition in file \fBtcltk_bmodel\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int model_processing (Tcl_Interp * interp, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Implements the 'Bmodel' command in Tcl/Tk to access model parameter files through Bsoft\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*interp\fP a Tcl interpreter within Tcl\&. 
+.br
+\fIobjc\fP number of arguments passed (+1)\&. 
+.br
+\fI*objv[]\fP arguments passed as Tcl objects\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int Tcl result\&. 
+.PP
+.nf
+Bmodel command syntax:
+    Bmodel <action> <arguments>.
+    where:
+        action          "create", "exists", "read", "write", "kill", "get", "set", "delete"
+                        "delete_non_selected", "components_to_particles", "extract_segments",
+                        "comptype", "component", "link"
+        arguments           action-specific arguments:
+            "create"        <id>
+            "read"          <filename>
+            "write"         <filename>
+            "get"           <property> [arguments]
+            "set"           <property> <value>
+            "delete"        <property>
+            "delete_non_selected"   <property> <selection>
+            "components_to_particles"
+            "extract_segments"  <filename> [multilevel]
+            "comptype"      [arguments]
+            "component"     [arguments]
+            "link"          [arguments]
+            where:
+                property    "id <string>"
+                            "map <string> <value>"
+                            "number <value>"
+                            "radius <value>"
+                            "linkradius <value>"
+Return values:
+    Each action may have a return value:
+        "create"    (none)
+        "exists"    0=no, 1=yes
+        "read"      model id
+        "write"     (none)
+        "kill"      (none)
+        "get"       return value based on property
+        "set"       modify model property
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 120 of file tcltk_bmodel\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

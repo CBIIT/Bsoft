@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# Bernard Heymann                                  
+# 20170512 - 20180305
+
+version=`cat bsoft/BVERSION`
+comp_loc="/Users/bernard/b20"
+bin_loc="/Users/bernard/b20install"
+inst_loc="/usr/local/bsoft"
+
+echo Bsoft version:		$version
+echo Compile location:	$comp_loc
+echo Binary location:	$bin_loc
+echo Install location:	$inst_loc
+
+pkgbuild --identifier ws.bsoft.bsoft --version $version --scripts $bin_loc/Scripts --install-location $inst_loc --root $bin_loc bsoft.pkg
+
+pkgbuild --component $comp_loc/bsoft/Bshow.app --scripts $comp_loc/bsoft/Bshow.app/Contents/Resources/Scripts --install-location /Applications bshow.pkg
+
+pkgbuild --component $comp_loc/bsoft/Brun.app --scripts $comp_loc/bsoft/Brun.app/Contents/Resources/Scripts --install-location /Applications brun.pkg
+
+productbuild --synthesize --product breq.plist --version $version --package bsoft.pkg --package bshow.pkg --package brun.pkg bdist.plist
+
+productbuild --distribution bdist.plist --package-path bsoft.pkg --package-path bshow.pkg --package-path brun.pkg bsoft2.pkg
+
+hdiutil create -srcfolder bsoft2.pkg -ov Bsoft2.dmg
+
+
+

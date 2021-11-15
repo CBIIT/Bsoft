@@ -1,0 +1,211 @@
+.TH "/Users/bernard/b20/bsoft/src/model/model_path.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/model/model_path.cpp \- Library routines used for model processing\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'model_util\&.h'\fP
+.br
+\fC#include 'model_transform\&.h'\fP
+.br
+\fC#include 'model_select\&.h'\fP
+.br
+\fC#include 'model_compare\&.h'\fP
+.br
+\fC#include 'mol_transform\&.h'\fP
+.br
+\fC#include 'mol_compare\&.h'\fP
+.br
+\fC#include 'mol_util\&.h'\fP
+.br
+\fC#include 'symmetry\&.h'\fP
+.br
+\fC#include 'Matrix3\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBMatrix\fP \fBmodel_shortest_path\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates the shortest path between every pair of vertices\&. "
+.ti -1c
+.RI "double \fBmodel_wiener_index\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates the Wiener index\&. "
+.ti -1c
+.RI "int \fBcomp_link_check\fP (\fBBcomponent\fP *comp, \fBBcomponent\fP *comp2)"
+.br
+.ti -1c
+.RI "int \fBcomp_link_check\fP (\fBBmodel\fP *\fBmodel\fP, string &id1, string &id2)"
+.br
+.ti -1c
+.RI "\fBBlink\fP * \fBmodel_link_add\fP (\fBBmodel\fP *\fBmodel\fP, string &id1, string &id2)"
+.br
+.ti -1c
+.RI "int \fBmodel_check_path\fP (\fBBmodel\fP *\fBmodel\fP, \fBBcomponent\fP **path)"
+.br
+.ti -1c
+.RI "double \fBmodel_add_path\fP (\fBBmodel\fP *\fBmodel\fP, \fBBcomponent\fP **path)"
+.br
+.ti -1c
+.RI "int \fBcomp_pick_next\fP (int i, int n, \fBBcomponent\fP *comp, \fBBcomponent\fP **path, \fBBmodel\fP *\fBmodel\fP)"
+.br
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_hamiltonian_cycle\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates the Hamiltonian cycles in a model\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines used for model processing\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20060908 
+.PP
+Modified: 20150208 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_path\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int comp_link_check (\fBBcomponent\fP * comp, \fBBcomponent\fP * comp2)"
+
+.PP
+Definition at line 113 of file model_path\&.cpp\&.
+.SS "int comp_link_check (\fBBmodel\fP * model, string & id1, string & id2)"
+
+.PP
+Definition at line 123 of file model_path\&.cpp\&.
+.SS "int comp_pick_next (int i, int n, \fBBcomponent\fP * comp, \fBBcomponent\fP ** path, \fBBmodel\fP * model)"
+
+.PP
+Definition at line 192 of file model_path\&.cpp\&.
+.SS "double model_add_path (\fBBmodel\fP * model, \fBBcomponent\fP ** path)"
+
+.PP
+Definition at line 164 of file model_path\&.cpp\&.
+.SS "int model_check_path (\fBBmodel\fP * model, \fBBcomponent\fP ** path)"
+
+.PP
+Definition at line 145 of file model_path\&.cpp\&.
+.SS "\fBBmodel\fP* model_hamiltonian_cycle (\fBBmodel\fP * model)"
+
+.PP
+Calculates the Hamiltonian cycles in a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* linked list of models with cycle links\&. 
+.PP
+.nf
+A Hamiltonian cycle passes through each component once.
+The cycles are limited to the links in the input model.
+Redundant cycles are discarded.
+Only the first model in the linked list is used.
+Each of the resultant models has links forming a Hamiltonian cycle.
+
+.fi
+.PP
+ Reference: H\&. Wiener, J\&. Am\&. Chem\&. Soc\&., 1947, 69, 17\&. 
+.RE
+.PP
+
+.PP
+Definition at line 240 of file model_path\&.cpp\&.
+.SS "\fBBlink\fP* model_link_add (\fBBmodel\fP * model, string & id1, string & id2)"
+
+.PP
+Definition at line 134 of file model_path\&.cpp\&.
+.SS "\fBMatrix\fP model_shortest_path (\fBBmodel\fP * model)"
+
+.PP
+Calculates the shortest path between every pair of vertices\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBMatrix\fP path matrix\&. 
+.PP
+.nf
+The adjacency matrix is calculated as a starting point.
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 36 of file model_path\&.cpp\&.
+.SS "double model_wiener_index (\fBBmodel\fP * model)"
+
+.PP
+Calculates the Wiener index\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double average Wiener index\&. 
+.PP
+.nf
+The Wiener index is calculated as the sum of the elements of
+the shortest path matrix.
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ Reference: H\&. Wiener, J\&. Am\&. Chem\&. Soc\&., 1947, 69, 17\&. 
+.RE
+.PP
+
+.PP
+Definition at line 82 of file model_path\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,225 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__refine_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/mg_refine.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/mg_refine.h</primary></indexterm>
+<para>
+
+<para>Reciprocal space refinement of orientation parameters of particle images. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+#include &quot;rwimg.h&quot;
+#include &quot;symmetry.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>long <link linkend="_mg__refine_8h_1ac015a84e19818e434f79916bc2e94d87">mg_refine_orientations</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;reffile, <link linkend="_class_bstring">Bstring</link> &amp;maskfile, <link linkend="_class_bstring">Bstring</link> &amp;sym_string, int <link linkend="_tcltk__bmg_8cpp_1a66823305785303716aa59f76b0e3359d">part_select</link>, int max_iter, double alpha_step, double accuracy, double shift_step, double shift_accuracy, int fom_type, vector&lt; double &gt; weight, double hi_res, double lo_res, int kernel_width, int kernel_power, double edge_radius, double def_std, double shift_std, double view_std, double max_angle, double max_mag, int flags)</para>
+
+<para>Refine the orientation and origin with respect to a reference map. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__refine_8h_1a1331dbbf289ab81924b877ebbe99d9de">project_refine_orientations</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;reffile, <link linkend="_class_bstring">Bstring</link> &amp;maskfile, <link linkend="_class_bstring">Bstring</link> &amp;sym_string, int <link linkend="_tcltk__bmg_8cpp_1a66823305785303716aa59f76b0e3359d">part_select</link>, int max_iter, double alpha_step, double accuracy, double shift_step, double shift_accuracy, int fom_type, vector&lt; double &gt; weight, double hi_res, double lo_res, int kernel_width, int kernel_power, double edge_radius, double def_std, double shift_std, double view_std, double max_angle, double max_mag, int flags)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Reciprocal space refinement of orientation parameters of particle images. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20070115 </para>
+
+<para>Modified: 20190207 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__refine_8h_1ac015a84e19818e434f79916bc2e94d87"/>    <section>
+    <title>mg_refine_orientations()</title>
+<indexterm><primary>mg_refine_orientations</primary><secondary>mg_refine.h</secondary></indexterm>
+<indexterm><primary>mg_refine.h</primary><secondary>mg_refine_orientations</secondary></indexterm>
+<para><computeroutput>long mg_refine_orientations (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; reffile, <link linkend="_class_bstring">Bstring</link> &amp; maskfile, <link linkend="_class_bstring">Bstring</link> &amp; sym_string, int part_select, int max_iter, double alpha_step, double accuracy, double shift_step, double shift_accuracy, int fom_type, vector&lt; double &gt; weight, double hi_res, double lo_res, int kernel_width, int kernel_power, double edge_radius, double def_std, double shift_std, double view_std, double max_angle, double max_mag, int flags)</computeroutput></para><para>
+
+<para>Refine the orientation and origin with respect to a reference map. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>image processing parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;reffile</entry>
+                                <entry>
+<para>file containing reference map. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;maskfile</entry>
+                                <entry>
+<para>file containing a real space mask (can be empty). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;sym_string</entry>
+                                <entry>
+<para>point group symmetry designator. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>part_select</entry>
+                                <entry>
+<para>particle selection for processing. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_iter</entry>
+                                <entry>
+<para>Monte Carlo maximum number of refining iterations. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>alpha_step</entry>
+                                <entry>
+<para>grid search angular step size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>accuracy</entry>
+                                <entry>
+<para>grid search accuracy. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_step</entry>
+                                <entry>
+<para>grid shift size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_accuracy</entry>
+                                <entry>
+<para>grid shift accuracy. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_type</entry>
+                                <entry>
+<para>type of resolution measure: 0=FRC, 1=DPR </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>weight</entry>
+                                <entry>
+<para>1D reciprocal space weight curve. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hi_res</entry>
+                                <entry>
+<para>high resolution limit (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lo_res</entry>
+                                <entry>
+<para>low resolution limit (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>kernel_width</entry>
+                                <entry>
+<para>interpolation kernel width. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>kernel_power</entry>
+                                <entry>
+<para>interpolation kernel power. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>edge_radius</entry>
+                                <entry>
+<para>edge radius to mask background using previous origin. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_std</entry>
+                                <entry>
+<para>random defocus standard deviation </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_std</entry>
+                                <entry>
+<para>random origin shift standard deviation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view_std</entry>
+                                <entry>
+<para>random view shift standard deviation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_angle</entry>
+                                <entry>
+<para>maximum random rotation angle adjustment. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_mag</entry>
+                                <entry>
+<para>maximum magnification adjustment. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>option flags. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of comparisons, &lt;0 on error. <literallayout><computeroutput>The orientation, origin, magnitude and defocus are refined for each particle.
+The default method uses a grid search around the existing view and origin.
+Specifying the maximum number of iterations switches the algorithm to a
+Monte Carlo search for the best parameters.
+The FOM is either based on the FSC or the DPR.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 77 of file mg_refine.cpp.</para>
+    </section><anchor xml:id="_mg__refine_8h_1a1331dbbf289ab81924b877ebbe99d9de"/>    <section>
+    <title>project_refine_orientations()</title>
+<indexterm><primary>project_refine_orientations</primary><secondary>mg_refine.h</secondary></indexterm>
+<indexterm><primary>mg_refine.h</primary><secondary>project_refine_orientations</secondary></indexterm>
+<para><computeroutput>long project_refine_orientations (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; reffile, <link linkend="_class_bstring">Bstring</link> &amp; maskfile, <link linkend="_class_bstring">Bstring</link> &amp; sym_string, int part_select, int max_iter, double alpha_step, double accuracy, double shift_step, double shift_accuracy, int fom_type, vector&lt; double &gt; weight, double hi_res, double lo_res, int kernel_width, int kernel_power, double edge_radius, double def_std, double shift_std, double view_std, double max_angle, double max_mag, int flags)</computeroutput></para><para>
+Definition at line 249 of file mg_refine.cpp.</para>
+</section>
+</section>
+</section>

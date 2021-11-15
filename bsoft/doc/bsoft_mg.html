@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Micrograph</title>
+<link href="bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body>
+
+<div id="content">
+
+<h2>The micrograph parameter hierarchy</h2>
+<p>The unit data element originating from an electron microscope is a
+      micrograph. Typically, a collection of micrographs are taken of the same
+      specimen, intended to be all processed in the same way. In Bsoft, this
+      is defined as a "project", and is tied to a specific specimen produced
+      in a specific manner under a specific set of conditions. Changing one
+      single parameter in the production of the specimen constitutes a new
+      project.</p>
+<p>There are several instances where multiple micrographs are taken
+      of the same field. Common examples are focal series and tomographic tilt
+      series. Within a project, there is a grouping level called a "field",
+      which contains all micrographs from the same field (also called a
+      "field-of-view").</p>
+<p>In single particle analysis (SPA), small images of single
+      particles in each micrograph are extracted for further processing. In
+      tomography, a subfield may also be extracted and accessed at this
+      level.</p>
+<p>The micrograph parameter hierarchy is therefore:</p>
+<ul type="disc">
+<li><p>Project</p>
+	<ul type="circle"><li><p>Field (Field-of-view)</p>
+		<ul type="square"><li><p>Micrograph</p>
+			<ul type="disc">
+				<li><p>Particle</p></li>
+				<li><p>Filament</p>
+					<ul type="circle"><li><p>Filament node</p></li></ul>
+				</li>
+				<li><p>Structure factor</p></li>
+				<li><p>Layer line</p></li>
+				<li><p>Marker</p></li>
+			</ul>
+		</li></ul>
+	</li></ul>
+	<li><p>Reconstruction</p>
+		<ul type="square"><li>
+			<p>Particle</p></li>
+			<li><p>Filament</p>
+				<ul type="disc"><li><p>Filament node</p></li></ul>
+			</li>
+			<li><p>Structure factor</p></li>
+			<li><p>Marker</p></li>
+		</ul>
+	</li></ul>
+</li></ul>
+<br/>
+<h2>STAR files for micrograph parameters (extension .star)</h2>
+<p>The STAR format defines a limited hierarchy, so that expressing
+      the micrograph parameter hierarchy requires some specialized
+      conventions. Each data block corresponds to a micrograph, and particle
+      parameters are encoded in looped variables tightly linked to the
+      original micrograph. Micrographs are identified by an "id" tag, and the
+      fields-of-view they belong are identified by a "field_id" tag. Each
+      particle is identified by a unique number, starting from 1 for the first
+      particle in the micrograph:</p>
+	<blockquote class="blockquote">
+		<p>data_</p>
+		<p>_micrograph.id                   &lt;a string&gt;</p>
+		<p>_micrograph.field_id         &lt;a string&gt;</p>
+		<p>loop_</p>
+		<p>_particle.id</p>
+		<p>&lt;numbers from 1 to n&gt;</p>
+	</blockquote>
+	<p>Parameters for the micrograph proper are encoded as tags with
+      single values, such as the micrograph file name, the acceleration
+      voltage and CTF parameters. Parameters for the individual particle
+      images picked from a micrograph are encoded in a table-like construct
+      starting with the keyword "loop_" followed by the list of tags and
+      columns of values. The first column should always be the particle number
+      starting with the first particle as one and referencing all the
+      particles in the picked particle file. Any selections of particles
+      should be done using a selection column (not by deleting and rearranging
+      the particle records). The loop must be followed by an empty line to
+      indicate its end. The start of a STAR file (before any "data_" keywords)
+      is used to record the history of the file. Every program writing a STAR
+      file should add comments to the end of this section giving the date and
+      time and the command line for execution. Additional comments can be
+      inserted at any point.</p>
+
+<br/>
+<h2>XML files for micrograph parameters (extension .xml)</h2>
+<p>The same tags used for the STAR files are used in XML files
+	(without the initial underscore). The micrograph hierarchy is better
+	represented due to the inherent structure of the XML syntax. </p>
+<br/>
+<h2>EMX (electron microscopy exchange files, extension .emx)</h2>
+<p> Selected parameters from the micrograph hierarchy can be exported to and
+	imported from EMX files for interchange with other software packages.
+	Because this is an evolving standard, it is likely to experience
+	significant changes</p>
+</div>
+<div id="footer">
+  Bernard Heymann 20130906
+</div>
+</body>
+</html>

@@ -1,0 +1,618 @@
+.TH "/Users/bernard/b20/bsoft/src/util/random_numbers.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/util/random_numbers.cpp \- Functions for generating random sequences\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Vector3\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBrandseed\fP (0)"
+.br
+.ti -1c
+.RI "long \fBget_rand_max\fP ()"
+.br
+.RI "Finds the maximum random number for a system\&. "
+.ti -1c
+.RI "double \fBirm\fP (1\&.0L/\fBget_rand_max\fP())"
+.br
+.ti -1c
+.RI "long \fBrandom_seed\fP ()"
+.br
+.RI "Gets a random seed and sets the flag\&. "
+.ti -1c
+.RI "int \fBrandom_array_uniform_chunk\fP (float *r, long start, long end, double min, double range)"
+.br
+.ti -1c
+.RI "float * \fBrandom_array_uniform\fP (long n, double min, double max)"
+.br
+.RI "Generates a series with a uniform random distribution\&. "
+.ti -1c
+.RI "double \fBrandom_gaussian\fP (double avg, double stdev)"
+.br
+.RI "Generates a value with a gaussian random distribution\&. "
+.ti -1c
+.RI "int \fBrandom_array_gaussian_chunk\fP (float *r, long start, long end, double avg, double stdev)"
+.br
+.ti -1c
+.RI "float * \fBrandom_array_gaussian\fP (long n, double avg, double stdev)"
+.br
+.RI "Generates a series with a gaussian random distribution of values\&. "
+.ti -1c
+.RI "double \fBrandom_poisson\fP (double avg)"
+.br
+.RI "Generates a value deviating from the average based on a poisson distribution\&. "
+.ti -1c
+.RI "int \fBrandom_array_poisson_chunk\fP (float *r, long start, long end, double avg)"
+.br
+.ti -1c
+.RI "float * \fBrandom_array_poisson\fP (int n, double avg)"
+.br
+.RI "Generates a series with a poisson random distribution of values\&. "
+.ti -1c
+.RI "double \fBrandom_logistical\fP (double avg, double stdev)"
+.br
+.RI "Generates a value with a logistical random distribution\&. "
+.ti -1c
+.RI "int \fBrandom_array_logistical_chunk\fP (float *r, long start, long end, double avg, double stdev)"
+.br
+.ti -1c
+.RI "float * \fBrandom_array_logistical\fP (long n, double avg, double stdev)"
+.br
+.RI "Generates an array with a logistical random distribution\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBvector3_random_unit_sphere\fP ()"
+.br
+.RI "Generates a random vector on the unit sphere\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBvector3_random\fP (const double min, const double max)"
+.br
+.RI "Generates a random vector within a defined cube\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBvector3_random\fP (\fBVector3\fP< double > min, \fBVector3\fP< double > max)"
+.br
+.RI "Generates a random vector within a defined cube\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBvector3_random\fP (const double \fBlength\fP)"
+.br
+.RI "Generates a random vector within a defined sphere\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBvector3_random_gaussian\fP (double avg, double stdev)"
+.br
+.RI "Generates a random vector within a random gaussian-distributed length\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBvector3_xy_random_gaussian\fP (double avg, double stdev)"
+.br
+.RI "Generates a random vector within a random gaussian-distributed length in the xy plane\&. "
+.ti -1c
+.RI "double \fBhalton_number\fP (long i, long b)"
+.br
+.ti -1c
+.RI "double * \fBhalton_sequence\fP (long n, long b)"
+.br
+.RI "Generates a Halton sequence\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for generating random sequences\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19990703 
+.PP
+Modified: 20151113 
+.RE
+.PP
+
+.PP
+Definition in file \fBrandom_numbers\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "long get_rand_max ()"
+
+.PP
+Finds the maximum random number for a system\&. 
+.PP
+\fBReturns\fP
+.RS 4
+long the maximum random number\&. 
+.PP
+.nf
+Loops through random numbers to determine if the maximum is 2 or 4 bytes.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 22 of file random_numbers\&.cpp\&.
+.SS "double halton_number (long i, long b)"
+
+.PP
+Definition at line 536 of file random_numbers\&.cpp\&.
+.SS "double* halton_sequence (long n, long b)"
+
+.PP
+Generates a Halton sequence\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP length of sequence\&. 
+.br
+\fIb\fP base\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double* sequence\&. 
+.PP
+.nf
+The Halton sequence is a pseudo-random array.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 558 of file random_numbers\&.cpp\&.
+.SS "double irm (1\&.0L/ get_rand_max())"
+
+.SS "float* random_array_gaussian (long n, double avg, double stdev)"
+
+.PP
+Generates a series with a gaussian random distribution of values\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP number of values\&. 
+.br
+\fIavg\fP average\&. 
+.br
+\fIstdev\fP standard deviation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+float* the array of values\&. 
+.PP
+.nf
+An array of floating point numbers is generated with a gaussian 
+distribution with a given average and standard deviation:
+    value = average + std_dev*sqrt(-2*log(random_value))*
+                    cos(2*PI*random_value);
+where random_value is between 0 and 1.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 172 of file random_numbers\&.cpp\&.
+.SS "int random_array_gaussian_chunk (float * r, long start, long end, double avg, double stdev)"
+
+.PP
+Definition at line 143 of file random_numbers\&.cpp\&.
+.SS "float* random_array_logistical (long n, double avg, double stdev)"
+
+.PP
+Generates an array with a logistical random distribution\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP number of values\&. 
+.br
+\fIavg\fP average\&. 
+.br
+\fIstdev\fP standard deviation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+float* array of values\&. 
+.PP
+.nf
+An array of floating point numbers is generated with a logistical 
+differential distribution with a given average and standard deviation:
+    value = average + (std_dev/golden)*ln(1/random_value - 1)
+where random_value is between 0 and 1 and:
+    golden  = (sqrt(5) + 1)/2
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.RE
+.PP
+
+.PP
+Definition at line 379 of file random_numbers\&.cpp\&.
+.SS "int random_array_logistical_chunk (float * r, long start, long end, double avg, double stdev)"
+
+.PP
+Definition at line 353 of file random_numbers\&.cpp\&.
+.SS "float* random_array_poisson (int n, double avg)"
+
+.PP
+Generates a series with a poisson random distribution of values\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP number of values\&. 
+.br
+\fIavg\fP average\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+float* the array of values\&. 
+.PP
+.nf
+The poisson distribution is given for j = 0,1,... by:
+            avg^j * exp(-avg)
+    P(j) = -----------------
+                   j!
+Note that only positive integer values are defined for j and sum(P(j)) = 1.
+An array of floating point numbers is generated with a poisson 
+distribution with a given average. The standard deviation is:
+    std = sqrt(avg)
+If the average <= 0, the return array contains only zeroes.
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.RE
+.PP
+
+.PP
+Definition at line 296 of file random_numbers\&.cpp\&.
+.SS "int random_array_poisson_chunk (float * r, long start, long end, double avg)"
+
+.PP
+Definition at line 249 of file random_numbers\&.cpp\&.
+.SS "float* random_array_uniform (long n, double min, double max)"
+
+.PP
+Generates a series with a uniform random distribution\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP number of values\&. 
+.br
+\fImin\fP minimum value\&. 
+.br
+\fImax\fP maximum value\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+float* array with uniform random numbers\&. 
+.PP
+.nf
+An array of floating point numbers is generated distributed uniformly 
+in the range of the given minimum and maximum:
+    value = random_value*(max - min) + min
+where random_value is between 0 and 1.
+The average and standard deviation are:
+    average = (max + min)/2
+    standard deviation = 0.5*sqrt(1/3)*(max - min).
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 76 of file random_numbers\&.cpp\&.
+.SS "int random_array_uniform_chunk (float * r, long start, long end, double min, double range)"
+
+.PP
+Definition at line 52 of file random_numbers\&.cpp\&.
+.SS "double random_gaussian (double avg, double stdev)"
+
+.PP
+Generates a value with a gaussian random distribution\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIavg\fP average\&. 
+.br
+\fIstdev\fP standard deviation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double the random value\&. 
+.PP
+.nf
+A floating point number is generated with a gaussian 
+distribution with a given average and standard deviation:
+    value = average + std_dev*sqrt(-2*log(random_value))*
+                    cos(2*PI*random_value);
+where random_value is between 0 and 1.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 123 of file random_numbers\&.cpp\&.
+.SS "double random_logistical (double avg, double stdev)"
+
+.PP
+Generates a value with a logistical random distribution\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIavg\fP average\&. 
+.br
+\fIstdev\fP standard deviation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double the random value\&. 
+.PP
+.nf
+A floating point number is generated with a logistical 
+differential distribution with a given average and standard deviation:
+    value = average + (std_dev/golden)*ln(1/random_value - 1)
+where random_value is between 0 and 1 and:
+    golden  = (sqrt(5) + 1)/2
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.RE
+.PP
+
+.PP
+Definition at line 338 of file random_numbers\&.cpp\&.
+.SS "double random_poisson (double avg)"
+
+.PP
+Generates a value deviating from the average based on a poisson distribution\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIavg\fP average\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double value\&. 
+.PP
+.nf
+The poisson distribution is given for j = 0,1,... by:
+            avg^j * exp(-avg)
+    P(j) = -----------------
+                   j!
+Note that only positive integer values are defined for j and sum(P(j)) = 1.
+A value is generated with a poisson distribution with a given average.
+If the average <= 0, the return value is zero.
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.RE
+.PP
+
+.PP
+Definition at line 221 of file random_numbers\&.cpp\&.
+.SS "long random_seed ()"
+
+.PP
+Gets a random seed and sets the flag\&. 
+.PP
+\fBReturns\fP
+.RS 4
+int flag\&. 
+.PP
+.nf
+The random seed is obtained using the program pid.
+A flag is set to prevent the seed from being generated multiple times.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 41 of file random_numbers\&.cpp\&.
+.SS "int randseed (0)"
+
+.SS "\fBVector3\fP<double> vector3_random (const double length)"
+
+.PP
+Generates a random vector within a defined sphere\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIlength\fP maximum vector length\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP vector\&. 
+.PP
+.nf
+A random vector is generated, normalized and multiplied with
+a random value smaller than the given length.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 483 of file random_numbers\&.cpp\&.
+.SS "\fBVector3\fP<double> vector3_random (const double min, const double max)"
+
+.PP
+Generates a random vector within a defined cube\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImin\fP minimum\&. 
+.br
+\fImax\fP maximum\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP vector\&. 
+.PP
+.nf
+Each vector element is set to a random value between the given minimum and maximum.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 440 of file random_numbers\&.cpp\&.
+.SS "\fBVector3\fP<double> vector3_random (\fBVector3\fP< double > min, \fBVector3\fP< double > max)"
+
+.PP
+Generates a random vector within a defined cube\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImin\fP minimum vector\&. 
+.br
+\fImax\fP maximum vector\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP vector\&. 
+.PP
+.nf
+Each vector element is set to a random value between the given 
+minimum and maximum vectors.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 462 of file random_numbers\&.cpp\&.
+.SS "\fBVector3\fP<double> vector3_random_gaussian (double avg, double stdev)"
+
+.PP
+Generates a random vector within a random gaussian-distributed length\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIavg\fP average of gaussian distribution\&. 
+.br
+\fIstdev\fP standard deviation of gaussian distribution\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP vector\&. 
+.PP
+.nf
+A random vector is generated, normalized and multiplied with
+a random value derived from a gaussian distribution.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 502 of file random_numbers\&.cpp\&.
+.SS "\fBVector3\fP<double> vector3_random_unit_sphere ()"
+
+.PP
+Generates a random vector on the unit sphere\&. 
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP vector\&. 
+.PP
+.nf
+A random vector is generated with a uniform distribution on the unit sphere.
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.RE
+.PP
+
+.PP
+Definition at line 419 of file random_numbers\&.cpp\&.
+.SS "\fBVector3\fP<double> vector3_xy_random_gaussian (double avg, double stdev)"
+
+.PP
+Generates a random vector within a random gaussian-distributed length in the xy plane\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIavg\fP average of gaussian distribution\&. 
+.br
+\fIstdev\fP standard deviation of gaussian distribution\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP vector\&. 
+.PP
+.nf
+A random vector is generated, the z-component set to zero, normalized 
+and multiplied with a random value derived from a gaussian distribution.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 522 of file random_numbers\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

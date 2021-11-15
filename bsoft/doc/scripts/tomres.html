@@ -1,0 +1,116 @@
+<textarea readonly rows="60" cols="80">
+#!/bin/tcsh -f
+
+# tomres
+# A script to determine the resolution of a tomographic tilt series
+# Usage:
+#       tomres -size <x,y,z> -resolution <number> -postscript <file> <files>
+#	Requirement: At least the size must be specified.
+#	Distributed processing: The lines with "psubmit" can be used with the Peach distributed system.
+# Example:
+#       tomres -size 2048,2048,200 -resolution 20 -postscript res.ps "c*.star"
+#       psubmit tomres -size 2048,2048,200 -resolution 20 -postscript res.ps "c*.star" -ss
+# Author: Bernard Heymann
+# 20070210 - 20101203
+
+set SIZE = "2048,2048,240"
+set RESLIM = 30
+set PAD = 0
+set PS = "res"
+
+# Peach switch
+set PSWITCH = 0
+if ( $?HASH_WORD ) set PSWITCH = 1
+
+# Command line
+echo -n tomres
+set a = 1
+while ( $a <= $#argv )
+	echo -n " $argv[$a]"
+	@ a++
+end
+echo " "
+
+if ( $#argv < 1 ) then
+	echo "No input!"
+	exit
+endif
+
+# Interpret options
+set a = 1
+while ( "x$argv[$a]" =~ x-* )
+#	echo $a $argv[$a]
+	if ( "x$argv[$a]" =~ x-siz* ) then
+		@ a++
+		set SIZE = $argv[$a]
+	endif
+	if ( "x$argv[$a]" =~ x-res* ) then
+		@ a++
+		set RESLIM = $argv[$a]
+	endif
+	if ( "x$argv[$a]" =~ x-pos* ) then
+		@ a++
+		set PS = $argv[$a]
+	endif
+	@ a++
+end
+
+set PF = $argv[$a]
+set NMG = `btomo -v 7 $PF | awk '$1=="Micrographs:" { print $2 }'`
+set NSEL = `btomo -v 7 $PF | awk '$1=="Micrographs:" { print $4 }'`
+
+set PSB = `echo $PS | cut -f1 -d"."`
+
+echo "Resolution estimation:"
+echo "----------------------"
+date
+echo "Parameter file        = $PF"
+echo "Number of micrographs = $NMG"
+echo "Selected micrographs  = $NSEL"
+echo "Size                  = $SIZE"
+echo "Resolution limit      = $RESLIM"
+echo ""
+
+# Calculate all the resolution curves
+set N = 0
+while ( $N < $NMG )
+	set JN = `printf "%s_%03d" $PSB $N`
+	set PS = `printf "%s_%03d.ps" $PSB $N`
+	set CMD = "btomres -v 1 -size $SIZE -fast 10 -cutoff 0.3 -mic $N -res $RESLIM -Post $PS $PF"
+	echo $CMD
+	if ( $PSWITCH ) then
+		psubmit $CMD -jn $JN
+	else
+		$CMD >> ${JN}.log
+	endif
+	sleep 1
+	@ N++
+end
+
+# Check if all the resolution curves have been calculated
+set N = 0
+while ( $N < $NSEL )
+	sleep 10
+	set N = `ls -1 ${PSB}*.ps | wc -l`
+	echo "$N curves calculated"
+end
+
+# Extract the resolution values
+echo "Micrograph FSC(0.3)"
+set N = 0
+while ( $N < $NMG )
+	set JN = `printf "%s_%03d" $PSB $N`
+	if ( $PSWITCH ) then
+		set OF = "${JN}.pl.STDOUT"
+	else
+		set OF = "${JN}.log"
+	endif
+	if ( -e $OF ) then
+		set RES = `awk '$1=="Resolution:" { print $2 }' $OF`
+		echo $N $RES
+	endif
+	@ N++
+end
+
+</textarea>
+

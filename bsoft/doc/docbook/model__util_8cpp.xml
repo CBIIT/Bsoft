@@ -1,0 +1,1182 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_model__util_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/model/model_util.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/model/model_util.cpp</primary></indexterm>
+<para>
+
+<para>Library routines used for model processing. </para>
+ 
+</para>
+<programlisting>#include &quot;model_util.h&quot;
+#include &quot;model_transform.h&quot;
+#include &quot;model_select.h&quot;
+#include &quot;model_links.h&quot;
+#include &quot;mol_transform.h&quot;
+#include &quot;mol_compare.h&quot;
+#include &quot;mol_util.h&quot;
+#include &quot;symmetry.h&quot;
+#include &quot;matrix_linear.h&quot;
+#include &quot;matrix_util.h&quot;
+#include &quot;Matrix3.h&quot;
+#include &quot;random_numbers.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>long <link linkend="_model__util_8cpp_1a30ee786d43459f872ff601eb60226854">models_process</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, long(modfunc)(<link linkend="_class_bmodel">Bmodel</link> *))</para>
+
+<para>Process a list of models using the specified function. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__util_8cpp_1a355a6493fa508eb628ff486cc70f9904">models_process</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, long i, long(modfunc)(<link linkend="_class_bmodel">Bmodel</link> *, long))</para>
+</listitem>
+            <listitem><para>long <link linkend="_model__util_8cpp_1ae5ed4fecd2de6c3b2bd6afd1f1a8ae2c">models_process</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double d, long(modfunc)(<link linkend="_class_bmodel">Bmodel</link> *, double))</para>
+</listitem>
+            <listitem><para>long <link linkend="_model__util_8cpp_1ae484457b3aee6c6366ac4caf87f37284">models_process</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bstring">Bstring</link> &amp;str, long(modfunc)(<link linkend="_class_bmodel">Bmodel</link> *, <link linkend="_class_bstring">Bstring</link> &amp;str))</para>
+</listitem>
+            <listitem><para>long <link linkend="_model__util_8cpp_1a4e732c44b262d4dcf18e13d4d3a870a8">models_process</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, string &amp;str, long(modfunc)(<link linkend="_class_bmodel">Bmodel</link> *, string &amp;str))</para>
+</listitem>
+            <listitem><para>long <link linkend="_model__util_8cpp_1a4c33f296c7e12512c8b5db3ebddecf3e">model_list</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Lists models in table form. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__util_8cpp_1ac6f6367948187664f95336a73c75154b">model_list_comp</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Lists models with component counts in table form. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__util_8cpp_1a18355d3e26bb3b6b2281a41fb9c32c40">model_replace_components</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bmodel">Bmodel</link> *modref)</para>
+
+<para>Replaces all components in a model with reference components. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__util_8cpp_1a7435e9d2c8374e7a221feb51cde53364">model_merge</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Merges components from all models into one. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__util_8cpp_1a2e3082fb07d37877121b5a70d9f54b70">model_number_ids</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Add a number to each model id. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__util_8cpp_1a9e766f5d17472ddfa9c37ff546b6055b">model_rename_components</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Rename components. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__util_8cpp_1a73660f17a8ecd63c263e6eafed7361ba">model_mass</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Calculates the mass of a model from component masses. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__util_8cpp_1a81f7644aaefa69028611bd923a5c18dd">model_mass_all</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Calculates the masses of all the models in the list. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_model__util_8cpp_1a7775e0d625d96afa3bc75f31d608b435">model_center_of_mass</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Calculates the center-of-mass of a model. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__util_8cpp_1aeeac808708f442f4c3da52cfeff00ab8">model_distance_sum</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; loc)</para>
+
+<para>Calculates the sum of distances of model components to a location. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_model__util_8cpp_1a3b98ee36309db713447f93b78a7b9a43">model_geometric_median_estimate</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; pgm)</para>
+
+<para>Calculates the geometric median estimate of model components. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_model__util_8cpp_1ab117702e765d80151e7498ee6b21965e">model_geometric_median</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Calculates the geometric median of model components. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__util_8cpp_1a4f99375e354e9a427bc20f01117d0c68">model_gyration_radius</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Calculates the radius of gyration for a model. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_model__util_8cpp_1afc89fc3ae2ad4349459fac3be59c76e6">model_principal_axes</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; *eigenvec)</para>
+
+<para>Calculates the principal axes of a model. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_model__util_8cpp_1a7e3c6ba946cf6cfcd0447f8db5218152">model_principal_axes</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_matrix">Matrix</link> &amp;eigenvec)</para>
+</listitem>
+            <listitem><para>long <link linkend="_model__util_8cpp_1a9d8d7c19bf2b1cf963c1ae67e10b712d">model_principal_axes</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+</listitem>
+            <listitem><para>long <link linkend="_model__util_8cpp_1a3fee2fe7d3ef591140662b1e7a318b65">model_radial_distribution</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double interval)</para>
+
+<para>Calculates the radial distribution function of a model. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__util_8cpp_1a30168531075f7cd7523327f9a5991dd4">molgroup_write_into_grid</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_vector3">Vector3</link>&lt; int &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; min, double sampling, int *grid)</para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolgroup">Bmolgroup</link> * <link linkend="_model__util_8cpp_1a78d383ded80b6e5b822a05890b3e4864">model_assemble</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bstring">Bstring</link> &amp;paramfile, int separate)</para>
+
+<para>Concatenates selected molecules into one group. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__util_8cpp_1a6625613941d908cf4b0a2dcf5a212c11">model_generate_com</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Calculates the centers-of-mass of molecule group components and generates a new model. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__util_8cpp_1ad50f31b66740e3743866faba6fc31f12">model_update_centers_of_mass</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Updates the centers-of-mass of molecule group components. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__util_8cpp_1a0725d2b7fbef2210b3d5b6c8650c324c">model_average_components</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, int number)</para>
+
+<para>Averages sequential components. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bcomponent">Bcomponent</link> ** <link linkend="_model__util_8cpp_1aad21dedfa51ff7258c368196bf84b190">component_get_array</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, long &amp;n)</para>
+
+<para>Generates an array of pointers to component structures. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_model__util_8cpp_1a59ac6536183b8fcc80395fe3a83bf975">component_plane</link> (vector&lt; <link linkend="_class_bcomponent">Bcomponent</link> * &gt; &amp;comparray, double &amp;offset)</para>
+
+<para>Calculates a plane through an array of components. </para>
+</listitem>
+            <listitem><para>vector&lt; vector&lt; <link linkend="_class_bcomponent">Bcomponent</link> * &gt; &gt; <link linkend="_model__util_8cpp_1a0464eb260e9188c7c1d69cb8b495f582">model_component_grid</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; &amp;size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; &amp;origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; &amp;sampling)</para>
+
+<para>Generates lists of atoms based on a grid. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_model__util_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines used for model processing. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20060908 </para>
+
+<para>Modified: 20210414 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_model__util_8cpp_1aad21dedfa51ff7258c368196bf84b190"/>    <section>
+    <title>component_get_array()</title>
+<indexterm><primary>component_get_array</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>component_get_array</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bcomponent">Bcomponent</link>** component_get_array (<link linkend="_class_bmodel">Bmodel</link> * model, long &amp; n)</computeroutput></para><para>
+
+<para>Generates an array of pointers to component structures. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;n</entry>
+                                <entry>
+<para>pointer to number of comps found. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bcomponent** array of pointers to components. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1049 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a59ac6536183b8fcc80395fe3a83bf975"/>    <section>
+    <title>component_plane()</title>
+<indexterm><primary>component_plane</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>component_plane</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; component_plane (vector&lt; <link linkend="_class_bcomponent">Bcomponent</link> * &gt; &amp; comparray, double &amp; offset)</computeroutput></para><para>
+
+<para>Calculates a plane through an array of components. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**comparray</entry>
+                                <entry>
+<para>array of components. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;offset</entry>
+                                <entry>
+<para>offset from plane. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> plane normal. <literallayout><computeroutput>A plane is fit through the polygon vertices and the normal calculated from:
+    n•p = d
+where n is the normal vector, p is a point in the plane, and d is the offset.
+The polygon planarity is defined as the root-mean-square-deviation from 
+the fitted plane.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1079 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a78d383ded80b6e5b822a05890b3e4864"/>    <section>
+    <title>model_assemble()</title>
+<indexterm><primary>model_assemble</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_assemble</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolgroup">Bmolgroup</link>* model_assemble (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bstring">Bstring</link> &amp; paramfile, int separate)</computeroutput></para><para>
+
+<para>Concatenates selected molecules into one group. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;paramfile</entry>
+                                <entry>
+<para>atomic parameter file. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>separate</entry>
+                                <entry>
+<para>flag to generate separate molecule groups. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolgroup* list of molecule groups. <literallayout><computeroutput>Only the first model in the linked list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 828 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a0725d2b7fbef2210b3d5b6c8650c324c"/>    <section>
+    <title>model_average_components()</title>
+<indexterm><primary>model_average_components</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_average_components</secondary></indexterm>
+<para><computeroutput>long model_average_components (<link linkend="_class_bmodel">Bmodel</link> * model, int number)</computeroutput></para><para>
+
+<para>Averages sequential components. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure to be modified. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>number of components to average. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of remaining components. <literallayout><computeroutput>Only the first component in each set with modified coordinates is kept.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1012 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a7775e0d625d96afa3bc75f31d608b435"/>    <section>
+    <title>model_center_of_mass()</title>
+<indexterm><primary>model_center_of_mass</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_center_of_mass</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; model_center_of_mass (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Calculates the center-of-mass of a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> center-of-mass. <literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 497 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a0464eb260e9188c7c1d69cb8b495f582"/>    <section>
+    <title>model_component_grid()</title>
+<indexterm><primary>model_component_grid</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_component_grid</secondary></indexterm>
+<para><computeroutput>vector&lt;vector&lt;<link linkend="_class_bcomponent">Bcomponent</link>*&gt; &gt; model_component_grid (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; &amp; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; &amp; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; &amp; sampling)</computeroutput></para><para>
+
+<para>Generates lists of atoms based on a grid. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of grid. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>origin of grid. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sampling</entry>
+                                <entry>
+<para>spacing in each dimension. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;vector&lt;Bcomponent*&gt;&gt; array of component arrays. <literallayout><computeroutput>The goal is to fit all the components within the grid boundaries.
+Components located outside the grid will be added to the edges.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1135 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1aeeac808708f442f4c3da52cfeff00ab8"/>    <section>
+    <title>model_distance_sum()</title>
+<indexterm><primary>model_distance_sum</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_distance_sum</secondary></indexterm>
+<para><computeroutput>double model_distance_sum (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; loc)</computeroutput></para><para>
+
+<para>Calculates the sum of distances of model components to a location. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>loc</entry>
+                                <entry>
+<para>reference location. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double sum of distances. <literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 526 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a6625613941d908cf4b0a2dcf5a212c11"/>    <section>
+    <title>model_generate_com()</title>
+<indexterm><primary>model_generate_com</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_generate_com</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_generate_com (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Calculates the centers-of-mass of molecule group components and generates a new model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>list of molecule groups. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new model. <literallayout><computeroutput>Each molecule is assumed to be a component.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 933 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1ab117702e765d80151e7498ee6b21965e"/>    <section>
+    <title>model_geometric_median()</title>
+<indexterm><primary>model_geometric_median</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_geometric_median</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; model_geometric_median (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Calculates the geometric median of model components. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> geometric median. <literallayout><computeroutput>Only the first model in the list is processed.
+Based on Weiszfeld’s method.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 577 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a3b98ee36309db713447f93b78a7b9a43"/>    <section>
+    <title>model_geometric_median_estimate()</title>
+<indexterm><primary>model_geometric_median_estimate</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_geometric_median_estimate</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; model_geometric_median_estimate (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; pgm)</computeroutput></para><para>
+
+<para>Calculates the geometric median estimate of model components. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pgm</entry>
+                                <entry>
+<para>previous geometric median estimate. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> new geomtric median estimate. <literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 549 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a4f99375e354e9a427bc20f01117d0c68"/>    <section>
+    <title>model_gyration_radius()</title>
+<indexterm><primary>model_gyration_radius</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_gyration_radius</secondary></indexterm>
+<para><computeroutput>double model_gyration_radius (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Calculates the radius of gyration for a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double radius of gyration. <literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 613 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a4c33f296c7e12512c8b5db3ebddecf3e"/>    <section>
+    <title>model_list()</title>
+<indexterm><primary>model_list</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_list</secondary></indexterm>
+<para><computeroutput>long model_list (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Lists models in table form. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of models. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 151 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1ac6f6367948187664f95336a73c75154b"/>    <section>
+    <title>model_list_comp()</title>
+<indexterm><primary>model_list_comp</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_list_comp</secondary></indexterm>
+<para><computeroutput>long model_list_comp (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Lists models with component counts in table form. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of models. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 183 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a73660f17a8ecd63c263e6eafed7361ba"/>    <section>
+    <title>model_mass()</title>
+<indexterm><primary>model_mass</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_mass</secondary></indexterm>
+<para><computeroutput>double model_mass (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Calculates the mass of a model from component masses. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double model mass. <literallayout><computeroutput>The component type masses must be provided.
+Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 444 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a81f7644aaefa69028611bd923a5c18dd"/>    <section>
+    <title>model_mass_all()</title>
+<indexterm><primary>model_mass_all</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_mass_all</secondary></indexterm>
+<para><computeroutput>long model_mass_all (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Calculates the masses of all the models in the list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>linked list of model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of selected models. <literallayout><computeroutput>The component type masses must be provided.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 473 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a7435e9d2c8374e7a221feb51cde53364"/>    <section>
+    <title>model_merge()</title>
+<indexterm><primary>model_merge</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_merge</secondary></indexterm>
+<para><computeroutput>long model_merge (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Merges components from all models into one. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 323 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a2e3082fb07d37877121b5a70d9f54b70"/>    <section>
+    <title>model_number_ids()</title>
+<indexterm><primary>model_number_ids</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_number_ids</secondary></indexterm>
+<para><computeroutput>long model_number_ids (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Add a number to each model id. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of models. <literallayout><computeroutput>The intention is to give unique id&apos;s to models.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 380 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a9d8d7c19bf2b1cf963c1ae67e10b712d"/>    <section>
+    <title>model_principal_axes()<computeroutput>[1/3]</computeroutput></title>
+<indexterm><primary>model_principal_axes</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_principal_axes</secondary></indexterm>
+<para><computeroutput>long model_principal_axes (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+Definition at line 713 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a7e3c6ba946cf6cfcd0447f8db5218152"/>    <section>
+    <title>model_principal_axes()<computeroutput>[2/3]</computeroutput></title>
+<indexterm><primary>model_principal_axes</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_principal_axes</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; model_principal_axes (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_matrix">Matrix</link> &amp; eigenvec)</computeroutput></para><para>
+Definition at line 684 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1afc89fc3ae2ad4349459fac3be59c76e6"/>    <section>
+    <title>model_principal_axes()<computeroutput>[3/3]</computeroutput></title>
+<indexterm><primary>model_principal_axes</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_principal_axes</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; model_principal_axes (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; * eigenvec)</computeroutput></para><para>
+
+<para>Calculates the principal axes of a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*eigenvec</entry>
+                                <entry>
+<para>eigen vectors (can be NULL). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> 3-valued vector of principal axes. <literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 644 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a3fee2fe7d3ef591140662b1e7a318b65"/>    <section>
+    <title>model_radial_distribution()</title>
+<indexterm><primary>model_radial_distribution</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_radial_distribution</secondary></indexterm>
+<para><computeroutput>long model_radial_distribution (<link linkend="_class_bmodel">Bmodel</link> * model, double interval)</computeroutput></para><para>
+
+<para>Calculates the radial distribution function of a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>interval</entry>
+                                <entry>
+<para>interval between bins. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long 0. <literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 745 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a9e766f5d17472ddfa9c37ff546b6055b"/>    <section>
+    <title>model_rename_components()</title>
+<indexterm><primary>model_rename_components</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_rename_components</secondary></indexterm>
+<para><computeroutput>long model_rename_components (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Rename components. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components. <literallayout><computeroutput>The number of links to a component determines its new name.
+Only the first model is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 405 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a18355d3e26bb3b6b2281a41fb9c32c40"/>    <section>
+    <title>model_replace_components()</title>
+<indexterm><primary>model_replace_components</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_replace_components</secondary></indexterm>
+<para><computeroutput>long model_replace_components (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bmodel">Bmodel</link> * modref)</computeroutput></para><para>
+
+<para>Replaces all components in a model with reference components. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure to be modified. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*modref</entry>
+                                <entry>
+<para>reference model. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components used in reference. <literallayout><computeroutput>Only the first model in the reference is used.
+All models will have identical sets of components.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 252 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1ad50f31b66740e3743866faba6fc31f12"/>    <section>
+    <title>model_update_centers_of_mass()</title>
+<indexterm><primary>model_update_centers_of_mass</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>model_update_centers_of_mass</secondary></indexterm>
+<para><computeroutput>long model_update_centers_of_mass (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Updates the centers-of-mass of molecule group components. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>list of molecule groups. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of selected components. <literallayout><computeroutput>The identifiers of the molecule groups must correspond to the component identifiers.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 985 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1ae484457b3aee6c6366ac4caf87f37284"/>    <section>
+    <title>models_process()<computeroutput>[1/5]</computeroutput></title>
+<indexterm><primary>models_process</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>models_process</secondary></indexterm>
+<para><computeroutput>long models_process (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bstring">Bstring</link> &amp; str, long(modfunc)(<link linkend="_class_bmodel">Bmodel</link> *, <link linkend="_class_bstring">Bstring</link> &amp;str) )</computeroutput></para><para>
+Definition at line 108 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1ae5ed4fecd2de6c3b2bd6afd1f1a8ae2c"/>    <section>
+    <title>models_process()<computeroutput>[2/5]</computeroutput></title>
+<indexterm><primary>models_process</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>models_process</secondary></indexterm>
+<para><computeroutput>long models_process (<link linkend="_class_bmodel">Bmodel</link> * model, double d, long(modfunc)(<link linkend="_class_bmodel">Bmodel</link> *, double) )</computeroutput></para><para>
+Definition at line 84 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a355a6493fa508eb628ff486cc70f9904"/>    <section>
+    <title>models_process()<computeroutput>[3/5]</computeroutput></title>
+<indexterm><primary>models_process</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>models_process</secondary></indexterm>
+<para><computeroutput>long models_process (<link linkend="_class_bmodel">Bmodel</link> * model, long i, long(modfunc)(<link linkend="_class_bmodel">Bmodel</link> *, long) )</computeroutput></para><para>
+Definition at line 60 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a30ee786d43459f872ff601eb60226854"/>    <section>
+    <title>models_process()<computeroutput>[4/5]</computeroutput></title>
+<indexterm><primary>models_process</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>models_process</secondary></indexterm>
+<para><computeroutput>long models_process (<link linkend="_class_bmodel">Bmodel</link> * model, long(modfunc)(<link linkend="_class_bmodel">Bmodel</link> *) )</computeroutput></para><para>
+
+<para>Process a list of models using the specified function. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>list of models. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>modfunc</entry>
+                                <entry>
+<para>function to be called. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long aggregate number returned by function. <literallayout><computeroutput>The function called process only one model.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 36 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a4e732c44b262d4dcf18e13d4d3a870a8"/>    <section>
+    <title>models_process()<computeroutput>[5/5]</computeroutput></title>
+<indexterm><primary>models_process</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>models_process</secondary></indexterm>
+<para><computeroutput>long models_process (<link linkend="_class_bmodel">Bmodel</link> * model, string &amp; str, long(modfunc)(<link linkend="_class_bmodel">Bmodel</link> *, string &amp;str) )</computeroutput></para><para>
+Definition at line 132 of file model_util.cpp.</para>
+    </section><anchor xml:id="_model__util_8cpp_1a30168531075f7cd7523327f9a5991dd4"/>    <section>
+    <title>molgroup_write_into_grid()</title>
+<indexterm><primary>molgroup_write_into_grid</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>molgroup_write_into_grid</secondary></indexterm>
+<para><computeroutput>long molgroup_write_into_grid (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_vector3">Vector3</link>&lt; int &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; min, double sampling, int * grid)</computeroutput></para><para>
+Definition at line 784 of file model_util.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_model__util_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>model_util.cpp</secondary></indexterm>
+<indexterm><primary>model_util.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

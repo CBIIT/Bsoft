@@ -1,0 +1,188 @@
+.TH "/Users/bernard/b20/bsoft/src/model/model_multifit.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/model/model_multifit.cpp \- Searching for a template in a map and returning multiple hits in a model\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'rwmodel\&.h'\fP
+.br
+\fC#include 'model_multifit\&.h'\fP
+.br
+\fC#include 'symmetry\&.h'\fP
+.br
+\fC#include 'Matrix\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_from_densities\fP (\fBBimage\fP *p, \fBBimage\fP *ptemp, \fBView\fP *view, double alpha, double alpha_step, double hires, double lores, \fBBimage\fP *pmask, double threshold)"
+.br
+.RI "Searches a 2D/3D density map for a template\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_from_densities_for_view\fP (\fBBimage\fP *p, \fBBimage\fP *ptemp, \fBView\fP view, double hires, double lores, \fBBimage\fP *pmask, double threshold)"
+.br
+.RI "Searches a 2D/3D density map for a template using a specific view\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_from_peaks\fP (\fBBimage\fP *p, double threshold, int wrap)"
+.br
+.RI "Generates a model from peaks in a map\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Searching for a template in a map and returning multiple hits in a model\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20021027 
+.PP
+Modified: 20151127 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_multifit\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBmodel\fP* model_from_densities (\fBBimage\fP * p, \fBBimage\fP * ptemp, \fBView\fP * view, double alpha, double alpha_step, double hires, double lores, \fBBimage\fP * pmask, double threshold)"
+
+.PP
+Searches a 2D/3D density map for a template\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image\&. 
+.br
+\fI*ptemp\fP the template to be searched for\&. 
+.br
+\fI*view\fP views\&. 
+.br
+\fIalpha\fP rotation around view vector, <0 = use 2*PI (radians)\&. 
+.br
+\fIalpha_step\fP angular step size around view vector (radians)\&. 
+.br
+\fIhires\fP high resolution limit\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fI*pmask\fP mask for cross-correlation (ignored if NULL)\&. 
+.br
+\fIthreshold\fP threshold value, if 0, threshold = FOMmax/2\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* list of solutions\&. 
+.PP
+.nf
+The template is rotated and cross-correlated to find the best fit.
+The views must be calculated externally to allow for custom sets.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 38 of file model_multifit\&.cpp\&.
+.SS "\fBBmodel\fP* model_from_densities_for_view (\fBBimage\fP * p, \fBBimage\fP * ptemp, \fBView\fP view, double hires, double lores, \fBBimage\fP * pmask, double threshold)"
+
+.PP
+Searches a 2D/3D density map for a template using a specific view\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image\&. 
+.br
+\fI*ptemp\fP the template to be searched for\&. 
+.br
+\fIview\fP view\&. 
+.br
+\fIhires\fP high resolution limit\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fI*pmask\fP mask for cross-correlation (ignored if NULL)\&. 
+.br
+\fIthreshold\fP threshold value, if 0, threshold = FOMmax/2\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* list of solutions\&. 
+.PP
+.nf
+The template is rotated to the view and cross-correlated to find
+a set of high-scoring fits.
+The views must be calculated externally to allow for custom sets.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 170 of file model_multifit\&.cpp\&.
+.SS "\fBBmodel\fP* model_from_peaks (\fBBimage\fP * p, double threshold, int wrap)"
+
+.PP
+Generates a model from peaks in a map\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP cross-correlation map\&. 
+.br
+\fIthreshold\fP threshold value, if 0, threshold = FOMmax/2\&. 
+.br
+\fIwrap\fP flag to wrap around image boundaries\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* list of peaks\&. 
+.PP
+.nf
+Peaks found in the map are returned in the FOM block.
+A component is generated from each peak with a FOM above the threshold.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 208 of file model_multifit\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,567 @@
+.TH "/Users/bernard/b20/bsoft/include/scatter.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/scatter.h \- Functions for calculating electron scattering profiles\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel\&.h'\fP
+.br
+\fC#include 'rwmodel_param\&.h'\fP
+.br
+\fC#include 'ctf\&.h'\fP
+.br
+\fC#include 'string_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "vector< string > \fBall_elements\fP (map< string, \fBBcomptype\fP > &types)"
+.br
+.ti -1c
+.RI "vector< double > \fBcalculate_scattering_curve\fP (\fBBcomptype\fP &ct, double ds, double scut)"
+.br
+.RI "Calculates an elastic electron scattering profile for an component type\&. "
+.ti -1c
+.RI "map< string, vector< double > > \fBcalculate_scattering_curves\fP (\fBJSvalue\fP &el, map< string, \fBBcomptype\fP > &types, double ds, double scut)"
+.br
+.RI "Calculates elastic electron scattering profiles for a subset of component types\&. "
+.ti -1c
+.RI "map< string, vector< double > > \fBcalculate_scattering_curves\fP (map< string, \fBBcomptype\fP > &types, double ds, double scut)"
+.br
+.ti -1c
+.RI "double \fBscatter_curve_integral\fP (\fBBcomptype\fP &ct)"
+.br
+.RI "Calculates the integral of the whole curve\&. "
+.ti -1c
+.RI "double \fBelastic_cross_section\fP (\fBBcomptype\fP &ct, double volt)"
+.br
+.RI "Calculates the full elastic cross section (no aperture)\&. "
+.ti -1c
+.RI "double \fBelastic_cross_section_integrated\fP (\fBBcomptype\fP &ct, \fBCTFparam\fP &ctf)"
+.br
+.RI "Integrates the elastic scattering curve up to the aperture cutoff\&. "
+.ti -1c
+.RI "double \fBelastic_cross_section\fP (map< string, \fBBcomptype\fP > &types, double volt)"
+.br
+.RI "Calculates the combined elastic cross section for a defined composition\&. "
+.ti -1c
+.RI "double \fBelastic_cross_section_integrated\fP (map< string, \fBBcomptype\fP > &types, \fBCTFparam\fP &ctf)"
+.br
+.RI "Calculates the combined elastic cross section for a defined composition\&. "
+.ti -1c
+.RI "double \fBinelastic_cross_section_langmore\fP (long Z, double volt)"
+.br
+.RI "Calculates the inelastic cross section for an component type\&. "
+.ti -1c
+.RI "double \fBinelastic_cross_section_langmore\fP (map< string, \fBBcomptype\fP > &types, double volt)"
+.br
+.RI "Calculates the combined inelastic cross section for a defined composition\&. "
+.ti -1c
+.RI "double \fBcross_section\fP (map< string, \fBBcomptype\fP > &types, double volt)"
+.br
+.RI "Calculates the combined total cross section for a defined composition\&. "
+.ti -1c
+.RI "double \fBcross_section_integrated\fP (map< string, \fBBcomptype\fP > &types, \fBCTFparam\fP &ctf)"
+.br
+.RI "Calculates the combined total cross section for a defined composition\&. "
+.ti -1c
+.RI "double \fBcross_section_half_maximal_frequency\fP (\fBBcomptype\fP &ct)"
+.br
+.RI "Calculates the half-maximal frequency for an component type\&. "
+.ti -1c
+.RI "double \fBcross_section_half_maximal_frequency\fP (map< string, \fBBcomptype\fP > &at)"
+.br
+.RI "Calculates the half-maximal frequency for an component type\&. "
+.ti -1c
+.RI "\fBBmaterial\fP \fBmaterial_combine\fP (vector< \fBBmaterial\fP > &mlist, vector< double > fractions)"
+.br
+.RI "Creates a newAssembles a component composition from a set of materials with fractional contributions\&. "
+.ti -1c
+.RI "\fBBmaterial\fP \fBmaterial_ice\fP (map< string, \fBBcomptype\fP > &types)"
+.br
+.RI "Returns vitreous ice density\&. "
+.ti -1c
+.RI "double \fBeffective_mean_free_path\fP (\fBBmaterial\fP &material, \fBCTFparam\fP &ctf)"
+.br
+.RI "Calculates the average effective mean free path\&. "
+.ti -1c
+.RI "double \fBeffective_mean_free_path\fP (vector< \fBBmaterial\fP > &material, vector< double > fractions, \fBCTFparam\fP &ctf)"
+.br
+.RI "Calculates the expected intensity given a thickness of vitreous ice\&. "
+.ti -1c
+.RI "double \fBsignal_intensity\fP (\fBBmaterial\fP &material, double thickness, \fBCTFparam\fP &ctf)"
+.br
+.RI "Calculates the expected intensity given a thickness of vitreous ice\&. "
+.ti -1c
+.RI "vector< double > \fBsignal_intensity\fP (\fBBmaterial\fP &material, double thick_step, double thick_max, \fBCTFparam\fP &ctf)"
+.br
+.RI "Calculates the expected intensity vs thickness of vitreous ice\&. "
+.ti -1c
+.RI "int \fBwrite_scattering_curves\fP (\fBBstring\fP &paramfile, \fBBstring\fP &outfile, \fBBstring\fP &selection)"
+.br
+.RI "Calculates and writes atomic scattering profiles to a file\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for calculating electron scattering profiles\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20190521 
+.PP
+Modified: 20210329 
+.RE
+.PP
+
+.PP
+Definition in file \fBscatter\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "vector<string> all_elements (map< string, \fBBcomptype\fP > & types)"
+
+.PP
+Definition at line 63 of file scatter\&.cpp\&.
+.SS "vector<double> calculate_scattering_curve (\fBBcomptype\fP & ct, double ds, double scut)"
+
+.PP
+Calculates an elastic electron scattering profile for an component type\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&ct\fP component type\&. 
+.br
+\fIds\fP frequency space sampling increment\&. 
+.br
+\fIscut\fP maximum spacial frequency\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<double> array with scattering profile\&. 
+.RE
+.PP
+
+.PP
+Definition at line 116 of file scatter\&.cpp\&.
+.SS "map<string, vector<double> > calculate_scattering_curves (\fBJSvalue\fP & el, map< string, \fBBcomptype\fP > & types, double ds, double scut)"
+
+.PP
+Calculates elastic electron scattering profiles for a subset of component types\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&el\fP elements to calculate curves for\&. 
+.br
+\fI&types\fP component type\&. 
+.br
+\fIds\fP frequency space sampling increment\&. 
+.br
+\fIscut\fP maximum spacial frequency\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+map<string, vector<double>> array with scattering profile\&. 
+.RE
+.PP
+
+.PP
+Definition at line 149 of file scatter\&.cpp\&.
+.SS "map<string, vector<double> > calculate_scattering_curves (map< string, \fBBcomptype\fP > & types, double ds, double scut)"
+
+.PP
+Definition at line 168 of file scatter\&.cpp\&.
+.SS "double cross_section (map< string, \fBBcomptype\fP > & types, double volt)"
+
+.PP
+Calculates the combined total cross section for a defined composition\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&types\fP component types\&. 
+.br
+\fIvolt\fP acceleration voltage\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double integral\&. 
+.RE
+.PP
+
+.PP
+Definition at line 321 of file scatter\&.cpp\&.
+.SS "double cross_section_half_maximal_frequency (\fBBcomptype\fP & ct)"
+
+.PP
+Calculates the half-maximal frequency for an component type\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&ct\fP component type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double half-maximal frequency\&. 
+.RE
+.PP
+
+.PP
+Definition at line 362 of file scatter\&.cpp\&.
+.SS "double cross_section_half_maximal_frequency (map< string, \fBBcomptype\fP > & types)"
+
+.PP
+Calculates the half-maximal frequency for an component type\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&types\fP component types\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double half-maximal frequency\&. 
+.RE
+.PP
+
+.PP
+Definition at line 382 of file scatter\&.cpp\&.
+.SS "double cross_section_integrated (map< string, \fBBcomptype\fP > & types, \fBCTFparam\fP & ctf)"
+
+.PP
+Calculates the combined total cross section for a defined composition\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&types\fP component types\&. 
+.br
+\fI&ctf\fP CTF and microscope parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double integral\&. 
+.PP
+.nf
+If the slit width is specified, the energy filter is assumed to be used
+and only the elastic cross section is returned.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 343 of file scatter\&.cpp\&.
+.SS "double effective_mean_free_path (\fBBmaterial\fP & material, \fBCTFparam\fP & ctf)"
+
+.PP
+Calculates the average effective mean free path\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&material\fP material with types\&. 
+.br
+\fI&ctf\fP microscope parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double EMFP average\&. 
+.RE
+.PP
+
+.PP
+Definition at line 515 of file scatter\&.cpp\&.
+.SS "double effective_mean_free_path (vector< \fBBmaterial\fP > & materials, vector< double > fractions, \fBCTFparam\fP & ctf)"
+
+.PP
+Calculates the expected intensity given a thickness of vitreous ice\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&materials\fP list of materials with types\&. 
+.br
+\fI&fractions\fP fractional contributions\&. 
+.br
+\fI&ctf\fP microscope parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double effective mean free path\&. 
+.RE
+.PP
+
+.PP
+Definition at line 572 of file scatter\&.cpp\&.
+.SS "double elastic_cross_section (\fBBcomptype\fP & ct, double volt)"
+
+.PP
+Calculates the full elastic cross section (no aperture)\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&ct\fP component type\&. 
+.br
+\fIvolt\fP acceleration voltage\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double integral\&. 
+.RE
+.PP
+
+.PP
+Definition at line 209 of file scatter\&.cpp\&.
+.SS "double elastic_cross_section (map< string, \fBBcomptype\fP > & types, double volt)"
+
+.PP
+Calculates the combined elastic cross section for a defined composition\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&types\fP component types\&. 
+.br
+\fIvolt\fP acceleration voltage\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double integral\&. 
+.RE
+.PP
+
+.PP
+Definition at line 252 of file scatter\&.cpp\&.
+.SS "double elastic_cross_section_integrated (\fBBcomptype\fP & ct, \fBCTFparam\fP & ctf)"
+
+.PP
+Integrates the elastic scattering curve up to the aperture cutoff\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&ct\fP component type\&. 
+.br
+\fIctf\fP CTF and microscope parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double integral\&. 
+.RE
+.PP
+
+.PP
+Definition at line 226 of file scatter\&.cpp\&.
+.SS "double elastic_cross_section_integrated (map< string, \fBBcomptype\fP > & types, \fBCTFparam\fP & ctf)"
+
+.PP
+Calculates the combined elastic cross section for a defined composition\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&types\fP component types\&. 
+.br
+\fIctf\fP CTF and microscope parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double integral\&. 
+.RE
+.PP
+
+.PP
+Definition at line 269 of file scatter\&.cpp\&.
+.SS "double inelastic_cross_section_langmore (long Z, double volt)"
+
+.PP
+Calculates the inelastic cross section for an component type\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIZ\fP atomic number\&. 
+.br
+\fIvolt\fP acceleration voltage\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double integral\&. 
+.RE
+.PP
+
+.PP
+Definition at line 285 of file scatter\&.cpp\&.
+.SS "double inelastic_cross_section_langmore (map< string, \fBBcomptype\fP > & types, double volt)"
+
+.PP
+Calculates the combined inelastic cross section for a defined composition\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&types\fP component types\&. 
+.br
+\fIvolt\fP acceleration voltage\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double integral\&. 
+.RE
+.PP
+
+.PP
+Definition at line 304 of file scatter\&.cpp\&.
+.SS "\fBBmaterial\fP material_combine (vector< \fBBmaterial\fP > & mlist, vector< double > fractions)"
+
+.PP
+Creates a newAssembles a component composition from a set of materials with fractional contributions\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&mlist\fP list of materials\&. 
+.br
+\fI&fractions\fP fractional contributions\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBBmaterial\fP new combined material\&. 
+.RE
+.PP
+
+.PP
+Definition at line 405 of file scatter\&.cpp\&.
+.SS "\fBBmaterial\fP material_ice (map< string, \fBBcomptype\fP > & types)"
+
+.PP
+Returns vitreous ice density\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fItypes\fP reference parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double density in molecules/A3\&. 
+.RE
+.PP
+
+.PP
+Definition at line 437 of file scatter\&.cpp\&.
+.SS "double scatter_curve_integral (\fBBcomptype\fP & ct)"
+
+.PP
+Calculates the integral of the whole curve\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&ct\fP component type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double integral\&. 
+.RE
+.PP
+
+.PP
+Definition at line 188 of file scatter\&.cpp\&.
+.SS "vector<double> signal_intensity (\fBBmaterial\fP & material, double thick_step, double thick_max, \fBCTFparam\fP & ctf)"
+
+.PP
+Calculates the expected intensity vs thickness of vitreous ice\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&material\fP material with types\&. 
+.br
+\fIthick_step\fP specimen tickness step size (angstrom)\&. 
+.br
+\fIthick_max\fP maximum specimen thickness (angstrom)\&. 
+.br
+\fI&ctf\fP microscope parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<double> array of intensities\&. 
+.RE
+.PP
+
+.PP
+Definition at line 653 of file scatter\&.cpp\&.
+.SS "double signal_intensity (\fBBmaterial\fP & material, double thickness, \fBCTFparam\fP & ctf)"
+
+.PP
+Calculates the expected intensity given a thickness of vitreous ice\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&material\fP material with types\&. 
+.br
+\fIthickness\fP specimen thickness\&. 
+.br
+\fIctf\fP microscope parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double intensity\&. 
+.RE
+.PP
+
+.PP
+Definition at line 602 of file scatter\&.cpp\&.
+.SS "int write_scattering_curves (\fBBstring\fP & paramfile, \fBBstring\fP & outfile, \fBBstring\fP & selection)"
+
+.PP
+Calculates and writes atomic scattering profiles to a file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&paramfile\fP file with scattering coefficients\&. 
+.br
+\fI&outfile\fP file to write curves to\&. 
+.br
+\fI&selection\fP element selection\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The scattering coefficients are obtained from an input parameter file.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 701 of file scatter\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Micrograph Pair Alignment</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="../Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Aligning micrographs</h1>
+<p>In Bsoft, micrographs are grouped into fields-of-view (or field for short).
+In many cases there will only be one micrograph per field.
+In other cases each field may contain two or more micrographs of the same area,
+such as:</p>
+<ul>
+	<li>Focal pairs or series</li>
+	<li>Dose series</li>
+	<li>Tilt pairs or series (the latter could be tomographic series)</li>
+</ul>
+<p>Each of these cases are treated separately.</p>
+<br/>
+<h2>1. Focal pairs</h2>
+<p>In a typical strategy for single particle analysis, focal pairs of micrographs are taken, with the first micrograph close to focus, and the second micrograph further from focus. The following treatment assumes that this strategy has been followed.</p>
+<p>The recommended sequence of micrograph processing is: (i) determine the CTF parameters, (ii) pick particles in the further-from-focus micrograph, and (iii) align the closer-to-focus micrograph with the further-from-focus micrograph and calculate the particle positions in the former.</p>
+<p>To do the alignment, the following are required to be set in the parameter (STAR) file:</p>
+<ol>
+	<li>All the micrograph data blocks for both close to focus and further from focus micrographs must be specified in the parameter file(s).</li>
+	<li>Each pair of micrographs must be specified within the same field-of-view, with the closer to focus micrograph first.</li>
+	<li>The sampling or pixel size must be correctly specified for each micrograph.</li>
+	<li>There should be particle records for the further from focus micrographs.</li>
+</ol>
+<p>Here is an example setup for micrograph alignment starting from a set of parameter files:</p>
+<div id="command"><p>bmg -v 7 -number 2 -Pixel 2.4 -output mg_67xx.star 670*.star</p></div>
+<pre>
+Project hierarchy:
+Field: 6701
+        Micrograph: 6701        Particles: 0 (0)        Filaments: 0 (0)
+        Micrograph: 6702        Particles: 27 (27)      Filaments: 0 (0)
+Field: 6705
+        Micrograph: 6705        Particles: 0 (0)        Filaments: 0 (0)
+        Micrograph: 6706        Particles: 48 (48)      Filaments: 0 (0)
+Field: 6707
+        Micrograph: 6707        Particles: 0 (0)        Filaments: 0 (0)
+        Micrograph: 6708        Particles: 43 (43)      Filaments: 0 (0)
+Field: 6709
+        Micrograph: 6709        Particles: 0 (0)        Filaments: 0 (0)
+        Micrograph: 6710        Particles: 59 (59)      Filaments: 0 (0)
+Totals: 177 particles   177 selected    (100.0%)        0 filaments     0 filament nodes
+</pre>
+<p><b>bmgalign</b> generates a set of panels or tiles for each micrograph, and then cross-correlates the corresponding tiles to produce a set of shift vectors. This set of shift vectors are then fit to a five-parameter model (xy shift, xy scale, and rotation angle) to determine the final alignment. The locations of the picked particles in the reference micrograph (the further from focus micrograph) is then transformed to predict the locations in the closer to focus micrograph.</p>
+<div id="command"><p>bmgalign -v 7 -align mic -ref 2 -resol 5000,30 -correlate 2048,2048,1 -out mg_67xx_aln.star mg_67xx.star</p></div>
+<p>Important options:</p>
+<ol>
+	<li>-resolution: The resolution limits are in angstrom and thus linked to the pixel size. Generally the idea is to cut out  very low resolution features that does not contribute to alignment information, and high resolution information that is dominated by noise.</li>
+	<li>-correlate: The default tile size of 512,512,1 for cross-correlation is usually sufficient to get a successful alignment. However, when the alignment fails, increasing the tile size often works.</li>
+</ol>
+<p>The key lines generated in the ouput shows the two micrographs compared, the shift vector (3 values), the scale vector (3 values), the rotation angle (in degrees), and the residual (in pixels). The aim is to get a low residual, typically on the order of 1-3 pixels. Usually when the alignment fails, the residual is large (10-100 pixels) and the key options mentioned above should be modified. </p>
+<p>Example output lines: </p>
+<pre>
+Best fit:       6702.tif        6701.tif         163.53  183.10    0.00 1.00228 1.00227 1.00000    0.06464         0.98
+Best fit:       6706.tif        6705.tif         -18.59 -107.90    0.00 1.00291 1.00315 1.00000    0.08264         1.29
+Best fit:       6708.tif        6707.tif         238.96   74.60    0.00 1.00286 1.00299 1.00000    0.13664         0.99
+Best fit:       6710.tif        6709.tif          47.01  146.23    0.00 1.00148 1.00299 1.00000   -0.09736         2.48
+</pre>
+<br/>
+<h2>2. Dose series</h2>
+<p>The typical MRC file generated by CCD and direct cameras specify the images as
+slices of a 3D volume. Before processing in Bsoft, this needs to be corrected
+so that the programs interpret it as a stack of 2D images:</p>
+<div id="command"><p>bhead -verb 1 -images May27_18.31.49.mrc 2014_05_27_18_31_49.mrc</p></div>
+<p>Next generate a parameter file where each set of frames is configured as a field-of-view
+with the frames as individual micrographs:</p>
+<div id="command"><p>bmg -verb 7 -extract mg -num 10 -out phi6_set1.star 2014_05_27_18_31_49.mrc</p></div>
+<p>Then the micrographs within each field-of-view can be aligned by cross-correlation:</p>
+<div id="command"><p>bseries -verb 1 -align 0 -resol 10,10000 -edge 20,10 -dat f -average phi6_set1 -out phi6_set1_aln.star phi6_set1.star</p></div>
+<p>The resolution limits can be changed if the alignment did not work well. The edge smoothing option avoids artifacts associated with the micrograph edges.</p>
+<br/>
+<h2>3. Tilt pairs</h2>
+<p>The particles are picked in the two micrographs simultaneously to ensure the same numbering. There is no current method to align the micrographs and transfer the particle locations
+as is done for focal pairs.<p>
+<br/>
+</div>
+<div id="footer">
+  Bernard Heymann  20150223
+</div>
+</body>
+</html>

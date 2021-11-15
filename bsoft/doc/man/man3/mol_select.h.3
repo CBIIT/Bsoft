@@ -1,0 +1,210 @@
+.TH "/Users/bernard/b20/bsoft/include/mol_select.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/mol_select.h \- Library routines to select atomic coordinates\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Vector3\&.h'\fP
+.br
+\fC#include 'rwmolecule\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "long \fBmolgroup_select\fP (\fBBmolgroup\fP *molgroup, \fBBstring\fP selstr)"
+.br
+.RI "Sets selection based on a specification\&. "
+.ti -1c
+.RI "long \fBmolgroup_atoms_selected\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Returns the number of atoms selected\&. "
+.ti -1c
+.RI "long \fBmolgroup_select_all\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Sets selection for all atoms\&. "
+.ti -1c
+.RI "long \fBmolgroup_deselect_all\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Unsets selection for all atoms\&. "
+.ti -1c
+.RI "int \fBmolgroup_select_chains\fP (\fBBmolgroup\fP *molgroup, \fBBstring\fP chains)"
+.br
+.RI "Selects molecules\&. "
+.ti -1c
+.RI "int \fBmolgroup_coor_select_ring\fP (\fBBmolgroup\fP *molgroup, double rmin, double rmax)"
+.br
+.RI "Selects atoms in a ring\&. "
+.ti -1c
+.RI "int \fBmolgroup_coor_select\fP (\fBBmolgroup\fP *molgroup, \fBVector3\fP< double > min, \fBVector3\fP< double > max)"
+.br
+.RI "Selects atoms within a box\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines to select atomic coordinates\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19980214 
+.PP
+Modified: 20170118 
+.RE
+.PP
+
+.PP
+Definition in file \fBmol_select\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "long molgroup_atoms_selected (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Returns the number of atoms selected\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of atoms selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 27 of file mol_select\&.cpp\&.
+.SS "int molgroup_coor_select (\fBBmolgroup\fP * molgroup, \fBVector3\fP< double > min, \fBVector3\fP< double > max)"
+
+.PP
+Selects atoms within a box\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fImin\fP three-valued vector of minima\&. 
+.br
+\fImax\fP three-valued vector of maxima\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 233 of file mol_select\&.cpp\&.
+.SS "int molgroup_coor_select_ring (\fBBmolgroup\fP * molgroup, double rmin, double rmax)"
+
+.PP
+Selects atoms in a ring\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIrmin\fP minimum radius\&. 
+.br
+\fIrmax\fP maximum radius\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 195 of file mol_select\&.cpp\&.
+.SS "long molgroup_deselect_all (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Unsets selection for all atoms\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of atoms\&. 
+.RE
+.PP
+
+.PP
+Definition at line 147 of file mol_select\&.cpp\&.
+.SS "long molgroup_select (\fBBmolgroup\fP * molgroup, \fBBstring\fP selstr)"
+
+.PP
+Sets selection based on a specification\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIselstr\fP selection specification\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of atoms selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 51 of file mol_select\&.cpp\&.
+.SS "long molgroup_select_all (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Sets selection for all atoms\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of atoms\&. 
+.RE
+.PP
+
+.PP
+Definition at line 125 of file mol_select\&.cpp\&.
+.SS "int molgroup_select_chains (\fBBmolgroup\fP * molgroup, \fBBstring\fP chains)"
+
+.PP
+Selects molecules\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIchains\fP comma-separated list of molecule ids\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int chains selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 168 of file mol_select\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

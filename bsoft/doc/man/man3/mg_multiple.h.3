@@ -1,0 +1,380 @@
+.TH "/Users/bernard/b20/bsoft/include/mg_multiple.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/mg_multiple.h \- Selection of single particle parameters from multiple files for classification\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'symmetry\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBproject\fP * \fBproject_multi_merge\fP (\fBBstring\fP *\fBfile_list\fP, int fom_index, int flags)"
+.br
+.RI "Merges multiple projects\&. "
+.ti -1c
+.RI "int \fBproject_multi_add\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP *\fBfile_list\fP, int fom_index)"
+.br
+.RI "Merges multiple projects with an existing one\&. "
+.ti -1c
+.RI "long \fBproject_multi_adjust_FOM\fP (\fBBproject\fP *project_list, int fom_index)"
+.br
+.RI "Adjusts FOM to the avergae of the first project\&. "
+.ti -1c
+.RI "long \fBproject_multi_select_best_FOM\fP (\fBBproject\fP *project_list, double fom_cut, int fom_index, int fom_def_flag)"
+.br
+.RI "Selects the best particle orientations from multiple parameter files\&. "
+.ti -1c
+.RI "long \fBproject_multi_selection_stats\fP (\fBBproject\fP *project_list)"
+.br
+.RI "Counts particle assignment distributions using selection arrays\&. "
+.ti -1c
+.RI "long \fBproject_multi_select_low_variance\fP (\fBBproject\fP *project_list, \fBBsymmetry\fP &sym, double origin_dev, double view_dev, double angle_dev, double mag_dev)"
+.br
+.RI "Selects the best particle orientations from multiple parameter files\&. "
+.ti -1c
+.RI "long \fBproject_multi_select_low_difference\fP (\fBBproject\fP *project1, \fBBproject\fP *project2, \fBBsymmetry\fP &sym, double origin_err, double view_err, double angle_err, double mag_err)"
+.br
+.RI "Selects the best particle orientations from two parameter files\&. "
+.ti -1c
+.RI "long \fBproject_multi_select_low_rmsd\fP (\fBBproject\fP *project1, \fBBproject\fP *project2, \fBBsymmetry\fP &sym, double origin_rmsd, double view_rmsd, double angle_rmsd, double mag_rmsd, int flag)"
+.br
+.RI "Selects the best particle orientations from two parameter files\&. "
+.ti -1c
+.RI "long \fBproject_multi_selection_compare\fP (\fBBproject\fP *project1, \fBBproject\fP *project2)"
+.br
+.RI "Calculates the number of selections that are the same\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Selection of single particle parameters from multiple files for classification\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010319 
+.PP
+Modified: 20210516 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_multiple\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int project_multi_add (\fBBproject\fP * project, \fBBstring\fP * file_list, int fom_index)"
+
+.PP
+Merges multiple projects with an existing one\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project to add/merge to\&. 
+.br
+\fI*file_list\fP linked list of parameter file names\&. 
+.br
+\fIfom_index\fP index of FOM to select on\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long selected particles\&. 
+.PP
+.nf
+The selected particles are merged with existing ones.
+Requirement: The project component ID's must correspond.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 207 of file mg_multiple\&.cpp\&.
+.SS "long project_multi_adjust_FOM (\fBBproject\fP * project_list, int fom_index)"
+
+.PP
+Adjusts FOM to the avergae of the first project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project_list\fP linked list of project structures with all parameters\&. 
+.br
+\fIfom_index\fP index of FOM to select on\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+Requirement: The project structures must be of identical form.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 329 of file mg_multiple\&.cpp\&.
+.SS "\fBBproject\fP* project_multi_merge (\fBBstring\fP * file_list, int fom_index, int flags)"
+
+.PP
+Merges multiple projects\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*file_list\fP linked list of parameter file names\&. 
+.br
+\fIfom_index\fP index of FOM to select on\&. 
+.br
+\fIflags\fP flags: 1=rec, 2=template, 4=reset\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bproject* merged project\&. 
+.PP
+.nf
+The selected particles are merged.
+Requirement: The project component ID's must correspond.
+If bit 2 of the flag is set (2), it signifies a template and the FOM's of the template
+are set to zero.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 68 of file mg_multiple\&.cpp\&.
+.SS "long project_multi_select_best_FOM (\fBBproject\fP * project_list, double fom_cut, int fom_index, int fom_def_flag)"
+
+.PP
+Selects the best particle orientations from multiple parameter files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project_list\fP linked list of project structures with all parameters\&. 
+.br
+\fIfom_cut\fP FOM cutoff to eliminate bad particles\&. 
+.br
+\fIfom_index\fP index of FOM to select on\&. 
+.br
+\fIfom_def_flag\fP flag to adjust the cutoff for defocus\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+The orientation parameters for each particle is selected from
+the file with the highest FOM. The selection flag gets the number 
+of the file from which the particle was selected, with the first
+file getting the number 1. If the best FOM is under the cutoff,
+the selection flag is set to zero. The selected orientation
+parameters are written into the first micrograph parameter
+structure.
+Requirement: The project structures must be of identical form.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 403 of file mg_multiple\&.cpp\&.
+.SS "long project_multi_select_low_difference (\fBBproject\fP * project1, \fBBproject\fP * project2, \fBBsymmetry\fP & sym, double origin_err, double view_err, double angle_err, double mag_err)"
+
+.PP
+Selects the best particle orientations from two parameter files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project1\fP first project structure with all parameters\&. 
+.br
+\fI*project2\fP second project structure with all parameters\&. 
+.br
+\fI*sym\fP symmetry\&. 
+.br
+\fIorigin_err\fP cutoff to accept origins (pixels)\&. 
+.br
+\fIview_err\fP cutoff to accept views (radians)\&. 
+.br
+\fIangle_err\fP cutoff to accept rotation angles (radians)\&. 
+.br
+\fImag_err\fP cutoff to accept magnifications (fraction)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+The error is calculated between parameters. 
+Requirement: The origin, view and rotation angle (or Euler angle), 
+    and magnification arrays in the micrographs must be defined.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 834 of file mg_multiple\&.cpp\&.
+.SS "long project_multi_select_low_rmsd (\fBBproject\fP * project1, \fBBproject\fP * project2, \fBBsymmetry\fP & sym, double origin_rmsd, double view_rmsd, double angle_rmsd, double mag_rmsd, int flag)"
+
+.PP
+Selects the best particle orientations from two parameter files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project1\fP first project structure with all parameters\&. 
+.br
+\fI*project2\fP second project structure with all parameters\&. 
+.br
+\fI*sym\fP symmetry\&. 
+.br
+\fIorigin_rmsd\fP cutoff to accept origins (pixels)\&. 
+.br
+\fIview_rmsd\fP cutoff to accept views (radians)\&. 
+.br
+\fIangle_rmsd\fP cutoff to accept rotation angles (radians)\&. 
+.br
+\fImag_rmsd\fP cutoff to accept magnifications (fraction)\&. 
+.br
+\fIflag\fP 0=RMSD, 1=MSD 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+The error is calculated between parameters. 
+Requirement: The origin, view and rotation angle (or Euler angle), 
+    and magnification arrays in the micrographs must be defined.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 985 of file mg_multiple\&.cpp\&.
+.SS "long project_multi_select_low_variance (\fBBproject\fP * project_list, \fBBsymmetry\fP & sym, double origin_dev, double view_dev, double angle_dev, double mag_dev)"
+
+.PP
+Selects the best particle orientations from multiple parameter files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project_list\fP linked list of project structures with all parameters\&. 
+.br
+\fI*sym\fP symmetry\&. 
+.br
+\fIorigin_dev\fP cutoff to accept origins (pixels)\&. 
+.br
+\fIview_dev\fP cutoff to accept views (radians)\&. 
+.br
+\fIangle_dev\fP cutoff to accept rotation angles (radians)\&. 
+.br
+\fImag_dev\fP cutoff to accept magnifications (fraction)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+The standard deviations of particle parameters are calculated as 
+follows:
+    origin_std = sqrt(var(origin_x) + var(origin_y))
+    view_std = sqrt(var(view_x) + var(view_y) + var(view_z))
+    angle_std = sqrt(var(angle))
+    size_std = sqrt(var(magnification))
+Requirement: The origin, view and rotation angle (or Euler angle), 
+    and magnification arrays in the micrographs must be defined.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 663 of file mg_multiple\&.cpp\&.
+.SS "long project_multi_selection_compare (\fBBproject\fP * project1, \fBBproject\fP * project2)"
+
+.PP
+Calculates the number of selections that are the same\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project1\fP first project structure with all parameters\&. 
+.br
+\fI*project2\fP second project structure with all parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selections the same\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1097 of file mg_multiple\&.cpp\&.
+.SS "long project_multi_selection_stats (\fBBproject\fP * project_list)"
+
+.PP
+Counts particle assignment distributions using selection arrays\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project_list\fP linked list of project structures with all parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+Requirement: The project structures must be of identical form.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 525 of file mg_multiple\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,1254 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mol__util_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mol/mol_util.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mol/mol_util.cpp</primary></indexterm>
+<para>
+
+<para>Library routines used for atomic coordinates. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmolecule.h&quot;
+#include &quot;rwatomprop.h&quot;
+#include &quot;rwresprop.h&quot;
+#include &quot;mol_util.h&quot;
+#include &quot;seq_util.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;Matrix.h&quot;
+#include &quot;utilities.h&quot;
+#include &lt;map&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mol__util_8cpp_1ae2dfb0b1f9db4f86c00d587825d511df">molgroup_Bfactors</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Calculates the average Bfactors for residues in molecules. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__util_8cpp_1ae7473481095ab6adfda26c2bc4ca93b4">molgroup_print_sequence</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Prints the sequence of a molecule as a single letter code string. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__util_8cpp_1a11c2c2c5c2b33e45bcdf21c2e73f84b3">molgroup_set_radius</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double radius)</para>
+
+<para>Shifts all coordinates to a given radius. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__util_8cpp_1a3bb2023ca76070e0c980e6efd58539c7">molgroup_rename</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, char first_name)</para>
+
+<para>Renames molecules. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__util_8cpp_1a977ee0bcee43ddb833a2ae4f86dccd3a">molgroup_residue_renumber</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, int first)</para>
+
+<para>Renumbers residues. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__util_8cpp_1abbd2b4b7a695f1162e306ea31e18e6ac">molgroup_atom_renumber</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, int first)</para>
+
+<para>Renumbers all atoms, disregarding molecule distinction. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__util_8cpp_1aa387c7028c0a91745426a47fd2d416d0">molgroup_coor_reset_occupancy</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, int range_first, int range_last, double occupancy)</para>
+
+<para>Sets occupancies to new values.. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__util_8cpp_1a517d4f121f7cfa30dd5ef69199003999">molgroup_weight_from_atoms</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Calculates the weight of each molecule. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__util_8cpp_1a6ca5157c0d8909b750399bdd3fbe83c3">molgroup_weight_from_sequence</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Calculates the weight of each molecule. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_mol__util_8cpp_1af0a4d0d1130ae266c464197a5cbb4174">molgroup_center_of_mass</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Calculates the center of mass of a molecule group. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_mol__util_8cpp_1aacb81cbc00eb4dd66fb65bb85fde1006">molgroup_selected_center_of_mass</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Calculates the center of mass of a molecule group. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_mol__util_8cpp_1a517680e6a439e083afcd99685fda6554">molgroup_show_center_of_mass</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Calculates the center of mass of a molecule group. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_mol__util_8cpp_1abba1e973773f75a1fe721a362d942b26">mol_center_of_mass</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol)</para>
+
+<para>Calculates the center of mass of a molecule. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_mol__util_8cpp_1af2691411e0e380a565633a20dcb47b7e">mol_show_center_of_mass</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol)</para>
+
+<para>Calculates the center of mass of a molecule. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_mol__util_8cpp_1a7953d12b0b46bc6583d815c756d83a79">molgroup_principal_axes</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; *eigenvec)</para>
+
+<para>Calculates the principal axes of a molecule group. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_mol__util_8cpp_1a4b752d262024d306ca442f7bf2eba061">mol_principal_axes</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; *eigenvec)</para>
+
+<para>Calculates the principal axes of a molecule. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__util_8cpp_1aa02fe76efdcc42d75c103f8100573bcd">molgroup_sphericity</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double da)</para>
+
+<para>Calculates how close the coordinate set is to a spherical shape. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__util_8cpp_1a2f6b545a6a5f83c35f89d04712a5ba51">molgroup_density</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Calculates the number and mass density of a molecular system. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__util_8cpp_1a157d9d129d93847a5f9210301d43476d">molgroup_volume</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bstring">Bstring</link> &amp;paramfile, int wrap)</para>
+
+<para>Calculates the volume of a molecular system. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__util_8cpp_1ab100cafbcdd2b3dc3089337442246db6">molgroup_composition</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bstring">Bstring</link> &amp;paramfile)</para>
+
+<para>Calculates the elemental composition of a molecular system. </para>
+</listitem>
+            <listitem><para><link linkend="_class_j_svalue">JSvalue</link> <link linkend="_mol__util_8cpp_1ae252d6057c4f9a9297da3f0af049a85c">molgroup_elements</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Calculates the elemental composition. </para>
+</listitem>
+            <listitem><para><link linkend="_class_j_svalue">JSvalue</link> <link linkend="_mol__util_8cpp_1addd5ffe8c9d8c8dc05ab4973f0f14a36">molgroup_elements</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bstring">Bstring</link> &amp;paramfile)</para>
+
+<para>Calculates the elemental composition from residue compositions. </para>
+</listitem>
+            <listitem><para><link linkend="_class_j_svalue">JSvalue</link> <link linkend="_mol__util_8cpp_1a79ae385dfdf78cf834516b38f27b5321">protein_composition_default</link> (double mass)</para>
+
+<para>Default protein composition adjusted by mass. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__util_8cpp_1a258b18b1d1876f2498586d937b97bdac">molgroup_radial_density</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double interval, double cutoff, int wrap)</para>
+
+<para>Calculates a radial distribution function. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_latom">Latom</link> ** <link linkend="_mol__util_8cpp_1a0f8a9eea3cb0efd1281d440a8df28101">molgroup_atom_mesh_lists</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_vector3">Vector3</link>&lt; int &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sampling)</para>
+
+<para>Generates lists of atoms based on a grid. </para>
+</listitem>
+            <listitem><para>vector&lt; <link linkend="_struct_batom">Batom</link> * &gt; <link linkend="_mol__util_8cpp_1a61996ef05ab84b2e7d4c3793a715b406">atom_get_array</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Generates an array of pointers to atom structures. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mol__util_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines used for atomic coordinates. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19980214 </para>
+
+<para>Modified: 20210512 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mol__util_8cpp_1a61996ef05ab84b2e7d4c3793a715b406"/>    <section>
+    <title>atom_get_array()</title>
+<indexterm><primary>atom_get_array</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>atom_get_array</secondary></indexterm>
+<para><computeroutput>vector&lt;<link linkend="_struct_batom">Batom</link>*&gt; atom_get_array (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Generates an array of pointers to atom structures. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure to be modified. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;Batom*&gt; array of pointers to atoms. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1224 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1abba1e973773f75a1fe721a362d942b26"/>    <section>
+    <title>mol_center_of_mass()</title>
+<indexterm><primary>mol_center_of_mass</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>mol_center_of_mass</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; mol_center_of_mass (<link linkend="_struct_bmolecule">Bmolecule</link> * mol)</computeroutput></para><para>
+
+<para>Calculates the center of mass of a molecule. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mol</entry>
+                                <entry>
+<para>molecule structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> 3-valued center of mass vector. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 445 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1a4b752d262024d306ca442f7bf2eba061"/>    <section>
+    <title>mol_principal_axes()</title>
+<indexterm><primary>mol_principal_axes</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>mol_principal_axes</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; mol_principal_axes (<link linkend="_struct_bmolecule">Bmolecule</link> * mol, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; * eigenvec)</computeroutput></para><para>
+
+<para>Calculates the principal axes of a molecule. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mol</entry>
+                                <entry>
+<para>molecule structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*eigenvec</entry>
+                                <entry>
+<para>eigen vectors (can be NULL). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> 3-valued vector of principal axes. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 544 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1af2691411e0e380a565633a20dcb47b7e"/>    <section>
+    <title>mol_show_center_of_mass()</title>
+<indexterm><primary>mol_show_center_of_mass</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>mol_show_center_of_mass</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; mol_show_center_of_mass (<link linkend="_struct_bmolecule">Bmolecule</link> * mol)</computeroutput></para><para>
+
+<para>Calculates the center of mass of a molecule. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mol</entry>
+                                <entry>
+<para>molecule structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> 3-valued center of mass vector. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 483 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1a0f8a9eea3cb0efd1281d440a8df28101"/>    <section>
+    <title>molgroup_atom_mesh_lists()</title>
+<indexterm><primary>molgroup_atom_mesh_lists</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_atom_mesh_lists</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_latom">Latom</link>** molgroup_atom_mesh_lists (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_vector3">Vector3</link>&lt; int &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sampling)</computeroutput></para><para>
+
+<para>Generates lists of atoms based on a grid. </para>
+</para>
+
+<para><literallayout><computeroutput>The coordinates must be positive to fit into a grid starting at {0,0,0}.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure to be modified. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of grid. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sampling</entry>
+                                <entry>
+<para>spacing in each dimension. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Latom** array of linked lists of atoms. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1176 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1abbd2b4b7a695f1162e306ea31e18e6ac"/>    <section>
+    <title>molgroup_atom_renumber()</title>
+<indexterm><primary>molgroup_atom_renumber</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_atom_renumber</secondary></indexterm>
+<para><computeroutput>int molgroup_atom_renumber (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, int first)</computeroutput></para><para>
+
+<para>Renumbers all atoms, disregarding molecule distinction. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>first</entry>
+                                <entry>
+<para>number of first atom. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 211 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1ae2dfb0b1f9db4f86c00d587825d511df"/>    <section>
+    <title>molgroup_Bfactors()</title>
+<indexterm><primary>molgroup_Bfactors</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_Bfactors</secondary></indexterm>
+<para><computeroutput>int molgroup_Bfactors (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Calculates the average Bfactors for residues in molecules. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 28 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1af0a4d0d1130ae266c464197a5cbb4174"/>    <section>
+    <title>molgroup_center_of_mass()</title>
+<indexterm><primary>molgroup_center_of_mass</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_center_of_mass</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; molgroup_center_of_mass (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Calculates the center of mass of a molecule group. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> 3-valued center of mass vector. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 351 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1ab100cafbcdd2b3dc3089337442246db6"/>    <section>
+    <title>molgroup_composition()</title>
+<indexterm><primary>molgroup_composition</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_composition</secondary></indexterm>
+<para><computeroutput>int molgroup_composition (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bstring">Bstring</link> &amp; paramfile)</computeroutput></para><para>
+
+<para>Calculates the elemental composition of a molecular system. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;paramfile</entry>
+                                <entry>
+<para>atomic parameter file. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 861 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1aa387c7028c0a91745426a47fd2d416d0"/>    <section>
+    <title>molgroup_coor_reset_occupancy()</title>
+<indexterm><primary>molgroup_coor_reset_occupancy</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_coor_reset_occupancy</secondary></indexterm>
+<para><computeroutput>int molgroup_coor_reset_occupancy (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, int range_first, int range_last, double occupancy)</computeroutput></para><para>
+
+<para>Sets occupancies to new values.. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>range_first</entry>
+                                <entry>
+<para>first residue in range to change. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>range_last</entry>
+                                <entry>
+<para>last residue in range to change. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>occupancy</entry>
+                                <entry>
+<para>value to set occupancy to. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 243 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1a2f6b545a6a5f83c35f89d04712a5ba51"/>    <section>
+    <title>molgroup_density()</title>
+<indexterm><primary>molgroup_density</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_density</secondary></indexterm>
+<para><computeroutput>double molgroup_density (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Calculates the number and mass density of a molecular system. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double density: Da/A^3. <literallayout><computeroutput>Requirement: The box size must be correctly specified in the
+molecular group structure.
+The number of molecules, residues and atoms are calculated and the
+density for each number reported.
+The total mass is calculated and the mass density reported as
+Da/A^3 and g/ml.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 710 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1ae252d6057c4f9a9297da3f0af049a85c"/>    <section>
+    <title>molgroup_elements()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>molgroup_elements</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_elements</secondary></indexterm>
+<para><computeroutput><link linkend="_class_j_svalue">JSvalue</link> molgroup_elements (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Calculates the elemental composition. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_j_svalue">JSvalue</link> composition. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 936 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1addd5ffe8c9d8c8dc05ab4973f0f14a36"/>    <section>
+    <title>molgroup_elements()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>molgroup_elements</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_elements</secondary></indexterm>
+<para><computeroutput><link linkend="_class_j_svalue">JSvalue</link> molgroup_elements (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bstring">Bstring</link> &amp; paramfile)</computeroutput></para><para>
+
+<para>Calculates the elemental composition from residue compositions. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;paramfile</entry>
+                                <entry>
+<para>residue parameter file. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_j_svalue">JSvalue</link> composition. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 963 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1a7953d12b0b46bc6583d815c756d83a79"/>    <section>
+    <title>molgroup_principal_axes()</title>
+<indexterm><primary>molgroup_principal_axes</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_principal_axes</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; molgroup_principal_axes (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; * eigenvec)</computeroutput></para><para>
+
+<para>Calculates the principal axes of a molecule group. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*eigenvec</entry>
+                                <entry>
+<para>eigen vectors (can be NULL). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> 3-valued vector of principal axes. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 499 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1ae7473481095ab6adfda26c2bc4ca93b4"/>    <section>
+    <title>molgroup_print_sequence()</title>
+<indexterm><primary>molgroup_print_sequence</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_print_sequence</secondary></indexterm>
+<para><computeroutput>int molgroup_print_sequence (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Prints the sequence of a molecule as a single letter code string. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 92 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1a258b18b1d1876f2498586d937b97bdac"/>    <section>
+    <title>molgroup_radial_density()</title>
+<indexterm><primary>molgroup_radial_density</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_radial_density</secondary></indexterm>
+<para><computeroutput>int molgroup_radial_density (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double interval, double cutoff, int wrap)</computeroutput></para><para>
+
+<para>Calculates a radial distribution function. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>interval</entry>
+                                <entry>
+<para>interval between bins. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>cutoff</entry>
+                                <entry>
+<para>distance cutoff. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wrap</entry>
+                                <entry>
+<para>flag to use periodic boundaries. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The atoms are not distinguished by type or properties.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1074 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1a3bb2023ca76070e0c980e6efd58539c7"/>    <section>
+    <title>molgroup_rename()</title>
+<indexterm><primary>molgroup_rename</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_rename</secondary></indexterm>
+<para><computeroutput>int molgroup_rename (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, char first_name)</computeroutput></para><para>
+
+<para>Renames molecules. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>first_name</entry>
+                                <entry>
+<para>letter of first molecule. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Letters are assigned to the molecules in sequence starting from the
+given first letter. If it extends beyond &apos;Z&apos;, it restarts at &apos;A&apos;.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 161 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1a977ee0bcee43ddb833a2ae4f86dccd3a"/>    <section>
+    <title>molgroup_residue_renumber()</title>
+<indexterm><primary>molgroup_residue_renumber</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_residue_renumber</secondary></indexterm>
+<para><computeroutput>int molgroup_residue_renumber (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, int first)</computeroutput></para><para>
+
+<para>Renumbers residues. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>first</entry>
+                                <entry>
+<para>number of first residue. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 182 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1aacb81cbc00eb4dd66fb65bb85fde1006"/>    <section>
+    <title>molgroup_selected_center_of_mass()</title>
+<indexterm><primary>molgroup_selected_center_of_mass</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_selected_center_of_mass</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; molgroup_selected_center_of_mass (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Calculates the center of mass of a molecule group. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> 3-valued center of mass vector. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 391 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1a11c2c2c5c2b33e45bcdf21c2e73f84b3"/>    <section>
+    <title>molgroup_set_radius()</title>
+<indexterm><primary>molgroup_set_radius</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_set_radius</secondary></indexterm>
+<para><computeroutput>int molgroup_set_radius (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double radius)</computeroutput></para><para>
+
+<para>Shifts all coordinates to a given radius. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>radius</entry>
+                                <entry>
+<para>spherical radius. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 114 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1a517680e6a439e083afcd99685fda6554"/>    <section>
+    <title>molgroup_show_center_of_mass()</title>
+<indexterm><primary>molgroup_show_center_of_mass</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_show_center_of_mass</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; molgroup_show_center_of_mass (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Calculates the center of mass of a molecule group. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> 3-valued center of mass vector. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 431 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1aa02fe76efdcc42d75c103f8100573bcd"/>    <section>
+    <title>molgroup_sphericity()</title>
+<indexterm><primary>molgroup_sphericity</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_sphericity</secondary></indexterm>
+<para><computeroutput>double molgroup_sphericity (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double da)</computeroutput></para><para>
+
+<para>Calculates how close the coordinate set is to a spherical shape. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>da</entry>
+                                <entry>
+<para>angular step size. (in radians) </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double sphericity. <literallayout><computeroutput>For each solid angle, the algorithm finds the coordinates with the
+maximum distance from the center-of-mass.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 589 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1a157d9d129d93847a5f9210301d43476d"/>    <section>
+    <title>molgroup_volume()</title>
+<indexterm><primary>molgroup_volume</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_volume</secondary></indexterm>
+<para><computeroutput>double molgroup_volume (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bstring">Bstring</link> &amp; paramfile, int wrap)</computeroutput></para><para>
+
+<para>Calculates the volume of a molecular system. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;paramfile</entry>
+                                <entry>
+<para>atomic parameter file. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wrap</entry>
+                                <entry>
+<para>flag to turn on wrapping. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double volume in angstrom^3. <literallayout><computeroutput>The volume occupied by all the atoms is estimated from the footprint
+under the Van der Waals volume of each atom.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 748 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1a517d4f121f7cfa30dd5ef69199003999"/>    <section>
+    <title>molgroup_weight_from_atoms()</title>
+<indexterm><primary>molgroup_weight_from_atoms</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_weight_from_atoms</secondary></indexterm>
+<para><computeroutput>double molgroup_weight_from_atoms (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Calculates the weight of each molecule. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double total mass of the molecule group. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 270 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1a6ca5157c0d8909b750399bdd3fbe83c3"/>    <section>
+    <title>molgroup_weight_from_sequence()</title>
+<indexterm><primary>molgroup_weight_from_sequence</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>molgroup_weight_from_sequence</secondary></indexterm>
+<para><computeroutput>double molgroup_weight_from_sequence (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Calculates the weight of each molecule. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double total mass of the molecule group. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 310 of file mol_util.cpp.</para>
+    </section><anchor xml:id="_mol__util_8cpp_1a79ae385dfdf78cf834516b38f27b5321"/>    <section>
+    <title>protein_composition_default()</title>
+<indexterm><primary>protein_composition_default</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>protein_composition_default</secondary></indexterm>
+<para><computeroutput><link linkend="_class_j_svalue">JSvalue</link> protein_composition_default (double mass)</computeroutput></para><para>
+
+<para>Default protein composition adjusted by mass. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>mass</entry>
+                                <entry>
+<para>molecular weight. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_j_svalue">JSvalue</link> composition. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1035 of file mol_util.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_mol__util_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>mol_util.cpp</secondary></indexterm>
+<indexterm><primary>mol_util.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

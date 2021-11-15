@@ -1,0 +1,379 @@
+.TH "/Users/bernard/b20/bsoft/include/mg_orient.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/mg_orient.h \- Library routines for single particle analysis\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBTEMP_PROJ_FILE\fP   'temp_proj\&.spi'"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBimage\fP * \fBproject_prepare_2D_references\fP (\fBBproject\fP *\fBproject\fP, long first, long number, int bin=1, int ctf_action=0, double wiener=0\&.2)"
+.br
+.RI "Prepare reference images from particles\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_prepare_projections\fP (\fBBstring\fP &filename, \fBBstring\fP &mask_file, int bin, \fBBsymmetry\fP &sym, double theta_step, double phi_step, double side_ang)"
+.br
+.RI "Generate projections if a 3D file, otherwise clean projections\&. "
+.ti -1c
+.RI "int \fBproject_determine_orientations\fP (\fBBproject\fP *\fBproject\fP, \fBBimage\fP *proj, \fBBstring\fP &mask_file, int bin, \fBBsymmetry\fP &sym, int \fBpart_select\fP, vector< double > &band, double res_lo, double res_hi, double res_polar, int ann_min, int ann_max, double shift_limit, double angle_limit, double edge_radius, int flags)"
+.br
+.RI "Find the orientation and origin of every image in a project\&. "
+.ti -1c
+.RI "int \fBproject_determine_orientations2\fP (\fBBproject\fP *\fBproject\fP, \fBBimage\fP *proj, \fBBstring\fP &mask_file, int bin, \fBBsymmetry\fP &sym, int \fBpart_select\fP, vector< double > &band, double res_lo, double res_hi, double res_polar, int ann_min, int ann_max, double shift_limit, double angle_limit, double edge_radius, int flags)"
+.br
+.RI "Find the orientation and origin of every image in a project\&. "
+.ti -1c
+.RI "int \fBproject_determine_origins\fP (\fBBproject\fP *\fBproject\fP, \fBBimage\fP *proj, int bin, \fBBsymmetry\fP &sym, int \fBpart_select\fP, double res_lo, double res_hi, double shift_limit, int flags)"
+.br
+.RI "Find the origin of every image in a project\&. "
+.ti -1c
+.RI "double \fBimg_cross_validate\fP (\fBBimage\fP *p, \fBBimage\fP *pref, \fBBimage\fP *pmask, \fBfft_plan\fP \fBplanf\fP)"
+.br
+.RI "Rotates and shifts a reference image and calculates a cross-validation coefficient\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines for single particle analysis\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann and David M\&. Belnap 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010403 
+.PP
+Modified: 20190826 (BH) 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_orient\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define TEMP_PROJ_FILE   'temp_proj\&.spi'"
+
+.PP
+Definition at line 12 of file mg_orient\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "double img_cross_validate (\fBBimage\fP * p, \fBBimage\fP * pref, \fBBimage\fP * prs_mask, \fBfft_plan\fP planf)"
+
+.PP
+Rotates and shifts a reference image and calculates a cross-validation coefficient\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 2D image\&. 
+.br
+\fI*pref\fP reference 2D image\&. 
+.br
+\fI*prs_mask\fP dual mask\&. 
+.br
+\fIplanf\fP FFT forward plan\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double cross-validation coefficient\&. 
+.PP
+.nf
+The reference image is first rotated by the difference in the angles
+between the image and the reference, then shifted to the same origin
+as the image. Both are then Fourier transformed, the negative values in
+the mask used to select reciprocal space areas, and the complex product
+calculated. The sum of the zeroeth pixel then gives the cross-validation
+coefficient.
+The input images must be equal-sized square 2D images.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1425 of file mg_orient\&.cpp\&.
+.SS "\fBBimage\fP* img_prepare_projections (\fBBstring\fP & filename, \fBBstring\fP & mask_file, int bin, \fBBsymmetry\fP & sym, double theta_step, double phi_step, double side_ang)"
+
+.PP
+Generate projections if a 3D file, otherwise clean projections\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file containing reference map or projections\&. 
+.br
+\fI&mask_file\fP mask to apply to projections\&. 
+.br
+\fIbin\fP data compression by binning\&. 
+.br
+\fI*sym\fP point group symmetry structure\&. 
+.br
+\fItheta_step\fP angular step size from primary symmetry axis (radians)\&. 
+.br
+\fIphi_step\fP angular step size around primary symmetry axis (radians)\&. 
+.br
+\fIside_ang\fP angular devaition from eqautor (radians)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* projection images, NULL on error\&. 
+.PP
+.nf
+If the input file is a 3D map, a set of projections are generated
+given the point group symmetry.
+Flags:
+    FULL_ASU    projections for full asymmetric unit
+    MULTI_FILE  projections in multiple files   
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 157 of file mg_orient\&.cpp\&.
+.SS "int project_determine_orientations (\fBBproject\fP * project, \fBBimage\fP * proj, \fBBstring\fP & mask_file, int bin, \fBBsymmetry\fP & sym, int part_select, vector< double > & band, double res_lo, double res_hi, double res_polar, int ann_min, int ann_max, double shift_limit, double angle_limit, double edge_radius, int flags)"
+
+.PP
+Find the orientation and origin of every image in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP image processing parameter structure\&. 
+.br
+\fI*proj\fP reference projections\&. 
+.br
+\fI&mask_file\fP mask to apply to particles\&. 
+.br
+\fIbin\fP data compression by binning\&. 
+.br
+\fI*sym\fP point group symmetry structure\&. 
+.br
+\fIpart_select\fP particle selection for processing\&. 
+.br
+\fI*band\fP array of reciprocal space bands\&. 
+.br
+\fIres_lo\fP low resolution limit (angstrom)\&. 
+.br
+\fIres_hi\fP high resolution limit (angstrom)\&. 
+.br
+\fIres_polar\fP resolution limit for in-plane angular alignment (angstrom)\&. 
+.br
+\fIann_min\fP minimum annulus (>=0)\&. 
+.br
+\fIann_max\fP maximum annulus (< image radius)\&. 
+.br
+\fIshift_limit\fP maximum shift from nominal origin of box\&. 
+.br
+\fIangle_limit\fP maximum rotation from original in-plane rotation angle\&. 
+.br
+\fIedge_radius\fP edge radius to mask background using previous origin\&. 
+.br
+\fIflags\fP option flags\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code\&. 
+.PP
+.nf
+The polar power spectrum (pps) of the reference projection is cross correlated
+with that of the image in order to find the angle of rotation.  The image
+is transformed using this angle and the shift found by cross correlation (cc).
+A  second iterative comparison is done with real space polar images
+to find the angle followed by cross correlation to find the shift.
+How much of this second comparison is done depends on the mode flag:
+    mode=0  pps     projection selected only based on pps comparison
+    mode=1  scc     several projections selected based on cutoff for pps cc's
+    mode=2  ccc     all projections selected
+The angle and the x and y values are stored in the view_angle, and ox and oy 
+arrays of the micrograph parameter structure.
+The projections must already be binned.
+Flags:
+    MODE        projection matching mode
+    APPLY_CTF   apply CTF to projections
+    PART_LOG    write log files in log directory
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 330 of file mg_orient\&.cpp\&.
+.SS "int project_determine_orientations2 (\fBBproject\fP * project, \fBBimage\fP * proj, \fBBstring\fP & mask_file, int bin, \fBBsymmetry\fP & sym, int part_select, vector< double > & band, double res_lo, double res_hi, double res_polar, int ann_min, int ann_max, double shift_limit, double angle_limit, double edge_radius, int flags)"
+
+.PP
+Find the orientation and origin of every image in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP image processing parameter structure\&. 
+.br
+\fI*proj\fP reference projections\&. 
+.br
+\fI&mask_file\fP mask to apply to particles\&. 
+.br
+\fIbin\fP data compression by binning\&. 
+.br
+\fI*sym\fP point group symmetry structure\&. 
+.br
+\fIpart_select\fP particle selection for processing\&. 
+.br
+\fI*band\fP array of reciprocal space bands\&. 
+.br
+\fIres_lo\fP low resolution limit (angstrom)\&. 
+.br
+\fIres_hi\fP high resolution limit (angstrom)\&. 
+.br
+\fIres_polar\fP resolution limit for in-plane angular alignment (angstrom)\&. 
+.br
+\fIann_min\fP minimum annulus (>=0)\&. 
+.br
+\fIann_max\fP maximum annulus (< image radius)\&. 
+.br
+\fIshift_limit\fP maximum shift from nominal origin of box\&. 
+.br
+\fIangle_limit\fP maximum rotation from original in-plane rotation angle\&. 
+.br
+\fIedge_radius\fP edge radius to mask background using previous origin\&. 
+.br
+\fIflags\fP option flags\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code\&. 
+.PP
+.nf
+The polar power spectrum (pps) of the reference projection is cross correlated
+with that of the image in order to find the angle of rotation.  The image
+is transformed using this angle and the shift found by cross correlation (cc).
+A  second iterative comparison is done with real space polar images
+to find the angle followed by cross correlation to find the shift.
+How much of this second comparison is done depends on the mode flag:
+    mode=0  pps     projection selected only based on pps comparison
+    mode=1  scc     several projections selected based on cutoff for pps cc's
+    mode=2  ccc     all projections selected
+The angle and the x and y values are stored in the view_angle, and ox and oy
+arrays of the micrograph parameter structure.
+The projections must already be binned.
+Flags:
+    MODE        projection matching mode
+    APPLY_CTF   apply CTF to projections
+    PART_LOG    write log files in log directory
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1048 of file mg_orient\&.cpp\&.
+.SS "int project_determine_origins (\fBBproject\fP * project, \fBBimage\fP * proj, int bin, \fBBsymmetry\fP & sym, int part_select, double res_lo, double res_hi, double shift_limit, int flags)"
+
+.PP
+Find the origin of every image in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP image processing parameter structure\&. 
+.br
+\fI*proj\fP reference projections\&. 
+.br
+\fIbin\fP data compression by binning\&. 
+.br
+\fIsym\fP point group symmetry structure\&. 
+.br
+\fIpart_select\fP particle selection for processing\&. 
+.br
+\fIres_lo\fP low resolution limit (angstrom)\&. 
+.br
+\fIres_hi\fP high resolution limit (angstrom)\&. 
+.br
+\fIshift_limit\fP maximum shift from nominal origin of box\&. 
+.br
+\fIflags\fP option flags\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code\&. 
+.PP
+.nf
+The input view is used to find the corresponding reference projection.
+This projection is then rotated by the input view angle and cross-correlated 
+with the image to find the shift.
+Flags:
+    PART_LOG    write log files in log directory
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1246 of file mg_orient\&.cpp\&.
+.SS "\fBBimage\fP* project_prepare_2D_references (\fBBproject\fP * project, long first, long number, int bin, int ctf_action, double wiener)"
+
+.PP
+Prepare reference images from particles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIproject\fP micrograph project structure\&. 
+.br
+\fIfirst\fP first particle image to use\&. 
+.br
+\fInumber\fP number of particle images to use\&. 
+.br
+\fIbin\fP data compression by binning\&. 
+.br
+\fIctf_action\fP flag to apply CTF to projections\&. 
+.br
+\fIwiener\fP Wiener factor\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* reference images, NULL on error\&. 
+.PP
+.nf
+The particle images are shifted to center their origins.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 65 of file mg_orient\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

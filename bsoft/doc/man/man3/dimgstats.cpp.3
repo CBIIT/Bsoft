@@ -1,0 +1,275 @@
+.TH "/Users/bernard/b20/bsoft/src/dimgstats.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/dimgstats.cpp \- Calculates statistical measures within a set of images or between sets of images\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Bstring\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'img_combine\&.h'\fP
+.br
+\fC#include 'math_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+\fC#include 'Vector3\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBimg_fom_sqrt\fP (\fBBimage\fP *p)"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_students_t_test\fP (int n, \fBBimage\fP *p, vector< double > &weight)"
+.br
+.RI "Applies the Student's t-test to one set of images\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_students_t_test_equal\fP (int set1, int set2, \fBBimage\fP *p1, \fBBimage\fP *p2, vector< double > &weight)"
+.br
+.RI "Applies the Student's t-test to two sets of images, assumes the two distributions have approximately the same variance\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_students_t_test_unequal\fP (int set1, int set2, \fBBimage\fP *p1, \fBBimage\fP *p2, vector< double > &weight)"
+.br
+.RI "Applies the Student's t-test to two sets of images, assumes the two distributions have unequal variance\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_f_test\fP (int set1, int set2, \fBBimage\fP *p1, \fBBimage\fP *p2, vector< double > &weight)"
+.br
+.RI "Applies the F-test to two sets of images\&. "
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Calculates statistical measures within a set of images or between sets of images\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+David Belnap and Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20051213 
+.PP
+Modified: 20190208 (BH) 
+.RE
+.PP
+
+.PP
+Definition in file \fBdimgstats\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBimage\fP * img_f_test (int set1, int set2, \fBBimage\fP * p1, \fBBimage\fP * p2, vector< double > & weight)"
+
+.PP
+Applies the F-test to two sets of images\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+David Belnap 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIset1\fP number of files in set 1\&. 
+.br
+\fIset2\fP number of files in set 2\&. 
+.br
+\fI*p1\fP average image with variance (FOM), set 1 
+.br
+\fI*p2\fP average image with variance (FOM), set 2 
+.br
+\fIweight\fP list of weights\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* F-test image and significance image (as FOM)\&. 
+.PP
+.nf
+The F value is computed for each pixel:
+        F(i) = var1(i) / var2(i)
+
+Variance (as FOM of an average image) is input.  The significance 
+level is computed and stored as FOM of F-test image.  Output is
+in floating point.
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.RE
+.PP
+
+.PP
+Definition at line 589 of file dimgstats\&.cpp\&.
+.SS "int img_fom_sqrt (\fBBimage\fP * p)"
+
+.PP
+Definition at line 322 of file dimgstats\&.cpp\&.
+.SS "\fBBimage\fP * img_students_t_test (int n, \fBBimage\fP * p, vector< double > & weight)"
+
+.PP
+Applies the Student's t-test to one set of images\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP number of files in the set\&. 
+.br
+\fI*p\fP average and variance of the set\&. 
+.br
+\fIweight\fP list of weights\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* significant level image (floating point)\&. 
+.PP
+.nf
+First, average (avg) and variance (var) images are calculated:
+        var = [1/(N-1)] sum(x - avgx)^2
+Second, the t value is computed and returned as an image:
+        t = avg / sqrt[ var/N ]
+Finally, the significance is calculated and returned as the FOM of the image:
+        sig = betai(dof/2, 0.5, dof/(dof + t*t))
+where dof (degrees-of-freedom) is calculated as:
+        dof = ws*(1 - 1.0L/N)
+and ws is the weight sum.
+All images are converted to floating point.
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. Milligan and Flicker (1987) J\&. Cell Biol\&. 105:29-39\&. 
+.RE
+.PP
+
+.PP
+Definition at line 365 of file dimgstats\&.cpp\&.
+.SS "\fBBimage\fP * img_students_t_test_equal (int set1, int set2, \fBBimage\fP * p1, \fBBimage\fP * p2, vector< double > & weight)"
+
+.PP
+Applies the Student's t-test to two sets of images, assumes the two distributions have approximately the same variance\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+David Belnap and Bernard Heymann 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIset1\fP number of files in set 1\&. 
+.br
+\fIset2\fP number of files in set 2\&. 
+.br
+\fI*p1\fP average image with variance (FOM), set 1 
+.br
+\fI*p2\fP average image with variance (FOM), set 2 
+.br
+\fIweight\fP list of weights\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* t-test image and significance image (as FOM)\&. 
+.PP
+.nf
+Input average images for sets 1 and 2, with variance as FOM portion
+of the images.  The numerator portion of the variance (Vn) is 
+computed from the variance.  The "standard error of the difference 
+of the means" is computed:
+SD = sqrt[ ( (Vn1 + Vn2) / degrees_of_freedom ) * (1/set1 + 1/set2) ]
+
+and used to compute the t value:
+            t = ( avg1 - avg2 ) / SD
+
+Finally, the significance level (probability) is computed.
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. Milligan and Flicker (1987) J\&. Cell Biol\&. 105:29-39\&. 
+.RE
+.PP
+
+.PP
+Definition at line 433 of file dimgstats\&.cpp\&.
+.SS "\fBBimage\fP * img_students_t_test_unequal (int set1, int set2, \fBBimage\fP * p1, \fBBimage\fP * p2, vector< double > & weight)"
+
+.PP
+Applies the Student's t-test to two sets of images, assumes the two distributions have unequal variance\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+David Belnap 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIset1\fP number of files in set 1\&. 
+.br
+\fIset2\fP number of files in set 2\&. 
+.br
+\fI*p1\fP average image with variance (FOM), set 1 
+.br
+\fI*p2\fP average image with variance (FOM), set 2 
+.br
+\fIweight\fP list of weights\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* t-test image and significance image (as FOM)\&. 
+.PP
+.nf
+Input average images for sets 1 and 2, with variance as FOM portion
+of the images.  The t value is computed:
+        t = ( avg1 - avg2 ) / sqrt[ var1/ws1 + var2/ws2 ]
+
+(ws = weighted sum, default = N).  The significance level 
+(probability) is computed.  Output is in floating point.
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. Milligan and Flicker (1987) J\&. Cell Biol\&. 105:29-39\&. 
+.RE
+.PP
+
+.PP
+Definition at line 515 of file dimgstats\&.cpp\&.
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 81 of file dimgstats\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+
+.PP
+Definition at line 29 of file dimgstats\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

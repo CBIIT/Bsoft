@@ -1,0 +1,372 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__hand_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mg/mg_hand.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mg/mg_hand.cpp</primary></indexterm>
+<para>
+
+<para>Functions for comparing projections of two oppositely handed reconstructions to images of tilted specimens. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_hand.h&quot;
+#include &quot;mg_select.h&quot;
+#include &quot;Matrix3.h&quot;
+#include &quot;qsort_functions.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_struct_hand___stats">Hand_Stats</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mg__hand_8cpp_1a01650724f5bc7911fd307c267834edcc">field_get_handedness</link> (<link linkend="_class_bimage">Bimage</link> *mapA, <link linkend="_class_bimage">Bimage</link> *mapB, <link linkend="_class_bmicrograph">Bmicrograph</link> *mg1, <link linkend="_class_bmicrograph">Bmicrograph</link> *mg2, <link linkend="_struct_hand___stats">Hand_Stats</link> *Global, double rad_min, double rad_max, double res_min, double res_max, double AmB_min, double AB_min, int diff_out, int origins2, <link linkend="_class_bstring">Bstring</link> outimg, int fieldnum)</para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__hand_8cpp_1aa92b4c5f8b7387a94eb062f266a24631">get_handedness_from_tilt_pair</link> (<link linkend="_class_bimage">Bimage</link> *mapA, <link linkend="_class_bimage">Bimage</link> *mapB, <link linkend="_class_bmicrograph">Bmicrograph</link> *mg1, <link linkend="_class_bmicrograph">Bmicrograph</link> *mg2, <link linkend="_class_bparticle">Bparticle</link> *particle1, <link linkend="_class_bparticle">Bparticle</link> *particle2, <link linkend="_struct_hand___stats">Hand_Stats</link> *Pair, double rad_min, double rad_max, double res_min, double res_max, double AmB_min, double AB_min, int diff_out, int origins2, <link linkend="_class_bstring">Bstring</link> outimg, int fieldnum)</para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__hand_8cpp_1a1ed9470df84b80967ec777591d9f5667">hand_compute_stats</link> (<link linkend="_struct_hand___stats">Hand_Stats</link> *stats, int diff_out)</para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__hand_8cpp_1af66de9e9a1358bf617d3d5906d964c40">hand_prepare_image</link> (<link linkend="_class_bimage">Bimage</link> *p, double resmin, double resmax)</para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__hand_8cpp_1ae498a7eb36cb4e7785a618d1fe8d8d57">hand_print_outheader</link> (int which_one, int diff_out)</para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__hand_8cpp_1a2a0c241d78a0f5b837491c3de36bfa66">hand_print_stats</link> (<link linkend="_struct_hand___stats">Hand_Stats</link> *stats, int which_one, int diff_out)</para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__hand_8cpp_1a1ca63b77880c56578b9dbded8a9b1885">hand_write_img</link> (<link linkend="_class_bimage">Bimage</link> *img, <link linkend="_class_bstring">Bstring</link> imgname, <link linkend="_class_bstring">Bstring</link> outimg, int fieldnum, int num)</para>
+
+<para>Appends micrograph number, image number, and a string tag to a file name. Then it writes out an image file. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__hand_8cpp_1a8e58f6ea2c6cc10cd29aceadfb371412">project_get_handedness</link> (<link linkend="_class_bimage">Bimage</link> *mapA, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double *mg_ang, int *mg_index, int *mg_select, double rad_min, double rad_max, double res_min, double res_max, double AmB_min, double AB_min, int diff_out, int origins2, <link linkend="_class_bstring">Bstring</link> outimg)</para>
+
+<para>Determines handedness for all selected particles (sel &gt; 0) in a project. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__hand_8cpp_1a7eaca1d35e4eb337da4c24e8d0f68020">hand_select_consist</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double *mg_ang, int *mg_index, int *mg_select, int sel_consist)</para>
+
+<para>Sets consistent selection values in all (including unused) micrographs. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mg__hand_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions for comparing projections of two oppositely handed reconstructions to images of tilted specimens. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>David Belnap </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20011003 </para>
+
+<para>Modified: 20151008 (BH) </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__hand_8cpp_1a01650724f5bc7911fd307c267834edcc"/>    <section>
+    <title>field_get_handedness()</title>
+<indexterm><primary>field_get_handedness</primary><secondary>mg_hand.cpp</secondary></indexterm>
+<indexterm><primary>mg_hand.cpp</primary><secondary>field_get_handedness</secondary></indexterm>
+<para><computeroutput>int field_get_handedness (<link linkend="_class_bimage">Bimage</link> * mapA, <link linkend="_class_bimage">Bimage</link> * mapB, <link linkend="_class_bmicrograph">Bmicrograph</link> * mg1, <link linkend="_class_bmicrograph">Bmicrograph</link> * mg2, <link linkend="_struct_hand___stats">Hand_Stats</link> * Global, double rad_min, double rad_max, double res_min, double res_max, double AmB_min, double AB_min, int diff_out, int origins2, <link linkend="_class_bstring">Bstring</link> outimg, int fieldnum)</computeroutput></para><para>
+Definition at line 231 of file mg_hand.cpp.</para>
+    </section><anchor xml:id="_mg__hand_8cpp_1aa92b4c5f8b7387a94eb062f266a24631"/>    <section>
+    <title>get_handedness_from_tilt_pair()</title>
+<indexterm><primary>get_handedness_from_tilt_pair</primary><secondary>mg_hand.cpp</secondary></indexterm>
+<indexterm><primary>mg_hand.cpp</primary><secondary>get_handedness_from_tilt_pair</secondary></indexterm>
+<para><computeroutput>int get_handedness_from_tilt_pair (<link linkend="_class_bimage">Bimage</link> * mapA, <link linkend="_class_bimage">Bimage</link> * mapB, <link linkend="_class_bmicrograph">Bmicrograph</link> * mg1, <link linkend="_class_bmicrograph">Bmicrograph</link> * mg2, <link linkend="_class_bparticle">Bparticle</link> * particle1, <link linkend="_class_bparticle">Bparticle</link> * particle2, <link linkend="_struct_hand___stats">Hand_Stats</link> * Pair, double rad_min, double rad_max, double res_min, double res_max, double AmB_min, double AB_min, int diff_out, int origins2, <link linkend="_class_bstring">Bstring</link> outimg, int fieldnum)</computeroutput></para><para>
+Definition at line 353 of file mg_hand.cpp.</para>
+    </section><anchor xml:id="_mg__hand_8cpp_1a1ed9470df84b80967ec777591d9f5667"/>    <section>
+    <title>hand_compute_stats()</title>
+<indexterm><primary>hand_compute_stats</primary><secondary>mg_hand.cpp</secondary></indexterm>
+<indexterm><primary>mg_hand.cpp</primary><secondary>hand_compute_stats</secondary></indexterm>
+<para><computeroutput>int hand_compute_stats (<link linkend="_struct_hand___stats">Hand_Stats</link> * stats, int diff_out)</computeroutput></para><para>
+Definition at line 698 of file mg_hand.cpp.</para>
+    </section><anchor xml:id="_mg__hand_8cpp_1af66de9e9a1358bf617d3d5906d964c40"/>    <section>
+    <title>hand_prepare_image()</title>
+<indexterm><primary>hand_prepare_image</primary><secondary>mg_hand.cpp</secondary></indexterm>
+<indexterm><primary>mg_hand.cpp</primary><secondary>hand_prepare_image</secondary></indexterm>
+<para><computeroutput>int hand_prepare_image (<link linkend="_class_bimage">Bimage</link> * p, double resmin, double resmax)</computeroutput></para><para>
+Definition at line 766 of file mg_hand.cpp.</para>
+    </section><anchor xml:id="_mg__hand_8cpp_1ae498a7eb36cb4e7785a618d1fe8d8d57"/>    <section>
+    <title>hand_print_outheader()</title>
+<indexterm><primary>hand_print_outheader</primary><secondary>mg_hand.cpp</secondary></indexterm>
+<indexterm><primary>mg_hand.cpp</primary><secondary>hand_print_outheader</secondary></indexterm>
+<para><computeroutput>int hand_print_outheader (int which_one, int diff_out)</computeroutput></para><para>
+Definition at line 788 of file mg_hand.cpp.</para>
+    </section><anchor xml:id="_mg__hand_8cpp_1a2a0c241d78a0f5b837491c3de36bfa66"/>    <section>
+    <title>hand_print_stats()</title>
+<indexterm><primary>hand_print_stats</primary><secondary>mg_hand.cpp</secondary></indexterm>
+<indexterm><primary>mg_hand.cpp</primary><secondary>hand_print_stats</secondary></indexterm>
+<para><computeroutput>int hand_print_stats (<link linkend="_struct_hand___stats">Hand_Stats</link> * stats, int which_one, int diff_out)</computeroutput></para><para>
+Definition at line 838 of file mg_hand.cpp.</para>
+    </section><anchor xml:id="_mg__hand_8cpp_1a7eaca1d35e4eb337da4c24e8d0f68020"/>    <section>
+    <title>hand_select_consist()</title>
+<indexterm><primary>hand_select_consist</primary><secondary>mg_hand.cpp</secondary></indexterm>
+<indexterm><primary>mg_hand.cpp</primary><secondary>hand_select_consist</secondary></indexterm>
+<para><computeroutput>int hand_select_consist (<link linkend="_class_bproject">Bproject</link> * project, double * mg_ang, int * mg_index, int * mg_select, int sel_consist)</computeroutput></para><para>
+
+<para>Sets consistent selection values in all (including unused) micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>Project structure </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*mg_ang</entry>
+                                <entry>
+<para>angles for micrograph selection, views 1 &amp; 2 </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*mg_index</entry>
+                                <entry>
+<para>indices for micrograph selection, views 1 &amp; 2 </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*mg_select</entry>
+                                <entry>
+<para>micrograph selection criteria, views 1 &amp; 2 </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sel_consist</entry>
+                                <entry>
+<para>1 or 2, set other selection values to those of this view </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>If a field-of-view contains more than two micrographs, the user can
+only use two of them to do the handedness determination.  The unused
+micrographs may need their selection values set to the same as those
+in the used micrographs (views 1 and 2).  In addition, there may be
+differences in the initial selection values for views 1 and 2.  This 
+routine loops through the micrographs in a field-of-view and sets all
+selection values to those of view 1 or 2.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 898 of file mg_hand.cpp.</para>
+    </section><anchor xml:id="_mg__hand_8cpp_1a1ca63b77880c56578b9dbded8a9b1885"/>    <section>
+    <title>hand_write_img()</title>
+<indexterm><primary>hand_write_img</primary><secondary>mg_hand.cpp</secondary></indexterm>
+<indexterm><primary>mg_hand.cpp</primary><secondary>hand_write_img</secondary></indexterm>
+<para><computeroutput>int hand_write_img (<link linkend="_class_bimage">Bimage</link> * img, <link linkend="_class_bstring">Bstring</link> imgname, <link linkend="_class_bstring">Bstring</link> outimg, int fieldnum, int num)</computeroutput></para><para>
+
+<para>Appends micrograph number, image number, and a string tag to a file name. Then it writes out an image file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*img</entry>
+                                <entry>
+<para>Image to write out </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>imgname</entry>
+                                <entry>
+<para>String tag for image, appended to file name </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>outimg</entry>
+                                <entry>
+<para>Prefix and suffix for file name </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fieldnum</entry>
+                                <entry>
+<para>Index number for current field-of-view </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>num</entry>
+                                <entry>
+<para>Index number for image </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 959 of file mg_hand.cpp.</para>
+    </section><anchor xml:id="_mg__hand_8cpp_1a8e58f6ea2c6cc10cd29aceadfb371412"/>    <section>
+    <title>project_get_handedness()</title>
+<indexterm><primary>project_get_handedness</primary><secondary>mg_hand.cpp</secondary></indexterm>
+<indexterm><primary>mg_hand.cpp</primary><secondary>project_get_handedness</secondary></indexterm>
+<para><computeroutput>int project_get_handedness (<link linkend="_class_bimage">Bimage</link> * mapA, <link linkend="_class_bproject">Bproject</link> * project, double * mg_ang, int * mg_index, int * mg_select, double rad_min, double rad_max, double res_min, double res_max, double AmB_min, double AB_min, int diff_out, int origins2, <link linkend="_class_bstring">Bstring</link> outimg)</computeroutput></para><para>
+
+<para>Determines handedness for all selected particles (sel &gt; 0) in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mapA</entry>
+                                <entry>
+<para>3D map (hand A) </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>Project structure </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*mg_ang</entry>
+                                <entry>
+<para>angles for micrograph selection, views 1 &amp; 2 </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*mg_index</entry>
+                                <entry>
+<para>indices for micrograph selection, views 1 &amp; 2 </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*mg_select</entry>
+                                <entry>
+<para>micrograph selection criteria, views 1 &amp; 2 </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rad_min</entry>
+                                <entry>
+<para>minimum radius for FOM calculation (pixels) </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rad_max</entry>
+                                <entry>
+<para>maximum radius for FOM calculation (pixels) </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_min</entry>
+                                <entry>
+<para>minimum resolution for FOM calculation (angs.) </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_max</entry>
+                                <entry>
+<para>maximum resolution for FOM calculation (angs.) </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>AmB_min</entry>
+                                <entry>
+<para>|FOMA - FOMB| must be this value or greater </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>AB_min</entry>
+                                <entry>
+<para>min. acceptable value for FOM of correct hand </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>diff_out</entry>
+                                <entry>
+<para>output difference of measured &amp; predicted orientations </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origins2</entry>
+                                <entry>
+<para>flag to determine origins for second view </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>outimg</entry>
+                                <entry>
+<para>prefix &amp; suffix for output projection files </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Gets tilt-axis direction and rotation angle for a micrograph pair.
+Then, loops through the selected particles in pair.  Sends data to
+function get_handedness_from_tilt_pair, where handedness is
+determined.  Statistics are calculated for each pair and sums for
+global statistics are tabulated.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 114 of file mg_hand.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_mg__hand_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>mg_hand.cpp</secondary></indexterm>
+<indexterm><primary>mg_hand.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Model Template Searching</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h2>Searching for a template in maps</h2>
+<p>In tomographic maps there are typically many copies of one or more components. Reliably locating such components within a densely packed tomogram may be difficult and can only yield approximately correct results at best. The method presented here relies on cross-correlation, and may have significant false positives and false negatives. The final result must be assessed in the light of these limitations.</p>
+<h2>Global cross-correlation grid search</h2>
+<p>With a suitable template of a particular type of component, multiple copies can identified through cross-correlation with an orientation search:</p>
+<div id="command"><p>bmultifit -v 1 -ori 80,80,80 -Temp 1gw5_temp.map -ang 5 -fullasu -resol 50,200 -fom 0.05 -out ccv_part.star ccv_part.map</p></div>
+<p>This generates a very large set of possible solutions which has to be &quot;pruned&quot; in subsequent steps. Note that the template must be the same size as the input map.</p>
+<h2>Pruning a large set of solutions</h2>
+<p>An efficient way of pruning a very large set of components is to map them to a grid, and select the one with the highest FOM in each grid unit. The following generates a grid with a unit of 10 Å on a side, finds the highest FOM in each, as long as the FOM is higher than 0.5 of the maximum FOM (the -fraction option), and deletes the non-selected components:</p>
+<div id="command"><p>bmodsel -verb 7 -all -prune large -distance 10 -fraction 0.5 -out ccv_part_sel.star ccv_part.star</p></div>
+<p>The result is a much smaller solution set with components at least 10 Å from each other. The next step is to further select components with the aim of finding a set that represents the density in the map. The following selects components from the highest FOM, deleting all other components closer than 80 Å, and proceeding with the next highest FOM remaining:</p>
+<div id="command"><p>bmodsel -verb 7 -prune fom -dist 80 -out ccv_part_sel2.star ccv_part_sel.star</p></div>
+<h2>Verifying the quality of the final solution</h2>
+<p>The quality of the final solution can be assessed by building a synthetic map from the template and compare that to the tomographic map:</p>
+<div id="command"><p>bxb -verb 7 -build 160,160,160 -ori 80,80,80 -sam 7.8 -cons ccv_build.map -out ccv_build.star ccv_part_sel2.star</p></div>
+</div>
+<div id="footer">
+  Bernard Heymann  20120126
+</div>
+</body>
+</html>

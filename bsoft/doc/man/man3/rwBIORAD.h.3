@@ -1,0 +1,110 @@
+.TH "/Users/bernard/b20/bsoft/include/rwBIORAD.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/rwBIORAD.h \- Header file for reading and writing BioRad files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBBIORADhead\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBBIORADSIZE\fP   76"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBreadBIORAD\fP (\fBBimage\fP *p, int readdata)"
+.br
+.RI "Reading a BioRad image file format\&. "
+.ti -1c
+.RI "int \fBwriteBIORAD\fP (\fBBimage\fP *p)"
+.br
+.RI "Writing a BioRad image file format\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for reading and writing BioRad files\&. 
+
+
+.PP
+\fBDate\fP
+.RS 4
+Created: 19990427 
+.PP
+Modified: 20111217 
+.PP
+.nf
+Format: BioRad 3D confocal microscopy image file format@author Bernard Heymann
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwBIORAD\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define BIORADSIZE   76"
+
+.PP
+Definition at line 12 of file rwBIORAD\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int readBIORAD (\fBBimage\fP * p, int readdata)"
+
+.PP
+Reading a BioRad image file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.br
+\fIreaddata\fP flag to activate reading of image data\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. A 3D image format intended for confocal light microscopy\&. Header size: 76 bytes (fixed)\&. File format extension: \&.PIC\&. Identifier: 12345 (byte 54)\&. Byte order determination: Magic number\&. Data types: 0 = short, 1 = byte\&. 
+.RE
+.PP
+
+.PP
+Definition at line 40 of file rwBIORAD\&.cpp\&.
+.SS "int writeBIORAD (\fBBimage\fP * p)"
+
+.PP
+Writing a BioRad image file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. A 3D image format intended for confocal light microscopy\&. 
+.RE
+.PP
+
+.PP
+Definition at line 99 of file rwBIORAD\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,362 @@
+.TH "/Users/bernard/b20/bsoft/src/model/model_map.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/model/model_map.cpp \- Function to generate a map from a model\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel\&.h'\fP
+.br
+\fC#include 'model_links\&.h'\fP
+.br
+\fC#include 'model_transform\&.h'\fP
+.br
+\fC#include 'model_extract_build\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'mg_orient\&.h'\fP
+.br
+\fC#include 'img_combine\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_from_images\fP (\fBBimage\fP *plist)"
+.br
+.RI "Creates one or more models from 3D images\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_from_graph_segments\fP (\fBBimage\fP *p, \fBGSgraph\fP &gs)"
+.br
+.RI "Creates one or more models from graph segments\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_from_model\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< double > ori, \fBVector3\fP< long > size, \fBVector3\fP< double > sam, double sigma)"
+.br
+.RI "Calculates a map from model component coordinates\&. 
+.br
+ "
+.ti -1c
+.RI "int \fBmodel_catenate_maps\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP &filename)"
+.br
+.RI "Concatenates all model maps into one multi-image file\&. 
+.br
+ "
+.ti -1c
+.RI "int \fBmodel_shell_fit\fP (\fBBmodel\fP *\fBmodel\fP, double hires, double lores, int neg)"
+.br
+.RI "Fits a shell model as a rigid body to a map\&. 
+.br
+ "
+.ti -1c
+.RI "int \fBmodel_shell_radial_profile\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates a radial profile from a shell model\&. 
+.br
+ "
+.ti -1c
+.RI "\fBBimage\fP * \fBmodel_shell_power_spectrum\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< long > size, \fBVector3\fP< double > origin, int ft_size, int ann_min, int ann_max, double hires, double lores)"
+.br
+.RI "Calculates a radial profile from a shell model\&. 
+.br
+ "
+.ti -1c
+.RI "int \fBcomp_set_fom_sym\fP (\fBBcomponent\fP *comp, \fBBimage\fP *p, long minorder, long maxorder)"
+.br
+.ti -1c
+.RI "int \fBmodel_component_symmetry\fP (\fBBmodel\fP *\fBmodel\fP, long nangles, long ann_min, long ann_max, long ann_width, long zmin, long zmax, long zinc, long minorder, long maxorder)"
+.br
+.RI "Determines the cyclic symmetry of components\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Function to generate a map from a model\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20081112 
+.PP
+Modified: 20210205 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_map\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int comp_set_fom_sym (\fBBcomponent\fP * comp, \fBBimage\fP * p, long minorder, long maxorder)"
+
+.PP
+Definition at line 597 of file model_map\&.cpp\&.
+.SS "\fBBimage\fP* img_from_model (\fBBmodel\fP * model, \fBVector3\fP< double > ori, \fBVector3\fP< long > size, \fBVector3\fP< double > sam, double sigma)"
+
+.PP
+Calculates a map from model component coordinates\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fIori\fP origin within new map\&. 
+.br
+\fIsize\fP size of new map\&. 
+.br
+\fIsam\fP voxel size of new map\&. 
+.br
+\fIsigma\fP gaussian sphere width\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* new map\&. 
+.RE
+.PP
+
+.PP
+Definition at line 125 of file model_map\&.cpp\&.
+.SS "int model_catenate_maps (\fBBmodel\fP * model, \fBBstring\fP & filename)"
+
+.PP
+Concatenates all model maps into one multi-image file\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fI&filename\fP new map file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The model map file name must be set and point to a valid file.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 224 of file model_map\&.cpp\&.
+.SS "int model_component_symmetry (\fBBmodel\fP * model, long nangles, long ann_min, long ann_max, long ann_width, long zmin, long zmax, long zinc, long minorder, long maxorder)"
+
+.PP
+Determines the cyclic symmetry of components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fInangles\fP number of angles\&. 
+.br
+\fIann_min\fP minimum annulus\&. 
+.br
+\fIann_max\fP maximum annulus\&. 
+.br
+\fIann_width\fP annular width\&. 
+.br
+\fIzmin\fP minimum z limit\&. 
+.br
+\fIzmax\fP maximum z limit\&. 
+.br
+\fIzinc\fP z increment\&. 
+.br
+\fIminorder\fP minimum cyclic order to search for\&. 
+.br
+\fImaxorder\fP maximum cyclic order to search for\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 683 of file model_map\&.cpp\&.
+.SS "\fBBmodel\fP* model_from_graph_segments (\fBBimage\fP * p, \fBGSgraph\fP & gs)"
+
+.PP
+Creates one or more models from graph segments\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image\&. 
+.br
+\fI&gs\fP graph segments\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model\&. 
+.PP
+.nf
+The regions are assumed to be number consecutively.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 62 of file model_map\&.cpp\&.
+.SS "\fBBmodel\fP* model_from_images (\fBBimage\fP * plist)"
+
+.PP
+Creates one or more models from 3D images\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*plist\fP list of images\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model\&. 
+.PP
+.nf
+The model ID's are derived from the image filenames.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 29 of file model_map\&.cpp\&.
+.SS "int model_shell_fit (\fBBmodel\fP * model, double hires, double lores, int neg)"
+
+.PP
+Fits a shell model as a rigid body to a map\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fIhires\fP high resolution limit\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fIneg\fP flag to set contrast negative\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The model map file name must be set and point to a valid file.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 258 of file model_map\&.cpp\&.
+.SS "\fBBimage\fP* model_shell_power_spectrum (\fBBmodel\fP * model, \fBVector3\fP< long > size, \fBVector3\fP< double > origin, int ft_size, int ann_min, int ann_max, double hires, double lores)"
+
+.PP
+Calculates a radial profile from a shell model\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fIsize\fP size of component density to extract\&. 
+.br
+\fIorigin\fP origin for extracted densities\&. 
+.br
+\fIft_size\fP Fourier transform size\&. 
+.br
+\fIann_min\fP minimum annulus for rotational alignment\&. 
+.br
+\fIann_max\fP maximum annulus for rotational alignment\&. 
+.br
+\fIhires\fP high resolution limit for cross-correlation\&. 
+.br
+\fIlores\fP low resolution limit for cross-correlation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* 0\&. 
+.PP
+.nf
+The model map file name must be set and point to a valid file.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 410 of file model_map\&.cpp\&.
+.SS "int model_shell_radial_profile (\fBBmodel\fP * model)"
+
+.PP
+Calculates a radial profile from a shell model\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The model map file name must be set and point to a valid file.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 306 of file model_map\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

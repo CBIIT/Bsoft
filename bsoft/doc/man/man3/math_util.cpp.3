@@ -1,0 +1,433 @@
+.TH "/Users/bernard/b20/bsoft/src/util/math_util.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/util/math_util.cpp \- Mathematics utility functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'math_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "double \fBbfloor\fP (double value, int places)"
+.br
+.RI "Truncates a value to a specified number of decimal places\&. "
+.ti -1c
+.RI "double \fBbround\fP (double value, int places)"
+.br
+.RI "Rounds a value to a specified number of decimal places\&. "
+.ti -1c
+.RI "double \fBfactorial\fP (int n)"
+.br
+.RI "Calculates the factorial of n\&. "
+.ti -1c
+.RI "double \fBnumber_of_combinations\fP (int n, int r)"
+.br
+.RI "Calculates the number of combinations of size r in set of size n\&. "
+.ti -1c
+.RI "int \fBpartition\fP (vector< double > &a, int n, int k)"
+.br
+.RI "Determines the index k'th value in the array\&. "
+.ti -1c
+.RI "long * \fBprime_factors\fP (long number, long &n)"
+.br
+.RI "Finds all the prime factor for the input number\&. "
+.ti -1c
+.RI "long \fBsmallest_prime\fP (long number)"
+.br
+.RI "Finds the smallest prime number factor of the input number\&. "
+.ti -1c
+.RI "int \fBnext_permutation\fP (\fBBstring\fP &s)"
+.br
+.RI "Produces the next permutation in lexical order\&. "
+.ti -1c
+.RI "double \fBfishers_z_transform\fP (double value)"
+.br
+.RI "Calculates Fisher's z-transform\&. "
+.ti -1c
+.RI "double \fBbetacf\fP (double a, double b, double x)"
+.br
+.RI "Evaluates the continued fraction for the incomplete beta function\&. "
+.ti -1c
+.RI "double \fBbetai\fP (double a, double b, double x)"
+.br
+.RI "Calculates the incomplete beta function Ix(a,b)\&. "
+.ti -1c
+.RI "double \fBkmeans_threshold\fP (long n, double *v)"
+.br
+.RI "Finds a threshold that partitions an array into foreground and background clusters\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Mathematics utility functions\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20030414 
+.PP
+Modified: 20151203 
+.RE
+.PP
+
+.PP
+Definition in file \fBmath_util\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double betacf (double a, double b, double x)"
+
+.PP
+Evaluates the continued fraction for the incomplete beta function\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIa\fP first parameter\&. 
+.br
+\fIb\fP second parameter\&. 
+.br
+\fIx\fP domain variable [0,1]\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double 
+.br
+ 
+.PP
+.nf
+Lentz's method.
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.RE
+.PP
+
+.PP
+Definition at line 268 of file math_util\&.cpp\&.
+.SS "double betai (double a, double b, double x)"
+
+.PP
+Calculates the incomplete beta function Ix(a,b)\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIa\fP first parameter\&. 
+.br
+\fIb\fP second parameter\&. 
+.br
+\fIx\fP domain variable [0,1]\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double 
+.br
+ 
+.PP
+.nf
+Limiting values: I0(a,b) = 0, I1(a,b) = 1.
+Symmetry relation: Ix(a,b) = 1 - I1-x(b,a).
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.RE
+.PP
+
+.PP
+Definition at line 320 of file math_util\&.cpp\&.
+.SS "double bfloor (double value, int places)"
+
+.PP
+Truncates a value to a specified number of decimal places\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP value to be truncated\&. 
+.br
+\fIplaces\fP number of decimal places\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 21 of file math_util\&.cpp\&.
+.SS "double bround (double value, int places)"
+
+.PP
+Rounds a value to a specified number of decimal places\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP value to be rounded\&. 
+.br
+\fIplaces\fP number of decimal places\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double rounded value\&. 
+.RE
+.PP
+
+.PP
+Definition at line 39 of file math_util\&.cpp\&.
+.SS "double factorial (int n)"
+
+.PP
+Calculates the factorial of n\&. 
+.PP
+.nf
+All values of n less than 1 returns 1.
+An exact calculation is done for 1 < n <= 50.
+The Lancos approximation is used for n > 50.
+Factorials of integers larger than 170 exceeds the capacity of a 
+double and causes program termination.
+The largest relative error is for 170: 1.22378e-13.
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP integer\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double factorial of n, <0 on error\&. 
+.RE
+.PP
+
+.PP
+Definition at line 66 of file math_util\&.cpp\&.
+.SS "double fishers_z_transform (double value)"
+
+.PP
+Calculates Fisher's z-transform\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP a value\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double z value\&. 
+.PP
+.nf
+Fisher's z-transform is given by:
+    z = 0.5*log((1+v)/(1-v))
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.RE
+.PP
+
+.PP
+Definition at line 249 of file math_util\&.cpp\&.
+.SS "double kmeans_threshold (long n, double * v)"
+
+.PP
+Finds a threshold that partitions an array into foreground and background clusters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP number of array elements\&. 
+.br
+\fIv\fP array\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double threshold\&. 
+.br
+ 
+.PP
+.nf
+Limiting values: I0(a,b) = 0, I1(a,b) = 1.
+Symmetry relation: Ix(a,b) = 1 - I1-x(b,a).
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.RE
+.PP
+
+.PP
+Definition at line 345 of file math_util\&.cpp\&.
+.SS "int next_permutation (\fBBstring\fP & s)"
+
+.PP
+Produces the next permutation in lexical order\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&s\fP string of symbols to permute\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 1 = success, 0 = no next permutation\&. 
+.PP
+.nf
+To get all permutations, the first string needs
+to be ordered in ascending order.
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.RE
+.PP
+
+.PP
+Definition at line 220 of file math_util\&.cpp\&.
+.SS "double number_of_combinations (int n, int r)"
+
+.PP
+Calculates the number of combinations of size r in set of size n\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP number in set\&. 
+.br
+\fIr\fP number in subset\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double number of combinations, <0 on error\&. 
+.PP
+.nf
+All values of n less than 1 returns 1.
+An exact calculation is done for 1 < n <= 50.
+The Lancos approximation is used for n > 50.
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.RE
+.PP
+
+.PP
+Definition at line 97 of file math_util\&.cpp\&.
+.SS "int partition (vector< double > & a, int n, int k)"
+
+.PP
+Determines the index k'th value in the array\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*a\fP array\&. 
+.br
+\fIn\fP number of array elements\&. 
+.br
+\fIk\fP rank index to look for\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+0 
+.PP
+.nf
+The array is partioned into 2 sides, with the left side lower or equal 
+to and the right side higher or equal to the k'th element.
+This is useful to determine the median without full sorting.
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.RE
+.PP
+
+.PP
+Definition at line 123 of file math_util\&.cpp\&.
+.SS "long* prime_factors (long number, long & n)"
+
+.PP
+Finds all the prime factor for the input number\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fInumber\fP integer\&. 
+.br
+\fI&n\fP number of prime factors\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long* array of prime factors (can be NULL)\&. 
+.PP
+.nf
+Calculates the prime factors from the smallest to the largest.
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.RE
+.PP
+
+.PP
+Definition at line 152 of file math_util\&.cpp\&.
+.SS "long smallest_prime (long number)"
+
+.PP
+Finds the smallest prime number factor of the input number\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fInumber\fP integer\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long smallest prime factor\&. 
+.PP
+.nf
+Tries to divide the given positive integer number by 
+primes from 2 to the square root of the integer.
+Returns the first prime divisor found, which may be the 
+input number if it is prime.
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.RE
+.PP
+
+.PP
+Definition at line 191 of file math_util\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

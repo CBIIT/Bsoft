@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/bsoft.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: SPA strategies</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="../Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Single Particle Analysis Strategies</h1>
+<p>SPA aims at determining the structure of a particle from electron
+micrographs containing many particle images. The modern strategies
+for this processing involve the following three issues that need to be
+considered before starting processing:</p>
+<ul>
+	<li>Validation</li>
+	<li>CTF correction</li>
+	<li>Heterogeneity</li>
+</ul>
+<p>The sections below describe these issues in general with links to
+more specific workflows.</p>
+<br />
+<h2>1. Validation approaches</h2>
+<p>The particle images should be processed in such a way that a valid
+reconstruction is produced. The principle in all of these approaches
+is that the images should contain mutually consistent information.
+Pure noise images don't contain such coherent information, but they
+can still be aligned to any given reference to give an apparently
+reasonable reconstruction. The validation methods below are designed
+to avoid mistaking noise images for real particle images, as well
+as support the estimated resolution obtained for a reconstruction.</p>
+<h3>1.1. <a href="bsoft_spa_simple.html">Resolution-limited alignment</a></h3>
+<p>Resolution limits are imposed on the alignment of particles to make use
+of that region of the spatial frequencies that carry orientational information.
+The low frequencies often have high amplitudes but not much rotational
+information, so they should be omitted. The high frequencies often have
+very low signal-to-noise, and should be omitted to avoid aligning to noise.
+In addition, recovery of information in the reconstruction beyond the
+high resolution limit used in alignment provides a measure of validation.
+This indicates how resolution limits can be misused. If the user select
+too generous high resolution limits, the data can be overfitted (just
+another term referring to the inclusion of high frequency noise).
+The high resolution limit should therefore be chosen with care.</p>
+<h3>1.2. <a href="bsoft_spa_gs.html">Independent data sets ("golden standard")</a></h3>
+<p>The notion of independent data sets is simply a variant of repetition in
+science. If you get the same result by processing two or more independent
+data sets, then the outcome is very likely valid. The way in which this fails
+is if common information is used in the processing of the separate data sets.
+One example is if the same shape mask is used on the references and possibly
+the images. Such data is coerced to converge to the same result. However,
+this is rare and should be easily avoided by not sharing any form of
+information between data sets.</p>
+<h3>1.3. <a href="bsoft_handedness.html">Tilt pair/Handedness analysis</a></h3>
+<p>Multiple images of the same particle can be used to verify that the
+processing returns the expected corrresponding orientations. This is
+typically done by taking tilt pairs of micrographs and comparing the
+orientations obtained for the particles. The angle between the
+orientations should agree with the angle difference between the micrographs.
+This is also one way to determine the handedness of the reconstructions.</p>
+<br />
+<h2>2. <a href="bsoft_ctf.html">Contrast transfer function correction</a></h2>
+<p>The use of underfocused images in cryo-EM to enhance contrast requires a
+correction based on the CTF to align the particle images and
+recover high frequency information in the reconstructions. The two
+approaches are to correct for the CTF in the particle images before alignment
+and reconstruction, or to defer the correction to after the alignment and
+during reconstruction</p>
+<h3>2.1 CTF correction before alignment</h3>
+<p>The traditional workflow for SPA involves correcting the extracted
+particle images followed by alignment. The images are therefore already corrected
+by the time the reconstruction is done. One drawback is that if the correction
+is too aggressive in modifying the amplitudes, it may introduce artifacts
+that throw off the alignment. In this case it is safest to just do phase
+flipping rather than a method that changes the amplitudes</p>
+<h3>2.2 CTF correction after alignment</h3>
+<p>In a newer workflow, the CTF is applied to the reference projection so that
+its power spectrum looks more like that of the original particle image.
+Because the application of the CTF is straightforward, any artifacts due to
+correction are avoided and the scaling of the amplitudes relative to noise
+is similar in both projection and image. The images are then corrected for
+the CTF during reconstruction (Note that the same artifacts may be introduced
+here if the correction is too aggressive). This is now the preferred
+strategy in Bsoft.</p>
+<br />
+<h2>3. <a href="bsoft_mpa.html">3D Classification</a></h2>
+<p>In Bsoft, a form of K-means classification or multi-reference alignment
+ is done as follows.
+The particles are aligned against multiple reference maps. The particles
+are then classified based on their best figure-of-merit with respect
+to the reference maps. The process is iterated until a stable set
+of maps are generated. The maps/classes can be modified after each
+iteration by combining those
+maps that are very similar, and generating intermediate maps between
+those that are very dissimilar.</p>
+<br />
+
+</div>
+<div id="footer">
+  Bernard Heymann  20150219
+</div>
+</body>
+</html>

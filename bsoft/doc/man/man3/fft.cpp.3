@@ -1,0 +1,171 @@
+.TH "/Users/bernard/b20/bsoft/src/util/fft.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/util/fft.cpp \- General FFT for n-dimensional data\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'fft\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBfft_plan\fP \fBfft_setup_plan\fP (long x, long y, long z, \fBfft_direction\fP dir, int opt)"
+.br
+.RI "Sets up a plan for fast Fourier transforms\&. "
+.ti -1c
+.RI "\fBfft_plan\fP \fBfft_setup_plan\fP (\fBVector3\fP< long > size, \fBfft_direction\fP dir, int opt)"
+.br
+.ti -1c
+.RI "int \fBfft_destroy_plan\fP (\fBfft_plan\fP plan)"
+.br
+.RI "Deallocates a plan for fast Fourier transforms\&. "
+.ti -1c
+.RI "int \fBfftw\fP (\fBfft_plan\fP plan, \fBComplex\fP< float > *a)"
+.br
+.RI "Fast Fourier transforms a data array\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+General FFT for n-dimensional data\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19980805 
+.PP
+Modified: 20151002 
+.PP
+.nf
+    Implementing the FFTW library
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition in file \fBfft\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int fft_destroy_plan (\fBfft_plan\fP plan)"
+
+.PP
+Deallocates a plan for fast Fourier transforms\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIplan\fP FFTW plan\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+FFTW library (www.fftw.org).
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 87 of file fft\&.cpp\&.
+.SS "\fBfft_plan\fP fft_setup_plan (long x, long y, long z, \fBfft_direction\fP dir, int opt)"
+
+.PP
+Sets up a plan for fast Fourier transforms\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIx\fP x dimension\&. 
+.br
+\fIy\fP y dimension\&. 
+.br
+\fIz\fP z dimension\&. 
+.br
+\fIdir\fP direction of transformation (FFTW_FORWARD or FFTW_BACKWARD) 
+.br
+\fIopt\fP optimization (0=FFTW_ESTIMATE, 1=FFTW_MEASURE, 2=FFTW_PATIENT, 3=FFTW_EXHAUSTIVE)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+fft_plan FFTW plan\&. 
+.PP
+.nf
+FFTW library (www.fftw.org).
+The size and direction determines the plan.
+Both FFTW versions 2 and 3 are supported.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 31 of file fft\&.cpp\&.
+.SS "\fBfft_plan\fP fft_setup_plan (\fBVector3\fP< long > size, \fBfft_direction\fP dir, int opt)"
+
+.PP
+Definition at line 74 of file fft\&.cpp\&.
+.SS "int fftw (\fBfft_plan\fP plan, \fBComplex\fP< float > * a)"
+
+.PP
+Fast Fourier transforms a data array\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIplan\fP Fourier transform plan\&. 
+.br
+\fI*a\fP data array\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code\&. 
+.PP
+.nf
+FFTW library (www.fftw.org).
+The transform plan encodes both the direction and size of the transform.
+The transformation is done in place and the resultant data are 
+returned within the original array.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 106 of file fft\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

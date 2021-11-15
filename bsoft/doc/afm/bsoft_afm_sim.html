@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: AFM</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h2>Simulating an AFM experiment</h2>
+<p>If the molecular structure of a specimen is known, a topographic map can be calculated through a simulation of AFM imaging.</p>
+<p>	The elastic force on an AFM tip is calculated as:</p>
+<center><p>F = kt*dz = kb*dV/d</p></center>
+<p>where</p>
+<ul><li>kt is the cantilever spring constant, typically 0.01 - 0.1 N/m.</li>
+	<li>dz is the tip displacement due to specimen interaction.</li>
+	<li>kb is the bulk modulus of the specimen, typically 1e9 N/m2.</li>
+	<li>dV is the volume of the specimen displaced by the tip. This
+				volume is here approximated as the density overlap volume.</li>
+	<li>d is the specimen thickness in angstrom.</li>
+</ul>
+<p>	The tip is positioned at each point (x,y,z) in the density map and the
+	overlap volume calculated (i.e., a type of convolution).  This tip
+	position corresponds to a zero displacement.  The correct tip position
+	is found by shifting the tip upwards (in the z-direction) until the 
+	displacement and elastic forces are approximately equal.  The tip 
+	displacement is refined by interpolation and the force calculated.  
+	The force map is returned in place of the original density map.</p>
+<p>	Forces are calculated in piconewton.
+	The origin of the tip density is taken as nx/2, ny/2, 0.</p>
+	<br/>
+<h3>Example: Simulation of an AFM experiment on a bacteriorhodopsin 2D crystal</h3>
+<p>First generate a map from an atomic coordinate file:</p>
+<div id="command"><p>bgex -v 7 -coor 1qhj_two_trim_uc.pdb -sam 1 -ori 0,0,0 -size 62,108,100 -wrap -resol 6 br_uc_6a.map</p></div>
+<p>Then run the simulation with the appropriate parameters:</p>
+<div id="command"><p>bafm -v 7 -sam 1 -tip 10,60,60,60 -spring 0.02 -modulus 1e9 -thick 60 -Post br_afm_6a_t10_k1e9.ps -Force br_afm_6a_t10_k1e9.map br_uc_6a.map br_afm_6a_t10_k1e9.pif</p></div>
+<center><p><img src="br_afm_6a_t10_k1e9_h10pN.png" alt="AFM simulation" width="124" />
+	<img src="br_cyt_uc.png" alt="AFM simulation" width="124" /></p>
+<p>Left: The simulated height map at 10 pN. Right: An actual AFM height map of the cytoplasmic surface</p></center>
+<center><p><img src="br_afm_6a_t10_k1e9.png" alt="AFM simulation" width="500" /></p>
+<p>The average force curve for the simulation</p></center>
+</div>
+<div id="footer">
+  Bernard Heymann  20141230
+</div>
+</body>
+</html>

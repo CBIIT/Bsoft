@@ -1,0 +1,151 @@
+.TH "/Users/bernard/b20/bsoft/radon/proj_tool.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/radon/proj_tool.cpp
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'proj_tool\&.h'\fP
+.br
+\fC#include 'radon_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBLUTable\fP * \fBcreate_table\fP (int ncol, int sizeT)"
+.br
+.ti -1c
+.RI "int \fBkill_table\fP (\fBLUTable\fP *lut)"
+.br
+.ti -1c
+.RI "int \fBwrite_line\fP (\fBBimage\fP *p, \fBBimage\fP *prec, int angolo, float csi, float eta, \fBBimage\fP *pmask, \fBLUTable\fP *lut, float *priga)"
+.br
+.ti -1c
+.RI "int \fBweigh_radon_transf\fP (\fBBimage\fP *p, \fBBimage\fP *pmask)"
+.br
+.RI "Weighs a radon transform with a mask\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+\fBAuthor\fP
+.RS 4
+P\&.L\&. Bellon, F\&. Cantele and S\&. Lanzavecchia Dip\&. Chimica Strutturale e Stereochimica Inorganica Via Venezian 21, 20133 Milano, Italy
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 7 04 2003 
+.PP
+Modified: 07 07 2005 
+.RE
+.PP
+
+.PP
+Definition in file \fBproj_tool\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBLUTable\fP* create_table (int ncol, int sizeT)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fIncol\fP 
+.br
+\fIsizeT\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 25 of file proj_tool\&.cpp\&.
+.SS "int kill_table (\fBLUTable\fP * lut)"
+
+.PP
+Definition at line 139 of file proj_tool\&.cpp\&.
+.SS "int weigh_radon_transf (\fBBimage\fP * p, \fBBimage\fP * pmask)"
+
+.PP
+Weighs a radon transform with a mask\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP radon transform\&. 
+.br
+\fI*pmask\fP mask calculated for the radon transform\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.PP
+.nf
+The mask is searched for the minimum value to assess completeness.
+Each value in the mask above a threshold is inverted (the weight to be applied).
+Values below the threshold is set to zero.
+The threshold is set to 0.9.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 289 of file proj_tool\&.cpp\&.
+.SS "int write_line (\fBBimage\fP * p, \fBBimage\fP * prec, int angolo, float csi, float eta, \fBBimage\fP * pmask, \fBLUTable\fP * lut, float * priga)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 
+.br
+ 
+.br
+\fI*prec\fP 
+.br
+\fIangolo\fP angle index 
+.br
+\fIcsi\fP 
+.br
+\fIeta\fP 
+.br
+\fI*pmask\fP 
+.br
+\fI*lut\fP 
+.br
+\fI*priga\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 177 of file proj_tool\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

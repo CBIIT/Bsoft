@@ -1,0 +1,275 @@
+.TH "/Users/bernard/b20/bsoft/src/util/file_util.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/util/file_util.cpp \- Library functions for file checking\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'file_util\&.h'\fP
+.br
+\fC#include 'string_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include <fstream>\fP
+.br
+\fC#include <dirent\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBstring\fP \fBtest_access\fP (\fBBstring\fP filename)"
+.br
+.ti -1c
+.RI "string \fBtest_access\fP (string filename)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBfind_file\fP (\fBBstring\fP filename, \fBBstring\fP path, int flag)"
+.br
+.RI "Searches for a file within or without the given path\&. "
+.ti -1c
+.RI "string \fBfind_file\fP (string filename, string path, int flag)"
+.br
+.ti -1c
+.RI "vector< string > \fBfile_list\fP (string path)"
+.br
+.RI "Returns a list of files in the requested directory\&. "
+.ti -1c
+.RI "vector< string > \fBfile_list\fP (string path, string ext)"
+.br
+.RI "Returns a list of files in the requested directory\&. "
+.ti -1c
+.RI "\fBFileType\fP \fBfile_type\fP (const char *filename)"
+.br
+.RI "Checks the file type using the extension and contents\&. "
+.ti -1c
+.RI "\fBFileType\fP \fBfile_type\fP (\fBBstring\fP &filename)"
+.br
+.ti -1c
+.RI "int \fBfread_large\fP (unsigned char *aptr, size_t pagesize, size_t offset, ifstream *fimg)"
+.br
+.RI "Reads blocks of memeory no larger than 1Gb\&. "
+.ti -1c
+.RI "int \fBfread_large\fP (unsigned char *aptr, size_t pagesize, size_t offset, ifstream &fimg)"
+.br
+.ti -1c
+.RI "int \fBdetect_and_fix_carriage_return\fP (const char *filename)"
+.br
+.RI "Detects carriage returns in text files and converts them to new-lines\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library functions for file checking\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20070101 
+.PP
+Modified: 20210413 
+.RE
+.PP
+
+.PP
+Definition in file \fBfile_util\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int detect_and_fix_carriage_return (const char * filename)"
+
+.PP
+Detects carriage returns in text files and converts them to new-lines\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*filename\fP file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 if error\&. 
+.PP
+.nf
+The first line is read and if any carriage returns are found, the whole
+file is scanned and carriage returns converted to new-lines.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 469 of file file_util\&.cpp\&.
+.SS "vector<string> file_list (string path)"
+
+.PP
+Returns a list of files in the requested directory\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&path\fP directory path\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<string> list of file names\&. 
+.RE
+.PP
+
+.PP
+Definition at line 176 of file file_util\&.cpp\&.
+.SS "vector<string> file_list (string path, string ext)"
+
+.PP
+Returns a list of files in the requested directory\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&path\fP directory path\&. 
+.br
+\fI&ext\fP file name extension\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<string> list of file names\&. 
+.RE
+.PP
+
+.PP
+Definition at line 211 of file file_util\&.cpp\&.
+.SS "\fBFileType\fP file_type (\fBBstring\fP & filename)"
+
+.PP
+Definition at line 256 of file file_util\&.cpp\&.
+.SS "\fBFileType\fP file_type (const char * filename)"
+
+.PP
+Checks the file type using the extension and contents\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*filename\fP file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+FileType enumerated file type\&. 
+.PP
+.nf
+The file extension is the main determinant of the file type.
+File formats with multiple types (such as the STAR and PDB formats)
+are distinguished based on content.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 250 of file file_util\&.cpp\&.
+.SS "\fBBstring\fP find_file (\fBBstring\fP filename, \fBBstring\fP path, int flag)"
+
+.PP
+Searches for a file within or without the given path\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIfilename\fP file name to search for\&. 
+.br
+\fIpath\fP path to search in\&. 
+.br
+\fIflag\fP if not found: bit 4 = warn; bit 5 = delete file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBBstring\fP found file, empty if not found and delete_flag set\&. 
+.PP
+.nf
+The input filename is first tested for access.
+If not found, the filename without its original path is tested.
+If not found, the filename with the given path is tested.
+If not found, an error is reported and the original filename returned 
+unless the delete flag is set.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 56 of file file_util\&.cpp\&.
+.SS "string find_file (string filename, string path, int flag)"
+
+.PP
+Definition at line 113 of file file_util\&.cpp\&.
+.SS "int fread_large (unsigned char * aptr, size_t pagesize, size_t offset, ifstream & fimg)"
+
+.PP
+Definition at line 439 of file file_util\&.cpp\&.
+.SS "int fread_large (unsigned char * aptr, size_t pagesize, size_t offset, ifstream * fimg)"
+
+.PP
+Reads blocks of memeory no larger than 1Gb\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*aptr\fP pointer to pre-allocated memory\&. 
+.br
+\fIpagesize\fP size of pre-allocated memory\&. 
+.br
+\fIoffset\fP offset in file\&. 
+.br
+\fI*fimg\fP file pointer\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 if error\&. 
+.PP
+.nf
+Each block is packed in sequence into the pre-allocated memory provided.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 420 of file file_util\&.cpp\&.
+.SS "\fBBstring\fP test_access (\fBBstring\fP filename)"
+
+.PP
+Definition at line 18 of file file_util\&.cpp\&.
+.SS "string test_access (string filename)"
+
+.PP
+Definition at line 30 of file file_util\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

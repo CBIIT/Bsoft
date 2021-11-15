@@ -1,0 +1,206 @@
+.TH "/Users/bernard/b20/bsoft/include/mol_map_energy.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/mol_map_energy.h \- Headers of functions to calculate estimates of the fitting of molecules to maps\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmolecule\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "double \fBmolgroup_map_energy\fP (\fBBmolgroup\fP *molgroup, \fBBimage\fP *map, double Kmap)"
+.br
+.RI "Energy calculation of a molecule fit into a map\&. 
+.br
+ "
+.ti -1c
+.RI "double \fBmol_map_energy\fP (\fBBmolecule\fP *mol, \fBBimage\fP *map, double Kmap)"
+.br
+.RI "Energy calculation of a molecule fit into a map\&. 
+.br
+ "
+.ti -1c
+.RI "double \fBmolgroup_map_correlation\fP (\fBBmolgroup\fP *molgroup, \fBBimage\fP *map)"
+.br
+.RI "Calculation of the fit of a molecule group into a map as a correlation coefficient\&. 
+.br
+ "
+.ti -1c
+.RI "double \fBmol_map_correlation\fP (\fBBmolecule\fP *mol, \fBBimage\fP *map)"
+.br
+.RI "Calculation of the fit of a molecule into a map as a correlation coefficient\&. 
+.br
+ "
+.ti -1c
+.RI "double \fBmolgroup_bond_fit_map_energy\fP (\fBBmolgroup\fP *molgroup, \fBBimage\fP *map, double Kmap, int steps)"
+.br
+.RI "Energy calculation of a molecule fit into a map\&. 
+.br
+ "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Headers of functions to calculate estimates of the fitting of molecules to maps\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20041230 
+.PP
+Modified: 20071224 
+.RE
+.PP
+
+.PP
+Definition in file \fBmol_map_energy\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double mol_map_correlation (\fBBmolecule\fP * mol, \fBBimage\fP * map)"
+
+.PP
+Calculation of the fit of a molecule into a map as a correlation coefficient\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol\fP molecule\&. 
+.br
+\fI*map\fP map\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double correlation coefficient\&. 
+.RE
+.PP
+
+.PP
+Definition at line 185 of file mol_map_energy\&.cpp\&.
+.SS "double mol_map_energy (\fBBmolecule\fP * mol, \fBBimage\fP * map, double Kmap)"
+
+.PP
+Energy calculation of a molecule fit into a map\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol\fP molecule\&. 
+.br
+\fI*map\fP map\&. 
+.br
+\fIKmap\fP map energy constant\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double energy\&. 
+.RE
+.PP
+
+.PP
+Definition at line 83 of file mol_map_energy\&.cpp\&.
+.SS "double molgroup_bond_fit_map_energy (\fBBmolgroup\fP * molgroup, \fBBimage\fP * map, double Kmap, int steps)"
+
+.PP
+Energy calculation of a molecule fit into a map\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fI*map\fP map\&. 
+.br
+\fIKmap\fP map energy constant\&. 
+.br
+\fIsteps\fP number of steps along a bond\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double energy\&.
+.RE
+.PP
+.PP
+.nf
+The energy is the negative of the density at each step along a bond, rho, 
+plus a fudge factor to make it positive:
+    E = Kmap * ((-sum(rho)/n + avg)/std + 10)
+where n is the number of voxels sampled, avg is the average of the map,
+and std is the standard deviation of the map.
+The force associated with this energy is the gradient at each step:
+    Fx = Kmap * (rho(x+1) - rho(x-1))/(2*u)
+where u is the voxel size. The contribution of a force to an atom at 
+a step is weighted by the fractional distance the step is away from
+the atom along the bond. 
+.fi
+.PP
+ 
+.PP
+Definition at line 250 of file mol_map_energy\&.cpp\&.
+.SS "double molgroup_map_correlation (\fBBmolgroup\fP * molgroup, \fBBimage\fP * map)"
+
+.PP
+Calculation of the fit of a molecule group into a map as a correlation coefficient\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fI*map\fP map\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double correlation coefficient\&. 
+.RE
+.PP
+
+.PP
+Definition at line 128 of file mol_map_energy\&.cpp\&.
+.SS "double molgroup_map_energy (\fBBmolgroup\fP * molgroup, \fBBimage\fP * map, double Kmap)"
+
+.PP
+Energy calculation of a molecule fit into a map\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fI*map\fP map\&. 
+.br
+\fIKmap\fP map energy constant\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double energy\&. 
+.RE
+.PP
+
+.PP
+Definition at line 23 of file mol_map_energy\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

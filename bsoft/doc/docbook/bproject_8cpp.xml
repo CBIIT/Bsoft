@@ -1,0 +1,217 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_bproject_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/bproject.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/bproject.cpp</primary></indexterm>
+<para>
+
+<para>Projecting a 3D map and calculating comparison statistics of the projections. </para>
+ 
+</para>
+<programlisting>#include &quot;rwimg.h&quot;
+#include &quot;matrix_util.h&quot;
+#include &quot;symmetry.h&quot;
+#include &quot;ps_views.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;options.h&quot;
+#include &quot;utilities.h&quot;
+#include &quot;timer.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_matrix">Matrix</link> <link linkend="_bproject_8cpp_1a5848688cd38b397e342c33aaacf9b687">img_compare_projections</link> (<link linkend="_class_bimage">Bimage</link> *p, double SNR, double hires, double lores, double shift_limit)</para>
+
+<para>Compares a set of projections from a 3D density map. </para>
+</listitem>
+            <listitem><para>int <link linkend="_bproject_8cpp_1a7addf31044598cbf5722bc47715ba095">img_compare_projections_lowpass</link> (<link linkend="_class_bimage">Bimage</link> *p, double SNR, double shift_limit)</para>
+
+<para>Compares a set of projections from a 3D density map. </para>
+</listitem>
+            <listitem><para><link linkend="_class_j_svalue">JSvalue</link> <link linkend="_bproject_8cpp_1a4aa982817e585674a9f9d631190f5837">js_views</link> (<link linkend="_class_view">View</link> *views)</para>
+</listitem>
+            <listitem><para>int <link linkend="_bproject_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+            <listitem><para>double <link linkend="_bproject_8cpp_1aecc0d32464df91a92c8ae61ab778680e">img_compare_one_projection</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bimage">Bimage</link> *pref, long i, double hires, double lores, double radius, double sigma, <link linkend="_class_matrix">Matrix</link> *cc, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a6ecaa8728bab23c3a7d96fe0cadc75f2">planf</link>, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a9ec8849996c5e210d7b7e8e05b98639d">planb</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_class_matrix">Matrix</link> * <link linkend="_bproject_8cpp_1ae1eacb5197ea6bf24e911ec7c0a8ab37">img_compare_projections_driver</link> (<link linkend="_class_bimage">Bimage</link> *p, double SNR, double hires, double lores, double shift_limit)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_bproject_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>const char * <link linkend="_bproject_8cpp_1a4de0ad4c7190962494815c0fa7f948df">use</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Projecting a 3D map and calculating comparison statistics of the projections. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010420 </para>
+
+<para>Modified: 20200318 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_bproject_8cpp_1aecc0d32464df91a92c8ae61ab778680e"/>    <section>
+    <title>img_compare_one_projection()</title>
+<indexterm><primary>img_compare_one_projection</primary><secondary>bproject.cpp</secondary></indexterm>
+<indexterm><primary>bproject.cpp</primary><secondary>img_compare_one_projection</secondary></indexterm>
+<para><computeroutput>double img_compare_one_projection (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bimage">Bimage</link> * pref, long i, double hires, double lores, double radius, double sigma, <link linkend="_class_matrix">Matrix</link> * cc, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planf, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planb)</computeroutput></para><para>
+Definition at line 353 of file bproject.cpp.</para>
+    </section><anchor xml:id="_bproject_8cpp_1a5848688cd38b397e342c33aaacf9b687"/>    <section>
+    <title>img_compare_projections()</title>
+<indexterm><primary>img_compare_projections</primary><secondary>bproject.cpp</secondary></indexterm>
+<indexterm><primary>bproject.cpp</primary><secondary>img_compare_projections</secondary></indexterm>
+<para><computeroutput><link linkend="_class_matrix">Matrix</link> img_compare_projections (<link linkend="_class_bimage">Bimage</link> * p, double SNR, double hires, double lores, double shift_limit)</computeroutput></para><para>
+
+<para>Compares a set of projections from a 3D density map. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the 2D projections. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>SNR</entry>
+                                <entry>
+<para>SNR to impose on test projections. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_limit</entry>
+                                <entry>
+<para>limit on cross-correlation shift. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_matrix">Matrix</link> matrix with projection comparisons. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 428 of file bproject.cpp.</para>
+    </section><anchor xml:id="_bproject_8cpp_1ae1eacb5197ea6bf24e911ec7c0a8ab37"/>    <section>
+    <title>img_compare_projections_driver()</title>
+<indexterm><primary>img_compare_projections_driver</primary><secondary>bproject.cpp</secondary></indexterm>
+<indexterm><primary>bproject.cpp</primary><secondary>img_compare_projections_driver</secondary></indexterm>
+<para><computeroutput><link linkend="_class_matrix">Matrix</link>* img_compare_projections_driver (<link linkend="_class_bimage">Bimage</link> * p, double SNR, double hires, double lores, double shift_limit)</computeroutput></para><para>
+Definition at line 377 of file bproject.cpp.</para>
+    </section><anchor xml:id="_bproject_8cpp_1a7addf31044598cbf5722bc47715ba095"/>    <section>
+    <title>img_compare_projections_lowpass()</title>
+<indexterm><primary>img_compare_projections_lowpass</primary><secondary>bproject.cpp</secondary></indexterm>
+<indexterm><primary>bproject.cpp</primary><secondary>img_compare_projections_lowpass</secondary></indexterm>
+<para><computeroutput>int img_compare_projections_lowpass (<link linkend="_class_bimage">Bimage</link> * p, double SNR, double shift_limit)</computeroutput></para><para>
+
+<para>Compares a set of projections from a 3D density map. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the 2D projections. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>SNR</entry>
+                                <entry>
+<para>SNR to impose on test projections. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_limit</entry>
+                                <entry>
+<para>limit on cross-correlation shift. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 491 of file bproject.cpp.</para>
+    </section><anchor xml:id="_bproject_8cpp_1a4aa982817e585674a9f9d631190f5837"/>    <section>
+    <title>js_views()</title>
+<indexterm><primary>js_views</primary><secondary>bproject.cpp</secondary></indexterm>
+<indexterm><primary>bproject.cpp</primary><secondary>js_views</secondary></indexterm>
+<para><computeroutput><link linkend="_class_j_svalue">JSvalue</link> js_views (<link linkend="_class_view">View</link> * views)</computeroutput></para><para>
+Definition at line 541 of file bproject.cpp.</para>
+    </section><anchor xml:id="_bproject_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>bproject.cpp</secondary></indexterm>
+<indexterm><primary>bproject.cpp</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 70 of file bproject.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_bproject_8cpp_1a4de0ad4c7190962494815c0fa7f948df"/>    <section>
+    <title>use</title>
+<indexterm><primary>use</primary><secondary>bproject.cpp</secondary></indexterm>
+<indexterm><primary>bproject.cpp</primary><secondary>use</secondary></indexterm>
+<para><computeroutput>const char* use[]</computeroutput></para><para>
+Definition at line 27 of file bproject.cpp.</para>
+    </section><anchor xml:id="_bproject_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>bproject.cpp</secondary></indexterm>
+<indexterm><primary>bproject.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

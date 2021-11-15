@@ -1,0 +1,296 @@
+.TH "/Users/bernard/b20/bsoft/include/model_compare.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/model_compare.h \- Functions to compare models and components\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel\&.h'\fP
+.br
+\fC#include 'Matrix\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "long \fBmodel_component_number_difference\fP (\fBBmodel\fP *model1, \fBBmodel\fP *model2)"
+.br
+.RI "Compares the numbers of components in two models\&. "
+.ti -1c
+.RI "long \fBmodel_maxnum_components\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates the largest number of components in a model\&. "
+.ti -1c
+.RI "double \fBmodel_compare\fP (\fBBmodel\fP *model1, \fBBmodel\fP *model2)"
+.br
+.RI "Compares two models\&. "
+.ti -1c
+.RI "\fBMatrix\fP \fBmodel_distance_matrix\fP (\fBBmodel\fP *\fBmodel\fP, int view_flag)"
+.br
+.RI "Calculates the distance matrix for a model\&. "
+.ti -1c
+.RI "\fBMatrix\fP \fBmodel_distance_matrix\fP (\fBBmodel\fP *m1, \fBBmodel\fP *m2)"
+.br
+.RI "Calculates the distance matrix between two models\&. "
+.ti -1c
+.RI "\fBMatrix\fP \fBmodel_adjacency_matrix\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Constructs the adjacency matrix for a model\&. "
+.ti -1c
+.RI "long \fBmodel_consolidate\fP (\fBBmodel\fP *\fBmodel\fP, double \fBdistance\fP)"
+.br
+.RI "Consolidates close components within a model\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodels_consensus\fP (\fBBmodel\fP *\fBmodel\fP, double \fBdistance\fP)"
+.br
+.RI "Determines a consensus between models in a list\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to compare models and components\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20060908 
+.PP
+Modified: 20161011 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_compare\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBMatrix\fP model_adjacency_matrix (\fBBmodel\fP * model)"
+
+.PP
+Constructs the adjacency matrix for a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBMatrix\fP adjacency matrix\&. 
+.PP
+.nf
+The matrix contains ones for adjacent components and zero elsewhere. 
+Only the first model in the linked list is used.
+The component selections are reset.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 152 of file model_compare\&.cpp\&.
+.SS "double model_compare (\fBBmodel\fP * model1, \fBBmodel\fP * model2)"
+
+.PP
+Compares two models\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model1\fP first model structure\&. 
+.br
+\fI*model2\fP second model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double RMSD\&. 
+.PP
+.nf
+Only the first models in the linked lists are compared.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 66 of file model_compare\&.cpp\&.
+.SS "long model_component_number_difference (\fBBmodel\fP * model1, \fBBmodel\fP * model2)"
+
+.PP
+Compares the numbers of components in two models\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model1\fP first model\&. 
+.br
+\fI*model2\fP second model\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long difference in the number of components\&. 
+.PP
+.nf
+Only the first models in the lists are compared.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 26 of file model_compare\&.cpp\&.
+.SS "long model_consolidate (\fBBmodel\fP * model, double distance)"
+
+.PP
+Consolidates close components within a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIdistance\fP cutoff distance to consider components to be the same\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components retained\&. 
+.PP
+.nf
+A matrix is calculated from the pairwise distances between selected components.
+Components closer to each other than the given distance are consolidated. 
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 264 of file model_compare\&.cpp\&.
+.SS "\fBMatrix\fP model_distance_matrix (\fBBmodel\fP * m1, \fBBmodel\fP * m2)"
+
+.PP
+Calculates the distance matrix between two models\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*m1\fP first model structure\&. 
+.br
+\fI*m2\fP second model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBMatrix\fP distance matrix\&. 
+.PP
+.nf
+The matrix is calculated from the pairwise distances between selected 
+components. 
+Only the first model in each linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 236 of file model_compare\&.cpp\&.
+.SS "\fBMatrix\fP model_distance_matrix (\fBBmodel\fP * model, int view_flag)"
+
+.PP
+Calculates the distance matrix for a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIview_flag\fP flag to include views\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBMatrix\fP distance matrix\&. 
+.PP
+.nf
+The matrix is calculated from the pairwise distances between selected 
+components, with the option to include the views.
+When the views are included, the euclidean distances are rescaled to
+the maximum so that their ranges are similar to the view differences. 
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 189 of file model_compare\&.cpp\&.
+.SS "long model_maxnum_components (\fBBmodel\fP * model)"
+
+.PP
+Calculates the largest number of components in a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long largest number of components in a model\&. 
+.RE
+.PP
+
+.PP
+Definition at line 43 of file model_compare\&.cpp\&.
+.SS "\fBBmodel\fP* models_consensus (\fBBmodel\fP * model, double distance)"
+
+.PP
+Determines a consensus between models in a list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model list\&. 
+.br
+\fIdistance\fP cutoff distance to consider components to be the same\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components retained\&. 
+.PP
+.nf
+A matrix is calculated from the pairwise distances between selected components
+from each apir of models.
+Components closer to each other than the given distance in different
+models are consolidated.
+The component selection field contains the number of contributing components.
+A new model containing the result is returned.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 324 of file model_compare\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,723 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: History</title>
+<link href="bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+	<h1>Change History of Bsoft Version 1, 1999-2017</h1>
+	<h2>Version 0.1, 1999-11-30</h2>
+    Final release within the framework of the BioImage database project as
+Bsoft.
+      <ul>
+        <li>Originating from code developed under the BioImage project
+including
+MMIFL</li>
+        <li>Oldest code: 19970914 (bgex, bsf)</li>
+        <li>Major shift away from SGI-specific code: 19990321 (bimg,
+rwimg)</li>
+        <li>Shift away from the common make utility to the C-shell
+bmake: 19990814</li>
+        <br>
+      </ul>
+      <h2>Version 0.2, 2000-03-30</h2>
+Final release of development at the Biozentrum, Basel.
+      <ul>
+        <li>Ported to VMS: 20000112</li>
+        <li>FFTW and LIBTIFF included in the distribution: 20000303</li>
+        <br>
+      </ul>
+      <h2>Version 0.3, 2000-11-01</h2>
+Development starts at the LSBR, NIAMS, NIH, Bethesda.
+      <ul>
+        <li>Multiple images per file now supported in the reading code:
+20000415</li>
+        <li>The design for reading STAR format files has been changed:
+20000420</li>
+        <li>Major reorganization of function names: 20000520</li>
+        <br>
+      </ul>
+      <h2>Version 0.4, 2000-12-12</h2>
+Release featured in the paper: Heymann, J. B. (2001). Bsoft: Image and
+molecular processing in electron microscopy. J. Struct. Biol. 133(2/3),
+156 - 169. <br>
+Made available through the web server at the LSBR, NIAMS, NIH,
+Bethesda.
+      <ul>
+        <li>bcolour: Generates colour images from grayscale images.</li>
+        <li>beditimg: Generates/edits images in simple ways.</li>
+        <li>bfix: Fixes end-of-line characters for conversion between
+Unix and Mac.</li>
+        <li>bmontage: Generates a montage of 2D images from a 3D image
+or a
+multi-image
+file.</li>
+        <li>bsplit: Separates a multi-image image file into
+single-image files.</li>
+      </ul>
+      <h2>Version 0.5, 2001-05-07</h2>
+      <ul>
+        <li>Documentation included (most generated automatically from
+source files)</li>
+        <li>Extensive introduction of geometric manipulations and the
+use of
+quaternions.</li>
+        <li>badd: Weighted addition of multiple images.</li>
+        <li>bbackproj: Real space backprojection.</li>
+        <li>bclass: Classifies images with respect to reference maps.</li>
+        <li>bfilter: Does a number of filtering operations.</li>
+        <li>bmapdist: Determines similarities/differences between
+images.</li>
+        <li>bpartmulti: Compares particle parameters in multiple STAR
+files.</li>
+        <li>bpartsel: Selects particles in a STAR file based on
+user-specified
+criteria.</li>
+        <li>brandom: Generates random noise images.</li>
+        <li>bstar: Edits STAR files.</li>
+      </ul>
+      <h2>Version 0.6, 2001-05-27</h2>
+Released at the Gordon conference on 3D electron microscopy in Rhode
+Island.
+      <ul>
+        <li>bctf: Determines and applies CTF.</li>
+      </ul>
+      <h2>Version 0.7, 2001-11-05</h2>
+Production version update.
+      <ul>
+        <li>bcomplex: Transforms complex images.</li>
+        <li>bmatrix: Matrix operations.</li>
+        <li>bmol: Atomic coordinate manipulations (originally bcoor).</li>
+        <li>bpick: Picking particles and aligning micrographs
+(originally bpair).</li>
+        <li>bsym: Symmetry operations on images.</li>
+        <li>btree: Outputs postscript files from Phylip phylogeny trees.</li>
+      </ul>
+      <h2>Version 0.8, 2002-05-27</h2>
+Production version update.
+      <ul>
+        <li>breconstruct: Fourier space reconstruction from 2D images.</li>
+        <li>bsegment: Segments images in various ways.</li>
+      </ul>
+      <h2>Version 0.9, 2002-12-20</h2>
+Production version update. Final release of development at the LSBR,
+NIAMS,
+NIH, Bethesda.
+      <ul>
+        <li>Added Digital Micrograph image format (only the 2.x
+format): 20020619</li>
+        <li>Change in function names: 20020711</li>
+        <ul>
+          <li>int&nbsp;&nbsp; fft_img(fftw_direction dir, Bimage* p)
+===&gt;
+int&nbsp; img_fft(fftw_direction
+dir, Bimage* p)</li>
+          <li>int&nbsp;&nbsp; auto_correlate_img(Bimage* p) ===&gt;
+img_auto_correlate(Bimage*
+p)</li>
+          <li>Bimage*&nbsp; cross_correlate_images(Bimage* p1, Bimage*
+p2) ===&gt;
+Bimage*&nbsp;
+img_cross_correlate(Bimage*&nbsp; p1, Bimage*&nbsp; p2)</li>
+          <li>float*&nbsp;&nbsp; find_shift_between_images(Bimage* p1,
+Bimage* p2)
+===&gt;
+float*&nbsp;&nbsp; img_find_shift(Bimage* p1, Bimage* p2, int
+refine_flag)</li>
+        </ul>
+        <li>Fixed a problem in the function for finding the shift
+between images by
+cross-correlation.</li>
+        <li>bnad (denoising by non-linear anisotropic diffusion) from
+code written
+by Achilleas Frangakis: 20020803</li>
+        <li>Changed micrograph structure hierarchy to a new linked
+list-based
+hierarchy:
+20020826</li>
+        <ul>
+          <li>new Bproject: replaces Bmg_group; overall structure for a
+project.</li>
+          <li>new Bfield: field-of-view containing focal or tomographic
+tilt series.</li>
+          <li>Bmicrograph: micrograph parameters.</li>
+          <li>new Bparticle: replaces arrays of particle parameters in
+Bmicrograph.</li>
+        </ul>
+        <li>STAR tags associated with the new micrograph structure
+hierarchy:
+20020826</li>
+        <ul>
+          <li>_micrograph.id: A string value identifying a micrograph</li>
+          <li>_micrograph.field_id: A string value identifying the
+field-of-view,
+must
+be the same for all micrographs in a field, default value is the
+micrograph
+ID of the first micrograph in the series.</li>
+          <li>_particle.id: A number corresponding to the image number
+in a
+multi-image
+particle file, replaces _particle.number.</li>
+        </ul>
+        <li>Major change in dealing with defocus: Previously: Minimum
+and maximum
+defocus;
+Now: Average defocus and deviation.</li>
+        <li>bshow, a Tcl/Tk script and interface code: 20021015</li>
+        <ul>
+          <li>Image display</li>
+          <li>Picking single particle images from micrographs.</li>
+          <li>Fitting the CTF to micrograph power spectra.</li>
+          <li>Extracting filaments from micrographs.</li>
+          <li>Marking for segmentation.</li>
+          <li>Set up for tomographic processing.</li>
+        </ul>
+        <li>balign: Aligning and adding micrographs of the same field -
+intended
+for
+focal pairs: 20021128</li>
+        <li>bproject: A program to calculate sets of projections within
+asymmetric
+units: 20021208</li>
+      </ul>
+      <h2>Version 0.9.1, 2003-11-28</h2>
+Pre-official version, attempting to achieve all the goals for version
+1.0.0.
+      <ul>
+        <li>bnorm: Normalizing a set of images based on density
+distribution:
+20030411</li>
+        <li>Added new Digital Micrograph image format (3.x format):
+20030510</li>
+        <li>bfind: Finding a template in an image by cross-correlation:
+20030512<br>
+        </li>
+        <li>Introduced long options: 20030605</li>
+        <li>Reworked density generation from atomic coordinates, bgex
+and
+bsf: 2003 (over several months).</li>
+        <li>bmask: Generating image masks.</li>
+        <li>Established installation for Mac OS X to allow launching
+bshow from the Dock: 20030907<br>
+        </li>
+        <li>Major reworking of bshow: 20030907<br>
+        </li>
+        <ul>
+          <li>Reading and writing of micrograph parameter files for
+single
+particle processing and tomography.</li>
+          <li>Reorganization of menus and options.</li>
+          <li>Changes in CTF determination.</li>
+          <li>Marginally useful automatic particle picking.</li>
+        </ul>
+        <li>Ongoing improvements in determining CTF (bctf).</li>
+        <li>dmerge: Program by David Belnap to merge micrographs from
+the
+same field: 20030901<br>
+        </li>
+        <li>New STAR tags for micrographs to incorporate more electron
+microscope parameters (Cc, illumination half-angle, etc.): 20030915</li>
+        <li>bcrystal: Calculates coordinates for multiple unit cells:
+20030928</li>
+        <li>bhelix: Dealing with images with helical symmetry: 20031016</li>
+        <li>borient: Single particle image orientation finding program:
+20031102<br>
+        </li>
+      </ul>
+      <br>
+      <h2>Version 1.0.0, 2004-01-15</h2>
+First official version, with extensive support for single particle
+processing for cryo-electron microscopy.<br>
+      <ul>
+        <li>Introduced generic linked lists: 20031203<br>
+        </li>
+        <li>New web documentation layout: 20040115<br>
+        </li>
+      </ul>
+      <br>
+      <h2>Version 1.0.2, 2004-04-15<br>
+      </h2>
+Reorganization of source code.<br>
+      <ul>
+        <li>Fixed bview.</li>
+        <li>bshow: Activate arrows for navigation and autoscaling.</li>
+        <li>bpartsel: Fixed reselection</li>
+        <li>bcc: Functions to do cross-correlation (used to be in
+bfft): 20040206</li>
+        <li>bbackproj: Fixed weighting: 20040303 </li>
+        <li>Introduced reciprocal space masks in bresolve, bfind, and
+bcc: 20040401<br>
+        </li>
+        <li>bproject: Tilt series: 20040413.</li>
+      </ul>
+      <h2>Version 1.1.0, 2004-05-11<br>
+      </h2>
+Reorganization of source code.<br>
+      <ul>
+        <li>bshow: Reorganized code to allow references between image
+and
+micrograph structures required for particle image extraction: 20040406</li>
+        <li>Many files in the util directory was moved into img, mg,
+mol and ps: 20040407<br>
+        </li>
+        <li>bseries: Aligns a series of micrographs, update coordinates
+and extract particle images: 20040407</li>
+        <li>Filter kernels added into the parameters directory: 20040416<br>
+        </li>
+        <li>Better version control through the file BVERSION: 20040430<br>
+        </li>
+      </ul>
+      <br>
+      <h2>Version 1.1.1, 2004-08-23</h2>
+      <p>A large amount of functionality was added to deal with user
+requests. Final release from Caltech.<br>
+      </p>
+      <ul>
+        <li>read_star: Improved STAR file parsing speed: 20040517</li>
+        <li>bimg: Deleting sub-images: 20040622<br>
+        </li>
+        <li>bfilter: Denoising function and phases only filter: 20040703</li>
+        <li>bradial: Averaged radial power spectrum: 20040707</li>
+        <li>bcolour: Add single colour conversions: 20040708<br>
+        </li>
+        <li>bpartsel: Added functions to set the FOM, select particles
+and set orientations based on the FOM of the first micrograph, and show
+particle parameters: 20040709</li>
+        <li>bmg: Dump particle parameters into a table and change pixel
+size: 20040709</li>
+        <li>bshow: Add dialog box for the power spectrum: 20040713</li>
+        <li>btile, bpatch: Programs to fragment and reassemble images:
+20040713</li>
+        <li>bampweigh: Adjust the amplitudes of an image by those of a
+template: 20040714</li>
+        <li>bar: Simple arithmetic on images: 20040727</li>
+        <li>bpartmulti: Analyzing errors between two parameter files:
+20040728<br>
+        </li>
+        <li>bproject: Random projections: 20040731</li>
+        <li>bop: Mask to limit region of comparison for fitting:
+20040805</li>
+      </ul>
+      <br>
+      <h2>Version 1.2.0, 2004-11-04</h2>
+      <p>Release from LSBR, NIAMS, NIH.<br>
+      </p>
+      <ul>
+        <li>CTF fitting: Major changes in the CTF fitting in bshow and
+bctf: 20041104</li>
+        <li>borient: Major improvement in dealing with half asymmetric
+units: 20041104<br>
+        </li>
+      </ul>
+      <br>
+      <h2>Version 1.3.0, 2005-10-07</h2>
+      <p>Release from LSBR, NIAMS, NIH.<br>
+      </p>
+      <ul>
+        <li>bflat: A solvent flattening program: 20041113</li>
+        <li>dhand: Program to determine handedness from tilt pairs by
+David Belnap:
+20041117<br>
+        </li>
+        <li>Reorganized functionality of bpick and balign. New bpick
+for finding and extracting particle images, new balign for aligning a
+pair of micrographs, and bmgalign to align a large set of images
+specified in a parameter file: 20041129<br>
+        </li>
+        <li>bmultislice: Multi-slice single image simulation: 20041201</li>
+        <li>bsim: Large-scale multi-slice image simulation: 20041201<br>
+        </li>
+        <li>bphase: A program to examine and change phases: 20041208<br>
+        </li>
+        <li>Added support for PNG (now requires zlib): 20041223</li>
+        <li>Memory tracking improved (using the -v mem option): 20041225</li>
+        <li>bcolour: Added CMYK support: 20050111<br>
+        </li>
+        <li>bsplitmol: Program to split molecule groups into individual
+molecules: 20050119</li>
+        <li>bresolve: Add an option to specify sampling of the
+resolution shells: 20050121</li>
+        <li>bmoledit: Some coordinate editing functions: 20050122<br>
+        </li>
+        <li>More functions distinguishing molecule groups from
+individual molecules:&nbsp; 20050123 <br>
+        </li>
+        <li>bmd: Minimalistic implementation of molecular dynamics:
+20050202</li>
+        <li>bwater: Minimalistic molecular dynamics of blocks of water:
+20050202</li>
+        <li>bmolsym: Split out the symmetry functions from bmol:
+20050214</li>
+        <li>bshow: Added radial averaging for a powder diffraction
+pattern: 20050216<br>
+        </li>
+        <li>Added support for the Wayne Hendrickson coordinate file
+format: 20050217</li>
+        <li>bdif: Program to analyze diffraction patterns: 20050217<br>
+        </li>
+        <li>balpha: Program to create and manipulate alpha helices:
+20050323<br>
+        </li>
+        <li>bfilter: Added a smoothing option for the bandpass filter:
+20050328<br>
+        </li>
+        <li>bmonte: Program to fit molecules into maps using monte
+carlo dynamics: 20050330</li>
+        <li>Added 3D magnification for bshow: 20050405</li>
+        <li>Introduced cross-validation for borient: 20050408<br>
+        </li>
+        <li>Added use of BIOMT matrices in PDB files to bmolsym:
+20050418</li>
+        <li>Added use of SMTRY matrices in PDB files to bmolsym:
+20050418</li>
+        <li>Added linkers for markers in bshow: 20050514</li>
+        <li>Added capability to pick multiple filaments in bshow:
+20050612</li>
+        <li>Introduced filament structures as part of the micrograph
+database: 20050616<br>
+        </li>
+        <li>Changed support for PI from internal to M_PI from standard
+C: 20050704</li>
+        <li>Changed the STAR structures to linked lists to remove
+limitations: 20050930</li>
+        <li>Added support for Brookhaven STEM files: 20050811</li>
+        <li>Expanded support for image with double precision data type:
+20051004<br>
+        </li>
+        <li>Numerous refinements of geometry functions with David
+Belnap: 20051005</li>
+      </ul>
+      <br>
+      <h2>Version 1.4.0, 2006-09-05</h2>
+      <p>Release from LSBR, NIAMS, NIH featured in the paper: Heymann,
+J. B. and Belnap, D. M. (2007). Bsoft: Image Processing and Molecular
+Modeling for Electron Microscopy. J. Struct. Biol. 157(1), 3 - 18.<br>
+      </p>
+    <ul>
+        <li>bshow: Added a toolbar: 20051130<br>
+        </li>
+        <li>Converted several structures to C++ classes: Complex,
+Vector3, Matrix3, Quaternion: 20051222</li>
+        <li>btomo, btrack, btomrec, bmgft, bzfft, bmark: Programs for
+tomography: 20060122</li>
+        <li>Converted Bstring to a C++ class: 20060127</li>
+        <li>bshow: Added directional radial averages to the diffraction
+plot: 20060201<br>
+        </li>
+        <li>breconstruct: Modified to generate one map per filament:
+20060304</li>
+        <li>bmonte: Introduced adjustment of single atoms by Monte
+Carlo methods: 20060420</li>
+        <li>bpick: Introduced capability to pick boxed particles along
+filaments: 20060425</li>
+        <li>bmol: Added radial density function: 20060502<br>
+        </li>
+        <li>bflood: Watershed segmentation algorithm (originally in
+bsegment): 20060511</li>
+        <li>bsym: Added search for point group symmetry: 20060815</li>
+        <li>bpartsel &amp; breconstruct: Added bootstrap
+reconstruction: 20060819<br>
+        </li>
+        <li>bshow: Added the selection tool functionality: 20060820 <br>
+        </li>
+    </ul>
+      <br>
+      <h2>Version 1.5.0, 2007-10-25</h2>
+      Release from LSBR, NIAMS, NIH associated with the paper: Heymann, J.B., Cardone, G., Winkler, D. and Steven, A.C. (2007) Computational resources for cryo-electron tomography in Bsoft. J. Struct. Biol. 161(3), 232 - 242.<br>
+      <ul>
+        <li>btomres: New program to estimate the resolution of aligned
+tilt series: 20070216<br>
+        </li>
+        <li>bfind: Added directional mode: 20070227<br>
+        </li>
+        <li>bshow: Added refinement of tilt series parameters: 20070315<br>
+        </li>
+        <li>bfind and bnorm: Added support for parameter files: 20070317</li>
+        <li>bmedian: New program to do iterative median filtering:
+20070329<br>
+        </li>
+        <li>bbif: New program to do bilateral filtering: 20070404</li>
+        <li>bmatrix: Added affinity propagation clustering: 20070419</li>
+        <li>bsubvol: New program to select particles in a series:
+20070419</li>
+        <li>Extracted CTF parameters from Bimage into a new structure:
+20070504<br>
+        </li>
+        <li>bradial: Arbitrary radial step sizes in bradial: 20070514</li>
+        <li>bmissing: New program to generate reciprocal space missing
+region masks: 20070604<br>
+        </li>
+        <li>bsymcomp: New program to fit symmetrized versions of
+molecules: 20070612</li>
+        <li>bmodel: New program for managing low resolution models:
+20070614</li>
+        <li>Function to "untangle" molecules (bmoledit &amp; bmodel):
+20070614</li>
+        <li>Model structures reorganized to allow multiple models and
+component definitions: 20070616</li>
+        <li>Debugged bsplit to avoid core dumps and memory allocation errors: 20070814</li>
+        <li>bmark: All vestiges of linkers removed, markers only from mg and rec: 20070903</li>
+        <li>bshow: Introduced I/O code for model components and linkers: 20070903</li>
+        <li>Model structures extended to include linkers and polygons: 20070903</li>
+        <li>Chimera cmm marker format added: 20070905</li>
+        <li>bmodmask: New program to generate masks from models: 20070905</li>
+        <li>bpoly: New program to analyze and manipulate polyhedral models: 20070906</li>
+        <li>bconvert: New program to convert lists of image files: 20070927</li>
+        <li>MRC files: New specification switched to signed byte in stead of unsigned byte: 20070927</li>
+        <li>dimgstats: New program  to calculate Student's t-test: 20071004 (D.M.Belnap)</li>
+        <li>bshow: Rearranged menus and introduce &quot;Model&quot; menu and model functions: 20071015</li>
+        <li>bshow: Introduced code for helical diffraction processing: 20071015<br>
+        </li>
+      </ul>
+      <br>
+      <h2>Version 1.5.3, 2008-03-06</h2>
+      Lots of new modeling code and bug fixes.<br />
+      <ul>
+        <li>Moved the CTF parameters out of the micrograph structure into a new structure: 20071110</li>
+        <li>bpoly: Polyhedral symmetry determination: 20071125</li>
+        <li>bpartsel: Sets generated can be contained within each micrograph: 20071127</li>
+        <li>bpartmulti: Micrograph merging improved - can handle non-identical files: 20071127</li>
+        <li>bpoly: Introduced angular restraints for regularization: 20071205</li>
+        <li>Fixed jacobian rotation for eigen analysis: 20071206</li>
+        <li>Added permutation generation: 20071206<br />
+        </li>
+        <li>borient: Cross-validation is now calculated on excluded low resolution shells: 20071207</li>
+        <li>bshow: Particle and filament image output can now be split to individual files: 20080203</li>
+        <li>Path for extraction of particles fixed: 20080208</li>
+        <li>Path for CTF corrected images fixed: 20080219 </li>
+        <li>bmask: New multi-level mask option: 20080225</li>
+        <li>bass: New program to assemble molecules specified within models: 20080226</li>
+        <li>blocres: New program to calculate local resolution: 20080229</li>
+      </ul>
+      <h2>Version 1.5.4, 2008-04-09</h2>
+      Lots of new modeling code and bug fixes.<br />
+      <ul>
+        <li>bsym: Introduced replication of an asymmetric unit: 20080322</li>
+        <li>View calculations modified for optimization and accuracy: 20080326</li>
+        <li>bshow &amp; bctf: Option to limit power spectrum generation along tilt axis: 20080328</li>
+        <li>blocres: Introduced limiting calculation to an asymmetric unit: 20080328</li>
+        <li>bradial: Fixed radial fitting to eliminate sporadic bad fits: 20080408</li>
+        <li>Reorganized model I/O code: 20080408</li>
+        <li>bspiral: New program to generate polyhedra: 20080408</li>
+        <li>bdelta: New program to generate deltagraph polyhedra: 20080408</li>
+        <li>bmodcol: New program to colour models: 20080408</li>
+      </ul>
+      <h2>Version 1.5.7, 2009-06-15</h2>
+      New single particle analysis, helical processing and modeling code, introduction of XML and OpenMP support, as well as lots of bug fixes.<br />
+      <ul>
+        <li>bpartcen: New program to center single particle images: 20080425</li>
+        <li>bmodcomp: New program to compare models to references: 20080428</li>
+        <li>Updated the TIFF library to version 3.8.2: 20080523</li>
+        <li>Multiple model format support improved: 20080604</li>
+        <li>Improved support for 3D CTF for reconstructions: 20080705</li>
+        <li>Added animation to bshow (Jeremy Greenfield): 20080725</li>
+        <li>Improved object manipulation in bshow (Jeremy Greenfield): 20080725</li>
+        <li>bxb: New program to extract and build densities: 20080728</li>
+        <li>Change from STAR-specific tags to generic tags for parameter files: 20080924</li>
+        <li>Added magnification field for sub-images: 20080930</li>
+        <li>Introduced an XML format for micrographs: 20081028</li>
+        <li>Introduced an XML format for models: 20081029</li>
+        <li>First use of OpenMP capability in bnorm: 20081031</li>
+        <li>Added support for the Princeton Instruments SPE format: 20081105</li>
+        <li>bmodsel: New program to select model components: 20081114</li>
+        <li>bmultifit: New program to search for multiple versions of a template in a map: 20081114</li>
+        <li>brefine: New program to refine single particle orientations: 20081116</li>
+        <li>bmodmap: New program to calculate a map from a model: 20081117</li>
+        <li>bmod2part: New program to convert between model and particle coordinates: 20081117</li>
+        <li>Added the extra programs directory: 20081119</li>
+        <li>Added searching for helical parameters to bhelix: 20081206</li>
+        <li>bmolhel: New program to generate a helix from an asymmetric unit: 20090121</li>
+        <li>bfil: New program to extract filaments and derived particles (replaces some functions of bpick): 20090224</li>
+        <li>bparam: New program to extract molecular modeling parameters from atomic coordinate files: 20090226</li>
+        <li>Fixed SPIDER header for stack I/O: 20090423</li>
+      </ul>
+      <h2>Version 1.6.0, 2010-02-11</h2>
+      Update to 3D single particle averaging and tomography, introduction of FFTW3 for use with OpenMP, several new programs for modeling, and lots of bug fixes.<br />
+      <ul>
+        <li>bfind: Update to fit into 3D averaging workflow: 20090709</li>
+        <li>brecadd: New program to do 3D average: 20090709</li>
+        <li>Added Xplor map format (.xpl): 20090713</li>
+        <li>bshell: New program to generate spherical point models: 20090724</li>
+        <li>bproject: Added OpenMP-based parallel projection generation: 20090806</li>
+        <li>Added CTF consideration in borient, brefine and breconstruct: 20090810</li>
+        <li>Added FFTW3 as alternative to FFTW (v2): 20090812</li>
+        <li>Added OpenMP-based parallel Fourier transforms of multiple images: 20090812</li>
+        <li>bradsec: New program to calculate symmetry-based radial sections: 20090823</li>
+        <li>bzfft: Added ability to do z-line transforms on y tiles: 20090827</li>
+        <li>brecmod: New program to link reconstructions and models: 20090922</li>
+        <li>bshell: Added fitting, radial profile and power spectrum functions: 20090924</li>
+        <li>bpatch: Added support for micrograph parameter files: 20090928</li>
+        <li>bshow: Replaced object lists with direct calls to parameter structures: 20091009</li>
+        <li>bmissing: Added generation of missing mask from tilt series orientations: 20091012</li>
+        <li>Digital Micrograph format 3: Improved to read tags properly: 20091101</li>
+        <li>baddmask: New program to combine masks into a composite mask: 20091117</li>
+        <li>bmultimask: New program to manipulate composite masks: 20091209</li>
+        <li>emgrand: New program for randomizing micrograph parameters: 20100128</li>
+        <li>bmodedit: New program to create and edit models: 20100128</li>
+        <li>dcount: New program to determine occupancies of proteins in tomograms: 20100205</li>
+        <li>bdual: New program to aid in reconstructing dual tilt tomograms: 20100211</li>
+        <li>bproject: Added reciprocal space projection: 20100211</li>
+      </ul>
+    <h2>Version 1.7.0, 2010-12-16</h2>
+      Improved single particle analysis, tomographic 3D single particle analysis, and modeling with type specifications and selections.<br />
+      <ul>
+        <li>bshow: Better handling of component types and their properties through selection: 20100329</li>
+        <li>bmm: New program to do model mechanics: 20100407</li>
+        <li>borient: Projections now calculated by reciprocal space interpolation: 20100422</li>
+        <li>CCP4 MAP and MRC: Added the STK type for 2D image stacks: 20100423</li>
+        <li>MRC: Added support for IMOD-derived MRC format variants: 20100426</li>
+        <li>b3v: New program to extract orthogonal views from a map: 20100429</li>
+        <li>Cross-correlation normalization corrected: 20100616</li>
+        <li>Added statistics to sub-image structure: 20100710</li>
+        <li>Changed timer functions: 20100726</li>
+        <li>IMAGIC images: Added ability to recognize old format: 20100802</li>
+        <li>borient: Improved orientation finding in pps mode: 20100803</li>
+        <li>borient: Improved orientation finding in ccc mode: 20100805</li>
+        <li>View, Euler and Transform converted to class objects: 20100811</li>
+        <li>brefine: Improved Monte Carlo refinements: 20100818</li>
+        <li>Converted Bmatrix to a class object: 20100818</li>
+        <li>brefine: Introduced grid search refinements: 20100819</li>
+        <li>bshell: Added circle, ellipse and ellipsoid shapes: 20100827</li>
+        <li>breconstruct: Introduced resolution estimate calculated during reconstruction: 20101018</li>
+        <li>bhelix: Improved function to determine helical parameters: 20101102</li>
+        <li>Changed to more rational kernel names in the parameter directory: 20101115</li>
+        <li>bmg: Added option to use a different reference view (suggested by Eduardo Sanz-Garcia): 20101116</li>
+        <li>emgrand: Added helical random views: 20101116</li>
+        <li>bsym: Added option to change symmetry: 20101123</li>
+        <li>bmodsel: Added FOM rank selection: 20101130</li>
+        <li>bshow: Added voxel value recording feature: 20101202</li>
+        <li>bbackproj: Improved R-weighting: 20101216</li>
+      </ul>
+    <h2>Version 1.8.0, 20120229</h2>
+      Comprehensive change to C++ image objects, updated included libraries and new functions.<br />
+      <ul>
+        <li>PNM: Added support for PBM, PGM and PPM image formats: 20110317</li>
+        <li>libtiff: Updated to version 3.9.4: 20110320</li>
+        <li>libpng: Updated to version 1.5.1: 20110320</li>
+        <li>zlib: Updated to version 1.2.5: 20110320</li>
+        <li>bgraphseg: New program to do graph-based segmentation: 20110328</li>
+		<li>Introduced the enumerated CompoundType: 20110618</li>
+		<li>Converted Complex to a two-channel compound type: 20110618</li>
+		<li>Converted Bimage and Bsub_image to classes: 20110810</li>
+		<li>bcyl: A new program for cylindrical operations: 20110930</li>
+		<li>bnad: Rewrote code to allow for threading: 20111003</li>
+		<li>Color classes RGB, RGBA, CMYK: 20111123</li>
+		<li>CTFparam class: 20111123</li>
+		<li>Reorganized cross-correlation functions to allow both resolution limits and mask: 20111128</li>
+		<li>bhelix: Symmetrization with a seam: 20120112</li>
+		<li>Bplot and associated classes: 20120118</li>
+		<li>Constant RHO changed to 0.81 Da/A3: 20120123</li>
+      </ul>
+    <h2>Version 1.9.0, 20150213</h2>
+      Further conversion to C++ syntax, threading and addition of new programs.<br />
+      <ul>
+        <li>borient and brefine: Added mask option: 20120412</li>
+        <li>btompart: New program to reconstruct tomographic particles and estimate resolution: 20120416</li>
+        <li>Fixed cross-correlation roundoff error: 20120501</li>
+        <li>borient: Added polarresolution option: 20120506</li>
+        <li>Fixed issues with VMS with Jouk Jansen's help: 20120517</li>
+        <li>blocres: Parallelized: 20120731</li>
+        <li>blocfilt: Filter a map based on local resolution by Giovanni Cardone: 20120803</li>
+        <li>breconstruct: Introduced threading and modifying options: 20120913</li>
+        <li>Tcl/Tk code: Separated micrograph elements into different files: 20120926</li>
+        <li>dhand: Fixed and updated for proper output: 20121013</li>
+        <li>bmultifit: Modification to accumulate hits on a view grid: 20121013</li>
+        <li>bresolve: Added mask input option: 20121101</li>
+        <li>bhelix: Fixed helix parameter search -> findcc and findrs: 20121108</li>
+        <li>DM4: Support for Digital Micrograph format 4 images: 20121108</li>
+        <li>dhand: Improved handling of handedness analysis: 20121116</li>
+        <li>bresolve: XML output of a FSC curve improved: 20121217</li>
+        <li>bampweigh: Introduces option to read a FSC curve: 20121217</li>
+        <li>rwPDB: Fixed secondary structure parsing and writing: 20130111</li>
+        <li>bflood: Watershed algorithm threaded: 20130122</li>
+        <li>brun: Reorganized parsing and presentation: 20130123</li>
+        <li>brefine: Downsized reference map based on resolution limit: 20130201</li>
+        <li>EMX: Introduced micrograph exchange format support: 20130201</li>
+        <li>brefine: Introduced 1D weight function, default C-curve: 20130410</li>
+        <li>bfcc: New program to do fast cross-correlation searches: 20130618</li>
+        <li>Threaded background calculation code: 20130625</li>
+        <li>Bshow: Added "Change image" option to micrograph menu: 20130726</li>
+        <li>Changed from box radius to box size for particles: 20130805</li>
+        <li>Bshow: Added window and autoscaling preferences: 20130828</li>
+        <li>borient and brefine: Added ppx files to track particle alignment completion: 20130828</li>
+        <li>btomrec: Threaded micrograph transformation and pack in smaller reciprocal space: 20130829</li>
+        <li>btube: New program to symmetrize hexagonal tubes: 20131023</li>
+        <li>bhelix: Threaded helical symmetrization: 20131028</li>
+        <li>bhelcross: New program to reconstruct a cross section based on helical parameters: 20131028</li>
+        <li>bfilwidth: New program to estimate filament width: 20131028</li>
+        <li>Introduce Grand Central Dispatch as alternative to OpenMP: 20131211</li>
+        <li>Bshow: Filament profiles: 20131216</li>
+        <li>bpick: New algorithm based on circular foreground-background comparisons: 20140108</li>
+        <li>bhelix: Helical segment cross-correlations over an angular range: 20140207</li>
+        <li>bpath: New program to analyze paths in models: 20140325</li>
+        <li>Bshow and bfil: Added an automated filament node centering function: 20140411</li>
+        <li>bresolve: Add option to indicate high resolution limit used in alignment: 20140416</li>
+        <li>bspr: New program to do single particle reconstructions: 20140418</li>
+        <li>bxml: New program to read, write and validate XML files: 20140423</li>
+        <li>bdens: New program to calculate regional density averages: 20140424</li>
+        <li>bproject: -compare option with optional SNR imposed: 20140506</li>
+        <li>bpartsel: -filament option sets directional selection: 20140508</li>
+        <li>Digital Micrograph format: Rewritten with plist output: 20140516</li>
+        <li>bmgtransfer: New program to copy sets of parameters between parameter files: 20140403</li>
+        <li>bbild: New program to convert models to Bild representations for Chimera: 20140406</li>
+        <li>bshow: Added micrograph change buttons to boxing and CTF dialogs: 20140411</li>
+        <li>bctf: Added envelope equation choices: 20140710</li>
+        <li>borient: Reorganized orientation-finding code: 20140710</li>
+        <li>bseries: Threaded alignment: 20140710</li>
+        <li>bhelcross: Added an alignment option: 20140710</li>
+        <li>bplane: New program to manipulate plane models: 20140929</li>
+        <li>Jsubtomo: Incorporated and paralellized jsubtomo: 20150108</li>
+        <li>Added support for the FEI SER image format: 20150204</li>
+	</ul>
+    <h2>Version 1.9.3, 20161031</h2>
+      <p>Bug fixes, modifications and additions.<br />
+      <ul>
+        <li>Situs: Added support for the Situs image format: 20150316</li>
+        <li>OpenDX: Added support for the DX image format: 20150319</li>
+        <li>bbackproj: Fixed the weighting: 20150814</li>
+        <li>TGA: Added support for the TrueVision image format: 20150815</li>
+        <li>bpick and bshow: Templated particle picking: 20160106</li>
+        <li>Tilted CTF: Power spectrum and correcting for micrographs of tilted specimens: 20160123</li>
+        <li>Frames: Added frames tag to micrograph data block: 20160309</li>
+        <li>bseries: Progressive and iterative micrograph frame alignment: 20160309</li>
+        <li>bshell: New option to generate a shell model from each component: 20160531</li>
+		<li>bmodsym: New program for symmetry functions, including cyclic symmetry at components: 20160606</li>
+		<li>FOM block: Eliminated image FOM block - replaced by linked image(s): 20160606</li>
+        <li>bpick: New option to pick symmetry related subvolumes: 20160610</li>
+        <li>Bimage: Coverted the vast majority of image processing into the Bimage class: 20160616</li>
+		<li>bnad: Added support 2D images: 20160623</li>
+		<li>bctf: Added extra baselines to model peak at ~3.8 Å: 20160909</li>
+		<li>bmodcomp: Added model comparisons and consolidation: 20161012</li>
+		<li>Radon package: Updated: 20161025</li>
+	</ul>
+    <h2>Version 1.9.4, 20170426</h2>
+      <p>Bug fixes, modifications and additions.<br />
+      <ul>
+		<li>blevel: New program to handle level masks: 20161205</li>
+		<li>bftr: New program to resize images in frequency space: 20161205</li>
+		<li>bhead: Added moments calculation: 20161205</li>
+		<li>bfilter: Added difference-of-gaussians filter: 20161214</li>
+		<li>bscale: New program to rescale maps with minimal interpolation: 20170126</li>
+		<li>bsupix: New program to do superpixel segmentation: 20170421</li>
+	</ul>
+    <h2>Version 1.9.5, 20170918</h2>
+      <p>Final version before big transition to version 2.<br />
+      <ul>
+		<li>bmg2imod: Program to convert IMOD parameter files: 20170918</li>
+		<li>bmgconvert: Program to convert parameter files from other packages: 20170918</li>
+		<li>bmaxpow: New program to determine particle orientations from maximum power in transforms: 20171113</li>
+	</ul>
+</div>
+<div id="footer">
+  Bernard Heymann  20180108
+</div>
+</body>
+</html>

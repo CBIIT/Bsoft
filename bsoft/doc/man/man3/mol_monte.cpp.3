@@ -1,0 +1,558 @@
+.TH "/Users/bernard/b20/bsoft/src/mol/mol_monte.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mol/mol_monte.cpp \- Functions for a monte carlo metroplis algorithm to energy minimize molecular positions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmolecule\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'rwmd\&.h'\fP
+.br
+\fC#include 'mol_md\&.h'\fP
+.br
+\fC#include 'mol_monte\&.h'\fP
+.br
+\fC#include 'mol_bonds\&.h'\fP
+.br
+\fC#include 'mol_map_energy\&.h'\fP
+.br
+\fC#include 'mol_compare\&.h'\fP
+.br
+\fC#include 'mol_transform\&.h'\fP
+.br
+\fC#include 'mol_util\&.h'\fP
+.br
+\fC#include 'Matrix\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBdisplay_energy_headers\fP (\fBBmd\fP *md)"
+.br
+.ti -1c
+.RI "int \fBdisplay_energy\fP (long iter, \fBBmd\fP *md, double dE)"
+.br
+.ti -1c
+.RI "\fBBmolgroup\fP * \fBmonte_carlo_metropolis\fP (\fBBmolgroup\fP *molgroup, \fBBmd\fP *md, \fBBimage\fP *map, double \fBbeta\fP, double max_angle, double max_shift, long max_iter, int rigid, double(Efunc)(\fBBmolgroup\fP *, \fBBimage\fP *, \fBBmd\fP *), int(Tfunc)(\fBBmolgroup\fP *, double, double))"
+.br
+.ti -1c
+.RI "\fBBmolgroup\fP * \fBmolgroup_generate_masked_grid_list\fP (\fBBmolgroup\fP *molgroup, \fBBimage\fP *pmask, \fBVector3\fP< double > grid_sampling, \fBBstring\fP filename)"
+.br
+.RI "Generates multiple versions of a molecule at different locations\&. 
+.br
+ "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmolgroup_generate_masked_grid_list\fP (\fBBmolgroup\fP *molgroup, \fBVector3\fP< double > grid_sampling, \fBBimage\fP *pmask)"
+.br
+.ti -1c
+.RI "\fBBmolgroup\fP * \fBmolgroup_generate_orientation_list\fP (\fBBmolgroup\fP *molgroup, double angle_step, \fBBstring\fP filename, int whole)"
+.br
+.RI "Generates multiple versions of a molecule at different locations\&. 
+.br
+ "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmolgroup_generate_orientation_list\fP (\fBBmolgroup\fP *molgroup, double angle_step)"
+.br
+.ti -1c
+.RI "int \fBmcm_molecule_list\fP (\fBBmolgroup\fP *molgroup, \fBBmodel\fP *\fBmodel\fP, \fBBmd\fP *md, \fBBimage\fP *map, double \fBbeta\fP, double max_angle, double max_shift, long max_iter, int rigid)"
+.br
+.RI "Monte Carlo fit of a molecule to a list of locations and orientations\&. 
+.br
+ "
+.ti -1c
+.RI "int \fBmcm_molecule_groups\fP (\fBBmolgroup\fP *molgroup, \fBBmodel\fP *\fBmodel\fP, \fBBmd\fP *md, \fBBimage\fP *map, double \fBbeta\fP, double max_angle, double max_shift, long max_iter, int rigid)"
+.br
+.RI "Monte Carlo fit of a set of molecule groups\&. 
+.br
+ "
+.ti -1c
+.RI "int \fBmolgroup_set_box_to_map_boundaries\fP (\fBBmolgroup\fP *molgroup, \fBBimage\fP *map)"
+.br
+.RI "Sets the box in a molgroup to that defined by the map boundaries\&. 
+.br
+ "
+.ti -1c
+.RI "long \fBmolgroup_test_if_within_box\fP (\fBBmolgroup\fP *molgroup, \fBVector3\fP< double > min, \fBVector3\fP< double > max)"
+.br
+.RI "Tests if a molecule overlaps with a defined box\&. 
+.br
+ "
+.ti -1c
+.RI "double \fBmonte_rigid_body_fit_energy\fP (\fBBmolgroup\fP *molgroup, \fBBimage\fP *map, \fBBmd\fP *md)"
+.br
+.RI "Calculates the potential energy for rigid body fitting\&. "
+.ti -1c
+.RI "double \fBmonte_atom_fit_energy\fP (\fBBmolgroup\fP *molgroup, \fBBimage\fP *map, \fBBmd\fP *md)"
+.br
+.RI "Calculates the potential energy for fitting atoms to a map\&. "
+.ti -1c
+.RI "double \fBmonte_bond_fit_energy\fP (\fBBmolgroup\fP *molgroup, \fBBimage\fP *map, \fBBmd\fP *md)"
+.br
+.RI "Calculates the potential energy for fitting bonds to a map\&. "
+.ti -1c
+.RI "double \fBmolgroup_atom_overlap\fP (\fBBmolgroup\fP *molgroup, \fBBmd\fP *md)"
+.br
+.RI "Calculates an energy term based on atom overlap\&. "
+.ti -1c
+.RI "int \fBmolgroup_rigid_body_transform\fP (\fBBmolgroup\fP *molgroup, double max_angle, double shift_std)"
+.br
+.RI "Randomly transforms a molecule or molecule group\&. "
+.ti -1c
+.RI "int \fBmolgroup_move_atoms_down_energy\fP (\fBBmolgroup\fP *molgroup, double max_angle, double max_shift)"
+.br
+.RI "Move atoms random distances down the energy gradient\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for a monte carlo metroplis algorithm to energy minimize molecular positions\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20041230 
+.PP
+Modified: 20180226 
+.RE
+.PP
+
+.PP
+Definition in file \fBmol_monte\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int display_energy (long iter, \fBBmd\fP * md, double dE)"
+
+.PP
+Definition at line 42 of file mol_monte\&.cpp\&.
+.SS "int display_energy_headers (\fBBmd\fP * md)"
+
+.PP
+Definition at line 27 of file mol_monte\&.cpp\&.
+.SS "int mcm_molecule_groups (\fBBmolgroup\fP * molgroup, \fBBmodel\fP * model, \fBBmd\fP * md, \fBBimage\fP * map, double beta, double max_angle, double max_shift, long max_iter, int rigid)"
+
+.PP
+Monte Carlo fit of a set of molecule groups\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fI*model\fP model parameters (modified)\&. 
+.br
+\fI*md\fP molecular dynamics structure\&. 
+.br
+\fI*map\fP map\&. 
+.br
+\fIbeta\fP equivalent of 1/kT\&. 
+.br
+\fImax_angle\fP maximum allowed angular step size\&. 
+.br
+\fImax_shift\fP maximum allowed shift\&. 
+.br
+\fImax_iter\fP maximum number of iterations\&. 
+.br
+\fIrigid\fP selection of mode\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolgroup* new molecule group list\&. 
+.PP
+.nf
+For each model, the molecule group is first transformed to the model 
+location and orientation. The whole ensemble is then refined with the 
+Monte Carlo Metropolis algorithm and the model parameters updated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 548 of file mol_monte\&.cpp\&.
+.SS "int mcm_molecule_list (\fBBmolgroup\fP * molgroup, \fBBmodel\fP * model, \fBBmd\fP * md, \fBBimage\fP * map, double beta, double max_angle, double max_shift, long max_iter, int rigid)"
+
+.PP
+Monte Carlo fit of a molecule to a list of locations and orientations\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fI*model\fP model parameters (modified)\&. 
+.br
+\fI*md\fP molecular dynamics structure\&. 
+.br
+\fI*map\fP map\&. 
+.br
+\fIbeta\fP equivalent of 1/kT\&. 
+.br
+\fImax_angle\fP maximum allowed angular step size\&. 
+.br
+\fImax_shift\fP maximum allowed shift\&. 
+.br
+\fImax_iter\fP maximum number of iterations\&. 
+.br
+\fIrigid\fP selection of mode\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolgroup* new molecule group list\&. 
+.PP
+.nf
+For each model, the molecule group is first transformed to the model 
+location and orientation. This is then refined with the Monte Carlo
+Metropolis algorithm and the model parameters updated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 491 of file mol_monte\&.cpp\&.
+.SS "double molgroup_atom_overlap (\fBBmolgroup\fP * molgroup, \fBBmd\fP * md)"
+
+.PP
+Calculates an energy term based on atom overlap\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecular structure\&. 
+.br
+\fI*md\fP molecular dynamics structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double total overlap energy\&. 
+.PP
+.nf
+The energy is defined as linear decay to the reference separation distance
+and zero beyond:
+    Esep = Ksep * (1 - d/dsep)  for  d < dsep, zero otherwise
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 763 of file mol_monte\&.cpp\&.
+.SS "\fBBmolgroup\fP* molgroup_generate_masked_grid_list (\fBBmolgroup\fP * molgroup, \fBBimage\fP * pmask, \fBVector3\fP< double > grid_sampling, \fBBstring\fP filename)"
+
+.PP
+Generates multiple versions of a molecule at different locations\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fI*pmask\fP mask to get limit grid positions\&. 
+.br
+\fIgrid_sampling\fP sampling for grid search\&. 
+.br
+\fIfilename\fP output base file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolgroup* linked list of molecule groups\&. 
+.PP
+.nf
+The locations of the molecules are defined on the intersection of a 
+grid and a user-defined mask.
+The numbered output filename is also set.
+Note: the molecule group minima and maxima should be set to the 
+volume to be searched before calling this function.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 260 of file mol_monte\&.cpp\&.
+.SS "\fBBmodel\fP* molgroup_generate_masked_grid_list (\fBBmolgroup\fP * molgroup, \fBVector3\fP< double > grid_sampling, \fBBimage\fP * pmask)"
+
+.PP
+Definition at line 319 of file mol_monte\&.cpp\&.
+.SS "\fBBmodel\fP* molgroup_generate_orientation_list (\fBBmolgroup\fP * molgroup, double angle_step)"
+
+.PP
+Definition at line 438 of file mol_monte\&.cpp\&.
+.SS "\fBBmolgroup\fP* molgroup_generate_orientation_list (\fBBmolgroup\fP * molgroup, double angle_step, \fBBstring\fP filename, int whole)"
+
+.PP
+Generates multiple versions of a molecule at different locations\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fIangle_step\fP angular step size in radians\&. 
+.br
+\fIfilename\fP output base file name\&. 
+.br
+\fIwhole\fP treat the whole ensemble as a rigid body\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolgroup* linked list of molecule groups\&. 
+.PP
+.nf
+The molecule group is rotated in place to give all orientations
+with a given angle step size between the views.
+The numbered output filename is also set.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 389 of file mol_monte\&.cpp\&.
+.SS "int molgroup_move_atoms_down_energy (\fBBmolgroup\fP * molgroup, double max_angle, double max_shift)"
+
+.PP
+Move atoms random distances down the energy gradient\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecular structure\&. 
+.br
+\fImax_angle\fP (not used)\&. 
+.br
+\fImax_shift\fP maximum shift for each atom\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double 0\&. 
+.PP
+.nf
+The distance of movement is limited to the maximum shift.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 895 of file mol_monte\&.cpp\&.
+.SS "int molgroup_rigid_body_transform (\fBBmolgroup\fP * molgroup, double max_angle, double shift_std)"
+
+.PP
+Randomly transforms a molecule or molecule group\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecular structure\&. 
+.br
+\fImax_angle\fP maximum rotation angle\&. 
+.br
+\fIshift_std\fP gaussian length for shift vector\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The transformation is calculted as a random angular rotation and a
+random shift. The shift is sampled from a random vector with a
+gaussian length distribution.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 851 of file mol_monte\&.cpp\&.
+.SS "int molgroup_set_box_to_map_boundaries (\fBBmolgroup\fP * molgroup, \fBBimage\fP * map)"
+
+.PP
+Sets the box in a molgroup to that defined by the map boundaries\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fI*map\fP map to get boundaries from\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 608 of file mol_monte\&.cpp\&.
+.SS "long molgroup_test_if_within_box (\fBBmolgroup\fP * molgroup, \fBVector3\fP< double > min, \fBVector3\fP< double > max)"
+
+.PP
+Tests if a molecule overlaps with a defined box\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fImin\fP start of box\&. 
+.br
+\fImax\fP end of box\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 630 of file mol_monte\&.cpp\&.
+.SS "double monte_atom_fit_energy (\fBBmolgroup\fP * molgroup, \fBBimage\fP * map, \fBBmd\fP * md)"
+
+.PP
+Calculates the potential energy for fitting atoms to a map\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecular structure\&. 
+.br
+\fI*map\fP density map\&. 
+.br
+\fI*md\fP molecular dynamics structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double potential energy\&. 
+.PP
+.nf
+The energy is the sum of the bond, angle, and map energies.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 697 of file mol_monte\&.cpp\&.
+.SS "double monte_bond_fit_energy (\fBBmolgroup\fP * molgroup, \fBBimage\fP * map, \fBBmd\fP * md)"
+
+.PP
+Calculates the potential energy for fitting bonds to a map\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecular structure\&. 
+.br
+\fI*map\fP density map\&. 
+.br
+\fI*md\fP molecular dynamics structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double potential energy\&. 
+.PP
+.nf
+The energy is the sum of the bond, angle, and map energies.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 729 of file mol_monte\&.cpp\&.
+.SS "\fBBmolgroup\fP* monte_carlo_metropolis (\fBBmolgroup\fP * molgroup, \fBBmd\fP * md, \fBBimage\fP * map, double beta, double max_angle, double max_shift, long max_iter, int rigid, double(Efunc)(\fBBmolgroup\fP *, \fBBimage\fP *, \fBBmd\fP *), int(Tfunc)(\fBBmolgroup\fP *, double, double))"
+
+.PP
+Definition at line 71 of file mol_monte\&.cpp\&.
+.SS "double monte_rigid_body_fit_energy (\fBBmolgroup\fP * molgroup, \fBBimage\fP * map, \fBBmd\fP * md)"
+
+.PP
+Calculates the potential energy for rigid body fitting\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecular structure\&. 
+.br
+\fI*map\fP density map\&. 
+.br
+\fI*md\fP molecular dynamics structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double potential energy\&. 
+.PP
+.nf
+The energy is the sum of the overlap, map, and point force energies.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 665 of file mol_monte\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

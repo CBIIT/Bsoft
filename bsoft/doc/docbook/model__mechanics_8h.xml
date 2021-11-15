@@ -1,0 +1,1481 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_model__mechanics_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/model_mechanics.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/model_mechanics.h</primary></indexterm>
+<para>
+
+<para>Functions to do molecular mechanics. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmodel.h&quot;
+#include &quot;rwmodel_param.h&quot;
+#include &quot;rwimg.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1a146c7646a40b4afc53f8fbf4ae0cb70c">model_mechanics</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bmodparam">Bmodparam</link> &amp;md, int mm_type, int max_iter, double max_shift, double velocitylimit)</para>
+
+<para>Minimizes the energy of a model. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__mechanics_8h_1abfa114cb4ebf04dd000780ae3a56ab1a">model_minimize</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double max_shift)</para>
+
+<para>Move components random distances down the energy gradient. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1a4111f7274a1e0f313b249df84b8e1b8f">model_verlet</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double timestep, double Kfriction, double velocitylimit)</para>
+
+<para>Model dynamics using the velocity verlet integrator. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1ac66cb3db035b84b3b101aab34ac98448">model_electrostatic_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bmodparam">Bmodparam</link> &amp;md)</para>
+
+<para>Calculates the electrostatic potentials between components. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1a7bdb91ae36845864133047f22b040f5e">model_distance_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bmodparam">Bmodparam</link> &amp;md)</para>
+
+<para>Calculates the distance-related potentials between components. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1a12722f0e2ea53fee890d09ab69af0c4a">model_grid_distance_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bmodparam">Bmodparam</link> &amp;md)</para>
+
+<para>Calculates the non-bonded forces and energy. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1adbd5167faccf5901241dae5fc4199a01">model_neighbor_distance_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bmodparam">Bmodparam</link> &amp;md)</para>
+
+<para>Calculates the distance-related potentials between components and their neighbors. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1ad0e5cb830160de53f08a59e03f408849">model_soft_sphere_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double Kdistance, double dist_ref)</para>
+
+<para>Calculates the soft sphere potential between components. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1a4c2c49fb2f38d28db1096f236a167b49">model_lennard_jones_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double Kdistance, double <link linkend="__vector3_8h_1aa60745aa4e45acde64f733424e37dbb9">distance</link>)</para>
+
+<para>Calculates the Lennard-Jones potential between components. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1af9aadb8e44f9c9ea98332144fd1432da">model_morse_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double Kdistance, double <link linkend="__vector3_8h_1aa60745aa4e45acde64f733424e37dbb9">distance</link>)</para>
+
+<para>Calculates the Morse potential between components. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1ae06d71db1e4a623f5cb69c4265349415">model_link_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bmodparam">Bmodparam</link> &amp;md)</para>
+
+<para>Calculates the model link energy. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1a0a24f6e2ddd291d2707a3ca8038ef3d1">model_link_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double Klink)</para>
+
+<para>Calculates the model link energy. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1a50aa3cd80e0c8953f88c44cd5795d08f">model_angle_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bmodparam">Bmodparam</link> &amp;md)</para>
+
+<para>Calculates the model angular energy. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1a8c56f12a193aae669cadd550549876a2">model_polygon_angle_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double Kangle)</para>
+
+<para>Calculates the link angular forces and energy. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1a631dc257ac74698ad52f427cc4b8ab46">model_polygon_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double Kpoly)</para>
+
+<para>Calculates the polygon regularity energy and forces. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1a8da857326b0810c24bbc5daa4fe044be">model_polygon_plane_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double Kpolyplane)</para>
+
+<para>Calculates the polygon planarity energy and forces. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1aa6dd499aa56d27ea9a2242adc07cc04d">model_neighbor_plane_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double Kplane)</para>
+
+<para>Calculates the planarity energy and forces with respect to neighbors. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1a251ae64cbdf6ff011001886c1e5b1337">model_point_force</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; point, double Kpoint, double decay)</para>
+
+<para>Calculates the forces and energy resulting from a single point force. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1a3570cbe427325125243f2f030acf2b70">model_radial_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; point, double d0, double Kd)</para>
+
+<para>Calculates the potential between a components and a point. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1a35695c0710d45ff27f12f7f5ff3f3472">model_guide_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bmodparam">Bmodparam</link> &amp;md)</para>
+
+<para>Calculates the potential with respect to a guide model. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1a2fccf8ef2d25e9332454fe8af95c8cb6">model_polyhedron_guide_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bmodel">Bmodel</link> *gmod, double Kguide)</para>
+
+<para>Calculates the potential with respect to a guide polyhedron. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1aa7d70e0e2285eddea66f5b028b3191da">model_map_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bimage">Bimage</link> *map, double Kmap)</para>
+
+<para>Energy calculation of a model into a map. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__mechanics_8h_1a9525b7792358d073985919e09fa95513">model_map_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bimage">Bimage</link> *map, double Kmap, double sigma)</para>
+</listitem>
+            <listitem><para>int <link linkend="_model__mechanics_8h_1a000b5e3639275863d082973124a89b57">model_zero_forces</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Zeroes the component forces. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__mechanics_8h_1aaad79680c7e3577a4d6cd698371c2600">model_calculate_deviations</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Calculates the deviations from regularity in a polyhedral model. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__mechanics_8h_1a1fd9e65f7adb7327c3fab4fb385bc29b">model_calculate_deviations</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bmodparam">Bmodparam</link> &amp;md)</para>
+</listitem>
+            <listitem><para>int <link linkend="_model__mechanics_8h_1adba977349c6ecee3c9d8ef37b1e38a6b">model_regularize</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, int reg_iter, double <link linkend="__vector3_8h_1aa60745aa4e45acde64f733424e37dbb9">distance</link>, double Kdistance, double Klink, double Kangle, double Kpoly, double Kpolyplane, double Kpoint, double decay)</para>
+
+<para>Regularizes a model. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions to do molecular mechanics. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010828 </para>
+
+<para>Modified: 20210324 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_model__mechanics_8h_1a50aa3cd80e0c8953f88c44cd5795d08f"/>    <section>
+    <title>model_angle_energy()</title>
+<indexterm><primary>model_angle_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_angle_energy</secondary></indexterm>
+<para><computeroutput>double model_angle_energy (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bmodparam">Bmodparam</link> &amp; md)</computeroutput></para><para>
+
+<para>Calculates the model angular energy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;md</entry>
+                                <entry>
+<para>model parameters with reference angle specifications. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double angular energy. <literallayout><computeroutput>The angular potential is a harmonic function:
+    E = Ka*(a - a0)^2
+The force is zero when a = reference angle (a0).
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 937 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1aaad79680c7e3577a4d6cd698371c2600"/>    <section>
+    <title>model_calculate_deviations()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>model_calculate_deviations</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_calculate_deviations</secondary></indexterm>
+<para><computeroutput>int model_calculate_deviations (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Calculates the deviations from regularity in a polyhedral model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Link deviation:
+    d = sqrt(sum((l - l0)^2)/n)
+where l is the length and l0 is the reference length.
+Angle deviation:
+    d = sqrt(sum((a - a0)^2)/n)
+where a is the angle between two links and a0 is the reference angle:
+    a0 = PI*(1 - 2/v)
+where v is the number of vertices in the associated polygon.
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1521 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1a1fd9e65f7adb7327c3fab4fb385bc29b"/>    <section>
+    <title>model_calculate_deviations()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>model_calculate_deviations</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_calculate_deviations</secondary></indexterm>
+<para><computeroutput>int model_calculate_deviations (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bmodparam">Bmodparam</link> &amp; md)</computeroutput></para><para>
+Definition at line 1572 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1a7bdb91ae36845864133047f22b040f5e"/>    <section>
+    <title>model_distance_energy()</title>
+<indexterm><primary>model_distance_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_distance_energy</secondary></indexterm>
+<para><computeroutput>double model_distance_energy (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bmodparam">Bmodparam</link> &amp; md)</computeroutput></para><para>
+
+<para>Calculates the distance-related potentials between components. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;md</entry>
+                                <entry>
+<para>model parameters with distance interactions specifications. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double distance energy. <literallayout><computeroutput>Distance potential types:
+    0   none
+    1   harmonic - only for explicit links
+    2   soft
+    3   Lennard-Jones
+    4   Morse
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 595 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1ac66cb3db035b84b3b101aab34ac98448"/>    <section>
+    <title>model_electrostatic_energy()</title>
+<indexterm><primary>model_electrostatic_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_electrostatic_energy</secondary></indexterm>
+<para><computeroutput>double model_electrostatic_energy (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bmodparam">Bmodparam</link> &amp; md)</computeroutput></para><para>
+
+<para>Calculates the electrostatic potentials between components. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;md</entry>
+                                <entry>
+<para>model parameters with distance interactions specifications. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double electrostatic energy. <literallayout><computeroutput>Electrostaic potential:
+    E = Ke*q1*q2/d
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 556 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1a12722f0e2ea53fee890d09ab69af0c4a"/>    <section>
+    <title>model_grid_distance_energy()</title>
+<indexterm><primary>model_grid_distance_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_grid_distance_energy</secondary></indexterm>
+<para><computeroutput>double model_grid_distance_energy (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bmodparam">Bmodparam</link> &amp; md)</computeroutput></para><para>
+
+<para>Calculates the non-bonded forces and energy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;md</entry>
+                                <entry>
+<para>model parameters with distance interactions specifications. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double distance energy.</para>
+</formalpara>
+<literallayout><computeroutput>Distance potential types:
+    0   none
+    1   harmonic - only for explicit links
+    2   soft
+    3   Lennard-Jones
+    4   Morse
+</computeroutput></literallayout> </para>
+<para>
+Definition at line 656 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1a35695c0710d45ff27f12f7f5ff3f3472"/>    <section>
+    <title>model_guide_energy()</title>
+<indexterm><primary>model_guide_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_guide_energy</secondary></indexterm>
+<para><computeroutput>double model_guide_energy (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bmodparam">Bmodparam</link> &amp; md)</computeroutput></para><para>
+
+<para>Calculates the potential with respect to a guide model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;md</entry>
+                                <entry>
+<para>model aparameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double energy. <literallayout><computeroutput>Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1231 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1a4c2c49fb2f38d28db1096f236a167b49"/>    <section>
+    <title>model_lennard_jones_energy()</title>
+<indexterm><primary>model_lennard_jones_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_lennard_jones_energy</secondary></indexterm>
+<para><computeroutput>double model_lennard_jones_energy (<link linkend="_class_bmodel">Bmodel</link> * model, double Kd, double d0)</computeroutput></para><para>
+
+<para>Calculates the Lennard-Jones potential between components. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kd</entry>
+                                <entry>
+<para>distance force constant (Kd). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>d0</entry>
+                                <entry>
+<para>reference distance between components (d0). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double distance energy. <literallayout><computeroutput>The Lennard-Jones potential is given by:
+    E = Kd*((d0/d)^12 - 2*(d0/d)^6)
+The force is zero when d = d0.
+The potential is set to zero for d &gt; 3*d0;
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 825 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1ae06d71db1e4a623f5cb69c4265349415"/>    <section>
+    <title>model_link_energy()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>model_link_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_link_energy</secondary></indexterm>
+<para><computeroutput>double model_link_energy (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bmodparam">Bmodparam</link> &amp; md)</computeroutput></para><para>
+
+<para>Calculates the model link energy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;md</entry>
+                                <entry>
+<para>model parameters with distance interactions specifications. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double distance energy. <literallayout><computeroutput>The link potential is a harmonic function:
+    E = Kl*(d - l0)^2
+The force is zero when d = reference link length (l0).
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 880 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1a0a24f6e2ddd291d2707a3ca8038ef3d1"/>    <section>
+    <title>model_link_energy()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>model_link_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_link_energy</secondary></indexterm>
+<para><computeroutput>double model_link_energy (<link linkend="_class_bmodel">Bmodel</link> * model, double Klink)</computeroutput></para><para>
+
+<para>Calculates the model link energy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Klink</entry>
+                                <entry>
+<para>link force constant (Kl). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double link energy. <literallayout><computeroutput>The link potential is a harmonic function:
+    E = Kl*(d - l0)^2
+The force is zero when d = reference link length (l0).
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 913 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1aa7d70e0e2285eddea66f5b028b3191da"/>    <section>
+    <title>model_map_energy()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>model_map_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_map_energy</secondary></indexterm>
+<para><computeroutput>double model_map_energy (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bimage">Bimage</link> * map, double Kmap)</computeroutput></para><para>
+
+<para>Energy calculation of a model into a map. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*map</entry>
+                                <entry>
+<para>map. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kmap</entry>
+                                <entry>
+<para>map force constant. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double energy. <literallayout><computeroutput>The map must be possitive density.
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1317 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1a9525b7792358d073985919e09fa95513"/>    <section>
+    <title>model_map_energy()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>model_map_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_map_energy</secondary></indexterm>
+<para><computeroutput>double model_map_energy (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bimage">Bimage</link> * map, double Kmap, double sigma)</computeroutput></para><para>
+Definition at line 1403 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1a146c7646a40b4afc53f8fbf4ae0cb70c"/>    <section>
+    <title>model_mechanics()</title>
+<indexterm><primary>model_mechanics</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_mechanics</secondary></indexterm>
+<para><computeroutput>double model_mechanics (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bmodparam">Bmodparam</link> &amp; md, int mm_type, int max_iter, double max_shift, double velocitylimit)</computeroutput></para><para>
+
+<para>Minimizes the energy of a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;md</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mm_type</entry>
+                                <entry>
+<para>type of mechanics: 0=minimization, 1=dynamics </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_iter</entry>
+                                <entry>
+<para>number of minimization iterations. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_shift</entry>
+                                <entry>
+<para>maximum shift per iteration. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>velocitylimit</entry>
+                                <entry>
+<para>limit on velocity per time step. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double final energy. <literallayout><computeroutput>The inclusion of energy terms is based on positive K-constants in the 
+model parameter structure.
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 40 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1abfa114cb4ebf04dd000780ae3a56ab1a"/>    <section>
+    <title>model_minimize()</title>
+<indexterm><primary>model_minimize</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_minimize</secondary></indexterm>
+<para><computeroutput>int model_minimize (<link linkend="_class_bmodel">Bmodel</link> * model, double max_shift)</computeroutput></para><para>
+
+<para>Move components random distances down the energy gradient. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_shift</entry>
+                                <entry>
+<para>maximum shift for each component. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of components. <literallayout><computeroutput>The distance of movement is limited to the maximum shift.
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 222 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1af9aadb8e44f9c9ea98332144fd1432da"/>    <section>
+    <title>model_morse_energy()</title>
+<indexterm><primary>model_morse_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_morse_energy</secondary></indexterm>
+<para><computeroutput>double model_morse_energy (<link linkend="_class_bmodel">Bmodel</link> * model, double Kd, double d0)</computeroutput></para><para>
+
+<para>Calculates the Morse potential between components. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kd</entry>
+                                <entry>
+<para>distance force constant (Kd). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>d0</entry>
+                                <entry>
+<para>reference distance between components (d0). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double distance energy. <literallayout><computeroutput>The Morse potential is given by:
+    E = Kd*((1-exp((a/d0)*(d0-d)))^2 - 1)
+The width of the energy well is given by a, set here to 6.
+The force is zero when d = d0.
+The potential is set to zero for d &gt; 3*d0;
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 854 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1adbd5167faccf5901241dae5fc4199a01"/>    <section>
+    <title>model_neighbor_distance_energy()</title>
+<indexterm><primary>model_neighbor_distance_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_neighbor_distance_energy</secondary></indexterm>
+<para><computeroutput>double model_neighbor_distance_energy (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bmodparam">Bmodparam</link> &amp; md)</computeroutput></para><para>
+
+<para>Calculates the distance-related potentials between components and their neighbors. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;md</entry>
+                                <entry>
+<para>model parameters with distance interactions specifications. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double distance energy. <literallayout><computeroutput>Distance potential types:
+    0   none
+    1   harmonic - only for explicit links
+    2   soft
+    3   Lennard-Jones
+    4   Morse
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 728 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1aa6dd499aa56d27ea9a2242adc07cc04d"/>    <section>
+    <title>model_neighbor_plane_energy()</title>
+<indexterm><primary>model_neighbor_plane_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_neighbor_plane_energy</secondary></indexterm>
+<para><computeroutput>double model_neighbor_plane_energy (<link linkend="_class_bmodel">Bmodel</link> * model, double Kplane)</computeroutput></para><para>
+
+<para>Calculates the planarity energy and forces with respect to neighbors. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kplane</entry>
+                                <entry>
+<para>neighbor planarity constant. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double neighbor planar energy. <literallayout><computeroutput>A plane is fit through the neigbor locations and the normal calculated from:
+    n•p = d
+where n is the normal vector, p is a point in the plane, and d is the offset.
+The deviation of a component location from the neighbor plane is calculated
+and converted to a harmonic energy and force.
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1128 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1a251ae64cbdf6ff011001886c1e5b1337"/>    <section>
+    <title>model_point_force()</title>
+<indexterm><primary>model_point_force</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_point_force</secondary></indexterm>
+<para><computeroutput>double model_point_force (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; point, double Kpoint, double decay)</computeroutput></para><para>
+
+<para>Calculates the forces and energy resulting from a single point force. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>point</entry>
+                                <entry>
+<para>center of point force. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kpoint</entry>
+                                <entry>
+<para>point force constant. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>decay</entry>
+                                <entry>
+<para>energy decay with distance. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double point force energy. <literallayout><computeroutput>The energy is defined as an exponential decay over distance from the 
+center of the point force:
+    Ep = Kp * exp(-decay*dist)
+The force is the derivative of the energy:
+    Fp = Kp * decay * dir * exp(-decay*dist)
+where Kp is the point force constant, dist is the distance of the component 
+from the center of the point force, decay is the energy decay with distance
+from the point force center, and dir is the normalized direction vector
+pointing from the point force center to the component, indicating the direction
+of force.
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1175 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1a8c56f12a193aae669cadd550549876a2"/>    <section>
+    <title>model_polygon_angle_energy()</title>
+<indexterm><primary>model_polygon_angle_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_polygon_angle_energy</secondary></indexterm>
+<para><computeroutput>double model_polygon_angle_energy (<link linkend="_class_bmodel">Bmodel</link> * model, double Kpolyangle)</computeroutput></para><para>
+
+<para>Calculates the link angular forces and energy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kpolyangle</entry>
+                                <entry>
+<para>angle force constant (Ka). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double total link angle energy. <literallayout><computeroutput>The energy is defined as a harmonic function around the reference 
+link angle, a0:
+    Ea = Ka*(cos(a0)-r1*r2/(|r1|*|r2|))^2
+    Ea = Ka*(a0 - a)^2
+The force is the derivative of the energy on the first and last atoms:
+    Fa1 = 2*Ka*(cos(a0)-r1*r2/(|r1|*|r2|))/(|r1|*|r2|) * ((r1*r2/|r1|)*r1-r2)
+    Fa3 = 2*Ka*(cos(a0)-r1*r2/(|r1|*|r2|))/(|r1|*|r2|) * ((r1*r2/|r2|)*r2-r1)
+where r1 is the vector from atom 2 to atom 1, r2 is the vector from
+atom 2 to atom 3, and Ka is the link angle force constant.
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 985 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1a631dc257ac74698ad52f427cc4b8ab46"/>    <section>
+    <title>model_polygon_energy()</title>
+<indexterm><primary>model_polygon_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_polygon_energy</secondary></indexterm>
+<para><computeroutput>double model_polygon_energy (<link linkend="_class_bmodel">Bmodel</link> * model, double Kpoly)</computeroutput></para><para>
+
+<para>Calculates the polygon regularity energy and forces. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kpoly</entry>
+                                <entry>
+<para>polygon regularity constant (Kp). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double polygon energy. <literallayout><computeroutput>Given the distances of all the vertices from the polygon center, the
+polygon regularity is defined as the deviation of these distances
+from the average distance:
+    E = Kp*(d - d0)
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1073 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1a8da857326b0810c24bbc5daa4fe044be"/>    <section>
+    <title>model_polygon_plane_energy()</title>
+<indexterm><primary>model_polygon_plane_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_polygon_plane_energy</secondary></indexterm>
+<para><computeroutput>double model_polygon_plane_energy (<link linkend="_class_bmodel">Bmodel</link> * model, double Kpolyplane)</computeroutput></para><para>
+
+<para>Calculates the polygon planarity energy and forces. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kpolyplane</entry>
+                                <entry>
+<para>polygon planarity constant. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double polygon planar energy. <literallayout><computeroutput>A plane is fit through the polygon vertices and the normal calculated from:
+    n•p = d
+where n is the normal vector, p is a point in the plane, and d is the offset.
+The polygon plane energy is calculated as a harmonic deviation from 
+the fitted plane.
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1091 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1a2fccf8ef2d25e9332454fe8af95c8cb6"/>    <section>
+    <title>model_polyhedron_guide_energy()</title>
+<indexterm><primary>model_polyhedron_guide_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_polyhedron_guide_energy</secondary></indexterm>
+<para><computeroutput>double model_polyhedron_guide_energy (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bmodel">Bmodel</link> * gmod, double Kguide)</computeroutput></para><para>
+
+<para>Calculates the potential with respect to a guide polyhedron. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*gmod</entry>
+                                <entry>
+<para>guide polyhedron model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kguide</entry>
+                                <entry>
+<para>guide polyhedron force constant. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double energy. <literallayout><computeroutput>Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1267 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1a3570cbe427325125243f2f030acf2b70"/>    <section>
+    <title>model_radial_energy()</title>
+<indexterm><primary>model_radial_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_radial_energy</secondary></indexterm>
+<para><computeroutput>double model_radial_energy (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; point, double d0, double Kradial)</computeroutput></para><para>
+
+<para>Calculates the potential between a components and a point. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>point</entry>
+                                <entry>
+<para>reference point = radial center. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>d0</entry>
+                                <entry>
+<para>reference distance between component and point. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kradial</entry>
+                                <entry>
+<para>radial force constant. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double energy. <literallayout><computeroutput>The radial potential is given by:
+    E = Kd*(d - d0)^2
+The force is zero when d = d0.
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1210 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1adba977349c6ecee3c9d8ef37b1e38a6b"/>    <section>
+    <title>model_regularize()</title>
+<indexterm><primary>model_regularize</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_regularize</secondary></indexterm>
+<para><computeroutput>int model_regularize (<link linkend="_class_bmodel">Bmodel</link> * model, int max_iter, double distance, double Kdistance, double Klink, double Kpolyangle, double Kpolygon, double Kpolyplane, double Kpoint, double decay)</computeroutput></para><para>
+
+<para>Regularizes a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_iter</entry>
+                                <entry>
+<para>maximum number of iterations. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>distance</entry>
+                                <entry>
+<para>reference distance. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kdistance</entry>
+                                <entry>
+<para>distance strength constant. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Klink</entry>
+                                <entry>
+<para>link strength constant. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kpolyangle</entry>
+                                <entry>
+<para>angle strength constant. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kpolygon</entry>
+                                <entry>
+<para>polygon regularity constant. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kpolyplane</entry>
+                                <entry>
+<para>polygon planarity constant. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kpoint</entry>
+                                <entry>
+<para>force away from the center-of-mass. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>decay</entry>
+                                <entry>
+<para>point force decay constant. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1696 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1ad0e5cb830160de53f08a59e03f408849"/>    <section>
+    <title>model_soft_sphere_energy()</title>
+<indexterm><primary>model_soft_sphere_energy</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_soft_sphere_energy</secondary></indexterm>
+<para><computeroutput>double model_soft_sphere_energy (<link linkend="_class_bmodel">Bmodel</link> * model, double Kd, double d0)</computeroutput></para><para>
+
+<para>Calculates the soft sphere potential between components. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kd</entry>
+                                <entry>
+<para>distance force constant. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>d0</entry>
+                                <entry>
+<para>reference distance between components. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double distance energy. <literallayout><computeroutput>The soft sphere potential is given by:
+    E = Kd*(d0/d)^12
+The potential is set to zero for d &gt; 3*d0;
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 797 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1a4111f7274a1e0f313b249df84b8e1b8f"/>    <section>
+    <title>model_verlet()</title>
+<indexterm><primary>model_verlet</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_verlet</secondary></indexterm>
+<para><computeroutput>double model_verlet (<link linkend="_class_bmodel">Bmodel</link> * model, double timestep, double Kfriction, double velocitylimit)</computeroutput></para><para>
+
+<para>Model dynamics using the velocity verlet integrator. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>timestep</entry>
+                                <entry>
+<para>dynamics time step. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kfriction</entry>
+                                <entry>
+<para>friction coefficient. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>velocitylimit</entry>
+                                <entry>
+<para>limit on velocity per time step. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double kinetic energy. <literallayout><computeroutput>Leapfrog integration for any coordinate x, velocity vx and force Fx:
+    x(t+1) = x(t) + vx(t+1) * dt
+    vx(t+1) = (Fx(t) * dt/m + vx(t)) * kf
+    where
+        kf: friction constant (1=no friction)
+        dt: time step
+        m: atomic mass
+The velocity is limited each time step to damp chaotic oscillations.
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 261 of file model_mechanics.cpp.</para>
+    </section><anchor xml:id="_model__mechanics_8h_1a000b5e3639275863d082973124a89b57"/>    <section>
+    <title>model_zero_forces()</title>
+<indexterm><primary>model_zero_forces</primary><secondary>model_mechanics.h</secondary></indexterm>
+<indexterm><primary>model_mechanics.h</primary><secondary>model_zero_forces</secondary></indexterm>
+<para><computeroutput>int model_zero_forces (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Zeroes the component forces. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of components. <literallayout><computeroutput>Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1495 of file model_mechanics.cpp.</para>
+</section>
+</section>
+</section>

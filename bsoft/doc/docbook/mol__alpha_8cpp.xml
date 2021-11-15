@@ -1,0 +1,578 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mol__alpha_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mol/mol_alpha.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mol/mol_alpha.cpp</primary></indexterm>
+<para>
+
+<para>Functions to make and analyze alpha helices. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmolecule.h&quot;
+#include &quot;mol_alpha.h&quot;
+#include &quot;mol_transform.h&quot;
+#include &quot;mol_util.h&quot;
+#include &quot;Bimage.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;random_numbers.h&quot;
+#include &quot;Matrix3.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_struct_alpha_template">AlphaTemplate</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_mol__alpha_8cpp_1acef12a2eeed5b97bda00d173f030202c">NTEMPATOM</link>   6</para>
+</listitem>
+            <listitem><para>#define <link linkend="_mol__alpha_8cpp_1a603f9bc31e056819363189c3f66f62be">DAXIS</link>   2.303</para>
+</listitem>
+            <listitem><para>#define <link linkend="_mol__alpha_8cpp_1a18e03c49412827cd6aafd98827e38d0e">HRISE</link>   1.5</para>
+</listitem>
+            <listitem><para>#define <link linkend="_mol__alpha_8cpp_1a49215bec42d3260eee36ce4a310256bc">HANGLE</link>   100</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_struct_bmolgroup">Bmolgroup</link> * <link linkend="_mol__alpha_8cpp_1a9907d81ba9424ab77ffc80f79c9911cc">molgroup_generate_alpha_helix</link> (int <link linkend="__vector3_8h_1a7baf5ed670fcf9bcca9a3a400820e292">length</link>)</para>
+
+<para>Generates an alpha helix of the desired length. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolecule">Bmolecule</link> * <link linkend="_mol__alpha_8cpp_1a09993da8a0c1e7413ba48a501210dcc3">mol_generate_alpha_helix</link> (int <link linkend="__vector3_8h_1a7baf5ed670fcf9bcca9a3a400820e292">length</link>)</para>
+
+<para>Generates an alpha helix of the desired length. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__alpha_8cpp_1a4778e0f1a9ec6198c89072fe3a651a9d">molgroup_set_alpha_helix</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, int helix_start, int helix_end)</para>
+
+<para>Sets a residue range to an alpha helix in all molecules. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__alpha_8cpp_1ae1768f69d8e49d79a58b28c2fa9bfc00">molgroup_find_helical_axes</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Calculates the centers and orientations of all alpha helices. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_mol__alpha_8cpp_1a9ebdc7dbc703102528718669001fdf90">alpha_find_center</link> (<link linkend="_struct_bresidue">Bresidue</link> *resfirst, <link linkend="_struct_bresidue">Bresidue</link> *reslast)</para>
+
+<para>Calculates the center of an alpha helix. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_mol__alpha_8cpp_1a913b36307fc4e0c871c114b4a2fd0721">alpha_find_orientation</link> (<link linkend="_struct_bresidue">Bresidue</link> *resfirst, <link linkend="_struct_bresidue">Bresidue</link> *reslast)</para>
+
+<para>Calculates the orientation of an alpha helix. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_mol__alpha_8cpp_1a0942ce93360e5b71f01b9fd81279505b">mol_find_alpha_orientation</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol, int set_std)</para>
+
+<para>Calculates the orientation of an alpha helix. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_mol__alpha_8cpp_1ac496c23bbcbc4d267041265c4e3d7fbf">point_on_helix_axis</link> (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; ca1, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; ca2, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; ca3)</para>
+
+<para>Calculates a point on an alpha helix corresponding to a Ca atom. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para>long <link linkend="_mol__alpha_8cpp_1a1a9a2b01177c10b205645f28481ca2df">find_closest_mean</link> (long k, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; *mc, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; *ma, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; c, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; a, double afac)</para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolgroup">Bmolgroup</link> * <link linkend="_mol__alpha_8cpp_1aca26aaa716d72e585cec9196407443ee">molgroup_consolidate_alpha</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Cluster a set of alpha helices to consolidate helices. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mol__alpha_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_alpha_template">AlphaTemplate</link> <link linkend="_mol__alpha_8cpp_1a4645d3a299335b9b1ea24fb9df517238">alpha_template</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions to make and analyze alpha helices. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20050315 </para>
+
+<para>Modified: 20111030 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_mol__alpha_8cpp_1a603f9bc31e056819363189c3f66f62be"/>    <section>
+    <title>DAXIS</title>
+<indexterm><primary>DAXIS</primary><secondary>mol_alpha.cpp</secondary></indexterm>
+<indexterm><primary>mol_alpha.cpp</primary><secondary>DAXIS</secondary></indexterm>
+<para><computeroutput>#define DAXIS   2.303</computeroutput></para><para>
+Definition at line 33 of file mol_alpha.cpp.</para>
+    </section><anchor xml:id="_mol__alpha_8cpp_1a49215bec42d3260eee36ce4a310256bc"/>    <section>
+    <title>HANGLE</title>
+<indexterm><primary>HANGLE</primary><secondary>mol_alpha.cpp</secondary></indexterm>
+<indexterm><primary>mol_alpha.cpp</primary><secondary>HANGLE</secondary></indexterm>
+<para><computeroutput>#define HANGLE   100</computeroutput></para><para>
+Definition at line 35 of file mol_alpha.cpp.</para>
+    </section><anchor xml:id="_mol__alpha_8cpp_1a18e03c49412827cd6aafd98827e38d0e"/>    <section>
+    <title>HRISE</title>
+<indexterm><primary>HRISE</primary><secondary>mol_alpha.cpp</secondary></indexterm>
+<indexterm><primary>mol_alpha.cpp</primary><secondary>HRISE</secondary></indexterm>
+<para><computeroutput>#define HRISE   1.5</computeroutput></para><para>
+Definition at line 34 of file mol_alpha.cpp.</para>
+    </section><anchor xml:id="_mol__alpha_8cpp_1acef12a2eeed5b97bda00d173f030202c"/>    <section>
+    <title>NTEMPATOM</title>
+<indexterm><primary>NTEMPATOM</primary><secondary>mol_alpha.cpp</secondary></indexterm>
+<indexterm><primary>mol_alpha.cpp</primary><secondary>NTEMPATOM</secondary></indexterm>
+<para><computeroutput>#define NTEMPATOM   6</computeroutput></para><para>
+Definition at line 32 of file mol_alpha.cpp.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mol__alpha_8cpp_1a9ebdc7dbc703102528718669001fdf90"/>    <section>
+    <title>alpha_find_center()</title>
+<indexterm><primary>alpha_find_center</primary><secondary>mol_alpha.cpp</secondary></indexterm>
+<indexterm><primary>mol_alpha.cpp</primary><secondary>alpha_find_center</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; alpha_find_center (<link linkend="_struct_bresidue">Bresidue</link> * resfirst, <link linkend="_struct_bresidue">Bresidue</link> * reslast)</computeroutput></para><para>
+
+<para>Calculates the center of an alpha helix. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*resfirst</entry>
+                                <entry>
+<para>first residue in helix. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*reslast</entry>
+                                <entry>
+<para>last residue in helix. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> center. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 179 of file mol_alpha.cpp.</para>
+    </section><anchor xml:id="_mol__alpha_8cpp_1a913b36307fc4e0c871c114b4a2fd0721"/>    <section>
+    <title>alpha_find_orientation()</title>
+<indexterm><primary>alpha_find_orientation</primary><secondary>mol_alpha.cpp</secondary></indexterm>
+<indexterm><primary>mol_alpha.cpp</primary><secondary>alpha_find_orientation</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; alpha_find_orientation (<link linkend="_struct_bresidue">Bresidue</link> * resfirst, <link linkend="_struct_bresidue">Bresidue</link> * reslast)</computeroutput></para><para>
+
+<para>Calculates the orientation of an alpha helix. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*resfirst</entry>
+                                <entry>
+<para>first residue in helix. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*reslast</entry>
+                                <entry>
+<para>last residue in helix. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> axis. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 208 of file mol_alpha.cpp.</para>
+    </section><anchor xml:id="_mol__alpha_8cpp_1a1a9a2b01177c10b205645f28481ca2df"/>    <section>
+    <title>find_closest_mean()</title>
+<indexterm><primary>find_closest_mean</primary><secondary>mol_alpha.cpp</secondary></indexterm>
+<indexterm><primary>mol_alpha.cpp</primary><secondary>find_closest_mean</secondary></indexterm>
+<para><computeroutput>long find_closest_mean (long k, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; * mc, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; * ma, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; c, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; a, double afac)</computeroutput></para><para>
+Definition at line 359 of file mol_alpha.cpp.</para>
+    </section><anchor xml:id="_mol__alpha_8cpp_1a0942ce93360e5b71f01b9fd81279505b"/>    <section>
+    <title>mol_find_alpha_orientation()</title>
+<indexterm><primary>mol_find_alpha_orientation</primary><secondary>mol_alpha.cpp</secondary></indexterm>
+<indexterm><primary>mol_alpha.cpp</primary><secondary>mol_find_alpha_orientation</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; mol_find_alpha_orientation (<link linkend="_struct_bmolecule">Bmolecule</link> * mol, int set_std)</computeroutput></para><para>
+
+<para>Calculates the orientation of an alpha helix. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mol</entry>
+                                <entry>
+<para>molecule. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>set_std</entry>
+                                <entry>
+<para>rotate and shift to a standard orientation. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> axis. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 249 of file mol_alpha.cpp.</para>
+    </section><anchor xml:id="_mol__alpha_8cpp_1a09993da8a0c1e7413ba48a501210dcc3"/>    <section>
+    <title>mol_generate_alpha_helix()</title>
+<indexterm><primary>mol_generate_alpha_helix</primary><secondary>mol_alpha.cpp</secondary></indexterm>
+<indexterm><primary>mol_alpha.cpp</primary><secondary>mol_generate_alpha_helix</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolecule">Bmolecule</link>* mol_generate_alpha_helix (int length)</computeroutput></para><para>
+
+<para>Generates an alpha helix of the desired length. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>length</entry>
+                                <entry>
+<para>number of alanines to generate. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 68 of file mol_alpha.cpp.</para>
+    </section><anchor xml:id="_mol__alpha_8cpp_1aca26aaa716d72e585cec9196407443ee"/>    <section>
+    <title>molgroup_consolidate_alpha()</title>
+<indexterm><primary>molgroup_consolidate_alpha</primary><secondary>mol_alpha.cpp</secondary></indexterm>
+<indexterm><primary>mol_alpha.cpp</primary><secondary>molgroup_consolidate_alpha</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolgroup">Bmolgroup</link>* molgroup_consolidate_alpha (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Cluster a set of alpha helices to consolidate helices. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group with alpha helices (deallocated). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolgroup* new molecule group. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 382 of file mol_alpha.cpp.</para>
+    </section><anchor xml:id="_mol__alpha_8cpp_1ae1768f69d8e49d79a58b28c2fa9bfc00"/>    <section>
+    <title>molgroup_find_helical_axes()</title>
+<indexterm><primary>molgroup_find_helical_axes</primary><secondary>mol_alpha.cpp</secondary></indexterm>
+<indexterm><primary>mol_alpha.cpp</primary><secondary>molgroup_find_helical_axes</secondary></indexterm>
+<para><computeroutput>int molgroup_find_helical_axes (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Calculates the centers and orientations of all alpha helices. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 147 of file mol_alpha.cpp.</para>
+    </section><anchor xml:id="_mol__alpha_8cpp_1a9907d81ba9424ab77ffc80f79c9911cc"/>    <section>
+    <title>molgroup_generate_alpha_helix()</title>
+<indexterm><primary>molgroup_generate_alpha_helix</primary><secondary>mol_alpha.cpp</secondary></indexterm>
+<indexterm><primary>mol_alpha.cpp</primary><secondary>molgroup_generate_alpha_helix</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolgroup">Bmolgroup</link>* molgroup_generate_alpha_helix (int length)</computeroutput></para><para>
+
+<para>Generates an alpha helix of the desired length. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>length</entry>
+                                <entry>
+<para>number of alanines to generate. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 54 of file mol_alpha.cpp.</para>
+    </section><anchor xml:id="_mol__alpha_8cpp_1a4778e0f1a9ec6198c89072fe3a651a9d"/>    <section>
+    <title>molgroup_set_alpha_helix()</title>
+<indexterm><primary>molgroup_set_alpha_helix</primary><secondary>mol_alpha.cpp</secondary></indexterm>
+<indexterm><primary>mol_alpha.cpp</primary><secondary>molgroup_set_alpha_helix</secondary></indexterm>
+<para><computeroutput>int molgroup_set_alpha_helix (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, int helix_start, int helix_end)</computeroutput></para><para>
+
+<para>Sets a residue range to an alpha helix in all molecules. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>helix_start</entry>
+                                <entry>
+<para>first residue in helix. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>helix_end</entry>
+                                <entry>
+<para>last residue in helix. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 117 of file mol_alpha.cpp.</para>
+    </section><anchor xml:id="_mol__alpha_8cpp_1ac496c23bbcbc4d267041265c4e3d7fbf"/>    <section>
+    <title>point_on_helix_axis()</title>
+<indexterm><primary>point_on_helix_axis</primary><secondary>mol_alpha.cpp</secondary></indexterm>
+<indexterm><primary>mol_alpha.cpp</primary><secondary>point_on_helix_axis</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; point_on_helix_axis (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; ca1, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; ca2, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; ca3)</computeroutput></para><para>
+
+<para>Calculates a point on an alpha helix corresponding to a Ca atom. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para><literallayout><computeroutput>The point on the alpha helix corresponding to the second Ca atom is returned.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>ca1</entry>
+                                <entry>
+<para>first Ca atom. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ca2</entry>
+                                <entry>
+<para>second Ca atom. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ca3</entry>
+                                <entry>
+<para>third Ca atom. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> point on alpha helix. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 349 of file mol_alpha.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_mol__alpha_8cpp_1a4645d3a299335b9b1ea24fb9df517238"/>    <section>
+    <title>alpha_template</title>
+<indexterm><primary>alpha_template</primary><secondary>mol_alpha.cpp</secondary></indexterm>
+<indexterm><primary>mol_alpha.cpp</primary><secondary>alpha_template</secondary></indexterm>
+<para><computeroutput>struct <link linkend="_struct_alpha_template">AlphaTemplate</link> alpha_template[]</computeroutput></para><emphasis role="strong">Initial value:</emphasis><programlisting>=&#32;{
+&#32;&#32;&#32;&#32;{<emphasis role="stringliteral">&quot;N&quot;</emphasis>,&#32;&#32;{1.378,&#32;-0.646,&#32;-0.926}},
+&#32;&#32;&#32;&#32;{<emphasis role="stringliteral">&quot;CA&quot;</emphasis>,&#32;{2.303,&#32;&#32;0.000,&#32;&#32;0.000}},
+&#32;&#32;&#32;&#32;{<emphasis role="stringliteral">&quot;C&quot;</emphasis>,&#32;&#32;{1.599,&#32;&#32;0.860,&#32;&#32;1.028}},
+&#32;&#32;&#32;&#32;{<emphasis role="stringliteral">&quot;O&quot;</emphasis>,&#32;&#32;{2.020,&#32;&#32;1.002,&#32;&#32;2.171}},
+&#32;&#32;&#32;&#32;{<emphasis role="stringliteral">&quot;CB&quot;</emphasis>,&#32;{3.260,&#32;&#32;0.864,&#32;-0.824}},
+&#32;&#32;&#32;&#32;{<emphasis role="stringliteral">&quot;H&quot;</emphasis>,&#32;&#32;{1.279,&#32;-0.316,&#32;-1.865}}
+}
+</programlisting>    </section><anchor xml:id="_mol__alpha_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>mol_alpha.cpp</secondary></indexterm>
+<indexterm><primary>mol_alpha.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

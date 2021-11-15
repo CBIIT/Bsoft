@@ -1,0 +1,410 @@
+.TH "JSvalue" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+JSvalue
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <json\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBJSvalue\fP ()"
+.br
+.ti -1c
+.RI "\fBJSvalue\fP (\fBJStype\fP tp)"
+.br
+.ti -1c
+.RI "\fBJSvalue\fP (bool tf)"
+.br
+.ti -1c
+.RI "\fBJSvalue\fP (const char *val)"
+.br
+.ti -1c
+.RI "\fBJSvalue\fP (const string &val)"
+.br
+.ti -1c
+.RI "\fBJSvalue\fP (const int &val)"
+.br
+.ti -1c
+.RI "\fBJSvalue\fP (const unsigned int &val)"
+.br
+.ti -1c
+.RI "\fBJSvalue\fP (const long &val)"
+.br
+.ti -1c
+.RI "\fBJSvalue\fP (const unsigned long &val)"
+.br
+.ti -1c
+.RI "\fBJSvalue\fP (const float &val)"
+.br
+.ti -1c
+.RI "\fBJSvalue\fP (const double &val)"
+.br
+.ti -1c
+.RI "template<typename T > \fBJSvalue\fP (const vector< T > &arr)"
+.br
+.ti -1c
+.RI "template<typename T > \fBJSvalue\fP (const map< string, T > &mp)"
+.br
+.ti -1c
+.RI "const \fBJStype\fP & \fBtype\fP () const"
+.br
+.ti -1c
+.RI "size_t \fBsize\fP ()"
+.br
+.ti -1c
+.RI "void \fBclear\fP ()"
+.br
+.ti -1c
+.RI "long \fBmemory\fP ()"
+.br
+.ti -1c
+.RI "string & \fBvalue\fP ()"
+.br
+.ti -1c
+.RI "bool & \fBboolean\fP ()"
+.br
+.ti -1c
+.RI "long & \fBinteger\fP ()"
+.br
+.ti -1c
+.RI "double & \fBreal\fP ()"
+.br
+.ti -1c
+.RI "vector< \fBJSvalue\fP > & \fBarray\fP ()"
+.br
+.ti -1c
+.RI "\fBJSvalue\fP & \fBoperator[]\fP (long j)"
+.br
+.ti -1c
+.RI "vector< long > \fBarray_integer\fP ()"
+.br
+.ti -1c
+.RI "vector< double > \fBarray_real\fP ()"
+.br
+.ti -1c
+.RI "\fBJSvalue\fP & \fBfront\fP ()"
+.br
+.ti -1c
+.RI "\fBJSvalue\fP & \fBback\fP ()"
+.br
+.ti -1c
+.RI "vector< \fBJSvalue\fP >::iterator \fBbegin\fP ()"
+.br
+.ti -1c
+.RI "vector< \fBJSvalue\fP >::iterator \fBend\fP ()"
+.br
+.ti -1c
+.RI "vector< \fBJSvalue\fP >::iterator \fBerase\fP (long j)"
+.br
+.ti -1c
+.RI "vector< \fBJSvalue\fP >::iterator \fBerase\fP (vector< \fBJSvalue\fP >::iterator first, vector< \fBJSvalue\fP >::iterator last)"
+.br
+.ti -1c
+.RI "void \fBpush_back\fP (const \fBJSvalue\fP &val)"
+.br
+.ti -1c
+.RI "map< string, \fBJSvalue\fP > & \fBobject\fP ()"
+.br
+.ti -1c
+.RI "\fBJSvalue\fP & \fBoperator[]\fP (string tag)"
+.br
+.ti -1c
+.RI "\fBJSvalue\fP & \fBobject\fP (string tag)"
+.br
+.ti -1c
+.RI "\fBJSvalue\fP & \fBat\fP (string tag)"
+.br
+.ti -1c
+.RI "bool \fBexists\fP (string tag)"
+.br
+.ti -1c
+.RI "long \fBerase\fP (string tag)"
+.br
+.ti -1c
+.RI "map< string, \fBJSvalue\fP >::iterator \fBobject_begin\fP ()"
+.br
+.ti -1c
+.RI "map< string, \fBJSvalue\fP >::iterator \fBobject_end\fP ()"
+.br
+.ti -1c
+.RI "map< string, \fBJSvalue\fP >::iterator \fBerase\fP (map< string, \fBJSvalue\fP >::iterator first, map< string, \fBJSvalue\fP >::iterator last)"
+.br
+.ti -1c
+.RI "void \fBappend\fP (\fBJSvalue\fP &obj)"
+.br
+.ti -1c
+.RI "bool & \fBboolean\fP (string &tag)"
+.br
+.ti -1c
+.RI "long & \fBinteger\fP (string &tag)"
+.br
+.ti -1c
+.RI "double & \fBreal\fP (string &tag)"
+.br
+.ti -1c
+.RI "vector< \fBJSvalue\fP > & \fBarray\fP (string &tag)"
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (string val)"
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (string val)"
+.br
+.ti -1c
+.RI "void \fBoperator+=\fP (double d)"
+.br
+.ti -1c
+.RI "void \fBoperator*=\fP (double d)"
+.br
+.ti -1c
+.RI "void \fBoperator/=\fP (double d)"
+.br
+.ti -1c
+.RI "vector< \fBJSvalue\fP * > \fBoperator()\fP (string &jsonpath)"
+.br
+.ti -1c
+.RI "void \fBqdots\fP (string &jsonpath, vector< \fBJSvalue\fP * > &qarr)"
+.br
+.ti -1c
+.RI "void \fBqbrackets\fP (string &jsonpath, vector< \fBJSvalue\fP * > &qarr)"
+.br
+.ti -1c
+.RI "void \fBwrite\fP (string filename)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 54 of file json\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "JSvalue::JSvalue ()\fC [inline]\fP"
+
+.PP
+Definition at line 89 of file json\&.h\&.
+.SS "JSvalue::JSvalue (\fBJStype\fP tp)\fC [inline]\fP"
+
+.PP
+Definition at line 90 of file json\&.h\&.
+.SS "JSvalue::JSvalue (bool tf)\fC [inline]\fP"
+
+.PP
+Definition at line 91 of file json\&.h\&.
+.SS "JSvalue::JSvalue (const char * val)\fC [inline]\fP"
+
+.PP
+Definition at line 92 of file json\&.h\&.
+.SS "JSvalue::JSvalue (const string & val)\fC [inline]\fP"
+
+.PP
+Definition at line 93 of file json\&.h\&.
+.SS "JSvalue::JSvalue (const int & val)\fC [inline]\fP"
+
+.PP
+Definition at line 94 of file json\&.h\&.
+.SS "JSvalue::JSvalue (const unsigned int & val)\fC [inline]\fP"
+
+.PP
+Definition at line 95 of file json\&.h\&.
+.SS "JSvalue::JSvalue (const long & val)\fC [inline]\fP"
+
+.PP
+Definition at line 96 of file json\&.h\&.
+.SS "JSvalue::JSvalue (const unsigned long & val)\fC [inline]\fP"
+
+.PP
+Definition at line 97 of file json\&.h\&.
+.SS "JSvalue::JSvalue (const float & val)\fC [inline]\fP"
+
+.PP
+Definition at line 98 of file json\&.h\&.
+.SS "JSvalue::JSvalue (const double & val)\fC [inline]\fP"
+
+.PP
+Definition at line 99 of file json\&.h\&.
+.SS "template<typename T > JSvalue::JSvalue (const vector< T > & arr)\fC [inline]\fP"
+
+.PP
+Definition at line 101 of file json\&.h\&.
+.SS "template<typename T > JSvalue::JSvalue (const map< string, T > & mp)\fC [inline]\fP"
+
+.PP
+Definition at line 108 of file json\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "void JSvalue::append (\fBJSvalue\fP & obj)\fC [inline]\fP"
+
+.PP
+Definition at line 237 of file json\&.h\&.
+.SS "vector<\fBJSvalue\fP>& JSvalue::array ()\fC [inline]\fP"
+
+.PP
+Definition at line 158 of file json\&.h\&.
+.SS "vector<\fBJSvalue\fP>& JSvalue::array (string & tag)\fC [inline]\fP"
+
+.PP
+Definition at line 252 of file json\&.h\&.
+.SS "vector<long> JSvalue::array_integer ()\fC [inline]\fP"
+
+.PP
+Definition at line 166 of file json\&.h\&.
+.SS "vector<double> JSvalue::array_real ()\fC [inline]\fP"
+
+.PP
+Definition at line 173 of file json\&.h\&.
+.SS "\fBJSvalue\fP& JSvalue::at (string tag)\fC [inline]\fP"
+
+.PP
+Definition at line 217 of file json\&.h\&.
+.SS "\fBJSvalue\fP& JSvalue::back ()\fC [inline]\fP"
+
+.PP
+Definition at line 184 of file json\&.h\&.
+.SS "vector<\fBJSvalue\fP>::iterator JSvalue::begin ()\fC [inline]\fP"
+
+.PP
+Definition at line 188 of file json\&.h\&.
+.SS "bool& JSvalue::boolean ()\fC [inline]\fP"
+
+.PP
+Definition at line 139 of file json\&.h\&.
+.SS "bool& JSvalue::boolean (string & tag)\fC [inline]\fP"
+
+.PP
+Definition at line 243 of file json\&.h\&.
+.SS "void JSvalue::clear ()\fC [inline]\fP"
+
+.PP
+Definition at line 122 of file json\&.h\&.
+.SS "vector<\fBJSvalue\fP>::iterator JSvalue::end ()\fC [inline]\fP"
+
+.PP
+Definition at line 189 of file json\&.h\&.
+.SS "vector<\fBJSvalue\fP>::iterator JSvalue::erase (long j)\fC [inline]\fP"
+
+.PP
+Definition at line 190 of file json\&.h\&.
+.SS "map<string, \fBJSvalue\fP>::iterator JSvalue::erase (map< string, \fBJSvalue\fP >::iterator first, map< string, \fBJSvalue\fP >::iterator last)\fC [inline]\fP"
+
+.PP
+Definition at line 233 of file json\&.h\&.
+.SS "long JSvalue::erase (string tag)\fC [inline]\fP"
+
+.PP
+Definition at line 227 of file json\&.h\&.
+.SS "vector<\fBJSvalue\fP>::iterator JSvalue::erase (vector< \fBJSvalue\fP >::iterator first, vector< \fBJSvalue\fP >::iterator last)\fC [inline]\fP"
+
+.PP
+Definition at line 194 of file json\&.h\&.
+.SS "bool JSvalue::exists (string tag)\fC [inline]\fP"
+
+.PP
+Definition at line 222 of file json\&.h\&.
+.SS "\fBJSvalue\fP& JSvalue::front ()\fC [inline]\fP"
+
+.PP
+Definition at line 180 of file json\&.h\&.
+.SS "long& JSvalue::integer ()\fC [inline]\fP"
+
+.PP
+Definition at line 143 of file json\&.h\&.
+.SS "long& JSvalue::integer (string & tag)\fC [inline]\fP"
+
+.PP
+Definition at line 246 of file json\&.h\&.
+.SS "long JSvalue::memory ()\fC [inline]\fP"
+
+.PP
+Definition at line 127 of file json\&.h\&.
+.SS "map<string, \fBJSvalue\fP>& JSvalue::object ()\fC [inline]\fP"
+
+.PP
+Definition at line 203 of file json\&.h\&.
+.SS "\fBJSvalue\fP& JSvalue::object (string tag)\fC [inline]\fP"
+
+.PP
+Definition at line 212 of file json\&.h\&.
+.SS "map<string, \fBJSvalue\fP>::iterator JSvalue::object_begin ()\fC [inline]\fP"
+
+.PP
+Definition at line 231 of file json\&.h\&.
+.SS "map<string, \fBJSvalue\fP>::iterator JSvalue::object_end ()\fC [inline]\fP"
+
+.PP
+Definition at line 232 of file json\&.h\&.
+.SS "bool JSvalue::operator!= (string val)\fC [inline]\fP"
+
+.PP
+Definition at line 259 of file json\&.h\&.
+.SS "vector<\fBJSvalue\fP*> JSvalue::operator() (string & jsonpath)\fC [inline]\fP"
+
+.PP
+Definition at line 289 of file json\&.h\&.
+.SS "void JSvalue::operator*= (double d)\fC [inline]\fP"
+
+.PP
+Definition at line 270 of file json\&.h\&.
+.SS "void JSvalue::operator+= (double d)\fC [inline]\fP"
+
+.PP
+Definition at line 263 of file json\&.h\&.
+.SS "void JSvalue::operator/= (double d)\fC [inline]\fP"
+
+.PP
+Definition at line 277 of file json\&.h\&.
+.SS "bool JSvalue::operator== (string val)\fC [inline]\fP"
+
+.PP
+Definition at line 256 of file json\&.h\&.
+.SS "\fBJSvalue\fP& JSvalue::operator[] (long j)\fC [inline]\fP"
+
+.PP
+Definition at line 162 of file json\&.h\&.
+.SS "\fBJSvalue\fP& JSvalue::operator[] (string tag)\fC [inline]\fP"
+
+.PP
+Definition at line 207 of file json\&.h\&.
+.SS "void JSvalue::push_back (const \fBJSvalue\fP & val)\fC [inline]\fP"
+
+.PP
+Definition at line 198 of file json\&.h\&.
+.SS "void JSvalue::qbrackets (string & jsonpath, vector< \fBJSvalue\fP * > & qarr)\fC [inline]\fP"
+
+.PP
+Definition at line 341 of file json\&.h\&.
+.SS "void JSvalue::qdots (string & jsonpath, vector< \fBJSvalue\fP * > & qarr)\fC [inline]\fP"
+
+.PP
+Definition at line 297 of file json\&.h\&.
+.SS "double& JSvalue::real ()\fC [inline]\fP"
+
+.PP
+Definition at line 150 of file json\&.h\&.
+.SS "double& JSvalue::real (string & tag)\fC [inline]\fP"
+
+.PP
+Definition at line 249 of file json\&.h\&.
+.SS "size_t JSvalue::size ()\fC [inline]\fP"
+
+.PP
+Definition at line 115 of file json\&.h\&.
+.SS "const \fBJStype\fP& JSvalue::type () const\fC [inline]\fP"
+
+.PP
+Definition at line 113 of file json\&.h\&.
+.SS "string& JSvalue::value ()\fC [inline]\fP"
+
+.PP
+Definition at line 135 of file json\&.h\&.
+.SS "void JSvalue::write (string filename)\fC [inline]\fP"
+
+.PP
+Definition at line 374 of file json\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

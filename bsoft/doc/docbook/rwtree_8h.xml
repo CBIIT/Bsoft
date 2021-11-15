@@ -1,0 +1,332 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rwtree_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/rwtree.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/rwtree.h</primary></indexterm>
+<para>
+
+<para>Header file for reading (and writing) trees. </para>
+ 
+</para>
+<simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_struct_bnode">Bnode</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_rwtree_8h_1a6191befe8d7b6b4c1821ac4feb16439a">_Bnode_</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_struct_bnode">Bnode</link> * <link linkend="_rwtree_8h_1a8970d0fd5e8bd370bec695281246e65d">read_tree</link> (char *filename)</para>
+
+<para>Reads a phylip format tree file. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bnode">Bnode</link> * <link linkend="_rwtree_8h_1a8720aefda5b4bb9b2082d69ef6f49733">tree_read_node</link> (char **handle, <link linkend="_struct_bnode">Bnode</link> *parent)</para>
+
+<para>Reads a node into a tree structure. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwtree_8h_1a110f44c961503d5a8d03e07da89e35ac">tree_calculate_angle</link> (<link linkend="_struct_bnode">Bnode</link> *node, int *itip, float tip_angle)</para>
+
+<para>Calculates an angle for each node for plotting. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwtree_8h_1ab23f0027979d6144c56423caf1c74eb7">tree_delete_node</link> (<link linkend="_struct_bnode">Bnode</link> *node)</para>
+
+<para>Deletes a node with all daughter nodes. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwtree_8h_1a34ed484e681e0321cd673b64d7cfb170">tree_rotate</link> (<link linkend="_struct_bnode">Bnode</link> *node, float <link linkend="__vector3_8h_1a4d0ad562e2f2e87c018fe778805aa3cf">angle</link>)</para>
+
+<para>Adds an angle to all nodes. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwtree_8h_1abc89e49e9ffb7dfbee539052d8f7d944">tree_show</link> (<link linkend="_struct_bnode">Bnode</link> *node)</para>
+
+<para>Shows a node with all daughter nodes. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for reading (and writing) trees. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010722 </para>
+
+<para>Modified: 20010805 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_rwtree_8h_1a6191befe8d7b6b4c1821ac4feb16439a"/>    <section>
+    <title>_Bnode_</title>
+<indexterm><primary>_Bnode_</primary><secondary>rwtree.h</secondary></indexterm>
+<indexterm><primary>rwtree.h</primary><secondary>_Bnode_</secondary></indexterm>
+<para><computeroutput>#define _Bnode_</computeroutput></para><para>
+Definition at line 31 of file rwtree.h.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rwtree_8h_1a8970d0fd5e8bd370bec695281246e65d"/>    <section>
+    <title>read_tree()</title>
+<indexterm><primary>read_tree</primary><secondary>rwtree.h</secondary></indexterm>
+<indexterm><primary>rwtree.h</primary><secondary>read_tree</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bnode">Bnode</link>* read_tree (char * filename)</computeroutput></para><para>
+
+<para>Reads a phylip format tree file. </para>
+</para>
+
+<para><literallayout><computeroutput>Reads the tree file using a recursive approach.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*filename</entry>
+                                <entry>
+<para>tree file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bnode* a pointer to the root node of the tree. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 23 of file rwtree.cpp.</para>
+    </section><anchor xml:id="_rwtree_8h_1a110f44c961503d5a8d03e07da89e35ac"/>    <section>
+    <title>tree_calculate_angle()</title>
+<indexterm><primary>tree_calculate_angle</primary><secondary>rwtree.h</secondary></indexterm>
+<indexterm><primary>rwtree.h</primary><secondary>tree_calculate_angle</secondary></indexterm>
+<para><computeroutput>int tree_calculate_angle (<link linkend="_struct_bnode">Bnode</link> * node, int * itip, float tip_angle)</computeroutput></para><para>
+
+<para>Calculates an angle for each node for plotting. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*node</entry>
+                                <entry>
+<para>node. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*itip</entry>
+                                <entry>
+<para>the number of tip nodes passed. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tip_angle</entry>
+                                <entry>
+<para>the angular increment for each tip node. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 133 of file rwtree.cpp.</para>
+    </section><anchor xml:id="_rwtree_8h_1ab23f0027979d6144c56423caf1c74eb7"/>    <section>
+    <title>tree_delete_node()</title>
+<indexterm><primary>tree_delete_node</primary><secondary>rwtree.h</secondary></indexterm>
+<indexterm><primary>rwtree.h</primary><secondary>tree_delete_node</secondary></indexterm>
+<para><computeroutput>int tree_delete_node (<link linkend="_struct_bnode">Bnode</link> * node)</computeroutput></para><para>
+
+<para>Deletes a node with all daughter nodes. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*node</entry>
+                                <entry>
+<para>node. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 160 of file rwtree.cpp.</para>
+    </section><anchor xml:id="_rwtree_8h_1a8720aefda5b4bb9b2082d69ef6f49733"/>    <section>
+    <title>tree_read_node()</title>
+<indexterm><primary>tree_read_node</primary><secondary>rwtree.h</secondary></indexterm>
+<indexterm><primary>rwtree.h</primary><secondary>tree_read_node</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bnode">Bnode</link>* tree_read_node (char ** handle, <link linkend="_struct_bnode">Bnode</link> * one)</computeroutput></para><para>
+
+<para>Reads a node into a tree structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**handle</entry>
+                                <entry>
+<para>pointer to the buffer holding the phylip format tree. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*one</entry>
+                                <entry>
+<para>one node. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bnode* a pointer to the new node of the tree. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 75 of file rwtree.cpp.</para>
+    </section><anchor xml:id="_rwtree_8h_1a34ed484e681e0321cd673b64d7cfb170"/>    <section>
+    <title>tree_rotate()</title>
+<indexterm><primary>tree_rotate</primary><secondary>rwtree.h</secondary></indexterm>
+<indexterm><primary>rwtree.h</primary><secondary>tree_rotate</secondary></indexterm>
+<para><computeroutput>int tree_rotate (<link linkend="_struct_bnode">Bnode</link> * node, float angle)</computeroutput></para><para>
+
+<para>Adds an angle to all nodes. </para>
+</para>
+
+<para><literallayout><computeroutput>The angle must be specified in radians.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*node</entry>
+                                <entry>
+<para>node. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>angle</entry>
+                                <entry>
+<para>rotation angle (radians). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 184 of file rwtree.cpp.</para>
+    </section><anchor xml:id="_rwtree_8h_1abc89e49e9ffb7dfbee539052d8f7d944"/>    <section>
+    <title>tree_show()</title>
+<indexterm><primary>tree_show</primary><secondary>rwtree.h</secondary></indexterm>
+<indexterm><primary>rwtree.h</primary><secondary>tree_show</secondary></indexterm>
+<para><computeroutput>int tree_show (<link linkend="_struct_bnode">Bnode</link> * node)</computeroutput></para><para>
+
+<para>Shows a node with all daughter nodes. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*node</entry>
+                                <entry>
+<para>node. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 204 of file rwtree.cpp.</para>
+</section>
+</section>
+</section>

@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rwmg_e_m_x_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/rwparam/rwmgEMX.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/rwparam/rwmgEMX.cpp</primary></indexterm>
+<para>
+
+<para>Reads and writes micrograph exchange files. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+#include &quot;mg_img_proc.h&quot;
+#include &quot;mg_tomography.h&quot;
+#include &quot;rwmg.h&quot;
+#include &quot;file_util.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_rwmg_e_m_x_8cpp_1a9fa8d10640d85358f5726734a35366b0">CONV_SWITCH</link>   0</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rwmg_e_m_x_8cpp_1a8cdd665f03a74d3bc95764fce0b504ec">read_project_emx</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;xsdfile)</para>
+
+<para>Reading micrograph parameters from XML files. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_e_m_x_8cpp_1a4425abd5113df319633183a870ca5d20">write_project_emx</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int mg_select, int rec_select)</para>
+
+<para>Writing micrograph parameters to an EMX file. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rwmg_e_m_x_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Reads and writes micrograph exchange files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20130123 </para>
+
+<para>Modified: 20200128 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_rwmg_e_m_x_8cpp_1a9fa8d10640d85358f5726734a35366b0"/>    <section>
+    <title>CONV_SWITCH</title>
+<indexterm><primary>CONV_SWITCH</primary><secondary>rwmgEMX.cpp</secondary></indexterm>
+<indexterm><primary>rwmgEMX.cpp</primary><secondary>CONV_SWITCH</secondary></indexterm>
+<para><computeroutput>#define CONV_SWITCH   0</computeroutput></para><para>
+Definition at line 21 of file rwmgEMX.cpp.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rwmg_e_m_x_8cpp_1a8cdd665f03a74d3bc95764fce0b504ec"/>    <section>
+    <title>read_project_emx()</title>
+<indexterm><primary>read_project_emx</primary><secondary>rwmgEMX.cpp</secondary></indexterm>
+<indexterm><primary>rwmgEMX.cpp</primary><secondary>read_project_emx</secondary></indexterm>
+<para><computeroutput>int read_project_emx (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; xsdfile)</computeroutput></para><para>
+
+<para>Reading micrograph parameters from XML files. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>initialized project structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;xsdfile</entry>
+                                <entry>
+<para>XML schema to validate against (can be empty). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 241 of file rwmgEMX.cpp.</para>
+    </section><anchor xml:id="_rwmg_e_m_x_8cpp_1a4425abd5113df319633183a870ca5d20"/>    <section>
+    <title>write_project_emx()</title>
+<indexterm><primary>write_project_emx</primary><secondary>rwmgEMX.cpp</secondary></indexterm>
+<indexterm><primary>rwmgEMX.cpp</primary><secondary>write_project_emx</secondary></indexterm>
+<para><computeroutput>int write_project_emx (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bproject">Bproject</link> * project, int mg_select, int rec_select)</computeroutput></para><para>
+
+<para>Writing micrograph parameters to an EMX file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mg_select</entry>
+                                <entry>
+<para>flag to only write selected micrographs. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rec_select</entry>
+                                <entry>
+<para>flag to only convert selected reconstructions. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 317 of file rwmgEMX.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_rwmg_e_m_x_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>rwmgEMX.cpp</secondary></indexterm>
+<indexterm><primary>rwmgEMX.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

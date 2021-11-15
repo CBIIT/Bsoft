@@ -1,0 +1,436 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_bico_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/bico.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/bico.cpp</primary></indexterm>
+<para>
+
+<para>Program to analyze icosahedral subtomograms. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+#include &quot;mg_reconstruct.h&quot;
+#include &quot;rwmg.h&quot;
+#include &quot;rwimg.h&quot;
+#include &quot;rwsymop.h&quot;
+#include &quot;symmetry.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+#include &quot;options.h&quot;
+#include &quot;timer.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_bico_8cpp_1a9d20024b49237a4ab3174adb76669ae2">img_vertex_reconstruct</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, double maxres)</para>
+</listitem>
+            <listitem><para>long <link linkend="_bico_8cpp_1acc243b07eb7c9357baf85cca206f2ef5">project_ico_worst_vertex</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bimage">Bimage</link> *pref, <link linkend="_class_bimage">Bimage</link> *pmask, <link linkend="_class_bimage">Bimage</link> *pfsmask, double hires, double lores)</para>
+
+<para>Determines the special vertex for icosahedral symmetry and returns two maps. </para>
+</listitem>
+            <listitem><para>long <link linkend="_bico_8cpp_1a8ef1f7d9cbc9e14e4e29a3e630099de8">project_ico_opposite_vertex</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bimage">Bimage</link> *pmask, <link linkend="_class_bimage">Bimage</link> *pfsmask, double hires, double lores)</para>
+
+<para>Determines the special vertex for icosahedral symmetry and returns two maps. </para>
+</listitem>
+            <listitem><para>long <link linkend="_bico_8cpp_1a5a606767743b194bc1a768e7a446d47c">project_ico_best_c5</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bimage">Bimage</link> *pref, <link linkend="_class_bimage">Bimage</link> *pmask, <link linkend="_class_bimage">Bimage</link> *pfsmask, double hires, double lores)</para>
+
+<para>Determines the best 5-fold orientation of the vertex wrt a reference. </para>
+</listitem>
+            <listitem><para>long <link linkend="_bico_8cpp_1aee13a3e857cc2d5cb8ecbea2e9e2c9a9">project_assign_special_vertex_orientations</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bproject">Bproject</link> *project_specvert)</para>
+</listitem>
+            <listitem><para>long <link linkend="_bico_8cpp_1aa609049c9b212eef88caf382c1133401">project_analyze_vertices</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double threshold)</para>
+</listitem>
+            <listitem><para>long <link linkend="_bico_8cpp_1a85abd3f18555a6f587fd7df857503012">project_analyze_vertices2</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double significance)</para>
+</listitem>
+            <listitem><para>long <link linkend="_bico_8cpp_1afff13c346a42b87208426269cb5cdc37">project_analyze_vertices3</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long maxcut)</para>
+</listitem>
+            <listitem><para>int <link linkend="_bico_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_bico_8cpp_1a04c2474d6defbcc34041672fba8c9823">img_read_orient_mask</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bimage">Bimage</link> *pmask, <link linkend="_class_view">View</link> view)</para>
+</listitem>
+            <listitem><para>double <link linkend="_bico_8cpp_1a97de0d715f0f4ff08c3d9a978b074ea2">img_cc</link> (<link linkend="_class_bimage">Bimage</link> *p1, <link linkend="_class_bimage">Bimage</link> *p2, <link linkend="_class_bimage">Bimage</link> *pfsmask, double hires, double lores)</para>
+</listitem>
+            <listitem><para>long <link linkend="_bico_8cpp_1ae8b03a4dbc616c4d2baf9a701a107110">particle_worst_vertex</link> (<link linkend="_class_bparticle">Bparticle</link> *vert, <link linkend="_class_bimage">Bimage</link> *pref, <link linkend="_class_bimage">Bimage</link> *pmask, <link linkend="_class_bimage">Bimage</link> *pfsmask, double hires, double lores)</para>
+</listitem>
+            <listitem><para>long <link linkend="_bico_8cpp_1af1e43f88fc1ccb00d831750a24c4b0d9">particle_cc_opposite_vertices</link> (<link linkend="_class_bparticle">Bparticle</link> *vert, <link linkend="_class_bimage">Bimage</link> *pmask, <link linkend="_class_bimage">Bimage</link> *pfsmask, double hires, double lores)</para>
+</listitem>
+            <listitem><para>long <link linkend="_bico_8cpp_1a25c3c87aac2af79bf7725b192f22127d">particle_worst_opposite_vertex</link> (<link linkend="_class_bparticle">Bparticle</link> *vert, <link linkend="_class_bimage">Bimage</link> *pref, <link linkend="_class_bimage">Bimage</link> *pmask, <link linkend="_class_bimage">Bimage</link> *pfsmask, double hires, double lores)</para>
+</listitem>
+            <listitem><para>long <link linkend="_bico_8cpp_1aa0416428f9b0281e97318a2c4e2e3091">particle_best_c5</link> (<link linkend="_class_bparticle">Bparticle</link> *part, <link linkend="_class_bimage">Bimage</link> *pref, <link linkend="_class_bimage">Bimage</link> *pmask, <link linkend="_class_bimage">Bimage</link> *pfsmask, double hires, double lores)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_bico_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para><link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a6ecaa8728bab23c3a7d96fe0cadc75f2">planf</link></para>
+</listitem>
+            <listitem><para><link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a9ec8849996c5e210d7b7e8e05b98639d">planb</link></para>
+</listitem>
+            <listitem><para>const char * <link linkend="_bico_8cpp_1a4de0ad4c7190962494815c0fa7f948df">use</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Program to analyze icosahedral subtomograms. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20180427 </para>
+
+<para>Modified: 20201124 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_bico_8cpp_1a97de0d715f0f4ff08c3d9a978b074ea2"/>    <section>
+    <title>img_cc()</title>
+<indexterm><primary>img_cc</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>img_cc</secondary></indexterm>
+<para><computeroutput>double img_cc (<link linkend="_class_bimage">Bimage</link> * p1, <link linkend="_class_bimage">Bimage</link> * p2, <link linkend="_class_bimage">Bimage</link> * pfsmask, double hires, double lores)</computeroutput></para><para>
+Definition at line 228 of file bico.cpp.</para>
+    </section><anchor xml:id="_bico_8cpp_1a04c2474d6defbcc34041672fba8c9823"/>    <section>
+    <title>img_read_orient_mask()</title>
+<indexterm><primary>img_read_orient_mask</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>img_read_orient_mask</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_read_orient_mask (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bimage">Bimage</link> * pmask, <link linkend="_class_view">View</link> view)</computeroutput></para><para>
+Definition at line 210 of file bico.cpp.</para>
+    </section><anchor xml:id="_bico_8cpp_1a9d20024b49237a4ab3174adb76669ae2"/>    <section>
+    <title>img_vertex_reconstruct()</title>
+<indexterm><primary>img_vertex_reconstruct</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>img_vertex_reconstruct</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link> * img_vertex_reconstruct (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, double maxres)</computeroutput></para><para>
+Definition at line 252 of file bico.cpp.</para>
+    </section><anchor xml:id="_bico_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 67 of file bico.cpp.</para>
+    </section><anchor xml:id="_bico_8cpp_1aa0416428f9b0281e97318a2c4e2e3091"/>    <section>
+    <title>particle_best_c5()</title>
+<indexterm><primary>particle_best_c5</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>particle_best_c5</secondary></indexterm>
+<para><computeroutput>long particle_best_c5 (<link linkend="_class_bparticle">Bparticle</link> * part, <link linkend="_class_bimage">Bimage</link> * pref, <link linkend="_class_bimage">Bimage</link> * pmask, <link linkend="_class_bimage">Bimage</link> * pfsmask, double hires, double lores)</computeroutput></para><para>
+Definition at line 388 of file bico.cpp.</para>
+    </section><anchor xml:id="_bico_8cpp_1af1e43f88fc1ccb00d831750a24c4b0d9"/>    <section>
+    <title>particle_cc_opposite_vertices()</title>
+<indexterm><primary>particle_cc_opposite_vertices</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>particle_cc_opposite_vertices</secondary></indexterm>
+<para><computeroutput>long particle_cc_opposite_vertices (<link linkend="_class_bparticle">Bparticle</link> * vert, <link linkend="_class_bimage">Bimage</link> * pmask, <link linkend="_class_bimage">Bimage</link> * pfsmask, double hires, double lores)</computeroutput></para><para>
+Definition at line 311 of file bico.cpp.</para>
+    </section><anchor xml:id="_bico_8cpp_1a25c3c87aac2af79bf7725b192f22127d"/>    <section>
+    <title>particle_worst_opposite_vertex()</title>
+<indexterm><primary>particle_worst_opposite_vertex</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>particle_worst_opposite_vertex</secondary></indexterm>
+<para><computeroutput>long particle_worst_opposite_vertex (<link linkend="_class_bparticle">Bparticle</link> * vert, <link linkend="_class_bimage">Bimage</link> * pref, <link linkend="_class_bimage">Bimage</link> * pmask, <link linkend="_class_bimage">Bimage</link> * pfsmask, double hires, double lores)</computeroutput></para><para>
+Definition at line 355 of file bico.cpp.</para>
+    </section><anchor xml:id="_bico_8cpp_1ae8b03a4dbc616c4d2baf9a701a107110"/>    <section>
+    <title>particle_worst_vertex()</title>
+<indexterm><primary>particle_worst_vertex</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>particle_worst_vertex</secondary></indexterm>
+<para><computeroutput>long particle_worst_vertex (<link linkend="_class_bparticle">Bparticle</link> * vert, <link linkend="_class_bimage">Bimage</link> * pref, <link linkend="_class_bimage">Bimage</link> * pmask, <link linkend="_class_bimage">Bimage</link> * pfsmask, double hires, double lores)</computeroutput></para><para>
+Definition at line 266 of file bico.cpp.</para>
+    </section><anchor xml:id="_bico_8cpp_1aa609049c9b212eef88caf382c1133401"/>    <section>
+    <title>project_analyze_vertices()</title>
+<indexterm><primary>project_analyze_vertices</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>project_analyze_vertices</secondary></indexterm>
+<para><computeroutput>long project_analyze_vertices (<link linkend="_class_bproject">Bproject</link> * project, double threshold)</computeroutput></para><para>
+Definition at line 707 of file bico.cpp.</para>
+    </section><anchor xml:id="_bico_8cpp_1a85abd3f18555a6f587fd7df857503012"/>    <section>
+    <title>project_analyze_vertices2()</title>
+<indexterm><primary>project_analyze_vertices2</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>project_analyze_vertices2</secondary></indexterm>
+<para><computeroutput>long project_analyze_vertices2 (<link linkend="_class_bproject">Bproject</link> * project, double significance)</computeroutput></para><para>
+Definition at line 778 of file bico.cpp.</para>
+    </section><anchor xml:id="_bico_8cpp_1afff13c346a42b87208426269cb5cdc37"/>    <section>
+    <title>project_analyze_vertices3()</title>
+<indexterm><primary>project_analyze_vertices3</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>project_analyze_vertices3</secondary></indexterm>
+<para><computeroutput>long project_analyze_vertices3 (<link linkend="_class_bproject">Bproject</link> * project, long maxcut)</computeroutput></para><para>
+Definition at line 844 of file bico.cpp.</para>
+    </section><anchor xml:id="_bico_8cpp_1aee13a3e857cc2d5cb8ecbea2e9e2c9a9"/>    <section>
+    <title>project_assign_special_vertex_orientations()</title>
+<indexterm><primary>project_assign_special_vertex_orientations</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>project_assign_special_vertex_orientations</secondary></indexterm>
+<para><computeroutput>long project_assign_special_vertex_orientations (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bproject">Bproject</link> * project_specvert)</computeroutput></para><para>
+Definition at line 667 of file bico.cpp.</para>
+    </section><anchor xml:id="_bico_8cpp_1a5a606767743b194bc1a768e7a446d47c"/>    <section>
+    <title>project_ico_best_c5()</title>
+<indexterm><primary>project_ico_best_c5</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>project_ico_best_c5</secondary></indexterm>
+<para><computeroutput>long project_ico_best_c5 (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bimage">Bimage</link> * pref, <link linkend="_class_bimage">Bimage</link> * pmask, <link linkend="_class_bimage">Bimage</link> * pfsmask, double hires, double lores)</computeroutput></para><para>
+
+<para>Determines the best 5-fold orientation of the vertex wrt a reference. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pref</entry>
+                                <entry>
+<para>reference map. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask</entry>
+                                <entry>
+<para>real space mask. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pfsmask</entry>
+                                <entry>
+<para>frequency space mask. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>maximum resolution for correlation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>minimum resolution for correlation. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long 1 if done, 0 on error. <literallayout><computeroutput>The function compares opposite vertices of the twelve for every particle
+to identify the pair that is most dissimilar. 
+One of these is a candidate for the special vertex.
+A reference map is then calculated from all the rest of the vertices.
+The previously selected pair is then correlated agiants the reference
+and the one with the worst coefficient selected as final candidate.
+Two averages are calculated, the first for the non-special vertices,
+and the second for the special vertices.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 613 of file bico.cpp.</para>
+    </section><anchor xml:id="_bico_8cpp_1a8ef1f7d9cbc9e14e4e29a3e630099de8"/>    <section>
+    <title>project_ico_opposite_vertex()</title>
+<indexterm><primary>project_ico_opposite_vertex</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>project_ico_opposite_vertex</secondary></indexterm>
+<para><computeroutput>long project_ico_opposite_vertex (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bimage">Bimage</link> * pmask, <link linkend="_class_bimage">Bimage</link> * pfsmask, double hires, double lores)</computeroutput></para><para>
+
+<para>Determines the special vertex for icosahedral symmetry and returns two maps. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask</entry>
+                                <entry>
+<para>real space mask. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pfsmask</entry>
+                                <entry>
+<para>frequency space mask. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>maximum resolution for correlation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>minimum resolution for correlation. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long 1 if done, 0 on error. <literallayout><computeroutput>The function compares opposite vertices of the twelve for every particle
+to identify the pair that is most dissimilar. 
+One of these is a candidate for the special vertex.
+A reference map is then calculated from all the rest of the vertices.
+The previously selected pair is then correlated agiants the reference
+and the one with the worst coefficient selected as final candidate.
+Two averages are calculated, the first for the non-special vertices,
+and the second for the special vertices.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 522 of file bico.cpp.</para>
+    </section><anchor xml:id="_bico_8cpp_1acc243b07eb7c9357baf85cca206f2ef5"/>    <section>
+    <title>project_ico_worst_vertex()</title>
+<indexterm><primary>project_ico_worst_vertex</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>project_ico_worst_vertex</secondary></indexterm>
+<para><computeroutput>long project_ico_worst_vertex (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bimage">Bimage</link> * pref, <link linkend="_class_bimage">Bimage</link> * pmask, <link linkend="_class_bimage">Bimage</link> * pfsmask, double hires, double lores)</computeroutput></para><para>
+
+<para>Determines the special vertex for icosahedral symmetry and returns two maps. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pref</entry>
+                                <entry>
+<para>reference map. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask</entry>
+                                <entry>
+<para>real space mask. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pfsmask</entry>
+                                <entry>
+<para>frequency space mask. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>maximum resolution for correlation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>minimum resolution for correlation. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long 1 if done, 0 on error. <literallayout><computeroutput>The function correlates each vertex with the reference, and selects the one
+out of the twelve for each particle with the worst coefficient as the 
+likely special vertex.
+Two averages are calculated, the first for the non-special vertices,
+and the second for the special vertices.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 448 of file bico.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_bico_8cpp_1a9ec8849996c5e210d7b7e8e05b98639d"/>    <section>
+    <title>planb</title>
+<indexterm><primary>planb</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>planb</secondary></indexterm>
+<para><computeroutput><link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planb</computeroutput></para><para>
+Definition at line 24 of file bico.cpp.</para>
+    </section><anchor xml:id="_bico_8cpp_1a6ecaa8728bab23c3a7d96fe0cadc75f2"/>    <section>
+    <title>planf</title>
+<indexterm><primary>planf</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>planf</secondary></indexterm>
+<para><computeroutput><link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planf</computeroutput></para><para>
+Definition at line 24 of file bico.cpp.</para>
+    </section><anchor xml:id="_bico_8cpp_1a4de0ad4c7190962494815c0fa7f948df"/>    <section>
+    <title>use</title>
+<indexterm><primary>use</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>use</secondary></indexterm>
+<para><computeroutput>const char* use[]</computeroutput></para><emphasis role="strong">Initial value:</emphasis><programlisting>=&#32;{
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Usage:&#32;bico&#32;[options]&#32;tomo.star&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-------------------------------&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Analyzes&#32;icosahedral&#32;subtomograms.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Actions:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-find&#32;opp&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Type&#32;of&#32;correlation:&#32;worst,&#32;opposite,&#32;c5.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-analyze&#32;0.1&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Calculate&#32;statistics&#32;for&#32;vertices.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Parameters:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-verbose&#32;7&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Verbosity&#32;of&#32;output.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-resolution&#32;15.6,200&#32;&#32;&#32;&#32;&#32;Resolution&#32;limits&#32;for&#32;cross-correlation&#32;(default&#32;0,inf).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-maxresolution&#32;9.5&#32;&#32;&#32;&#32;&#32;&#32;&#32;Maximum&#32;reconstruction&#32;resolution&#32;limit&#32;(default&#32;Nyquist).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Input:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-reference&#32;image.map&#32;&#32;&#32;&#32;&#32;Reference&#32;for&#32;cross-correlation.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-mask&#32;image.map&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Real&#32;space&#32;mask.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-Mask&#32;fsmask.mrc&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Frequency&#32;space&#32;mask&#32;(missing&#32;data).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-special&#32;vert.star&#32;&#32;&#32;&#32;&#32;&#32;&#32;Parameter&#32;file&#32;with&#32;special&#32;vertex&#32;orientations.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Output:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-output&#32;file.star&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Output&#32;parameter&#32;file.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-reconstruction&#32;file.ext&#32;Reconstruction&#32;file&#32;name.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+NULL
+}
+</programlisting><para>
+Definition at line 39 of file bico.cpp.</para>
+    </section><anchor xml:id="_bico_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>bico.cpp</secondary></indexterm>
+<indexterm><primary>bico.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

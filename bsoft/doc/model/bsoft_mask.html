@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Masks</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h2>Masks and segmentation</h2>
+<p>A mask defines the segmentation of an image into two or more regions, encoding the interpretation of the content of that image. Combinations and multi-level masks can be used to define all regions of interest in an image.</p>
+<p>&nbsp;</p>
+<table width="447" border="1">
+<caption>Types of masks</caption>
+  <tr>
+    <th width="70" scope="col">Mask type</th>
+    <th width="86" scope="col"># regions</th>
+    <th width="59" scope="col">Edges</th>
+    <th width="72" scope="col">Overlaps</th>
+    <th width="126" scope="col">Data type</th>
+  </tr>
+  <tr>
+    <td>Bit/Binary</td>
+    <td>2</td>
+    <td>hard</td>
+    <td>no</td>
+    <td>bit/char</td>
+  </tr>
+  <tr>
+    <td>Fuzzy</td>
+    <td>2</td>
+    <td>soft</td>
+    <td>yes</td>
+    <td>float</td>
+  </tr>
+  <tr>
+    <td>Bit-level</td>
+    <td>bits</td>
+    <td>hard</td>
+    <td>yes</td>
+    <td>char/short/int</td>
+  </tr>
+  <tr>
+    <td>Multi-level</td>
+    <td>2^bits</td>
+    <td>hard</td>
+    <td>no</td>
+    <td>char/short/int</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<h2>Bit/binary mask</h2>
+<p>Bit or binary mask data consist of only two numbers, usually 0 and 1.</p>
+<center><img src="phi6_P1_mask.jpg" alt="Ph6 P1 mask" width="240" height="240" /></center>
+<div id="command"><p>bmask -v 7 -threshold 1.3 phi6.map phi6_mask.map</p></div>
+<h2>Fuzzy mask</h2>
+<p>A fuzzy mask is the same as a bit or binary mask, but with the edges smoothed in some way. The following example uses an averaging filter kernel to smooth the edges.</p>
+<center><img src="phi6_P1_fuzzy_mask.jpg" alt="Phi6 P1 fuzzy mask" width="240" height="240" /></center>
+<div id="command"><p>bfilter -verb 7 -dat f -kernel Avg5.krn phi6_mask.map phi6_mask_a5.map</p></div>
+<h2>Bit-level mask</h2>
+<p>A bit-level mask encodes each region as a bit in an integer number. Regions can therefore overlap and any voxel may belong to multiple regions, with equal weight for each region.</p>
+<p>&nbsp;</p>
+<h2>Multi-level mask</h2>
+<p>A multi-level mask encodes each region as a unique integer. Voxels are therefore assigned to regions and overlapping is not allowed. The following mask was generated using the watershed algorithm (also called flooding), and then colorized to show the different regions.</p>
+<center><img src="phi6_multi_mask.jpg" alt="Phi6 multi-level mask" width="240" height="240" /><img src="phi6_multi_mask_color.jpg" alt="Phi6 multi-level mask colored" width="240" height="240" /></center>
+<div id="command"><p>bflood -v 7 -thresh 1,0.05 -fill phi6.map phi6_mask.tiff</p></div>
+<div id="command"><p>bcolour -v 7 -color 1,241 phi6_mask.tiff phi6_mask_col.tiff</p></div>
+<p>Multi-level masks can be added to each other:</p>
+<div id="command"><p>baddmask -v 7 -type level -output new_mask.pif mask1.tif mask2.pif</p></div>
+<p>Segmentation with an algorithm such as flooding typically produces many small regions. These can be added to larger regions or deleted if they are disconnected. The user has to decided what is considered a small region, and how large the interface between regions should be to consider merging:</p>
+<div id="command"><p>bmultimask -v 7 -interface 70,10 multi_mask.tif new_mask.tif</p>
+  
+</p>
+</div>
+<div id="footer">
+  Bernard Heymann  20120126
+</div>
+</body>
+</html>

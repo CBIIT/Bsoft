@@ -1,0 +1,260 @@
+.TH "/Users/bernard/b20/bsoft/tcltk/tcltk_bfil.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/tcltk/tcltk_bfil.cpp \- A shared object to manage micrograph parameter files in TCL/Tk\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <tk\&.h>\fP
+.br
+\fC#include 'tcltk_bfil\&.h'\fP
+.br
+\fC#include 'mg_extract\&.h'\fP
+.br
+\fC#include 'mg_helix\&.h'\fP
+.br
+\fC#include 'mg_select\&.h'\fP
+.br
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "Tcl_Obj * \fBfilament_count\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBfilament_count\fP (\fBBfield\fP *field)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBfilament_count\fP (\fBBmicrograph\fP *mg)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBfilament_count\fP (\fBBreconstruction\fP *rec)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBfilament_delete\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBfilament_delete\fP (\fBBmicrograph\fP *mg, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBfilament_delete\fP (\fBBreconstruction\fP *rec, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBfilament_extract\fP (\fBBmicrograph\fP *mg, \fBBreconstruction\fP *rec, \fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBfilament_profile\fP (\fBBmicrograph\fP *mg, \fBBreconstruction\fP *rec, \fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBfilament_center\fP (\fBBmicrograph\fP *mg, \fBBreconstruction\fP *rec, \fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBfilament_to_particles\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBnode_count\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBnode_count\fP (\fBBfield\fP *field)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBnode_count\fP (\fBBmicrograph\fP *mg)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBnode_count\fP (\fBBreconstruction\fP *rec)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBnode_ids\fP (\fBBfilament\fP *fillist)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBnode_location\fP (\fBBfilament\fP *fillist, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBnode_select\fP (\fBBfilament\fP *fillist, double radius, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBnode_move\fP (\fBBfilament\fP *fillist, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBnode_create\fP (\fBBfilament\fP **fillist, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBnode_delete\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBnode_delete\fP (\fBBmicrograph\fP *mg, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBnode_delete\fP (\fBBreconstruction\fP *rec, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_filament\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBfilament_renumber\fP (\fBBfilament\fP *fil)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_node\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBimglist\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A shared object to manage micrograph parameter files in TCL/Tk\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20030813 
+.PP
+Modified: 20150617 
+.RE
+.PP
+
+.PP
+Definition in file \fBtcltk_bfil\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "Tcl_Obj* do_filament (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 77 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj* do_node (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 536 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * filament_center (\fBBmicrograph\fP * mg, \fBBreconstruction\fP * rec, \fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 464 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * filament_count (\fBBfield\fP * field)"
+
+.PP
+Definition at line 197 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * filament_count (\fBBmicrograph\fP * mg)"
+
+.PP
+Definition at line 215 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * filament_count (\fBBproject\fP * project)"
+
+.PP
+Definition at line 172 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * filament_count (\fBBreconstruction\fP * rec)"
+
+.PP
+Definition at line 229 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * filament_delete (\fBBmicrograph\fP * mg, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 317 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * filament_delete (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 243 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * filament_delete (\fBBreconstruction\fP * rec, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 339 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * filament_extract (\fBBmicrograph\fP * mg, \fBBreconstruction\fP * rec, \fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 371 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * filament_profile (\fBBmicrograph\fP * mg, \fBBreconstruction\fP * rec, \fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 422 of file tcltk_bfil\&.cpp\&.
+.SS "int filament_renumber (\fBBfilament\fP * fil)"
+
+.PP
+Definition at line 361 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * filament_to_particles (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 495 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * node_count (\fBBfield\fP * field)"
+
+.PP
+Definition at line 646 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * node_count (\fBBmicrograph\fP * mg)"
+
+.PP
+Definition at line 664 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * node_count (\fBBproject\fP * project)"
+
+.PP
+Definition at line 620 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * node_count (\fBBreconstruction\fP * rec)"
+
+.PP
+Definition at line 680 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * node_create (\fBBfilament\fP ** fillist, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 812 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * node_delete (\fBBmicrograph\fP * mg, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 897 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * node_delete (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 866 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * node_delete (\fBBreconstruction\fP * rec, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 928 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * node_ids (\fBBfilament\fP * fillist)"
+
+.PP
+Definition at line 696 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * node_location (\fBBfilament\fP * fillist, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 716 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * node_move (\fBBfilament\fP * fillist, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 780 of file tcltk_bfil\&.cpp\&.
+.SS "Tcl_Obj * node_select (\fBBfilament\fP * fillist, double radius, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 741 of file tcltk_bfil\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "\fBBimage\fP* imglist\fC [extern]\fP"
+
+.PP
+Definition at line 32 of file bshow\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

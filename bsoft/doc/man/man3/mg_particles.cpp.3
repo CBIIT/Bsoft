@@ -1,0 +1,451 @@
+.TH "/Users/bernard/b20/bsoft/src/mg/mg_particles.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mg/mg_particles.cpp \- Calculates centers of single particle images\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_particles\&.h'\fP
+.br
+\fC#include 'mg_select\&.h'\fP
+.br
+\fC#include 'mg_img_proc\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'matrix_linear\&.h'\fP
+.br
+\fC#include 'file_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBproject_align_particles\fP (\fBBproject\fP *\fBproject\fP, int \fBpart_select\fP, double nuavg, double nustd)"
+.br
+.RI "Aligns single particle images based on orientation parameters\&. "
+.ti -1c
+.RI "int \fBproject_center_particles\fP (\fBBproject\fP *\fBproject\fP, int \fBpart_select\fP, double nuavg, double nustd)"
+.br
+.RI "Centers single particle images based on the parametric center\&. 
+.br
+ "
+.ti -1c
+.RI "int \fBproject_set_particle_centers\fP (\fBBproject\fP *\fBproject\fP, \fBBimage\fP *pref, int \fBpart_select\fP, double hires, double lores)"
+.br
+.RI "Calculates centers of single particle images by cross-correlation with a reference\&. 
+.br
+ "
+.ti -1c
+.RI "long \fBproject_find_part_centers_in_mgs\fP (\fBBproject\fP *\fBproject\fP, double hires, double lores, int filter_flag)"
+.br
+.RI "Finds the centers of picked particles within a micrograph\&. "
+.ti -1c
+.RI "long \fBmg_find_part_centers\fP (\fBBmicrograph\fP *mg, double hires, double lores, int filter_flag)"
+.br
+.RI "Finds the centers of picked particles within a micrograph\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBproject_find_particle_centers\fP (\fBBproject\fP *\fBproject\fP, int max_iter, int \fBpart_select\fP, double hires, double lores)"
+.br
+.RI "Calculates centers of single particle images\&. 
+.br
+ "
+.ti -1c
+.RI "long \fBparticles_mask\fP (\fBBmicrograph\fP *mg, \fBBimage\fP *pmask, \fBBstring\fP &partpath)"
+.br
+.ti -1c
+.RI "long \fBproject_mask_particles\fP (\fBBproject\fP *\fBproject\fP, \fBBimage\fP *pmask, \fBBstring\fP &partpath)"
+.br
+.RI "Calculates centers of single particle images\&. 
+.br
+ "
+.ti -1c
+.RI "long \fBproject_compare_particles\fP (\fBBproject\fP *\fBproject\fP, \fBBproject\fP *projcomp)"
+.br
+.RI "Compares the coordinates of particles between two files\&. 
+.br
+ "
+.ti -1c
+.RI "double \fBproject_tilt_from_particle_defocus\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Finds the tilt axis from refined particle defocus values\&. 
+.br
+ "
+.ti -1c
+.RI "long \fBproject_set_particle_defocus_from_tilt\fP (\fBBproject\fP *\fBproject\fP, double axis, double tilt)"
+.br
+.RI "Finds the tilt axis from refined particle defocus values\&. 
+.br
+ "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Calculates centers of single particle images\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20080424 
+.PP
+Modified: 20200401 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_particles\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "long mg_find_part_centers (\fBBmicrograph\fP * mg, double hires, double lores, int filter_flag)"
+
+.PP
+Finds the centers of picked particles within a micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph parameter structure\&. 
+.br
+\fIhires\fP high resolution limit\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fIfilter_flag\fP flag to filter extremes in particles\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles\&. 
+.PP
+.nf
+An image processing parameter structure loaded with micrograph
+information is used to extract particle images from the micrograph
+image using the particle coordinates in the parameter structure.
+The extracted particle images are each rotated by PI and the shift
+found by cross-correlation between the unrotated and rotated images.
+The particle coordinates in the parameter structure are updated with
+the shift.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 357 of file mg_particles\&.cpp\&.
+.SS "long particles_mask (\fBBmicrograph\fP * mg, \fBBimage\fP * pmask, \fBBstring\fP & partpath)"
+
+.PP
+Definition at line 513 of file mg_particles\&.cpp\&.
+.SS "int project_align_particles (\fBBproject\fP * project, int part_select, double nuavg, double nustd)"
+
+.PP
+Aligns single particle images based on orientation parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph processing parameter structure\&. 
+.br
+\fIpart_select\fP selection number from the selection column\&. 
+.br
+\fInuavg\fP rescale to new average\&. 
+.br
+\fInustd\fP rescale to new standard deviation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Each selected particle image is rotated and shifted.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 36 of file mg_particles\&.cpp\&.
+.SS "int project_center_particles (\fBBproject\fP * project, int part_select, double nuavg, double nustd)"
+
+.PP
+Centers single particle images based on the parametric center\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph processing parameter structure\&. 
+.br
+\fIpart_select\fP selection number from the selection column\&. 
+.br
+\fInuavg\fP rescale to new average\&. 
+.br
+\fInustd\fP rescale to new standard deviation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Each particle image is shifted to center the origin.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 138 of file mg_particles\&.cpp\&.
+.SS "long project_compare_particles (\fBBproject\fP * project, \fBBproject\fP * projcomp)"
+
+.PP
+Compares the coordinates of particles between two files\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI*projcomp\fP comparable project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of common particles\&. 
+.PP
+.nf
+The coordinates of particles in one parameter file is compared to
+that of a reference parameter file.
+The two parameter files must have the same field and micrograph ID's.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 651 of file mg_particles\&.cpp\&.
+.SS "long project_find_part_centers_in_mgs (\fBBproject\fP * project, double hires, double lores, int filter_flag)"
+
+.PP
+Finds the centers of picked particles within a micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIhires\fP high resolution limit\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fIfilter_flag\fP flag to filter extremes in particles\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+An image processing parameter structure loaded with micrograph
+information is used to extract particle images from the micrograph
+image using the particle coordinates in the parameter structure.
+The extracted particle images are each rotated by PI and the shift
+found by cross-correlation between the unrotated and rotated images.
+The particle coordinates in the parameter structure are updated with
+the shift.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 322 of file mg_particles\&.cpp\&.
+.SS "\fBBimage\fP* project_find_particle_centers (\fBBproject\fP * project, int max_iter, int part_select, double hires, double lores)"
+
+.PP
+Calculates centers of single particle images\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP image processing parameter structure\&. 
+.br
+\fImax_iter\fP maximum number of iterations\&. 
+.br
+\fIpart_select\fP selection number from the selection column\&. 
+.br
+\fIhires\fP high resolution limit\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* final image composite reference\&. 
+.PP
+.nf
+A composite image is generated from the selected particles and radially
+symmetrized. Each image shift is then determined by cross correlation.
+This is repeated until the chnage in image shifts decreases below
+a threshold.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 411 of file mg_particles\&.cpp\&.
+.SS "long project_mask_particles (\fBBproject\fP * project, \fBBimage\fP * pmask, \fBBstring\fP & partpath)"
+
+.PP
+Calculates centers of single particle images\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP image processing parameter structure\&. 
+.br
+\fI*pmask\fP 3D volume mask to be projected\&. 
+.br
+\fI&partpath\fP new path to particle files\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles masked\&. 
+.PP
+.nf
+A 3D mask is projected into each particle view and the particle image masked.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 580 of file mg_particles\&.cpp\&.
+.SS "int project_set_particle_centers (\fBBproject\fP * project, \fBBimage\fP * pref, int part_select, double hires, double lores)"
+
+.PP
+Calculates centers of single particle images by cross-correlation with a reference\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph processing parameter structure\&. 
+.br
+\fI*pref\fP reference image\&. 
+.br
+\fIpart_select\fP selection number from the selection column\&. 
+.br
+\fIhires\fP high resolution limit\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Each particle image shift is determined by cross correlation with
+the reference image.
+The reference must be the same size as the particle images.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 263 of file mg_particles\&.cpp\&.
+.SS "long project_set_particle_defocus_from_tilt (\fBBproject\fP * project, double axis, double tilt)"
+
+.PP
+Finds the tilt axis from refined particle defocus values\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIaxis\fP tilt axis angle (radians)\&. 
+.br
+\fItilt\fP tilt angle (radians)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of selected particles\&. 
+.RE
+.PP
+
+.PP
+Definition at line 803 of file mg_particles\&.cpp\&.
+.SS "double project_tilt_from_particle_defocus (\fBBproject\fP * project)"
+
+.PP
+Finds the tilt axis from refined particle defocus values\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double average tilt axis\&. 
+.RE
+.PP
+
+.PP
+Definition at line 710 of file mg_particles\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

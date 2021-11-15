@@ -1,0 +1,86 @@
+.TH "/Users/bernard/b20/bsoft/include/mg_ctf_sim.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/mg_ctf_sim.h \- Header file for functions to simulate tilted micrographs\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Bimage\&.h'\fP
+.br
+\fC#include 'ctf\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_ttf_simulate\fP (\fBBimage\fP *pn, \fBCTFparam\fP &ctf, int action, double wiener, double tilt, double tilt_inc, double axis)"
+.br
+.RI "Calculates an exact tilted CTF imposed image\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for functions to simulate tilted micrographs\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20150224 
+.PP
+Modified: 20200525 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_ctf_sim\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBimage\fP* img_ttf_simulate (\fBBimage\fP * pn, \fBCTFparam\fP & ctf, int action, double wiener, double tilt, double tilt_inc, double axis)"
+
+.PP
+Calculates an exact tilted CTF imposed image\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*pn\fP image structure\&. 
+.br
+\fI&ctf\fP CTF parameter structure\&. 
+.br
+\fIaction\fP 0=apply, 1=flip\&. 
+.br
+\fIwiener\fP Wiener factor\&. 
+.br
+\fItilt\fP tilt angle in radians\&. 
+.br
+\fItilt_inc\fP tilt increment per sub-image in radians\&. 
+.br
+\fIaxis\fP tilt axis direction in radians\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* new image\&. 
+.PP
+.nf
+A CTF function is calculated for each line parallel to the tilt axis,
+applied to the whole image, and the transformed line written into a new image.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 109 of file mg_ctf_sim\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

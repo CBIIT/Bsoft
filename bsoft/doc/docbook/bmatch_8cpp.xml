@@ -1,0 +1,125 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_bmatch_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/bmatch.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/bmatch.cpp</primary></indexterm>
+<para>
+
+<para>Program to search an image with multiple projections and orient them. </para>
+ 
+</para>
+<programlisting>#include &quot;rwimg.h&quot;
+#include &quot;rwmodel.h&quot;
+#include &quot;utilities.h&quot;
+#include &quot;options.h&quot;
+#include &quot;timer.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_bmatch_8cpp_1a6dbf690827b09e75e5f824edc18ff691">img_match</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bimage">Bimage</link> *pref, double res_hi, double res_lo, double angle_inc, double threshold, long exclusion, double mask_rad)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_bmatch_8cpp_1afeb780b480a306b688962e8b53d57fdc">img_match_one</link> (<link linkend="_class_bimage">Bimage</link> *p, long img_num, <link linkend="_class_bimage">Bimage</link> *pref, double res_hi, double res_lo, double angle_inc, double threshold, long exclusion, double mask_rad, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a6ecaa8728bab23c3a7d96fe0cadc75f2">planf</link>, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a9ec8849996c5e210d7b7e8e05b98639d">planb</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_bmatch_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_bmatch_8cpp_1a2d5a9c92ddec037642b4a5147b901d28">img_reference_prepare</link> (<link linkend="_class_bimage">Bimage</link> *pref, long nn, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_bmatch_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>const char * <link linkend="_bmatch_8cpp_1a4de0ad4c7190962494815c0fa7f948df">use</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Program to search an image with multiple projections and orient them. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20170720 </para>
+
+<para>Modified: 20190821</para>
+</formalpara>
+clang++ -o bin/bmatch <link linkend="_bmatch_8cpp">src/bmatch.cpp</link> -I. -I/usr/local/include -I/Users/bernard/b20/bsoft/include -L/Users/bernard/b20/bsoft/lib -lbsoft -DHAVE_FFTW3 -std=c++11 -I/Users/bernard/b20/fftw-3.3.6-pl2/include </para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_bmatch_8cpp_1a6dbf690827b09e75e5f824edc18ff691"/>    <section>
+    <title>img_match()</title>
+<indexterm><primary>img_match</primary><secondary>bmatch.cpp</secondary></indexterm>
+<indexterm><primary>bmatch.cpp</primary><secondary>img_match</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link> * img_match (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bimage">Bimage</link> * pref, double res_hi, double res_lo, double angle_inc, double threshold, long exclusion, double mask_rad)</computeroutput></para><para>
+Definition at line 166 of file bmatch.cpp.</para>
+    </section><anchor xml:id="_bmatch_8cpp_1afeb780b480a306b688962e8b53d57fdc"/>    <section>
+    <title>img_match_one()</title>
+<indexterm><primary>img_match_one</primary><secondary>bmatch.cpp</secondary></indexterm>
+<indexterm><primary>bmatch.cpp</primary><secondary>img_match_one</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link> * img_match_one (<link linkend="_class_bimage">Bimage</link> * p, long img_num, <link linkend="_class_bimage">Bimage</link> * pref, double res_hi, double res_lo, double angle_inc, double threshold, long exclusion, double mask_rad, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planf, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planb)</computeroutput></para><para>
+Definition at line 206 of file bmatch.cpp.</para>
+    </section><anchor xml:id="_bmatch_8cpp_1a2d5a9c92ddec037642b4a5147b901d28"/>    <section>
+    <title>img_reference_prepare()</title>
+<indexterm><primary>img_reference_prepare</primary><secondary>bmatch.cpp</secondary></indexterm>
+<indexterm><primary>bmatch.cpp</primary><secondary>img_reference_prepare</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_reference_prepare (<link linkend="_class_bimage">Bimage</link> * pref, long nn, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size)</computeroutput></para><para>
+Definition at line 189 of file bmatch.cpp.</para>
+    </section><anchor xml:id="_bmatch_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>bmatch.cpp</secondary></indexterm>
+<indexterm><primary>bmatch.cpp</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 56 of file bmatch.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_bmatch_8cpp_1a4de0ad4c7190962494815c0fa7f948df"/>    <section>
+    <title>use</title>
+<indexterm><primary>use</primary><secondary>bmatch.cpp</secondary></indexterm>
+<indexterm><primary>bmatch.cpp</primary><secondary>use</secondary></indexterm>
+<para><computeroutput>const char* use[]</computeroutput></para><emphasis role="strong">Initial value:</emphasis><programlisting>=&#32;{
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Usage:&#32;bmatch&#32;[options]&#32;img.mrc&#32;cc.map&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;--------------------------------------&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Searching&#32;an&#32;image&#32;with&#32;a&#32;set&#32;of&#32;2D&#32;templates/references&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Orientations&#32;are&#32;taken&#32;from&#32;the&#32;input&#32;projections.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+
+
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Parameters:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-verbose&#32;7&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Verbosity&#32;of&#32;output.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-datatype&#32;u&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Force&#32;writing&#32;of&#32;a&#32;new&#32;data&#32;type.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-sampling&#32;2,3.5,1&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Sampling&#32;before&#32;rescaling&#32;(angstrom/voxel,&#32;a&#32;single&#32;value&#32;sets&#32;all&#32;three).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-resolution&#32;25,200&#32;&#32;&#32;&#32;&#32;&#32;&#32;Resolution&#32;limits&#32;(angstrom).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-angle&#32;2.5&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Angular&#32;increment&#32;(default&#32;3&#32;degrees).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-origin&#32;0.8,-10,15.7&#32;&#32;&#32;&#32;&#32;Set&#32;the&#32;origin&#32;(default&#32;from&#32;input&#32;image).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-threshold&#32;0.24&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Threshold&#32;to&#32;find&#32;correlation&#32;peaks.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-exclusion&#32;150&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Minimum&#32;distance&#32;between&#32;correlation&#32;peaks.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-radius&#32;50&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Mask&#32;radius&#32;(slightly&#32;bigger&#32;than&#32;particle).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Input:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-reference&#32;file.pif&#32;&#32;&#32;&#32;&#32;&#32;Input&#32;reference&#32;projections&#32;file.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Output:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-output&#32;newmod.star&#32;&#32;&#32;&#32;&#32;&#32;New&#32;model&#32;file.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+NULL
+}
+</programlisting><para>
+Definition at line 26 of file bmatch.cpp.</para>
+    </section><anchor xml:id="_bmatch_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>bmatch.cpp</secondary></indexterm>
+<indexterm><primary>bmatch.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

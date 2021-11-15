@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Segmentation</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h2>Watershed</h2>
+<p>An important part of interpretation of an image is to identify and isolate regions of interest, a process called segmentation. The notion of regions-of-interest (ROI) makes it a subjective process, with decisive user interaction determining the outcome. The granularity of segmentation ranges from a voxel by voxel assignment to regions (highly subjective), to choosing one or a few parameters (mildly subjective), such as a threshold. Highly subjective segmentation is rarely justifiable, while a parameter such as a threshold can be justified from estimated volume-inclusion or the presence of certain indicator densities in a map. The emphasis here is therefore on finding ways to segment with having to choose the least number of parameters.</p>
+<p>Note: Most segmentation procedures assume that density is positive (i.e., density is white).</p>
+<h3>Watershed</h3>
+<p>The watershed algorithm starts at a threshold where regions are defined by clusters of neighboring voxels. It then proceeds through a series of steps of decreasing threshold, assigning each non-assigned voxel to a region if it is adjacent to another voxel from that region. In cases where a voxel is adjacent to two regions, it is assigned to the region with the highest density value in a neighboring voxel. The assignments stop when the lower threshold is reached. The result is a multi-level mask, where each region is encoded as a unique integer in the image.</p>
+<p>The first decision to make is which starting threshold to use. All densities that are disconnected at this threshold will be taken as separate regions. The best way to pick the threshold is to open the map in bshow and use the min and max sliders to find a threshold where the desired regions are disconnected. The second threshold should be above any noise and depends on how far you want to extent the regions.</p>
+<p>The output is a multi-level mask where each region has an integer number. One or more of these regions can be picked using the model tool in bshow, and the selected regions can be extracted as a mask. The mask can then be used to isolate specific parts of the original map.</p>
+<p>The following map was segmented to separate the main shell and associated proteins:</p>
+<center><img src="phi6_multi_mask.jpg" alt="Phi6 multi-level mask" width="240" height="240" /><img src="phi6_multi_mask_color.jpg" alt="Phi6 multi-level mask colored" width="240" height="240" /></center>
+<div id="command"><p>bflood -v 7 -thresh 1,0.05 -fill phi6.map phi6_mask.tiff</p></div>
+<div id="command"><p>bcolour -v 7 -color 1,241 phi6_mask.tiff phi6_mask_col.tiff</p></div>
+<h3>Peak-associated regions:</h3>
+<p>An alternative to the watershed algorithm generates regions based on peaks above a threshold. A peak is defined where a voxel is the maximum in a kernel. The kernel is typically 3x3x3. The algorithm actually assigns a pointer to each voxel above the threshold, pointing to the highest density value in the kernel. A peak will therefore automatically point to itself. Each voxel is assigned to a peak by following the pointers until they reach a peak.</p>
+<div id="command"><p>bflood -v 7 -peaks 0.05 phi6.map phi6_peakmask.tiff</p></div>
+<p><br />
+</p>
+</div>
+<div id="footer">
+  Bernard Heymann  20141223
+</div>
+</body>
+</html>

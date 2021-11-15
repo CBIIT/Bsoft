@@ -1,0 +1,242 @@
+.TH "/Users/bernard/b20/bsoft/src/mg/mg_hand.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mg/mg_hand.cpp \- Functions for comparing projections of two oppositely handed reconstructions to images of tilted specimens\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_hand\&.h'\fP
+.br
+\fC#include 'mg_select\&.h'\fP
+.br
+\fC#include 'Matrix3\&.h'\fP
+.br
+\fC#include 'qsort_functions\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBHand_Stats\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBfield_get_handedness\fP (\fBBimage\fP *mapA, \fBBimage\fP *mapB, \fBBmicrograph\fP *mg1, \fBBmicrograph\fP *mg2, \fBHand_Stats\fP *Global, double rad_min, double rad_max, double res_min, double res_max, double AmB_min, double AB_min, int diff_out, int origins2, \fBBstring\fP outimg, int fieldnum)"
+.br
+.ti -1c
+.RI "int \fBget_handedness_from_tilt_pair\fP (\fBBimage\fP *mapA, \fBBimage\fP *mapB, \fBBmicrograph\fP *mg1, \fBBmicrograph\fP *mg2, \fBBparticle\fP *particle1, \fBBparticle\fP *particle2, \fBHand_Stats\fP *Pair, double rad_min, double rad_max, double res_min, double res_max, double AmB_min, double AB_min, int diff_out, int origins2, \fBBstring\fP outimg, int fieldnum)"
+.br
+.ti -1c
+.RI "int \fBhand_compute_stats\fP (\fBHand_Stats\fP *stats, int diff_out)"
+.br
+.ti -1c
+.RI "int \fBhand_prepare_image\fP (\fBBimage\fP *p, double resmin, double resmax)"
+.br
+.ti -1c
+.RI "int \fBhand_print_outheader\fP (int which_one, int diff_out)"
+.br
+.ti -1c
+.RI "int \fBhand_print_stats\fP (\fBHand_Stats\fP *stats, int which_one, int diff_out)"
+.br
+.ti -1c
+.RI "int \fBhand_write_img\fP (\fBBimage\fP *img, \fBBstring\fP imgname, \fBBstring\fP outimg, int fieldnum, int num)"
+.br
+.RI "Appends micrograph number, image number, and a string tag to a file name\&. Then it writes out an image file\&. "
+.ti -1c
+.RI "int \fBproject_get_handedness\fP (\fBBimage\fP *mapA, \fBBproject\fP *\fBproject\fP, double *mg_ang, int *mg_index, int *mg_select, double rad_min, double rad_max, double res_min, double res_max, double AmB_min, double AB_min, int diff_out, int origins2, \fBBstring\fP outimg)"
+.br
+.RI "Determines handedness for all selected particles (sel > 0) in a project\&. "
+.ti -1c
+.RI "int \fBhand_select_consist\fP (\fBBproject\fP *\fBproject\fP, double *mg_ang, int *mg_index, int *mg_select, int sel_consist)"
+.br
+.RI "Sets consistent selection values in all (including unused) micrographs\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for comparing projections of two oppositely handed reconstructions to images of tilted specimens\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+David Belnap 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20011003 
+.PP
+Modified: 20151008 (BH) 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_hand\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int field_get_handedness (\fBBimage\fP * mapA, \fBBimage\fP * mapB, \fBBmicrograph\fP * mg1, \fBBmicrograph\fP * mg2, \fBHand_Stats\fP * Global, double rad_min, double rad_max, double res_min, double res_max, double AmB_min, double AB_min, int diff_out, int origins2, \fBBstring\fP outimg, int fieldnum)"
+
+.PP
+Definition at line 231 of file mg_hand\&.cpp\&.
+.SS "int get_handedness_from_tilt_pair (\fBBimage\fP * mapA, \fBBimage\fP * mapB, \fBBmicrograph\fP * mg1, \fBBmicrograph\fP * mg2, \fBBparticle\fP * particle1, \fBBparticle\fP * particle2, \fBHand_Stats\fP * Pair, double rad_min, double rad_max, double res_min, double res_max, double AmB_min, double AB_min, int diff_out, int origins2, \fBBstring\fP outimg, int fieldnum)"
+
+.PP
+Definition at line 353 of file mg_hand\&.cpp\&.
+.SS "int hand_compute_stats (\fBHand_Stats\fP * stats, int diff_out)"
+
+.PP
+Definition at line 698 of file mg_hand\&.cpp\&.
+.SS "int hand_prepare_image (\fBBimage\fP * p, double resmin, double resmax)"
+
+.PP
+Definition at line 766 of file mg_hand\&.cpp\&.
+.SS "int hand_print_outheader (int which_one, int diff_out)"
+
+.PP
+Definition at line 788 of file mg_hand\&.cpp\&.
+.SS "int hand_print_stats (\fBHand_Stats\fP * stats, int which_one, int diff_out)"
+
+.PP
+Definition at line 838 of file mg_hand\&.cpp\&.
+.SS "int hand_select_consist (\fBBproject\fP * project, double * mg_ang, int * mg_index, int * mg_select, int sel_consist)"
+
+.PP
+Sets consistent selection values in all (including unused) micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP Project structure 
+.br
+\fI*mg_ang\fP angles for micrograph selection, views 1 & 2 
+.br
+\fI*mg_index\fP indices for micrograph selection, views 1 & 2 
+.br
+\fI*mg_select\fP micrograph selection criteria, views 1 & 2 
+.br
+\fIsel_consist\fP 1 or 2, set other selection values to those of this view 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+If a field-of-view contains more than two micrographs, the user can
+only use two of them to do the handedness determination.  The unused
+micrographs may need their selection values set to the same as those
+in the used micrographs (views 1 and 2).  In addition, there may be
+differences in the initial selection values for views 1 and 2.  This 
+routine loops through the micrographs in a field-of-view and sets all
+selection values to those of view 1 or 2.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 898 of file mg_hand\&.cpp\&.
+.SS "int hand_write_img (\fBBimage\fP * img, \fBBstring\fP imgname, \fBBstring\fP outimg, int fieldnum, int num)"
+
+.PP
+Appends micrograph number, image number, and a string tag to a file name\&. Then it writes out an image file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*img\fP Image to write out 
+.br
+\fIimgname\fP String tag for image, appended to file name 
+.br
+\fIoutimg\fP Prefix and suffix for file name 
+.br
+\fIfieldnum\fP Index number for current field-of-view 
+.br
+\fInum\fP Index number for image 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 959 of file mg_hand\&.cpp\&.
+.SS "int project_get_handedness (\fBBimage\fP * mapA, \fBBproject\fP * project, double * mg_ang, int * mg_index, int * mg_select, double rad_min, double rad_max, double res_min, double res_max, double AmB_min, double AB_min, int diff_out, int origins2, \fBBstring\fP outimg)"
+
+.PP
+Determines handedness for all selected particles (sel > 0) in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mapA\fP 3D map (hand A) 
+.br
+\fI*project\fP Project structure 
+.br
+\fI*mg_ang\fP angles for micrograph selection, views 1 & 2 
+.br
+\fI*mg_index\fP indices for micrograph selection, views 1 & 2 
+.br
+\fI*mg_select\fP micrograph selection criteria, views 1 & 2 
+.br
+\fIrad_min\fP minimum radius for FOM calculation (pixels) 
+.br
+\fIrad_max\fP maximum radius for FOM calculation (pixels) 
+.br
+\fIres_min\fP minimum resolution for FOM calculation (angs\&.) 
+.br
+\fIres_max\fP maximum resolution for FOM calculation (angs\&.) 
+.br
+\fIAmB_min\fP |FOMA - FOMB| must be this value or greater 
+.br
+\fIAB_min\fP min\&. acceptable value for FOM of correct hand 
+.br
+\fIdiff_out\fP output difference of measured & predicted orientations 
+.br
+\fIorigins2\fP flag to determine origins for second view 
+.br
+\fIoutimg\fP prefix & suffix for output projection files 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Gets tilt-axis direction and rotation angle for a micrograph pair.
+Then, loops through the selected particles in pair.  Sends data to
+function get_handedness_from_tilt_pair, where handedness is
+determined.  Statistics are calculated for each pair and sums for
+global statistics are tabulated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 114 of file mg_hand\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,663 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__orient_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/mg_orient.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/mg_orient.h</primary></indexterm>
+<para>
+
+<para>Library routines for single particle analysis. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+#include &quot;rwimg.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_mg__orient_8h_1a1ba1303ebb6bb2986185390e558bfcc8">TEMP_PROJ_FILE</link>   &quot;temp_proj.spi&quot;</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__orient_8h_1ad62bb5342e9aba2d51dcf0f20c6d4fcf">project_prepare_2D_references</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long first, long number, int bin=1, int ctf_action=0, double wiener=0.2)</para>
+
+<para>Prepare reference images from particles. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__orient_8h_1acd23893858214bfb88a681288493f35a">img_prepare_projections</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bstring">Bstring</link> &amp;mask_file, int bin, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double theta_step, double phi_step, double side_ang)</para>
+
+<para>Generate projections if a 3D file, otherwise clean projections. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__orient_8h_1a3b63f8ac4c02590dbbc897b574169b50">project_determine_orientations</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bimage">Bimage</link> *proj, <link linkend="_class_bstring">Bstring</link> &amp;mask_file, int bin, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, int <link linkend="_tcltk__bmg_8cpp_1a66823305785303716aa59f76b0e3359d">part_select</link>, vector&lt; double &gt; &amp;band, double res_lo, double res_hi, double res_polar, int ann_min, int ann_max, double shift_limit, double angle_limit, double edge_radius, int flags)</para>
+
+<para>Find the orientation and origin of every image in a project. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__orient_8h_1aa1d1759de82413331dce2c09c43ba89d">project_determine_orientations2</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bimage">Bimage</link> *proj, <link linkend="_class_bstring">Bstring</link> &amp;mask_file, int bin, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, int <link linkend="_tcltk__bmg_8cpp_1a66823305785303716aa59f76b0e3359d">part_select</link>, vector&lt; double &gt; &amp;band, double res_lo, double res_hi, double res_polar, int ann_min, int ann_max, double shift_limit, double angle_limit, double edge_radius, int flags)</para>
+
+<para>Find the orientation and origin of every image in a project. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__orient_8h_1a58e14b1a2e60a4e93b2b6fbdbef91260">project_determine_origins</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bimage">Bimage</link> *proj, int bin, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, int <link linkend="_tcltk__bmg_8cpp_1a66823305785303716aa59f76b0e3359d">part_select</link>, double res_lo, double res_hi, double shift_limit, int flags)</para>
+
+<para>Find the origin of every image in a project. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__orient_8h_1a0f053d00a50b2030ebcb3a044e02acbc">img_cross_validate</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bimage">Bimage</link> *pref, <link linkend="_class_bimage">Bimage</link> *pmask, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a6ecaa8728bab23c3a7d96fe0cadc75f2">planf</link>)</para>
+
+<para>Rotates and shifts a reference image and calculates a cross-validation coefficient. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines for single particle analysis. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann and David M. Belnap </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010403 </para>
+
+<para>Modified: 20190826 (BH) </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_mg__orient_8h_1a1ba1303ebb6bb2986185390e558bfcc8"/>    <section>
+    <title>TEMP_PROJ_FILE</title>
+<indexterm><primary>TEMP_PROJ_FILE</primary><secondary>mg_orient.h</secondary></indexterm>
+<indexterm><primary>mg_orient.h</primary><secondary>TEMP_PROJ_FILE</secondary></indexterm>
+<para><computeroutput>#define TEMP_PROJ_FILE   &quot;temp_proj.spi&quot;</computeroutput></para><para>
+Definition at line 12 of file mg_orient.h.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__orient_8h_1a0f053d00a50b2030ebcb3a044e02acbc"/>    <section>
+    <title>img_cross_validate()</title>
+<indexterm><primary>img_cross_validate</primary><secondary>mg_orient.h</secondary></indexterm>
+<indexterm><primary>mg_orient.h</primary><secondary>img_cross_validate</secondary></indexterm>
+<para><computeroutput>double img_cross_validate (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bimage">Bimage</link> * pref, <link linkend="_class_bimage">Bimage</link> * prs_mask, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planf)</computeroutput></para><para>
+
+<para>Rotates and shifts a reference image and calculates a cross-validation coefficient. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>2D image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pref</entry>
+                                <entry>
+<para>reference 2D image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*prs_mask</entry>
+                                <entry>
+<para>dual mask. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>planf</entry>
+                                <entry>
+<para>FFT forward plan. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double cross-validation coefficient. <literallayout><computeroutput>The reference image is first rotated by the difference in the angles
+between the image and the reference, then shifted to the same origin
+as the image. Both are then Fourier transformed, the negative values in
+the mask used to select reciprocal space areas, and the complex product
+calculated. The sum of the zeroeth pixel then gives the cross-validation
+coefficient.
+The input images must be equal-sized square 2D images.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1425 of file mg_orient.cpp.</para>
+    </section><anchor xml:id="_mg__orient_8h_1acd23893858214bfb88a681288493f35a"/>    <section>
+    <title>img_prepare_projections()</title>
+<indexterm><primary>img_prepare_projections</primary><secondary>mg_orient.h</secondary></indexterm>
+<indexterm><primary>mg_orient.h</primary><secondary>img_prepare_projections</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_prepare_projections (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bstring">Bstring</link> &amp; mask_file, int bin, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double theta_step, double phi_step, double side_ang)</computeroutput></para><para>
+
+<para>Generate projections if a 3D file, otherwise clean projections. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file containing reference map or projections. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;mask_file</entry>
+                                <entry>
+<para>mask to apply to projections. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>data compression by binning. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>point group symmetry structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>theta_step</entry>
+                                <entry>
+<para>angular step size from primary symmetry axis (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>phi_step</entry>
+                                <entry>
+<para>angular step size around primary symmetry axis (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>side_ang</entry>
+                                <entry>
+<para>angular devaition from eqautor (radians). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* projection images, NULL on error. <literallayout><computeroutput>If the input file is a 3D map, a set of projections are generated
+given the point group symmetry.
+Flags:
+    FULL_ASU    projections for full asymmetric unit
+    MULTI_FILE  projections in multiple files   
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 157 of file mg_orient.cpp.</para>
+    </section><anchor xml:id="_mg__orient_8h_1a3b63f8ac4c02590dbbc897b574169b50"/>    <section>
+    <title>project_determine_orientations()</title>
+<indexterm><primary>project_determine_orientations</primary><secondary>mg_orient.h</secondary></indexterm>
+<indexterm><primary>mg_orient.h</primary><secondary>project_determine_orientations</secondary></indexterm>
+<para><computeroutput>int project_determine_orientations (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bimage">Bimage</link> * proj, <link linkend="_class_bstring">Bstring</link> &amp; mask_file, int bin, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, int part_select, vector&lt; double &gt; &amp; band, double res_lo, double res_hi, double res_polar, int ann_min, int ann_max, double shift_limit, double angle_limit, double edge_radius, int flags)</computeroutput></para><para>
+
+<para>Find the orientation and origin of every image in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>image processing parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*proj</entry>
+                                <entry>
+<para>reference projections. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;mask_file</entry>
+                                <entry>
+<para>mask to apply to particles. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>data compression by binning. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>point group symmetry structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>part_select</entry>
+                                <entry>
+<para>particle selection for processing. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*band</entry>
+                                <entry>
+<para>array of reciprocal space bands. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_lo</entry>
+                                <entry>
+<para>low resolution limit (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_hi</entry>
+                                <entry>
+<para>high resolution limit (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_polar</entry>
+                                <entry>
+<para>resolution limit for in-plane angular alignment (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ann_min</entry>
+                                <entry>
+<para>minimum annulus (&gt;=0). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ann_max</entry>
+                                <entry>
+<para>maximum annulus (&lt; image radius). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_limit</entry>
+                                <entry>
+<para>maximum shift from nominal origin of box. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>angle_limit</entry>
+                                <entry>
+<para>maximum rotation from original in-plane rotation angle. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>edge_radius</entry>
+                                <entry>
+<para>edge radius to mask background using previous origin. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>option flags. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code. <literallayout><computeroutput>The polar power spectrum (pps) of the reference projection is cross correlated
+with that of the image in order to find the angle of rotation.  The image
+is transformed using this angle and the shift found by cross correlation (cc).
+A  second iterative comparison is done with real space polar images
+to find the angle followed by cross correlation to find the shift.
+How much of this second comparison is done depends on the mode flag:
+    mode=0  pps     projection selected only based on pps comparison
+    mode=1  scc     several projections selected based on cutoff for pps cc&apos;s
+    mode=2  ccc     all projections selected
+The angle and the x and y values are stored in the view_angle, and ox and oy 
+arrays of the micrograph parameter structure.
+The projections must already be binned.
+Flags:
+    MODE        projection matching mode
+    APPLY_CTF   apply CTF to projections
+    PART_LOG    write log files in log directory
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 330 of file mg_orient.cpp.</para>
+    </section><anchor xml:id="_mg__orient_8h_1aa1d1759de82413331dce2c09c43ba89d"/>    <section>
+    <title>project_determine_orientations2()</title>
+<indexterm><primary>project_determine_orientations2</primary><secondary>mg_orient.h</secondary></indexterm>
+<indexterm><primary>mg_orient.h</primary><secondary>project_determine_orientations2</secondary></indexterm>
+<para><computeroutput>int project_determine_orientations2 (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bimage">Bimage</link> * proj, <link linkend="_class_bstring">Bstring</link> &amp; mask_file, int bin, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, int part_select, vector&lt; double &gt; &amp; band, double res_lo, double res_hi, double res_polar, int ann_min, int ann_max, double shift_limit, double angle_limit, double edge_radius, int flags)</computeroutput></para><para>
+
+<para>Find the orientation and origin of every image in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>image processing parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*proj</entry>
+                                <entry>
+<para>reference projections. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;mask_file</entry>
+                                <entry>
+<para>mask to apply to particles. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>data compression by binning. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>point group symmetry structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>part_select</entry>
+                                <entry>
+<para>particle selection for processing. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*band</entry>
+                                <entry>
+<para>array of reciprocal space bands. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_lo</entry>
+                                <entry>
+<para>low resolution limit (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_hi</entry>
+                                <entry>
+<para>high resolution limit (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_polar</entry>
+                                <entry>
+<para>resolution limit for in-plane angular alignment (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ann_min</entry>
+                                <entry>
+<para>minimum annulus (&gt;=0). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ann_max</entry>
+                                <entry>
+<para>maximum annulus (&lt; image radius). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_limit</entry>
+                                <entry>
+<para>maximum shift from nominal origin of box. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>angle_limit</entry>
+                                <entry>
+<para>maximum rotation from original in-plane rotation angle. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>edge_radius</entry>
+                                <entry>
+<para>edge radius to mask background using previous origin. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>option flags. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code. <literallayout><computeroutput>The polar power spectrum (pps) of the reference projection is cross correlated
+with that of the image in order to find the angle of rotation.  The image
+is transformed using this angle and the shift found by cross correlation (cc).
+A  second iterative comparison is done with real space polar images
+to find the angle followed by cross correlation to find the shift.
+How much of this second comparison is done depends on the mode flag:
+    mode=0  pps     projection selected only based on pps comparison
+    mode=1  scc     several projections selected based on cutoff for pps cc&apos;s
+    mode=2  ccc     all projections selected
+The angle and the x and y values are stored in the view_angle, and ox and oy
+arrays of the micrograph parameter structure.
+The projections must already be binned.
+Flags:
+    MODE        projection matching mode
+    APPLY_CTF   apply CTF to projections
+    PART_LOG    write log files in log directory
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1048 of file mg_orient.cpp.</para>
+    </section><anchor xml:id="_mg__orient_8h_1a58e14b1a2e60a4e93b2b6fbdbef91260"/>    <section>
+    <title>project_determine_origins()</title>
+<indexterm><primary>project_determine_origins</primary><secondary>mg_orient.h</secondary></indexterm>
+<indexterm><primary>mg_orient.h</primary><secondary>project_determine_origins</secondary></indexterm>
+<para><computeroutput>int project_determine_origins (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bimage">Bimage</link> * proj, int bin, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, int part_select, double res_lo, double res_hi, double shift_limit, int flags)</computeroutput></para><para>
+
+<para>Find the origin of every image in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>image processing parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*proj</entry>
+                                <entry>
+<para>reference projections. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>data compression by binning. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sym</entry>
+                                <entry>
+<para>point group symmetry structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>part_select</entry>
+                                <entry>
+<para>particle selection for processing. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_lo</entry>
+                                <entry>
+<para>low resolution limit (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_hi</entry>
+                                <entry>
+<para>high resolution limit (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_limit</entry>
+                                <entry>
+<para>maximum shift from nominal origin of box. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>option flags. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code. <literallayout><computeroutput>The input view is used to find the corresponding reference projection.
+This projection is then rotated by the input view angle and cross-correlated 
+with the image to find the shift.
+Flags:
+    PART_LOG    write log files in log directory
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1246 of file mg_orient.cpp.</para>
+    </section><anchor xml:id="_mg__orient_8h_1ad62bb5342e9aba2d51dcf0f20c6d4fcf"/>    <section>
+    <title>project_prepare_2D_references()</title>
+<indexterm><primary>project_prepare_2D_references</primary><secondary>mg_orient.h</secondary></indexterm>
+<indexterm><primary>mg_orient.h</primary><secondary>project_prepare_2D_references</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* project_prepare_2D_references (<link linkend="_class_bproject">Bproject</link> * project, long first, long number, int bin, int ctf_action, double wiener)</computeroutput></para><para>
+
+<para>Prepare reference images from particles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>project</entry>
+                                <entry>
+<para>micrograph project structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>first</entry>
+                                <entry>
+<para>first particle image to use. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>number of particle images to use. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>data compression by binning. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ctf_action</entry>
+                                <entry>
+<para>flag to apply CTF to projections. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wiener</entry>
+                                <entry>
+<para>Wiener factor. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* reference images, NULL on error. <literallayout><computeroutput>The particle images are shifted to center their origins.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 65 of file mg_orient.cpp.</para>
+</section>
+</section>
+</section>

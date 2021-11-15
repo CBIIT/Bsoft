@@ -1,0 +1,116 @@
+.TH "/Users/bernard/b20/bsoft/src/bdual.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/bdual.cpp \- Program to handle dual tomographic tilt series\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_img_proc\&.h'\fP
+.br
+\fC#include 'mg_tomography\&.h'\fP
+.br
+\fC#include 'mg_tomo_track\&.h'\fP
+.br
+\fC#include 'ps_marker\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Program to handle dual tomographic tilt series\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann, Jessica Mavadia, Charith Jayasinghe 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20071114 
+.PP
+Modified: 20160617 
+.RE
+.PP
+
+.PP
+Definition in file \fBbdual\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 56 of file bdual\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+" ",
+"Usage: bdual [options] input1\&.star [input2\&.star]",
+"------------------------------------------------",
+"Handles dual tomographic tilt series of micrographs\&.",
+"Expects exactly two input parameter files corresponding to the two tilt series\&.",
+"Outputs only the second series to a parameter file\&.",
+" ",
+"Actions:",
+"-seed 1\&.3,-95,75         Transfers seed markers from first to second series,",
+"                         using the angular increment to test for rotation angle,",
+"                         within the angular limits (default -180,180)\&.",
+"-refine                  Refines markers from the second series after transfer\&.",
+"-transform               Calculates the correct micrograph transformations for the 2nd series\&.",
+"-deselect 5-9,33         Deselect markers by id from all micrographs and models\&.",
+"-zcompare                Compare Z coordinates of the first and second series\&.",
+" ",
+"Parameters:",
+"-verbose 7               Verbosity of output\&.",
+"-sampling 1\&.5,1\&.5,1\&.5    Sampling (A/pixel; a single value can be given)\&.",
+"-resolution 900,300      High and low resolution limits for cross-correlation (default 0\&.1,1000 angstrom)\&.",
+"-shiftlimit 155\&.5        Limit on micrograph shift search in pixels (default 20% of micrograph width)\&.",
+" ",
+"Output:",
+"-output file\&.star        Output parameter file for 2nd series\&.",
+"-Postscript out\&.ps       Postscript output with Z coordinate error plots\&.",
+"-bild out\&.bld            BILD output with fitted marker models\&.",
+" ",
+NULL
+}
+.fi
+.PP
+Definition at line 24 of file bdual\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

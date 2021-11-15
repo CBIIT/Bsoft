@@ -1,0 +1,171 @@
+.TH "/Users/bernard/b20/bsoft/include/ps_model.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/ps_model.h \- Header file for postscript tools dealing with models\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBps_model_views\fP (\fBBstring\fP &filename, \fBBmodel\fP *\fBmodel\fP, int combined)"
+.br
+.RI "Postscript plot of the distribution of model views\&. "
+.ti -1c
+.RI "int \fBps_model_symmetry_views\fP (\fBBstring\fP &filename, \fBBmodel\fP *\fBmodel\fP, string &symmetry_string, int combined)"
+.br
+.RI "Postscript plot of the distribution of model views\&. "
+.ti -1c
+.RI "int \fBps_model_fom_histogram\fP (\fBBstring\fP &filename, \fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Postscript plot of the model component FOM histogram\&. "
+.ti -1c
+.RI "int \fBps_model_occupancy\fP (\fBBmodel\fP *\fBmodel\fP, double cutoff, int bins, int nfit, vector< double > &distrib, vector< double > &prob, double R, \fBBstring\fP &filename)"
+.br
+.RI "Generates a postscript plot for a model occupancy analysis\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for postscript tools dealing with models\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20090203 
+.PP
+Modified: 20190201 
+.RE
+.PP
+
+.PP
+Definition in file \fBps_model\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int ps_model_fom_histogram (\fBBstring\fP & filename, \fBBmodel\fP * model)"
+
+.PP
+Postscript plot of the model component FOM histogram\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP output postscript file name\&. 
+.br
+\fI*model\fP model parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, error if <0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 143 of file ps_model\&.cpp\&.
+.SS "int ps_model_occupancy (\fBBmodel\fP * model, double cutoff, int bins, int nfit, vector< double > & distrib, vector< double > & prob, double R, \fBBstring\fP & filename)"
+
+.PP
+Generates a postscript plot for a model occupancy analysis\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Daniel Nemecek 
+.PP
+Bernard Heymann 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fIcutoff\fP coverage cutoff (if 0 don't show)\&. 
+.br
+\fIbins\fP number of bins for histograms\&. 
+.br
+\fInfit\fP number of binomial distributions to fit\&. 
+.br
+\fI<em>distrib\fP distribution array ((3+nfit)(ncomp+1))\&. 
+.br
+\fI*prob\fP weight and probability array (2*nfit)\&. 
+.br
+\fIR\fP binomial fit residual\&. 
+.br
+\fI&filename\fP postscript file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+The distribution and probability arrays must already be allocated
+and the content calculated with model_occupancy_distribution.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 222 of file ps_model\&.cpp\&.
+.SS "int ps_model_symmetry_views (\fBBstring\fP & filename, \fBBmodel\fP * model, string & symmetry_string, int combined)"
+
+.PP
+Postscript plot of the distribution of model views\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP output postscript file name\&. 
+.br
+\fI*model\fP model parameter structure\&. 
+.br
+\fI&symmetry_string\fP symmetry\&. 
+.br
+\fIcombined\fP flag to show all models combined\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, error if <0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 94 of file ps_model\&.cpp\&.
+.SS "int ps_model_views (\fBBstring\fP & filename, \fBBmodel\fP * model, int combined)"
+
+.PP
+Postscript plot of the distribution of model views\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP output postscript file name\&. 
+.br
+\fI*model\fP model parameter structure\&. 
+.br
+\fIcombined\fP flag to show all models combined\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, error if <0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 28 of file ps_model\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

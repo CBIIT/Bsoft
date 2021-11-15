@@ -1,0 +1,217 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_brecmod_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/brecmod.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/brecmod.cpp</primary></indexterm>
+<para>
+
+<para>A tool to merge data from micrograph reconstruction and model files. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+#include &quot;rwmg.h&quot;
+#include &quot;rwimg.h&quot;
+#include &quot;rwmodel.h&quot;
+#include &quot;model_transform.h&quot;
+#include &quot;marker.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+#include &quot;options.h&quot;
+#include &quot;timer.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_brecmod_8cpp_1a98eabbd8882b669c1900ad5832231ee3">project_model_generate</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bmodel">Bmodel</link> *temp, int flags)</para>
+
+<para>Generates a model from each particle defined in a reconstruction. </para>
+</listitem>
+            <listitem><para>int <link linkend="_brecmod_8cpp_1a34ed33b08085994853e95dbc7709fd41">project_model_consolidate</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Exchanges information between reconstruction and model structures. </para>
+</listitem>
+            <listitem><para>int <link linkend="_brecmod_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_brecmod_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>const char * <link linkend="_brecmod_8cpp_1a4de0ad4c7190962494815c0fa7f948df">use</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>A tool to merge data from micrograph reconstruction and model files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20090828 </para>
+
+<para>Modified: 20110725 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_brecmod_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>brecmod.cpp</secondary></indexterm>
+<indexterm><primary>brecmod.cpp</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 53 of file brecmod.cpp.</para>
+    </section><anchor xml:id="_brecmod_8cpp_1a34ed33b08085994853e95dbc7709fd41"/>    <section>
+    <title>project_model_consolidate()</title>
+<indexterm><primary>project_model_consolidate</primary><secondary>brecmod.cpp</secondary></indexterm>
+<indexterm><primary>brecmod.cpp</primary><secondary>project_model_consolidate</secondary></indexterm>
+<para><computeroutput>int project_model_consolidate (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Exchanges information between reconstruction and model structures. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameter structures. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>This function assumes there is a 1-1 relationship between models and
+particles derived from reconstructions and that they are in corresponding
+sequence.
+The type id and hand from each model is converted into an integer and
+the particle group set to it.
+Each model id is reset to a combined reconstruction and particle id.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 298 of file brecmod.cpp.</para>
+    </section><anchor xml:id="_brecmod_8cpp_1a98eabbd8882b669c1900ad5832231ee3"/>    <section>
+    <title>project_model_generate()</title>
+<indexterm><primary>project_model_generate</primary><secondary>brecmod.cpp</secondary></indexterm>
+<indexterm><primary>brecmod.cpp</primary><secondary>project_model_generate</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link> * project_model_generate (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bmodel">Bmodel</link> * temp, int flags)</computeroutput></para><para>
+
+<para>Generates a model from each particle defined in a reconstruction. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*temp</entry>
+                                <entry>
+<para>template model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>conversion options: 1=images. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new model referencing the particle map files. <literallayout><computeroutput>The model id is a combined reconstruction and particle id.
+The model type id is taken from the particle group id.
+The selection and FOM is taken from the particle properties.
+The model map file name is taken from the particle file name if it
+is defined, otherwise it is taken from the reconstruction structure
+and the image number is taken from the particle id.
+Flags:
+    1   transform each particle images to standard orientation.
+    2   write a model file for each particle.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 181 of file brecmod.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_brecmod_8cpp_1a4de0ad4c7190962494815c0fa7f948df"/>    <section>
+    <title>use</title>
+<indexterm><primary>use</primary><secondary>brecmod.cpp</secondary></indexterm>
+<indexterm><primary>brecmod.cpp</primary><secondary>use</secondary></indexterm>
+<para><computeroutput>const char* use[]</computeroutput></para><emphasis role="strong">Initial value:</emphasis><programlisting>=&#32;{
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Usage:&#32;brecmod&#32;[options]&#32;in.star&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;--------------------------------&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Merges&#32;data&#32;from&#32;micrograph&#32;and&#32;model&#32;files.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Actions:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-consolidate&#32;mod.star&#32;&#32;&#32;&#32;Consolidate&#32;project&#32;and&#32;model&#32;parameters.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-images&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Convert&#32;particle&#32;images&#32;(use&#32;with&#32;-outmodel).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-submodels&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Generate&#32;particle&#32;models&#32;(use&#32;with&#32;-outmodel).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Parameters:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-verbose&#32;7&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Verbosity&#32;of&#32;output.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-sampling&#32;1.5,1.5,1.5&#32;&#32;&#32;&#32;Sampling&#32;of&#32;images&#32;(A/pixel;&#32;a&#32;single&#32;value&#32;can&#32;be&#32;given).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Input:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-template&#32;model.star&#32;&#32;&#32;&#32;&#32;Template&#32;to&#32;associate&#32;with&#32;each&#32;particle.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Output:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-output&#32;newmg.star&#32;&#32;&#32;&#32;&#32;&#32;&#32;New&#32;micrograph&#32;parameter&#32;file.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-outmodel&#32;partmod.star&#32;&#32;&#32;New&#32;model&#32;file&#32;from&#32;particles.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-outmark&#32;markmod.star&#32;&#32;&#32;&#32;New&#32;model&#32;file&#32;from&#32;markers.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+NULL
+}
+</programlisting><para>
+Definition at line 27 of file brecmod.cpp.</para>
+    </section><anchor xml:id="_brecmod_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>brecmod.cpp</secondary></indexterm>
+<indexterm><primary>brecmod.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

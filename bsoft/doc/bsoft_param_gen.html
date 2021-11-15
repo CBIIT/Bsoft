@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Parameters</title>
+<link href="bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+
+<h2>The Parametric Data Base</h2>
+
+<p>Image and molecular processing requires and produces large amounts
+    of informational and parametric data. The traditional way to deal with
+    this in software packages is to define one or more package-specific
+    parameter file formats. Often, these formats have a strict notion of the
+    placement and order of informational elements, making it hard to
+    impossible to ensure backward compatibility as these formats evolve. The
+    alternative to such formats is a flexible, tag-based format that is easy
+    to maintain and extend. For Bsoft, I adopted the STAR (Self-defining Text
+    Archiving and Retrieval) format (Hall, 1991). An alternative is XML,
+    although as text files, XML files are less readable and takes much more
+    space compared to the equivalent STAR files.</p>
+<h2>Internal hierarchies of structures</h2>
+<p>Bsoft was and is developed within the context of Structural Biology,
+and in particular associated with the use of high-resolution electron microscopy. 
+The types of data can therefore be grouped into the image processing side, 
+including sets of micrographs taken on electron microscopes and 
+3D reconstructions derived from them, and the modeling side, 
+including atoms, molecules and molecule groups that can be arranged in
+lower resolution component-based models.</p>
+<h3>Micrograph parameters</h3>
+<p>The parameters derived and generated in the processing of many micrographs
+and their associated sub-images are encoded in an internal hierarchy as a
+custom database. The two main branches of the design hierachy are the
+field-of-view and the reconstruction. The former refers to sets of micrographs
+grouped in terms of their natural relationships to each other. Fields-of-view
+may refer to focal pairs/series, tomographic tilt series, dose series (movies), etc.
+The reconstruction branch is intended to reference 3D maps as from single particle
+or tomographic reconstructions.</p>
+<p>Below the micrograph and reconstruction levels of the hierarchy are derived
+elements, such as particle, filament and marker parameters. The hierarchy preserves
+the relational infomartion so that the providence of derived elements are always
+retrievable.</p>
+<h3>Model and molecular parameters</h3>
+<p>The ultimate goal in Structural Biology is the production of a spatial
+model as an interpretation of the data. Bsoft provides for a hierarchical
+modeling scheme, with atomic models being the highest detail models, followed
+by succesively coarser grained models.</p>
+<br/>
+<h2>Additional parameter files</h2>
+<p>There are several sets of general parametric data required for
+      various operations on atomic coordinates and sequences. These files are
+      all located in the bsoft/parameters directory.</p>
+<h3>atom_prop.star</h3>
+<p>This file contains atomic properties such as the atomic number,
+        the atomic weights (Pure Appl. Chem., Vol. 73, No. 4, pp. 667-683,
+        2001.) and the electron scattering coefficients required to calculate
+        atomic cross-sections for electron microscopy (Peng et al., Acta
+        Cryst. (1996). A52, 257-276). Any program reading atomic coordinates
+        requires this file to retrieve at least the atomic weights. The
+        program "bsf" uses the scattering curves to calculate the Fourier
+        space representation of atomic structures.</p>
+<h3>res_prop.star</h3>
+<p>This file contains protein residue properties such as mass,
+        volume, charge, and hydrophobicity. In addition, it has a residue
+        similarity matrix based on the BLOSUM62 matrix. Most of the sequence
+        analyses requires information from this file.</p>
+<h3>symop.star</h3>
+<p>This file encodes all the symmetry information for the
+        crystallographic space groups. This was derived from the symop.lib
+        file from the CCP4 software suite.</p>
+<h3>.krn files</h3>
+<p>These files specify kernels for convolution filters used by the
+        program bfilter. The first line of the file gives the dimensions of
+        the kernel. The subsequent lines give all the values of the kernel in
+        order, with the arrangements per line being arbitrary. Here is a
+        typical kernel for a Sobel filter in the y direction, called
+        SobelY.krn:</p>
+	<blockquote><p>3 3 3</p>
+	<p>1 3 1</p>
+	<p>0 0 0</p>
+	<p>-1 -3 -1</p>
+	<p>3 6 3</p>
+	<p>0 0 0</p>
+	<p>-3 -6 -3</p>
+	<p>1 3 1</p>
+	<p>0 0 0</p>
+	<p>-1 -3 -1</p>
+	</blockquote>
+
+</div>
+<div id="footer">
+  Bernard Heymann 20150108
+</div>
+</body>
+</html>

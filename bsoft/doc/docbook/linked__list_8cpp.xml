@@ -1,0 +1,501 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_linked__list_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/util/linked_list.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/util/linked_list.cpp</primary></indexterm>
+<para>
+
+<para>Generalized linked list functions. </para>
+ 
+</para>
+<programlisting>#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>char * <link linkend="_linked__list_8cpp_1aceb93ac809d01b4f9831c9b86bfb1078">add_item</link> (char **list, unsigned long size)</para>
+
+<para>Adds an item to a linked list. </para>
+</listitem>
+            <listitem><para>char * <link linkend="_linked__list_8cpp_1aa52f8e552c20877ab4d97e090720bf2f">append_item</link> (char **list, char *item)</para>
+
+<para>Appends an item to a linked list. </para>
+</listitem>
+            <listitem><para>char * <link linkend="_linked__list_8cpp_1a7f1706110f6b5193734062f5a47d0aba">copy_item</link> (char *toitem, char *fromitem, unsigned long size)</para>
+
+<para>Copies an item to an existing item without changing the link. </para>
+</listitem>
+            <listitem><para>char * <link linkend="_linked__list_8cpp_1a2145a7095663306126cdd7e3f5f1e57c">remove_item</link> (char **list, char *item, unsigned long size)</para>
+
+<para>Finds the given item and deletes it from the linked list. </para>
+</listitem>
+            <listitem><para>char * <link linkend="_linked__list_8cpp_1adbf8a2a029f10290f4f321ec4b6e5ae3">replace_item</link> (char **list, char *item, char *new_item)</para>
+
+<para>Finds the given item and replaces it with the new item. </para>
+</listitem>
+            <listitem><para>char * <link linkend="_linked__list_8cpp_1a078adb2f69a9a93eda23297e1298d531">copy_list</link> (char *list, unsigned long size)</para>
+
+<para>Generates a complete copy of a linked list. </para>
+</listitem>
+            <listitem><para>long <link linkend="_linked__list_8cpp_1aa47d61bdac381369a3a3e4b4e51182a3">kill_list</link> (char *list, unsigned long size)</para>
+
+<para>Frees all the items in a linked list. </para>
+</listitem>
+            <listitem><para>long <link linkend="_linked__list_8cpp_1a0cbc687d30bfbd6c61eeabed6b311cbd">count_list</link> (char *list)</para>
+
+<para>Counts the number of items in a linked list. </para>
+</listitem>
+            <listitem><para>long <link linkend="_linked__list_8cpp_1ad899220a235c3e93e8e57e3742374a11">reverse_list</link> (char **list)</para>
+
+<para>Reverse the order of items in a linked list. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_linked__list_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Generalized linked list functions. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20031203 </para>
+
+<para>Modified: 20150206 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_linked__list_8cpp_1aceb93ac809d01b4f9831c9b86bfb1078"/>    <section>
+    <title>add_item()</title>
+<indexterm><primary>add_item</primary><secondary>linked_list.cpp</secondary></indexterm>
+<indexterm><primary>linked_list.cpp</primary><secondary>add_item</secondary></indexterm>
+<para><computeroutput>char* add_item (char ** list, unsigned long size)</computeroutput></para><para>
+
+<para>Adds an item to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**list</entry>
+                                <entry>
+<para>pointer to first item in the list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of item. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>char* new item. <literallayout><computeroutput>If the list is not defined, the new item becomes the first in the list.
+Otherwise, the list is traversed to find the end and the new item appended.
+Any structure with a pointer to itself as a first element can be used in a
+linked list. However, a linked list can only consist of one type of structure.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 26 of file linked_list.cpp.</para>
+    </section><anchor xml:id="_linked__list_8cpp_1aa52f8e552c20877ab4d97e090720bf2f"/>    <section>
+    <title>append_item()</title>
+<indexterm><primary>append_item</primary><secondary>linked_list.cpp</secondary></indexterm>
+<indexterm><primary>linked_list.cpp</primary><secondary>append_item</secondary></indexterm>
+<para><computeroutput>char* append_item (char ** list, char * item)</computeroutput></para><para>
+
+<para>Appends an item to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**list</entry>
+                                <entry>
+<para>pointer to first item in the list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*item</entry>
+                                <entry>
+<para>item to append. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>char* item. <literallayout><computeroutput>If the list is not defined, the new item becomes the first in the list.
+Otherwise, the list is traversed to find the end and the new item appended.
+Any structure with a pointer to itself as a first element can be used in a
+linked list. However, a linked list can only consist of one type of structure.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 59 of file linked_list.cpp.</para>
+    </section><anchor xml:id="_linked__list_8cpp_1a7f1706110f6b5193734062f5a47d0aba"/>    <section>
+    <title>copy_item()</title>
+<indexterm><primary>copy_item</primary><secondary>linked_list.cpp</secondary></indexterm>
+<indexterm><primary>linked_list.cpp</primary><secondary>copy_item</secondary></indexterm>
+<para><computeroutput>char* copy_item (char * toitem, char * fromitem, unsigned long size)</computeroutput></para><para>
+
+<para>Copies an item to an existing item without changing the link. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*toitem</entry>
+                                <entry>
+<para>item to copy to. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*fromitem</entry>
+                                <entry>
+<para>item to copy from. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of item. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>char* the resultant item. <literallayout><computeroutput>The items must be the same type.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 87 of file linked_list.cpp.</para>
+    </section><anchor xml:id="_linked__list_8cpp_1a078adb2f69a9a93eda23297e1298d531"/>    <section>
+    <title>copy_list()</title>
+<indexterm><primary>copy_list</primary><secondary>linked_list.cpp</secondary></indexterm>
+<indexterm><primary>linked_list.cpp</primary><secondary>copy_list</secondary></indexterm>
+<para><computeroutput>char* copy_list (char * list, unsigned long size)</computeroutput></para><para>
+
+<para>Generates a complete copy of a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*list</entry>
+                                <entry>
+<para>linked list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of list item. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>char* new list. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 185 of file linked_list.cpp.</para>
+    </section><anchor xml:id="_linked__list_8cpp_1a0cbc687d30bfbd6c61eeabed6b311cbd"/>    <section>
+    <title>count_list()</title>
+<indexterm><primary>count_list</primary><secondary>linked_list.cpp</secondary></indexterm>
+<indexterm><primary>linked_list.cpp</primary><secondary>count_list</secondary></indexterm>
+<para><computeroutput>long count_list (char * list)</computeroutput></para><para>
+
+<para>Counts the number of items in a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*list</entry>
+                                <entry>
+<para>first item in the linked list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of items in the list. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 235 of file linked_list.cpp.</para>
+    </section><anchor xml:id="_linked__list_8cpp_1aa47d61bdac381369a3a3e4b4e51182a3"/>    <section>
+    <title>kill_list()</title>
+<indexterm><primary>kill_list</primary><secondary>linked_list.cpp</secondary></indexterm>
+<indexterm><primary>linked_list.cpp</primary><secondary>kill_list</secondary></indexterm>
+<para><computeroutput>long kill_list (char * list, unsigned long size)</computeroutput></para><para>
+
+<para>Frees all the items in a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*list</entry>
+                                <entry>
+<para>first item in the linked list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of item. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of items deallocated. <literallayout><computeroutput>The list is traversed, setting a pointer to the next item before
+deallocating the current item.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 214 of file linked_list.cpp.</para>
+    </section><anchor xml:id="_linked__list_8cpp_1a2145a7095663306126cdd7e3f5f1e57c"/>    <section>
+    <title>remove_item()</title>
+<indexterm><primary>remove_item</primary><secondary>linked_list.cpp</secondary></indexterm>
+<indexterm><primary>linked_list.cpp</primary><secondary>remove_item</secondary></indexterm>
+<para><computeroutput>char* remove_item (char ** list, char * item, unsigned long size)</computeroutput></para><para>
+
+<para>Finds the given item and deletes it from the linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**list</entry>
+                                <entry>
+<para>pointer to first item in the linked list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*item</entry>
+                                <entry>
+<para>item to be deleted. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of item. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>char* item after the one removed. <literallayout><computeroutput>If the item is the first in the list, the list pointer is set to point
+to the next item.
+Otherwise, the list is traversed to find the item, the previous item&apos;s
+pointer is set to the next item, and the current item deallocated.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 114 of file linked_list.cpp.</para>
+    </section><anchor xml:id="_linked__list_8cpp_1adbf8a2a029f10290f4f321ec4b6e5ae3"/>    <section>
+    <title>replace_item()</title>
+<indexterm><primary>replace_item</primary><secondary>linked_list.cpp</secondary></indexterm>
+<indexterm><primary>linked_list.cpp</primary><secondary>replace_item</secondary></indexterm>
+<para><computeroutput>char* replace_item (char ** list, char * item, char * new_item)</computeroutput></para><para>
+
+<para>Finds the given item and replaces it with the new item. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**list</entry>
+                                <entry>
+<para>pointer to first item in the linked list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*item</entry>
+                                <entry>
+<para>item to be replaced. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*new_item</entry>
+                                <entry>
+<para>new item. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>char* new item. <literallayout><computeroutput>If the item is the first in the list, the list pointer is set to point
+to the new item.
+Otherwise, the list is traversed to find the item, the previous item&apos;s
+pointer is set to the new item, the new item&apos;s pointer is set to that
+of the old item, and the old item is deallocated.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 152 of file linked_list.cpp.</para>
+    </section><anchor xml:id="_linked__list_8cpp_1ad899220a235c3e93e8e57e3742374a11"/>    <section>
+    <title>reverse_list()</title>
+<indexterm><primary>reverse_list</primary><secondary>linked_list.cpp</secondary></indexterm>
+<indexterm><primary>linked_list.cpp</primary><secondary>reverse_list</secondary></indexterm>
+<para><computeroutput>long reverse_list (char ** list)</computeroutput></para><para>
+
+<para>Reverse the order of items in a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*list</entry>
+                                <entry>
+<para>first item in the linked list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of items in the list. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 252 of file linked_list.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_linked__list_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>linked_list.cpp</secondary></indexterm>
+<indexterm><primary>linked_list.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

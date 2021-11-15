@@ -1,0 +1,214 @@
+.TH "/Users/bernard/b20/bsoft/src/util/options.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/util/options.cpp \- Functions to handle general options\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMAX_TAG_LEN\fP   20"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBoption\fP * \fBget_option_list\fP (const char *\fBuse\fP[], int argc, char *argv[], int &optind)"
+.br
+.RI "Parses command line arguments based on a template\&. "
+.ti -1c
+.RI "int \fBoption_kill\fP (\fBBoption\fP *option)"
+.br
+.RI "Deallocates a linked list of option structures\&. "
+.ti -1c
+.RI "int \fBget_option_verbose\fP (char *optarg)"
+.br
+.RI "Sets the verbose option\&. "
+.ti -1c
+.RI "int \fBget_option_verbose\fP (\fBBstring\fP &optarg)"
+.br
+.ti -1c
+.RI "double \fBget_option_mass\fP (\fBBstring\fP &optarg)"
+.br
+.RI "Returns the adjusted mass based on the added character\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "string \fBcommand\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to handle general options\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010613 
+.PP
+Modified: 20200504 
+.RE
+.PP
+
+.PP
+Definition in file \fBoptions\&.cpp\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define MAX_TAG_LEN   20"
+
+.PP
+Definition at line 12 of file options\&.cpp\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBoption\fP* get_option_list (const char * use[], int argc, char * argv[], int & optind)"
+
+.PP
+Parses command line arguments based on a template\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*use[]\fP usage list of strings, the template\&. 
+.br
+\fIargc\fP number of command line arguments\&. 
+.br
+\fI*argv[]\fP array of command line argument strings\&. 
+.br
+\fI&optind\fP first argument after option list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Boption* linked list of tag-value pairs\&. 
+.PP
+.nf
+The usage list is parsed to find the desired option tag.
+Each option in the usage list must have the following format:
+    -<tag> <value,value,...>
+The first character on the line must be '-', the tag may not
+extend beyond the 17'th character and the value must start
+before the 19'th character.
+A partial input tag is tolerated as long as it is unambiguous.
+An ambiguous or unknown tag or a tag requiring a value but
+without one causes program abortion.
+Special tags:
+    -verbose 3      sets the verbosity level for all programs.
+    -help           returns the usage information and quits.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 40 of file options\&.cpp\&.
+.SS "double get_option_mass (\fBBstring\fP & optarg)"
+
+.PP
+Returns the adjusted mass based on the added character\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&optarg\fP mass with added character\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double adjusted mass\&. 
+.RE
+.PP
+
+.PP
+Definition at line 186 of file options\&.cpp\&.
+.SS "int get_option_verbose (\fBBstring\fP & optarg)"
+
+.PP
+Definition at line 158 of file options\&.cpp\&.
+.SS "int get_option_verbose (char * optarg)"
+
+.PP
+Sets the verbose option\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&optarg\fP verbosity level\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int verbosity number, <0 on error\&. 
+.PP
+.nf
+The verbosity level is defined by the following constants setting 
+particular bits:
+    VERB_NONE       0       No output
+    VERB_RESULT     1       Program results
+    VERB_LABEL      2       Function information
+    VERB_PROCESS    4       Selected processing information
+    VERB_STATS      8       Statistical information on objects
+    VERB_FULL       16      All processing information
+    VERB_TIME       32      Timing information
+    VERB_MEMORY     64      Memory allocation and freeing
+    VERB_DEBUG      256         Debugging information
+    VERB_DEBUG_STAR 512         STAR code debugging information
+    VERB_DEBUG_DM   1024    Digital Micrograph format debugging information
+    VERB_DEBUG_ND2  2048    Nikon ND2 format debugging information
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 152 of file options\&.cpp\&.
+.SS "int option_kill (\fBBoption\fP * option)"
+
+.PP
+Deallocates a linked list of option structures\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*option\fP linked list of tag-value pairs\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 116 of file options\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "string command\fC [extern]\fP"
+
+.PP
+Definition at line 20 of file utilities\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,271 @@
+.TH "/Users/bernard/b20/bsoft/src/mol/seq_align.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mol/seq_align.cpp \- Library routines to generate and analyze dot plots\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmolecule\&.h'\fP
+.br
+\fC#include 'rwresprop\&.h'\fP
+.br
+\fC#include 'dynamic_programming\&.h'\fP
+.br
+\fC#include 'seq_align\&.h'\fP
+.br
+\fC#include 'seq_util\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'Matrix3\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "long \fBseq_pair_align\fP (\fBBmolecule\fP *mol1, \fBBmolecule\fP *mol2, double gapopen, double gapextend, \fBBresidue_matrix\fP *simat)"
+.br
+.RI "Aligns two sequences\&. "
+.ti -1c
+.RI "int \fBseq_find_best_offset\fP (\fBBmolecule\fP *mol1, \fBBmolecule\fP *mol2, long &nres, \fBBresidue_matrix\fP *simat)"
+.br
+.RI "Finds the best offset for aligning two sequences without gaps\&. "
+.ti -1c
+.RI "\fBMatrix\fP \fBseq_dot_plot\fP (\fBBmolecule\fP *mol1, \fBBmolecule\fP *mol2, \fBBresidue_matrix\fP *simat)"
+.br
+.RI "Calculates a dot plot for two sequences\&. "
+.ti -1c
+.RI "\fBMatrix\fP \fBseq_dot_plot_mov_avg\fP (\fBMatrix\fP dot_plot, int window)"
+.br
+.RI "Calculates a moving average along the diagonals of a dot plot\&. "
+.ti -1c
+.RI "int \fBseq_dot_plot_interpret\fP (\fBMatrix\fP dot_plot)"
+.br
+.RI "Finds the row and column maxima in a dot plot\&. "
+.ti -1c
+.RI "double \fBseq_dot_plot_best_segments\fP (\fBMatrix\fP dot_plot)"
+.br
+.RI "Finding the best segments in a dot plot\&. "
+.ti -1c
+.RI "int \fBseq_show_segments\fP (\fBBmolecule\fP *mol1, \fBBmolecule\fP *mol2, double threshold, \fBMatrix\fP dot_plot)"
+.br
+.RI "Finds the best offset for aligning two sequences without gaps\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines to generate and analyze dot plots\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20001029 
+.PP
+Modified: 20180622 
+.RE
+.PP
+
+.PP
+Definition in file \fBseq_align\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBMatrix\fP seq_dot_plot (\fBBmolecule\fP * mol1, \fBBmolecule\fP * mol2, \fBBresidue_matrix\fP * simat)"
+
+.PP
+Calculates a dot plot for two sequences\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol1\fP first molecule structure\&. 
+.br
+\fI*mol2\fP second molecule structure\&. 
+.br
+\fI*simat\fP residue similarity matrix\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBMatrix\fP matrix with dot plot\&. 
+.RE
+.PP
+
+.PP
+Definition at line 137 of file seq_align\&.cpp\&.
+.SS "double seq_dot_plot_best_segments (\fBMatrix\fP dot_plot)"
+
+.PP
+Finding the best segments in a dot plot\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIdot_plot\fP dot plot matrix\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double threshold to identify unique segments\&. 
+.RE
+.PP
+
+.PP
+Definition at line 265 of file seq_align\&.cpp\&.
+.SS "int seq_dot_plot_interpret (\fBMatrix\fP dot_plot)"
+
+.PP
+Finds the row and column maxima in a dot plot\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIdot_plot\fP dot plot matrix\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of maxima in both rows and columns\&. 
+.RE
+.PP
+
+.PP
+Definition at line 214 of file seq_align\&.cpp\&.
+.SS "\fBMatrix\fP seq_dot_plot_mov_avg (\fBMatrix\fP dot_plot, int window)"
+
+.PP
+Calculates a moving average along the diagonals of a dot plot\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIdot_plot\fP dot plot matrix\&. 
+.br
+\fIwindow\fP moving average window size\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBMatrix\fP matrix with moving average dot plot\&. 
+.RE
+.PP
+
+.PP
+Definition at line 168 of file seq_align\&.cpp\&.
+.SS "int seq_find_best_offset (\fBBmolecule\fP * mol1, \fBBmolecule\fP * mol2, long & nres, \fBBresidue_matrix\fP * simat)"
+
+.PP
+Finds the best offset for aligning two sequences without gaps\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol1\fP first molecule structure\&. 
+.br
+\fI*mol2\fP second molecule structure\&. 
+.br
+\fI*nres\fP number of similar residues in best diagonal\&. 
+.br
+\fI*simat\fP residue similarity matrix\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int the offset of sequence 2 with respect to sequence 1\&. 
+.PP
+.nf
+The best offset is determined as the diagonal of a dot plot with
+the highest value.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 94 of file seq_align\&.cpp\&.
+.SS "long seq_pair_align (\fBBmolecule\fP * mol1, \fBBmolecule\fP * mol2, double gapopen, double gapextend, \fBBresidue_matrix\fP * simat)"
+
+.PP
+Aligns two sequences\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol1\fP first molecule structure\&. 
+.br
+\fI*mol2\fP second molecule structure\&. 
+.br
+\fIgapopen\fP gap opening penalty\&. 
+.br
+\fIgapextend\fP gap extension penalty\&. 
+.br
+\fI*simat\fP residue similarity matrix\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long length of the aligned sequences\&. 
+.PP
+.nf
+Two sequences are aligned and returned in the sequence strings
+of the molecule structures.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 34 of file seq_align\&.cpp\&.
+.SS "int seq_show_segments (\fBBmolecule\fP * mol1, \fBBmolecule\fP * mol2, double threshold, \fBMatrix\fP dot_plot)"
+
+.PP
+Finds the best offset for aligning two sequences without gaps\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol1\fP first molecule structure\&. 
+.br
+\fI*mol2\fP second molecule structure\&. 
+.br
+\fIthreshold\fP threshold to identify segments\&. 
+.br
+\fIdot_plot\fP dot plot\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int the offset of sequence 2 with respect to sequence 1\&. 
+.PP
+.nf
+The best offset is determined as the diagonal of a dot plot with
+the highest value.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 324 of file seq_align\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,277 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_model__plane_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/model/model_plane.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/model/model_plane.cpp</primary></indexterm>
+<para>
+
+<para>Library routines used for plane models. </para>
+ 
+</para>
+<programlisting>#include &quot;model_create.h&quot;
+#include &quot;model_transform.h&quot;
+#include &quot;model_views.h&quot;
+#include &quot;model_util.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_model__plane_8cpp_1aa4bf3a90d9e9da054e3167a87549bd95">model_fit_plane</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Fits a plane through a model. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__plane_8cpp_1a4fe2a941418d10d7894f223c70b5a99e">model_distance_to_guide</link> (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; loc, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; vec, <link linkend="_class_bmodel">Bmodel</link> *guide, double sigma2)</para>
+
+<para>Calculates the distance between a location and the local guide model. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__plane_8cpp_1a78cc538e0bcb593b86ff720bf482f2bc">model_adjust_to_guide</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bmodel">Bmodel</link> *gmod, double sigma)</para>
+
+<para>Adjusts a shell model to the faces of a polyhedral guide model. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__plane_8cpp_1a2bd8e7825c989ab9f9979753e3c1e735">model_generate_from_plane_guide</link> (<link linkend="_class_bmodel">Bmodel</link> *guide, double separation, double sigma)</para>
+
+<para>Generates a plane model and fits a plane through it. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_model__plane_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines used for plane models. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20140925 </para>
+
+<para>Modified: 20141008 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_model__plane_8cpp_1a78cc538e0bcb593b86ff720bf482f2bc"/>    <section>
+    <title>model_adjust_to_guide()</title>
+<indexterm><primary>model_adjust_to_guide</primary><secondary>model_plane.cpp</secondary></indexterm>
+<indexterm><primary>model_plane.cpp</primary><secondary>model_adjust_to_guide</secondary></indexterm>
+<para><computeroutput>int model_adjust_to_guide (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bmodel">Bmodel</link> * gmod, double sigma)</computeroutput></para><para>
+
+<para>Adjusts a shell model to the faces of a polyhedral guide model. </para>
+</para>
+
+<para><literallayout><computeroutput>For each component, it is determined whether it is located inside or 
+outside the appropriate polyhedral face, and its coordinates adjust
+closer to the face by the indicated fraction.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>shell model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*gmod</entry>
+                                <entry>
+<para>guide polyhedron model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sigma</entry>
+                                <entry>
+<para>smoothness of model. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 136 of file model_plane.cpp.</para>
+    </section><anchor xml:id="_model__plane_8cpp_1a4fe2a941418d10d7894f223c70b5a99e"/>    <section>
+    <title>model_distance_to_guide()</title>
+<indexterm><primary>model_distance_to_guide</primary><secondary>model_plane.cpp</secondary></indexterm>
+<indexterm><primary>model_plane.cpp</primary><secondary>model_distance_to_guide</secondary></indexterm>
+<para><computeroutput>double model_distance_to_guide (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; loc, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; vec, <link linkend="_class_bmodel">Bmodel</link> * guide, double sigma2)</computeroutput></para><para>
+
+<para>Calculates the distance between a location and the local guide model. </para>
+</para>
+
+<para><literallayout><computeroutput>Each guide component is used to calculate a distance of the location
+to the guide plane and a lateral distance to the guide component.
+The lateral distance is used to calculate a gaussian distributed weight
+which in turn is used to calculate a weighted average of the distance
+to the guide plane.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>loc</entry>
+                                <entry>
+<para>location to be tested. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>vec</entry>
+                                <entry>
+<para>direction vector associated with the location. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*guide</entry>
+                                <entry>
+<para>guide model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sigma2</entry>
+                                <entry>
+<para>smoothness weighting parameter. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new circle model. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 102 of file model_plane.cpp.</para>
+    </section><anchor xml:id="_model__plane_8cpp_1aa4bf3a90d9e9da054e3167a87549bd95"/>    <section>
+    <title>model_fit_plane()</title>
+<indexterm><primary>model_fit_plane</primary><secondary>model_plane.cpp</secondary></indexterm>
+<indexterm><primary>model_plane.cpp</primary><secondary>model_fit_plane</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; model_fit_plane (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Fits a plane through a model. </para>
+</para>
+
+<para><literallayout><computeroutput>A plane is fit through the components and the normal calculated from:
+    n•p = d
+where n is the normal vector, p is a point in the plane, and d is the offset.
+Only the first model is fit.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> plane normal. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 30 of file model_plane.cpp.</para>
+    </section><anchor xml:id="_model__plane_8cpp_1a2bd8e7825c989ab9f9979753e3c1e735"/>    <section>
+    <title>model_generate_from_plane_guide()</title>
+<indexterm><primary>model_generate_from_plane_guide</primary><secondary>model_plane.cpp</secondary></indexterm>
+<indexterm><primary>model_plane.cpp</primary><secondary>model_generate_from_plane_guide</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_generate_from_plane_guide (<link linkend="_class_bmodel">Bmodel</link> * guide, double separation, double sigma)</computeroutput></para><para>
+
+<para>Generates a plane model and fits a plane through it. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*guide</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>separation</entry>
+                                <entry>
+<para>separation between components for new model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sigma</entry>
+                                <entry>
+<para>smoothness of model. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new model based on input model. <literallayout><computeroutput>The principal axes of a planar model are calculated and a new plane model
+generated with the given separation between components.
+The components of the new model are then adjusted to fit the guide model.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 186 of file model_plane.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_model__plane_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>model_plane.cpp</secondary></indexterm>
+<indexterm><primary>model_plane.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

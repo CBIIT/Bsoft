@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Unix install</title>
+<link href="bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+    <h1>Installation for parallel processing using Grand Central Dispatch (Mac OS X 10.7+ only)</h1>
+	<br/>
+	<h2>Compiling and installing FFTW3</h2>
+    <p>Version 3.3.3 or later of FFTW3 can be obtained from
+		<a href="http://www.fftw.org">http://www.fftw.org</a></p>
+	<p>The clang compiler on Mac OS X 10.7+ uses GCD and pthreads, and FFTW3 should be configured as follows:</p>
+    <div id="command"><p>./configure --enable-float --enable-threads --enable-shared --disable-fortran CC=&quot;clang&quot; CXX=&quot;clang++&quot;</p></div>
+    <p>The compilation and installation should then be simply:</p>
+    <div id="command"><p>make</p>
+    <p>sudo make install</p></div>
+	</br>
+	<h2>Compiling parallel Bsoft with GCD</h2>
+	<p>As for the serial version of Bsoft, the recommended location for Bsoft
+	is in /usr/local. Most of the instructions for the serial version also
+	applies here. The compilation requires additional flags:</p>
+    <div id="command"><p>bmake gcd fftw3 threads</p></div>
+    <p>A custom location for FFTW3 can also be specified:</p>
+    <div id="command"><p>bmake omp fftw3=/somedisk/mydirectory</p></div>
+</div>
+<div id="footer">
+  Bernard Heymann  20150223
+</div>
+</body>
+</html>

@@ -1,0 +1,1011 @@
+.TH "/Users/bernard/b20/bsoft/include/model_select.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/model_select.h \- Header file for reading and writing atomic model files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel\&.h'\fP
+.br
+\fC#include 'Bimage\&.h'\fP
+.br
+\fC#include 'Bstring\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "long \fBmodel_select\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP &comptype)"
+.br
+.RI "Selects models, components and component types\&. "
+.ti -1c
+.RI "long \fBmodel_select\fP (\fBBmodel\fP *\fBmodel\fP, long number)"
+.br
+.RI "Resets the selection to all models\&. "
+.ti -1c
+.RI "long \fBmodel_select_all\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Resets the selection to all models\&. "
+.ti -1c
+.RI "long \fBmodel_select_unknowns\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Resets the selection to all unknown models\&. "
+.ti -1c
+.RI "long \fBmodel_reset_selection\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Resets the selection to all components\&. "
+.ti -1c
+.RI "long \fBmodel_unset_selection\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Unsets the selection to all components but not models\&. "
+.ti -1c
+.RI "long \fBmodel_invert_selection\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Inverts the selection of all components\&. "
+.ti -1c
+.RI "long \fBmodel_select_sets\fP (\fBBmodel\fP *\fBmodel\fP, int size, int flag)"
+.br
+.RI "Selects sets of components, each set with the same size\&. "
+.ti -1c
+.RI "long \fBmodel_select_number_of_components\fP (\fBBmodel\fP *\fBmodel\fP, int ncomp_min, int ncomp_max)"
+.br
+.RI "Selects models within a range of the number of components\&. "
+.ti -1c
+.RI "long \fBmodel_select_closed\fP (\fBBmodel\fP *\fBmodel\fP, int closure_rule, int val_order)"
+.br
+.RI "Determines if a polyhedron is closed given a rule\&. "
+.ti -1c
+.RI "long \fBmodel_select_fullerene\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Selects fullerene type models\&. "
+.ti -1c
+.RI "long \fBmodel_select_non_fullerene\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Selects non-fullerene type models\&. "
+.ti -1c
+.RI "long \fBmodel_select_valence\fP (\fBBmodel\fP *\fBmodel\fP, int valence)"
+.br
+.RI "Selects fullerene type models\&. "
+.ti -1c
+.RI "long \fBmodel_select_polygons\fP (\fBBmodel\fP *\fBmodel\fP, int order)"
+.br
+.RI "Selects model polygons with a given order\&. "
+.ti -1c
+.RI "long \fBmodel_select_first\fP (\fBBmodel\fP *\fBmodel\fP, int first)"
+.br
+.RI "Selects the first number of components\&. "
+.ti -1c
+.RI "long \fBmodel_select_within_shell\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< double > center, double minrad, double maxrad)"
+.br
+.RI "Selects components within a shell\&. "
+.ti -1c
+.RI "long \fBmodel_select_in_mask\fP (\fBBmodel\fP *\fBmodel\fP, \fBBimage\fP *pmask)"
+.br
+.RI "Selects components within a mask\&. "
+.ti -1c
+.RI "long \fBmodel_delete\fP (\fBBmodel\fP **\fBmodel\fP)"
+.br
+.RI "Deletes tagged models, components and links\&. "
+.ti -1c
+.RI "long \fBmodel_delete_comp_type\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP &comptype)"
+.br
+.RI "Deletes components based on their types\&. "
+.ti -1c
+.RI "long \fBmodel_delete_non_selected\fP (\fBBmodel\fP **\fBmodel\fP)"
+.br
+.RI "Deletes selected components and associated links from the model\&. "
+.ti -1c
+.RI "long \fBmodel_selection_stats\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates selection statistics\&. "
+.ti -1c
+.RI "long \fBmodel_type_from_selection\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP *comp_type, \fBBstring\fP &filename)"
+.br
+.RI "Converts selection numbers to different types\&. "
+.ti -1c
+.RI "long \fBmodel_fom_deselect\fP (\fBBmodel\fP *\fBmodel\fP, double fom_cutoff)"
+.br
+.RI "Deselects components based on the FOM\&. "
+.ti -1c
+.RI "long \fBmodel_fom_max_fraction_deselect\fP (\fBBmodel\fP *\fBmodel\fP, double fom_fraction)"
+.br
+.RI "Deselects components based on the FOM relative to the maximum FOM\&. "
+.ti -1c
+.RI "long \fBmodel_fom_histogram\fP (\fBBmodel\fP *\fBmodel\fP, double fom_step)"
+.br
+.RI "Selects components based on the FOM\&. "
+.ti -1c
+.RI "long \fBmodel_fom_ranking\fP (\fBBmodel\fP *\fBmodel\fP, int nrank)"
+.br
+.RI "Ranks components based on the FOM\&. "
+.ti -1c
+.RI "long \fBmodel_delete_overlapped_components\fP (\fBBmodel\fP **\fBmodel\fP, double \fBdistance\fP)"
+.br
+.RI "Deletes components that are too close to others\&. "
+.ti -1c
+.RI "long \fBmodel_average_overlapped_components\fP (\fBBmodel\fP *\fBmodel\fP, double \fBdistance\fP)"
+.br
+.RI "Averages components within a distance\&. "
+.ti -1c
+.RI "long \fBmodel_prune_simple\fP (\fBBmodel\fP *\fBmodel\fP, double mindist)"
+.br
+.RI "Prunes overlapping components based on a distance criterion\&. "
+.ti -1c
+.RI "long \fBmodel_prune_fom\fP (\fBBmodel\fP *\fBmodel\fP, double \fBdistance\fP)"
+.br
+.ti -1c
+.RI "long \fBmodel_prune_similar\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Averages similar components and reduces redundancy\&. "
+.ti -1c
+.RI "long \fBmodel_prune_fit\fP (\fBBmodel\fP *\fBmodel\fP, double \fBdistance\fP)"
+.br
+.RI "Deselects components based on overlap distance and the FOM\&. "
+.ti -1c
+.RI "long \fBmodel_prune_large\fP (\fBBmodel\fP *\fBmodel\fP, double sampling)"
+.br
+.RI "Deselects components based on overlap distance and the FOM\&. "
+.ti -1c
+.RI "long \fBmodel_find_overlap\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP &reffile, double \fBdistance\fP)"
+.br
+.RI "Finds the components that overlap with the reference\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for reading and writing atomic model files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20060908 
+.PP
+Modified: 20210318 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_select\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "long model_average_overlapped_components (\fBBmodel\fP * model, double distance)"
+
+.PP
+Averages components within a distance\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fIdistance\fP overlap distance\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long 0\&. 
+.PP
+.nf
+Components within the given distance are averaged and the first
+instance is retained while the others are deleted.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1469 of file model_select\&.cpp\&.
+.SS "long model_delete (\fBBmodel\fP ** model)"
+
+.PP
+Deletes tagged models, components and links\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**model\fP pointer to model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long remaining number of components\&. 
+.PP
+.nf
+A model, component or link is tagged for deletion by a negative selection flag.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 656 of file model_select\&.cpp\&.
+.SS "long model_delete_comp_type (\fBBmodel\fP * model, \fBBstring\fP & comptype)"
+
+.PP
+Deletes components based on their types\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fI&comptype\fP component type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components remaining\&. 
+.RE
+.PP
+
+.PP
+Definition at line 761 of file model_select\&.cpp\&.
+.SS "long model_delete_non_selected (\fBBmodel\fP ** model)"
+
+.PP
+Deletes selected components and associated links from the model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**model\fP pointer to model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long remaining number of components\&. 
+.RE
+.PP
+
+.PP
+Definition at line 822 of file model_select\&.cpp\&.
+.SS "long model_delete_overlapped_components (\fBBmodel\fP ** model, double distance)"
+
+.PP
+Deletes components that are too close to others\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**model\fP model handle\&. 
+.br
+\fIdistance\fP distance to test for\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long 0\&. 
+.PP
+.nf
+If a component is too close to another, the component further down
+in the list is deleted.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1440 of file model_select\&.cpp\&.
+.SS "long model_find_overlap (\fBBmodel\fP * model, \fBBstring\fP & reffile, double distance)"
+
+.PP
+Finds the components that overlap with the reference\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fI&reffile\fP reference molecule file name\&. 
+.br
+\fIdistance\fP distance for overlap\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components selected\&. 
+.PP
+.nf
+All components that are within the distance criterion of the components
+in the reference model are deselected.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2133 of file model_select\&.cpp\&.
+.SS "long model_fom_deselect (\fBBmodel\fP * model, double fom_cutoff)"
+
+.PP
+Deselects components based on the FOM\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIfom_cutoff\fP FOM threshold\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components selected\&. 
+.PP
+.nf
+The FOM is assumed to be a value from 0 to 1 and components with
+FOM's below the given cutoff are deselected.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1196 of file model_select\&.cpp\&.
+.SS "long model_fom_histogram (\fBBmodel\fP * model, double fom_step)"
+
+.PP
+Selects components based on the FOM\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIfom_step\fP FOM step size\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components\&. 
+.PP
+.nf
+The FOM is assumed to represent energy and therefore values below
+the given cutoff are selected.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1296 of file model_select\&.cpp\&.
+.SS "long model_fom_max_fraction_deselect (\fBBmodel\fP * model, double fom_fraction)"
+
+.PP
+Deselects components based on the FOM relative to the maximum FOM\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIfom_fraction\fP FOM threshold\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components selected\&. 
+.PP
+.nf
+The FOM/FOMmax ratio is calculated and components with ratios below
+the given fraction are deselected.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1222 of file model_select\&.cpp\&.
+.SS "long model_fom_ranking (\fBBmodel\fP * model, int nrank)"
+
+.PP
+Ranks components based on the FOM\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fInrank\fP number of levels\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of selected components\&. 
+.PP
+.nf
+Each selected component is ranked into one of a number of levels.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1349 of file model_select\&.cpp\&.
+.SS "long model_invert_selection (\fBBmodel\fP * model)"
+
+.PP
+Inverts the selection of all components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 286 of file model_select\&.cpp\&.
+.SS "long model_prune_fit (\fBBmodel\fP * model, double distance)"
+
+.PP
+Deselects components based on overlap distance and the FOM\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIdistance\fP overlap distance\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components selected\&. 
+.PP
+.nf
+The selected component with the highest FOM is chosen as the first 
+component in the solution set and all components within the distance 
+criterion from it are deselected. The selected component with the next 
+highest FOM is then chosen and again, all components within the distance 
+criterion from it are deselected.
+This is repeated until there are no more selected components to choose.
+Only the first model is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1882 of file model_select\&.cpp\&.
+.SS "long model_prune_fom (\fBBmodel\fP * model, double distance)"
+
+.PP
+Definition at line 1643 of file model_select\&.cpp\&.
+.SS "long model_prune_large (\fBBmodel\fP * model, double sampling)"
+
+.PP
+Deselects components based on overlap distance and the FOM\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIsampling\fP grid sampling\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components selected\&. 
+.PP
+.nf
+Each component location is mapped to a grid point and the component FOM
+is assigned to the grid point if it is larger.
+Peaks are determined within each 3x3x3 kernel: a peak is defined as
+having a higher value than any of its 26 neigbors.
+The component associated with the value at a peak is selected.
+Only the first model is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2013 of file model_select\&.cpp\&.
+.SS "long model_prune_similar (\fBBmodel\fP * model)"
+
+.PP
+Averages similar components and reduces redundancy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+lon number of clusters\&. 
+.PP
+.nf
+A view distance matrix is calculated for all the components.
+All components within a small distance (~10% of model radius) are averaged
+into the first component and the rest are deselected.
+Only the first model is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1687 of file model_select\&.cpp\&.
+.SS "long model_prune_simple (\fBBmodel\fP * model, double mindist)"
+
+.PP
+Prunes overlapping components based on a distance criterion\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure to be modified\&. 
+.br
+\fImindist\fP distance criterion\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of remaining components\&. 
+.PP
+.nf
+The first component in any pair of overlapping components is kept.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1512 of file model_select\&.cpp\&.
+.SS "long model_reset_selection (\fBBmodel\fP * model)"
+
+.PP
+Resets the selection to all components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components selected\&. 
+.PP
+.nf
+Only one model is modified.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 232 of file model_select\&.cpp\&.
+.SS "long model_select (\fBBmodel\fP * model, \fBBstring\fP & selstr)"
+
+.PP
+Selects models, components and component types\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fI&selstr\fP selection string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of selections made\&. 
+.PP
+.nf
+The selection string can have one of the following formats:
+    #model@component
+    #model%comp_type
+    ^model_type@component
+    ^model_type%comp_type
+Only elements originally selected is considered, except where the "." is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 36 of file model_select\&.cpp\&.
+.SS "long model_select (\fBBmodel\fP * model, long number)"
+
+.PP
+Resets the selection to all models\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fInumber\fP selection number to select\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 163 of file model_select\&.cpp\&.
+.SS "long model_select_all (\fBBmodel\fP * model)"
+
+.PP
+Resets the selection to all models\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of models selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 193 of file model_select\&.cpp\&.
+.SS "long model_select_closed (\fBBmodel\fP * model, int closure_rule, int val_order)"
+
+.PP
+Determines if a polyhedron is closed given a rule\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIclosure_rule\fP 1=valency, 2=order\&. 
+.br
+\fIval_order\fP magnitude of valency or order\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of models selected\&. 
+.PP
+.nf
+Polyhedron closure is arbitrarily decided by a rule:
+1.  Fixed valency.
+3.  Fixed polygon order.
+Models that fail the given rule are deselected.
+If the given valency or order is zero, it is set to the value for
+the first component or polygon.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 397 of file model_select\&.cpp\&.
+.SS "long model_select_first (\fBBmodel\fP * model, int first)"
+
+.PP
+Selects the first number of components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIfirst\fP first number of components to select\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 566 of file model_select\&.cpp\&.
+.SS "long model_select_fullerene (\fBBmodel\fP * model)"
+
+.PP
+Selects fullerene type models\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of models selected\&. 
+.PP
+.nf
+Each model is tested for the presence of polygons that have orders
+only of five or six.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 448 of file model_select\&.cpp\&.
+.SS "long model_select_in_mask (\fBBmodel\fP * model, \fBBimage\fP * pmask)"
+
+.PP
+Selects components within a mask\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIpmask\fP first number of components to select\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 623 of file model_select\&.cpp\&.
+.SS "long model_select_non_fullerene (\fBBmodel\fP * model)"
+
+.PP
+Selects non-fullerene type models\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of models selected\&. 
+.PP
+.nf
+Each model is tested for the presence of polygons that have orders
+different from five or six.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 477 of file model_select\&.cpp\&.
+.SS "long model_select_number_of_components (\fBBmodel\fP * model, int ncomp_min, int ncomp_max)"
+
+.PP
+Selects models within a range of the number of components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIncomp_min\fP minimum number of components\&. 
+.br
+\fIncomp_max\fP maximum number of components\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of models selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 359 of file model_select\&.cpp\&.
+.SS "long model_select_polygons (\fBBmodel\fP * model, int order)"
+
+.PP
+Selects model polygons with a given order\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model to color\&. 
+.br
+\fIorder\fP polygon order\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 535 of file model_select\&.cpp\&.
+.SS "long model_select_sets (\fBBmodel\fP * model, int size, int flag)"
+
+.PP
+Selects sets of components, each set with the same size\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP parameter structure with all parameters\&. 
+.br
+\fIsize\fP number of components in each set\&. 
+.br
+\fIflag\fP flag to not count across model boundaries\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components selected\&. 
+.PP
+.nf
+Sets up sets of components, each set identified as a number in the
+selection array.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 312 of file model_select\&.cpp\&.
+.SS "long model_select_unknowns (\fBBmodel\fP * model)"
+
+.PP
+Resets the selection to all unknown models\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of models selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 208 of file model_select\&.cpp\&.
+.SS "long model_select_valence (\fBBmodel\fP * model, int valence)"
+
+.PP
+Selects fullerene type models\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIvalence\fP component valence 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of models selected\&. 
+.PP
+.nf
+Each model is tested for the presence of polygons that have orders
+only of five or six.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 508 of file model_select\&.cpp\&.
+.SS "long model_select_within_shell (\fBBmodel\fP * model, \fBVector3\fP< double > center, double minrad, double maxrad)"
+
+.PP
+Selects components within a shell\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIcenter\fP center of the shell\&. 
+.br
+\fIminrad\fP minimum radius of the sphere\&. 
+.br
+\fImaxrad\fP radius of the sphere\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 592 of file model_select\&.cpp\&.
+.SS "long model_selection_stats (\fBBmodel\fP * model)"
+
+.PP
+Calculates selection statistics\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components selected\&. 
+.PP
+.nf
+The FOM is assumed to be a value from 0 to 1.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 912 of file model_select\&.cpp\&.
+.SS "long model_type_from_selection (\fBBmodel\fP * model, \fBBstring\fP * comp_type, \fBBstring\fP & filename)"
+
+.PP
+Converts selection numbers to different types\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fI*comp_type\fP linked list of strings\&. 
+.br
+\fI&filename\fP component type file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of component types assigned\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1105 of file model_select\&.cpp\&.
+.SS "long model_unset_selection (\fBBmodel\fP * model)"
+
+.PP
+Unsets the selection to all components but not models\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components deselected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 261 of file model_select\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft</title>
+<link href="bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body>
+
+<div id="content">
+    <h1>Bernard's Software Package</h1>
+    <p>Bsoft
+is a collection of programs and a platform for development of software
+for image and molecular processing in structural biology. Problems in
+structural biology are approached with a highly modular design,
+allowing fast development of new algorithms without the burden of
+issues such as file I/O. It provides an easily accessible interface, a
+resource that can be and has been used in other packages.</p>
+
+<p>The evolution of Bsoft is unique in the sense that it started from different aims and intentions than the typical image processing package. In stead of solving a particular image processing problem, Bsoft developed to deal with the disparities in approaches in other packages, as well as supporting efforts to handle large volumes of data and processing tasks in heterogeneous environments. As such, the layout and concepts within Bsoft are significantly different from other programs doing the same kind of processing. In the following sections I'm presenting the background and philosophies of Bsoft, which are still evolving, and may continue for some time.
+</p>
+    <center><img src="images/collage.gif" width="500" height="430" alt="Bsoft collage" /></center>
+
+<h2>Background and history</h2>
+
+<p>As in other computational fields, image processing involves posing solutions to problems in mathematical terms where possible. This mathematical approach is often rather abstract and must be written in an executable algorithm with all the required heuristics. Finally, the input data must be read, fed to the algorithm, and the results written to a persistent form. A program can therefore be seen as processing algorithms (doing the number crunching) and data management (pushing bits and bytes around).
+</p>
+<p>The typical scientific program is usually very good on the algorithmic side, but lacks seriously on the data management side (which is often the opposite for commercial programs). In the electron microscopy (EM) field, the emphasis has been and is on getting the processing done, with a minimalistic attitude towards data management. The prime example of this is the handling and design of image file formats. The majority of image processing packages have their own image file formats, and cross-talk between packages relies on collections of pairwise converters. The user is therefore left with the persistent and repetitive task of converting images between formats simply to be able to run various processing algorithms.
+</p>
+<p>While this situation was and still is tolerated, the problem came to a head in a European Union project called the Bioimage Database Project. An initial point of contention was the adoption of an official image file format. Nobody was willing to give up control of their favourite format, leaving the participants in a continual state of disagreement. The solution was actually simple and elegant: SGI already had an image format library (IFL) supporting many image formats and extensible to new formats. With Jean-Jacques Pittet, I wrote many extensions to IFL for existing formats used in EM and called it mmIFL (macromolecular IFL). Now, a program using this library can read and write any and all of the supported formats.
+</p>
+<p>This offered a solution to the image format issue, but only on SGI's machines (IFL is proprietary). I eventually rewrote the code for all of the formats so I could compile it on any platform. The philosophy was and is the same: Support all formats and provide a single internal representation of a generic image with all the necessary properties.
+</p>
+<p>During this time I also needed to do various forms of image processing requiring new programs. Using the image I/O with extensive format support provided a simple and reliable way of accessing data from different sources (other packages) and intended for different destinations (such as iso surfacing and preparing images for publication). Because the data management was not a recurring issue in Bsoft, coding and debugging algorithms became much faster. A small collection of programs developed in this way and the library of processing and I/O functions became the first version of Bsoft.
+</p>
+<p>One of the major activities in EM is single particle analysis (SPA), i.e., generating 3D reconstructions from sets of images of individual particles. Processing tens to hundreds of micrographs and thousands of particle images requires a significant amount of data management beyond simply reading and writing image files. As computational power becomes cheaper, more types of algorithms become plausible. The tradition has been to encode many of the parameters associated with the processing in binary image headers. However, the inflexibility of the typical image format specification renders this very difficult to accomplish during the rapid evolution of the field. A more sensible approach is to encode the parameters in a database-like style, with links to the image files. In Bsoft, the STAR format was adopted as a tag-based text format for parameters. The versatility of such a format overshadows the alternative of something like a relational database, where changes in the design becomes problematic inherently and for backward compatibility.
+</p>
+<p>Ultimately, the aim is to relate the reconstructions from EM data to the atomic structures of components generated by X-ray crystallography. Bsoft therefore offers a number of molecular manipulation programs, with the associated requirement for parameter files specifying atomic parameters such as atomic masses and scattering cross-sections. These parameter files have all been converted into the STAR format for consistency.
+</p>
+<p>The next step in the evolution is to be able to model large collections of objects, whether large numbers of molecules encoded as atomic structures, or component densities. The advent of tomography provides a way to study the large-scale relationships between such components, but that requires increasingly complex ways of describing these relationships. The ability to do the initial image processing of tomographic tilt series and reconstruction has been introduced in Bsoft. The interpretation and analysis of large complex volumes is the next challenge to develop.
+</p>
+<p>Bsoft has therefore emerged with a strong philosophy of data management. This proved to be an excellent platform for development and testing of many algorithms. It is thus hard to classify Bsoft or to state accurately what it does. It is more a collection of algorithms and data management capabilities than it has a well-defined scope.
+</p>
+
+<h2>Features</h2>
+
+<p>The Bsoft package grew out of my efforts to write programs dealing with image and molecular objects for electron microscopy specifically and structural biology in general. The key underlying philosophy in Bsoft is that the functionality should be as general as possible and empower the user to do many operations without being hampered with issues such as the multiple file formats and poor flexibility in processing. On the programming side I aimed at making the development cycle as simple as possible while using a sophisticated object-oriented approach. Bsoft is a package that evolves with consideration of the effectiveness, efficiency and manageability of the code.
+</p>
+<p>Here are some specific design features:
+</p>
+<ul>
+<li>Bsoft is written in standard C with several C++ classes, defining objects and managing dynamic memory efficiently.</li>
+
+<li>All machine-specific features in C are avoided, so that it compiles with no modification on many platforms (various flavours of Unix, as well as VMS).</li>
+
+<li>The modules in Bsoft are functions, each forming a completely defined and independent unit. All information needed by a function is specified in the argument list. All return values are specified in the returned object, or (rarely) associated with a pointer in the argument list. The only global allowed is package-wide and required for user output control (verbose).</li>
+
+<li>Bsoft is an object-oriented package with objects such as images and molecules encapsulated in C structs. Geometric objects such as vectors, rotation matrices and quaternions have been developed into full C++ classes to facilitate writing code and execution of geometric processing. Central to the package is the philosophy of a unified and standardized description of information, regardless of the source. Images are accessed within a single conceptual structure, regardless of file format or content (providing for 1D, 2D and 3D data, including structure factors). Similarly, the single concept of a molecule is used to encapsulate both sequence data and atomic structure.</li>
+
+<li>Documentation is embedded in the source code and automatically extracted using perl scripts.</li>
+
+<li>Bsoft offers access to a large number of image file formats and some molecular file formats.</li>
+
+<li>Bsoft has data base-like facilities for dealing with large amounts of parametric data. Persistence of data is achieved through tag-based parametric files, currently available in the STAR (Self-referencing Text Archiving and Retrieval) and XML formats.</li>
+
+<li>Conventions are explicitly stated and supported by an extensive list of functions for geometric operations.</li>
+
+<li>For the programmer, Bsoft offers a good software development platform. Programs can be written outside the package, linking in the Bsoft library on compilation. The coding-testing cycle is compressed, allowing fast debugging and code production.</li>
+</ul>
+
+
+</div>
+<div id="footer">
+  Bernard Heymann 20120302
+</div>
+</body>
+</html>

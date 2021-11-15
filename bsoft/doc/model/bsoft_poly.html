@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Masks</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h2>Polyhedra</h2>
+<p>A polyhedral model is composed of components (usually called vertices) and links (also called edges), but also has polygons formed by rings of links, and usually has specific rules for vertex or polygon valency. The following list defines specific types of polyhedra and polyhedral concepts:</p>
+<ul>
+  <li>A polyhedron typically has a fixed vertex valency, or a fixed polygon order.</li>
+  <li>The dual of a polyhedron switches the locations of vertices with polygons, such that a polyhedron with fixed valency becomes a polygon with fixed polygon order.</li>
+  <li>A deltagraph is a polyhedron with triangular polygons.</li>
+  <li>A fullerene is a polyhedron with trivalent vertices, 12 pentagons and a variable number of hexagons.</li>
+  <li>A polygon is considered closed when it either has the same valency for all vertices, or the same order for all polygons.</li>
+</ul>
+<p>The easiest way to visualize polyhedra is using UCSF Chimera and converting the model to the Chimera marker model format (cmm):</p>
+<div id="command"><p>bmodel -verb 7 -comp 0.5 -linkrad 0.2 -out new_model.cmm model.star</p></div>
+<p>The options for specifying the component and link radii may be necessary to produce reasonable display sizes for these elements.</p>
+<h2>Generating polyhedra</h2>
+<p>Bsoft offers various ways to generate polyhedra (e.g., <a href="../bsoft_ref.html">Heymann et al., 2008</a>).</p>
+<h3>Cylindrical algorithm</h3>
+<p>A cylindrical polygon can be a tube that is open at the ends, or closed with a specific cap type. The pentagonal type adds a semi-icosahedral cap to each end, while the hexagonal type adds a six-fold cap at each end. First, a deltagraph is generated as a cylinder with flat ends:</p>
+<div id="command"><p>bdelta -verb 1 -penta -rad 2 -height 5 -comp 0.2 -linkrad 0.1 -out loz.cmm</p></div>
+<p>It is then converted to its dual to give a fullerene:</p>
+<div id="command"><p>bpoly -verb 1 -dual -out loz_dual.cmm loz.cmm</p></div>
+<p>This is still distorted and has to be regularized:</p>
+<div id="command"><p>bpoly -verb 1 -reg 10000 -linklen 1 -Klink 0.1 -Kpolyangle 0.01 -Kpolyplane 0.0001 -out loz_reg.cmm loz_dual.cmm</p></div>
+<p>The pentagons can then be highlighted by color:</p>
+<div id="command"><p>bmodcol -verb 1 -polygons 5 -color 0,0,1,0 -out loz_reg_col.cmm loz_reg.cmm</p></div>
+<center><img src="loz_reg_cols.png" alt="Lozenge" width="400" height="238" /></center>
+<p>&nbsp;</p>
+<h3>Spiral algorithm</h3>
+<p>Almost any closed polyhedron can be built from a linear sequence of polygons, assembled in a manner where succesive polygons form a spiral on the polyhedral surface. This linear sequence of polygons can be encoded as a simple sequence of numbers relating the polygon orders. In the case the fullerenes, there are always 12 pentagons and a variable number of hexagons. The spiral algorithm simply generates all permutations of a specified length sequence of 5's and 6's, attempts to generate a closed polyhedron from each sequence, and keeping those closed polyhedra as output models. A comprehensive enumeration of fullerenes with a specific number of vertices can be generated:</p>
+<div id="command"><p>bspiral -verb 1 -vert 36 36.star</p></div>
+<p>This gives 15 closed polyhedra out of a possible 125970 permutations of the 20-polygon sequence.</p>
+<p>(Note: A fullerene with n vertices always has 12 pentagons and (n-20)/2 hexagons)</p>
+</p>
+</div>
+<div id="footer">
+  Bernard Heymann  20120126
+</div>
+</body>
+</html>

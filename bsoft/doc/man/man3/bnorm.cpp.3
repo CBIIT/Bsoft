@@ -1,0 +1,110 @@
+.TH "/Users/bernard/b20/bsoft/src/bnorm.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/bnorm.cpp \- Program to normalize a set of images based on their histograms\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_tomography\&.h'\fP
+.br
+\fC#include 'mg_img_proc\&.h'\fP
+.br
+\fC#include 'file_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Program to normalize a set of images based on their histograms\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20030411 
+.PP
+Modified: 20160617 
+.RE
+.PP
+
+.PP
+Definition in file \fBbnorm\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 48 of file bnorm\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+" ",
+"Usage: bnorm [options] input\&.star/input\&.img [input2\&.star/output\&.img]",
+"--------------------------------------------------------------------",
+"Normalizes a set of images based on their histograms\&.",
+" ",
+"Actions:",
+"-replacemaxima 57\&.5      Replace maxima above the given threshold with surrounding average\&.",
+"-type simple             Normalization type: simple, Gaussian or Poisson\&.",
+"-local 25                Normalization using local average and standard deviation\&.",
+"-truncate -0\&.5,1\&.2       Truncate data to minimum and maximum before mass normalization\&.",
+"-rescale 0\&.5,1\&.5         Average and standard deviation for output\&.",
+"-images                  Input slices of a single 3D image as 2D images\&.",
+"-slices                  Output 2D images as z-slices of a single 3D image\&.",
+" ",
+"Parameters:",
+"-verbose 7               Verbosity of output\&.",
+"-datatype u              Force writing of a new data type\&.",
+" ",
+"Output:",
+"-output file\&.star        Output parameter file\&.",
+" ",
+NULL
+}
+.fi
+.PP
+Definition at line 23 of file bnorm\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

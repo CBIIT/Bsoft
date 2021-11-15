@@ -1,0 +1,755 @@
+.TH "/Users/bernard/b20/bsoft/src/mg/mg_tomo_rec.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mg/mg_tomo_rec.cpp \- Functions to do a tomographic reconstruction\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_tomo_rec\&.h'\fP
+.br
+\fC#include 'mg_reconstruct\&.h'\fP
+.br
+\fC#include 'mg_tomography\&.h'\fP
+.br
+\fC#include 'mg_select\&.h'\fP
+.br
+\fC#include 'mg_ctf\&.h'\fP
+.br
+\fC#include 'Complex\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+\fC#include <fstream>\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBimg_backtransform_z_lines\fP (fstream *ftemp, \fBBimage\fP *p)"
+.br
+.ti -1c
+.RI "int \fBimg_write_data_block_with_type\fP (fstream *ftemp, \fBBimage\fP *p, double avg, double std, double cutmin, double cutmax)"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBmg_tomo_rec_prepare\fP (\fBBmicrograph\fP *mg, int ft_size, \fBVector3\fP< long > rec_size, double edge_width, double marker_radius, int fill_type, double fill, int action, double wiener, \fBVector3\fP< long > tile_size, \fBfft_plan\fP plan)"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBproject_tomo_reconstruct\fP (\fBBproject\fP *\fBproject\fP, double hi_res, double scale, \fBVector3\fP< long > size, int interp_type, int pad_factor, double edge_width, double marker_radius, int fill_type, double fill, int action, double wiener)"
+.br
+.RI "Reciprocal space reconstruction from the images in a multi-image file\&. 
+.br
+ "
+.ti -1c
+.RI "\fBBimage\fP * \fBproject_fourier_reconstruction_slab\fP (\fBBproject\fP *\fBproject\fP, double hi_res, double scale, \fBVector3\fP< long > size, int slab_start, int slab_end, double marker_radius, int fill_type, double fill, int action, double wiener)"
+.br
+.RI "Reciprocal space reconstruction from the images in a multi-image file\&. 
+.br
+ "
+.ti -1c
+.RI "long \fBparticle_tomo_reconstruct\fP (\fBBproject\fP *\fBproject\fP, \fBBparticle\fP *recpart, \fBVector3\fP< long > recsize, double resolution, int interp_type, long ft_size, \fBVector3\fP< double > scale, \fBfft_plan\fP planp, \fBfft_plan\fP planr, int ctf_action, double wiener, \fBBsymmetry\fP &sym, \fBBstring\fP &partbase, \fBBstring\fP &partpath, \fBBstring\fP &partext)"
+.br
+.RI "Reconstructs individual particles from a tilt series\&. "
+.ti -1c
+.RI "long \fBproject_tomo_reconstruct_particles\fP (\fBBproject\fP *\fBproject\fP, double resolution, int interp_type, int pad_factor, int ctf_action, double wiener, \fBBsymmetry\fP &sym, \fBBstring\fP &partbase, \fBBstring\fP &partpath, \fBBstring\fP &partext)"
+.br
+.RI "Reconstructs particles from a tilt series\&. "
+.ti -1c
+.RI "int \fBimg_backtransform_slices\fP (\fBBimage\fP *p)"
+.br
+.RI "Backtransforms 2D slices in a 3D volume\&. 
+.br
+ "
+.ti -1c
+.RI "long \fBimg_pack_2D_in_recip_space_slab\fP (\fBBimage\fP *p, \fBBimage\fP *prec, long zsize, long slab_start, float *weight, float *weight2, double hi_res, \fBMatrix3\fP mat, double scale)"
+.br
+.RI "Packs a 2D Fourier transform into a 3D reciprocal space volume\&. 
+.br
+ "
+.ti -1c
+.RI "int \fBimg_phase_shift_slab_to_origin\fP (\fBBimage\fP *p, int zsize, int slab_start)"
+.br
+.RI "Phase shifts a set of reflections to the image origin\&. "
+.ti -1c
+.RI "int \fBmg_fft_write\fP (\fBBproject\fP *\fBproject\fP, \fBVector3\fP< int > size, double scale, int pad_factor, \fBDataType\fP datatype, double marker_radius, int fill_type, double fill)"
+.br
+.RI "Fourier transform micrographs and write to disk\&. 
+.br
+ "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_extract_ytile\fP (\fBBstring\fP *\fBfile_list\fP, int ystart, int ysize)"
+.br
+.RI "Extracts a tile from the image with limits in y\&. 
+.br
+ "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_backtransform_z_on_disk\fP (\fBBstring\fP *\fBfile_list\fP, \fBBstring\fP &recfile, \fBDataType\fP datatype, double avg, double std, double cutmin, double cutmax)"
+.br
+.RI "The lines along the z-dimensions of a disk-based block is Fourier back-transformed\&. 
+.br
+ "
+.ti -1c
+.RI "int \fBimg_backtransform_one_y_plane\fP (\fBBimage\fP *p, \fBfft_plan\fP plan, int y)"
+.br
+.ti -1c
+.RI "int \fBimg_backtransform_one_y_plane\fP (fstream *ftemp, \fBBimage\fP *p, \fBfft_plan\fP plan, int y, \fBComplex\fP< float > *zline, \fBComplex\fP< float > *cfdata)"
+.br
+.ti -1c
+.RI "int \fBimg_backtransform_z_lines\fP (\fBBimage\fP *p)"
+.br
+.RI "The lines along the z-dimensions of a disk-based block is Fourier back-transformed\&. 
+.br
+ "
+.ti -1c
+.RI "long \fBgettypesize\fP (\fBDataType\fP type)"
+.br
+.RI "Get the size of a datatype\&. "
+.ti -1c
+.RI "int \fBset_value_with_datatype\fP (char *ptr, double value, \fBDataType\fP datatype)"
+.br
+.RI "Set a pointer to a value with a given data type\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBproject_missing_mask\fP (\fBBproject\fP *\fBproject\fP, \fBVector3\fP< long > size, \fBVector3\fP< double > origin, double hi_res, double scale)"
+.br
+.RI "Creates a reciprocal space mask from the tilt series orientations\&. 
+.br
+ "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to do a tomographic reconstruction\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20020416 
+.PP
+Modified: 20181221 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_tomo_rec\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "long gettypesize (\fBDataType\fP type)"
+
+.PP
+Get the size of a datatype\&. 
+.PP
+.nf
+This function is used for calculating image data sizes for allocating
+memory and reading the data.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fItype\fP data type (defined in \fBrwimg\&.h\fP)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long size of data type, if < 0 the data type is not supported\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1395 of file mg_tomo_rec\&.cpp\&.
+.SS "int img_backtransform_one_y_plane (\fBBimage\fP * p, \fBfft_plan\fP plan, int y)"
+
+.PP
+Definition at line 1251 of file mg_tomo_rec\&.cpp\&.
+.SS "int img_backtransform_one_y_plane (fstream * ftemp, \fBBimage\fP * p, \fBfft_plan\fP plan, int y, \fBComplex\fP< float > * zline, \fBComplex\fP< float > * cfdata)"
+
+.PP
+Definition at line 1271 of file mg_tomo_rec\&.cpp\&.
+.SS "int img_backtransform_slices (\fBBimage\fP * p)"
+
+.PP
+Backtransforms 2D slices in a 3D volume\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 3D complex volume\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Each slice is extracted, backtransformed and copied back into the
+original volume.
+Note: The phases are now not hermitian any more.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 764 of file mg_tomo_rec\&.cpp\&.
+.SS "int img_backtransform_z_lines (\fBBimage\fP * p)"
+
+.PP
+The lines along the z-dimensions of a disk-based block is Fourier back-transformed\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image header information (statistics updated)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Each 2D xz plane is read from the raw complex data block.
+Each z-line in the plane is back-transformed.
+The transformed 2D plane is written back into the raw data block.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1322 of file mg_tomo_rec\&.cpp\&.
+.SS "int img_backtransform_z_lines (fstream * ftemp, \fBBimage\fP * p)"
+
+.PP
+Definition at line 1350 of file mg_tomo_rec\&.cpp\&.
+.SS "\fBBimage\fP* img_backtransform_z_on_disk (\fBBstring\fP * file_list, \fBBstring\fP & recfile, \fBDataType\fP datatype, double avg, double std, double cutmin, double cutmax)"
+
+.PP
+The lines along the z-dimensions of a disk-based block is Fourier back-transformed\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*file_list\fP list of image file names\&. 
+.br
+\fI&recfile\fP new reconstruction file name\&. 
+.br
+\fIdatatype\fP data type for new reconstruction file\&. 
+.br
+\fIavg\fP target average\&. 
+.br
+\fIstd\fP target standard deviation\&. 
+.br
+\fIcutmin\fP minimum for truncation\&. 
+.br
+\fIcutmax\fP maximum for truncation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Each 2D xz plane is read from the raw complex data block.
+Each z-line in the plane is back-transformed.
+The transformed 2D plane is written back into the raw data block.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1173 of file mg_tomo_rec\&.cpp\&.
+.SS "\fBBimage\fP* img_extract_ytile (\fBBstring\fP * file_list, int ystart, int ysize)"
+
+.PP
+Extracts a tile from the image with limits in y\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*file_list\fP list of image file names\&. 
+.br
+\fIystart\fP first y index\&. 
+.br
+\fIysize\fP size in y\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* tile, NULL on failure\&. 
+.PP
+.nf
+From a series of z-slab images, tiles are extracted from a defined start in y,
+and with a defined size in y.
+A file indicating the origins of the tiles, "y.tiles", is written to
+be used with bpatch to assemble the tiles.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1072 of file mg_tomo_rec\&.cpp\&.
+.SS "long img_pack_2D_in_recip_space_slab (\fBBimage\fP * p, \fBBimage\fP * prec, long zsize, long slab_start, float * weight, float * weight2, double hi_res, \fBMatrix3\fP mat, double scale)"
+
+.PP
+Packs a 2D Fourier transform into a 3D reciprocal space volume\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 2D Fourier transform 
+.br
+\fI*prec\fP 3D reciprocal space slab volume\&. 
+.br
+\fIzsize\fP intentional z dimension of reconstruction\&. 
+.br
+\fIslab_start\fP start of current slab\&. 
+.br
+\fI*weight\fP weigth array\&. 
+.br
+\fI*weight2\fP weight squared array\&. 
+.br
+\fIhi_res\fP high resolution limit\&. 
+.br
+\fImat\fP affine matrix\&. 
+.br
+\fIscale\fP scale of reconstruction and particle magnification\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long 0\&. 
+.PP
+.nf
+The rotation matrix is used to determine the plane in reciprocal space
+to which the 2D transform data is added. The map is assumed to be cubic
+and the 2D transform square. The real space 2D image must be supplied.
+This is then padded to more than twice its original size, fourier
+transformed, and packed into the 3D reciprocal space block.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 815 of file mg_tomo_rec\&.cpp\&.
+.SS "int img_phase_shift_slab_to_origin (\fBBimage\fP * p, int zsize, int slab_start)"
+
+.PP
+Phase shifts a set of reflections to the image origin\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP complex image\&. 
+.br
+\fIzsize\fP slab thickness\&. 
+.br
+\fIslab_start\fP slab start\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+A real space translation with wrapping is equivalent to phase shifting
+in reciprocal space. The phases are shifted based on the embedded
+sub-image origins.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 924 of file mg_tomo_rec\&.cpp\&.
+.SS "int img_write_data_block_with_type (fstream * ftemp, \fBBimage\fP * p, double avg, double std, double cutmin, double cutmax)"
+
+.PP
+Definition at line 1486 of file mg_tomo_rec\&.cpp\&.
+.SS "int mg_fft_write (\fBBproject\fP * project, \fBVector3\fP< int > size, double scale, int pad_factor, \fBDataType\fP datatype, double marker_radius, int fill_type, double fill)"
+
+.PP
+Fourier transform micrographs and write to disk\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP image processing parameter structure\&. 
+.br
+\fIsize\fP intended reconstruction size\&. 
+.br
+\fIscale\fP reconstruction scale\&. 
+.br
+\fIpad_factor\fP factor that determines image padding\&. 
+.br
+\fIdatatype\fP datatype (default complex float)\&. 
+.br
+\fImarker_radius\fP flag to mask out markers\&. 
+.br
+\fIfill_type\fP FILL_AVERAGE, FILL_BACKGROUND, FILL_USER 
+.br
+\fIfill\fP value to paint markers\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* reconstruction, NULL on failure\&. 
+.PP
+.nf
+Each micrograph is padded to a square size that has power of 2
+dimensions. The micrograph is transformed and the phases shifted
+to the origin.
+A pad factor of zero indicates use of original size.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 977 of file mg_tomo_rec\&.cpp\&.
+.SS "\fBBimage\fP* mg_tomo_rec_prepare (\fBBmicrograph\fP * mg, int ft_size, \fBVector3\fP< long > rec_size, double edge_width, double marker_radius, int fill_type, double fill, int action, double wiener, \fBVector3\fP< long > tile_size, \fBfft_plan\fP plan)"
+
+.PP
+Definition at line 31 of file mg_tomo_rec\&.cpp\&.
+.SS "long particle_tomo_reconstruct (\fBBproject\fP * project, \fBBparticle\fP * recpart, \fBVector3\fP< long > recsize, double resolution, int interp_type, long ft_size, \fBVector3\fP< double > scale, \fBfft_plan\fP planp, \fBfft_plan\fP planr, int ctf_action, double wiener, \fBBsymmetry\fP & sym, \fBBstring\fP & partbase, \fBBstring\fP & partpath, \fBBstring\fP & partext)"
+
+.PP
+Reconstructs individual particles from a tilt series\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph project\&. 
+.br
+\fI*recpart\fP 3D particle within the project\&. 
+.br
+\fIrecsize\fP particle reconstructions ize 
+.br
+\fIresolution\fP high resolution limit for reconstruction\&. 
+.br
+\fIinterp_type\fP interpolation type\&. 
+.br
+\fIft_size\fP 2D Fourier transform size\&. 
+.br
+\fIscale\fP reconstruction scale\&. 
+.br
+\fIplanp\fP 2D Fourier transform plan\&. 
+.br
+\fIplanr\fP 3D Fourier transform plan\&. 
+.br
+\fIctf_action\fP flag to apply CTF to projections\&. 
+.br
+\fIwiener\fP Wiener factor\&. 
+.br
+\fI*sym\fP always C1\&. 
+.br
+\fI&partbase\fP particle base name for new particle reconstructions\&. 
+.br
+\fI&partpath\fP directory for new particle reconstructions\&. 
+.br
+\fI&partext\fP extension of new reconstructions\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles\&. 
+.PP
+.nf
+Requires the particles to be defined in all micrographs.
+The partbase, partpath and partext arguments can be left empty to
+use defaults.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 548 of file mg_tomo_rec\&.cpp\&.
+.SS "\fBBimage\fP* project_fourier_reconstruction_slab (\fBBproject\fP * project, double hi_res, double scale, \fBVector3\fP< long > size, int slab_start, int slab_end, double marker_radius, int fill_type, double fill, int action, double wiener)"
+
+.PP
+Reciprocal space reconstruction from the images in a multi-image file\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP image processing parameter structure\&. 
+.br
+\fIhi_res\fP high resolution limit\&. 
+.br
+\fIscale\fP scale of reconstruction\&. 
+.br
+\fIsize\fP size of reconstruction\&. 
+.br
+\fIslab_start\fP start of reconstruction slab\&. 
+.br
+\fIslab_end\fP end of reconstruction slab\&. 
+.br
+\fImarker_radius\fP flag and radius to mask out markers\&. 
+.br
+\fIfill_type\fP FILL_AVERAGE, FILL_BACKGROUND, FILL_USER 
+.br
+\fIfill\fP value to paint markers\&. 
+.br
+\fIaction\fP flag to apply CTF to projections\&. 
+.br
+\fIwiener\fP Wiener factor\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* reconstruction, NULL on failure\&. 
+.PP
+.nf
+The orientation parameters, view vector, angle of rotation and origin,
+must all be set. Each image is padded to at least two times its size 
+and its Fourier transform packed into 3D reciprocal space.
+The figure-of-merit calculated for each reciprocal space voxel is:
+           sum(w*re)^2 + sum(w*im)^2
+    FOM = ---------------------------
+          sum(w)*sum(w*(re^2 + im^2))
+where
+    re  real part
+    im  imaginary part
+    w   weight (inverse distance of image pixel to closest grid point)
+For voxels with only one data pixel contributing to it, FOM = 0.
+An image is used in the reconstruction if its selection flag has been set.
+If the selection number is less than zero, all particles with selection flags
+greater than zero are used. If the selection number is zero or above, all
+particles with the selection flag set to the same number are used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 329 of file mg_tomo_rec\&.cpp\&.
+.SS "\fBBimage\fP* project_missing_mask (\fBBproject\fP * project, \fBVector3\fP< long > size, \fBVector3\fP< double > origin, double hi_res, double scale)"
+
+.PP
+Creates a reciprocal space mask from the tilt series orientations\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIsize\fP size of mask\&. 
+.br
+\fIorigin\fP origin of mask\&. 
+.br
+\fIhi_res\fP high resolution limit\&. 
+.br
+\fIscale\fP scale of mask\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* mask, NULL on failure\&. 
+.PP
+.nf
+The orientation parameters of the micrographs must all be set. 
+A 2D mask is overlayed onto the 3D image for each micrograph.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1582 of file mg_tomo_rec\&.cpp\&.
+.SS "\fBBimage\fP* project_tomo_reconstruct (\fBBproject\fP * project, double hi_res, double scale, \fBVector3\fP< long > size, int interp_type, int pad_factor, double edge_width, double marker_radius, int fill_type, double fill, int action, double wiener)"
+
+.PP
+Reciprocal space reconstruction from the images in a multi-image file\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP image processing parameter structure\&. 
+.br
+\fIhi_res\fP high resolution limit\&. 
+.br
+\fIscale\fP scale of reconstruction\&. 
+.br
+\fIsize\fP size of reconstruction\&. 
+.br
+\fIinterp_type\fP interpolation type\&. 
+.br
+\fIpad_factor\fP factor that determines image padding\&. 
+.br
+\fIedge_width\fP edge smoothing width for masks\&. 
+.br
+\fImarker_radius\fP flag and radius to mask out markers\&. 
+.br
+\fIfill_type\fP FILL_AVERAGE, FILL_BACKGROUND, FILL_USER 
+.br
+\fIfill\fP value to paint markers\&. 
+.br
+\fIaction\fP flag to apply CTF to projections\&. 
+.br
+\fIwiener\fP Wiener factor\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* reconstruction, NULL on failure\&. 
+.PP
+.nf
+The orientation parameters, view vector, angle of rotation and origin,
+must all be set. Each image is padded to at least two times its size 
+and its Fourier transform packed into 3D reciprocal space.
+The figure-of-merit calculated for each reciprocal space voxel is:
+           sum(w*re)^2 + sum(w*im)^2
+    FOM = ---------------------------
+          sum(w)*sum(w*(re^2 + im^2))
+where
+    re  real part
+    im  imaginary part
+    w   weight (inverse distance of image pixel to closest grid point)
+For voxels with only one data pixel contributing to it, FOM = 0.
+An image is used in the reconstruction if its selection flag has been set.
+If the selection number is less than zero, all particles with selection flags
+greater than zero are used. If the selection number is zero or above, all
+particles with the selection flag set to the same number are used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 131 of file mg_tomo_rec\&.cpp\&.
+.SS "long project_tomo_reconstruct_particles (\fBBproject\fP * project, double resolution, int interp_type, int pad_factor, int ctf_action, double wiener, \fBBsymmetry\fP & sym, \fBBstring\fP & partbase, \fBBstring\fP & partpath, \fBBstring\fP & partext)"
+
+.PP
+Reconstructs particles from a tilt series\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph project\&. 
+.br
+\fIresolution\fP high resolution limit for reconstruction\&. 
+.br
+\fIinterp_type\fP interpolation type\&. 
+.br
+\fIpad_factor\fP factor that determines image padding\&. 
+.br
+\fIctf_action\fP flag to apply CTF to projections\&. 
+.br
+\fIwiener\fP Wiener factor\&. 
+.br
+\fI*sym\fP point group symmetry\&. 
+.br
+\fI&partbase\fP particle base name for new particle reconstructions\&. 
+.br
+\fI&partpath\fP directory for new particle reconstructions\&. 
+.br
+\fI&partext\fP extension of new reconstructions\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles\&. 
+.PP
+.nf
+Requires the particles to be defined in all micrographs.
+The partbase, partpath and partext arguments can be left empty to
+use defaults.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 634 of file mg_tomo_rec\&.cpp\&.
+.SS "int set_value_with_datatype (char * ptr, double value, \fBDataType\fP datatype)"
+
+.PP
+Set a pointer to a value with a given data type\&. 
+.PP
+.nf
+A value is inserted into a given location with the given data type.
+The size of the allocated memory is channels*typesize.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*ptr\fP pointer to location\&. 
+.br
+\fIvalue\fP the value\&. 
+.br
+\fIdatatype\fP data type (defined in \fBrwimg\&.h\fP)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1425 of file mg_tomo_rec\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

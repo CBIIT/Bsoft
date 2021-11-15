@@ -1,0 +1,425 @@
+.TH "/Users/bernard/b20/bsoft/include/rwmg.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/rwmg.h \- Header file for reading and writing micrograph parameters\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_select\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fB_RWMG_\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBproject\fP * \fBread_project\fP (const char *filename, int flags=0)"
+.br
+.RI "Reading micrograph parameters from files\&. "
+.ti -1c
+.RI "\fBBproject\fP * \fBread_project\fP (\fBBstring\fP &filename, int flags=0)"
+.br
+.ti -1c
+.RI "\fBBproject\fP * \fBread_project\fP (\fBBstring\fP &filename, \fBBstring\fP &xsdfile, int flags=0)"
+.br
+.ti -1c
+.RI "\fBBproject\fP * \fBread_project\fP (\fBBstring\fP *\fBfile_list\fP, int flags=0)"
+.br
+.ti -1c
+.RI "\fBBproject\fP * \fBread_project\fP (\fBBstring\fP *\fBfile_list\fP, \fBBstring\fP &xsdfile, int flags=0)"
+.br
+.ti -1c
+.RI "long \fBappend_project\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP *\fBfile_list\fP, \fBBstring\fP &xsdfile, int flags)"
+.br
+.ti -1c
+.RI "\fBBparticle\fP * \fBread_particle\fP (\fBBstring\fP &filename, \fBBparticle\fP **partlist, \fBFOMType\fP fom_tag[\fBNFOM\fP])"
+.br
+.ti -1c
+.RI "int \fBwrite_project\fP (const char *filename, \fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Writing micrograph parameters to a file\&. "
+.ti -1c
+.RI "int \fBwrite_project\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP, int mg_select, int rec_select)"
+.br
+.RI "Writing micrograph parameters to a file\&. "
+.ti -1c
+.RI "int \fBwrite_project\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP, int flags=0)"
+.br
+.RI "Writing micrograph parameters to a file\&. "
+.ti -1c
+.RI "long \fBwrite_particle_list\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP, int flags=0)"
+.br
+.RI "Writing particle coordinates to a file\&. "
+.ti -1c
+.RI "int \fBwrite_particle\fP (\fBBstring\fP &filename, \fBBparticle\fP *part, int euler_flag, int omega_flag, \fBFOMType\fP fom_tag[\fBNFOM\fP])"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBppx_filename\fP (\fBBstring\fP &id, int part_id)"
+.br
+.ti -1c
+.RI "int \fBppx_exists\fP (\fBBparticle\fP *part, int flag)"
+.br
+.ti -1c
+.RI "int \fBppx_check\fP (\fBBparticle\fP *part, \fBFOMType\fP fom_tag[\fBNFOM\fP])"
+.br
+.ti -1c
+.RI "int \fBppx_check\fP (\fBBparticle\fP *part)"
+.br
+.ti -1c
+.RI "\fBBparticle\fP * \fBproject_find_particle\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &fn)"
+.br
+.RI "Finds a particle associated with a file name\&. "
+.ti -1c
+.RI "long \fBproject_update_from_ppx\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Updates a project with ppx files\&. "
+.ti -1c
+.RI "long \fBproject_list_ppx\fP (\fBBproject\fP *\fBproject\fP, int flag)"
+.br
+.RI "Lists existing ppx files for a project\&. "
+.ti -1c
+.RI "int \fBproject_split_write\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Splits a project into sets of particle selections and write the files\&. "
+.ti -1c
+.RI "int \fBproject_split_field_write\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Splits a project into sets of particle selections and write the files\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for reading and writing micrograph parameters\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20000426 
+.PP
+Modified: 20210412 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwmg\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _RWMG_"
+
+.PP
+Definition at line 36 of file rwmg\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "long append_project (\fBBproject\fP * project, \fBBstring\fP * file_list, \fBBstring\fP & xsdfile, int flags)"
+
+.PP
+Definition at line 289 of file rwmg\&.cpp\&.
+.SS "int ppx_check (\fBBparticle\fP * part)"
+
+.PP
+Definition at line 541 of file rwmg\&.cpp\&.
+.SS "int ppx_check (\fBBparticle\fP * part, \fBFOMType\fP fom_tag[NFOM])"
+
+.PP
+Definition at line 516 of file rwmg\&.cpp\&.
+.SS "int ppx_exists (\fBBparticle\fP * part, int flag)"
+
+.PP
+Definition at line 496 of file rwmg\&.cpp\&.
+.SS "\fBBstring\fP ppx_filename (\fBBstring\fP & id, int part_id)"
+
+.PP
+Definition at line 490 of file rwmg\&.cpp\&.
+.SS "\fBBparticle\fP* project_find_particle (\fBBproject\fP * project, \fBBstring\fP & fn)"
+
+.PP
+Finds a particle associated with a file name\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph processing parameter structure\&. 
+.br
+\fIfn\fP filename to search for\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bparticle* particle structure if found, otherwise NULL\&. 
+.PP
+.nf
+The file name to search for is altered to represent an accurate path.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 707 of file rwmg\&.cpp\&.
+.SS "long project_list_ppx (\fBBproject\fP * project, int flag)"
+
+.PP
+Lists existing ppx files for a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIflag\fP select: 0 = all, 1 = existing, 2 = absent\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles updated\&. 
+.RE
+.PP
+
+.PP
+Definition at line 793 of file rwmg\&.cpp\&.
+.SS "int project_split_field_write (\fBBproject\fP * project)"
+
+.PP
+Splits a project into sets of particle selections and write the files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP the project\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of field files generated\&. 
+.PP
+.nf
+The relevant micrographs are selected for each particle selection number
+and written into a file.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 907 of file rwmg\&.cpp\&.
+.SS "int project_split_write (\fBBstring\fP & filename, \fBBproject\fP * project)"
+
+.PP
+Splits a project into sets of particle selections and write the files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP base filename modified to include the particle selection number\&. 
+.br
+\fI*project\fP the project\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of sets generated\&. 
+.PP
+.nf
+The relevant micrographs are selected for each particle selection number
+and written into a file.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 839 of file rwmg\&.cpp\&.
+.SS "long project_update_from_ppx (\fBBproject\fP * project)"
+
+.PP
+Updates a project with ppx files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles updated\&. 
+.RE
+.PP
+
+.PP
+Definition at line 752 of file rwmg\&.cpp\&.
+.SS "\fBBparticle\fP* read_particle (\fBBstring\fP & filename, \fBBparticle\fP ** partlist, \fBFOMType\fP fom_tag[NFOM])"
+
+.PP
+Definition at line 311 of file rwmg\&.cpp\&.
+.SS "\fBBproject\fP* read_project (\fBBstring\fP & filename, \fBBstring\fP & xsdfile, int flags = \fC0\fP)"
+
+.PP
+Definition at line 157 of file rwmg\&.cpp\&.
+.SS "\fBBproject\fP* read_project (\fBBstring\fP & filename, int flags = \fC0\fP)"
+
+.PP
+Definition at line 151 of file rwmg\&.cpp\&.
+.SS "\fBBproject\fP* read_project (\fBBstring\fP * file_list, \fBBstring\fP & xsdfile, int flags = \fC0\fP)"
+
+.PP
+Definition at line 214 of file rwmg\&.cpp\&.
+.SS "\fBBproject\fP* read_project (\fBBstring\fP * file_list, int flags = \fC0\fP)"
+
+.PP
+Definition at line 208 of file rwmg\&.cpp\&.
+.SS "\fBBproject\fP* read_project (const char * filename, int flags)"
+
+.PP
+Reading micrograph parameters from files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name (or comma-delimited list)\&. 
+.br
+\fIflags\fP flags to modify behavior\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bproject* project structure, NULL if reading failed\&. 
+.PP
+.nf
+Flags (bits):
+1.  check particle images against images.
+8.  warn if files not found.
+16. delete file names of files not found.
+32. update micrograph intensities.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 145 of file rwmg\&.cpp\&.
+.SS "int write_particle (\fBBstring\fP & filename, \fBBparticle\fP * part, int euler_flag, int omega_flag, \fBFOMType\fP fom_tag[NFOM])"
+
+.PP
+Definition at line 481 of file rwmg\&.cpp\&.
+.SS "long write_particle_list (\fBBstring\fP & filename, \fBBproject\fP * project, int flags)"
+
+.PP
+Writing particle coordinates to a file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name (or comma-delimited list)\&. 
+.br
+\fI*project\fP project structure\&. 
+.br
+\fIflags\fP bits: 1=in angstrom 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 424 of file rwmg\&.cpp\&.
+.SS "int write_project (\fBBstring\fP & filename, \fBBproject\fP * project, int flags)"
+
+.PP
+Writing micrograph parameters to a file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name (or comma-delimited list)\&. 
+.br
+\fI*project\fP project structure\&. 
+.br
+\fIflags\fP flags to modify behavior\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.PP
+.nf
+Flags (bits):
+1.  check particle images.
+2.  write only selected micrographs.
+4.  write only selected reconstructions.
+8.  warn if files not found.
+16. delete file names of files not found.
+32. update micrograph intensities.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 367 of file rwmg\&.cpp\&.
+.SS "int write_project (\fBBstring\fP & filename, \fBBproject\fP * project, int mg_select, int rec_select)"
+
+.PP
+Writing micrograph parameters to a file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*filename\fP file name (or comma-delimited list)\&. 
+.br
+\fI*project\fP project structure\&. 
+.br
+\fImg_select\fP flag to only write selected micrographs\&. 
+.br
+\fIrec_select\fP flag to only write selected reconstructions\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 342 of file rwmg\&.cpp\&.
+.SS "int write_project (const char * filename, \fBBproject\fP * project)"
+
+.PP
+Writing micrograph parameters to a file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*filename\fP file name (or comma-delimited list)\&. 
+.br
+\fI*project\fP project structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 327 of file rwmg\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

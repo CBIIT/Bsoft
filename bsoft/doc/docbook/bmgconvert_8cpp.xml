@@ -1,0 +1,376 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_bmgconvert_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/bmgconvert.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/bmgconvert.cpp</primary></indexterm>
+<para>
+
+<para>Convert between micrograph parameter formats. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+#include &quot;rwmg.h&quot;
+#include &quot;rwmgSTAR.h&quot;
+#include &quot;rwmgRELION.h&quot;
+#include &quot;rwmgXML.h&quot;
+#include &quot;mg_ctf.h&quot;
+#include &quot;file_util.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+#include &quot;options.h&quot;
+#include &quot;timer.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_bmgconvert_8cpp_1a7d694e665e97b50d7c7a3839f5ba4c67">DATLINELENGTH</link>   120</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bproject">Bproject</link> * <link linkend="_bmgconvert_8cpp_1a7fa3babd67b2eb49c5589b93438dd5c3">read_project_conv</link> (<link linkend="_class_bstring">Bstring</link> *<link linkend="_file__util_8cpp_1a3c3411ced4b9632566ecc66ffa64a72a">file_list</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_bmgconvert_8cpp_1af63b7bf2ac00cc8596bdbabadd7efca4">write_project_conv</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int mg_select, int rec_select)</para>
+</listitem>
+            <listitem><para>int <link linkend="_bmgconvert_8cpp_1a1acd010b99af35b50dd257f30cdf74cc">read_project_dat</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Reading micrograph parameters from a DAT file. </para>
+</listitem>
+            <listitem><para>int <link linkend="_bmgconvert_8cpp_1a67154acf5ca14a6c7e8bbbf183a89370">write_project_dat</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int mg_select, int rec_select)</para>
+
+<para>Writing micrograph parameters to a DAT file. </para>
+</listitem>
+            <listitem><para>int <link linkend="_bmgconvert_8cpp_1a4a6737cf47b7350287908f6fba761a71">read_project_crd</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Reading micrograph parameters from a CRD file. </para>
+</listitem>
+            <listitem><para>int <link linkend="_bmgconvert_8cpp_1ad1a554a14702e4e0efb7f5b956243bc9">write_project_crd</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int mg_select, int rec_select)</para>
+
+<para>Writing micrograph parameters to a CRD file. </para>
+</listitem>
+            <listitem><para>int <link linkend="_bmgconvert_8cpp_1a25f7951a8306a09dead29b5882f6cc78">project_modify_parameters</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, char flags)</para>
+
+<para>Modifies some micrograph parameters. </para>
+</listitem>
+            <listitem><para>int <link linkend="_bmgconvert_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_bmgconvert_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>const char * <link linkend="_bmgconvert_8cpp_1a4de0ad4c7190962494815c0fa7f948df">use</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Convert between micrograph parameter formats. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+
+<para>David Belnap </para>
+
+<para>James Conway </para>
+
+<para>Juha Huiskonen </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20061101 </para>
+
+<para>Modified: 20180322 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_bmgconvert_8cpp_1a7d694e665e97b50d7c7a3839f5ba4c67"/>    <section>
+    <title>DATLINELENGTH</title>
+<indexterm><primary>DATLINELENGTH</primary><secondary>bmgconvert.cpp</secondary></indexterm>
+<indexterm><primary>bmgconvert.cpp</primary><secondary>DATLINELENGTH</secondary></indexterm>
+<para><computeroutput>#define DATLINELENGTH   120</computeroutput></para><para>
+Definition at line 25 of file bmgconvert.cpp.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_bmgconvert_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>bmgconvert.cpp</secondary></indexterm>
+<indexterm><primary>bmgconvert.cpp</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 73 of file bmgconvert.cpp.</para>
+    </section><anchor xml:id="_bmgconvert_8cpp_1a25f7951a8306a09dead29b5882f6cc78"/>    <section>
+    <title>project_modify_parameters()</title>
+<indexterm><primary>project_modify_parameters</primary><secondary>bmgconvert.cpp</secondary></indexterm>
+<indexterm><primary>bmgconvert.cpp</primary><secondary>project_modify_parameters</secondary></indexterm>
+<para><computeroutput>int project_modify_parameters (<link linkend="_class_bproject">Bproject</link> * project, char flags)</computeroutput></para><para>
+
+<para>Modifies some micrograph parameters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>bit 0 = omega 90 flag, bit 1 = mag flag. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 669 of file bmgconvert.cpp.</para>
+    </section><anchor xml:id="_bmgconvert_8cpp_1a7fa3babd67b2eb49c5589b93438dd5c3"/>    <section>
+    <title>read_project_conv()</title>
+<indexterm><primary>read_project_conv</primary><secondary>bmgconvert.cpp</secondary></indexterm>
+<indexterm><primary>bmgconvert.cpp</primary><secondary>read_project_conv</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bproject">Bproject</link> * read_project_conv (<link linkend="_class_bstring">Bstring</link> * file_list)</computeroutput></para><para>
+Definition at line 163 of file bmgconvert.cpp.</para>
+    </section><anchor xml:id="_bmgconvert_8cpp_1a4a6737cf47b7350287908f6fba761a71"/>    <section>
+    <title>read_project_crd()</title>
+<indexterm><primary>read_project_crd</primary><secondary>bmgconvert.cpp</secondary></indexterm>
+<indexterm><primary>bmgconvert.cpp</primary><secondary>read_project_crd</secondary></indexterm>
+<para><computeroutput>int read_project_crd (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Reading micrograph parameters from a CRD file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file name (or comma-delimited list). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>initialized project structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 488 of file bmgconvert.cpp.</para>
+    </section><anchor xml:id="_bmgconvert_8cpp_1a1acd010b99af35b50dd257f30cdf74cc"/>    <section>
+    <title>read_project_dat()</title>
+<indexterm><primary>read_project_dat</primary><secondary>bmgconvert.cpp</secondary></indexterm>
+<indexterm><primary>bmgconvert.cpp</primary><secondary>read_project_dat</secondary></indexterm>
+<para><computeroutput>int read_project_dat (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Reading micrograph parameters from a DAT file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file name (or comma-delimited list). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>initialized project structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 296 of file bmgconvert.cpp.</para>
+    </section><anchor xml:id="_bmgconvert_8cpp_1af63b7bf2ac00cc8596bdbabadd7efca4"/>    <section>
+    <title>write_project_conv()</title>
+<indexterm><primary>write_project_conv</primary><secondary>bmgconvert.cpp</secondary></indexterm>
+<indexterm><primary>bmgconvert.cpp</primary><secondary>write_project_conv</secondary></indexterm>
+<para><computeroutput>int write_project_conv (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bproject">Bproject</link> * project, int mg_select, int rec_select)</computeroutput></para><para>
+Definition at line 243 of file bmgconvert.cpp.</para>
+    </section><anchor xml:id="_bmgconvert_8cpp_1ad1a554a14702e4e0efb7f5b956243bc9"/>    <section>
+    <title>write_project_crd()</title>
+<indexterm><primary>write_project_crd</primary><secondary>bmgconvert.cpp</secondary></indexterm>
+<indexterm><primary>bmgconvert.cpp</primary><secondary>write_project_crd</secondary></indexterm>
+<para><computeroutput>int write_project_crd (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bproject">Bproject</link> * project, int mg_select, int rec_select)</computeroutput></para><para>
+
+<para>Writing micrograph parameters to a CRD file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*filename</entry>
+                                <entry>
+<para>file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mg_select</entry>
+                                <entry>
+<para>flag to select micrograph. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rec_select</entry>
+                                <entry>
+<para>flag to select reconstruction. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 588 of file bmgconvert.cpp.</para>
+    </section><anchor xml:id="_bmgconvert_8cpp_1a67154acf5ca14a6c7e8bbbf183a89370"/>    <section>
+    <title>write_project_dat()</title>
+<indexterm><primary>write_project_dat</primary><secondary>bmgconvert.cpp</secondary></indexterm>
+<indexterm><primary>bmgconvert.cpp</primary><secondary>write_project_dat</secondary></indexterm>
+<para><computeroutput>int write_project_dat (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bproject">Bproject</link> * project, int mg_select, int rec_select)</computeroutput></para><para>
+
+<para>Writing micrograph parameters to a DAT file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*filename</entry>
+                                <entry>
+<para>file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mg_select</entry>
+                                <entry>
+<para>flag to select micrograph. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rec_select</entry>
+                                <entry>
+<para>flag to select reconstruction. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 419 of file bmgconvert.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_bmgconvert_8cpp_1a4de0ad4c7190962494815c0fa7f948df"/>    <section>
+    <title>use</title>
+<indexterm><primary>use</primary><secondary>bmgconvert.cpp</secondary></indexterm>
+<indexterm><primary>bmgconvert.cpp</primary><secondary>use</secondary></indexterm>
+<para><computeroutput>const char* use[]</computeroutput></para><para>
+Definition at line 40 of file bmgconvert.cpp.</para>
+    </section><anchor xml:id="_bmgconvert_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>bmgconvert.cpp</secondary></indexterm>
+<indexterm><primary>bmgconvert.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

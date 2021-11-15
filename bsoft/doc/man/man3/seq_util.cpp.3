@@ -1,0 +1,452 @@
+.TH "/Users/bernard/b20/bsoft/src/mol/seq_util.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mol/seq_util.cpp \- Sequence utility functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwgencode\&.h'\fP
+.br
+\fC#include 'seq_analysis\&.h'\fP
+.br
+\fC#include 'seq_util\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include <map>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBseq_show\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Shows all molecular sequences\&. "
+.ti -1c
+.RI "int \fBseq_mass\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Shows the masses of all molecular sequences\&. "
+.ti -1c
+.RI "vector< double > \fBseq_elements\fP (\fBBmolgroup\fP *molgroup, \fBBstring\fP &paramfile)"
+.br
+.RI "Shows the elemental composition of all molecular sequences\&. "
+.ti -1c
+.RI "int \fBseq_complement_all\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Complements all nucleotide sequences\&. "
+.ti -1c
+.RI "int \fBseq_translate_all\fP (\fBBmolgroup\fP *molgroup, int frame, \fBBstring\fP &gcfile)"
+.br
+.RI "Translates all nucleotide sequences to protein sequences\&. "
+.ti -1c
+.RI "long \fBseq_find_dna\fP (\fBBmolgroup\fP *molgroup, \fBBstring\fP &seq)"
+.br
+.RI "Finds a nucleotide sequence\&. "
+.ti -1c
+.RI "long \fBseq_find_protein\fP (\fBBmolgroup\fP *molgroup, \fBBstring\fP &seq)"
+.br
+.RI "Finds an amino acid sequence\&. "
+.ti -1c
+.RI "\fBBstring\fP \fBseq_find_protein_in_dna\fP (\fBBmolgroup\fP *molgroup, \fBBstring\fP &seq, int seqlenmin, int seqlenmax, int side1, int side2, double threshold, \fBBstring\fP &gcfile)"
+.br
+.RI "Finds the coding region for an amino acid sequence\&. "
+.ti -1c
+.RI "int \fBgetcode3\fP (char c, char *cod)"
+.br
+.RI "Converts a one-letter amino acid designation to the three-letter equivalent\&. "
+.ti -1c
+.RI "char \fBgetcode1\fP (char *acode)"
+.br
+.RI "Converts a three-letter amino acid designation to the one-letter equivalent\&. "
+.ti -1c
+.RI "int \fBcomplement_sequence\fP (\fBBstring\fP &nucseq)"
+.br
+.RI "Complements a nucleotide sequence in place\&. "
+.ti -1c
+.RI "char \fBget_complement\fP (char nuc)"
+.br
+.RI "Get the Watson-Crick complement of a nucleotide base\&. "
+.ti -1c
+.RI "\fBBstring\fP \fBsequence_translate\fP (\fBBstring\fP &nucseq, long frame, \fBBstring\fP &gencode)"
+.br
+.RI "Translates a nucleotide sequence to a protein sequence\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const map< char, string > \fBres_code\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Sequence utility functions\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20001029 
+.PP
+Modified: 20190613 
+.RE
+.PP
+
+.PP
+Definition in file \fBseq_util\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int complement_sequence (\fBBstring\fP & nucseq)"
+
+.PP
+Complements a nucleotide sequence in place\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&nucseq\fP nucleotide sequence to be translated\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 547 of file seq_util\&.cpp\&.
+.SS "char get_complement (char nuc)"
+
+.PP
+Get the Watson-Crick complement of a nucleotide base\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fInuc\fP nucleotide\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char complementing nucleotide\&. 
+.RE
+.PP
+
+.PP
+Definition at line 567 of file seq_util\&.cpp\&.
+.SS "char getcode1 (char * acode)"
+
+.PP
+Converts a three-letter amino acid designation to the one-letter equivalent\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*acode\fP the desired amino acid three-letter code 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char the corresponding one-letter code 
+.PP
+.nf
+Search through a list of 3-1 mappings for the desired three-letter code.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 528 of file seq_util\&.cpp\&.
+.SS "int getcode3 (char c, char * cod)"
+
+.PP
+Converts a one-letter amino acid designation to the three-letter equivalent\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIc\fP the desired amino acid code letter 
+.br
+\fI*cod\fP the corresponding three-letter code 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Search through a list of 1-3 mappings for the desired letter.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 507 of file seq_util\&.cpp\&.
+.SS "int seq_complement_all (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Complements all nucleotide sequences\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Search through a list of 1-3 mappings for the desired letter.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 265 of file seq_util\&.cpp\&.
+.SS "vector<double> seq_elements (\fBBmolgroup\fP * molgroup, \fBBstring\fP & paramfile)"
+
+.PP
+Shows the elemental composition of all molecular sequences\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP set of sequences\&. 
+.br
+\fI&paramfile\fP file of residue parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<double> array of element numbers: HCNOS 
+.RE
+.PP
+
+.PP
+Definition at line 176 of file seq_util\&.cpp\&.
+.SS "long seq_find_dna (\fBBmolgroup\fP * molgroup, \fBBstring\fP & seq)"
+
+.PP
+Finds a nucleotide sequence\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.br
+\fI&seq\fP sequence to find\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long position\&. 
+.RE
+.PP
+
+.PP
+Definition at line 314 of file seq_util\&.cpp\&.
+.SS "long seq_find_protein (\fBBmolgroup\fP * molgroup, \fBBstring\fP & seq)"
+
+.PP
+Finds an amino acid sequence\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.br
+\fI&seq\fP sequence to find\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long position\&. 
+.RE
+.PP
+
+.PP
+Definition at line 356 of file seq_util\&.cpp\&.
+.SS "\fBBstring\fP seq_find_protein_in_dna (\fBBmolgroup\fP * molgroup, \fBBstring\fP & seq, int seqlenmin, int seqlenmax, int side1, int side2, double threshold, \fBBstring\fP & gcfile)"
+
+.PP
+Finds the coding region for an amino acid sequence\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.br
+\fI&seq\fP sequence to find\&. 
+.br
+\fIseqlenmin\fP sequence length minimum\&. 
+.br
+\fIseqlenmax\fP sequence length maximum\&. 
+.br
+\fIside1\fP preceding sequence length to include\&. 
+.br
+\fIside2\fP succeeding sequence length to include\&. 
+.br
+\fIthreshold\fP threshold for reporting possible hits\&. 
+.br
+\fI&gcfile\fP file with genetic code\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBBstring\fP coding sequence\&. 
+.PP
+.nf
+All molecules in the group are searched in all 6 possible frames.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 394 of file seq_util\&.cpp\&.
+.SS "int seq_mass (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Shows the masses of all molecular sequences\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP set of sequences\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 131 of file seq_util\&.cpp\&.
+.SS "int seq_show (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Shows all molecular sequences\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP set of sequences\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 81 of file seq_util\&.cpp\&.
+.SS "int seq_translate_all (\fBBmolgroup\fP * molgroup, int frame, \fBBstring\fP & gcfile)"
+
+.PP
+Translates all nucleotide sequences to protein sequences\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.br
+\fIframe\fP the frame for translation\&. 
+.br
+\fI&gcfile\fP file with genetic code\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Each nucleic acid sequence in the molecule group is translated to the
+protein sequence.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 289 of file seq_util\&.cpp\&.
+.SS "\fBBstring\fP sequence_translate (\fBBstring\fP & nucseq, long frame, \fBBstring\fP & gencode)"
+
+.PP
+Translates a nucleotide sequence to a protein sequence\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&nucseq\fP nucleotide sequence to be translated\&. 
+.br
+\fIframe\fP coding frame\&. 
+.br
+\fI&gencode\fP genetic code: array of amino acids\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBBstring\fP translated protein sequence\&. 
+.RE
+.PP
+
+.PP
+Definition at line 590 of file seq_util\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const map<char, string> res_code"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+        {'-', "GAP"}, 
+        {'*', "UNK"}, 
+        {'A', "ALA"}, 
+        {'B', "ASX"}, 
+        {'C', "CYS"}, 
+        {'D', "ASP"}, 
+        {'E', "GLU"}, 
+        {'F', "PHE"}, 
+        {'G', "GLY"}, 
+        {'H', "HIS"}, 
+        {'I', "ILE"}, 
+        {'K', "LYS"}, 
+        {'L', "LEU"}, 
+        {'M', "MET"}, 
+        {'N', "ASN"}, 
+        {'P', "PRO"}, 
+        {'Q', "GLN"}, 
+        {'R', "ARG"}, 
+        {'S', "SER"}, 
+        {'T', "THR"}, 
+        {'V', "VAL"}, 
+        {'W', "TRP"}, 
+        {'Y', "TYR"}, 
+        {'Z', "GLX"}, 
+        {'X', "UNK"}
+}
+.fi
+.PP
+Definition at line 48 of file seq_util\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

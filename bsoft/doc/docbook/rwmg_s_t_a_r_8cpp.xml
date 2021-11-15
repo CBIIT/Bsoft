@@ -1,0 +1,406 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rwmg_s_t_a_r_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/rwparam/rwmgSTAR.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/rwparam/rwmgSTAR.cpp</primary></indexterm>
+<para>
+
+<para>Library routines to read and write micrograph parameters in STAR format. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+#include &quot;rwmgSTAR.h&quot;
+#include &quot;rwstar.h&quot;
+#include &quot;mg_tags.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rwmg_s_t_a_r_8cpp_1ac0cdda46efc1ca5b8ccc127beb5c02fd">star_to_project</link> (<link linkend="_struct_bstar">Bstar</link> *star, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_s_t_a_r_8cpp_1a3210ae0e2731ffcebb194a20daecc3a3">project_to_star</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_struct_bstar">Bstar</link> *star, int mg_select, int rec_select)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_s_t_a_r_8cpp_1a222d1548e981b8b55d891798b216b6fb">read_project_star</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Reading micrograph parameters from STAR files. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_s_t_a_r_8cpp_1adb8d242b348cb66e9425e0f5736a2888">write_project_star</link> (const char *filename, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int mg_select, int rec_select)</para>
+
+<para>Writing micrograph parameters to a STAR file. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_s_t_a_r_8cpp_1abbee8308517c61faf2a0ef810ef33b6e">write_project_star</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int mg_select, int rec_select)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_s_t_a_r_8cpp_1ab146c8af2519b521bb38324b6dd46476">mg_star_update_tags</link> (<link linkend="_struct_bstar">Bstar</link> *star)</para>
+
+<para>Replacing old STAR tags with new ones. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bframe">Bframe</link> * <link linkend="_rwmg_s_t_a_r_8cpp_1ad9473a1b0a7bf0661cddd59b93139cba">frame_from_starblock</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> * <link linkend="_rwmg_s_t_a_r_8cpp_1a52df50c7d1c536098a9a324cc4fb78e2">particle_from_starblock</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cf">FOMType</link> fom_tag[<link linkend="_mg__processing_8h_1ae84172dd7ca73ab08d8b2f3e05e4a1bd">NFOM</link>])</para>
+</listitem>
+            <listitem><para><link linkend="_class_bfilament">Bfilament</link> * <link linkend="_rwmg_s_t_a_r_8cpp_1acdb5a548dac0540adf96fce3d57062c0">filament_from_starblock</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bbadarea">Bbadarea</link> * <link linkend="_rwmg_s_t_a_r_8cpp_1add7eb1753e8354c79034cfb70ef67243">badarea_from_starblock</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block)</para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmarker">Bmarker</link> * <link linkend="_rwmg_s_t_a_r_8cpp_1a3dba4e66fc328b0e90a9ae2ea3ead53a">marker_from_starblock</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bstrucfac">Bstrucfac</link> * <link linkend="_rwmg_s_t_a_r_8cpp_1a443948960b1d63459a354701ea87e89a">strucfac_from_starblock</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block)</para>
+</listitem>
+            <listitem><para><link linkend="_class_blayerline">Blayerline</link> * <link linkend="_rwmg_s_t_a_r_8cpp_1a5c5894aba6fcd2dce8a4d050cf31da8a">layerline_from_starblock</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block)</para>
+</listitem>
+            <listitem><para><link linkend="_class_c_t_fparam">CTFparam</link> * <link linkend="_rwmg_s_t_a_r_8cpp_1aee38b090af08b1b6618565c73eec96b4">ctf_from_starblock</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bmicrograph">Bmicrograph</link> * <link linkend="_rwmg_s_t_a_r_8cpp_1a5aa6b4832d77750f92e3b08b2125b2c6">micrograph_from_starblock</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, <link linkend="_class_bstring">Bstring</link> &amp;mg_id, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cf">FOMType</link> fom_tag[<link linkend="_mg__processing_8h_1ae84172dd7ca73ab08d8b2f3e05e4a1bd">NFOM</link>])</para>
+</listitem>
+            <listitem><para><link linkend="_class_breconstruction">Breconstruction</link> * <link linkend="_rwmg_s_t_a_r_8cpp_1af596cc6da786f15ca0bae004e065aaed">reconstruction_from_starblock</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cf">FOMType</link> fom_tag[<link linkend="_mg__processing_8h_1ae84172dd7ca73ab08d8b2f3e05e4a1bd">NFOM</link>])</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_s_t_a_r_8cpp_1a23c1a1882fec5fb2b82e320433aa32df">item_put_filament_list</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, const char *tag, <link linkend="_class_bfilament">Bfilament</link> *fil, const char *format)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_s_t_a_r_8cpp_1afe2c9a66392c0fc463ad28f35c6ae3f2">frame_to_starblock</link> (<link linkend="_class_bframe">Bframe</link> *frame, <link linkend="_struct_bstar__block">Bstar_block</link> *block)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_s_t_a_r_8cpp_1ae67b284d2dc78d1dff37e94f327d982a">particle_to_starblock</link> (<link linkend="_class_bparticle">Bparticle</link> *part, <link linkend="_struct_bstar__block">Bstar_block</link> *block, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cf">FOMType</link> fom_tag[<link linkend="_mg__processing_8h_1ae84172dd7ca73ab08d8b2f3e05e4a1bd">NFOM</link>], int euler_flag, int omega_flag)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_s_t_a_r_8cpp_1a6e94b49eec0a376dbc6cb1d9e8e7fd2c">badarea_to_starblock</link> (<link linkend="_class_bbadarea">Bbadarea</link> *bad, <link linkend="_struct_bstar__block">Bstar_block</link> *block)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_s_t_a_r_8cpp_1a0c06e51a5185d79f78543a8b9cd6433b">filament_to_starblock</link> (<link linkend="_class_bfilament">Bfilament</link> *fil, <link linkend="_struct_bstar__block">Bstar_block</link> *block)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_s_t_a_r_8cpp_1a8fbf7d2da7d75bd7604f755b8393d6dd">marker_to_starblock</link> (<link linkend="_struct_bmarker">Bmarker</link> *mark, <link linkend="_struct_bstar__block">Bstar_block</link> *block)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_s_t_a_r_8cpp_1af1afc08dd844a9b382fca18c61c72a0b">strucfac_to_starblock</link> (<link linkend="_class_bstrucfac">Bstrucfac</link> *sf, <link linkend="_struct_bstar__block">Bstar_block</link> *block)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_s_t_a_r_8cpp_1a9df16434a5969235ceacd67aa491307a">layerline_to_starblock</link> (<link linkend="_class_blayerline">Blayerline</link> *line, <link linkend="_struct_bstar__block">Bstar_block</link> *block)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_s_t_a_r_8cpp_1a3a149a0c5eccc87b9904c8f035ffd795">ctf_to_starblock</link> (<link linkend="_class_c_t_fparam">CTFparam</link> *ctf, <link linkend="_struct_bstar__block">Bstar_block</link> *block)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_s_t_a_r_8cpp_1a95e41b170f86e310a1ed9e4d2af808ab">micrograph_to_starblock</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_struct_bstar__block">Bstar_block</link> *block, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cf">FOMType</link> fom_tag[<link linkend="_mg__processing_8h_1ae84172dd7ca73ab08d8b2f3e05e4a1bd">NFOM</link>], int euler_flag, int omega_flag)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_s_t_a_r_8cpp_1a37d9557f2672f16e7439b42d6e50e252">reconstruction_to_starblock</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_struct_bstar__block">Bstar_block</link> *block, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cf">FOMType</link> fom_tag[<link linkend="_mg__processing_8h_1ae84172dd7ca73ab08d8b2f3e05e4a1bd">NFOM</link>], int euler_flag, int omega_flag)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rwmg_s_t_a_r_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines to read and write micrograph parameters in STAR format. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010206 </para>
+
+<para>Modified: 20200202</para>
+</formalpara>
+<formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010206 </para>
+
+<para>Modified: 20210728 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rwmg_s_t_a_r_8cpp_1add7eb1753e8354c79034cfb70ef67243"/>    <section>
+    <title>badarea_from_starblock()</title>
+<indexterm><primary>badarea_from_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>badarea_from_starblock</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bbadarea">Bbadarea</link>* badarea_from_starblock (<link linkend="_struct_bstar__block">Bstar_block</link> * block)</computeroutput></para><para>
+Definition at line 359 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1a6e94b49eec0a376dbc6cb1d9e8e7fd2c"/>    <section>
+    <title>badarea_to_starblock()</title>
+<indexterm><primary>badarea_to_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>badarea_to_starblock</secondary></indexterm>
+<para><computeroutput>int badarea_to_starblock (<link linkend="_class_bbadarea">Bbadarea</link> * bad, <link linkend="_struct_bstar__block">Bstar_block</link> * block)</computeroutput></para><para>
+Definition at line 1218 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1aee38b090af08b1b6618565c73eec96b4"/>    <section>
+    <title>ctf_from_starblock()</title>
+<indexterm><primary>ctf_from_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>ctf_from_starblock</secondary></indexterm>
+<para><computeroutput><link linkend="_class_c_t_fparam">CTFparam</link>* ctf_from_starblock (<link linkend="_struct_bstar__block">Bstar_block</link> * block)</computeroutput></para><para>
+Definition at line 572 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1a3a149a0c5eccc87b9904c8f035ffd795"/>    <section>
+    <title>ctf_to_starblock()</title>
+<indexterm><primary>ctf_to_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>ctf_to_starblock</secondary></indexterm>
+<para><computeroutput>int ctf_to_starblock (<link linkend="_class_c_t_fparam">CTFparam</link> * ctf, <link linkend="_struct_bstar__block">Bstar_block</link> * block)</computeroutput></para><para>
+Definition at line 1345 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1acdb5a548dac0540adf96fce3d57062c0"/>    <section>
+    <title>filament_from_starblock()</title>
+<indexterm><primary>filament_from_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>filament_from_starblock</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bfilament">Bfilament</link>* filament_from_starblock (<link linkend="_struct_bstar__block">Bstar_block</link> * block)</computeroutput></para><para>
+Definition at line 309 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1a0c06e51a5185d79f78543a8b9cd6433b"/>    <section>
+    <title>filament_to_starblock()</title>
+<indexterm><primary>filament_to_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>filament_to_starblock</secondary></indexterm>
+<para><computeroutput>int filament_to_starblock (<link linkend="_class_bfilament">Bfilament</link> * fil, <link linkend="_struct_bstar__block">Bstar_block</link> * block)</computeroutput></para><para>
+Definition at line 1234 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1ad9473a1b0a7bf0661cddd59b93139cba"/>    <section>
+    <title>frame_from_starblock()</title>
+<indexterm><primary>frame_from_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>frame_from_starblock</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bframe">Bframe</link>* frame_from_starblock (<link linkend="_struct_bstar__block">Bstar_block</link> * block)</computeroutput></para><para>
+Definition at line 132 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1afe2c9a66392c0fc463ad28f35c6ae3f2"/>    <section>
+    <title>frame_to_starblock()</title>
+<indexterm><primary>frame_to_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>frame_to_starblock</secondary></indexterm>
+<para><computeroutput>int frame_to_starblock (<link linkend="_class_bframe">Bframe</link> * frame, <link linkend="_struct_bstar__block">Bstar_block</link> * block)</computeroutput></para><para>
+Definition at line 1080 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1a23c1a1882fec5fb2b82e320433aa32df"/>    <section>
+    <title>item_put_filament_list()</title>
+<indexterm><primary>item_put_filament_list</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>item_put_filament_list</secondary></indexterm>
+<para><computeroutput>int item_put_filament_list (<link linkend="_struct_bstar__block">Bstar_block</link> * block, const char * tag, <link linkend="_class_bfilament">Bfilament</link> * fil, const char * format)</computeroutput></para><para>
+Definition at line 1040 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1a5c5894aba6fcd2dce8a4d050cf31da8a"/>    <section>
+    <title>layerline_from_starblock()</title>
+<indexterm><primary>layerline_from_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>layerline_from_starblock</secondary></indexterm>
+<para><computeroutput><link linkend="_class_blayerline">Blayerline</link>* layerline_from_starblock (<link linkend="_struct_bstar__block">Bstar_block</link> * block)</computeroutput></para><para>
+Definition at line 523 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1a9df16434a5969235ceacd67aa491307a"/>    <section>
+    <title>layerline_to_starblock()</title>
+<indexterm><primary>layerline_to_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>layerline_to_starblock</secondary></indexterm>
+<para><computeroutput>int layerline_to_starblock (<link linkend="_class_blayerline">Blayerline</link> * line, <link linkend="_struct_bstar__block">Bstar_block</link> * block)</computeroutput></para><para>
+Definition at line 1320 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1a3dba4e66fc328b0e90a9ae2ea3ead53a"/>    <section>
+    <title>marker_from_starblock()</title>
+<indexterm><primary>marker_from_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>marker_from_starblock</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmarker">Bmarker</link>* marker_from_starblock (<link linkend="_struct_bstar__block">Bstar_block</link> * block)</computeroutput></para><para>
+Definition at line 391 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1a8fbf7d2da7d75bd7604f755b8393d6dd"/>    <section>
+    <title>marker_to_starblock()</title>
+<indexterm><primary>marker_to_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>marker_to_starblock</secondary></indexterm>
+<para><computeroutput>int marker_to_starblock (<link linkend="_struct_bmarker">Bmarker</link> * mark, <link linkend="_struct_bstar__block">Bstar_block</link> * block)</computeroutput></para><para>
+Definition at line 1250 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1ab146c8af2519b521bb38324b6dd46476"/>    <section>
+    <title>mg_star_update_tags()</title>
+<indexterm><primary>mg_star_update_tags</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>mg_star_update_tags</secondary></indexterm>
+<para><computeroutput>int mg_star_update_tags (<link linkend="_struct_bstar">Bstar</link> * star)</computeroutput></para><para>
+
+<para>Replacing old STAR tags with new ones. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*star</entry>
+                                <entry>
+<para>STAR database. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 83 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1a5aa6b4832d77750f92e3b08b2125b2c6"/>    <section>
+    <title>micrograph_from_starblock()</title>
+<indexterm><primary>micrograph_from_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>micrograph_from_starblock</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmicrograph">Bmicrograph</link>* micrograph_from_starblock (<link linkend="_struct_bstar__block">Bstar_block</link> * block, <link linkend="_class_bstring">Bstring</link> &amp; mg_id, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cf">FOMType</link> fom_tag[NFOM])</computeroutput></para><para>
+Definition at line 619 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1a95e41b170f86e310a1ed9e4d2af808ab"/>    <section>
+    <title>micrograph_to_starblock()</title>
+<indexterm><primary>micrograph_to_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>micrograph_to_starblock</secondary></indexterm>
+<para><computeroutput>int micrograph_to_starblock (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_struct_bstar__block">Bstar_block</link> * block, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cf">FOMType</link> fom_tag[NFOM], int euler_flag, int omega_flag)</computeroutput></para><para>
+Definition at line 1375 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1a52df50c7d1c536098a9a324cc4fb78e2"/>    <section>
+    <title>particle_from_starblock()</title>
+<indexterm><primary>particle_from_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>particle_from_starblock</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>* particle_from_starblock (<link linkend="_struct_bstar__block">Bstar_block</link> * block, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cf">FOMType</link> fom_tag[NFOM])</computeroutput></para><para>
+Definition at line 164 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1ae67b284d2dc78d1dff37e94f327d982a"/>    <section>
+    <title>particle_to_starblock()</title>
+<indexterm><primary>particle_to_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>particle_to_starblock</secondary></indexterm>
+<para><computeroutput>int particle_to_starblock (<link linkend="_class_bparticle">Bparticle</link> * part, <link linkend="_struct_bstar__block">Bstar_block</link> * block, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cf">FOMType</link> fom_tag[NFOM], int euler_flag, int omega_flag)</computeroutput></para><para>
+Definition at line 1101 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1a3210ae0e2731ffcebb194a20daecc3a3"/>    <section>
+    <title>project_to_star()</title>
+<indexterm><primary>project_to_star</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>project_to_star</secondary></indexterm>
+<para><computeroutput>int project_to_star (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_struct_bstar">Bstar</link> * star, int mg_select, int rec_select)</computeroutput></para><para>
+Definition at line 1573 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1a222d1548e981b8b55d891798b216b6fb"/>    <section>
+    <title>read_project_star()</title>
+<indexterm><primary>read_project_star</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>read_project_star</secondary></indexterm>
+<para><computeroutput>int read_project_star (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Reading micrograph parameters from STAR files. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file name (or comma-delimited list). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>initialized project structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 29 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1af596cc6da786f15ca0bae004e065aaed"/>    <section>
+    <title>reconstruction_from_starblock()</title>
+<indexterm><primary>reconstruction_from_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>reconstruction_from_starblock</secondary></indexterm>
+<para><computeroutput><link linkend="_class_breconstruction">Breconstruction</link>* reconstruction_from_starblock (<link linkend="_struct_bstar__block">Bstar_block</link> * block, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cf">FOMType</link> fom_tag[NFOM])</computeroutput></para><para>
+Definition at line 751 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1a37d9557f2672f16e7439b42d6e50e252"/>    <section>
+    <title>reconstruction_to_starblock()</title>
+<indexterm><primary>reconstruction_to_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>reconstruction_to_starblock</secondary></indexterm>
+<para><computeroutput>int reconstruction_to_starblock (<link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_struct_bstar__block">Bstar_block</link> * block, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cf">FOMType</link> fom_tag[NFOM], int euler_flag, int omega_flag)</computeroutput></para><para>
+Definition at line 1479 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1ac0cdda46efc1ca5b8ccc127beb5c02fd"/>    <section>
+    <title>star_to_project()</title>
+<indexterm><primary>star_to_project</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>star_to_project</secondary></indexterm>
+<para><computeroutput>int star_to_project (<link linkend="_struct_bstar">Bstar</link> * star, <link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+Definition at line 898 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1a443948960b1d63459a354701ea87e89a"/>    <section>
+    <title>strucfac_from_starblock()</title>
+<indexterm><primary>strucfac_from_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>strucfac_from_starblock</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstrucfac">Bstrucfac</link>* strucfac_from_starblock (<link linkend="_struct_bstar__block">Bstar_block</link> * block)</computeroutput></para><para>
+Definition at line 454 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1af1afc08dd844a9b382fca18c61c72a0b"/>    <section>
+    <title>strucfac_to_starblock()</title>
+<indexterm><primary>strucfac_to_starblock</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>strucfac_to_starblock</secondary></indexterm>
+<para><computeroutput>int strucfac_to_starblock (<link linkend="_class_bstrucfac">Bstrucfac</link> * sf, <link linkend="_struct_bstar__block">Bstar_block</link> * block)</computeroutput></para><para>
+Definition at line 1283 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1abbee8308517c61faf2a0ef810ef33b6e"/>    <section>
+    <title>write_project_star()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>write_project_star</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>write_project_star</secondary></indexterm>
+<para><computeroutput>int write_project_star (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bproject">Bproject</link> * project, int mg_select, int rec_select)</computeroutput></para><para>
+Definition at line 62 of file rwmgSTAR.cpp.</para>
+    </section><anchor xml:id="_rwmg_s_t_a_r_8cpp_1adb8d242b348cb66e9425e0f5736a2888"/>    <section>
+    <title>write_project_star()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>write_project_star</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>write_project_star</secondary></indexterm>
+<para><computeroutput>int write_project_star (const char * filename, <link linkend="_class_bproject">Bproject</link> * project, int mg_select, int rec_select)</computeroutput></para><para>
+
+<para>Writing micrograph parameters to a STAR file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mg_select</entry>
+                                <entry>
+<para>flag to only write selected micrographs. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rec_select</entry>
+                                <entry>
+<para>flag to only convert selected reconstructions. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 56 of file rwmgSTAR.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_rwmg_s_t_a_r_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>rwmgSTAR.cpp</secondary></indexterm>
+<indexterm><primary>rwmgSTAR.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

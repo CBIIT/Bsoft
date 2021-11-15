@@ -1,0 +1,94 @@
+<HTML>
+<HEAD>
+	<meta name="Author" content="Bernard Heymann">
+	<TITLE>Bsoft: bshell </TITLE>
+	<link type="image/png" href="Bsoft_16x16.png" rel="icon">
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+<h2><i><font color="#000099">Bsoft program</font></i></h2>
+<center><h1><font color="#FF0000">bshell</font></h1></center>  <h3>Usage: bshell [options] in1.star [in2.star ...]</h3>
+Generates and operates on shell models. <br>
+  <h3>Actions for creation action:</h3>
+<table><tbody>
+<tr><td>-shell 134.2</td><td>Generate a shell with the given radius.</td></tr>
+<tr><td>-dodecahedron 215,3,0.3</td><td>Generate an dodecahedral shell with the given radius and divisions,</td></tr>
+<tr><td></td><td>                         and a fraction to make it spherical.</td></tr>
+<tr><td>-icosahedron 238.5,3,0.5</td><td>Generate an icosahedral shell with the given radius and divisions,</td></tr>
+<tr><td></td><td>                         and a fraction to make it spherical.</td></tr>
+<tr><td>-circle 527,243</td><td>Generate a circle with the given radius and z offset.</td></tr>
+<tr><td>-ellipse 620.5,314.9,5.2</td><td>Generate an ellipse with the given x and y semi-axes lengths and z offset.</td></tr>
+<tr><td>-ellipsoid 24.3,51.2,68</td><td>Generate an ellipsoid with the given x,y,z semi-axes.</td></tr>
+<tr><td>-cylinder 0,1,0,88.3,155</td><td>Generate a cylinder with the given direction, radius and length.</td></tr>
+<tr><td>-add -14.7</td><td>Add a shell offset by a radial distance from selected components.</td></tr>
+<tr><td>-fromcomponents 18.6,1</td><td>Generate shells from components with given radius and flag for 2D.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Actions:</h3>
+<table><tbody>
+<tr><td>-merge</td><td>Merge models into one after all other operations.</td></tr>
+<tr><td>-guide poly.star</td><td>Input guide polyhedron to adjust the shell model.</td></tr>
+<tr><td>-linklength 56.3</td><td>Generate links with this maximum length for the sphere model.</td></tr>
+<tr><td>-views local</td><td>Calculate views for components. Modes: origin: current origin,</td></tr>
+<tr><td></td><td>                         com: center-of-mass origin, map: map origin, local: neigbor plane.</td></tr>
+<tr><td>-rdf 1.2</td><td>Calculate the radial distribution function with the given sampling (angstrom).</td></tr>
+<tr><td>-fit 15.6,200,1</td><td>Fits a shell model to a map using the given resolution limits,</td></tr>
+<tr><td></td><td>                         and a flag to indicate negative contrast.</td></tr>
+<tr><td>-radial</td><td>Calculate a radial profile based on a shell model.</td></tr>
+<tr><td>-powerspectrum out.map</td><td>Calculate 2D power spectra around components in the shell.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Selections:</h3>
+<table><tbody>
+<tr><td>-all</td><td>Reset selection to all models and components before other selections.</td></tr>
+<tr><td>-select #Mod1@14</td><td>Select models and components.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Parameters:</h3>
+<table><tbody>
+<tr><td>-verbose 7</td><td>Verbose output.</td></tr>
+<tr><td>-id model1</td><td>Set model identifier.</td></tr>
+<tr><td>-newtype MEM</td><td>Type for all new components.</td></tr>
+<tr><td>-componentradius 0.5</td><td>Component display radius.</td></tr>
+<tr><td>-linkradius 0.5</td><td>Link display radius.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Parameters for generating a model:</h3>
+<table><tbody>
+<tr><td>-points 152</td><td>Number of points.</td></tr>
+<tr><td>-separation 2.5</td><td>Separation distance between points.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Parameter for adjusting to a guide model:</h3>
+<table><tbody>
+<tr><td>-fraction 0.6</td><td>Fraction of adjustment to a guide model (default 1).</td></tr>
+<tr><td>-curved</td><td>Flag to indicate curved hull or shell surface (default not).</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Parameters for power spectra:</h3>
+<table><tbody>
+<tr><td>-size 45,40,20</td><td>Size of densities to extract (default 20,20,20 voxels).</td></tr>
+<tr><td>-origin 0.8,-10,15.7</td><td>Set the origin for extracted densities.</td></tr>
+<tr><td>-fftsize 256</td><td>Size of power spectrum (default from images).</td></tr>
+<tr><td>-resolution 20,360</td><td>High and low resolution limits for cross-correlation (angstrom).</td></tr>
+<tr><td>-annuli 2,95</td><td>Real space annular limits (default 0,inf pixels).</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Input:</h3>
+<table><tbody>
+<tr><td>-parameters param.star</td><td>Input parameter file.</td></tr>
+<tr><td>-map file.map</td><td>Input map file to associate with shell model.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Output:</h3>
+<table><tbody>
+<tr><td>-output file.star</td><td>Output model parameter file.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table>
+<br>Bsoft version 2.0.7-20200917 (64 bit)<br>
+<HR WIDTH="100%"><BR>
+Generated by bdoc.pl on Mon Oct 26 08:20:11 2020 <BR>
+<HR WIDTH="100%"><BR>
+<center><a href="bsoft.html">Back to the Bsoft home</a></center>
+<HR WIDTH="100%"><BR>
+</BODY>
+</HTML>

@@ -1,0 +1,341 @@
+.TH "/Users/bernard/b20/bsoft/include/model_views.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/model_views.h \- Library routines used for analysing model component views\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel\&.h'\fP
+.br
+\fC#include 'Bstring\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "list< \fBView2\fP< float > > \fBviews_from_model\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Returns a list of component views\&. "
+.ti -1c
+.RI "list< \fBView2\fP< float > > \fBviews_from_models\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Returns a list of component views\&. "
+.ti -1c
+.RI "long \fBmodel_set_views\fP (\fBBmodel\fP *\fBmodel\fP, \fBView2\fP< float > view)"
+.br
+.RI "Sets views\&. "
+.ti -1c
+.RI "long \fBmodel_invert_views\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Invert views\&. "
+.ti -1c
+.RI "long \fBmodel_find_views\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP &reffile, \fBBstring\fP &paramfile)"
+.br
+.RI "Finds the molecule views with respect to a reference\&. "
+.ti -1c
+.RI "long \fBmodel_calculate_views\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP &mode)"
+.br
+.RI "Calculates the views associated with each component\&. "
+.ti -1c
+.RI "long \fBmodel_calculate_local_views\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates the views associated with each component based on neighbors\&. "
+.ti -1c
+.RI "long \fBmodel_view_directions\fP (\fBBmodel\fP *\fBmodel\fP, int bin_width, int ref_flag)"
+.br
+.RI "Analyzes view directions in a model\&. "
+.ti -1c
+.RI "int \fBcomponent_hand\fP (\fBBstring\fP s)"
+.br
+.RI "Determines the hand of a component\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines used for analysing model component views\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20081120 
+.PP
+Modified: 20141029 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_views\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int component_hand (\fBBstring\fP s)"
+
+.PP
+Determines the hand of a component\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&s\fP string with encoded order\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int the hand\&. 
+.PP
+.nf
+Requirement: The string must be either a 3 or 6-digit code.
+The reverse of the string is generated and the canonical version 
+compared to the canonical version of the original string.
+The handedness is then returned as the sign of the comparison.
+The reverse of the 6-digit code is defined as reversing the
+first and last 3 digits separately.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 460 of file model_views\&.cpp\&.
+.SS "long model_calculate_local_views (\fBBmodel\fP * model)"
+
+.PP
+Calculates the views associated with each component based on neighbors\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure (views modified)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of selected components\&. 
+.PP
+.nf
+The view for a vertex is calculated from the vertex vector and the first link.
+The vertex vector points away from the origin and is calculated as follows:
+Angles defined for the vertex:
+    vv = normalized sum of the cross products for each pair of links
+        constituting an angle
+Angles not defined:
+    vv = component coordinates - origin
+The origin is defined as the current zero coordinates, the center-of-mass,
+or from the map.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 312 of file model_views\&.cpp\&.
+.SS "long model_calculate_views (\fBBmodel\fP * model, \fBBstring\fP & mode)"
+
+.PP
+Calculates the views associated with each component\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure (views modified)\&. 
+.br
+\fI&mode\fP none=current, com, map, local\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of selected components\&. 
+.PP
+.nf
+The view for a vertex is calculated from the vertex vector and the first link.
+The vertex vector points away from the origin and is calculated as follows:
+Angles defined for the vertex:
+    vv = normalized sum of the cross products for each pair of links
+        constituting an angle
+Angles not defined:
+    vv = component coordinates - origin
+The origin is defined as the current zero coordinates, the center-of-mass,
+or from the map.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 257 of file model_views\&.cpp\&.
+.SS "long model_find_views (\fBBmodel\fP * model, \fBBstring\fP & reffile, \fBBstring\fP & paramfile)"
+
+.PP
+Finds the molecule views with respect to a reference\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fI&reffile\fP reference molecule file name\&. 
+.br
+\fI&paramfile\fP atomic parameter file\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of molecules selected\&. 
+.PP
+.nf
+The positioning of each molecule is based on the center of mass of the reference.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 146 of file model_views\&.cpp\&.
+.SS "long model_invert_views (\fBBmodel\fP * model)"
+
+.PP
+Invert views\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of selected components\&. 
+.PP
+.nf
+It calculates the inverse of each component view.
+Only the first model is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 119 of file model_views\&.cpp\&.
+.SS "long model_set_views (\fBBmodel\fP * model, \fBView2\fP< float > view)"
+
+.PP
+Sets views\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIview\fP set view\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of selected components\&. 
+.PP
+.nf
+Each component view is set tot the given view.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 91 of file model_views\&.cpp\&.
+.SS "long model_view_directions (\fBBmodel\fP * model, int bin_width, int ref_flag)"
+
+.PP
+Analyzes view directions in a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIbin_width\fP bin width in degrees\&. 
+.br
+\fIref_flag\fP flag to select the reference vector (0=z-axis, 1=component location) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of molecules selected\&. 
+.PP
+.nf
+The angle between the component view and a reference vector is calculated.
+A histogram of the angles is constructed and reported.
+The reference vector can be the z-axis, or the component location.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 353 of file model_views\&.cpp\&.
+.SS "list<\fBView2\fP<float> > views_from_model (\fBBmodel\fP * model)"
+
+.PP
+Returns a list of component views\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+list<\fBView2<float>\fP> list of views\&. 
+.PP
+.nf
+Only the first model is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 29 of file model_views\&.cpp\&.
+.SS "list<\fBView2\fP<float> > views_from_models (\fBBmodel\fP * model)"
+
+.PP
+Returns a list of component views\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+View* list of views\&. 
+.PP
+.nf
+All models are processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 68 of file model_views\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

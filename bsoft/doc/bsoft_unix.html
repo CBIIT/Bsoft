@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Unix install</title>
+<link href="bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+    <h1> Installation on Unix (including Linux/Mac OSX)</h1>
+    <p>The installation is the same for all flavors of Unix. The recommended location for Bsoft is in /usr/local. If you want to install Bsoft in a different location, change the environment variable BSOFT to point to the appropriate directory:</p>
+    <div id="command"><p>setenv BSOFT /usr/local/bsoft</p></div>
+    <p>OR</p>
+    <div id="command"><p>setenv BSOFT $OTHERPATH/bsoft</p></div>
+    <p>Copy the distribution file to the desired directory (e.g., /usr/local) and unpack it as follows (it will unpack into a directory named &quot;bsoft&quot;):</p>
+    <div id="command"><p>gunzip bsoft1_6_0 .tgz </p>
+    <p>tar -xvf bsoft1_6_0 .tar</p></div>
+    <p>OR</p>
+    <div id="command"><p>tar -xzvf bsoft1_6_0 .tgz</p></div>
+	<p>Note for Mac OS X 10.8+: To compile Bsoft, the Apple developer application Xcode must be installed.
+	In addition, the command line tools must also be installed after Xcode:</p>
+	<div id="command"><p>xcode-select --install</p></div>
+    <p>All programs are compiled with the C-shell script &quot;bmake&quot; in the main bsoft directory (the -w option prevents display of warnings):</p>
+    <div id="command"><p>bmake</p></div>
+	</br>
+    <h3>Compiling over a previous installation</h3>
+    <p>When the operating system has changed or a new version of Bsoft has been downloaded over an old one, the old object files need to be clean out before compilation. A clean install is then required:</p>
+    <div id="command"><p>bmake clean</p></div>
+    <p>OR</p>
+    <div id="command"><p>bmake cleanall</p></div>
+    <p>The last option cleans out all the associated libraries (TIFF, JPEG, PNG and FFTW).</p>
+	</br>
+    <h3>Platform specifics</h3>
+    <p>The bmake script uses platform specifications in the bsoft/platform directory. The file name for the platform is automatically generated from system information. However, a different file may be specified:</p>
+    <div id="command"><p>bmake file=ia64_Linux.icc</p></div>
+	</br>
+    <h3>Tcl/Tk (for Bshow and Brun)</h3>
+    <p>The programs bshow and brun requires the Tcl/Tk libraries, including the header files for compilation. The typical Linux installation omits the developer part of the Tcl/Tk package, but this is required for Bsoft.</p>
+    <p>If for some reason bshow and brun are not desired, the compilation of the Tcl/Tk interface can be bypassed as follows:</p>
+    <div id="command"><p>bmake notcltk</p></div>
+    <p>In some cases the Tcl/Tk libraries may be installed in an odd location. One option is to specify the directory for the Tcl/Tk header files:</p>
+    <div id="command"><p>bmake tcltk=/usr/local/include</p></div>
+	</br>
+    <h3>Tcl/Tk on Mac OS X</h3>
+    <p>I've packaged the Tcl/Tk applications bshow and brun to be able to launch them from the Finder and the Dock. Run the macinstall script in the bsoft/macosx folder (this requires administrative priveleges). This should install Bshow and Brun in the &quot;/Applications&quot; folder.</p>
+	</br>
+    <h3>Note on 32 versus 64 bit</h3>
+    <p>Bsoft is 64 bit clean and 64-bit versions should be able to handle large image files (&gt;2Gb). The default on systems capable of both 32 and 64 bit addressing, is 64 bit addressing. To generate 32 bit versions, run the bmake script with the flag &quot;32&quot;:</p>
+    <div id="command"><p>bmake 32</p></div>
+    <p>Both 32 and 64 bit versions of Bsoft can coexist by maintaining two separate bsoft directories. When a program is run, the correct version and library for a particular machine will execute, provided that the PATH and LD_LIBRARY_PATH environmental variables are correctly defined. Be sure to distinguish 32 and 64 bit versions of the Bsoft library clearly with the LD_LIBRARYN32_PATH and LD_LIBRARY64_PATH variables under IRIX64.</p>
+    <p>32-bit only systems: Linux on x86, MacOSX (G4 and pre-Tiger/10.4 on G5, Intel i386), Solaris, VMS, Cygwin_NT (Intel).</p>
+    <p>64-bit only systems: Linux on Alpha and Itanium, Tru64.</p>
+    <p>Dual 32- and 64-bit systems: Linux on x86_64, MacOSX Tiger/10.4+ on G5 and Intel, IRIX64.</p>
+	</br>
+    <h3>Note on Macintosh G5 and Intel</h3>
+    <p>Bsoft compiled on an Intel Mac with Mac OS X before 10.7 generates universal binaries and libraries, each containing four versions: PowerPC 32 and 64 bit, and Intel 32 and 64 bit. Later versions of Mac OS X dropped support for PowerPC processors and only the Intel version are compiled</p>
+    <p>The Mac OS X versions have a progression of compilers:</p>
+    <ul>
+      <li>Mac OS X 10.4 (Tiger): Xcode 2.5</li>
+      <li>Mac OS X 10.5 (Leopard): Xcode 3</li>
+	  <li>Mac OS X 10.6 (Snow Leopard): Xcode 3</li>
+      <li>Mac OS X 10.7 (Lion): Xcode 4</li>
+      <li>Mac OS X 10.8 (Mountain Lion): Xcode 4</li>
+      <li>Mac OS X 10.9 (Mavericks): Xcode 5</li>
+      <li>Mac OS X 10.10 (Yosemite): Xcode 6</li>
+      <li>Mac OS X 10.11 (El Capitan): Xcode 7</li>
+      <li>Mac OS X 10.12 (Sierra): Xcode 8</li>
+    </ul>
+	<p>Note: The best supported way of running Bsoft on Macs is on the latest version possible and in 64 bit. Some older Macs can only upgrade to 10.7, and this will still be supported for now.</p>
+ 	</br>
+    <h2>Paralellization and FFTW3</h2>
+	<p>Compiling Bsoft with support for parallel processing requires the FFTW3 package. Instructions to configure and compile FFTW3 and Bsoft are provided <a href="bsoft_parallel.html">here</a>.</p>
+ 	</br>
+    <h2>Environment </h2>
+    <p>During compilation the script bmake writes two small files called &quot;bsoft.cshrc&quot; and &quot;bsoft.bashrc&quot; with the required environmental variables. The following Bsoft-specific variables are required:</p>
+    <ul>
+      <li>BSOFT: The main environmental variable pointing to the Bsoft location (usually /usr/local/bsoft)</li>
+      <li>BSOFT32: In cases where both 32 and 64 bit versions of Bsoft is required, this variable points to the 32 bit version directory (usually /usr/local/bsoft32)</li>
+      <li>BPARAM: This variable points to a directory in the Bsoft tree that includes parameter files for molecular modeling and filter kernels.</li>
+    </ul>
+    <p>The following general environmental variables need to be modified as well:</p>
+    <ul>
+      <li>PATH: This points to the executable files (usually /usr/local/bsoft/bin)</li>
+      <li>LD_LIBRARY_PATH: This points to the directory with the shared libraries (usually /usr/local/bsoft/lib)</li>
+    </ul>
+    <p>Note that there are variants of LD_LIBRARY_PATH, in particular:</p>
+    <ul>
+      <li>Darwin (Mac OSX): DYLD_LIBRARY_PATH</li>
+      <li>IRIX64 (SGI): LD_LIBRARYN32_PATH and LD_LIBRARY64_PATH</li>
+    </ul>
+    <p>For system-wide setting of these environmental variables, the files to modify are:</p>
+    <ul>
+      <li>Darwin (Mac OSX): csh/tcsh - /etc/csh.cshrc; sh/bash - /etc/profile</li>
+      <li>Linux: csh/tcsh - /etc/csh.cshrc; sh/bash - /etc/profile</li>
+    </ul>
+	</br>
+</div>
+<div id="footer">
+  Bernard Heymann  20141214
+</div>
+</body>
+</html>

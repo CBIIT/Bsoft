@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/bsoft.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Particle picking</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="../Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Particle Picking</h1>
+<h2>1. Selecting a box size</h2>
+<p>All of the projection-matching and reconstruction involves multiple
+Fourier transforms per particle. It is therefore a good idea to find
+a box size that transforms fast (Note that simply expanding the image
+size to a power-of-two size does not necessarily mean the fastest transformation).
+The program <b>bfft</b> has an option to test the speed of Fourier
+transformation for different image sizes:<br />
+<div id="command"><p>bfft -test 2,250,260</p></div>
+<pre>
+Timing the execution of fast Fourier transforms:
+FFTW planner option:            0
+Number of dimensions:           2
+Size range:                     250 - 260
+
+Size	Ptime	Etime	Prime factors
+250	0.00723	0.08392	2	5	5	5
+251	0.03657	0.08565	251
+252	0.01181	0.11592	2	2	3	3	7
+253	0.07655	0.00492	11	23
+254	0.06900	0.23176	2	127
+255	0.15219	0.00303	3	5	17
+256	0.00438	0.04742	2	2	2	2	2	2	2	2
+257	0.10456	0.08203	257
+258	0.22105	0.09444	2	3	43
+259	0.09175	0.00598	7	37
+260	0.00661	0.08395	2	2	5	13
+
+Ordered times:
+Size	Etime
+255	0.00303
+253	0.00492
+259	0.00598
+256	0.04742
+257	0.08203
+250	0.08392
+260	0.08395
+251	0.08565
+258	0.09444
+252	0.11592
+254	0.23176
+</pre>
+<p>The FFTW3 library used for Fourier transformation has an optimization
+capability that is typically included when it plans for a particular
+size transform. This can be switched on for the tests:</p>
+<div id="command"><p>bfft -test 2,250,260</p></div>
+<pre>
+Timing the execution of fast Fourier transforms:
+FFTW planner option:            1
+Number of dimensions:           2
+Size range:                     250 - 260
+
+Size	Ptime	Etime	Prime factors
+250	0.50410	0.00204	2	5	5	5
+251	0.86033	0.00336	251
+252	0.57269	0.00184	2	2	3	3	7
+253	1.45545	0.00182	11	23
+254	1.59815	0.00177	2	127
+255	2.72546	0.00144	3	5	17
+256	0.29502	0.00122	2	2	2	2	2	2	2	2
+257	2.36167	0.00198	257
+258	3.26567	0.00167	2	3	43
+259	1.30502	0.00184	7	37
+260	0.59385	0.00128	2	2	5	13
+
+Ordered times:
+Size	Etime
+256	0.00122
+260	0.00128
+255	0.00144
+258	0.00167
+254	0.00177
+253	0.00182
+252	0.00184
+259	0.00184
+257	0.00198
+250	0.00204
+251	0.00336
+</pre>
+<p>Now the planning time (Ptime) is much longer, but the execution time (Etime)
+is much shorter. The differences in execution time between the different sizes
+are also smaller, but still significant to do this test to pick a box size.</p>
+<br />
+<h2>2. Picking particles in bshow</h2>
+<p>The fastest way to pick particles is to open a parameter (STAR) file
+for all the micrographs in <b>bshow</b>. To activate
+the creation of boxes for picking, click on the boxing tool in the tool
+panel (menu item &quot;Window/Tools&quot;). This will bring up a dialog box
+where the particle box size and bad area radius can be set.
+A typical particle can be selected and the box size set appropriately
+(the bad area radius is usually about a quarter or third of the box size).
+All the particles can be picked (left
+button) and deleted (shift-left button), and bad areas selected
+(control-left button or right button). The particle picking dialog
+box has buttons to move forward or backward through the series of
+micrographs referenced in the parameter file.</p>
+<p>In the case of more than one micrograph per field-of-view, the particles
+in only one should be picked. This is typically the further-from-focus
+micrograph (usually the second one in each focal pair).</p>
+<br />
+<h2>3. Finding particle locations in other micrographs in a field-of-view</h2>
+<p>Once all the particles have been picked in one micrograph in a
+field-of-view, the locations in the other micrographs can be found by aligning
+the micrographs to first one. This is most commonly done where the particles
+were picked in the further-from-focus micrograph and their locations need to
+be transferred to the closer-to-focus micrograph. All of the micrographs can
+be aligned using one command line:</p>
+<div id="command"><p>bmgalign -v 7 -align mic -ref 2 -resol 2000,30 -correlate 1024,1024,1
+-out klh_aln.star klh_*.star &gt; klh_aln.log &amp;</p></div>
+<p>To check the alignment, look for the key word &quot;Best fit&quot; in the log
+file:</p>
+<div id="command"><p>grep Best klh_aln.log</p></div>
+<p>The last number on each line gives the RMSD in pixels of the alignment,
+where values below 5 pixels represent good fits, below 10 is still
+acceptable, but any larger values indicate incorrect alignment. Visual
+inspection of the particle coordinates in the closer-to-focus
+micrographs should be used to assess the success of alignment.</p>
+<p>This alignment is not always successful, and the parameters that can be
+adjusted to improve it are the resolution limits (option -resolution)
+and the size of the tiles used for correlation (option -correlate,
+typically adjust it to larger tile sizes).</p>
+<br />
+<h2>4. Particle extraction</h2>
+<p>Once all the particle coordinates are specified in the parameter files,
+the particle images can be extracted (change to the part directory first):</p>
+<div id="command"><p>bpick -v 7 -extract 100 -back -norm -partpath ../part -partext pif -out
+klh_pick.star ../mg/klh_aln.star</p></div>
+<p>The paths in the parameter file are very important for the programs to find the
+images. Several of the programs processing parameter files have -*path options
+that should be used to set the paths for micrographs, power spectrum images
+and particle images. If the images are written in undesirable directories,
+this should corrected with the various -*path options.</p>
+<br />
+<h2>5. CTF correction</h2>
+<p>If desired, the extracted particle images can then be corrected for the
+CTF (change to the ctf directory first):</p>
+<div id="command"><p>bctf -v 3 -data float -back -action flip -resol 2000,10 -partpath
+../ctf -out klh_ctf.star ../part/klh_pick.star</p></div>
+<p>All the modified particle image files should be written to the ctf
+directory.</p>
+<br />
+
+</div>
+<div id="footer">
+  Bernard Heymann  20150219
+</div>
+</body>
+</html>

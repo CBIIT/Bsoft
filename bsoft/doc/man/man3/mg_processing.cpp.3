@@ -1,0 +1,2123 @@
+.TH "/Users/bernard/b20/bsoft/src/mg/mg_processing.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mg/mg_processing.cpp \- Functions for micrograph processing\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_select\&.h'\fP
+.br
+\fC#include 'mg_tags\&.h'\fP
+.br
+\fC#include 'qsort_functions\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'math_util\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include <fstream>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBproject\fP * \fBproject_create\fP (int nmg, int nrec)"
+.br
+.RI "Creates a micrograph processing project parameter structure\&. "
+.ti -1c
+.RI "int \fBproject_equal_mg_part_files\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Sets micrograph and particle files to be the same\&. "
+.ti -1c
+.RI "\fBBfield\fP * \fBfield_add\fP (\fBBfield\fP **field, \fBBstring\fP &field_id)"
+.br
+.RI "Adds a field-of-view parameter structure to a linked list\&. "
+.ti -1c
+.RI "\fBBmicrograph\fP * \fBmicrograph_add\fP (\fBBmicrograph\fP **mg, \fBBstring\fP &mg_id)"
+.br
+.RI "Adds a micrograph parameter structure to a linked list\&. "
+.ti -1c
+.RI "\fBBframe\fP * \fBframe_add\fP (\fBBframe\fP **frame, int pid)"
+.br
+.RI "Adds a movie frame parameter structure to a linked list\&. "
+.ti -1c
+.RI "\fBBparticle\fP * \fBparticle_add\fP (\fBBparticle\fP **part, int pid)"
+.br
+.RI "Adds a particle parameter structure to a linked list\&. "
+.ti -1c
+.RI "int \fBmg_part_links\fP (\fBBmicrograph\fP *mg)"
+.br
+.RI "Sets the links from particles to micrographs\&. "
+.ti -1c
+.RI "int \fBrec_part_links\fP (\fBBreconstruction\fP *rec)"
+.br
+.RI "Sets the links from particles to reconstructions\&. "
+.ti -1c
+.RI "\fBBparticle\fP * \fBpart_find_first\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Finds the first particle in a project\&. "
+.ti -1c
+.RI "\fBBfilament\fP * \fBfilament_add\fP (\fBBfilament\fP **fil, int pid)"
+.br
+.RI "Adds a filament parameter structure to a linked list\&. "
+.ti -1c
+.RI "\fBBfilnode\fP * \fBfilament_node_add\fP (\fBBfilnode\fP **fnode, int pid)"
+.br
+.RI "Adds a filament node parameter structure to a linked list\&. "
+.ti -1c
+.RI "double \fBfilament_length\fP (\fBBfilament\fP *fil)"
+.br
+.RI "Calculates the length of a filament\&. "
+.ti -1c
+.RI "\fBBreconstruction\fP * \fBreconstruction_add\fP (\fBBreconstruction\fP **rec, \fBBstring\fP &rec_id)"
+.br
+.RI "Adds a reconstruction parameter structure to a linked list\&. "
+.ti -1c
+.RI "int \fBproject_kill\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Frees a whole project\&. "
+.ti -1c
+.RI "int \fBfield_kill\fP (\fBBfield\fP *field)"
+.br
+.RI "Frees a whole field-of-view structure\&. "
+.ti -1c
+.RI "int \fBmicrograph_kill\fP (\fBBmicrograph\fP *mg)"
+.br
+.RI "Frees a whole micrograph parameter structure\&. "
+.ti -1c
+.RI "int \fBparticle_kill\fP (\fBBparticle\fP *part)"
+.br
+.RI "Frees a list of particles\&. "
+.ti -1c
+.RI "int \fBfilament_kill\fP (\fBBfilament\fP *fil)"
+.br
+.RI "Frees a list of filaments\&. "
+.ti -1c
+.RI "int \fBreconstruction_kill\fP (\fBBreconstruction\fP *rec)"
+.br
+.RI "Frees a whole reconstruction parameter structure\&. "
+.ti -1c
+.RI "\fBBparticle\fP * \fBparticle_copy\fP (\fBBparticle\fP **partlist, \fBBparticle\fP *part)"
+.br
+.RI "Adds one particle onto a list of particle parameters\&. "
+.ti -1c
+.RI "\fBBparticle\fP * \fBparticle_copy\fP (\fBBparticle\fP *partlist)"
+.br
+.RI "Copies a list of particle parameters to a new list\&. "
+.ti -1c
+.RI "\fBBbadarea\fP * \fBparticle_bad_copy\fP (\fBBbadarea\fP *badlist)"
+.br
+.ti -1c
+.RI "\fBBfilament\fP * \fBfilament_copy\fP (\fBBfilament\fP *fillist)"
+.br
+.ti -1c
+.RI "\fBBstrucfac\fP * \fBstructurefactor_copy\fP (\fBBstrucfac\fP *sflist)"
+.br
+.ti -1c
+.RI "\fBBlayerline\fP * \fBlayerline_copy\fP (\fBBlayerline\fP *layerlist)"
+.br
+.ti -1c
+.RI "\fBBmicrograph\fP * \fBmicrograph_copy\fP (\fBBmicrograph\fP *mg)"
+.br
+.RI "Copies a micrograph\&. "
+.ti -1c
+.RI "int \fBproject_update\fP (\fBBproject\fP *\fBproject\fP, \fBBproject\fP *proj_new, int fom_index)"
+.br
+.RI "Updates an existing project with new information\&. "
+.ti -1c
+.RI "int \fBmicrograph_update\fP (\fBBmicrograph\fP *mg, \fBBmicrograph\fP *nu_mg, int fom_index, int flags)"
+.br
+.RI "Updates an existing micrograph with new information\&. "
+.ti -1c
+.RI "int \fBreconstruction_update\fP (\fBBreconstruction\fP *rec, \fBBreconstruction\fP *nu_rec, int fom_index, int flags)"
+.br
+.RI "Updates an existing reconstruction with new information\&. "
+.ti -1c
+.RI "int \fBparticle_update\fP (\fBBparticle\fP *part, \fBBparticle\fP *nu_part)"
+.br
+.RI "Updates one existing particle with new information\&. "
+.ti -1c
+.RI "int \fBparticle_update\fP (\fBBparticle\fP **pnt_part, \fBBparticle\fP *nu_part, int fom_index)"
+.br
+.RI "Updates an existing particle list with new information\&. "
+.ti -1c
+.RI "int \fBproject_merge_part_parameters\fP (\fBBproject\fP *\fBproject\fP, \fBBproject\fP *partproject)"
+.br
+.RI "Puts particle parameters from one project into another\&. "
+.ti -1c
+.RI "long \fBproject_set_part_links\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Sets the links from particles back to the micrographs and reconstructions\&. "
+.ti -1c
+.RI "long \fBmicrograph_set_part_links\fP (\fBBmicrograph\fP *mg)"
+.br
+.RI "Sets the links from particles back to the micrograph\&. "
+.ti -1c
+.RI "long \fBreconstruction_set_part_links\fP (\fBBreconstruction\fP *rec)"
+.br
+.RI "Sets the links from particles back to the reconstruction\&. "
+.ti -1c
+.RI "long \fBproject_divide\fP (\fBBproject\fP *\fBproject\fP, long n)"
+.br
+.RI "Divides a project into a number of micrograph subsets\&. "
+.ti -1c
+.RI "\fBBmicrograph\fP ** \fBproject_micrograph_array\fP (\fBBproject\fP *\fBproject\fP, long &nmg)"
+.br
+.RI "Sets up an array of selected micrograph pointers\&. "
+.ti -1c
+.RI "\fBBparticle\fP ** \fBproject_mg_particle_array\fP (\fBBproject\fP *\fBproject\fP, int \fBpart_select\fP, long &npart)"
+.br
+.RI "Sets up an array of selected particle pointers\&. "
+.ti -1c
+.RI "\fBBparticle\fP ** \fBproject_rec_particle_array\fP (\fBBproject\fP *\fBproject\fP, int \fBpart_select\fP, long &npart)"
+.br
+.RI "Sets up an array of selected particle pointers\&. "
+.ti -1c
+.RI "\fBBparticle\fP ** \fBparticle_array\fP (\fBBparticle\fP *partlist, int \fBpart_select\fP, long &npart)"
+.br
+.RI "Sets up an array of selected particle pointers\&. "
+.ti -1c
+.RI "int \fBproject_revert_filenames\fP (\fBBproject\fP *\fBproject\fP, \fBBproject\fP *project_old, int flag)"
+.br
+.RI "Reverts file names to what it was in an old project\&. "
+.ti -1c
+.RI "int \fBproject_set_field_id\fP (\fBBproject\fP *\fBproject\fP, int nseries, \fBBstring\fP &field_id)"
+.br
+.RI "Sets the field id's according to a regular series\&. "
+.ti -1c
+.RI "long \fBproject_show_hierarchy\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Shows the project hierarchy\&. "
+.ti -1c
+.RI "long \fBproject_show_class_averages\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Shows the class averages in a project\&. "
+.ti -1c
+.RI "long \fBproject_dump\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &filename)"
+.br
+.RI "Dumps particle info in the project hierarchy\&. "
+.ti -1c
+.RI "\fBBstring\fP \fBpath_update\fP (\fBBstring\fP &filename, \fBBstring\fP &path)"
+.br
+.ti -1c
+.RI "int \fBproject_set_micrograph_path\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &path)"
+.br
+.RI "Sets the path to micrograph files for all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_frame_path\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &path)"
+.br
+.RI "Sets the path to micrograph frames files for all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_powerspectrum_path\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &path)"
+.br
+.RI "Sets the path to powerspectrum files for all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_particle_path\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &path)"
+.br
+.RI "Sets the path to particle files for all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_filament_path\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &path)"
+.br
+.RI "Sets the path to filament files for all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_magnification\fP (\fBBproject\fP *\fBproject\fP, double mag)"
+.br
+.RI "Sets the magnification for all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_scan_sampling\fP (\fBBproject\fP *\fBproject\fP, double sampling)"
+.br
+.RI "Sets the scan sampling for all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_mg_pixel_size\fP (\fBBproject\fP *\fBproject\fP, \fBVector3\fP< double > pixel_size)"
+.br
+.RI "Sets the pixel size for all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_frame_pixel_size\fP (\fBBproject\fP *\fBproject\fP, \fBVector3\fP< double > pixel_size)"
+.br
+.RI "Sets the pixel size for all the micrograph frames\&. "
+.ti -1c
+.RI "int \fBproject_set_rec_voxel_size\fP (\fBBproject\fP *\fBproject\fP, \fBVector3\fP< double > pixel_size)"
+.br
+.RI "Sets the pixel size for all the reconstructions\&. "
+.ti -1c
+.RI "int \fBproject_set_part_pixel_size\fP (\fBBproject\fP *\fBproject\fP, \fBVector3\fP< double > pixel_size)"
+.br
+.RI "Sets the pixel size for all the particles\&. "
+.ti -1c
+.RI "int \fBproject_set_tilt\fP (\fBBproject\fP *\fBproject\fP, double tilt_axis, double tilt_angle)"
+.br
+.RI "Sets the tilt parameters for all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_exposure\fP (\fBBproject\fP *\fBproject\fP, double exposure)"
+.br
+.RI "Sets the aquisition time of all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_dose\fP (\fBBproject\fP *\fBproject\fP, double dose)"
+.br
+.RI "Sets the electron dose of all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_dose\fP (\fBBproject\fP *\fBproject\fP, \fBJSvalue\fP &dose_frac)"
+.br
+.RI "Sets the dose fractionation scheme of all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_micrograph_origins\fP (\fBBproject\fP *\fBproject\fP, \fBVector3\fP< double > origin)"
+.br
+.RI "Sets micrograph origins to the given origin\&. "
+.ti -1c
+.RI "int \fBproject_add_origins_to_coords\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Adds the particle origins to the micrograph coordinates\&. "
+.ti -1c
+.RI "int \fBproject_flip_origins\fP (\fBBproject\fP *\fBproject\fP, int flip)"
+.br
+.RI "Flip origin coordinates\&. "
+.ti -1c
+.RI "long \fBproject_renumber_particles\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Renumbers particles\&. "
+.ti -1c
+.RI "int \fBproject_set_particle_box_size\fP (\fBBproject\fP *\fBproject\fP, \fBVector3\fP< long > box_size)"
+.br
+.RI "Sets particle box size to the given value\&. "
+.ti -1c
+.RI "int \fBproject_set_particle_box_size\fP (\fBBproject\fP *\fBproject\fP, long box_size)"
+.br
+.RI "Sets particle box size to the given value\&. "
+.ti -1c
+.RI "int \fBproject_set_particle_origins\fP (\fBBproject\fP *\fBproject\fP, \fBVector3\fP< double > origin)"
+.br
+.RI "Sets particle origins to given values\&. "
+.ti -1c
+.RI "int \fBproject_set_particle_asu_views\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &symmetry_asu)"
+.br
+.RI "Sets particle views within the asymmetric unit\&. "
+.ti -1c
+.RI "int \fBproject_set_particle_asu_views\fP (\fBBproject\fP *\fBproject\fP, \fBBsymmetry\fP &sym)"
+.br
+.ti -1c
+.RI "int \fBproject_rotate_particle_views\fP (\fBBproject\fP *\fBproject\fP, \fBView\fP view)"
+.br
+.RI "Rotates particle views with respect to a reference view\&. "
+.ti -1c
+.RI "int \fBproject_apply_map_magnifications\fP (\fBBproject\fP *\fBproject\fP, int mag_num, float *mag)"
+.br
+.RI "Change particle pixel sizes for particles based on map magnifications\&. "
+.ti -1c
+.RI "long \fBproject_reset\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &reset)"
+.br
+.RI "Reset a particle parameter from its micrograph\&. "
+.ti -1c
+.RI "\fBView\fP * \fBviews_from_project\fP (\fBBproject\fP *\fBproject\fP, int selection)"
+.br
+.RI "Retrieves the particle views from a project\&. "
+.ti -1c
+.RI "\fBBstring\fP \fBget_fom_tag\fP (\fBFOMType\fP fom_type)"
+.br
+.RI "Returns the tag associated with a particular FOM\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for micrograph processing\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010206 
+.PP
+Modified: 20210722 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_processing\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBfield\fP* field_add (\fBBfield\fP ** field, \fBBstring\fP & field_id)"
+
+.PP
+Adds a field-of-view parameter structure to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**field\fP pointer to any field-of-view in the list\&. 
+.br
+\fIfield_id\fP field identifier\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bfield* new field-of-view\&. 
+.PP
+.nf
+The function allocates memory for a new field-of-view structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 106 of file mg_processing\&.cpp\&.
+.SS "int field_kill (\fBBfield\fP * field)"
+
+.PP
+Frees a whole field-of-view structure\&. 
+.PP
+.nf
+Frees all the structures down the hierarchy.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*field\fP field-of-view parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 429 of file mg_processing\&.cpp\&.
+.SS "\fBBfilament\fP* filament_add (\fBBfilament\fP ** fil, int pid)"
+
+.PP
+Adds a filament parameter structure to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**fil\fP pointer to any filament in the list\&. 
+.br
+\fIpid\fP filament number in file (starts at 1)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bfilament* new filament\&. 
+.PP
+.nf
+The function allocates memory for a new filament structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 288 of file mg_processing\&.cpp\&.
+.SS "\fBBfilament\fP* filament_copy (\fBBfilament\fP * fillist)"
+
+.PP
+Definition at line 632 of file mg_processing\&.cpp\&.
+.SS "int filament_kill (\fBBfilament\fP * fil)"
+
+.PP
+Frees a list of filaments\&. 
+.PP
+.nf
+Frees all the structures down the hierarchy.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fil\fP filament parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 515 of file mg_processing\&.cpp\&.
+.SS "double filament_length (\fBBfilament\fP * fil)"
+
+.PP
+Calculates the length of a filament\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fil\fP pointer to a filament\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double length in coordinate units\&. 
+.PP
+.nf
+The length is defined as the sum of the link lengths connecting the nodes.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 342 of file mg_processing\&.cpp\&.
+.SS "\fBBfilnode\fP* filament_node_add (\fBBfilnode\fP ** fnode, int pid)"
+
+.PP
+Adds a filament node parameter structure to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**fnode\fP pointer to any filament node in the list\&. 
+.br
+\fIpid\fP filament node number in file (starts at 1)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bfilnode* new filament node\&. 
+.PP
+.nf
+The function allocates memory for a new filament node structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 317 of file mg_processing\&.cpp\&.
+.SS "\fBBframe\fP* frame_add (\fBBframe\fP ** frame, int pid)"
+
+.PP
+Adds a movie frame parameter structure to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**frame\fP pointer to any frame in the list\&. 
+.br
+\fIpid\fP particle number in file (starts at 1)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bframe* new frame\&. 
+.PP
+.nf
+The function allocates memory for a new frame structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 167 of file mg_processing\&.cpp\&.
+.SS "\fBBstring\fP get_fom_tag (\fBFOMType\fP fom_type)"
+
+.PP
+Returns the tag associated with a particular FOM\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIfom_type\fP type of FOM\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBBstring\fP FOM tag\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2670 of file mg_processing\&.cpp\&.
+.SS "\fBBlayerline\fP* layerline_copy (\fBBlayerline\fP * layerlist)"
+
+.PP
+Definition at line 673 of file mg_processing\&.cpp\&.
+.SS "int mg_part_links (\fBBmicrograph\fP * mg)"
+
+.PP
+Sets the links from particles to micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP pointer to micrograph\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 218 of file mg_processing\&.cpp\&.
+.SS "\fBBmicrograph\fP* micrograph_add (\fBBmicrograph\fP ** mg, \fBBstring\fP & mg_id)"
+
+.PP
+Adds a micrograph parameter structure to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**mg\fP pointer to any micrograph in the list\&. 
+.br
+\fImg_id\fP micrograph identifier\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmicrograph* new micrograph\&. 
+.PP
+.nf
+The function allocates memory for a new micrograph structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 135 of file mg_processing\&.cpp\&.
+.SS "\fBBmicrograph\fP* micrograph_copy (\fBBmicrograph\fP * mg)"
+
+.PP
+Copies a micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph structure to be copied\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmicrograph* new micrograph\&. 
+.RE
+.PP
+
+.PP
+Definition at line 698 of file mg_processing\&.cpp\&.
+.SS "int micrograph_kill (\fBBmicrograph\fP * mg)"
+
+.PP
+Frees a whole micrograph parameter structure\&. 
+.PP
+.nf
+Frees all the structures down the hierarchy.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 456 of file mg_processing\&.cpp\&.
+.SS "long micrograph_set_part_links (\fBBmicrograph\fP * mg)"
+
+.PP
+Sets the links from particles back to the micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1135 of file mg_processing\&.cpp\&.
+.SS "int micrograph_update (\fBBmicrograph\fP * mg, \fBBmicrograph\fP * nu_mg, int fom_index, int flags)"
+
+.PP
+Updates an existing micrograph with new information\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph structure to be updated\&. 
+.br
+\fI*nu_mg\fP micrograph structure with new information\&. 
+.br
+\fIfom_index\fP index of FOM to select on\&. 
+.br
+\fIflags\fP flags indicating which parts to update\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The new information is encoded as a micrograph structure.
+All fields are updated if the new fields contain non-default data.
+Defaults are defined here as zero-length strings or zeroes.
+The particles in the original micrograph are matched by ID with 
+those in the new micrograph and updated, with any new particles 
+added from the new micrograph.
+The bad area and marker coordinates are replaced if they exist 
+in the new structure.
+The new micrograph structure is not modified, except for deletion 
+of bad areas and markers.
+
+Flags:
+    1   particles
+    2   bad areas
+    4   filaments
+    8   structure factors
+    16  layer lines
+    32  markers
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 842 of file mg_processing\&.cpp\&.
+.SS "\fBBparticle\fP* part_find_first (\fBBproject\fP * project)"
+
+.PP
+Finds the first particle in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP pointer to project\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bparticle* first particle with a filename\&. 
+.PP
+.nf
+The function searches for the first particle with a filename.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 252 of file mg_processing\&.cpp\&.
+.SS "\fBBparticle\fP* particle_add (\fBBparticle\fP ** part, int pid)"
+
+.PP
+Adds a particle parameter structure to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**part\fP pointer to any particle in the list\&. 
+.br
+\fIpid\fP particle number in file (starts at 1)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bparticle* new particle\&. 
+.PP
+.nf
+The function allocates memory for a new particle structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 196 of file mg_processing\&.cpp\&.
+.SS "\fBBparticle\fP** particle_array (\fBBparticle\fP * partlist, int part_select, long & npart)"
+
+.PP
+Sets up an array of selected particle pointers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*partlist\fP particle linked list\&. 
+.br
+\fIpart_select\fP particle selection (-1 if none)\&. 
+.br
+\fI&npart\fP array length (modified)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bparticle** particle pointer array\&. 
+.PP
+.nf
+FOM's of non-selected particles are zeroed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1325 of file mg_processing\&.cpp\&.
+.SS "\fBBbadarea\fP* particle_bad_copy (\fBBbadarea\fP * badlist)"
+
+.PP
+Definition at line 617 of file mg_processing\&.cpp\&.
+.SS "\fBBparticle\fP* particle_copy (\fBBparticle\fP ** partlist, \fBBparticle\fP * part)"
+
+.PP
+Adds one particle onto a list of particle parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**partlist\fP destination particle list\&. 
+.br
+\fI*part\fP particle\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bparticle* new particle\&. 
+.RE
+.PP
+
+.PP
+Definition at line 577 of file mg_processing\&.cpp\&.
+.SS "\fBBparticle\fP* particle_copy (\fBBparticle\fP * partlist)"
+
+.PP
+Copies a list of particle parameters to a new list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*partlist\fP source particle list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bparticle* new list\&. 
+.RE
+.PP
+
+.PP
+Definition at line 606 of file mg_processing\&.cpp\&.
+.SS "int particle_kill (\fBBparticle\fP * part)"
+
+.PP
+Frees a list of particles\&. 
+.PP
+.nf
+Frees all the structures down the hierarchy.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*part\fP particle parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 491 of file mg_processing\&.cpp\&.
+.SS "int particle_update (\fBBparticle\fP ** pnt_part, \fBBparticle\fP * nu_part, int fom_index)"
+
+.PP
+Updates an existing particle list with new information\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**pnt_part\fP particle structure list to be updated\&. 
+.br
+\fI*nu_part\fP particle structure list with new information\&. 
+.br
+\fIfom_index\fP index of FOM to select on\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The new information is encoded as a particle structure.
+All fields are updated if the new fields contain non-default data.
+Defaults are defined here as zeroes.
+The new particle structure is not modified.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1038 of file mg_processing\&.cpp\&.
+.SS "int particle_update (\fBBparticle\fP * part, \fBBparticle\fP * nu_part)"
+
+.PP
+Updates one existing particle with new information\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*part\fP particle structure to be updated\&. 
+.br
+\fI*nu_part\fP particle structure with new information\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The new information is encoded as a particle structure.
+All fields are updated if the new fields contain non-default data.
+Defaults are defined here as zeroes.
+The new particle structure is not modified.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 991 of file mg_processing\&.cpp\&.
+.SS "\fBBstring\fP path_update (\fBBstring\fP & filename, \fBBstring\fP & path)"
+
+.PP
+Definition at line 1705 of file mg_processing\&.cpp\&.
+.SS "int project_add_origins_to_coords (\fBBproject\fP * project)"
+
+.PP
+Adds the particle origins to the micrograph coordinates\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The coordinates of particles from a micrograph and particle origins
+in an image processing parameter structure are added. The old
+micrograph coordinates are overwritten with the results.
+Requirement: The box radius for picked particles must be specified.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2214 of file mg_processing\&.cpp\&.
+.SS "int project_apply_map_magnifications (\fBBproject\fP * project, int mag_num, float * mag)"
+
+.PP
+Change particle pixel sizes for particles based on map magnifications\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fImag_num\fP number of maps; 
+.br
+\fI*mag\fP array of map magnifications\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2529 of file mg_processing\&.cpp\&.
+.SS "\fBBproject\fP* project_create (int nmg, int nrec)"
+
+.PP
+Creates a micrograph processing project parameter structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fInmg\fP number of micrograph structures\&. 
+.br
+\fInrec\fP number of reconstruction structures\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bproject* project parameter structure\&. 
+.PP
+.nf
+The function allocates memory for the project structure, a field-of-view structure,
+and the requested number of micrographs and reconstructions.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 33 of file mg_processing\&.cpp\&.
+.SS "long project_divide (\fBBproject\fP * project, long n)"
+
+.PP
+Divides a project into a number of micrograph subsets\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIn\fP number of subsets\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of new projects created\&. 
+.PP
+.nf
+Only selected micrographs are considered in the subdivision.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1169 of file mg_processing\&.cpp\&.
+.SS "long project_dump (\fBBproject\fP * project, \fBBstring\fP & filename)"
+
+.PP
+Dumps particle info in the project hierarchy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&filename\fP output file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles dumped\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1611 of file mg_processing\&.cpp\&.
+.SS "int project_equal_mg_part_files (\fBBproject\fP * project)"
+
+.PP
+Sets micrograph and particle files to be the same\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+If the micrograph file name exists, that is used, otherwise the
+particle file name is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 73 of file mg_processing\&.cpp\&.
+.SS "int project_flip_origins (\fBBproject\fP * project, int flip)"
+
+.PP
+Flip origin coordinates\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIflip\fP axes to flip\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The particle origins are reversed.
+The specification of axes to flip is embedded in the flip number:
+    first bit  - x
+    second bit - y
+    third bit  - z
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2256 of file mg_processing\&.cpp\&.
+.SS "int project_kill (\fBBproject\fP * project)"
+
+.PP
+Frees a whole project\&. 
+.PP
+.nf
+Frees all the structures down the hierarchy.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 392 of file mg_processing\&.cpp\&.
+.SS "int project_merge_part_parameters (\fBBproject\fP * project, \fBBproject\fP * partproject)"
+
+.PP
+Puts particle parameters from one project into another\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure with all parameters\&. 
+.br
+\fI*partproject\fP project parameter structure with particle parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1083 of file mg_processing\&.cpp\&.
+.SS "\fBBparticle\fP** project_mg_particle_array (\fBBproject\fP * project, int part_select, long & npart)"
+
+.PP
+Sets up an array of selected particle pointers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIpart_select\fP particle selection (-1 if none)\&. 
+.br
+\fI&npart\fP array length (modified)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bparticle** particle pointer array\&. 
+.PP
+.nf
+FOM's of non-selected particles are zeroed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1247 of file mg_processing\&.cpp\&.
+.SS "\fBBmicrograph\fP** project_micrograph_array (\fBBproject\fP * project, long & nmg)"
+
+.PP
+Sets up an array of selected micrograph pointers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&nmg\fP array length (modified)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmicrograph** micrograph pointer array\&. 
+.PP
+.nf
+FOM's of non-selected micrographs are zeroed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1219 of file mg_processing\&.cpp\&.
+.SS "\fBBparticle\fP** project_rec_particle_array (\fBBproject\fP * project, int part_select, long & npart)"
+
+.PP
+Sets up an array of selected particle pointers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIpart_select\fP particle selection (-1 if none)\&. 
+.br
+\fI&npart\fP array length (modified)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bparticle** particle pointer array\&. 
+.PP
+.nf
+FOM's of non-selected particles are zeroed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1289 of file mg_processing\&.cpp\&.
+.SS "long project_renumber_particles (\fBBproject\fP * project)"
+
+.PP
+Renumbers particles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long total number of particles\&. 
+.PP
+.nf
+For each micrograph the particles are renumbered starting from 1.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2307 of file mg_processing\&.cpp\&.
+.SS "long project_reset (\fBBproject\fP * project, \fBBstring\fP & reset)"
+
+.PP
+Reset a particle parameter from its micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&reset\fP a string specifying the parameter\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles changed\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2574 of file mg_processing\&.cpp\&.
+.SS "int project_revert_filenames (\fBBproject\fP * project, \fBBproject\fP * project_old, int flag)"
+
+.PP
+Reverts file names to what it was in an old project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI*project_old\fP project parameter structure with old file names\&. 
+.br
+\fIflag\fP 1=mg, 2=ps, 4=rec, 8=part, 16=frames\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1353 of file mg_processing\&.cpp\&.
+.SS "int project_rotate_particle_views (\fBBproject\fP * project, \fBView\fP view)"
+
+.PP
+Rotates particle views with respect to a reference view\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Eduardo Sanz-Garcia 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIview\fP reference view\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2487 of file mg_processing\&.cpp\&.
+.SS "int project_set_dose (\fBBproject\fP * project, double dose)"
+
+.PP
+Sets the electron dose of all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIdose\fP electron dose (e/A2)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2112 of file mg_processing\&.cpp\&.
+.SS "int project_set_dose (\fBBproject\fP * project, \fBJSvalue\fP & dose_frac)"
+
+.PP
+Sets the dose fractionation scheme of all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIdose_frac\fP electron dose fractionation scheme\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2132 of file mg_processing\&.cpp\&.
+.SS "int project_set_exposure (\fBBproject\fP * project, double exposure)"
+
+.PP
+Sets the aquisition time of all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIexposure\fP aquisition time (seconds)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2092 of file mg_processing\&.cpp\&.
+.SS "int project_set_field_id (\fBBproject\fP * project, int nseries, \fBBstring\fP & field_id)"
+
+.PP
+Sets the field id's according to a regular series\&. 
+.PP
+.nf
+The micrograph data blocks must be arranged in a regular order with
+every nseries micrographs from the same field-of-view.
+The field id's are taken from the first micrograph id in a series.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fInseries\fP number of micrographs per field-of-view\&. 
+.br
+\fI&field_id\fP a user-specified field ID\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1421 of file mg_processing\&.cpp\&.
+.SS "int project_set_filament_path (\fBBproject\fP * project, \fBBstring\fP & path)"
+
+.PP
+Sets the path to filament files for all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&path\fP path to filament files\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+If the requested path is "." or "./", the path is completely removed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1868 of file mg_processing\&.cpp\&.
+.SS "int project_set_frame_path (\fBBproject\fP * project, \fBBstring\fP & path)"
+
+.PP
+Sets the path to micrograph frames files for all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&path\fP path to micrograph frames files\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+If the requested path is "." or "./", the path is completely removed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1760 of file mg_processing\&.cpp\&.
+.SS "int project_set_frame_pixel_size (\fBBproject\fP * project, \fBVector3\fP< double > pixel_size)"
+
+.PP
+Sets the pixel size for all the micrograph frames\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIpixel_size\fP pixel size\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1986 of file mg_processing\&.cpp\&.
+.SS "int project_set_magnification (\fBBproject\fP * project, double mag)"
+
+.PP
+Sets the magnification for all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fImag\fP magnification\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1919 of file mg_processing\&.cpp\&.
+.SS "int project_set_mg_pixel_size (\fBBproject\fP * project, \fBVector3\fP< double > pixel_size)"
+
+.PP
+Sets the pixel size for all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIpixel_size\fP pixel size\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1962 of file mg_processing\&.cpp\&.
+.SS "int project_set_micrograph_origins (\fBBproject\fP * project, \fBVector3\fP< double > origin)"
+
+.PP
+Sets micrograph origins to the given origin\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIorigin\fP particle origin\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+For each micrograph the micrograph origin is set to the given origin.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2182 of file mg_processing\&.cpp\&.
+.SS "int project_set_micrograph_path (\fBBproject\fP * project, \fBBstring\fP & path)"
+
+.PP
+Sets the path to micrograph files for all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&path\fP path to micrograph files\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+If the requested path is "." or "./", the path is completely removed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1731 of file mg_processing\&.cpp\&.
+.SS "long project_set_part_links (\fBBproject\fP * project)"
+
+.PP
+Sets the links from particles back to the micrographs and reconstructions\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1113 of file mg_processing\&.cpp\&.
+.SS "int project_set_part_pixel_size (\fBBproject\fP * project, \fBVector3\fP< double > pixel_size)"
+
+.PP
+Sets the pixel size for all the particles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIpixel_size\fP pixel size\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2035 of file mg_processing\&.cpp\&.
+.SS "int project_set_particle_asu_views (\fBBproject\fP * project, \fBBstring\fP & symmetry_asu)"
+
+.PP
+Sets particle views within the asymmetric unit\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&symmetry_asu\fP point group string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+For each micrograph or reconstruction the particle view is set to within the asymmetric unit.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2443 of file mg_processing\&.cpp\&.
+.SS "int project_set_particle_asu_views (\fBBproject\fP * project, \fBBsymmetry\fP & sym)"
+
+.PP
+Definition at line 2454 of file mg_processing\&.cpp\&.
+.SS "int project_set_particle_box_size (\fBBproject\fP * project, long box_size)"
+
+.PP
+Sets particle box size to the given value\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIbox_size\fP particle box size\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+For each micrograph or reconstruction the particle box size is set 
+to the given radius and the particle origins are adjusted as well.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2389 of file mg_processing\&.cpp\&.
+.SS "int project_set_particle_box_size (\fBBproject\fP * project, \fBVector3\fP< long > box_size)"
+
+.PP
+Sets particle box size to the given value\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIbox_size\fP particle box size\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+For each micrograph or reconstruction the particle box size is set 
+to the given radius and the particle origins are adjusted as well.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2344 of file mg_processing\&.cpp\&.
+.SS "int project_set_particle_origins (\fBBproject\fP * project, \fBVector3\fP< double > origin)"
+
+.PP
+Sets particle origins to given values\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIorigin\fP particle origin\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+For each micrograph or reconstruction the particle origin is set to the given origin.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2408 of file mg_processing\&.cpp\&.
+.SS "int project_set_particle_path (\fBBproject\fP * project, \fBBstring\fP & path)"
+
+.PP
+Sets the path to particle files for all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&path\fP path to particle files\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+If the requested path is "." or "./", the path is completely removed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1818 of file mg_processing\&.cpp\&.
+.SS "int project_set_powerspectrum_path (\fBBproject\fP * project, \fBBstring\fP & path)"
+
+.PP
+Sets the path to powerspectrum files for all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&path\fP path to powerspectrum files\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+If the requested path is "." or "./", the path is completely removed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1789 of file mg_processing\&.cpp\&.
+.SS "int project_set_rec_voxel_size (\fBBproject\fP * project, \fBVector3\fP< double > pixel_size)"
+
+.PP
+Sets the pixel size for all the reconstructions\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIpixel_size\fP pixel size\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2014 of file mg_processing\&.cpp\&.
+.SS "int project_set_scan_sampling (\fBBproject\fP * project, double sampling)"
+
+.PP
+Sets the scan sampling for all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIsampling\fP sampling\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Sampling is isotropic.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1942 of file mg_processing\&.cpp\&.
+.SS "int project_set_tilt (\fBBproject\fP * project, double tilt_axis, double tilt_angle)"
+
+.PP
+Sets the tilt parameters for all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fItilt_axis\fP micrograph tilt axis angle\&. 
+.br
+\fItilt_angle\fP micrograph tilt angle\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2069 of file mg_processing\&.cpp\&.
+.SS "long project_show_class_averages (\fBBproject\fP * project)"
+
+.PP
+Shows the class averages in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of class averages\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1582 of file mg_processing\&.cpp\&.
+.SS "long project_show_hierarchy (\fBBproject\fP * project)"
+
+.PP
+Shows the project hierarchy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1471 of file mg_processing\&.cpp\&.
+.SS "int project_update (\fBBproject\fP * project, \fBBproject\fP * proj_new, int fom_index)"
+
+.PP
+Updates an existing project with new information\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure to be updated\&. 
+.br
+\fI*proj_new\fP project parameter structure with new information\&. 
+.br
+\fIfom_index\fP index of FOM to select on\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&.
+.RE
+.PP
+.PP
+.nf
+The new information is encoded as a project hierarchy.
+The original project hierarchy is searched for the micrograph ID
+tags that correspond to the original project hierarchy and those
+micrograph parameters are updated. Because the micrograph ID tags
+should be unique in themselves, the field ID tags are ignored and
+the two project hierarchies may have different field designations.
+If a micrograph ID from the new project hierarchy is not found in
+the original project hierarchy, it is added.
+The new project hierarchy is not modified.
+.fi
+.PP
+ 
+.PP
+Definition at line 773 of file mg_processing\&.cpp\&.
+.SS "int rec_part_links (\fBBreconstruction\fP * rec)"
+
+.PP
+Sets the links from particles to reconstructions\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*rec\fP pointer to reconstruction\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 234 of file mg_processing\&.cpp\&.
+.SS "\fBBreconstruction\fP* reconstruction_add (\fBBreconstruction\fP ** rec, \fBBstring\fP & rec_id)"
+
+.PP
+Adds a reconstruction parameter structure to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**rec\fP pointer to any reconstruction in the list\&. 
+.br
+\fI&rec_id\fP reconstruction identifier\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Breconstruction* new reconstruction\&. 
+.PP
+.nf
+The function allocates memory for a new micrograph structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 365 of file mg_processing\&.cpp\&.
+.SS "int reconstruction_kill (\fBBreconstruction\fP * rec)"
+
+.PP
+Frees a whole reconstruction parameter structure\&. 
+.PP
+.nf
+Frees all the structures down the hierarchy.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*rec\fP reconstruction parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 545 of file mg_processing\&.cpp\&.
+.SS "long reconstruction_set_part_links (\fBBreconstruction\fP * rec)"
+
+.PP
+Sets the links from particles back to the reconstruction\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*rec\fP reconstruction parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1150 of file mg_processing\&.cpp\&.
+.SS "int reconstruction_update (\fBBreconstruction\fP * rec, \fBBreconstruction\fP * nu_rec, int fom_index, int flags)"
+
+.PP
+Updates an existing reconstruction with new information\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*rec\fP reconstruction structure to be updated\&. 
+.br
+\fI*nu_rec\fP reconstruction structure with new information\&. 
+.br
+\fIfom_index\fP index of FOM to select on\&. 
+.br
+\fIflags\fP flags indicating which parts to update\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The new information is encoded as a reconstruction structure.
+The update is only done if the FOM of the new reconstruction is better.
+All fields are updated if the new fields contain non-default data.
+Defaults are defined here as zero-length strings or zeroes.
+The particles in the original reconstruction are matched by ID with 
+those in the new reconstruction and updated, with any new particles 
+added from the new reconstruction.
+The bad area and marker coordinates are replaced if they exist 
+in the new structure.
+The new reconstruction structure is not modified, except for deletion 
+of bad areas and markers.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 947 of file mg_processing\&.cpp\&.
+.SS "\fBBstrucfac\fP* structurefactor_copy (\fBBstrucfac\fP * sflist)"
+
+.PP
+Definition at line 652 of file mg_processing\&.cpp\&.
+.SS "\fBView\fP* views_from_project (\fBBproject\fP * project, int selection)"
+
+.PP
+Retrieves the particle views from a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIselection\fP selection number (-1 selects positives, 0 selects all)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+View* linked list of views\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2624 of file mg_processing\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

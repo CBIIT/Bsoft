@@ -1,0 +1,312 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Handedness</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="../Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+    <h1> Background </h1>
+      <p>There are at least three steps to a tilt experiment: </p>
+      <ol>
+        <li>Record a tilt-pair of micrographs, where the second view is
+of the same field as the first, but the specimen was rotated by a known angle
+(rotation angle) about a known axis (tilt axis). </li>
+        <li>Determine orientations (views or Euler angles: phi, theta, psi = -omega)
+		and origins and then a reconstruction from the first view.
+		At a minimum, the origins of the particles in the second view must be
+determined. (The second view can be included in the reconstruction - after
+orientations and origins are determined of course.) Chiral features should be
+apparent in the reconstruction. The handedness of this structure
+is termed &quot;hand A&quot;. The mirror of this structure is &quot;hand B&quot;. </li>
+        <li>Compare projections of each handedness to images of the
+second view. In the program dhand, the following steps are performed:
+        <ul>
+          <li>The input three-dimensional, hand A map is mirrored to give the
+		  hand B map: mapB(x,y,z) = mapA(-x,-y,-z). </li>
+          <li>180 degrees is added to each view angle (or equivalently the omega or psi angle).
+This gives the orientation for hand B. </li>
+          <li>Two predicted orientations for the second view are computed from
+the first orientation and the known tilt-axis direction and rotation angle.
+One predicted orientation corresponds to the expected second
+orientation if the structure has handedness A. The other corresponds to the
+expected second orientation if the structure has handedness B. For the hand
+A orientation the program uses the original view angle.
+For the hand B orientation the program uses the orientation view angle
++ 180 degrees. The effect of this is to rotate opposite directions
+about the tilt axis - as far as the view vector ( or equivalently the phi,
+theta Euler angles) are concerned. </li>
+          <li>The hand A map is projected in the predicted hand-A orientation
+(for the second view). </li>
+          <li>The hand B map is projected in the predicted hand-B
+orientation (for the second view). </li>
+          <li>The hand A and hand B projections are compared to the
+image of the second view. A correlation coefficient (CC) is computed for each
+comparison. The correct handedness will have the highest CC.
+(Note: Before the test is considered reliable, there should be a
+significant gap between the hand A and hand B CCs. What is reliable
+will depend on the specimen and the quality of the images.) </li>
+          <li>As a control, the hand A map is projected along the hand
+A orientation of the first view. This projection is then compared to the first
+image. This resulting CC should be a similar value to the CC from
+the correct handedness in the previous point.</li>
+        </ul>
+	</li>
+	</ol>
+<p>For a detailed discussion of the handedness-tilt experiment, please see
+      Belnap <i>et al</i> (1997) &quot;A Method for Establishing the Handedness of Biological
+Macromolecules&quot; <i>J. Struct. Biol.</i> <b>120</b>, 44-51</p>
+      <hr width="100%" />
+<h1>Running dhand</h1>
+<p>To run dhand you need the following:</p>
+      <ol>
+        <li>Particle images from the first and second views.
+Particle image
+numbers must match between the two micrographs, i.e. the id numbers in
+micrograph pairs must represent the same imaged object. Note, the
+two images must be kept in the same view direction (i.e. the same x,y orientation)
+when displaying, storing, extracting, and manipulating in the computer.
+For example, if you scan negatives you should place the two micrographs
+in the scanner in the same orientation. </li>
+        <li>A three-dimensional reconstruction computed from the
+micrograph of the first view. (There is no reason the second view cannot be
+included in the reconstruction as well if the orientations and origins are
+sufficiently well determined.) For a reliable detection of the correct absolute
+handedness, the reconstruction needs to be of sufficiently high quality
+that you can see chiral features (handedness) in it. </li>
+        <li>Orientations and origins of particles in the first view,
+and at least origins of particles in the second view (orientations are okay, too). </li>
+        <li>The angle of the tilt axis in the image plane (tilt-axis direction).
+This angle is measured from the +x-axis of the orientation of the micrograph
+in the computer (<a href="tilt_axis_convention.jpg">see diagram</a>).
+A positive angle is a anticlockwise rotation. </li>
+        <li>Tilt angles for each view. The tilt angle is the
+angle of the specimen in the microscope. For example, if the first view was
+taken with the microscope goniometer at 0 degrees and the second at 5
+degrees, then the tilt angles are 0 and 5 for the first and second views,
+respectively. The angle of rotation is tilt_angle2 - tilt_angle1. It is critical that
+the tilt and the tilt-axis direction angles be set properly otherwise the
+incorrect handedness may be chosen (<a href="tilt_axis_convention.jpg">
+see diagram</a>). For this reason, it is recommended that you use ahandedness
+calibration standard - a particle with known handedness - to calibratethe
+tilt-axis direction and tilt angles. A standard should be used at
+every magnification and microscope used since the tilt-axis direction
+changes with changes in magnification or instrument. </li>
+        <li>Radial and resolution limits for the correlation-coefficient calculation,
+in pixel and angstrom units, respectively. </li>
+        <li>Input parameters in a parameter file (such as a STAR file),
+		<a href="poly_hand.star.html">see example</a>
+		 Multiple micrograph pairs can be entered. The micrographs must be
+		 correctly organized in field-of-view records, each containing exactly 2
+		 micrographs of the same field-of-view. </li>
+        <li>The spacing in angstroms/pixel must be correctly set in the
+		parameter file. </li>
+	</ol>
+<center><img src="tilt_axis_convention.jpg" alt="Tilt axis convention" height="500" />
+<p>The tilt axis convention</p></center>
+
+	<br/>
+<h2>Example command lines</h2>
+<p>To view the options avaialabe for the program dhand, just enter &quot;dhand&quot;.</p>
+<p>Given two micrographs in two parameter files, it can be properly organized
+using the -numberperfield option. The tilt angle and tilt axis should be
+specified in the parameter file, but the -axis option can override the angle
+for the tilt axis. The other requirements are the micrograph selection (-mgsel)
+and the reference map (-map):</p>
+<div id="command"><p>dhand -v 1 -num 2 -axis 90 -mgsel angle,0,10 -mindif 0.02 -map d5.map d5_proj.star d5_roty10_proj.star</p></div>
+<p>If more information about each particle is desired, the -difference option
+can be used:</p>
+<div id="command"><p>dhand -v 1 -diff 1 -num 2 -axis 90 -mgsel angle,0,10 -mindif 0.03 -map d5.map d5_proj.star d5_roty10_proj.star</p></div>
+<p>If the origins of the second set of particle images are not well defined,
+they can be determined using the option -org2:</p>
+<div id="command"><p>dhand -v 1 -org2 cross -num 2 -axis 90 -mgsel angle,0,10 -mindif 0.03 -resol 4,200 -map d5.map d5_proj.star d5_roty10_proj.star</p></div>
+
+<br />
+      <h2>Sample output for a test with murine polyomavirus</h2>
+      </p>
+      <tt>dhand, version 2001-10-18</tt>
+      <p><tt>Total number of micrographs: 2</tt> </p>
+      <p><tt>Total number of particles:&nbsp;&nbsp; 61</tt> <br />
+&nbsp; </p>
+      <p><tt>Tilt pair</tt> <br />
+      <tt>poly_5122.pif</tt> <br />
+      <tt>poly5123.pif</tt> </p>
+      <p><tt>Tilt-axis direction =&nbsp; 113.500&nbsp;&nbsp;&nbsp;
+Rotation angle
+(tilt_angle2 - tilt_angle1) = -5.000</tt> </p>
+      <p><tt>Particle images vs. projections</tt> </p>
+      <p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Correlation Coefficients</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+projection&nbsp;&nbsp;&nbsp;&nbsp; projection&nbsp;&nbsp;&nbsp;&nbsp;
+projection</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+view 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+view2,handA&nbsp;&nbsp;&nbsp;
+view2,handB</tt> <br />
+      <tt>&nbsp;&nbsp;
+Particle_Id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+vs. image1&nbsp;&nbsp;&nbsp;&nbsp; vs. image2&nbsp;&nbsp;&nbsp;&nbsp;
+vs.
+image2</tt> <br />
+      <tt>================================================================</tt>
+      <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4206&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3559&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.1399</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3896&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3354&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.1670</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4481&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3817&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.1612</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4178&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3675&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.1155</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4620&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3647&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.2844</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4171&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3803&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.1356</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4146&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3400&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.1925</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3624&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3721&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.1674</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4258&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3838&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.1240</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+11&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4803&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3310&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.1159</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+12&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4524&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4156&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.1735</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+13&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4301&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3405&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.1247</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+16&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3839&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3482&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.0307</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+17&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4359&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3881&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.2008</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+18&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3944&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3550&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.1037</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+19&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3994&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3581&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.1494</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+22&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4113&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3542&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.1109</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+24&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4425&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4033&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.1467</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+29&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4380&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4038&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.1486</tt> </p>
+      <p><tt>Tilt-pair
+average&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4224&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3673&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.1470</tt> <br />
+      <tt>Tilt-pair std. dev&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.0290&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.0245&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.0503</tt> <br />
+      <tt>Pair
+Count&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+19&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0</tt> <br />
+&nbsp; <br />
+&nbsp; </p>
+      <p><tt>Particle images vs. projections</tt> </p>
+      <p><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Correlation Coefficients</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+projection&nbsp;&nbsp;&nbsp;&nbsp; projection&nbsp;&nbsp;&nbsp;&nbsp;
+projection</tt> <br />
+      <tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+view 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+view2,handA&nbsp;&nbsp;&nbsp;
+view2,handB</tt> <br />
+      <tt>&nbsp;&nbsp;
+Particle_Id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+vs. image1&nbsp;&nbsp;&nbsp;&nbsp; vs. image2&nbsp;&nbsp;&nbsp;&nbsp;
+vs.
+image2</tt> <br />
+      <tt>================================================================</tt>
+      <br />
+      <tt>Global
+average&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.4224&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.3673&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.1470</tt> <br />
+      <tt>Global std.
+dev&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.0290&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.0245&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0.0503</tt> <br />
+      <tt>Global
+Count&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+19&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+0</tt> </p>
+      <p><tt>NOTE:&nbsp; Hand A is handedness of input map.&nbsp;
+Mirror of input
+map is hand B.</tt> <br />
+&nbsp; </p>
+      <p>(for multiple micrograph pairs the global results would
+represent all
+pair-wise comparisons) <br />
+      </p>
+</div>
+<div id="footer">
+  Bernard Heymann  20121013
+</div>
+</body>
+</html>

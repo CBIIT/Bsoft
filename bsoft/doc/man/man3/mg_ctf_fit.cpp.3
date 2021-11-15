@@ -1,0 +1,542 @@
+.TH "/Users/bernard/b20/bsoft/src/mg/mg_ctf_fit.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mg/mg_ctf_fit.cpp \- Functions for CTF (contrast transfer function) processing\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'mg_ctf_fit\&.h'\fP
+.br
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'simplex\&.h'\fP
+.br
+\fC#include 'moving_average\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "double \fBctf_fit_baseline\fP (\fBBimage\fP *prad, double real_size, \fBCTFparam\fP &em_ctf, double lores, double hires)"
+.br
+.ti -1c
+.RI "double \fBctf_fit_envelope\fP (\fBBimage\fP *prad, double real_size, \fBCTFparam\fP &em_ctf, double lores, double hires)"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_ctf_radial_average\fP (\fBBimage\fP *p, long n, \fBCTFparam\fP &em_ctf)"
+.br
+.RI "Calculates the power spectrum radial average corrected for astigmatism\&. "
+.ti -1c
+.RI "double \fBimg_ctf_fit_residual\fP (\fBBimage\fP *p, long n, \fBCTFparam\fP &em_ctf, double lores, double hires)"
+.br
+.ti -1c
+.RI "double \fBimg_ctf_fit\fP (\fBBimage\fP *p, long n, \fBCTFparam\fP &em_ctf, double lores, double hires, double def_start, double def_end, double def_inc, int flag)"
+.br
+.RI "Determines the CTF parameters from a power spectrum\&. "
+.ti -1c
+.RI "double \fBimg_ctf_fit_baseline\fP (\fBBimage\fP *p, long n, \fBCTFparam\fP &em_ctf, double lores, double hires)"
+.br
+.RI "Fits only the baseline for a given CTF\&. "
+.ti -1c
+.RI "double \fBimg_ctf_fit_envelope\fP (\fBBimage\fP *p, long n, \fBCTFparam\fP &em_ctf, double lores, double hires)"
+.br
+.RI "Fits only the envelope for a given CTF\&. "
+.ti -1c
+.RI "double \fBctf_test_defocus\fP (\fBCTFparam\fP &em_ctf, double def, double step_size, vector< double > &r, long rmin, long rmax)"
+.br
+.ti -1c
+.RI "double \fBctf_find_defocus\fP (vector< double > &v, \fBCTFparam\fP &em_ctf, long rmin, long rmax, double step_size, double def_start, double def_end, double def_inc)"
+.br
+.ti -1c
+.RI "double \fBctf_test_defocus\fP (\fBCTFparam\fP &em_ctf, double def, long nx, double step_size, vector< double > &r, long rmin, long rmax)"
+.br
+.ti -1c
+.RI "double \fBimg_ctf_find_defocus\fP (\fBBimage\fP *p, long n, \fBCTFparam\fP &em_ctf, double lores, double hires, double def_start, double def_end, double def_inc)"
+.br
+.RI "Searches for the defocus based on correlation\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_ctf_radial_subtract_baseline\fP (\fBBimage\fP *prad, double real_size, \fBCTFparam\fP &em_ctf)"
+.br
+.ti -1c
+.RI "double \fBimg_ctf_astigmatism_measure\fP (\fBBimage\fP *p, long n, double real_size, \fBCTFparam\fP &em_ctf, double lores, double hires)"
+.br
+.ti -1c
+.RI "double \fBimg_ctf_fit_astigmatism\fP (\fBBimage\fP *p, long n, \fBCTFparam\fP &em_ctf, double lores, double hires)"
+.br
+.RI "Fits the astigmatism with a given defocus, baseline and envelope\&. "
+.ti -1c
+.RI "double \fBimg_water_ring_index\fP (\fBBimage\fP *p, long img_num, \fBCTFparam\fP &em_ctf)"
+.br
+.RI "Calculates the water ring index from a power spectrum\&. "
+.ti -1c
+.RI "double \fBimg_water_ring_index\fP (\fBBimage\fP *prad)"
+.br
+.RI "Calculates the water ring index from a power spectrum\&. "
+.ti -1c
+.RI "double \fBgaussian_R\fP (\fBBsimplex\fP &simp)"
+.br
+.ti -1c
+.RI "double \fBgaussian1_R\fP (\fBBsimplex\fP &simp)"
+.br
+.ti -1c
+.RI "double \fBdouble_gaussian_R\fP (\fBBsimplex\fP &simp)"
+.br
+.ti -1c
+.RI "double \fBeman_baseline_R\fP (\fBBsimplex\fP &simp)"
+.br
+.ti -1c
+.RI "double \fBctf_fit_polynomial\fP (long n, vector< double > &x, vector< double > &y, vector< double > &coeff)"
+.br
+.ti -1c
+.RI "double \fBctf_fit_double_gaussian_baseline\fP (long n, vector< double > &x, vector< double > &y, vector< double > &coeff)"
+.br
+.ti -1c
+.RI "double \fBctf_fit_eman_to_baseline\fP (long n, vector< double > &x, vector< double > &y, vector< double > &coeff)"
+.br
+.ti -1c
+.RI "double \fBctf_fit_gaussian\fP (long n, vector< double > &x, vector< double > &y, vector< double > &coeff)"
+.br
+.ti -1c
+.RI "double \fBctf_fit_baseline_bump\fP (long n, vector< double > &x, vector< double > &y, vector< double > &coeff)"
+.br
+.ti -1c
+.RI "double \fBctf_fit_double_gaussian_envelope\fP (long n, vector< double > &x, vector< double > &y, vector< double > &coeff)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for CTF (contrast transfer function) processing\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19970715 
+.PP
+Modified: 20210817 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_ctf_fit\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double ctf_find_defocus (vector< double > & v, \fBCTFparam\fP & em_ctf, long rmin, long rmax, double step_size, double def_start, double def_end, double def_inc)"
+
+.PP
+Definition at line 498 of file mg_ctf_fit\&.cpp\&.
+.SS "double ctf_fit_baseline (\fBBimage\fP * prad, double real_size, \fBCTFparam\fP & em_ctf, double lores, double hires)"
+
+.PP
+Definition at line 1210 of file mg_ctf_fit\&.cpp\&.
+.SS "double ctf_fit_baseline_bump (long n, vector< double > & x, vector< double > & y, vector< double > & coeff)"
+
+.PP
+Definition at line 1117 of file mg_ctf_fit\&.cpp\&.
+.SS "double ctf_fit_double_gaussian_baseline (long n, vector< double > & x, vector< double > & y, vector< double > & coeff)"
+
+.PP
+Definition at line 1033 of file mg_ctf_fit\&.cpp\&.
+.SS "double ctf_fit_double_gaussian_envelope (long n, vector< double > & x, vector< double > & y, vector< double > & coeff)"
+
+.PP
+Definition at line 1187 of file mg_ctf_fit\&.cpp\&.
+.SS "double ctf_fit_eman_to_baseline (long n, vector< double > & x, vector< double > & y, vector< double > & coeff)"
+
+.PP
+Definition at line 1068 of file mg_ctf_fit\&.cpp\&.
+.SS "double ctf_fit_envelope (\fBBimage\fP * prad, double real_size, \fBCTFparam\fP & em_ctf, double lores, double hires)"
+
+.PP
+Definition at line 1306 of file mg_ctf_fit\&.cpp\&.
+.SS "double ctf_fit_gaussian (long n, vector< double > & x, vector< double > & y, vector< double > & coeff)"
+
+.PP
+Definition at line 1099 of file mg_ctf_fit\&.cpp\&.
+.SS "double ctf_fit_polynomial (long n, vector< double > & x, vector< double > & y, vector< double > & coeff)"
+
+.PP
+Definition at line 1011 of file mg_ctf_fit\&.cpp\&.
+.SS "double ctf_test_defocus (\fBCTFparam\fP & em_ctf, double def, double step_size, vector< double > & r, long rmin, long rmax)"
+
+.PP
+Definition at line 476 of file mg_ctf_fit\&.cpp\&.
+.SS "double ctf_test_defocus (\fBCTFparam\fP & em_ctf, double def, long nx, double step_size, vector< double > & r, long rmin, long rmax)"
+
+.PP
+Definition at line 560 of file mg_ctf_fit\&.cpp\&.
+.SS "double double_gaussian_R (\fBBsimplex\fP & simp)"
+
+.PP
+Definition at line 962 of file mg_ctf_fit\&.cpp\&.
+.SS "double eman_baseline_R (\fBBsimplex\fP & simp)"
+
+.PP
+Definition at line 981 of file mg_ctf_fit\&.cpp\&.
+.SS "double gaussian1_R (\fBBsimplex\fP & simp)"
+
+.PP
+Definition at line 940 of file mg_ctf_fit\&.cpp\&.
+.SS "double gaussian_R (\fBBsimplex\fP & simp)"
+
+.PP
+Definition at line 922 of file mg_ctf_fit\&.cpp\&.
+.SS "double img_ctf_astigmatism_measure (\fBBimage\fP * p, long n, double real_size, \fBCTFparam\fP & em_ctf, double lores, double hires)"
+
+.PP
+Definition at line 694 of file mg_ctf_fit\&.cpp\&.
+.SS "double img_ctf_find_defocus (\fBBimage\fP * p, long n, \fBCTFparam\fP & em_ctf, double lores, double hires, double def_start, double def_end, double def_inc)"
+
+.PP
+Searches for the defocus based on correlation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image structure\&. 
+.br
+\fIn\fP sub-image number\&. 
+.br
+\fI&em_ctf\fP CTF parameter structure\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fIhires\fP high resolution limit\&. 
+.br
+\fIdef_start\fP defocus search start (default 1e3)\&. 
+.br
+\fIdef_end\fP defocus search end (default 2e5)\&. 
+.br
+\fIdef_inc\fP defocus search increment (default 1e3)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double R factor\&. 
+.PP
+.nf
+A radial power spectrum is calculated.
+A range of defocus values is tested (1000-200000 angstrom, 0.1-20 um), 
+and the best fitting value accepted.
+The new parameters are written into the CTFparam structure.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 600 of file mg_ctf_fit\&.cpp\&.
+.SS "double img_ctf_fit (\fBBimage\fP * p, long n, \fBCTFparam\fP & em_ctf, double lores, double hires, double def_start, double def_end, double def_inc, int flag)"
+
+.PP
+Determines the CTF parameters from a power spectrum\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image structure\&. 
+.br
+\fIn\fP sub-image number\&. 
+.br
+\fI&em_ctf\fP CTF parameter structure\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fIhires\fP high resolution limit 
+.br
+\fIdef_start\fP defocus search start (default 1e3)\&. 
+.br
+\fIdef_end\fP defocus search end (default 2e5)\&. 
+.br
+\fIdef_inc\fP defocus search increment (default 1e3)\&. 
+.br
+\fIflag\fP flag to determine astigmatism\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double water ring index\&. 
+.PP
+.nf
+Input: Power spectrum or its logarithm.
+A radial power spectrum is calculated.
+A range of defocus values is tested (100-200000 angstrom, 0.01-20 um), 
+defining the baseline as passing through the zeroes for each defocus 
+and fitting it to a 4th order polynomial.
+The envelope function is a simple gaussian on top of the baseline and
+fitted to minimize the RMSD between the calculated curve and the
+radial power spectrum logarithm.
+The fitting is limited to the spatial frequency range between the 
+first and last zeroes.
+Defocus values are positive for underfocus.
+Functions:
+    angle = atan(y/x)
+    s2 = reciprocal space distance squared
+    defocus_average = (defocus_max + defocus_min)/2
+    defocus_deviation = (defocus_max - defocus_min)/2
+    defocus = defocus_average + defocus_deviation*cos(2*(angle - astigmatism_angle))
+    phase = 0.5*PI*lambda*lambda*lambda*Cs*s2*s2 - PI*lambda*defocus*s2 - amp_shift;
+    CTF = sin(phase)
+The new parameters are written into the CTPparam structure.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 211 of file mg_ctf_fit\&.cpp\&.
+.SS "double img_ctf_fit_astigmatism (\fBBimage\fP * p, long n, \fBCTFparam\fP & em_ctf, double lores, double hires)"
+
+.PP
+Fits the astigmatism with a given defocus, baseline and envelope\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image structure\&. 
+.br
+\fIn\fP sub-image number\&. 
+.br
+\fI&em_ctf\fP CTF parameter structure\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fIhires\fP high resolution limit 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double objective measure (larger is better)\&. 
+.PP
+.nf
+A radial power spectrum is calculated and the baseline subtracted.
+The defocus deviation starts from a low value to get an estimate of
+the astigmatism angle. The defocus deviation is modified nased on
+the direction of improvements in the fit, at each iteration 
+narrowing the angular search for the astigmatism angle.
+The new parameters are written into the CTFparam structure.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 766 of file mg_ctf_fit\&.cpp\&.
+.SS "double img_ctf_fit_baseline (\fBBimage\fP * p, long n, \fBCTFparam\fP & em_ctf, double lores, double hires)"
+
+.PP
+Fits only the baseline for a given CTF\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image structure\&. 
+.br
+\fIn\fP sub-image number\&. 
+.br
+\fI&em_ctf\fP CTF parameter structure\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fIhires\fP high resolution limit 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double R factor\&. 
+.PP
+.nf
+A radial power spectrum is calculated incorporating astigmatism.
+The baseline of the required type is fit.
+The new parameters are written into the CTFparam structure.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 424 of file mg_ctf_fit\&.cpp\&.
+.SS "double img_ctf_fit_envelope (\fBBimage\fP * p, long n, \fBCTFparam\fP & em_ctf, double lores, double hires)"
+
+.PP
+Fits only the envelope for a given CTF\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image structure\&. 
+.br
+\fIn\fP sub-image number\&. 
+.br
+\fI*em_ctf\fP CTF parameter structure\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fIhires\fP high resolution limit 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double R factor\&. 
+.PP
+.nf
+A radial power spectrum is calculated incorporating astigmatism.
+The envelope is fit.
+The new parameters are written into the CTFparam structure.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 457 of file mg_ctf_fit\&.cpp\&.
+.SS "double img_ctf_fit_residual (\fBBimage\fP * p, long n, \fBCTFparam\fP & em_ctf, double lores, double hires)"
+
+.PP
+Definition at line 145 of file mg_ctf_fit\&.cpp\&.
+.SS "\fBBimage\fP* img_ctf_radial_average (\fBBimage\fP * p, long n, \fBCTFparam\fP & em_ctf)"
+
+.PP
+Calculates the power spectrum radial average corrected for astigmatism\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image structure\&. 
+.br
+\fIn\fP sub-image number\&. 
+.br
+\fI&em_ctf\fP CTF parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* radial average, NULL on error\&. 
+.PP
+.nf
+A power spectrum with its origin at the center.
+Functions:
+    angle = atan(y/x) - astigmatism_angle
+    s2 = reciprocal space distance squared
+    defocus_min = defocus_avg - defocus_dev
+    defocus_max = defocus_avg + defocus_dev
+    smin2 = 1 - defocus_dev/defocus_avg
+    smax2 = 1 + defocus_dev/defocus_avg
+    radius = sqrt(2*s2*(smax2*cos(angle)*cos(angle)+
+                smin2*sin(angle)*sin(angle))/(smax2+smin2))
+The radial average is returned as a new 1D image.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 46 of file mg_ctf_fit\&.cpp\&.
+.SS "\fBBimage\fP* img_ctf_radial_subtract_baseline (\fBBimage\fP * prad, double real_size, \fBCTFparam\fP & em_ctf)"
+
+.PP
+Definition at line 669 of file mg_ctf_fit\&.cpp\&.
+.SS "double img_water_ring_index (\fBBimage\fP * p, long img_num, \fBCTFparam\fP & em_ctf)"
+
+.PP
+Calculates the water ring index from a power spectrum\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP power spectrum\&. 
+.br
+\fIimg_num\fP sub-image number\&. 
+.br
+\fI&em_ctf\fP CTF parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double water ing index\&. 
+.PP
+.nf
+A radial power spectrum is calculated.
+The the water ring index is defined as:
+    wri = wp/b - 1
+where wp is the intensity at s=0.26 (3.8 Å) and b is the background.
+The background is estimated as the average of sections before and after 
+the water peak:
+    b1 between s=0.1 and s=0.2
+    b2 between s=0.3 and s=0.4
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 860 of file mg_ctf_fit\&.cpp\&.
+.SS "double img_water_ring_index (\fBBimage\fP * prad)"
+
+.PP
+Calculates the water ring index from a power spectrum\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*prad\fP radial power spectrum\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double water ing index\&. 
+.PP
+.nf
+The the water ring index is defined as:
+    wri = wp/b - 1
+where wp is the average intensity between 0.2 and 0.3, covering the 
+peak at s=0.26 (3.8 Å).
+The background, b, is estimated as the average of sections before and after 
+the water peak:
+    b1 between s=0.1 and s=0.2
+    b2 between s=0.3 and s=0.4
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 889 of file mg_ctf_fit\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,109 @@
+.TH "/Users/bernard/b20/bsoft/include/model_plane.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/model_plane.h \- Library routines used for plane models\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmodel_fit_plane\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Fits a plane through a model\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_generate_from_plane_guide\fP (\fBBmodel\fP *guide, double separation, double sigma)"
+.br
+.RI "Generates a plane model and fits a plane through it\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines used for plane models\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20140925 
+.PP
+Modified: 20141008 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_plane\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBVector3\fP<double> model_fit_plane (\fBBmodel\fP * model)"
+
+.PP
+Fits a plane through a model\&. 
+.PP
+.nf
+A plane is fit through the components and the normal calculated from:
+    n•p = d
+where n is the normal vector, p is a point in the plane, and d is the offset.
+Only the first model is fit.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP plane normal\&. 
+.RE
+.PP
+
+.PP
+Definition at line 30 of file model_plane\&.cpp\&.
+.SS "\fBBmodel\fP* model_generate_from_plane_guide (\fBBmodel\fP * guide, double separation, double sigma)"
+
+.PP
+Generates a plane model and fits a plane through it\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*guide\fP model structure\&. 
+.br
+\fIseparation\fP separation between components for new model\&. 
+.br
+\fIsigma\fP smoothness of model\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model based on input model\&. 
+.PP
+.nf
+The principal axes of a planar model are calculated and a new plane model
+generated with the given separation between components.
+The components of the new model are then adjusted to fit the guide model.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 186 of file model_plane\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

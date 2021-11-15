@@ -1,0 +1,118 @@
+.TH "/Users/bernard/b20/bsoft/src/img/Bimage_histogram.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/img/Bimage_histogram.cpp \- Library routines to calculate histograms for images\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Bimage\&.h'\fP
+.br
+\fC#include 'simplex\&.h'\fP
+.br
+\fC#include 'cluster\&.h'\fP
+.br
+\fC#include 'moving_average\&.h'\fP
+.br
+\fC#include 'matrix_linear\&.h'\fP
+.br
+\fC#include 'qsort_functions\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "double \fBfind_maximum_sigma\fP (\fBMatrix\fP &H, long i, long \fBlevel\fP, long depth, double sum, double &maxsum, vector< double > &t)"
+.br
+.ti -1c
+.RI "vector< double > \fBhistogram_thresholds\fP (vector< long > h, long number)"
+.br
+.RI "Calculates multiple thresholds from a histogram\&. "
+.ti -1c
+.RI "double \fBsimplex_gauss_R\fP (\fBBsimplex\fP &simp)"
+.br
+.ti -1c
+.RI "double \fBsimplex_poisson_R\fP (\fBBsimplex\fP &simp)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines to calculate histograms for images\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19990321 
+.PP
+Modified: 20210304 
+.RE
+.PP
+
+.PP
+Definition in file \fBBimage_histogram\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double find_maximum_sigma (\fBMatrix\fP & H, long i, long level, long depth, double sum, double & maxsum, vector< double > & t)"
+
+.PP
+Definition at line 759 of file Bimage_histogram\&.cpp\&.
+.SS "vector<double> histogram_thresholds (vector< long > h, long number)"
+
+.PP
+Calculates multiple thresholds from a histogram\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIh\fP histogram\&. 
+.br
+\fInumber\fP number of clusters (one more than thresholds)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<double> thresholds\&. 
+.PP
+.nf
+Reference: PS.Liao, TS.Chen, and PC. Chung,
+       Journal of Information Science and Engineering, vol 17, 713-727 (2001)
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 799 of file Bimage_histogram\&.cpp\&.
+.SS "double simplex_gauss_R (\fBBsimplex\fP & simp)"
+
+.PP
+Definition at line 873 of file Bimage_histogram\&.cpp\&.
+.SS "double simplex_poisson_R (\fBBsimplex\fP & simp)"
+
+.PP
+Definition at line 1222 of file Bimage_histogram\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

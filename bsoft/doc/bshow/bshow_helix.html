@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Bshow Helix Processing</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+    <p><img src="helix_active.gif" alt="Helix" width="36" height="36" /></p>
+    <p>A Fourier transform or power spectrum of an images of a helical specimens
+	can be analyzed by selecting the &quot;Micrograph/Helix&quot; menu item or
+	the helix tool (helical diffraction pattern icon). This brings up a new
+	window with a menu &quot;Helix&quot; and parameters:<br />
+    </p>
+  <ul>
+        <li>Helix
+          <ul>
+           <li>Set layer line index - open a dialog box called &quot;Indices&quot; to
+            set the indices of the currently selected reflection.</li>
+          <li>Generate layer lines - generates all layer lines from a seed
+		  within a given resolution limit.</li>
+          <li>Mask layer lines - mask layer lines in a Fourier transform and delete the background.</li>
+          <li>Delete all layer lines - delete all layer lines in memory (no recovery!).</li>
+          <li>Close - close window and deactivate helix
+operations.</li>
+        </ul>
+      </li>
+        <li>Parameters
+        <ul>
+          <li>Radiobuttons to display/hide layer lines and indices.</li>
+          <li>Helix axis angle - sets the helix axis direction relative to the x-axis.</li>
+          <li>Layer line length - sets the length for drawing layer lines.</li>
+          <li>Layer line width - sets the width for masking.</li>
+          <li>Layer line count - shows the number of layer lines.</li>
+          <li>Selected - indicates the currently selected layer line, its
+		  Bessel order and its figure-of-merit.</li>
+          <li>A plot of a selected layer line (blue) and a Bessel function of the indicated order (red).</li>
+          </ul>
+      </li>
+      </ul>
+      <br/>
+	  <center>
+      <img src="bshow_helix.png" alt="Bshow helix" width="700" />
+	  <p>A power spectrum with helical axis (light blue) and layer lines with indices (yellow).
+	  In the "Helix" dialog box, the profile for the second layer lines is shown (blue)
+	  with a Bessel function of the indicated order (red).</p>
+	  </center>
+	  <br/>
+      <h2>Setup for helix processing</h2>
+      <p>The image of a helix is read into bshow, and its Fourier transform 
+	  	calculated with the &quot;Image/Fourier transform&quot; menu item.
+		The Fourier transform is then shifted to center the origin with the
+		menu item, &quot;Image/Center origin&quot;.</p>
+		<p>Alternatively, a power spectrum can be generated with the "Image/Power spectrum"
+		menu item. This image cannot be masked and backtransfomed as is possible
+		with the Fourier transform</p>
+      <br/>
+      <h2>Picking layer lines</h2>
+      <p>To activate picking layer lines, select the helix tool icon
+	  (helical diffraction pattern icon) from the tools window. The helix
+	  axis angle should be set to coincide with diffraction pattern.
+	  Click on a layer line and then set its index with the
+	  &quot;Helix/Set layer line index&quot; menu item. As many layer lines
+	  can be picked as needed. The rest of the layer lines can then be
+	  generated using the &quot;Helix/Generate layer lines&quot; menu item
+	  and setting a resolution limit.</p>
+        <br />
+      <h2>Checking Bessel function fits</h2>
+      <p>The peaks in the profile of a layer line can be fitted with one or more
+	  Bessel functions. To test a particular fit, select a layer line and set
+	  the order to a desired value. The profile is shown as a blue curve in
+	  the plot on the "Helix" dialog window, and the Bessel function as a red curve.</p>
+        <br />
+    <h2>Masking</h2>
+      <p>With any number of defined layer lines defined in a Fourier transform,
+	  they can be masked using the &quot;Helix/Mask layer lines&quot; menu item.
+	  The &quot;Layer line width&quot; in the crystallography window is used
+	  to determine the mask width for each layer line.
+	  The Fourier transform can then be backtransformed to produce a new
+	  image with most of the background removed.</p>
+	  <br/>
+      <h2>Mouse controls for picking reflections</h2>
+      <ul>
+        <li>Left/middle button: create or select a layer line </li>
+        <li>Shift - left/middle button: delete a layer line</li>
+      </ul>
+      <p>Clicking the left or middle mouse button in an empty region on the
+	image creates a new reflection. Clicking on an existing layer line
+	selects that layer line, that can then be moved. To delete a layer line,
+	hold down the shift key and click the left or middle
+	button on the layer line.</p>
+      <br/>
+      <h2>Reading and saving crystallographic parameters</h2>
+        <p>The &quot;Micrograph/Read parameters&quot; and
+		&quot;Micrograph/Write parameters&quot; menu
+        items are used to read and write parameter files (usually in STAR or XML format).</p>
+      <br/>
+</div>
+<div id="footer">
+  Bernard Heymann  20130909
+</div>
+</body>
+</html>

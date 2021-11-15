@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Tomography</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Preparation for tilt series alignment and reconstruction</h1>
+
+<h2>1. Parameter file structure</h2>
+<p>A tomographic tilt series is represented in a parameter file in Bsoft as a
+  single field-of-view with multiple micrographs, one for each image. 
+  The best approach is to have a tilt series in one image file making sure
+  it is specified as a multiple images, not slices of a 3D image.
+  The programs <b>bhead, bimg and bnorm</b> have an
+  option to convert 3D slices into a stack of 2D images for multi-image
+  formats, and the program <b>btomo</b> automatically does the conversion.
+  In addition, it is good to set the pixel size (sampling) and have
+  all the statistical parameters properly calculated.
+  The simplest way is to just run the image through <b>bhead</b>
+  prior to any further operations:</p>
+  <p><div id="command">bhead -v 7 -images -sampling 5 -recalc gold3.pif gold3.mrc</div></p>
+<p>For practice, download the following tilt series and try the different
+	operations for tomography:</p>
+<p align="center"><a href="gold3.mrc" type="application/octet-stream">gold3.mrc</a>
+<p>Open it in <b>bshow</b> to get the following display:
+<center><img
+ style="width: 500px;" alt="First view of gold3.mrc"
+ src="bshow_tomo_first.png" /><br />
+</center>
+
+<br />
+
+<h2>Tilt geometry convention</h2>
+<center><img
+ style="width: 250px;" alt="Tilt convention"
+ src="bsoft_tilt_convention.png" /><br />
+</center>
+<p>The tilt axis angle (red arrow) is defined as the angle relative to the 
+	x-axis and rotating anti-clockwise. The rotation around the tilt axis 
+	(red dashed line) is right-handed (blue arrow), so that the normal 
+	to the specimen plane rotates from negative to positive 
+	tilt angles. The normal to the specimen plane (dotted blue line)
+	progresses from negative to positive tilt angles, from left to right
+	(for a tilt axis close to the y-axis or 90&#730;) or top to bottom (for a
+	tilt axis close to the x-axis or 0&#730;). </p>
+<br />
+<h2>2. Setting the initial parameters</h2>
+<p>The initial parameters can be set up in a number of ways. The following
+sections detail three ways of doing it.</p>
+<h3>a. Using a SerialEM mdoc file</h3>
+<p>The program <b>SerialEM</b> is commonly used to acquire tilt series
+	on electron microscopes.
+	It produduces a text output file ending with the extension .mdoc.
+	Bsoft programs can parse this file into its own internal parameter
+	data base, setting up all the initial parameters. Note that the 
+	specification of the tilt axis angle in SerialEM is relative to the
+	y-axis, while in Bsoft it is relative to the x-axis, giving a 90° 
+	difference.</p>
+<p>Set up a new parameter file with <b>btomo</b>:</p>
+  <div id="command"><p>btomo -verb 7 -lambda 2200 -out RS1_G6_01.star RS1_G6_01.mrc.mdoc</p></div>
+<p>The -lamda parameter allows the estimation of the tomogram thickness, as
+described below. For fiducialless alignment, the btomaln program can read
+a .mdoc file directly and do the alignment without any other setup.</p>
+
+<h3>b. On the command line from an image file</h3>
+<p>Some of the initial parameters can be set up with <b>btomo</b>
+	starting from a tilt series of images:</p>
+<div id="command"><p>btomo -v 7 -sampling 1.75 -axis 87.5 -tilt -60,3 -gold 22 -out
+RS1_G6_01.star RS1_G6_01.mrc</p></div>
+</p>
+  
+<h3>c. Using bshow</h3>
+<p>All of the initial parameters can be set up in <b>bshow</b>:
+  <div id="command">bshow RS1_G6_01.mrc</div></p>
+<p>
+  Set the following parameters:
+</p>
+<ul>
+  <li>Enter the correct pixel size in the main window</li>
+  <li>Select the menu item &quot;Micrograph/Tomography&quot; (see picture below)</li>
+  <li>If the tilt series contain fiducial markers, enter the fiducial marker radius in pixels</li>
+  <li>Enter the tilt axis angle</li>
+  <li>Enter the tilt angles:</li>
+  <ul>
+    <li>Select the menu item &quot;Tomography/Set tilt angles&quot; 
+    	and enter the the starting angle and the angular increment.</li>
+    <li>or select the menu item &quot;Tomography/Read rawtlt
+      file&quot; and read the angles from a *.rawtlt file</li>
+  </ul>
+</ul>
+<center><img
+ style="width: 500px;" alt="Tomography window"
+ src="tomo_setup.png" /><br />
+</center>
+
+<h2>3. Aligning and summing frames</h2>
+<p>If each micrograph in the tilt series was acquired as multiple frames,
+	they should be aligned and summed prior to any further operations.
+	<center><img
+	 style="width: 500px;" alt="Frame alignment dialog"
+	 src="tomo_aln_frames.png" /><br />
+	</center>
+
+<h2>3. Thickness estimation</h2>
+<p>The change in micrograph intensity can be used to estimate the thickness
+	of the specimen, given a proportionality parameter, lambda (&Lambda;). 
+	This parameter is often referred to as the "mean free path", but is not
+	necessarily a true reflection of the mean distance between electron
+	scattering events. Lambda is typically calibrated for a given microscope,
+	acceleration voltage and imaging settings. The average intensity of
+	a micrograph for a tilted specimen is given by:</p>
+<center><img
+ style="width: 200px;" alt="Thickness equation"
+ src="tomo_thickness_eq.png" /><br />
+</center>
+<p>where I<sub>db</sub> is the direct beam intensity, t is the average 
+	specimen thickness, &alpha; is the nominal tilt angle, and 
+	&alpha;<sub>st</sub> is the specimen tilt angle for the 
+	nominal zero-degree micrograph.</p>
+<p>The parameter -lambda can be provided with several programs (btomo, btomaln)
+	to estimate a specimen thickness. In the absence of a good value for it,
+	the thickness-to-lambda ratio is calculated to allow for later calculation
+	of the thickness once the appropriate value of lambda is established.
+	With an appropriate value for lambda, the thickness can be estimated
+	as follows:</p>
+<div id="command"><p>btomo -verb 7 -lambda 2200 -Post gold3_thick.ps gold3_aln.star</p></div>
+<p>An additional benefit of this analysis is that it gives an estimate of
+	how much the specimen is tilted. The tilt angles are corrected
+	to compensate for the specimen tilt. The -Postscript option generates
+	a plot of the intensity change as well as the fit:
+<center><img
+ style="width: 500px;" alt="Thickness plot"
+ src="tomo_thickness.png" /><br />
+</center>
+<p>In the <b>Tomography</b> window in <b>bshow</b>,
+	there is a "Thickness" entry. Click
+	on the "Fit intensities" button to calculate the new specimen thickness.
+	A dialog box will open with several options to do the fit. Set the lambda
+	parameter to an appropriate value or click the button to estimate
+	it from first principles. Check whether the result will be
+	used to adjust the tilt angles. Finally, eneter a Postcript file name
+	to generate a file with plot of intensities and fit. This file can
+	be displayed with the "Open" button in an external display program
+	(Preview on Mac OSX and ghostscript on Linux).</p>
+
+<h2>4. Normalization</h2>
+<p>In the traditional preparation of a tilt series, it was recommended to
+	normalize the images to compensate for contrast variations.
+	This is particularly important with film, where the dynamic range 
+	can vary considerably. With CCD cameras, it is less of an issue but 
+	still useful to render the contrast in images to a similar scale.
+	With direct detectors, the more accurate representation of the
+	signal makes it unnecessary to normalize the images. More 
+	importantly, the better reflection of actual counts means that the
+	images are already properly weighted and should not be normalized.
+	Note that normalization would also remove the information
+	required for thickness estimation as described in the previous section.</p>
+<p>If normalization is still desired, it can be done in several ways.
+	The first is simply setting all the images to the same average and 
+	standard deviation:</p>
+<div id="command"><p>bnorm -v 7 -rescale 127,10 -data byte -out gold3.star gold3.mrc gold3_norm.mrc</p></div>
+<p>The second is to fit the central part
+  of the histogram of each micrograph to a Gaussian function,
+  and rescale it to a given average and standard deviation:<br />
+  <br />
+  <div id="command"><p>bnorm -v 7 -type Gauss -rescale 0,1 -data float -out gold3.star gold3.mrc
+  gold3_norm.mrc</p></div>
+<p>Alternatively, the normalization can also be done using a previously generated parameter file:</p>
+<div id="command"><p>bnorm -v 7 -rescale 127,10 -data byte -out gold3_norm.star gold3.star</p></div>
+  <br />
+</p>
+<div id="footer">
+  Bernard Heymann  20200325
+</div>
+</body>
+</html>

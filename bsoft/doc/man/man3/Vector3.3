@@ -1,0 +1,501 @@
+.TH "Vector3< Type >" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vector3< Type > \- Vector class for 3-value vectors used in 3D space\&. The internal variables are an array of 3 numbers\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Vector3\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBVector3\fP ()"
+.br
+.ti -1c
+.RI "\fBVector3\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "\fBVector3\fP (const Type x, const Type y, const Type z)"
+.br
+.ti -1c
+.RI "template<typename T2 > \fBVector3\fP (const vector< T2 > &v)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator=\fP (const Type d)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator=\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "template<typename T2 > \fBVector3\fP \fBoperator=\fP (const vector< T2 > &v)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator\-\fP ()"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator+=\fP (const double d)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator+\fP (const double d)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator+=\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator+\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator\-=\fP (const double d)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator\-\fP (const double d)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator\-=\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator\-\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator*=\fP (const double d)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator*\fP (const double d)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator*=\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator*\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator/=\fP (const double d)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator/\fP (const double d)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator/=\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBoperator/\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (const double d)"
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "bool \fBoperator>\fP (const double d)"
+.br
+.ti -1c
+.RI "bool \fBoperator<\fP (const double d)"
+.br
+.ti -1c
+.RI "bool \fBoperator>\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "bool \fBoperator<\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "bool \fBoperator>=\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "bool \fBoperator<=\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "Type \fBoperator[]\fP (size_t i) const"
+.br
+.ti -1c
+.RI "Type & \fBoperator[]\fP (size_t i)"
+.br
+.ti -1c
+.RI "template<typename T2 > \fBoperator Vector3< T2 >\fP () const"
+.br
+.ti -1c
+.RI "vector< double > \fBarray\fP ()"
+.br
+.ti -1c
+.RI "Type \fBmin\fP ()"
+.br
+.ti -1c
+.RI "Type \fBmax\fP ()"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBmin\fP (const double d)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBmax\fP (const double d)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBmin\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBmax\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBabs\fP ()"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBfloor\fP (int places)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBround\fP (int places)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBremainder\fP (int divisor)"
+.br
+.ti -1c
+.RI "double \fBlength2\fP ()"
+.br
+.ti -1c
+.RI "double \fBlength\fP ()"
+.br
+.ti -1c
+.RI "void \fBlength\fP (double d)"
+.br
+.ti -1c
+.RI "double \fBdistance\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "double \fBdistance2\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "double \fBdistance_from_line2\fP (\fBVector3\fP v1, \fBVector3\fP v2)"
+.br
+.ti -1c
+.RI "double \fBdistance_from_line\fP (\fBVector3\fP v1, \fBVector3\fP v2)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBclosest_point_on_line\fP (\fBVector3\fP v1, \fBVector3\fP v2)"
+.br
+.ti -1c
+.RI "double \fBposition_relative_to_line\fP (\fBVector3\fP v1, \fBVector3\fP v2)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBsquare_root\fP ()"
+.br
+.ti -1c
+.RI "double \fBsum\fP ()"
+.br
+.ti -1c
+.RI "double \fBvolume\fP ()"
+.br
+.ti -1c
+.RI "double \fBnormalize\fP ()"
+.br
+.ti -1c
+.RI "double \fBscalar\fP (const \fBVector3\fP &v) const"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBcross\fP (const \fBVector3\fP &v)"
+.br
+.ti -1c
+.RI "template<typename T2 > double \fBangle\fP (\fBVector3\fP< T2 > &v)"
+.br
+.ti -1c
+.RI "\fBVector3\fP \fBnormal\fP (\fBVector3\fP &v1, \fBVector3\fP &v2)"
+.br
+.ti -1c
+.RI "bool \fBfinite\fP ()"
+.br
+.ti -1c
+.RI "bool \fBnotfinite\fP ()"
+.br
+.ti -1c
+.RI "bool \fBwithin\fP (\fBVector3\fP &v1, \fBVector3\fP &v2)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.SS "template<typename Type>
+.br
+class Vector3< Type >"
+Vector class for 3-value vectors used in 3D space\&. The internal variables are an array of 3 numbers\&. 
+.PP
+Definition at line 27 of file Vector3\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "template<typename Type > \fBVector3\fP< Type >::\fBVector3\fP ()\fC [inline]\fP"
+
+.PP
+Definition at line 31 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP< Type >::\fBVector3\fP (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 32 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP< Type >::\fBVector3\fP (const Type x, const Type y, const Type z)\fC [inline]\fP"
+
+.PP
+Definition at line 33 of file Vector3\&.h\&.
+.SS "template<typename Type > template<typename T2 > \fBVector3\fP< Type >::\fBVector3\fP (const vector< T2 > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 35 of file Vector3\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::abs ()\fC [inline]\fP"
+
+.PP
+Definition at line 201 of file Vector3\&.h\&.
+.SS "template<typename Type > template<typename T2 > double \fBVector3\fP< Type >::angle (\fBVector3\fP< T2 > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 282 of file Vector3\&.h\&.
+.SS "template<typename Type > vector<double> \fBVector3\fP< Type >::array ()\fC [inline]\fP"
+
+.PP
+Definition at line 166 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::closest_point_on_line (\fBVector3\fP< Type > v1, \fBVector3\fP< Type > v2)\fC [inline]\fP"
+
+.PP
+Definition at line 239 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::cross (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 275 of file Vector3\&.h\&.
+.SS "template<typename Type > double \fBVector3\fP< Type >::distance (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 227 of file Vector3\&.h\&.
+.SS "template<typename Type > double \fBVector3\fP< Type >::distance2 (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 228 of file Vector3\&.h\&.
+.SS "template<typename Type > double \fBVector3\fP< Type >::distance_from_line (\fBVector3\fP< Type > v1, \fBVector3\fP< Type > v2)\fC [inline]\fP"
+
+.PP
+Definition at line 236 of file Vector3\&.h\&.
+.SS "template<typename Type > double \fBVector3\fP< Type >::distance_from_line2 (\fBVector3\fP< Type > v1, \fBVector3\fP< Type > v2)\fC [inline]\fP"
+
+.PP
+Definition at line 229 of file Vector3\&.h\&.
+.SS "template<typename Type > bool \fBVector3\fP< Type >::finite ()\fC [inline]\fP"
+
+.PP
+Definition at line 299 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::floor (int places)\fC [inline]\fP"
+
+.PP
+Definition at line 206 of file Vector3\&.h\&.
+.SS "template<typename Type > double \fBVector3\fP< Type >::length ()\fC [inline]\fP"
+
+.PP
+Definition at line 222 of file Vector3\&.h\&.
+.SS "template<typename Type > void \fBVector3\fP< Type >::length (double d)\fC [inline]\fP"
+
+.PP
+Definition at line 223 of file Vector3\&.h\&.
+.SS "template<typename Type > double \fBVector3\fP< Type >::length2 ()\fC [inline]\fP"
+
+.PP
+Definition at line 221 of file Vector3\&.h\&.
+.SS "template<typename Type > Type \fBVector3\fP< Type >::max ()\fC [inline]\fP"
+
+.PP
+Definition at line 175 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::max (const double d)\fC [inline]\fP"
+
+.PP
+Definition at line 186 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::max (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 196 of file Vector3\&.h\&.
+.SS "template<typename Type > Type \fBVector3\fP< Type >::min ()\fC [inline]\fP"
+
+.PP
+Definition at line 169 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::min (const double d)\fC [inline]\fP"
+
+.PP
+Definition at line 181 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::min (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 191 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::normal (\fBVector3\fP< Type > & v1, \fBVector3\fP< Type > & v2)\fC [inline]\fP"
+
+.PP
+Definition at line 292 of file Vector3\&.h\&.
+.SS "template<typename Type > double \fBVector3\fP< Type >::normalize ()\fC [inline]\fP"
+
+.PP
+Definition at line 261 of file Vector3\&.h\&.
+.SS "template<typename Type > bool \fBVector3\fP< Type >::notfinite ()\fC [inline]\fP"
+
+.PP
+Definition at line 304 of file Vector3\&.h\&.
+.SS "template<typename Type > template<typename T2 > \fBVector3\fP< Type >::operator \fBVector3\fP< T2 > () const\fC [inline]\fP"
+
+.PP
+Definition at line 163 of file Vector3\&.h\&.
+.SS "template<typename Type > bool \fBVector3\fP< Type >::operator!= (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 126 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator* (const double d)\fC [inline]\fP"
+
+.PP
+Definition at line 86 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator* (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 94 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator*= (const double d)\fC [inline]\fP"
+
+.PP
+Definition at line 82 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator*= (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 90 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator+ (const double d)\fC [inline]\fP"
+
+.PP
+Definition at line 54 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator+ (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 62 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator+= (const double d)\fC [inline]\fP"
+
+.PP
+Definition at line 50 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator+= (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 58 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator\- ()\fC [inline]\fP"
+
+.PP
+Definition at line 46 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator\- (const double d)\fC [inline]\fP"
+
+.PP
+Definition at line 70 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator\- (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 78 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator\-= (const double d)\fC [inline]\fP"
+
+.PP
+Definition at line 66 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator\-= (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 74 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator/ (const double d)\fC [inline]\fP"
+
+.PP
+Definition at line 104 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator/ (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 112 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator/= (const double d)\fC [inline]\fP"
+
+.PP
+Definition at line 98 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator/= (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 108 of file Vector3\&.h\&.
+.SS "template<typename Type > bool \fBVector3\fP< Type >::operator< (const double d)\fC [inline]\fP"
+
+.PP
+Definition at line 136 of file Vector3\&.h\&.
+.SS "template<typename Type > bool \fBVector3\fP< Type >::operator< (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 146 of file Vector3\&.h\&.
+.SS "template<typename Type > bool \fBVector3\fP< Type >::operator<= (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 156 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator= (const Type d)\fC [inline]\fP"
+
+.PP
+Definition at line 36 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::operator= (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 37 of file Vector3\&.h\&.
+.SS "template<typename Type > template<typename T2 > \fBVector3\fP \fBVector3\fP< Type >::operator= (const vector< T2 > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 42 of file Vector3\&.h\&.
+.SS "template<typename Type > bool \fBVector3\fP< Type >::operator== (const double d)\fC [inline]\fP"
+
+.PP
+Definition at line 121 of file Vector3\&.h\&.
+.SS "template<typename Type > bool \fBVector3\fP< Type >::operator== (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 116 of file Vector3\&.h\&.
+.SS "template<typename Type > bool \fBVector3\fP< Type >::operator> (const double d)\fC [inline]\fP"
+
+.PP
+Definition at line 131 of file Vector3\&.h\&.
+.SS "template<typename Type > bool \fBVector3\fP< Type >::operator> (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 141 of file Vector3\&.h\&.
+.SS "template<typename Type > bool \fBVector3\fP< Type >::operator>= (const \fBVector3\fP< Type > & v)\fC [inline]\fP"
+
+.PP
+Definition at line 151 of file Vector3\&.h\&.
+.SS "template<typename Type > Type& \fBVector3\fP< Type >::operator[] (size_t i)\fC [inline]\fP"
+
+.PP
+Definition at line 162 of file Vector3\&.h\&.
+.SS "template<typename Type > Type \fBVector3\fP< Type >::operator[] (size_t i) const\fC [inline]\fP"
+
+.PP
+Definition at line 161 of file Vector3\&.h\&.
+.SS "template<typename Type > double \fBVector3\fP< Type >::position_relative_to_line (\fBVector3\fP< Type > v1, \fBVector3\fP< Type > v2)\fC [inline]\fP"
+
+.PP
+Definition at line 245 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::remainder (int divisor)\fC [inline]\fP"
+
+.PP
+Definition at line 216 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::round (int places)\fC [inline]\fP"
+
+.PP
+Definition at line 211 of file Vector3\&.h\&.
+.SS "template<typename Type > double \fBVector3\fP< Type >::scalar (const \fBVector3\fP< Type > & v) const\fC [inline]\fP"
+
+.PP
+Definition at line 272 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP \fBVector3\fP< Type >::square_root ()\fC [inline]\fP"
+
+.PP
+Definition at line 251 of file Vector3\&.h\&.
+.SS "template<typename Type > double \fBVector3\fP< Type >::sum ()\fC [inline]\fP"
+
+.PP
+Definition at line 259 of file Vector3\&.h\&.
+.SS "template<typename Type > double \fBVector3\fP< Type >::volume ()\fC [inline]\fP"
+
+.PP
+Definition at line 260 of file Vector3\&.h\&.
+.SS "template<typename Type > bool \fBVector3\fP< Type >::within (\fBVector3\fP< Type > & v1, \fBVector3\fP< Type > & v2)\fC [inline]\fP"
+
+.PP
+Definition at line 309 of file Vector3\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

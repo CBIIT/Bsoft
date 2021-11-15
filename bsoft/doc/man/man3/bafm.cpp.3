@@ -1,0 +1,198 @@
+.TH "/Users/bernard/b20/bsoft/src/bafm.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/bafm.cpp \- Simulation of AFM experiments\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBimage\fP * \fBafm_generate_tip\fP (\fBVector3\fP< long > size, \fBVector3\fP< double > sampling, double radius, double \fBangle\fP, double resolution)"
+.br
+.RI "Generates a rounded conical AFM tip\&. "
+.ti -1c
+.RI "\fBBplot\fP * \fBafm_simulate\fP (\fBBimage\fP *ptip, \fBBimage\fP *p, double spring, double modulus, double thick)"
+.br
+.RI "Simulates and AFM experiment\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBafm_force_to_height\fP (\fBBimage\fP *pf, double force_step)"
+.br
+.RI "Converts an AFM force map into a set of 2D height images at different constant force values\&. "
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.ti -1c
+.RI "int \fBafm_simulate_at_xy\fP (\fBBimage\fP *ptip, \fBBimage\fP *p, long ii, float *force, double spring, double modulus, double thick)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Simulation of AFM experiments\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19990124 
+.PP
+Modified: 20170612 
+.RE
+.PP
+
+.PP
+Definition in file \fBbafm\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBimage\fP * afm_force_to_height (\fBBimage\fP * pf, double force_step)"
+
+.PP
+Converts an AFM force map into a set of 2D height images at different constant force values\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*pf\fP force map\&. 
+.br
+\fIforce_step\fP force intervals for height images 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+*ph height images\&. 
+.RE
+.PP
+
+.PP
+Definition at line 448 of file bafm\&.cpp\&.
+.SS "\fBBimage\fP * afm_generate_tip (\fBVector3\fP< long > size, \fBVector3\fP< double > sampling, double radius, double angle, double resolution)"
+
+.PP
+Generates a rounded conical AFM tip\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsize\fP size of the tip density 
+.br
+\fIsampling\fP sampling/spacing (in angstrom/pixel) 
+.br
+\fIradius\fP radius of the tip curvature (in angstrom) 
+.br
+\fIangle\fP angle of the tip side (in radians) 
+.br
+\fIresolution\fP the resolution affects the tip surface softness 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* tip 3D map\&. 
+.PP
+.nf
+A 2D image of a conical tip is generated, with a 45 degree angle and
+a rounding tip with the desired radius and softness.
+The 2D image is then converted to a 3D surface using the function 
+img_to_surface and returned.  The density of beta-silicon nitride
+of 1.925 Da/A3 is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 200 of file bafm\&.cpp\&.
+.SS "\fBBplot\fP * afm_simulate (\fBBimage\fP * ptip, \fBBimage\fP * p, double spring, double modulus, double thick)"
+
+.PP
+Simulates and AFM experiment\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*ptip\fP AFM tip density map - converted to force map\&. 
+.br
+\fI*p\fP specimen density map\&. 
+.br
+\fIspring\fP AFM cantilever spring constant (N/m)\&. 
+.br
+\fImodulus\fP bulk modules (N/m2)\&. 
+.br
+\fIthick\fP sample thickness (angstrom)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bplot* force curve\&. 
+.PP
+.nf
+The elastic force on an AFM tip is calculated as:
+    F = kt*dz = kb*dV/d
+where   kt is the cantilever spring constant, typically 0.01 - 0.1 N/m.
+        dz is the tip displacement due to specimen interaction.
+        kb is the bulk modulus of the specimen, typically 1e9 N/m2.
+        dV is the volume of the specimen displaced by the tip. This
+            volume is here approximated as the density overlap volume.
+        d is the specimen thickness in angstrom.
+The tip is positioned at each point (x,y,z) in the density map and the
+overlap volume calculated (i.e., a type of convolution).  This tip
+position corresponds to a zero displacement.  The correct tip position
+is found by shifting the tip upwards (in the z-direction) until the 
+displacement and elastic forces are approximately equal.  The tip 
+displacement is refined by interpolation and the force calculated.  
+The force map is returned in place of the original density map.
+Forces are calculated in piconewton. 
+The origin of the tip density is taken as nx/2, ny/2, 0.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 358 of file bafm\&.cpp\&.
+.SS "int afm_simulate_at_xy (\fBBimage\fP * ptip, \fBBimage\fP * p, long ii, float * force, double spring, double modulus, double thick)"
+
+.PP
+Definition at line 265 of file bafm\&.cpp\&.
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 62 of file bafm\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+
+.PP
+Definition at line 25 of file bafm\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

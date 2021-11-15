@@ -1,0 +1,629 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__ctf__fit_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/mg_ctf_fit.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/mg_ctf_fit.h</primary></indexterm>
+<para>
+
+<para>Header file for CTF (contrast transfer function) functions. </para>
+ 
+</para>
+<programlisting>#include &quot;rwimg.h&quot;
+#include &quot;ctf.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__ctf__fit_8h_1a17fa37bc462141fb9a71bbe253d45a85">img_ctf_radial_average</link> (<link linkend="_class_bimage">Bimage</link> *p, long n, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;em_ctf)</para>
+
+<para>Calculates the power spectrum radial average corrected for astigmatism. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__ctf__fit_8h_1a39a0c06ad0e5a580c38e8cfa056251af">img_ctf_fit</link> (<link linkend="_class_bimage">Bimage</link> *p, long n, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;em_ctf, double lores, double hires, double def_start=1e3, double def_end=2e5, double def_inc=1e3, int flag=0)</para>
+
+<para>Determines the CTF parameters from a power spectrum. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__ctf__fit_8h_1a914828856f28065d3daceb2a1c2cd21b">img_ctf_isotropy</link> (<link linkend="_class_bimage">Bimage</link> *p, long n, double lores, double hires)</para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__ctf__fit_8h_1a804fa46726d940f0c0ed88f2da0a6825">img_ctf_fit_baseline</link> (<link linkend="_class_bimage">Bimage</link> *p, long n, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;em_ctf, double lores, double hires)</para>
+
+<para>Fits only the baseline for a given CTF. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__ctf__fit_8h_1ac0cc671d77d351f03aa631bb40927eca">img_ctf_fit_envelope</link> (<link linkend="_class_bimage">Bimage</link> *p, long n, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;em_ctf, double lores, double hires)</para>
+
+<para>Fits only the envelope for a given CTF. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__ctf__fit_8h_1af985f1e858d119ade8d519e2f14ed128">ctf_find_defocus</link> (vector&lt; double &gt; &amp;v, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;em_ctf, long rmin, long rmax, double step_size, double def_start, double def_end, double def_inc)</para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__ctf__fit_8h_1a1989e9d1c03ba60781fa02d0b5e7d402">img_ctf_find_defocus</link> (<link linkend="_class_bimage">Bimage</link> *p, long n, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;em_ctf, double lores, double hires, double def_start=1e3, double def_end=2e5, double def_inc=1e3)</para>
+
+<para>Searches for the defocus based on correlation. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__ctf__fit_8h_1a67531ca1d0884d83e11cf25873f1e95b">img_ctf_fit_astigmatism</link> (<link linkend="_class_bimage">Bimage</link> *p, long n, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;em_ctf, double lores, double hires)</para>
+
+<para>Fits the astigmatism with a given defocus, baseline and envelope. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__ctf__fit_8h_1a2ac841c36d48f32c91f0439f905d9ceb">img_water_ring_index</link> (<link linkend="_class_bimage">Bimage</link> *p, long img_num, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;em_ctf)</para>
+
+<para>Calculates the water ring index from a power spectrum. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__ctf__fit_8h_1ac2220d1b5ffa128bfeeedffbb5fa5dfc">img_water_ring_index</link> (<link linkend="_class_bimage">Bimage</link> *prad)</para>
+
+<para>Calculates the water ring index from a power spectrum. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for CTF (contrast transfer function) functions. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20000426 </para>
+
+<para>Modified: 20210813 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__ctf__fit_8h_1af985f1e858d119ade8d519e2f14ed128"/>    <section>
+    <title>ctf_find_defocus()</title>
+<indexterm><primary>ctf_find_defocus</primary><secondary>mg_ctf_fit.h</secondary></indexterm>
+<indexterm><primary>mg_ctf_fit.h</primary><secondary>ctf_find_defocus</secondary></indexterm>
+<para><computeroutput>double ctf_find_defocus (vector&lt; double &gt; &amp; v, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; em_ctf, long rmin, long rmax, double step_size, double def_start, double def_end, double def_inc)</computeroutput></para><para>
+Definition at line 498 of file mg_ctf_fit.cpp.</para>
+    </section><anchor xml:id="_mg__ctf__fit_8h_1a1989e9d1c03ba60781fa02d0b5e7d402"/>    <section>
+    <title>img_ctf_find_defocus()</title>
+<indexterm><primary>img_ctf_find_defocus</primary><secondary>mg_ctf_fit.h</secondary></indexterm>
+<indexterm><primary>mg_ctf_fit.h</primary><secondary>img_ctf_find_defocus</secondary></indexterm>
+<para><computeroutput>double img_ctf_find_defocus (<link linkend="_class_bimage">Bimage</link> * p, long n, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; em_ctf, double lores, double hires, double def_start, double def_end, double def_inc)</computeroutput></para><para>
+
+<para>Searches for the defocus based on correlation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>sub-image number. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;em_ctf</entry>
+                                <entry>
+<para>CTF parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_start</entry>
+                                <entry>
+<para>defocus search start (default 1e3). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_end</entry>
+                                <entry>
+<para>defocus search end (default 2e5). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_inc</entry>
+                                <entry>
+<para>defocus search increment (default 1e3). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double R factor. <literallayout><computeroutput>A radial power spectrum is calculated.
+A range of defocus values is tested (1000-200000 angstrom, 0.1-20 um), 
+and the best fitting value accepted.
+The new parameters are written into the CTFparam structure.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 600 of file mg_ctf_fit.cpp.</para>
+    </section><anchor xml:id="_mg__ctf__fit_8h_1a39a0c06ad0e5a580c38e8cfa056251af"/>    <section>
+    <title>img_ctf_fit()</title>
+<indexterm><primary>img_ctf_fit</primary><secondary>mg_ctf_fit.h</secondary></indexterm>
+<indexterm><primary>mg_ctf_fit.h</primary><secondary>img_ctf_fit</secondary></indexterm>
+<para><computeroutput>double img_ctf_fit (<link linkend="_class_bimage">Bimage</link> * p, long n, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; em_ctf, double lores, double hires, double def_start, double def_end, double def_inc, int flag)</computeroutput></para><para>
+
+<para>Determines the CTF parameters from a power spectrum. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>sub-image number. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;em_ctf</entry>
+                                <entry>
+<para>CTF parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_start</entry>
+                                <entry>
+<para>defocus search start (default 1e3). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_end</entry>
+                                <entry>
+<para>defocus search end (default 2e5). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_inc</entry>
+                                <entry>
+<para>defocus search increment (default 1e3). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flag</entry>
+                                <entry>
+<para>flag to determine astigmatism. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double water ring index. <literallayout><computeroutput>Input: Power spectrum or its logarithm.
+A radial power spectrum is calculated.
+A range of defocus values is tested (100-200000 angstrom, 0.01-20 um), 
+defining the baseline as passing through the zeroes for each defocus 
+and fitting it to a 4th order polynomial.
+The envelope function is a simple gaussian on top of the baseline and
+fitted to minimize the RMSD between the calculated curve and the
+radial power spectrum logarithm.
+The fitting is limited to the spatial frequency range between the 
+first and last zeroes.
+Defocus values are positive for underfocus.
+Functions:
+    angle = atan(y/x)
+    s2 = reciprocal space distance squared
+    defocus_average = (defocus_max + defocus_min)/2
+    defocus_deviation = (defocus_max - defocus_min)/2
+    defocus = defocus_average + defocus_deviation*cos(2*(angle - astigmatism_angle))
+    phase = 0.5*PI*lambda*lambda*lambda*Cs*s2*s2 - PI*lambda*defocus*s2 - amp_shift;
+    CTF = sin(phase)
+The new parameters are written into the CTPparam structure.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 211 of file mg_ctf_fit.cpp.</para>
+    </section><anchor xml:id="_mg__ctf__fit_8h_1a67531ca1d0884d83e11cf25873f1e95b"/>    <section>
+    <title>img_ctf_fit_astigmatism()</title>
+<indexterm><primary>img_ctf_fit_astigmatism</primary><secondary>mg_ctf_fit.h</secondary></indexterm>
+<indexterm><primary>mg_ctf_fit.h</primary><secondary>img_ctf_fit_astigmatism</secondary></indexterm>
+<para><computeroutput>double img_ctf_fit_astigmatism (<link linkend="_class_bimage">Bimage</link> * p, long n, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; em_ctf, double lores, double hires)</computeroutput></para><para>
+
+<para>Fits the astigmatism with a given defocus, baseline and envelope. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>sub-image number. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;em_ctf</entry>
+                                <entry>
+<para>CTF parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double objective measure (larger is better). <literallayout><computeroutput>A radial power spectrum is calculated and the baseline subtracted.
+The defocus deviation starts from a low value to get an estimate of
+the astigmatism angle. The defocus deviation is modified nased on
+the direction of improvements in the fit, at each iteration 
+narrowing the angular search for the astigmatism angle.
+The new parameters are written into the CTFparam structure.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 766 of file mg_ctf_fit.cpp.</para>
+    </section><anchor xml:id="_mg__ctf__fit_8h_1a804fa46726d940f0c0ed88f2da0a6825"/>    <section>
+    <title>img_ctf_fit_baseline()</title>
+<indexterm><primary>img_ctf_fit_baseline</primary><secondary>mg_ctf_fit.h</secondary></indexterm>
+<indexterm><primary>mg_ctf_fit.h</primary><secondary>img_ctf_fit_baseline</secondary></indexterm>
+<para><computeroutput>double img_ctf_fit_baseline (<link linkend="_class_bimage">Bimage</link> * p, long n, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; em_ctf, double lores, double hires)</computeroutput></para><para>
+
+<para>Fits only the baseline for a given CTF. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>sub-image number. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;em_ctf</entry>
+                                <entry>
+<para>CTF parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double R factor. <literallayout><computeroutput>A radial power spectrum is calculated incorporating astigmatism.
+The baseline of the required type is fit.
+The new parameters are written into the CTFparam structure.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 424 of file mg_ctf_fit.cpp.</para>
+    </section><anchor xml:id="_mg__ctf__fit_8h_1ac0cc671d77d351f03aa631bb40927eca"/>    <section>
+    <title>img_ctf_fit_envelope()</title>
+<indexterm><primary>img_ctf_fit_envelope</primary><secondary>mg_ctf_fit.h</secondary></indexterm>
+<indexterm><primary>mg_ctf_fit.h</primary><secondary>img_ctf_fit_envelope</secondary></indexterm>
+<para><computeroutput>double img_ctf_fit_envelope (<link linkend="_class_bimage">Bimage</link> * p, long n, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; em_ctf, double lores, double hires)</computeroutput></para><para>
+
+<para>Fits only the envelope for a given CTF. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>sub-image number. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*em_ctf</entry>
+                                <entry>
+<para>CTF parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double R factor. <literallayout><computeroutput>A radial power spectrum is calculated incorporating astigmatism.
+The envelope is fit.
+The new parameters are written into the CTFparam structure.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 457 of file mg_ctf_fit.cpp.</para>
+    </section><anchor xml:id="_mg__ctf__fit_8h_1a914828856f28065d3daceb2a1c2cd21b"/>    <section>
+    <title>img_ctf_isotropy()</title>
+<indexterm><primary>img_ctf_isotropy</primary><secondary>mg_ctf_fit.h</secondary></indexterm>
+<indexterm><primary>mg_ctf_fit.h</primary><secondary>img_ctf_isotropy</secondary></indexterm>
+<para><computeroutput>double img_ctf_isotropy (<link linkend="_class_bimage">Bimage</link> * p, long n, double lores, double hires)</computeroutput></para>    </section><anchor xml:id="_mg__ctf__fit_8h_1a17fa37bc462141fb9a71bbe253d45a85"/>    <section>
+    <title>img_ctf_radial_average()</title>
+<indexterm><primary>img_ctf_radial_average</primary><secondary>mg_ctf_fit.h</secondary></indexterm>
+<indexterm><primary>mg_ctf_fit.h</primary><secondary>img_ctf_radial_average</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_ctf_radial_average (<link linkend="_class_bimage">Bimage</link> * p, long n, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; em_ctf)</computeroutput></para><para>
+
+<para>Calculates the power spectrum radial average corrected for astigmatism. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>sub-image number. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;em_ctf</entry>
+                                <entry>
+<para>CTF parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* radial average, NULL on error. <literallayout><computeroutput>A power spectrum with its origin at the center.
+Functions:
+    angle = atan(y/x) - astigmatism_angle
+    s2 = reciprocal space distance squared
+    defocus_min = defocus_avg - defocus_dev
+    defocus_max = defocus_avg + defocus_dev
+    smin2 = 1 - defocus_dev/defocus_avg
+    smax2 = 1 + defocus_dev/defocus_avg
+    radius = sqrt(2*s2*(smax2*cos(angle)*cos(angle)+
+                smin2*sin(angle)*sin(angle))/(smax2+smin2))
+The radial average is returned as a new 1D image.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 46 of file mg_ctf_fit.cpp.</para>
+    </section><anchor xml:id="_mg__ctf__fit_8h_1a2ac841c36d48f32c91f0439f905d9ceb"/>    <section>
+    <title>img_water_ring_index()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>img_water_ring_index</primary><secondary>mg_ctf_fit.h</secondary></indexterm>
+<indexterm><primary>mg_ctf_fit.h</primary><secondary>img_water_ring_index</secondary></indexterm>
+<para><computeroutput>double img_water_ring_index (<link linkend="_class_bimage">Bimage</link> * p, long img_num, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; em_ctf)</computeroutput></para><para>
+
+<para>Calculates the water ring index from a power spectrum. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>power spectrum. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>img_num</entry>
+                                <entry>
+<para>sub-image number. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;em_ctf</entry>
+                                <entry>
+<para>CTF parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double water ing index. <literallayout><computeroutput>A radial power spectrum is calculated.
+The the water ring index is defined as:
+    wri = wp/b - 1
+where wp is the intensity at s=0.26 (3.8 Å) and b is the background.
+The background is estimated as the average of sections before and after 
+the water peak:
+    b1 between s=0.1 and s=0.2
+    b2 between s=0.3 and s=0.4
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 860 of file mg_ctf_fit.cpp.</para>
+    </section><anchor xml:id="_mg__ctf__fit_8h_1ac2220d1b5ffa128bfeeedffbb5fa5dfc"/>    <section>
+    <title>img_water_ring_index()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>img_water_ring_index</primary><secondary>mg_ctf_fit.h</secondary></indexterm>
+<indexterm><primary>mg_ctf_fit.h</primary><secondary>img_water_ring_index</secondary></indexterm>
+<para><computeroutput>double img_water_ring_index (<link linkend="_class_bimage">Bimage</link> * prad)</computeroutput></para><para>
+
+<para>Calculates the water ring index from a power spectrum. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*prad</entry>
+                                <entry>
+<para>radial power spectrum. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double water ing index. <literallayout><computeroutput>The the water ring index is defined as:
+    wri = wp/b - 1
+where wp is the average intensity between 0.2 and 0.3, covering the 
+peak at s=0.26 (3.8 Å).
+The background, b, is estimated as the average of sections before and after 
+the water peak:
+    b1 between s=0.1 and s=0.2
+    b2 between s=0.3 and s=0.4
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 889 of file mg_ctf_fit.cpp.</para>
+</section>
+</section>
+</section>

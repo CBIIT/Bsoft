@@ -1,0 +1,248 @@
+.TH "/Users/bernard/b20/bsoft/src/bmgconvert.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/bmgconvert.cpp \- Convert between micrograph parameter formats\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'rwmgSTAR\&.h'\fP
+.br
+\fC#include 'rwmgRELION\&.h'\fP
+.br
+\fC#include 'rwmgXML\&.h'\fP
+.br
+\fC#include 'mg_ctf\&.h'\fP
+.br
+\fC#include 'file_util\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBDATLINELENGTH\fP   120"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBproject\fP * \fBread_project_conv\fP (\fBBstring\fP *\fBfile_list\fP)"
+.br
+.ti -1c
+.RI "int \fBwrite_project_conv\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP, int mg_select, int rec_select)"
+.br
+.ti -1c
+.RI "int \fBread_project_dat\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Reading micrograph parameters from a DAT file\&. "
+.ti -1c
+.RI "int \fBwrite_project_dat\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP, int mg_select, int rec_select)"
+.br
+.RI "Writing micrograph parameters to a DAT file\&. "
+.ti -1c
+.RI "int \fBread_project_crd\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Reading micrograph parameters from a CRD file\&. "
+.ti -1c
+.RI "int \fBwrite_project_crd\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP, int mg_select, int rec_select)"
+.br
+.RI "Writing micrograph parameters to a CRD file\&. "
+.ti -1c
+.RI "int \fBproject_modify_parameters\fP (\fBBproject\fP *\fBproject\fP, char flags)"
+.br
+.RI "Modifies some micrograph parameters\&. "
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Convert between micrograph parameter formats\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.PP
+David Belnap 
+.PP
+James Conway 
+.PP
+Juha Huiskonen 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20061101 
+.PP
+Modified: 20180322 
+.RE
+.PP
+
+.PP
+Definition in file \fBbmgconvert\&.cpp\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define DATLINELENGTH   120"
+
+.PP
+Definition at line 25 of file bmgconvert\&.cpp\&.
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 73 of file bmgconvert\&.cpp\&.
+.SS "int project_modify_parameters (\fBBproject\fP * project, char flags)"
+
+.PP
+Modifies some micrograph parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project structure\&. 
+.br
+\fIflags\fP bit 0 = omega 90 flag, bit 1 = mag flag\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 669 of file bmgconvert\&.cpp\&.
+.SS "\fBBproject\fP * read_project_conv (\fBBstring\fP * file_list)"
+
+.PP
+Definition at line 163 of file bmgconvert\&.cpp\&.
+.SS "int read_project_crd (\fBBstring\fP & filename, \fBBproject\fP * project)"
+
+.PP
+Reading micrograph parameters from a CRD file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name (or comma-delimited list)\&. 
+.br
+\fI*project\fP initialized project structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 488 of file bmgconvert\&.cpp\&.
+.SS "int read_project_dat (\fBBstring\fP & filename, \fBBproject\fP * project)"
+
+.PP
+Reading micrograph parameters from a DAT file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name (or comma-delimited list)\&. 
+.br
+\fI*project\fP initialized project structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 296 of file bmgconvert\&.cpp\&.
+.SS "int write_project_conv (\fBBstring\fP & filename, \fBBproject\fP * project, int mg_select, int rec_select)"
+
+.PP
+Definition at line 243 of file bmgconvert\&.cpp\&.
+.SS "int write_project_crd (\fBBstring\fP & filename, \fBBproject\fP * project, int mg_select, int rec_select)"
+
+.PP
+Writing micrograph parameters to a CRD file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*filename\fP file name\&. 
+.br
+\fI*project\fP project structure\&. 
+.br
+\fImg_select\fP flag to select micrograph\&. 
+.br
+\fIrec_select\fP flag to select reconstruction\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 588 of file bmgconvert\&.cpp\&.
+.SS "int write_project_dat (\fBBstring\fP & filename, \fBBproject\fP * project, int mg_select, int rec_select)"
+
+.PP
+Writing micrograph parameters to a DAT file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*filename\fP file name\&. 
+.br
+\fI*project\fP project structure\&. 
+.br
+\fImg_select\fP flag to select micrograph\&. 
+.br
+\fIrec_select\fP flag to select reconstruction\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 419 of file bmgconvert\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+
+.PP
+Definition at line 40 of file bmgconvert\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,918 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_symmetry_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/symmetry.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/symmetry.h</primary></indexterm>
+<para>
+
+<para>Header file for general symmetry functions. </para>
+ 
+</para>
+<programlisting>#include &quot;View.h&quot;
+#include &quot;Bstring.h&quot;
+</programlisting><simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>class <link linkend="_class_bsymop">Bsymop</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_bsymmetry">Bsymmetry</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_symmetry_8h_1a5d70b574d3b78c7f50bd3f21d5ad1483">_Bsymmetry_</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>string <link linkend="_symmetry_8h_1a79adf15f738d41f47ad62eca52442618">symmetry_helical_label</link> (double helix_rise, double helix_angle, int dyad_axis, int cyclic, double seam_shift)</para>
+
+<para>Returns the label for helical symmetry. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> <link linkend="_symmetry_8h_1a1e705f89eff8c1718cc9e2d5129a1f0f">view_symmetry_reference</link> (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym)</para>
+
+<para>Returns an asymmetric unit reference point. </para>
+</listitem>
+            <listitem><para><link linkend="_class_matrix3">Matrix3</link> <link linkend="_symmetry_8h_1af769a5a2b3b2448fae4254000d6ae86d">symmetry_rotate_to_axis</link> (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, long axis, long axis_flag)</para>
+
+<para>Rotation matrix to orient a symmetry axis on the z axis. </para>
+</listitem>
+            <listitem><para>vector&lt; <link linkend="_class_vector3">Vector3</link>&lt; double &gt; &gt; <link linkend="_symmetry_8h_1ad2486a64d4f27d739ae8cbba06d33180">symmetry_get_axes</link> (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym)</para>
+
+<para>Get all symmetry axes. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> * <link linkend="_symmetry_8h_1abefa00358b1fc270eec6a43e87f75f95">symmetry_get_all_views</link> (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, <link linkend="_class_view">View</link> asu_view)</para>
+
+<para>Get all symmetry-related views of one given view. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> * <link linkend="_symmetry_8h_1a999de3b49b96a3bf044e4364687a84f8">symmetry_get_all_views</link> (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, <link linkend="_class_view">View</link> *views)</para>
+</listitem>
+            <listitem><para>vector&lt; <link linkend="_class_matrix3">Matrix3</link> &gt; <link linkend="_symmetry_8h_1a64eadc934b31d093961c44652d34f137">symmetry_get_all_matrices</link> (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym)</para>
+
+<para>Get all symmetry-related views of one given view. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> * <link linkend="_symmetry_8h_1aa26d547a66aee839630d778fc2c8763a">asymmetric_unit_views</link> (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double theta_step, double phi_step, int flag)</para>
+
+<para>Initializes a well-distributed set of views in an asymmetric unit. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> * <link linkend="_symmetry_8h_1a329b9140a004bcd5f504afad69b84148">asymmetric_unit_views</link> (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double theta_step, double phi_step, double alpha_step, int flag)</para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> * <link linkend="_symmetry_8h_1af26ad3fcbfb35783184eb223f77c5e93">side_views</link> (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double side_ang, double theta_step, double phi_step)</para>
+
+<para>Initializes a set of views around the z-axis for helical projection. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> * <link linkend="_symmetry_8h_1a07b6c56416df03173cb62d741c6982a9">side_views</link> (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double side_ang, double theta_step, double phi_step, double alpha_step)</para>
+</listitem>
+            <listitem><para>int <link linkend="_symmetry_8h_1ac79290da17fe52a774192b85c6b3d10d">change_views_to_asymmetric_unit</link> (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, <link linkend="_class_view">View</link> *view)</para>
+
+<para>Change the views to those in the asymmetric unit. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> <link linkend="_symmetry_8h_1acbba6172031c6099bac9bfc728cca11e">find_asymmetric_unit_view</link> (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, <link linkend="_class_view">View</link> theview)</para>
+
+<para>Finds the corresponding view in the asymmetric unit. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> <link linkend="_symmetry_8h_1aecbbb8fa851ca00fbc8c7db044b1556e">find_closest_symmetric_view</link> (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, <link linkend="_class_view">View</link> view_ref, <link linkend="_class_view">View</link> view)</para>
+
+<para>Finds the closest symmetric match between two views. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> * <link linkend="_symmetry_8h_1ac0958238deb6d4b923a11f723405852d">reference_asymmetric_unit_views</link> (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym)</para>
+
+<para>Returns a reference view for each asymmetric unit. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> <link linkend="_symmetry_8h_1aa460212f2de46f7dc5751edbf605d21b">random_symmetric_view</link> (<link linkend="_class_view">View</link> &amp;asu_view, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym)</para>
+
+<para>Returns a randomly picked symmetry view. </para>
+</listitem>
+            <listitem><para>int <link linkend="_symmetry_8h_1af0e80fecf844f43d0fa4b1b704dbdc1a">test_asymmetric_unit_view</link> (<link linkend="_class_view">View</link> theview, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym)</para>
+
+<para>Returns an asymmetric unit index number. </para>
+</listitem>
+            <listitem><para>int <link linkend="_symmetry_8h_1a7f568f590c61cdfc96c1ddc2bdef92f8">sym_show_matrices</link> (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym)</para>
+
+<para>Show symmetry matrices. </para>
+</listitem>
+            <listitem><para>int <link linkend="_symmetry_8h_1a3e43ac681399b07e0010feaf9d0d8eb5">sym_show_operational_matrices</link> (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym)</para>
+
+<para>Show symmetry matrices associated with each symmetry operator. </para>
+</listitem>
+            <listitem><para>int <link linkend="_symmetry_8h_1a8c7611b8a8ac5d4c65137dce3b249640">sym_show_pdb_matrices</link> (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym)</para>
+
+<para>Show PDB format symmetry matrices associated with each symmetry operator. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for general symmetry functions. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010420 </para>
+
+<para>Modified: 20210116 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_symmetry_8h_1a5d70b574d3b78c7f50bd3f21d5ad1483"/>    <section>
+    <title>_Bsymmetry_</title>
+<indexterm><primary>_Bsymmetry_</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>_Bsymmetry_</secondary></indexterm>
+<para><computeroutput>#define _Bsymmetry_</computeroutput></para><para>
+Definition at line 131 of file symmetry.h.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_symmetry_8h_1a329b9140a004bcd5f504afad69b84148"/>    <section>
+    <title>asymmetric_unit_views()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>asymmetric_unit_views</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>asymmetric_unit_views</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link>* asymmetric_unit_views (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double theta_step, double phi_step, double alpha_step, int flag)</computeroutput></para><para>
+Definition at line 548 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1aa26d547a66aee839630d778fc2c8763a"/>    <section>
+    <title>asymmetric_unit_views()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>asymmetric_unit_views</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>asymmetric_unit_views</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link>* asymmetric_unit_views (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double theta_step, double phi_step, int flag)</computeroutput></para><para>
+
+<para>Initializes a well-distributed set of views in an asymmetric unit. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>theta_step</entry>
+                                <entry>
+<para>angular step size from primary symmetry axis (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>phi_step</entry>
+                                <entry>
+<para>angular step size around primary symmetry axis (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flag</entry>
+                                <entry>
+<para>flag for generating a full asymmetric unit (default 0=half). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>View* a linked list of views. <literallayout><computeroutput>A set of views is calculated with tesselation within each asymmetric
+unit such that the views are well-distributed.
+If the full flag is set, both halves of the asymmetric unit are covered.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 380 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1ac79290da17fe52a774192b85c6b3d10d"/>    <section>
+    <title>change_views_to_asymmetric_unit()</title>
+<indexterm><primary>change_views_to_asymmetric_unit</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>change_views_to_asymmetric_unit</secondary></indexterm>
+<para><computeroutput>int change_views_to_asymmetric_unit (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, <link linkend="_class_view">View</link> * view)</computeroutput></para><para>
+
+<para>Change the views to those in the asymmetric unit. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*view</entry>
+                                <entry>
+<para>list of views (replaced). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The view is replaced with the one in the standard asymmetric unit.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 636 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1acbba6172031c6099bac9bfc728cca11e"/>    <section>
+    <title>find_asymmetric_unit_view()</title>
+<indexterm><primary>find_asymmetric_unit_view</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>find_asymmetric_unit_view</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link> find_asymmetric_unit_view (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, <link linkend="_class_view">View</link> theview)</computeroutput></para><para>
+
+<para>Finds the corresponding view in the asymmetric unit. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>theview</entry>
+                                <entry>
+<para>view. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_view">View</link> the asymmetric unit view. <literallayout><computeroutput>The asymmetric unit view is found and the the new view with the 
+link from the old view is returned.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 658 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1aecbbb8fa851ca00fbc8c7db044b1556e"/>    <section>
+    <title>find_closest_symmetric_view()</title>
+<indexterm><primary>find_closest_symmetric_view</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>find_closest_symmetric_view</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link> find_closest_symmetric_view (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, <link linkend="_class_view">View</link> view_ref, <link linkend="_class_view">View</link> view)</computeroutput></para><para>
+
+<para>Finds the closest symmetric match between two views. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view_ref</entry>
+                                <entry>
+<para>reference view. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view</entry>
+                                <entry>
+<para>test view. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_view">View</link> matched symmetric version of test view. <literallayout><computeroutput>A list of symmetry-related views of the test view is searched
+for the closest to the reference view.
+The matched view is returned.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 741 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1aa460212f2de46f7dc5751edbf605d21b"/>    <section>
+    <title>random_symmetric_view()</title>
+<indexterm><primary>random_symmetric_view</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>random_symmetric_view</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link> random_symmetric_view (<link linkend="_class_view">View</link> &amp; asu_view, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym)</computeroutput></para><para>
+
+<para>Returns a randomly picked symmetry view. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;asu_view</entry>
+                                <entry>
+<para>asymmetric unit view. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_view">View</link> picked view. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 813 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1ac0958238deb6d4b923a11f723405852d"/>    <section>
+    <title>reference_asymmetric_unit_views()</title>
+<indexterm><primary>reference_asymmetric_unit_views</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>reference_asymmetric_unit_views</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link>* reference_asymmetric_unit_views (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym)</computeroutput></para><para>
+
+<para>Returns a reference view for each asymmetric unit. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>View* reference views. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 774 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1af26ad3fcbfb35783184eb223f77c5e93"/>    <section>
+    <title>side_views()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>side_views</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>side_views</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link>* side_views (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double side_ang, double theta_step, double phi_step)</computeroutput></para><para>
+
+<para>Initializes a set of views around the z-axis for helical projection. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>side_ang</entry>
+                                <entry>
+<para>starting angle (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>theta_step</entry>
+                                <entry>
+<para>angular step size perpendicular to equator (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>phi_step</entry>
+                                <entry>
+<para>angular step size around equator (radians). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>View* a set of 4-value views. <literallayout><computeroutput>A set of views is calculated corresponding to views around the z-axis
+including some tilting to account for oblique views.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 571 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1a07b6c56416df03173cb62d741c6982a9"/>    <section>
+    <title>side_views()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>side_views</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>side_views</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link>* side_views (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double side_ang, double theta_step, double phi_step, double alpha_step)</computeroutput></para><para>
+Definition at line 616 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1a7f568f590c61cdfc96c1ddc2bdef92f8"/>    <section>
+    <title>sym_show_matrices()</title>
+<indexterm><primary>sym_show_matrices</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>sym_show_matrices</secondary></indexterm>
+<para><computeroutput>int sym_show_matrices (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym)</computeroutput></para><para>
+
+<para>Show symmetry matrices. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of symmetry matrices. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 863 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1a3e43ac681399b07e0010feaf9d0d8eb5"/>    <section>
+    <title>sym_show_operational_matrices()</title>
+<indexterm><primary>sym_show_operational_matrices</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>sym_show_operational_matrices</secondary></indexterm>
+<para><computeroutput>int sym_show_operational_matrices (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym)</computeroutput></para><para>
+
+<para>Show symmetry matrices associated with each symmetry operator. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of symmetry matrices. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 883 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1a8c7611b8a8ac5d4c65137dce3b249640"/>    <section>
+    <title>sym_show_pdb_matrices()</title>
+<indexterm><primary>sym_show_pdb_matrices</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>sym_show_pdb_matrices</secondary></indexterm>
+<para><computeroutput>int sym_show_pdb_matrices (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym)</computeroutput></para><para>
+
+<para>Show PDB format symmetry matrices associated with each symmetry operator. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of symmetry matrices. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 902 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1a64eadc934b31d093961c44652d34f137"/>    <section>
+    <title>symmetry_get_all_matrices()</title>
+<indexterm><primary>symmetry_get_all_matrices</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>symmetry_get_all_matrices</secondary></indexterm>
+<para><computeroutput>vector&lt;<link linkend="_class_matrix3">Matrix3</link>&gt; symmetry_get_all_matrices (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym)</computeroutput></para><para>
+
+<para>Get all symmetry-related views of one given view. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;Matrix3&gt; array of matrices. <literallayout><computeroutput>The number of views generated for a point group symmetry is
+calculated as the product of the order fields in the symmetry
+structure.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 348 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1a999de3b49b96a3bf044e4364687a84f8"/>    <section>
+    <title>symmetry_get_all_views()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>symmetry_get_all_views</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>symmetry_get_all_views</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link>* symmetry_get_all_views (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, <link linkend="_class_view">View</link> * views)</computeroutput></para><para>
+Definition at line 321 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1abefa00358b1fc270eec6a43e87f75f95"/>    <section>
+    <title>symmetry_get_all_views()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>symmetry_get_all_views</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>symmetry_get_all_views</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link>* symmetry_get_all_views (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, <link linkend="_class_view">View</link> asu_view)</computeroutput></para><para>
+
+<para>Get all symmetry-related views of one given view. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>asu_view</entry>
+                                <entry>
+<para>asymmetric unit vector and rotation angle. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>View* linked list of views. <literallayout><computeroutput>The number of views generated for a point group symmetry is
+calculated as the product of the order fields in the symmetry
+structure.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 277 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1ad2486a64d4f27d739ae8cbba06d33180"/>    <section>
+    <title>symmetry_get_axes()</title>
+<indexterm><primary>symmetry_get_axes</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>symmetry_get_axes</secondary></indexterm>
+<para><computeroutput>vector&lt;<link linkend="_class_vector3">Vector3</link>&lt;double&gt; &gt; symmetry_get_axes (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym)</computeroutput></para><para>
+
+<para>Get all symmetry axes. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;<link linkend="_class_vector3">Vector3&lt;double&gt;</link>&gt; array of axes. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 213 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1a79adf15f738d41f47ad62eca52442618"/>    <section>
+    <title>symmetry_helical_label()</title>
+<indexterm><primary>symmetry_helical_label</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>symmetry_helical_label</secondary></indexterm>
+<para><computeroutput>string symmetry_helical_label (double helix_rise, double helix_angle, int dyad_axis, int cyclic, double seam_shift)</computeroutput></para><para>
+
+<para>Returns the label for helical symmetry. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>helix_rise</entry>
+                                <entry>
+<para>helical rise (angstroms). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>helix_angle</entry>
+                                <entry>
+<para>helical rotation angle (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>dyad_axis</entry>
+                                <entry>
+<para>presence of dyad axis (1/2). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>cyclic</entry>
+                                <entry>
+<para>cyclic symmetry. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>seam_shift</entry>
+                                <entry>
+<para>fractional shift for seamed helices. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>string label. <literallayout><computeroutput>Thge symmetry order is defined as the product of all the individual
+orders of the symmetry operations, or alternatively, the number of views.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 133 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1af769a5a2b3b2448fae4254000d6ae86d"/>    <section>
+    <title>symmetry_rotate_to_axis()</title>
+<indexterm><primary>symmetry_rotate_to_axis</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>symmetry_rotate_to_axis</secondary></indexterm>
+<para><computeroutput><link linkend="_class_matrix3">Matrix3</link> symmetry_rotate_to_axis (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, long axis, long axis_flag)</computeroutput></para><para>
+
+<para>Rotation matrix to orient a symmetry axis on the z axis. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>axis</entry>
+                                <entry>
+<para>desired symmetry axis order. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>axis_flag</entry>
+                                <entry>
+<para>view modifier. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_matrix3">Matrix3</link> new rotation matrix. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 182 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1af0e80fecf844f43d0fa4b1b704dbdc1a"/>    <section>
+    <title>test_asymmetric_unit_view()</title>
+<indexterm><primary>test_asymmetric_unit_view</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>test_asymmetric_unit_view</secondary></indexterm>
+<para><computeroutput>int test_asymmetric_unit_view (<link linkend="_class_view">View</link> theview, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym)</computeroutput></para><para>
+
+<para>Returns an asymmetric unit index number. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>theview</entry>
+                                <entry>
+<para>view to test. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int view number. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 837 of file symmetry.cpp.</para>
+    </section><anchor xml:id="_symmetry_8h_1a1e705f89eff8c1718cc9e2d5129a1f0f"/>    <section>
+    <title>view_symmetry_reference()</title>
+<indexterm><primary>view_symmetry_reference</primary><secondary>symmetry.h</secondary></indexterm>
+<indexterm><primary>symmetry.h</primary><secondary>view_symmetry_reference</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link> view_symmetry_reference (<link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym)</computeroutput></para><para>
+
+<para>Returns an asymmetric unit reference point. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_view">View</link> reference view. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 150 of file symmetry.cpp.</para>
+</section>
+</section>
+</section>

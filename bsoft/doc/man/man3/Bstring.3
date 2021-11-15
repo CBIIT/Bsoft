@@ -1,0 +1,548 @@
+.TH "Bstring" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Bstring
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Bstring\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBstring\fP ()"
+.br
+.ti -1c
+.RI "\fBBstring\fP (const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "\fBBstring\fP (const string &s)"
+.br
+.ti -1c
+.RI "\fBBstring\fP (const \fBBstring\fP &s, long start, long len)"
+.br
+.ti -1c
+.RI "\fBBstring\fP (const char *c)"
+.br
+.ti -1c
+.RI "\fBBstring\fP (const char *c, long start, long len)"
+.br
+.ti -1c
+.RI "\fBBstring\fP (const char c, long size)"
+.br
+.ti -1c
+.RI "string \fBstr\fP ()"
+.br
+.ti -1c
+.RI "template<typename T > \fBBstring\fP (T value, const char *format)"
+.br
+.ti -1c
+.RI "\fB~Bstring\fP ()"
+.br
+.ti -1c
+.RI "\fBBstring\fP & \fBoperator=\fP (const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "\fBBstring\fP & \fBoperator=\fP (const string &s)"
+.br
+.ti -1c
+.RI "\fBBstring\fP & \fBoperator=\fP (const char *c)"
+.br
+.ti -1c
+.RI "\fBBstring\fP & \fBoperator+=\fP (const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBoperator+\fP (const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBoperator+\fP (const \fBBstring\fP &s) const"
+.br
+.ti -1c
+.RI "\fBBstring\fP & \fBoperator+=\fP (const char c)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBoperator+\fP (const char c)"
+.br
+.ti -1c
+.RI "bool \fBoperator==\fP (const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "bool \fBoperator!=\fP (const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "bool \fBoperator>\fP (const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "bool \fBoperator<\fP (const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "bool \fBoperator>=\fP (const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "bool \fBoperator<=\fP (const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBoperator<<\fP (int n)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBoperator>>\fP (int n)"
+.br
+.ti -1c
+.RI "char & \fBoperator[]\fP (long i)"
+.br
+.ti -1c
+.RI "const char * \fBc_str\fP ()"
+.br
+.ti -1c
+.RI "bool \fBempty\fP ()"
+.br
+.ti -1c
+.RI "long \fBlength\fP () const"
+.br
+.ti -1c
+.RI "long \fBcount\fP (const char c)"
+.br
+.ti -1c
+.RI "long \fBcompare\fP (const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "long \fBcompare_value\fP (const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBcommon\fP (const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "void \fBfill\fP (const char c)"
+.br
+.ti -1c
+.RI "void \fBplace\fP (long i, const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBlower\fP ()"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBupper\fP ()"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBsubstr\fP (long start, long len)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBno_space\fP ()"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBno_lead_space\fP ()"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBalnum\fP ()"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBleft\fP (long len)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBright\fP (long len)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBpre\fP (char c)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBpost\fP (char c)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBpre_rev\fP (char c)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBpost_rev\fP (char c)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBwithin\fP (char c1, char c2)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBreplace\fP (char cold, char cnew)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBremove\fP (const char c)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBswap\fP (const long i, const long j)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBerase\fP (const long i)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBtruncate\fP (const long n)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBbase\fP ()"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBextension\fP ()"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBcanonical\fP (int n)"
+.br
+.ti -1c
+.RI "long \fBinteger\fP ()"
+.br
+.ti -1c
+.RI "double \fBreal\fP ()"
+.br
+.ti -1c
+.RI "long \fBindex\fP (const char c)"
+.br
+.ti -1c
+.RI "long \fBindex\fP (const char c, long start)"
+.br
+.ti -1c
+.RI "long \fBfind\fP (const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "long \fBfind\fP (const \fBBstring\fP &s, long start)"
+.br
+.ti -1c
+.RI "long \fBrfind\fP (const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "long \fBrfind\fP (const \fBBstring\fP &s, long start)"
+.br
+.ti -1c
+.RI "bool \fBcontains\fP (const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBinsert\fP (long pos, const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "\fBBstring\fP * \fBsplit\fP ()"
+.br
+.ti -1c
+.RI "\fBBstring\fP * \fBsplit\fP (const \fBBstring\fP &delim)"
+.br
+.ti -1c
+.RI "vector< long > \fBsplit_into_integers\fP (const \fBBstring\fP &delim)"
+.br
+.ti -1c
+.RI "vector< double > \fBsplit_into_doubles\fP (const \fBBstring\fP &delim)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBBstring\fP * \fBnext\fP"
+.br
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "\fBBstring\fP \fBoperator+\fP (const char *c, const \fBBstring\fP &s)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 29 of file Bstring\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Bstring::Bstring ()\fC [inline]\fP"
+
+.PP
+Definition at line 35 of file Bstring\&.h\&.
+.SS "Bstring::Bstring (const \fBBstring\fP & s)"
+Constructor 
+.PP
+Definition at line 22 of file Bstring\&.cpp\&.
+.SS "Bstring::Bstring (const string & s)"
+
+.PP
+Definition at line 34 of file Bstring\&.cpp\&.
+.SS "Bstring::Bstring (const \fBBstring\fP & s, long start, long len)"
+
+.PP
+Definition at line 46 of file Bstring\&.cpp\&.
+.SS "Bstring::Bstring (const char * c)"
+
+.PP
+Definition at line 63 of file Bstring\&.cpp\&.
+.SS "Bstring::Bstring (const char * c, long start, long len)"
+
+.PP
+Definition at line 77 of file Bstring\&.cpp\&.
+.SS "Bstring::Bstring (const char c, long size)"
+
+.PP
+Definition at line 96 of file Bstring\&.cpp\&.
+.SS "template<typename T > Bstring::Bstring (T value, const char * format)\fC [inline]\fP"
+
+.PP
+Definition at line 48 of file Bstring\&.h\&.
+.SS "Bstring::~Bstring ()\fC [inline]\fP"
+
+.PP
+Definition at line 56 of file Bstring\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBBstring\fP Bstring::alnum ()"
+
+.PP
+Definition at line 350 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::base ()"
+
+.PP
+Definition at line 509 of file Bstring\&.cpp\&.
+.SS "const char* Bstring::c_str ()\fC [inline]\fP"
+
+.PP
+Definition at line 74 of file Bstring\&.h\&.
+.SS "\fBBstring\fP Bstring::canonical (int n)"
+
+.PP
+Definition at line 528 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::common (const \fBBstring\fP & s)"
+
+.PP
+Definition at line 289 of file Bstring\&.cpp\&.
+.SS "long Bstring::compare (const \fBBstring\fP & s)"
+
+.PP
+Definition at line 270 of file Bstring\&.cpp\&.
+.SS "long Bstring::compare_value (const \fBBstring\fP & s)"
+
+.PP
+Definition at line 278 of file Bstring\&.cpp\&.
+.SS "bool Bstring::contains (const \fBBstring\fP & s)"
+
+.PP
+Definition at line 585 of file Bstring\&.cpp\&.
+.SS "long Bstring::count (const char c)"
+
+.PP
+Definition at line 262 of file Bstring\&.cpp\&.
+.SS "bool Bstring::empty ()\fC [inline]\fP"
+
+.PP
+Definition at line 75 of file Bstring\&.h\&.
+.SS "\fBBstring\fP Bstring::erase (const long i)"
+
+.PP
+Definition at line 486 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::extension ()"
+
+.PP
+Definition at line 516 of file Bstring\&.cpp\&.
+.SS "void Bstring::fill (const char c)"
+
+.PP
+Definition at line 297 of file Bstring\&.cpp\&.
+.SS "long Bstring::find (const \fBBstring\fP & s)\fC [inline]\fP"
+
+.PP
+Definition at line 108 of file Bstring\&.h\&.
+.SS "long Bstring::find (const \fBBstring\fP & s, long start)"
+
+.PP
+Definition at line 563 of file Bstring\&.cpp\&.
+.SS "long Bstring::index (const char c)\fC [inline]\fP"
+
+.PP
+Definition at line 106 of file Bstring\&.h\&.
+.SS "long Bstring::index (const char c, long start)"
+
+.PP
+Definition at line 553 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::insert (long pos, const \fBBstring\fP & s)"
+
+.PP
+Definition at line 591 of file Bstring\&.cpp\&.
+.SS "long Bstring::integer ()"
+
+.PP
+Definition at line 540 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::left (long len)"
+
+.PP
+Definition at line 359 of file Bstring\&.cpp\&.
+.SS "long Bstring::length () const"
+
+.PP
+Definition at line 256 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::lower ()"
+
+.PP
+Definition at line 309 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::no_lead_space ()"
+
+.PP
+Definition at line 342 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::no_space ()"
+
+.PP
+Definition at line 333 of file Bstring\&.cpp\&.
+.SS "bool Bstring::operator!= (const \fBBstring\fP & s)"
+
+.PP
+Definition at line 201 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::operator+ (const \fBBstring\fP & s)"
+
+.PP
+Definition at line 154 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::operator+ (const \fBBstring\fP & s) const"
+
+.PP
+Definition at line 167 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::operator+ (const char c)"
+
+.PP
+Definition at line 186 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP & Bstring::operator+= (const \fBBstring\fP & s)"
+
+.PP
+Definition at line 148 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP & Bstring::operator+= (const char c)"
+
+.PP
+Definition at line 180 of file Bstring\&.cpp\&.
+.SS "bool Bstring::operator< (const \fBBstring\fP & s)"
+
+.PP
+Definition at line 211 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::operator<< (int n)"
+
+.PP
+Definition at line 226 of file Bstring\&.cpp\&.
+.SS "bool Bstring::operator<= (const \fBBstring\fP & s)"
+
+.PP
+Definition at line 221 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP & Bstring::operator= (const \fBBstring\fP & s)"
+
+.PP
+Definition at line 107 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP & Bstring::operator= (const char * c)"
+
+.PP
+Definition at line 134 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP & Bstring::operator= (const string & s)"
+
+.PP
+Definition at line 121 of file Bstring\&.cpp\&.
+.SS "bool Bstring::operator== (const \fBBstring\fP & s)"
+
+.PP
+Definition at line 196 of file Bstring\&.cpp\&.
+.SS "bool Bstring::operator> (const \fBBstring\fP & s)"
+
+.PP
+Definition at line 206 of file Bstring\&.cpp\&.
+.SS "bool Bstring::operator>= (const \fBBstring\fP & s)"
+
+.PP
+Definition at line 216 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::operator>> (int n)"
+
+.PP
+Definition at line 233 of file Bstring\&.cpp\&.
+.SS "char & Bstring::operator[] (long i)"
+
+.PP
+Definition at line 240 of file Bstring\&.cpp\&.
+.SS "void Bstring::place (long i, const \fBBstring\fP & s)"
+
+.PP
+Definition at line 303 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::post (char c)"
+
+.PP
+Definition at line 395 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::post_rev (char c)"
+
+.PP
+Definition at line 429 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::pre (char c)"
+
+.PP
+Definition at line 382 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::pre_rev (char c)"
+
+.PP
+Definition at line 414 of file Bstring\&.cpp\&.
+.SS "double Bstring::real ()"
+
+.PP
+Definition at line 546 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::remove (const char c)"
+
+.PP
+Definition at line 466 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::replace (char cold, char cnew)"
+
+.PP
+Definition at line 458 of file Bstring\&.cpp\&.
+.SS "long Bstring::rfind (const \fBBstring\fP & s)\fC [inline]\fP"
+
+.PP
+Definition at line 110 of file Bstring\&.h\&.
+.SS "long Bstring::rfind (const \fBBstring\fP & s, long start)"
+
+.PP
+Definition at line 575 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::right (long len)"
+
+.PP
+Definition at line 368 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP * Bstring::split ()"
+
+.PP
+Definition at line 598 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP * Bstring::split (const \fBBstring\fP & delim)"
+
+.PP
+Definition at line 623 of file Bstring\&.cpp\&.
+.SS "vector< double > Bstring::split_into_doubles (const \fBBstring\fP & delim)"
+
+.PP
+Definition at line 666 of file Bstring\&.cpp\&.
+.SS "vector< long > Bstring::split_into_integers (const \fBBstring\fP & delim)"
+
+.PP
+Definition at line 650 of file Bstring\&.cpp\&.
+.SS "string Bstring::str ()\fC [inline]\fP"
+
+.PP
+Definition at line 42 of file Bstring\&.h\&.
+.SS "\fBBstring\fP Bstring::substr (long start, long len)"
+
+.PP
+Definition at line 325 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::swap (const long i, const long j)"
+
+.PP
+Definition at line 478 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::truncate (const long n)"
+
+.PP
+Definition at line 496 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::upper ()"
+
+.PP
+Definition at line 317 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP Bstring::within (char c1, char c2)"
+
+.PP
+Definition at line 443 of file Bstring\&.cpp\&.
+.SH "Friends And Related Function Documentation"
+.PP 
+.SS "\fBBstring\fP operator+ (const char * c, const \fBBstring\fP & s)\fC [friend]\fP"
+
+.PP
+Definition at line 682 of file Bstring\&.cpp\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBBstring\fP* Bstring::next"
+
+.PP
+Definition at line 31 of file Bstring\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

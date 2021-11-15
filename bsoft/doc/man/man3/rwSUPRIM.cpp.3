@@ -1,0 +1,117 @@
+.TH "/Users/bernard/b20/bsoft/src/rwimg/rwSUPRIM.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/rwimg/rwSUPRIM.cpp \- Functions for reading and writing SUPRIM files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwSUPRIM\&.h'\fP
+.br
+\fC#include 'file_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBView\fP \fBview_from_suprim_euler\fP (\fBSUPRIMhead\fP *header)"
+.br
+.ti -1c
+.RI "int \fBsuprim_euler_from_view\fP (\fBSUPRIMhead\fP *header, \fBView\fP view)"
+.br
+.ti -1c
+.RI "int \fBreadSUPRIM\fP (\fBBimage\fP *p, int readdata)"
+.br
+.RI "Reading a SUPRIM map image file format\&. A 3D image format used in electron microscopy\&. Header size: 36 bytes basic fields 512 bytes additional fields called 'registers' up to 1024 bytes of 'trace' records File format extensions: \&.spm, \&.sup Byte order determination: Version and third dimension values must be less than 256*256\&. Data types: 1 = byte, 2 = float, 3 = complex float, 4 = run-length-encoded float, 5 = short, 6 = \fBRGB\fP, 7 = int, 8 = double\&. \fBTransform\fP type: Standard\&. "
+.ti -1c
+.RI "int \fBwriteSUPRIM\fP (\fBBimage\fP *p)"
+.br
+.RI "Writing a SUPRIM map image file format\&. A 3D image format used in electron microscopy\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for reading and writing SUPRIM files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19990930 
+.PP
+Modified: 20120409 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwSUPRIM\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int readSUPRIM (\fBBimage\fP * p, int readdata)"
+
+.PP
+Reading a SUPRIM map image file format\&. A 3D image format used in electron microscopy\&. Header size: 36 bytes basic fields 512 bytes additional fields called 'registers' up to 1024 bytes of 'trace' records File format extensions: \&.spm, \&.sup Byte order determination: Version and third dimension values must be less than 256*256\&. Data types: 1 = byte, 2 = float, 3 = complex float, 4 = run-length-encoded float, 5 = short, 6 = \fBRGB\fP, 7 = int, 8 = double\&. \fBTransform\fP type: Standard\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.br
+\fIreaddata\fP flag to activate reading of image data\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 60 of file rwSUPRIM\&.cpp\&.
+.SS "int suprim_euler_from_view (\fBSUPRIMhead\fP * header, \fBView\fP view)"
+
+.PP
+Definition at line 31 of file rwSUPRIM\&.cpp\&.
+.SS "\fBView\fP view_from_suprim_euler (\fBSUPRIMhead\fP * header)"
+
+.PP
+Definition at line 16 of file rwSUPRIM\&.cpp\&.
+.SS "int writeSUPRIM (\fBBimage\fP * p)"
+
+.PP
+Writing a SUPRIM map image file format\&. A 3D image format used in electron microscopy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 203 of file rwSUPRIM\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

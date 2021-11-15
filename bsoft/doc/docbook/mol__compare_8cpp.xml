@@ -1,0 +1,421 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mol__compare_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mol/mol_compare.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mol/mol_compare.cpp</primary></indexterm>
+<para>
+
+<para>Library routines used to compare sets of atomic coordinates. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmolecule.h&quot;
+#include &quot;rwatomprop.h&quot;
+#include &quot;mol_symmetry.h&quot;
+#include &quot;mol_compare.h&quot;
+#include &quot;mol_transform.h&quot;
+#include &quot;mol_util.h&quot;
+#include &quot;seq_align.h&quot;
+#include &quot;Matrix3.h&quot;
+#include &quot;matrix_linear.h&quot;
+#include &quot;Matrix.h&quot;
+#include &quot;symmetry.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>double <link linkend="_mol__compare_8cpp_1acb47070621dc922325f3c05df60c78b4">molgroup_rotate_and_compare</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_transform">Transform</link> t)</para>
+
+<para>Copies and rotates the molecule group and compares it with the original. </para>
+</listitem>
+            <listitem><para><link linkend="_class_transform">Transform</link> <link linkend="_mol__compare_8cpp_1a403d7d98f7f804d66a832b0d03f64f39">molgroup_find_transformation</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup1, <link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup2)</para>
+
+<para>Determines the transformation between two groups of identical molecules. </para>
+</listitem>
+            <listitem><para><link linkend="_class_transform">Transform</link> <link linkend="_mol__compare_8cpp_1a55628c3310c11036bca520c234a0872e">mol_find_transformation</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol1, <link linkend="_struct_bmolecule">Bmolecule</link> *mol2, int offset)</para>
+
+<para>Determines the transformation between two identical molecules. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__compare_8cpp_1a355165abda30b80bbc541d595da70cec">molgroup_calculate_rmsd</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup1, <link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup2)</para>
+
+<para>Calculates the root-mean-square-deviation between two molecule groups. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__compare_8cpp_1aa80e7de9ef8358efe94d834af1f733b8">mol_calculate_rmsd</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol1, <link linkend="_struct_bmolecule">Bmolecule</link> *mol2)</para>
+
+<para>Calculates the RMSD between two molecules. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__compare_8cpp_1a622e2b045ed31fc922a6ecccbcb0d81f">molgroup_calc_brute_rmsd</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup1, <link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup2)</para>
+
+<para>Calculates the RMSD based on nearest atoms. </para>
+</listitem>
+            <listitem><para><link linkend="_class_matrix">Matrix</link> <link linkend="_mol__compare_8cpp_1a604d3b167932b0a6d72077adb2b88feb">mol_distance_matrix</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *m1, <link linkend="_struct_bmolecule">Bmolecule</link> *m2)</para>
+
+<para>Calculates the distance matrix between the residues in two molecules. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mol__compare_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines used to compare sets of atomic coordinates. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20021020 </para>
+
+<para>Modified: 20150209 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mol__compare_8cpp_1aa80e7de9ef8358efe94d834af1f733b8"/>    <section>
+    <title>mol_calculate_rmsd()</title>
+<indexterm><primary>mol_calculate_rmsd</primary><secondary>mol_compare.cpp</secondary></indexterm>
+<indexterm><primary>mol_compare.cpp</primary><secondary>mol_calculate_rmsd</secondary></indexterm>
+<para><computeroutput>double mol_calculate_rmsd (<link linkend="_struct_bmolecule">Bmolecule</link> * mol1, <link linkend="_struct_bmolecule">Bmolecule</link> * mol2)</computeroutput></para><para>
+
+<para>Calculates the RMSD between two molecules. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mol1</entry>
+                                <entry>
+<para>first molecule. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*mol2</entry>
+                                <entry>
+<para>second molecule. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double RMSD. <literallayout><computeroutput>The root-mean-square-deviation between two sets of corrdinates is given by:
+    R = sqrt(sum(length(coord1-coord2))/number).
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 270 of file mol_compare.cpp.</para>
+    </section><anchor xml:id="_mol__compare_8cpp_1a604d3b167932b0a6d72077adb2b88feb"/>    <section>
+    <title>mol_distance_matrix()</title>
+<indexterm><primary>mol_distance_matrix</primary><secondary>mol_compare.cpp</secondary></indexterm>
+<indexterm><primary>mol_compare.cpp</primary><secondary>mol_distance_matrix</secondary></indexterm>
+<para><computeroutput><link linkend="_class_matrix">Matrix</link> mol_distance_matrix (<link linkend="_struct_bmolecule">Bmolecule</link> * m1, <link linkend="_struct_bmolecule">Bmolecule</link> * m2)</computeroutput></para><para>
+
+<para>Calculates the distance matrix between the residues in two molecules. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*m1</entry>
+                                <entry>
+<para>first molecules structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*m2</entry>
+                                <entry>
+<para>second molecules structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_matrix">Matrix</link> distance matrix. <literallayout><computeroutput>The matrix is calculated from the pairwise distances between residues. 
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 354 of file mol_compare.cpp.</para>
+    </section><anchor xml:id="_mol__compare_8cpp_1a55628c3310c11036bca520c234a0872e"/>    <section>
+    <title>mol_find_transformation()</title>
+<indexterm><primary>mol_find_transformation</primary><secondary>mol_compare.cpp</secondary></indexterm>
+<indexterm><primary>mol_compare.cpp</primary><secondary>mol_find_transformation</secondary></indexterm>
+<para><computeroutput><link linkend="_class_transform">Transform</link> mol_find_transformation (<link linkend="_struct_bmolecule">Bmolecule</link> * mol1, <link linkend="_struct_bmolecule">Bmolecule</link> * mol2, int offset)</computeroutput></para><para>
+
+<para>Determines the transformation between two identical molecules. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mol1</entry>
+                                <entry>
+<para>first molecule. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*mol2</entry>
+                                <entry>
+<para>second molecule. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>offset</entry>
+                                <entry>
+<para>offset of second sequence with respect to first. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_transform">Transform</link> transform structure. <literallayout><computeroutput>The transformation:
+    coord2 = rot_mat * (coord1 - origin) + origin + shift
+is solved.
+The algorithm is set up in parts, solving first for:
+    coord2 = rot_mat * coord1 + shift_temp
+The last term is given by:
+    shift_temp = shift + origin - rot_mat * origin
+The shift vector must be parallel to the rotation axis, and is
+determined as:
+    shift = axis * |shift_temp| * cos(alpha)
+where alpha is the angle between shift_temp and the rotation axis.
+The origin is then calculated from:
+    origin = (shift_temp - shift) * inverse(id_mat - rot_mat)
+Note that the origin still has one degree of freedom: It can be
+anywhere along the rotation axis.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 139 of file mol_compare.cpp.</para>
+    </section><anchor xml:id="_mol__compare_8cpp_1a622e2b045ed31fc922a6ecccbcb0d81f"/>    <section>
+    <title>molgroup_calc_brute_rmsd()</title>
+<indexterm><primary>molgroup_calc_brute_rmsd</primary><secondary>mol_compare.cpp</secondary></indexterm>
+<indexterm><primary>mol_compare.cpp</primary><secondary>molgroup_calc_brute_rmsd</secondary></indexterm>
+<para><computeroutput>double molgroup_calc_brute_rmsd (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup1, <link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup2)</computeroutput></para><para>
+
+<para>Calculates the RMSD based on nearest atoms. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup1</entry>
+                                <entry>
+<para>first molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*molgroup2</entry>
+                                <entry>
+<para>second molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double RMSD. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 314 of file mol_compare.cpp.</para>
+    </section><anchor xml:id="_mol__compare_8cpp_1a355165abda30b80bbc541d595da70cec"/>    <section>
+    <title>molgroup_calculate_rmsd()</title>
+<indexterm><primary>molgroup_calculate_rmsd</primary><secondary>mol_compare.cpp</secondary></indexterm>
+<indexterm><primary>mol_compare.cpp</primary><secondary>molgroup_calculate_rmsd</secondary></indexterm>
+<para><computeroutput>double molgroup_calculate_rmsd (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup1, <link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup2)</computeroutput></para><para>
+
+<para>Calculates the root-mean-square-deviation between two molecule groups. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup1</entry>
+                                <entry>
+<para>first molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*molgroup2</entry>
+                                <entry>
+<para>second molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double root-mean-square-deviation. <literallayout><computeroutput>The two molecule groups must have identical structures.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 213 of file mol_compare.cpp.</para>
+    </section><anchor xml:id="_mol__compare_8cpp_1a403d7d98f7f804d66a832b0d03f64f39"/>    <section>
+    <title>molgroup_find_transformation()</title>
+<indexterm><primary>molgroup_find_transformation</primary><secondary>mol_compare.cpp</secondary></indexterm>
+<indexterm><primary>mol_compare.cpp</primary><secondary>molgroup_find_transformation</secondary></indexterm>
+<para><computeroutput><link linkend="_class_transform">Transform</link> molgroup_find_transformation (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup1, <link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup2)</computeroutput></para><para>
+
+<para>Determines the transformation between two groups of identical molecules. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup1</entry>
+                                <entry>
+<para>first molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*molgroup2</entry>
+                                <entry>
+<para>second molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_transform">Transform</link> transform structure. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 51 of file mol_compare.cpp.</para>
+    </section><anchor xml:id="_mol__compare_8cpp_1acb47070621dc922325f3c05df60c78b4"/>    <section>
+    <title>molgroup_rotate_and_compare()</title>
+<indexterm><primary>molgroup_rotate_and_compare</primary><secondary>mol_compare.cpp</secondary></indexterm>
+<indexterm><primary>mol_compare.cpp</primary><secondary>molgroup_rotate_and_compare</secondary></indexterm>
+<para><computeroutput>double molgroup_rotate_and_compare (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_transform">Transform</link> t)</computeroutput></para><para>
+
+<para>Copies and rotates the molecule group and compares it with the original. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>t</entry>
+                                <entry>
+<para>rotation operation. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double RMSD. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 31 of file mol_compare.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_mol__compare_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>mol_compare.cpp</secondary></indexterm>
+<indexterm><primary>mol_compare.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

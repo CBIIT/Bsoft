@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Helical Map</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h2>Generating an artificial helical map</h2>
+<p>A simple artificial helical map can be easily calculated using some primitive
+  shapes and applying helical symmetry:<br />
+  </p>
+<div id="command">
+<p>beditimg -v 7 -create 100,100,100 -ori 50,50,50 -sam 2 -sph 70,50,50,10 -fill 1 -edge 2 sph1.map</p>
+  <p>beditimg -v 7 -sph 75,60,50,2 -fill 1 -edge 2 sph1.map sph2.map</p/>
+  <p>bhelix -v 7 -helix 8,58 sph2.map helix.map</p>
+</div>
+<center><img src="helix.png" alt="Helix" width="234" height="400" />
+<p>An artificial helix with a rise per subunit of 8 Å and a rotation per subunit of 58° isosurfaced at a threshold of 1.5 sigma. </p></center>
+	  <br />
+<h3>Helix with a seam</h3>
+<p>Some helices have a seam, where protofilaments are shifted. The seam itself is helical, describing the twist of the protofilaments. The seam introduces another orientation requirement: In Bsoft, the seam passes through the positive x-axis (i.e., the vector from the image origin pointing in the x direction). A synthetic helix can be generated as follows:</p>
+<div id="command">
+<p>beditimg -v 7 -create 100,100,100 -ori 50,50,50 -sam 2 -sphere 57,42,47,2 -edge 1 -fill 1 ss1.map</p> 
+<p>beditimg -v 7 -sphere 57,42,53,3 -edge 1 -fill 1 ss1.map ss2.map</p>
+<p>bhelix -v 7 -helix 1.1,33 -seam 0.5 ss2.map h11_s1.map</p>
+</div>
+<center><img src="h11_s1.png" alt="Helix with seam" /></center>
+<p>An artificial helix with a rise per subunit of 1.1 Å, a rotation per subunit of 33° and a seam shifted by 0.5 subunit length, isosurfaced at a threshold of 0.5 sigma. </p></center>
+<br/> 
+      <h2>Map orientation</h2>
+<p>If a helical map will be used in further processing, it
+has to be oriented correctly with the helical axis on the z-axis, and if a dyad axis is present, it has to lie on the x-axis.</p>
+      <br />
+      <h2>Generating projections</h2>
+      <p>To generate projections of the helix:<br />
+        <br />
+      <div id="command"><p>bhelix -v 7 -proj 5 helix.map helix_proj.pif</p></div>
+	or<br />
+	<div id="command"><p>bproject -v 7 -sym H -ang 5 helix.map helix_proj.pif</p></div>
+      <p><br />
+      </p>
+      <center>
+        <img src="helix_proj.jpg" alt="Helix projections" width="500" height="350" />
+        <p>Projections of the helical map at 5° intervals.</p>
+      </center>
+</div>
+<div id="footer">
+  Bernard Heymann  20120126
+</div>
+</body>
+</html>

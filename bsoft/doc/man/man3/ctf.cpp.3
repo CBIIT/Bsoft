@@ -1,0 +1,344 @@
+.TH "/Users/bernard/b20/bsoft/src/util/ctf.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/util/ctf.cpp \- Functions to manage CTF (contrast transfer function) parameters\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'ctf\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBJSvalue\fP \fBctf_to_json\fP (\fBCTFparam\fP &cp)"
+.br
+.RI "Converts microscope parameters to a JSON object list\&. "
+.ti -1c
+.RI "\fBCTFparam\fP \fBctf_from_json\fP (string filename)"
+.br
+.RI "Converts a JSON object list to microscope parameters\&. "
+.ti -1c
+.RI "\fBCTFparam\fP \fBctf_from_json\fP (\fBJSvalue\fP &js)"
+.br
+.RI "Converts a JSON object list to microscope parameters\&. "
+.ti -1c
+.RI "int \fBctf_update_from_json\fP (\fBCTFparam\fP &cp, \fBJSvalue\fP &js)"
+.br
+.RI "Converts a JSON object list to microscope parameters\&. "
+.ti -1c
+.RI "double \fBelectron_wavelength\fP (double volt)"
+.br
+.RI "Calculates the wavelength in angstrom from the acceleration voltage\&. "
+.ti -1c
+.RI "double \fBbeta2\fP (double volt)"
+.br
+.RI "Calculates the square of the relative electron velocity\&. "
+.ti -1c
+.RI "double \fBbeta\fP (double volt)"
+.br
+.RI "Calculates the relative electron velocity\&. "
+.ti -1c
+.RI "vector< double > \fBC_curve\fP (long n, double freq_step)"
+.br
+.RI "Calculates the carbon scattering curve\&. "
+.ti -1c
+.RI "vector< double > \fBdefocus_range_profile\fP (\fBCTFparam\fP &ctf, double freq_step, double def_min, double def_max, double def_step)"
+.br
+.RI "Calculates a weighting profile associated with a range of defocus values\&. "
+.ti -1c
+.RI "double \fBdefocus_factor\fP (\fBCTFparam\fP &ctf, double def_min, double def_max, double def_step)"
+.br
+.RI "Calculates an integrated defocus weighting factor for a raneg of defocus values\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to manage CTF (contrast transfer function) parameters\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20000426 
+.PP
+Modified: 20210531 
+.RE
+.PP
+
+.PP
+Definition in file \fBctf\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double beta (double volt)"
+
+.PP
+Calculates the relative electron velocity\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvolt\fP acceleration voltage\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double relative electron velocity\&. 
+.PP
+.nf
+                          1
+beta = sqrt(1 - ---------------------)
+                (1+e*volt/(me*c^2))^2
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 586 of file ctf\&.cpp\&.
+.SS "double beta2 (double volt)"
+
+.PP
+Calculates the square of the relative electron velocity\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvolt\fP acceleration voltage\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double square of the relative electron velocity\&. 
+.PP
+.nf
+                     1
+beta2 = 1 - ---------------------
+            (1+e*volt/(me*c^2))^2
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 565 of file ctf\&.cpp\&.
+.SS "vector<double> C_curve (long n, double freq_step)"
+
+.PP
+Calculates the carbon scattering curve\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP length of curve\&. 
+.br
+\fIfreq_step\fP frequency step size\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<double> array with C-curve\&. 
+.PP
+.nf
+The curve is based on the sum of five Gaussians.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 601 of file ctf\&.cpp\&.
+.SS "\fBCTFparam\fP ctf_from_json (\fBJSvalue\fP & js)"
+
+.PP
+Converts a JSON object list to microscope parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&js\fP JSON object list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBCTFparam\fP microscope parameter structure\&. 
+.RE
+.PP
+
+.PP
+Definition at line 482 of file ctf\&.cpp\&.
+.SS "\fBCTFparam\fP ctf_from_json (string filename)"
+
+.PP
+Converts a JSON object list to microscope parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIfilename\fP JSON file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBCTFparam\fP microscope parsmeter structure\&. 
+.RE
+.PP
+
+.PP
+Definition at line 469 of file ctf\&.cpp\&.
+.SS "\fBJSvalue\fP ctf_to_json (\fBCTFparam\fP & cp)"
+
+.PP
+Converts microscope parameters to a JSON object list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&cp\fP microscope parsmeter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBJSvalue\fP JSON object list\&. 
+.RE
+.PP
+
+.PP
+Definition at line 443 of file ctf\&.cpp\&.
+.SS "int ctf_update_from_json (\fBCTFparam\fP & cp, \fBJSvalue\fP & js)"
+
+.PP
+Converts a JSON object list to microscope parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&cp\fP CTF parameter structure\&. 
+.br
+\fI&js\fP JSON object list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 510 of file ctf\&.cpp\&.
+.SS "double defocus_factor (\fBCTFparam\fP & ctf, double def_min, double def_max, double def_step)"
+
+.PP
+Calculates an integrated defocus weighting factor for a raneg of defocus values\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&ctf\fP CTF parameters\&. 
+.br
+\fIdef_min\fP minimum defocus\&. 
+.br
+\fIdef_max\fP maximum defocus\&. 
+.br
+\fIdef_step\fP defocus step\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<double> sum of all CTF curves\&. 
+.PP
+.nf
+The CTF curves are calculated up to the frequency cutoff determined by the objective aperture.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 675 of file ctf\&.cpp\&.
+.SS "vector<double> defocus_range_profile (\fBCTFparam\fP & ctf, double freq_step, double def_min, double def_max, double def_step)"
+
+.PP
+Calculates a weighting profile associated with a range of defocus values\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&ctf\fP CTF parameters\&. 
+.br
+\fIfreq_step\fP frequency step size\&. 
+.br
+\fIdef_min\fP minimum defocus\&. 
+.br
+\fIdef_max\fP maximum defocus\&. 
+.br
+\fIdef_step\fP defocus step\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<double> sum of all CTF curves\&. 
+.PP
+.nf
+The CTF curves are calculated up to the frequency cutoff determined by the objective aperture.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 630 of file ctf\&.cpp\&.
+.SS "double electron_wavelength (double volt)"
+
+.PP
+Calculates the wavelength in angstrom from the acceleration voltage\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvolt\fP acceleration voltage\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double wavelength in angstrom, <0 on error\&. 
+.PP
+.nf
+                   12.26
+lambda = ----------------------------
+         sqrt(volt*(1+volt*0.9788e-6)
+                       1e10 * h
+lambda = ---------------------------------------
+         sqrt(2*me*e*volt*(1+e*volt/(2*me*c^2)))
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 542 of file ctf\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

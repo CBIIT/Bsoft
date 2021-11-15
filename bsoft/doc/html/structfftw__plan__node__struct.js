@@ -1,0 +1,28 @@
+var structfftw__plan__node__struct =
+[
+    [ "codelet", "structfftw__plan__node__struct.html#a25c03594d9b1cbb6233d09b3bc0af418", null ],
+    [ "codelet", "structfftw__plan__node__struct.html#a5974d49a3f2ae9c629156dbfc3effb20", null ],
+    [ "codelet", "structfftw__plan__node__struct.html#a1b5991ee0110b2cf7447078aa0af3a2c", null ],
+    [ "codelet", "structfftw__plan__node__struct.html#ac24815cf3b1ce5aa844ed95ae97b35e2", null ],
+    [ "codelet", "structfftw__plan__node__struct.html#aa9a8d4f0e3d018ae04cc00f3f04c3283", null ],
+    [ "codelet", "structfftw__plan__node__struct.html#a72246c274769259f0dc4c1eca01c2505", null ],
+    [ "codelet", "structfftw__plan__node__struct.html#a4e1eb660036c73926ccc592f68a554c6", null ],
+    [ "codelet", "structfftw__plan__node__struct.html#a07acad07e31c415d9ab0445bb79e0127", null ],
+    [ "codelet_desc", "structfftw__plan__node__struct.html#a7cb707dc27fb4779fbd0ee9cb4d7efd9", null ],
+    [ "dir", "structfftw__plan__node__struct.html#a3e47d4ee7b8ecddc6dc465409e8c038a", null ],
+    [ "generic", "structfftw__plan__node__struct.html#a5e47ca9253784c6b5b6a96119637df25", null ],
+    [ "hc2hc", "structfftw__plan__node__struct.html#a1c7c37646ba25cb88c82e5b9fade68b1", null ],
+    [ "hc2real", "structfftw__plan__node__struct.html#ad2b2b510d8cd715a6e8fd2844cb6ec00", null ],
+    [ "nodeu", "structfftw__plan__node__struct.html#aa8610b906ae5c3951fd5df0dc891029f", null ],
+    [ "notw", "structfftw__plan__node__struct.html#a1a913686c2edbeca067fff5c70838dd8", null ],
+    [ "rader", "structfftw__plan__node__struct.html#a1d17fd78cbd71cc937a679180dcd244f", null ],
+    [ "rader_data", "structfftw__plan__node__struct.html#a60c87d0e025ca24a5db918ee51b6b485", null ],
+    [ "real2hc", "structfftw__plan__node__struct.html#a39f1fec95c14df8cdc990c1d1c503c1e", null ],
+    [ "recurse", "structfftw__plan__node__struct.html#aa3ffc937d4b754addf7d17b18b313c70", null ],
+    [ "refcnt", "structfftw__plan__node__struct.html#a06f58dea6a277300bfcedba74c8bc3ee", null ],
+    [ "rgeneric", "structfftw__plan__node__struct.html#a1fdf97638625c12c1da5c9441436bb1f", null ],
+    [ "size", "structfftw__plan__node__struct.html#a334e1fcc2c98575d85d9a951b9e95941", null ],
+    [ "tw", "structfftw__plan__node__struct.html#a4a7244edea4157eb541d712ae30e2fab", null ],
+    [ "twiddle", "structfftw__plan__node__struct.html#a2ee21026cb07be7ecfe33bc417341988", null ],
+    [ "type", "structfftw__plan__node__struct.html#a726e9ec82efd03cdc7b8be71c0c7225f", null ]
+];

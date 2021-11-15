@@ -1,0 +1,196 @@
+.TH "/Users/bernard/b20/bsoft/src/rwimg/rwDM.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/rwimg/rwDM.cpp \- Functions for reading and writing Digital Micrograph files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwDM\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBreadFixedDMHeader\fP (ifstream *fimg, \fBBimage\fP *p, int readdata)"
+.br
+.ti -1c
+.RI "int \fBreadTagGroupData\fP (ifstream *fimg, int dim_flag, \fBBimage\fP *p, int readdata)"
+.br
+.ti -1c
+.RI "int \fBreadTagGroupWithVersion\fP (ifstream *fimg, \fBBimage\fP *p, int readdata, int img_select)"
+.br
+.ti -1c
+.RI "int \fBshow\fP (0)"
+.br
+.ti -1c
+.RI "int \fBkeep\fP (0)"
+.br
+.ti -1c
+.RI "int \fBversion\fP (0)"
+.br
+.ti -1c
+.RI "int \fBsb\fP (0)"
+.br
+.ti -1c
+.RI "int \fBendianness\fP (1)"
+.br
+.ti -1c
+.RI "size_t \fBlevel\fP (0)"
+.br
+.ti -1c
+.RI "int \fBreadDM\fP (\fBBimage\fP *p, int readdata, int img_select)"
+.br
+.RI "Reading a Digital Micrograph image file format\&. "
+.ti -1c
+.RI "int \fBwriteDM\fP (\fBBimage\fP *p)"
+.br
+.RI "Writing a Digital Micrograph map image file format\&. "
+.ti -1c
+.RI "\fBDataType\fP \fBdatatype_from_dm3_type\fP (\fBDMDataType\fP dm3_type, \fBBimage\fP *p)"
+.br
+.ti -1c
+.RI "int \fBdm3_type_length\fP (int dm3_type)"
+.br
+.ti -1c
+.RI "double \fBdm3_value\fP (ifstream *fimg, int dm3_type)"
+.br
+.ti -1c
+.RI "unsigned long \fBdm_read_integer\fP (ifstream *fimg, long len)"
+.br
+.ti -1c
+.RI "int \fBtag_convert\fP (unsigned char *tag)"
+.br
+.ti -1c
+.RI "int \fBreadTag\fP (ifstream *fimg, int dim_flag, \fBBimage\fP *p, int readdata, int &notag)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for reading and writing Digital Micrograph files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20020619 
+.PP
+Modified: 20170126 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwDM\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBDataType\fP datatype_from_dm3_type (\fBDMDataType\fP dm3_type, \fBBimage\fP * p)"
+
+.PP
+Definition at line 121 of file rwDM\&.cpp\&.
+.SS "int dm3_type_length (int dm3_type)"
+
+.PP
+Definition at line 275 of file rwDM\&.cpp\&.
+.SS "double dm3_value (ifstream * fimg, int dm3_type)"
+
+.PP
+Definition at line 298 of file rwDM\&.cpp\&.
+.SS "unsigned long dm_read_integer (ifstream * fimg, long len)"
+
+.PP
+Definition at line 343 of file rwDM\&.cpp\&.
+.SS "int endianness (1)"
+
+.SS "int keep (0)"
+
+.SS "size_t level (0)"
+
+.SS "int readDM (\fBBimage\fP * p, int readdata, int img_select)"
+
+.PP
+Reading a Digital Micrograph image file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.br
+\fIreaddata\fP flag to activate reading of image data\&. 
+.br
+\fIimg_select\fP image selection in multi-image file (-1 = all images)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. A 2D/3D image format used with CCD cameras in electron microscopy\&. File format extensions: \&.dm, \&.DM Two types: Fixed format (new) and the Macintosh format (old) Fixed format: Header size: 24 bytes (fixed)\&. Byte order determination: An endian flag: Must be 65535 or swap everything Data types: many\&. Macintosh format: Hermitian Header size: 8 bytes (fixed)\&. Byte order determination: Big-endian Data types: many\&. 
+.RE
+.PP
+
+.PP
+Definition at line 41 of file rwDM\&.cpp\&.
+.SS "int readFixedDMHeader (ifstream * fimg, \fBBimage\fP * p, int readdata)"
+
+.PP
+Definition at line 189 of file rwDM\&.cpp\&.
+.SS "int readTag (ifstream * fimg, int dim_flag, \fBBimage\fP * p, int readdata, int & notag)"
+
+.PP
+Definition at line 378 of file rwDM\&.cpp\&.
+.SS "int readTagGroupData (ifstream * fimg, int dim_flag, \fBBimage\fP * p, int readdata)"
+
+.PP
+Definition at line 632 of file rwDM\&.cpp\&.
+.SS "int readTagGroupWithVersion (ifstream * fimg, \fBBimage\fP * p, int readdata, int img_select)"
+
+.PP
+Definition at line 686 of file rwDM\&.cpp\&.
+.SS "int sb (0)"
+
+.SS "int show (0)"
+
+.SS "int tag_convert (unsigned char * tag)"
+
+.PP
+Definition at line 367 of file rwDM\&.cpp\&.
+.SS "int version (0)"
+
+.SS "int writeDM (\fBBimage\fP * p)"
+
+.PP
+Writing a Digital Micrograph map image file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. A 2D/3D image format used in electron microscopy\&. 
+.RE
+.PP
+
+.PP
+Definition at line 81 of file rwDM\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

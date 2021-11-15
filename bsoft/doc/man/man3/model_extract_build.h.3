@@ -1,0 +1,337 @@
+.TH "/Users/bernard/b20/bsoft/include/model_extract_build.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/model_extract_build.h \- Functions to extract subvolumes and build new maps\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmodel_refine_components\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP *ct_names, \fBBimage\fP *ptemp, \fBBimage\fP *pmask, \fBBimage\fP *pfsmask, int max_iter, double viewstep, double rotstep, double hires, double lores, double accuracy, double max_shift, double max_view_angle, double max_rot_angle, int shift_flag)"
+.br
+.RI "Refines component views and positions by cross-correlation\&. "
+.ti -1c
+.RI "int \fBmodel_refine_link_positions\fP (\fBBmodel\fP *\fBmodel\fP, \fBBimage\fP *ptemp, \fBBimage\fP *pmask, \fBBimage\fP *pfsmask, double hires, double lores, double max_shift, int shift_flag, double bias)"
+.br
+.RI "Refines link positions by cross-correlation\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBmodel_average_component_density\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< long > size, \fBVector3\fP< double > origin, int npt)"
+.br
+.RI "Averages the density associated with each component type in a model\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBmodel_extract_component_densities\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< long > size, \fBVector3\fP< double > origin)"
+.br
+.RI "Extracts all densities associated with components in a model\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBmodel_average_link_density\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< long > size, \fBVector3\fP< double > origin)"
+.br
+.RI "Extracts a density associated with each link in a model\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBmodel_build_from_component_density\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< long > size, \fBVector3\fP< double > origin, int flags)"
+.br
+.RI "Builds a new map from a densities of components in a model\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBmodel_build_from_link_density\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP &linkmap, \fBVector3\fP< long > size, \fBVector3\fP< double > origin, int \fBlink_select\fP, int flags)"
+.br
+.RI "Builds a new map from a density of a link in a model\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to extract subvolumes and build new maps\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20060411 
+.PP
+Modified: 20190821 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_extract_build\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBimage\fP* model_average_component_density (\fBBmodel\fP * model, \fBVector3\fP< long > size, \fBVector3\fP< double > origin, int npt)"
+
+.PP
+Averages the density associated with each component type in a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fIsize\fP size of component density to extract\&. 
+.br
+\fIorigin\fP origin of new component density image\&. 
+.br
+\fInpt\fP number per type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* average density around a component\&. 
+.PP
+.nf
+The densities associated with each vertex type is extracted and averaged.
+The extracted density origin is placed on the component coordinates.
+The component views must already be set.
+Only the first model in the list is processed.
+The map file for the model must exist.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 707 of file model_extract_build\&.cpp\&.
+.SS "\fBBimage\fP* model_average_link_density (\fBBmodel\fP * model, \fBVector3\fP< long > size, \fBVector3\fP< double > origin)"
+
+.PP
+Extracts a density associated with each link in a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fIsize\fP size of link density to extract\&. 
+.br
+\fIorigin\fP origin of new link density image\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* new image with the density around the link\&. 
+.PP
+.nf
+The link density origin is positioned on the center of the link.
+The component views must already be set.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 923 of file model_extract_build\&.cpp\&.
+.SS "\fBBimage\fP* model_build_from_component_density (\fBBmodel\fP * model, \fBVector3\fP< long > size, \fBVector3\fP< double > origin, int flags)"
+
+.PP
+Builds a new map from a densities of components in a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fIsize\fP size of new map\&. 
+.br
+\fIorigin\fP origin of new map with respect to the model\&. 
+.br
+\fIflags\fP flags to weigh by contributions (1) and build separate maps (2)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* new map\&. 
+.PP
+.nf
+The number of new maps depends on the number of selected component types
+and access to their density maps.
+The component views must already be set.
+The sampling must be the same for all component type maps.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1015 of file model_extract_build\&.cpp\&.
+.SS "\fBBimage\fP* model_build_from_link_density (\fBBmodel\fP * model, \fBBstring\fP & linkmap, \fBVector3\fP< long > size, \fBVector3\fP< double > origin, int link_select, int flags)"
+
+.PP
+Builds a new map from a density of a link in a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fI&linkmap\fP link map filename\&. 
+.br
+\fIsize\fP size of new map\&. 
+.br
+\fIorigin\fP origin of new map with respect to the model\&. 
+.br
+\fIlink_select\fP link selection number to build (first = 1)\&. 
+.br
+\fIflags\fP flags to weigh by contributions (1) and build separate maps (2)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* new map\&. 
+.PP
+.nf
+The component views must already be set.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1146 of file model_extract_build\&.cpp\&.
+.SS "\fBBimage\fP* model_extract_component_densities (\fBBmodel\fP * model, \fBVector3\fP< long > size, \fBVector3\fP< double > origin)"
+
+.PP
+Extracts all densities associated with components in a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fIsize\fP size of component density to extract\&. 
+.br
+\fIorigin\fP origin of new component density image\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* all densities around components\&. 
+.PP
+.nf
+The densities associated with each component is extracted.
+The extracted density origin is placed on the component coordinates.
+The component views must already be set.
+Only the first model in the list is processed.
+The map file for the model must exist.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 841 of file model_extract_build\&.cpp\&.
+.SS "int model_refine_components (\fBBmodel\fP * model, \fBBstring\fP * ct_names, \fBBimage\fP * ptemp, \fBBimage\fP * pmask, \fBBimage\fP * pfsmask, int max_iter, double viewstep, double rotstep, double hires, double lores, double accuracy, double max_shift, double max_view_angle, double max_rot_angle, int shift_flag)"
+
+.PP
+Refines component views and positions by cross-correlation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fI*ct_names\fP list of names associated with template sub-images\&. 
+.br
+\fI*ptemp\fP density template\&. 
+.br
+\fI*pmask\fP real space mask\&. 
+.br
+\fI*pfsmask\fP cross-correlation mask\&. 
+.br
+\fImax_iter\fP maximum number of iterations, 0 means only positional refinement\&. 
+.br
+\fIviewstep\fP first view direction angular step size (radians)\&. 
+.br
+\fIrotstep\fP rotation around view angular step size (radians)\&. 
+.br
+\fIhires\fP high resolution limit for cross-correlation\&. 
+.br
+\fIlores\fP low resolution limit for cross-correlation\&. 
+.br
+\fIaccuracy\fP angular accuracy (radians)\&. 
+.br
+\fImax_shift\fP maximum shift in coordinates (angstrom)\&. 
+.br
+\fImax_view_angle\fP maximum angular change in view vector (radians)\&. 
+.br
+\fImax_rot_angle\fP maximum angular change in rotation around view vector (radians)\&. 
+.br
+\fIshift_flag\fP flag to shift only along the normal (1) or perpendicular to it (2)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+The density origin is positioned on the component.
+The component views must already be set.
+The number of component type names should be equal to the number of 
+sub-images in the template.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 301 of file model_extract_build\&.cpp\&.
+.SS "int model_refine_link_positions (\fBBmodel\fP * model, \fBBimage\fP * ptemp, \fBBimage\fP * pmask, \fBBimage\fP * pfsmask, double hires, double lores, double max_shift, int shift_flag, double bias)"
+
+.PP
+Refines link positions by cross-correlation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fI*ptemp\fP density template\&. 
+.br
+\fI*pmask\fP real space mask\&. 
+.br
+\fI*pfsmask\fP cross-correlation mask\&. 
+.br
+\fIhires\fP high resolution limit for cross-correlation\&. 
+.br
+\fIlores\fP low resolution limit for cross-correlation\&. 
+.br
+\fImax_shift\fP maximum shift in coordinates (angstrom)\&. 
+.br
+\fIshift_flag\fP flag to shift only along the normal (1) or perpendicular to it (2)\&. 
+.br
+\fIbias\fP bias to apply to first correlation coefficient\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* density around the component\&. 
+.PP
+.nf
+The density origin is positioned on the link center.
+The component views must already be set.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 563 of file model_extract_build\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

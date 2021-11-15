@@ -1,0 +1,253 @@
+.TH "/Users/bernard/b20/bsoft/include/model_shell.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/model_shell.h \- Library routines used for shell model processing\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "long \fBmodel_add_shell\fP (\fBBmodel\fP *\fBmodel\fP, double add_distance, \fBBstring\fP &new_type)"
+.br
+.RI "Adds a shell to a model using selected components\&. "
+.ti -1c
+.RI "int \fBmodel_adjust_shell_to_guide\fP (\fBBmodel\fP *\fBmodel\fP, \fBBmodel\fP *gmod, double fraction, int curv_flag)"
+.br
+.RI "Adjusts a shell model to the faces of a polyhedral guide model\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_components_to_shells\fP (\fBBmodel\fP *\fBmodel\fP, double \fBdistance\fP, \fBBstring\fP &nutype, int twod)"
+.br
+.RI "Generates a new set of models by vonverting each component to a shell model\&. "
+.ti -1c
+.RI "double \fBmodel_sphericity\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates how close the model is to a spherical shape\&. "
+.ti -1c
+.RI "double \fBmodel_ellipsoidicity\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates how close the model is to an ellipsoid shape\&. "
+.ti -1c
+.RI "int \fBmodel_curvature\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates the curvature associated with each link\&. "
+.ti -1c
+.RI "double \fBmodel_inside_outside\fP (\fBVector3\fP< double > vec, \fBBmodel\fP *\fBmodel\fP, int curv_flag, int fast)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines used for shell model processing\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20060908 
+.PP
+Modified: 20161013 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_shell\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "long model_add_shell (\fBBmodel\fP * model, double add_distance, \fBBstring\fP & nutype)"
+
+.PP
+Adds a shell to a model using selected components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIadd_distance\fP distance to shift new components\&. 
+.br
+\fI&nutype\fP new component type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components in new shell\&. 
+.PP
+.nf
+Each selected component is duplicated and shifted radially.
+Only the first model in the list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 32 of file model_shell\&.cpp\&.
+.SS "int model_adjust_shell_to_guide (\fBBmodel\fP * model, \fBBmodel\fP * gmod, double fraction, int curv_flag)"
+
+.PP
+Adjusts a shell model to the faces of a polyhedral guide model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP shell model\&. 
+.br
+\fI*gmod\fP guide polyhedron model\&. 
+.br
+\fIfraction\fP fraction to adjust\&. 
+.br
+\fIcurv_flag\fP flag to indicate curved surface\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+For each component, it is determined whether it is located inside or 
+outside the appropriate polyhedral face, and its coordinates adjust
+closer to the face by the indicated fraction.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 84 of file model_shell\&.cpp\&.
+.SS "\fBBmodel\fP* model_components_to_shells (\fBBmodel\fP * model, double distance, \fBBstring\fP & nutype, int twod)"
+
+.PP
+Generates a new set of models by vonverting each component to a shell model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIdistance\fP distance between components\&. 
+.br
+\fI&nutype\fP new component type\&. 
+.br
+\fItwod\fP flag to indicate a 2D model\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new list of models\&. 
+.PP
+.nf
+Each selected component is converted to a shell model.
+The radius is taken from the original component radius.
+The given distance defines the distance between the new
+components and their radii.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 138 of file model_shell\&.cpp\&.
+.SS "int model_curvature (\fBBmodel\fP * model)"
+
+.PP
+Calculates the curvature associated with each link\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure (views modified)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The difference angle in the normals or view vectors of each pair of
+vertices of a link represents the curvature for that link.
+Curvature at each component is calculated as the average of the 
+curvature of the attached links and set as the component FOM.
+The model curvature is calculated as the average component curvature
+and set as the model FOM.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 280 of file model_shell\&.cpp\&.
+.SS "double model_ellipsoidicity (\fBBmodel\fP * model)"
+
+.PP
+Calculates how close the model is to an ellipsoid shape\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double ellipsoidicity\&. 
+.PP
+.nf
+The principal axes are calculated first.
+Then the fit to an ellipsoid function is calculated.
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 235 of file model_shell\&.cpp\&.
+.SS "double model_inside_outside (\fBVector3\fP< double > vec, \fBBmodel\fP * model, int curv_flag, int fast)"
+
+.PP
+Definition at line 402 of file model_shell\&.cpp\&.
+.SS "double model_sphericity (\fBBmodel\fP * model)"
+
+.PP
+Calculates how close the model is to a spherical shape\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double sphericity\&. 
+.PP
+.nf
+The deviation of vertices from the average radius is calculated.
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 195 of file model_shell\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

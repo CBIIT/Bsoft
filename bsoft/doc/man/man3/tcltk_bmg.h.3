@@ -1,0 +1,169 @@
+.TH "/Users/bernard/b20/bsoft/tcltk/tcltk_bmg.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/tcltk/tcltk_bmg.h \- A shared object to manage boxes in micrograph parameter files in TCL/Tk\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <tk\&.h>\fP
+.br
+\fC#include 'mg_processing\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBproject_processing\fP (Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[])"
+.br
+.RI "Implements the 'Bmg' command in Tcl/Tk to access micrograph parameter files through Bsoft\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+A shared object to manage boxes in micrograph parameter files in TCL/Tk\&. 
+
+A shared object to manage micrograph parameter files in TCL/Tk\&.
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20030813 
+.PP
+Modified: 20130726
+.RE
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20030813 
+.PP
+Modified: 20130924 
+.RE
+.PP
+
+.PP
+Definition in file \fBtcltk_bmg\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int project_processing (Tcl_Interp * interp, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Implements the 'Bmg' command in Tcl/Tk to access micrograph parameter files through Bsoft\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*interp\fP a Tcl interpreter within Tcl\&. 
+.br
+\fIobjc\fP number of arguments passed (+1)\&. 
+.br
+\fI*objv[]\fP arguments passed as Tcl objects\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int Tcl result\&. 
+.PP
+.nf
+Bmg command syntax:
+    Bmg <action> <arguments>.
+    where:
+        action          "create", "exists", "read", "add", "write", "kill", "get", "set", 
+                        "image_type", "rps", "ctf_fit", "update_matrices",
+                        "unitcell_vectors"  "refine" "box" "filament" "node" "layerline" "spot" "marker"
+        arguments               action-specific arguments:
+            "create"            <number_micrographs> <number_reconstructions>
+            "read"              <filename>
+            "add"               <filename>
+            "write"             <filename>
+            "get"               <property> [arguments]
+            "set"               <property> <value>
+            "rps"
+            "ctf_fit"           <level> <lores> <hires>
+            "sort"              <tag>
+            "update_matrices"
+            "unitcell_vectors"
+            "findaxis"          <axis> <step> <start> <end>
+            "track"             <iterations> <refine_markers>
+            "refine"            <operation>
+            "box"               [arguments]
+            "filament"          [arguments]
+            "node"              [arguments]
+            "layerline"         [arguments]
+            "spot"              [arguments]
+            "marker"            [arguments]
+            where:
+                property    "active <flag>"
+                            "id <string>"
+                            "id_from_index <mg_num>"
+                            "img_num <mg_num>"
+                            "number_of_mg"
+                            "number_of_rec"
+                            "number_of_part"
+                            "field <string>"
+                            "filename <string> <imgtype>"
+                            "select <y/n>"
+                            "fom <mg_num>"
+                            "pixel_size <angstrom>"
+                            "size <x> <y> <z>"
+                            "origin <x> <y> <z> / <mg_num>"
+                            "part_origin <x> <y> <z> / <part_num>"
+                            "scale <x> <y> <z> / <mg_num>"
+                            "dose" <electrons/Å2>
+                            "intensity"
+                            "defocus <angstrom>"
+                            "defocus_deviation <angstrom>"
+                            "astigmatism_angle <radians>"
+                            "volt <volts>"
+                            "Cs <angstrom>"
+                            "amp_fac <fraction>"
+                            "focal_length <angstrom>"
+                            "aperture <angstrom>"
+                            "slit_width <volts>"
+                            "zero <angstrom>"
+                            "baseline <string>"
+                            "envelope <string>"
+                            "view <mg_num>"
+                            "axis [<radians>] <mg_num>"
+                            "tilt [<radians>] <mg_num>"
+                            "level [<radians>] <mg_num>"
+                            "unitcell <ux> <uy> <vx> <vy>"
+                            "helix_axis <radians>"
+                            "helix_rise <angstrom>"
+                            "helix_angle <radians>"
+                            "helix_radius <angstrom>"
+                            "box_size <x> <y> <z>"
+                            "bad_radius <pixels>"
+                            "filament_width <width>"
+                            "filament_node_radius"
+                            "marker_radius <pixels>"
+Return values:
+    Each action may have a return value:
+        "create"    (none)
+        "exists"    0=no, 1=yes
+        "read"      micrograph id
+        "write"     (none)
+        "kill"      (none)
+        "get"       return value based on property
+        "set"       modify micrograph property
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 140 of file tcltk_bmg\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

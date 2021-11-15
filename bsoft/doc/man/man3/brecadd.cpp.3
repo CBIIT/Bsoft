@@ -1,0 +1,116 @@
+.TH "/Users/bernard/b20/bsoft/src/brecadd.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/brecadd.cpp \- Program to average selected reconstructions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'mg_reconstruct\&.h'\fP
+.br
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_particle_select\&.h'\fP
+.br
+\fC#include 'symmetry\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Program to average selected reconstructions\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20070419 
+.PP
+Modified: 20180427 
+.RE
+.PP
+
+.PP
+Definition in file \fBbrecadd\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 54 of file brecadd\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+" ",
+"Usage: brecadd [options] input\&.star [input\&.star]",
+"------------------------------------------------",
+"Averages reconstructions or subvolumes of reconstructions based on",
+"the selection in parameter files\&.",
+" ",
+"Actions:",
+"-all                     Reset selection to all particles before other selections\&.",
+"-group 3022              Select particles belonging to this group\&.",
+"-setnumber 3             Select given selection number and set others to zero\&.",
+"-multiple 2              Generate a number of maps from alternating particle images (default 1)\&.",
+"-size 50,50,70           Specify a size to extract new particles from a map\&.",
+"-resolution 15           Specify a resolution to do a reciprocal space summation\&.",
+"-std                     Output standard deviation image rather than variance image\&.",
+"-symmetry C5             Apply point group symmetry after reconstruction\&.",
+"-rescale -0\&.1,5\&.2        Rescale output images to average and standard deviation\&.",
+" ",
+"Parameters:",
+"-verbose 7               Verbosity of output\&.",
+"-datatype u              Force writing of a new data type\&.",
+"-sampling 1\&.5,1\&.5,1\&.5    Sampling (A/pixel; default from input file; a single value can be given)\&.",
+" ",
+"Output:",
+"-output file\&.star        Output parameter file\&.",
+"-average output\&.img      Output image (default avg\&.map)\&.",
+"-fom fom\&.img             Output variance/standard deviation image (default fom\&.map)\&.",
+" ",
+NULL
+}
+.fi
+.PP
+Definition at line 23 of file brecadd\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

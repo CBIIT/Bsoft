@@ -1,0 +1,359 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_model__shell_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/model_shell.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/model_shell.h</primary></indexterm>
+<para>
+
+<para>Library routines used for shell model processing. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmodel.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>long <link linkend="_model__shell_8h_1a5133ac58bcab78281eba81eb4128565d">model_add_shell</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double add_distance, <link linkend="_class_bstring">Bstring</link> &amp;new_type)</para>
+
+<para>Adds a shell to a model using selected components. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__shell_8h_1a24bbb7f6ecd5176719fdaa0b42c5cb41">model_adjust_shell_to_guide</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bmodel">Bmodel</link> *gmod, double fraction, int curv_flag)</para>
+
+<para>Adjusts a shell model to the faces of a polyhedral guide model. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__shell_8h_1a98c8896a0e49f2860fb72ad89ffaef39">model_components_to_shells</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double <link linkend="__vector3_8h_1aa60745aa4e45acde64f733424e37dbb9">distance</link>, <link linkend="_class_bstring">Bstring</link> &amp;nutype, int twod)</para>
+
+<para>Generates a new set of models by vonverting each component to a shell model. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__shell_8h_1ac4455d4fa35a775fc0e4df3e816e9563">model_sphericity</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Calculates how close the model is to a spherical shape. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__shell_8h_1a6c62efac8e5100e442ff448e0d7d054a">model_ellipsoidicity</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Calculates how close the model is to an ellipsoid shape. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__shell_8h_1af772e8542054fe6315980757020155f1">model_curvature</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Calculates the curvature associated with each link. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__shell_8h_1a6aeb99e0a4012232714281472cd5554d">model_inside_outside</link> (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; vec, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, int curv_flag, int fast)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines used for shell model processing. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20060908 </para>
+
+<para>Modified: 20161013 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_model__shell_8h_1a5133ac58bcab78281eba81eb4128565d"/>    <section>
+    <title>model_add_shell()</title>
+<indexterm><primary>model_add_shell</primary><secondary>model_shell.h</secondary></indexterm>
+<indexterm><primary>model_shell.h</primary><secondary>model_add_shell</secondary></indexterm>
+<para><computeroutput>long model_add_shell (<link linkend="_class_bmodel">Bmodel</link> * model, double add_distance, <link linkend="_class_bstring">Bstring</link> &amp; nutype)</computeroutput></para><para>
+
+<para>Adds a shell to a model using selected components. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>add_distance</entry>
+                                <entry>
+<para>distance to shift new components. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;nutype</entry>
+                                <entry>
+<para>new component type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components in new shell. <literallayout><computeroutput>Each selected component is duplicated and shifted radially.
+Only the first model in the list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 32 of file model_shell.cpp.</para>
+    </section><anchor xml:id="_model__shell_8h_1a24bbb7f6ecd5176719fdaa0b42c5cb41"/>    <section>
+    <title>model_adjust_shell_to_guide()</title>
+<indexterm><primary>model_adjust_shell_to_guide</primary><secondary>model_shell.h</secondary></indexterm>
+<indexterm><primary>model_shell.h</primary><secondary>model_adjust_shell_to_guide</secondary></indexterm>
+<para><computeroutput>int model_adjust_shell_to_guide (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bmodel">Bmodel</link> * gmod, double fraction, int curv_flag)</computeroutput></para><para>
+
+<para>Adjusts a shell model to the faces of a polyhedral guide model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>shell model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*gmod</entry>
+                                <entry>
+<para>guide polyhedron model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fraction</entry>
+                                <entry>
+<para>fraction to adjust. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>curv_flag</entry>
+                                <entry>
+<para>flag to indicate curved surface. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>For each component, it is determined whether it is located inside or 
+outside the appropriate polyhedral face, and its coordinates adjust
+closer to the face by the indicated fraction.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 84 of file model_shell.cpp.</para>
+    </section><anchor xml:id="_model__shell_8h_1a98c8896a0e49f2860fb72ad89ffaef39"/>    <section>
+    <title>model_components_to_shells()</title>
+<indexterm><primary>model_components_to_shells</primary><secondary>model_shell.h</secondary></indexterm>
+<indexterm><primary>model_shell.h</primary><secondary>model_components_to_shells</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_components_to_shells (<link linkend="_class_bmodel">Bmodel</link> * model, double distance, <link linkend="_class_bstring">Bstring</link> &amp; nutype, int twod)</computeroutput></para><para>
+
+<para>Generates a new set of models by vonverting each component to a shell model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>distance</entry>
+                                <entry>
+<para>distance between components. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;nutype</entry>
+                                <entry>
+<para>new component type. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>twod</entry>
+                                <entry>
+<para>flag to indicate a 2D model. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new list of models. <literallayout><computeroutput>Each selected component is converted to a shell model.
+The radius is taken from the original component radius.
+The given distance defines the distance between the new
+components and their radii.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 138 of file model_shell.cpp.</para>
+    </section><anchor xml:id="_model__shell_8h_1af772e8542054fe6315980757020155f1"/>    <section>
+    <title>model_curvature()</title>
+<indexterm><primary>model_curvature</primary><secondary>model_shell.h</secondary></indexterm>
+<indexterm><primary>model_shell.h</primary><secondary>model_curvature</secondary></indexterm>
+<para><computeroutput>int model_curvature (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Calculates the curvature associated with each link. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure (views modified). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The difference angle in the normals or view vectors of each pair of
+vertices of a link represents the curvature for that link.
+Curvature at each component is calculated as the average of the 
+curvature of the attached links and set as the component FOM.
+The model curvature is calculated as the average component curvature
+and set as the model FOM.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 280 of file model_shell.cpp.</para>
+    </section><anchor xml:id="_model__shell_8h_1a6c62efac8e5100e442ff448e0d7d054a"/>    <section>
+    <title>model_ellipsoidicity()</title>
+<indexterm><primary>model_ellipsoidicity</primary><secondary>model_shell.h</secondary></indexterm>
+<indexterm><primary>model_shell.h</primary><secondary>model_ellipsoidicity</secondary></indexterm>
+<para><computeroutput>double model_ellipsoidicity (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Calculates how close the model is to an ellipsoid shape. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double ellipsoidicity. <literallayout><computeroutput>The principal axes are calculated first.
+Then the fit to an ellipsoid function is calculated.
+Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 235 of file model_shell.cpp.</para>
+    </section><anchor xml:id="_model__shell_8h_1a6aeb99e0a4012232714281472cd5554d"/>    <section>
+    <title>model_inside_outside()</title>
+<indexterm><primary>model_inside_outside</primary><secondary>model_shell.h</secondary></indexterm>
+<indexterm><primary>model_shell.h</primary><secondary>model_inside_outside</secondary></indexterm>
+<para><computeroutput>double model_inside_outside (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; vec, <link linkend="_class_bmodel">Bmodel</link> * model, int curv_flag, int fast)</computeroutput></para><para>
+Definition at line 402 of file model_shell.cpp.</para>
+    </section><anchor xml:id="_model__shell_8h_1ac4455d4fa35a775fc0e4df3e816e9563"/>    <section>
+    <title>model_sphericity()</title>
+<indexterm><primary>model_sphericity</primary><secondary>model_shell.h</secondary></indexterm>
+<indexterm><primary>model_shell.h</primary><secondary>model_sphericity</secondary></indexterm>
+<para><computeroutput>double model_sphericity (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Calculates how close the model is to a spherical shape. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double sphericity. <literallayout><computeroutput>The deviation of vertices from the average radius is calculated.
+Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 195 of file model_shell.cpp.</para>
+</section>
+</section>
+</section>

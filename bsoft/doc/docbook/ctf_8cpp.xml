@@ -1,0 +1,532 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_ctf_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/util/ctf.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/util/ctf.cpp</primary></indexterm>
+<para>
+
+<para>Functions to manage CTF (contrast transfer function) parameters. </para>
+ 
+</para>
+<programlisting>#include &quot;ctf.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_j_svalue">JSvalue</link> <link linkend="_ctf_8cpp_1a1e16c54f8fa5c5a0882874e90e5e53d4">ctf_to_json</link> (<link linkend="_class_c_t_fparam">CTFparam</link> &amp;cp)</para>
+
+<para>Converts microscope parameters to a JSON object list. </para>
+</listitem>
+            <listitem><para><link linkend="_class_c_t_fparam">CTFparam</link> <link linkend="_ctf_8cpp_1a15e496729e669a60718fc53b89c1ddf4">ctf_from_json</link> (string filename)</para>
+
+<para>Converts a JSON object list to microscope parameters. </para>
+</listitem>
+            <listitem><para><link linkend="_class_c_t_fparam">CTFparam</link> <link linkend="_ctf_8cpp_1a7365dc81d35e1fa782b62baf642924b2">ctf_from_json</link> (<link linkend="_class_j_svalue">JSvalue</link> &amp;js)</para>
+
+<para>Converts a JSON object list to microscope parameters. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ctf_8cpp_1a29e7081c7543da5142e136088e8ac42d">ctf_update_from_json</link> (<link linkend="_class_c_t_fparam">CTFparam</link> &amp;cp, <link linkend="_class_j_svalue">JSvalue</link> &amp;js)</para>
+
+<para>Converts a JSON object list to microscope parameters. </para>
+</listitem>
+            <listitem><para>double <link linkend="_ctf_8cpp_1ada4dde849c16659751225aa1938a6a16">electron_wavelength</link> (double volt)</para>
+
+<para>Calculates the wavelength in angstrom from the acceleration voltage. </para>
+</listitem>
+            <listitem><para>double <link linkend="_ctf_8cpp_1a6b00977a694b50a8ae29dff20d10c135">beta2</link> (double volt)</para>
+
+<para>Calculates the square of the relative electron velocity. </para>
+</listitem>
+            <listitem><para>double <link linkend="_ctf_8cpp_1a58af9b95ad67fce3014a21a4248db61b">beta</link> (double volt)</para>
+
+<para>Calculates the relative electron velocity. </para>
+</listitem>
+            <listitem><para>vector&lt; double &gt; <link linkend="_ctf_8cpp_1a94c9256d5dfed8a70aa07455f849298f">C_curve</link> (long n, double freq_step)</para>
+
+<para>Calculates the carbon scattering curve. </para>
+</listitem>
+            <listitem><para>vector&lt; double &gt; <link linkend="_ctf_8cpp_1a90c6b9667d23288b6ccfd7c424afc7a4">defocus_range_profile</link> (<link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf, double freq_step, double def_min, double def_max, double def_step)</para>
+
+<para>Calculates a weighting profile associated with a range of defocus values. </para>
+</listitem>
+            <listitem><para>double <link linkend="_ctf_8cpp_1aacbf44eccf4b074d8a4d902d181f2aef">defocus_factor</link> (<link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf, double def_min, double def_max, double def_step)</para>
+
+<para>Calculates an integrated defocus weighting factor for a raneg of defocus values. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_ctf_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions to manage CTF (contrast transfer function) parameters. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20000426 </para>
+
+<para>Modified: 20210531 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_ctf_8cpp_1a58af9b95ad67fce3014a21a4248db61b"/>    <section>
+    <title>beta()</title>
+<indexterm><primary>beta</primary><secondary>ctf.cpp</secondary></indexterm>
+<indexterm><primary>ctf.cpp</primary><secondary>beta</secondary></indexterm>
+<para><computeroutput>double beta (double volt)</computeroutput></para><para>
+
+<para>Calculates the relative electron velocity. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>volt</entry>
+                                <entry>
+<para>acceleration voltage. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double relative electron velocity. <literallayout><computeroutput>                          1
+beta = sqrt(1 - ---------------------)
+                (1+e*volt/(me*c^2))^2
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 586 of file ctf.cpp.</para>
+    </section><anchor xml:id="_ctf_8cpp_1a6b00977a694b50a8ae29dff20d10c135"/>    <section>
+    <title>beta2()</title>
+<indexterm><primary>beta2</primary><secondary>ctf.cpp</secondary></indexterm>
+<indexterm><primary>ctf.cpp</primary><secondary>beta2</secondary></indexterm>
+<para><computeroutput>double beta2 (double volt)</computeroutput></para><para>
+
+<para>Calculates the square of the relative electron velocity. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>volt</entry>
+                                <entry>
+<para>acceleration voltage. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double square of the relative electron velocity. <literallayout><computeroutput>                     1
+beta2 = 1 - ---------------------
+            (1+e*volt/(me*c^2))^2
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 565 of file ctf.cpp.</para>
+    </section><anchor xml:id="_ctf_8cpp_1a94c9256d5dfed8a70aa07455f849298f"/>    <section>
+    <title>C_curve()</title>
+<indexterm><primary>C_curve</primary><secondary>ctf.cpp</secondary></indexterm>
+<indexterm><primary>ctf.cpp</primary><secondary>C_curve</secondary></indexterm>
+<para><computeroutput>vector&lt;double&gt; C_curve (long n, double freq_step)</computeroutput></para><para>
+
+<para>Calculates the carbon scattering curve. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>length of curve. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>freq_step</entry>
+                                <entry>
+<para>frequency step size. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;double&gt; array with C-curve. <literallayout><computeroutput>The curve is based on the sum of five Gaussians.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 601 of file ctf.cpp.</para>
+    </section><anchor xml:id="_ctf_8cpp_1a7365dc81d35e1fa782b62baf642924b2"/>    <section>
+    <title>ctf_from_json()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>ctf_from_json</primary><secondary>ctf.cpp</secondary></indexterm>
+<indexterm><primary>ctf.cpp</primary><secondary>ctf_from_json</secondary></indexterm>
+<para><computeroutput><link linkend="_class_c_t_fparam">CTFparam</link> ctf_from_json (<link linkend="_class_j_svalue">JSvalue</link> &amp; js)</computeroutput></para><para>
+
+<para>Converts a JSON object list to microscope parameters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;js</entry>
+                                <entry>
+<para>JSON object list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_c_t_fparam">CTFparam</link> microscope parameter structure. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 482 of file ctf.cpp.</para>
+    </section><anchor xml:id="_ctf_8cpp_1a15e496729e669a60718fc53b89c1ddf4"/>    <section>
+    <title>ctf_from_json()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>ctf_from_json</primary><secondary>ctf.cpp</secondary></indexterm>
+<indexterm><primary>ctf.cpp</primary><secondary>ctf_from_json</secondary></indexterm>
+<para><computeroutput><link linkend="_class_c_t_fparam">CTFparam</link> ctf_from_json (string filename)</computeroutput></para><para>
+
+<para>Converts a JSON object list to microscope parameters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>filename</entry>
+                                <entry>
+<para>JSON file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_c_t_fparam">CTFparam</link> microscope parsmeter structure. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 469 of file ctf.cpp.</para>
+    </section><anchor xml:id="_ctf_8cpp_1a1e16c54f8fa5c5a0882874e90e5e53d4"/>    <section>
+    <title>ctf_to_json()</title>
+<indexterm><primary>ctf_to_json</primary><secondary>ctf.cpp</secondary></indexterm>
+<indexterm><primary>ctf.cpp</primary><secondary>ctf_to_json</secondary></indexterm>
+<para><computeroutput><link linkend="_class_j_svalue">JSvalue</link> ctf_to_json (<link linkend="_class_c_t_fparam">CTFparam</link> &amp; cp)</computeroutput></para><para>
+
+<para>Converts microscope parameters to a JSON object list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;cp</entry>
+                                <entry>
+<para>microscope parsmeter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_j_svalue">JSvalue</link> JSON object list. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 443 of file ctf.cpp.</para>
+    </section><anchor xml:id="_ctf_8cpp_1a29e7081c7543da5142e136088e8ac42d"/>    <section>
+    <title>ctf_update_from_json()</title>
+<indexterm><primary>ctf_update_from_json</primary><secondary>ctf.cpp</secondary></indexterm>
+<indexterm><primary>ctf.cpp</primary><secondary>ctf_update_from_json</secondary></indexterm>
+<para><computeroutput>int ctf_update_from_json (<link linkend="_class_c_t_fparam">CTFparam</link> &amp; cp, <link linkend="_class_j_svalue">JSvalue</link> &amp; js)</computeroutput></para><para>
+
+<para>Converts a JSON object list to microscope parameters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;cp</entry>
+                                <entry>
+<para>CTF parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;js</entry>
+                                <entry>
+<para>JSON object list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 510 of file ctf.cpp.</para>
+    </section><anchor xml:id="_ctf_8cpp_1aacbf44eccf4b074d8a4d902d181f2aef"/>    <section>
+    <title>defocus_factor()</title>
+<indexterm><primary>defocus_factor</primary><secondary>ctf.cpp</secondary></indexterm>
+<indexterm><primary>ctf.cpp</primary><secondary>defocus_factor</secondary></indexterm>
+<para><computeroutput>double defocus_factor (<link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf, double def_min, double def_max, double def_step)</computeroutput></para><para>
+
+<para>Calculates an integrated defocus weighting factor for a raneg of defocus values. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;ctf</entry>
+                                <entry>
+<para>CTF parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_min</entry>
+                                <entry>
+<para>minimum defocus. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_max</entry>
+                                <entry>
+<para>maximum defocus. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_step</entry>
+                                <entry>
+<para>defocus step. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;double&gt; sum of all CTF curves. <literallayout><computeroutput>The CTF curves are calculated up to the frequency cutoff determined by the objective aperture.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 675 of file ctf.cpp.</para>
+    </section><anchor xml:id="_ctf_8cpp_1a90c6b9667d23288b6ccfd7c424afc7a4"/>    <section>
+    <title>defocus_range_profile()</title>
+<indexterm><primary>defocus_range_profile</primary><secondary>ctf.cpp</secondary></indexterm>
+<indexterm><primary>ctf.cpp</primary><secondary>defocus_range_profile</secondary></indexterm>
+<para><computeroutput>vector&lt;double&gt; defocus_range_profile (<link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf, double freq_step, double def_min, double def_max, double def_step)</computeroutput></para><para>
+
+<para>Calculates a weighting profile associated with a range of defocus values. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;ctf</entry>
+                                <entry>
+<para>CTF parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>freq_step</entry>
+                                <entry>
+<para>frequency step size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_min</entry>
+                                <entry>
+<para>minimum defocus. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_max</entry>
+                                <entry>
+<para>maximum defocus. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_step</entry>
+                                <entry>
+<para>defocus step. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;double&gt; sum of all CTF curves. <literallayout><computeroutput>The CTF curves are calculated up to the frequency cutoff determined by the objective aperture.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 630 of file ctf.cpp.</para>
+    </section><anchor xml:id="_ctf_8cpp_1ada4dde849c16659751225aa1938a6a16"/>    <section>
+    <title>electron_wavelength()</title>
+<indexterm><primary>electron_wavelength</primary><secondary>ctf.cpp</secondary></indexterm>
+<indexterm><primary>ctf.cpp</primary><secondary>electron_wavelength</secondary></indexterm>
+<para><computeroutput>double electron_wavelength (double volt)</computeroutput></para><para>
+
+<para>Calculates the wavelength in angstrom from the acceleration voltage. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>volt</entry>
+                                <entry>
+<para>acceleration voltage. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double wavelength in angstrom, &lt;0 on error. <literallayout><computeroutput>                   12.26
+lambda = ----------------------------
+         sqrt(volt*(1+volt*0.9788e-6)
+                       1e10 * h
+lambda = ---------------------------------------
+         sqrt(2*me*e*volt*(1+e*volt/(2*me*c^2)))
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 542 of file ctf.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_ctf_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>ctf.cpp</secondary></indexterm>
+<indexterm><primary>ctf.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/bsoft.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: SPA-GS</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="../Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Single Particle Analysis - "Gold Standard" version"</h1>
+<h2>1. Background</h2>
+<p>The concept of the "gold standard" approach involves separating the particle
+image data into two mutually independent sets. These sets are then
+independently processed - i.e., the one set is never exposed to the information
+of the other, rendering any comparison apparently unbiased. Because the starting
+point of processing requires an initial reference map, and because particle
+picking is not without bias, the processing can never be completely without bias.
+The starting point should therefore be chosen with as little information as
+possible without making it practically impossible to get a result. The typical
+approach is to low-pass filter a map (to 30-60 Å) as the initial reference for
+both particle sets. In subsequent iterations, only the map reconstructed from
+the same set of particles in the previous iteration is used as reference.
+The expectation is then that if the processing is pushed to far into overfitting,
+that the resolution estimation based on a comparison of the two independent
+reconstructions will deteriorate.</p>
+<center><img alt="SPA flowchart" src="SPA_GS.png"/></center>
+<p>The Bsoft workflow sets up two parameter files with alternating selection of
+particles. Each set is then independently aligned, selected and a reconstruction
+calculated. The reconstructions of the two independent sets are then compared
+by calculating the FSC curve. The amplitudes of the reconstructions are then
+weighed by the FSC curve to produce appropriate reference maps for the next iteration.</p>
+<br />
+<h2>2. <a href="bsoft_spa_prep.html">Preparation</a></h2>
+<p>The preparation for this workflow (CTF fitting and particle picking) is the
+same as for the typical SPA. The descriptions for orientation determination
+and reconstruction also apply, with the exceptions noted below.</p>
+<br />
+<h2>3. Determining particle orientations</h2>
+<p>As with the normal SPA, each orientation determination run should be done
+in its own directory. In this directory, set up the input parameter file
+to designate the two particle sets:</p>
+<div id="command"><p>bpartsel -verb 1 -all -alt 2 -out in.star ../run2/klh_run2.star </p></div>
+<p>As with conventional SPA, the alignment can be done with borient to get global orientations, or with brefine to improve already established orientations.</p>
+  <h3>a. borient:</h3>
+  <p>For each of the input parameter files, launch borient:</p>
+  <div id="command"><p>borient -v 1 -select 1 -sym D5 -angle 2 -resol 25,150 -ann 10,90 -mode ccc -CTF -ref
+  ../run2/klh_ref2_1.pif -out klh_run3_1.star in.star &gt; klh_run3_1.log &amp;</p></div>
+  <div id="command"><p>borient -v 1 -select 2 -sym D5 -angle 2 -resol 25,150 -ann 10,90 -mode ccc -CTF -ref
+  ../run2/klh_ref2_2.pif -out klh_run3_2.star in.star &gt; klh_run3_2.log &amp;</p></div>
+<h3>b. brefine</h3>
+  <p>For each of the input parameter files, launch brefine:</p>
+  <div id="command"><p>brefine -v 1 -select 1 -grid 2,0.2 -res 20 -mag 0.03 -defocus 0.002 -kernel 6,2 -ref
+  ../run2/klh_run2_1.pif -out klh_run3_1.star in.star &gt; klh_run3_1.log &amp;</p></div>
+  <div id="command"><p>brefine -v 1 -select 2 -grid 2,0.2 -res 20 -mag 0.03 -defocus 0.002 -kernel 6,2 -ref
+  ../run2/klh_run2_2.pif -out klh_run3_2.star in.star &gt; klh_run3_2.log &amp;</p></div>
+  <br />
+<h2>4. Particle selection</h2>
+<p>This should be done on each output parameter file:</p>
+<div id="command"><p>bpartsel -v 7 -fom 0.34 -out klh_run3_1_sel.star klh_run3_1.star</p></div>
+<div id="command"><p>bpartsel -v 7 -fom 0.34 -out klh_run3_2_sel.star klh_run3_2.star</p></div>
+<p>The selection output files can be recombined ready for the next iteration:</p>
+<div id="command"><p>bpartmulti -verb 7 -merge -output klh_run3_sel.star klh_run3_1_sel.star klh_run3_2_sel.star</p></div>
+<br />
+<h2>5. Reconstruction</h2>
+<p>Two reconstructions should be calculated:</p>
+<div id="command"><p>breconstruct -v 3 -resol 15 -rescale 0,1 -sym D5 -CTF baseflip -recon
+klh_run3_1.pif klh_run3_1_sel.star &gt;&amp; klh_run3_1_rec.log &amp;</p></div>
+<div id="command"><p>breconstruct -v 3 -resol 15 -rescale 0,1 -sym D5 -CTF baseflip -recon
+klh_run3_2.pif klh_run3_2_sel.star &gt;&amp; klh_run3_2_rec.log &amp;</p></div>
+<br />
+<h2>6. Resolution determination</h2>
+<p>This is the key step in the "gold standard" approach. The two independent maps
+are now compared to calculate an FSC curve and determine the resolution:</p>
+<div id="command"><p>bresolve -v 7 -cut 0.3,70 -resol 15 -XML klh_run3_resol.xml -Post klh_run3_resol.ps -map klh_run3_1.pif klh_run3_2.pif</p></div>
+<br />
+<h2>7. FSC filtering of reconstructions:</h2>
+<p>The FSC curve can be used to do an appropriate filtering of the reconstructions
+to more accurately represent the actual information content:</p>
+<div id="command"><p>bampweigh -v 7 -FSC klh_run3_resol.xml -resolution 15 -rescale 0,1 klh_run3_1.pif klh_run3_1_fsc.pif`</p></div>
+<div id="command"><p>bampweigh -v 7 -FSC klh_run3_resol.xml -resolution 15 -rescale 0,1 klh_run3_2.pif klh_run3_2_fsc.pif`</p></div>
+<br />
+</div>
+<div id="footer">
+  Bernard Heymann  20150219
+</div>
+</body>
+</html>

@@ -1,0 +1,190 @@
+.TH "/Users/bernard/b20/bsoft/src/brecmod.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/brecmod.cpp \- A tool to merge data from micrograph reconstruction and model files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'rwmodel\&.h'\fP
+.br
+\fC#include 'model_transform\&.h'\fP
+.br
+\fC#include 'marker\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBmodel\fP * \fBproject_model_generate\fP (\fBBproject\fP *\fBproject\fP, \fBBmodel\fP *temp, int flags)"
+.br
+.RI "Generates a model from each particle defined in a reconstruction\&. "
+.ti -1c
+.RI "int \fBproject_model_consolidate\fP (\fBBproject\fP *\fBproject\fP, \fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Exchanges information between reconstruction and model structures\&. "
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A tool to merge data from micrograph reconstruction and model files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20090828 
+.PP
+Modified: 20110725 
+.RE
+.PP
+
+.PP
+Definition in file \fBbrecmod\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 53 of file brecmod\&.cpp\&.
+.SS "int project_model_consolidate (\fBBproject\fP * project, \fBBmodel\fP * model)"
+
+.PP
+Exchanges information between reconstruction and model structures\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI*model\fP model parameter structures\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+This function assumes there is a 1-1 relationship between models and
+particles derived from reconstructions and that they are in corresponding
+sequence.
+The type id and hand from each model is converted into an integer and
+the particle group set to it.
+Each model id is reset to a combined reconstruction and particle id.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 298 of file brecmod\&.cpp\&.
+.SS "\fBBmodel\fP * project_model_generate (\fBBproject\fP * project, \fBBmodel\fP * temp, int flags)"
+
+.PP
+Generates a model from each particle defined in a reconstruction\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI*temp\fP template model\&. 
+.br
+\fIflags\fP conversion options: 1=images\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model referencing the particle map files\&. 
+.PP
+.nf
+The model id is a combined reconstruction and particle id.
+The model type id is taken from the particle group id.
+The selection and FOM is taken from the particle properties.
+The model map file name is taken from the particle file name if it
+is defined, otherwise it is taken from the reconstruction structure
+and the image number is taken from the particle id.
+Flags:
+    1   transform each particle images to standard orientation.
+    2   write a model file for each particle.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 181 of file brecmod\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+" ",
+"Usage: brecmod [options] in\&.star",
+"--------------------------------",
+"Merges data from micrograph and model files\&.",
+" ",
+"Actions:",
+"-consolidate mod\&.star    Consolidate project and model parameters\&.",
+"-images                  Convert particle images (use with -outmodel)\&.",
+"-submodels               Generate particle models (use with -outmodel)\&.",
+" ",
+"Parameters:",
+"-verbose 7               Verbosity of output\&.",
+"-sampling 1\&.5,1\&.5,1\&.5    Sampling of images (A/pixel; a single value can be given)\&.",
+" ",
+"Input:",
+"-template model\&.star     Template to associate with each particle\&.",
+" ",
+"Output:",
+"-output newmg\&.star       New micrograph parameter file\&.",
+"-outmodel partmod\&.star   New model file from particles\&.",
+"-outmark markmod\&.star    New model file from markers\&.",
+" ",
+NULL
+}
+.fi
+.PP
+Definition at line 27 of file brecmod\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,1167 @@
+.TH "/Users/bernard/b20/bsoft/include/utilities.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/utilities.h \- Header file for general utilities\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <ctype\&.h>\fP
+.br
+\fC#include <unistd\&.h>\fP
+.br
+\fC#include <pwd\&.h>\fP
+.br
+\fC#include <math\&.h>\fP
+.br
+\fC#include <climits>\fP
+.br
+\fC#include <cfloat>\fP
+.br
+\fC#include <algorithm>\fP
+.br
+\fC#include <iostream>\fP
+.br
+\fC#include <iomanip>\fP
+.br
+\fC#include <vector>\fP
+.br
+\fC#include <map>\fP
+.br
+\fC#include <list>\fP
+.br
+\fC#include <tuple>\fP
+.br
+\fC#include <regex>\fP
+.br
+\fC#include <ctime>\fP
+.br
+\fC#include 'Bstring\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBBVERSION\fP   '2\&.1\&.2\-20210901'"
+.br
+.ti -1c
+.RI "#define \fBMAXLINELEN\fP   1024"
+.br
+.ti -1c
+.RI "#define \fBSMALLFLOAT\fP   1e\-30"
+.br
+.ti -1c
+.RI "#define \fBMIN_SIZE_FOR_THREADING\fP   100000"
+.br
+.ti -1c
+.RI "#define \fBTRIGPRECISION\fP   1e\-30"
+.br
+.ti -1c
+.RI "#define \fBPLANCK\fP   6\&.626070E\-34"
+.br
+.ti -1c
+.RI "#define \fBECHARGE\fP   1\&.602177E\-19"
+.br
+.ti -1c
+.RI "#define \fBEMASS\fP   9\&.109384E\-31"
+.br
+.ti -1c
+.RI "#define \fBLIGHTSPEED\fP   299792458"
+.br
+.ti -1c
+.RI "#define \fBAVOGADRO\fP   6\&.02214076e23"
+.br
+.ti -1c
+.RI "#define \fBM_PI\fP   3\&.14159265358979323846264338327950288"
+.br
+.ti -1c
+.RI "#define \fBM_PI_2\fP   1\&.57079632679489661923132169163975144"
+.br
+.ti -1c
+.RI "#define \fBM_PI_4\fP   0\&.785398163397448309615660845819875721"
+.br
+.ti -1c
+.RI "#define \fBTWOPI\fP   6\&.28318530717958647692528676655900576"
+.br
+.ti -1c
+.RI "#define \fBMIN2PI\fP   \-6\&.28318530717958647692528676655900576"
+.br
+.ti -1c
+.RI "#define \fBGOLDEN\fP   1\&.61803398874989484820458683436563811772"
+.br
+.ti -1c
+.RI "#define \fBRHO\fP   0\&.81"
+.br
+.ti -1c
+.RI "#define \fBVERB_NONE\fP   0"
+.br
+.ti -1c
+.RI "#define \fBVERB_RESULT\fP   1"
+.br
+.ti -1c
+.RI "#define \fBVERB_LABEL\fP   2"
+.br
+.ti -1c
+.RI "#define \fBVERB_PROCESS\fP   4"
+.br
+.ti -1c
+.RI "#define \fBVERB_STATS\fP   8"
+.br
+.ti -1c
+.RI "#define \fBVERB_FULL\fP   16"
+.br
+.ti -1c
+.RI "#define \fBVERB_TIME\fP   32"
+.br
+.ti -1c
+.RI "#define \fBVERB_MEMORY\fP   64"
+.br
+.ti -1c
+.RI "#define \fBVERB_DEBUG\fP   128"
+.br
+.ti -1c
+.RI "#define \fBVERB_DEBUG_STAR\fP   256"
+.br
+.ti -1c
+.RI "#define \fBVERB_DEBUG_XML\fP   512"
+.br
+.ti -1c
+.RI "#define \fBVERB_DEBUG_DM\fP   1024"
+.br
+.ti -1c
+.RI "#define \fBVERB_DEBUG_ND2\fP   2048"
+.br
+.ti -1c
+.RI "#define \fBVERB_DEBUG_EER\fP   4096"
+.br
+.ti -1c
+.RI "#define \fB_systype_\fP"
+.br
+.ti -1c
+.RI "#define \fB_datatype_\fP"
+.br
+.ti -1c
+.RI "#define \fBFILL_USER\fP   0"
+.br
+.ti -1c
+.RI "#define \fBFILL_AVERAGE\fP   1"
+.br
+.ti -1c
+.RI "#define \fBFILL_BACKGROUND\fP   2"
+.br
+.ti -1c
+.RI "#define \fBFILL_MIN\fP   3"
+.br
+.ti -1c
+.RI "#define \fBFILL_MAX\fP   4"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBSysType\fP { \fBUnknown_System\fP = 0, \fBBigIEEE\fP = 1, \fBBigOther\fP = 5, \fBLittleIEEE\fP = 6, \fBLittleAlpha\fP = 7, \fBLittleVAX\fP = 8, \fBLittleOther\fP = 10 }"
+.br
+.ti -1c
+.RI "enum \fBDataType\fP { \fBUnknown_Type\fP = 0, \fBBit\fP = 1, \fBUCharacter\fP = 2, \fBSCharacter\fP = 3, \fBUShort\fP = 4, \fBShort\fP = 5, \fBUInteger\fP = 6, \fBInteger\fP = 7, \fBULong\fP = 8, \fBLong\fP = 9, \fBFloat\fP = 10, \fBDouble\fP = 11 }"
+.br
+.RI "Base data type specifier\&. "
+.ti -1c
+.RI "enum \fBCompoundType\fP { \fBTSimple\fP = 0, \fBTComplex\fP = 1, \fBTVector2\fP = 2, \fBTVector3\fP = 3, \fBTView\fP = 4, \fBTRGB\fP = 10, \fBTRGBA\fP = 11, \fBTCMYK\fP = 12, \fBTMulti\fP = 99 }"
+.br
+.RI "Compound data type specifier\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "ostream & \fBtab\fP (ostream &out)"
+.br
+.ti -1c
+.RI "int \fBcmd_line\fP (int argc, char **argv)"
+.br
+.RI "Reconstructs the command line as a global string\&. "
+.ti -1c
+.RI "\fBBstring\fP \fBcommand_line\fP ()"
+.br
+.RI "Returns the command line\&. "
+.ti -1c
+.RI "\fBBstring\fP \fBcommand_line_time\fP ()"
+.br
+.RI "Returns the command line and time in a string\&. "
+.ti -1c
+.RI "string \fBcommand_line_time2\fP ()"
+.br
+.ti -1c
+.RI "string \fBget_user_name\fP ()"
+.br
+.RI "Returns the user name\&. "
+.ti -1c
+.RI "void \fBusage\fP (const char **\fBuse\fP, int all)"
+.br
+.RI "Prints usage information\&. "
+.ti -1c
+.RI "\fBSysType\fP \fBsystype\fP (int \fBshow\fP)"
+.br
+.RI "Finds the system type - mostly just for byte order\&. "
+.ti -1c
+.RI "size_t \fBsystem_processors\fP ()"
+.br
+.RI "Returns the number of processors\&. "
+.ti -1c
+.RI "long \fBsystem_memory\fP ()"
+.br
+.RI "Returns system memory size\&. "
+.ti -1c
+.RI "int \fBmemory_check\fP (long mem_required)"
+.br
+.RI "Checking if there is enough memory, abort if not\&. "
+.ti -1c
+.RI "int \fBbexit\fP (int value)"
+.br
+.RI "Exit function for cleanup and debugging\&. "
+.ti -1c
+.RI "\fBDataType\fP \fBgetdatatype\fP (char letter)"
+.br
+.RI "Get the data type indicated by a single letter code\&. "
+.ti -1c
+.RI "\fBCompoundType\fP \fBgetcompoundtype\fP (int ch, string sct)"
+.br
+.RI "Get the compound type indicated by a single letter code\&. "
+.ti -1c
+.RI "int \fBselect_numbers\fP (\fBBstring\fP &string, int n, int *numsel)"
+.br
+.RI "Converts a string with a selection specification into an integer array\&. "
+.ti -1c
+.RI "vector< int > \fBselect_numbers\fP (\fBBstring\fP &string, int n)"
+.br
+.ti -1c
+.RI "int \fBfindNextPowerOf\fP (int startNumber, int powerOf)"
+.br
+.RI "Finds the next greatest number that is a power of a given number\&. "
+.ti -1c
+.RI "int \fBget_integer\fP (char *ptr, int len)"
+.br
+.RI "Converts a defined length string into an integer\&. "
+.ti -1c
+.RI "float \fBget_float\fP (char *ptr, int len)"
+.br
+.RI "Converts a defined length string into a floating point number\&. "
+.ti -1c
+.RI "void \fBswapbytes\fP (unsigned char *v, size_t n)"
+.br
+.RI "Swaps bytes\&. "
+.ti -1c
+.RI "void \fBswapbytes\fP (size_t size, unsigned char *v, size_t n)"
+.br
+.RI "Swaps bytes\&. "
+.ti -1c
+.RI "void \fBvax2ieee\fP (unsigned char *v, int \fBsb\fP)"
+.br
+.RI "Converts VAX floating point format to IEEE floating point format\&. "
+.ti -1c
+.RI "double \fBangle_set_negPI_to_PI\fP (double \fBangle\fP)"
+.br
+.RI "Returns an angle between -PI and PI\&. "
+.ti -1c
+.RI "float \fBremove_negative_zeros\fP (float value0, float threshold)"
+.br
+.RI "Prevent a negative sign from being placed in front of zero value in a text file\&. "
+.ti -1c
+.RI "size_t \fBget_chunk_size\fP (size_t datasize)"
+.br
+.RI "Returns the chunk size per thread\&. "
+.ti -1c
+.RI "size_t \fBget_chunk_size\fP (size_t datasize, size_t c)"
+.br
+.RI "Returns the chunk size per thread\&. "
+.ti -1c
+.RI "int \fBerror_show\fP (string message, string file, int line)"
+.br
+.RI "Displays the error with file and line reference\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for general utilities\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19990722 
+.PP
+Modified: 20210721 
+.RE
+.PP
+
+.PP
+Definition in file \fButilities\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _datatype_"
+
+.PP
+Definition at line 188 of file utilities\&.h\&.
+.SS "#define _systype_"
+
+.PP
+Definition at line 145 of file utilities\&.h\&.
+.SS "#define AVOGADRO   6\&.02214076e23"
+
+.PP
+Definition at line 58 of file utilities\&.h\&.
+.SS "#define BVERSION   '2\&.1\&.2\-20210901'"
+
+.PP
+Definition at line 9 of file utilities\&.h\&.
+.SS "#define ECHARGE   1\&.602177E\-19"
+
+.PP
+Definition at line 55 of file utilities\&.h\&.
+.SS "#define EMASS   9\&.109384E\-31"
+
+.PP
+Definition at line 56 of file utilities\&.h\&.
+.SS "#define FILL_AVERAGE   1"
+
+.PP
+Definition at line 201 of file utilities\&.h\&.
+.SS "#define FILL_BACKGROUND   2"
+
+.PP
+Definition at line 202 of file utilities\&.h\&.
+.SS "#define FILL_MAX   4"
+
+.PP
+Definition at line 204 of file utilities\&.h\&.
+.SS "#define FILL_MIN   3"
+
+.PP
+Definition at line 203 of file utilities\&.h\&.
+.SS "#define FILL_USER   0"
+
+.PP
+Definition at line 200 of file utilities\&.h\&.
+.SS "#define GOLDEN   1\&.61803398874989484820458683436563811772"
+
+.PP
+Definition at line 88 of file utilities\&.h\&.
+.SS "#define LIGHTSPEED   299792458"
+
+.PP
+Definition at line 57 of file utilities\&.h\&.
+.SS "#define M_PI   3\&.14159265358979323846264338327950288"
+
+.PP
+Definition at line 66 of file utilities\&.h\&.
+.SS "#define M_PI_2   1\&.57079632679489661923132169163975144"
+
+.PP
+Definition at line 69 of file utilities\&.h\&.
+.SS "#define M_PI_4   0\&.785398163397448309615660845819875721"
+
+.PP
+Definition at line 72 of file utilities\&.h\&.
+.SS "#define MAXLINELEN   1024"
+
+.PP
+Definition at line 48 of file utilities\&.h\&.
+.SS "#define MIN2PI   \-6\&.28318530717958647692528676655900576"
+
+.PP
+Definition at line 78 of file utilities\&.h\&.
+.SS "#define MIN_SIZE_FOR_THREADING   100000"
+
+.PP
+Definition at line 50 of file utilities\&.h\&.
+.SS "#define PLANCK   6\&.626070E\-34"
+
+.PP
+Definition at line 54 of file utilities\&.h\&.
+.SS "#define RHO   0\&.81"
+
+.PP
+Definition at line 98 of file utilities\&.h\&.
+.SS "#define SMALLFLOAT   1e\-30"
+
+.PP
+Definition at line 49 of file utilities\&.h\&.
+.SS "#define TRIGPRECISION   1e\-30"
+
+.PP
+Definition at line 51 of file utilities\&.h\&.
+.SS "#define TWOPI   6\&.28318530717958647692528676655900576"
+
+.PP
+Definition at line 75 of file utilities\&.h\&.
+.SS "#define VERB_DEBUG   128"
+
+.PP
+Definition at line 119 of file utilities\&.h\&.
+.SS "#define VERB_DEBUG_DM   1024"
+
+.PP
+Definition at line 122 of file utilities\&.h\&.
+.SS "#define VERB_DEBUG_EER   4096"
+
+.PP
+Definition at line 124 of file utilities\&.h\&.
+.SS "#define VERB_DEBUG_ND2   2048"
+
+.PP
+Definition at line 123 of file utilities\&.h\&.
+.SS "#define VERB_DEBUG_STAR   256"
+
+.PP
+Definition at line 120 of file utilities\&.h\&.
+.SS "#define VERB_DEBUG_XML   512"
+
+.PP
+Definition at line 121 of file utilities\&.h\&.
+.SS "#define VERB_FULL   16"
+
+.PP
+Definition at line 116 of file utilities\&.h\&.
+.SS "#define VERB_LABEL   2"
+
+.PP
+Definition at line 113 of file utilities\&.h\&.
+.SS "#define VERB_MEMORY   64"
+
+.PP
+Definition at line 118 of file utilities\&.h\&.
+.SS "#define VERB_NONE   0"
+
+.PP
+Definition at line 111 of file utilities\&.h\&.
+.SS "#define VERB_PROCESS   4"
+
+.PP
+Definition at line 114 of file utilities\&.h\&.
+.SS "#define VERB_RESULT   1"
+
+.PP
+Definition at line 112 of file utilities\&.h\&.
+.SS "#define VERB_STATS   8"
+
+.PP
+Definition at line 115 of file utilities\&.h\&.
+.SS "#define VERB_TIME   32"
+
+.PP
+Definition at line 117 of file utilities\&.h\&.
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBCompoundType\fP"
+
+.PP
+Compound data type specifier\&. 
+.PP
+.nf
+This determines what compound data type is used in an image.
+
+.fi
+.PP
+ 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fITSimple \fP\fP
+.TP
+\fB\fITComplex \fP\fP
+.TP
+\fB\fITVector2 \fP\fP
+.TP
+\fB\fITVector3 \fP\fP
+.TP
+\fB\fITView \fP\fP
+.TP
+\fB\fITRGB \fP\fP
+.TP
+\fB\fITRGBA \fP\fP
+.TP
+\fB\fITCMYK \fP\fP
+.TP
+\fB\fITMulti \fP\fP
+.PP
+Definition at line 176 of file utilities\&.h\&.
+.SS "enum \fBDataType\fP"
+
+.PP
+Base data type specifier\&. 
+.PP
+.nf
+This determines what simple data type is used in an image.
+
+.fi
+.PP
+ 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIUnknown_Type \fP\fP
+.TP
+\fB\fIBit \fP\fP
+.TP
+\fB\fIUCharacter \fP\fP
+.TP
+\fB\fISCharacter \fP\fP
+.TP
+\fB\fIUShort \fP\fP
+.TP
+\fB\fIShort \fP\fP
+.TP
+\fB\fIUInteger \fP\fP
+.TP
+\fB\fIInteger \fP\fP
+.TP
+\fB\fIULong \fP\fP
+.TP
+\fB\fILong \fP\fP
+.TP
+\fB\fIFloat \fP\fP
+.TP
+\fB\fIDouble \fP\fP
+.PP
+Definition at line 155 of file utilities\&.h\&.
+.SS "enum \fBSysType\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIUnknown_System \fP\fP
+.TP
+\fB\fIBigIEEE \fP\fP
+.TP
+\fB\fIBigOther \fP\fP
+.TP
+\fB\fILittleIEEE \fP\fP
+.TP
+\fB\fILittleAlpha \fP\fP
+.TP
+\fB\fILittleVAX \fP\fP
+.TP
+\fB\fILittleOther \fP\fP
+.PP
+Definition at line 136 of file utilities\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "double angle_set_negPI_to_PI (double angle)"
+
+.PP
+Returns an angle between -PI and PI\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIangle\fP input angle\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double angle between -PI and PI\&.
+.RE
+.PP
+Reference: Derived from CCP4 code 
+.PP
+Definition at line 607 of file utilities\&.cpp\&.
+.SS "int bexit (int value)"
+
+.PP
+Exit function for cleanup and debugging\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue\fP exit value\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int given value\&. 
+.RE
+.PP
+
+.PP
+Definition at line 294 of file utilities\&.cpp\&.
+.SS "int cmd_line (int argc, char ** argv)"
+
+.PP
+Reconstructs the command line as a global string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIargc\fP the number of command line arguments\&. 
+.br
+\fI**argv\fP the command line arguments\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Concatenates the command line arguments into one string.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 36 of file utilities\&.cpp\&.
+.SS "\fBBstring\fP command_line ()"
+
+.PP
+Returns the command line\&. 
+.PP
+\fBReturns\fP
+.RS 4
+\fBBstring\fP new string\&. 
+.PP
+.nf
+This is designed to pack the command line into a string.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 58 of file utilities\&.cpp\&.
+.SS "\fBBstring\fP command_line_time ()"
+
+.PP
+Returns the command line and time in a string\&. 
+.PP
+\fBReturns\fP
+.RS 4
+\fBBstring\fP new string\&. 
+.PP
+.nf
+This is designed to pack the command line into a string followed by
+a second string for the time.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 71 of file utilities\&.cpp\&.
+.SS "string command_line_time2 ()"
+
+.PP
+Definition at line 85 of file utilities\&.cpp\&.
+.SS "int error_show (string message, string file, int line)"
+
+.PP
+Displays the error with file and line reference\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*message\fP a string to be included\&. 
+.br
+\fI*file\fP the file name (should be \fBFILE\fP)\&. 
+.br
+\fIline\fP the line number (should be \fBLINE\fP)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error number\&. 
+.PP
+.nf
+The function uses perror() to display a message containing the source
+file and line number where it originated.
+
+.fi
+.PP
+ Reference: Derived from CCP4 code 
+.RE
+.PP
+
+.PP
+Definition at line 768 of file utilities\&.cpp\&.
+.SS "int findNextPowerOf (int startNumber, int powerOf)"
+
+.PP
+Finds the next greatest number that is a power of a given number\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Dan Krainak 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIstartNumber\fP number to begin from\&. 
+.br
+\fIpowerOf\fP power of this number is the number returned\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int the next greatest power (i\&.e\&. 128) or 0 on error\&. 
+.PP
+.nf
+Loop through the powerOf variable, multiplying it each successive
+iteration until it is greater than the starting number.
+Eg., the next greatest power of 2 starting at 100 is 128.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 446 of file utilities\&.cpp\&.
+.SS "size_t get_chunk_size (size_t datasize)"
+
+.PP
+Returns the chunk size per thread\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIdatasize\fP size of data to be divided into chunks\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long chunk size\&. 
+.PP
+.nf
+If multiple processors are used, the chunk size is set to the data size
+divided by the number of processors.
+Otherwise, the chunk size is equal to the data size.
+
+.fi
+.PP
+ Reference: Derived from CCP4 code 
+.RE
+.PP
+
+.PP
+Definition at line 658 of file utilities\&.cpp\&.
+.SS "size_t get_chunk_size (size_t datasize, size_t c)"
+
+.PP
+Returns the chunk size per thread\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIdatasize\fP size of data to be divided into chunks\&. 
+.br
+\fIc\fP channel size to align chunk to\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long chunk size\&. 
+.PP
+.nf
+If multiple processors are used, the chunk size is set to the data size
+divided by the number of processors.
+Otherwise, the chunk size is equal to the data size.
+
+.fi
+.PP
+ Reference: Derived from CCP4 code 
+.RE
+.PP
+
+.PP
+Definition at line 692 of file utilities\&.cpp\&.
+.SS "float get_float (char * ptr, int len)"
+
+.PP
+Converts a defined length string into a floating point number\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*ptr\fP pointer to the string\&. 
+.br
+\fIlen\fP length to be scanned\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+float the floating point number\&. 
+.PP
+.nf
+The string is copied, 0-terminated, and scanned for a floating point number.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 495 of file utilities\&.cpp\&.
+.SS "int get_integer (char * ptr, int len)"
+
+.PP
+Converts a defined length string into an integer\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*ptr\fP pointer to the string\&. 
+.br
+\fIlen\fP length to be scanned\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int the integer\&. 
+.PP
+.nf
+The string is copied, 0-terminated, and scanned for an integer.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 472 of file utilities\&.cpp\&.
+.SS "string get_user_name ()"
+
+.PP
+Returns the user name\&. 
+.PP
+\fBReturns\fP
+.RS 4
+string user name\&. 
+.PP
+.nf
+It uses getpwuid_r (thread safe) to find the user in the password file.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 106 of file utilities\&.cpp\&.
+.SS "\fBCompoundType\fP getcompoundtype (int ch, string sct)"
+
+.PP
+Get the compound type indicated by a single letter code\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIch\fP number of channels\&. 
+.br
+\fIsct\fP string indicating compound type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+CompoundType compound type\&. 
+.PP
+.nf
+This function is used in optional command-line arguments to indicate
+a new compound type for an image.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 345 of file utilities\&.cpp\&.
+.SS "\fBDataType\fP getdatatype (char letter)"
+
+.PP
+Get the data type indicated by a single letter code\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIletter\fP letter indicating data type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+DataType data type\&. 
+.PP
+.nf
+This function is used in optional command-line arguments to indicate 
+a new data type for an image.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 309 of file utilities\&.cpp\&.
+.SS "int memory_check (long mem_required)"
+
+.PP
+Checking if there is enough memory, abort if not\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fImem_required\fP memory required\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 1 if enough\&. 
+.RE
+.PP
+
+.PP
+Definition at line 269 of file utilities\&.cpp\&.
+.SS "float remove_negative_zeros (float value0, float threshold)"
+
+.PP
+Prevent a negative sign from being placed in front of zero value in a text file\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+David Belnap 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIvalue0\fP input value to be tested 
+.br
+\fIthreshold\fP a small negative number 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+float 'Corrected' or input value 
+.PP
+.nf
+This function is intended to be used when obvious zero values are set
+to a very small negative number.  Input value is set to zero if
+              value0 > threshold  and  value0 < 0
+If so, the value is reset to zero.  Otherwise, the input value is 
+returned.
+
+.fi
+.PP
+ Reference: Derived from CCP4 code 
+.RE
+.PP
+
+.PP
+Definition at line 635 of file utilities\&.cpp\&.
+.SS "vector<int> select_numbers (\fBBstring\fP & string, int n)"
+
+.PP
+Definition at line 391 of file utilities\&.cpp\&.
+.SS "int select_numbers (\fBBstring\fP & string, int n, int * numsel)"
+
+.PP
+Converts a string with a selection specification into an integer array\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&string\fP string\&. 
+.br
+\fIn\fP length of integer array\&. 
+.br
+\fI*numsel\fP pre-allocated integer array\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of levels\&. 
+.PP
+.nf
+The integer array must be allocated to a length that would accommodate
+the highest number in the selection.
+If the string length is zero, all elements are selected.
+Multiple subsets are separated by colons
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 384 of file utilities\&.cpp\&.
+.SS "void swapbytes (size_t size, unsigned char * v, size_t n)"
+
+.PP
+Swaps bytes\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsize\fP size of the block to be swapped\&. 
+.br
+\fI*v\fP a pointer to the bytes\&. 
+.br
+\fIn\fP number of bytes to swap\&. 
+.PP
+.nf
+Byte swapping is done in place. 
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 538 of file utilities\&.cpp\&.
+.SS "void swapbytes (unsigned char * v, size_t n)"
+
+.PP
+Swaps bytes\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*v\fP a pointer to the bytes\&. 
+.br
+\fIn\fP number of bytes to swap\&. 
+.PP
+.nf
+Byte swapping is done in place. 
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 517 of file utilities\&.cpp\&.
+.SS "long system_memory ()"
+
+.PP
+Returns system memory size\&. 
+.PP
+\fBReturns\fP
+.RS 4
+long memory size\&. 
+.RE
+.PP
+
+.PP
+Definition at line 225 of file utilities\&.cpp\&.
+.SS "size_t system_processors ()"
+
+.PP
+Returns the number of processors\&. 
+.PP
+\fBReturns\fP
+.RS 4
+long number of processors\&. 
+.RE
+.PP
+
+.PP
+Definition at line 207 of file utilities\&.cpp\&.
+.SS "\fBSysType\fP systype (int show)"
+
+.PP
+Finds the system type - mostly just for byte order\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIshow\fP a flag to indicate if the result should be shown\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+SysType an enumerated type\&. 
+.PP
+.nf
+Test the byte order of an arbitrary byte sequence by interpreting it as
+an integer or a floating point number.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 165 of file utilities\&.cpp\&.
+.SS "ostream& tab (ostream & out)"
+
+.PP
+Definition at line 22 of file utilities\&.cpp\&.
+.SS "void usage (const char ** use, int all)"
+
+.PP
+Prints usage information\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**use\fP the string array\&. 
+.br
+\fIall\fP flag to output all usage information\&. 
+.PP
+.nf
+The usage information must be written into an array of srings, with each
+string a line and following a specific convention for the Bsoft package.
+The first line with non-space characters must start with "Usage:" 
+followed by the command-line syntax. The next lines should describe the
+program. The options are indicated by lines strating with "-".
+The options are categorized as "Actions", "Parameters", "Input",
+and "Output". This constitutes the brief form.
+An additional section can be added as "Examples", that is shown
+only when the "all" argument is set.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 140 of file utilities\&.cpp\&.
+.SS "void vax2ieee (unsigned char * v, int sb)"
+
+.PP
+Converts VAX floating point format to IEEE floating point format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*v\fP four-byte array holding the floating point value 
+.br
+\fIsb\fP flag to swap bytes before conversion 
+.PP
+.nf
+Swap bytes prior to conversion if the swap flag is set.
+Handle special cases of zero, infinity, NaN or normalized values
+Otherwise assign the new byte values
+
+.fi
+.PP
+ Reference: Derived from CCP4 code 
+.RE
+.PP
+
+.PP
+Definition at line 561 of file utilities\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

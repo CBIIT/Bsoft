@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rw_g_o_o_d_f_o_r_d_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/rwimg/rwGOODFORD.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/rwimg/rwGOODFORD.cpp</primary></indexterm>
+<para>
+
+<para>Functions for reading and writing Peter Goodford&apos;s GRID files. </para>
+ 
+</para>
+<programlisting>#include &quot;rwGOODFORD.h&quot;
+#include &quot;file_util.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_g_o_o_d_f_o_r_d_8cpp_1a47925c7f168ca7406c593987f96e2b7e">readGOODFORD</link> (<link linkend="_class_bimage">Bimage</link> *p, int readdata)</para>
+
+<para>Reading Peter Goodford&apos;s GRID map image file format. A 3D image format used for electrostatic potential maps. Header size: 168 bytes (fixed). File format extensions: .pot The data is packed as slices, each slice with a header of size 20 bytes. Byte order determination: File type and third dimension values must be less than 256*256. Data types: 1 = float. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_g_o_o_d_f_o_r_d_8cpp_1ac047afa7827ca0b8e76174ecd10ee85c">writeGOODFORD</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>Writing Peter Goodford&apos;s GRID map image file format. A 3D image format used for electrostatic potential maps. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_g_o_o_d_f_o_r_d_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions for reading and writing Peter Goodford&apos;s GRID files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20000924 </para>
+
+<para>Modified: 20120321 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rw_g_o_o_d_f_o_r_d_8cpp_1a47925c7f168ca7406c593987f96e2b7e"/>    <section>
+    <title>readGOODFORD()</title>
+<indexterm><primary>readGOODFORD</primary><secondary>rwGOODFORD.cpp</secondary></indexterm>
+<indexterm><primary>rwGOODFORD.cpp</primary><secondary>readGOODFORD</secondary></indexterm>
+<para><computeroutput>int readGOODFORD (<link linkend="_class_bimage">Bimage</link> * p, int readdata)</computeroutput></para><para>
+
+<para>Reading Peter Goodford&apos;s GRID map image file format. A 3D image format used for electrostatic potential maps. Header size: 168 bytes (fixed). File format extensions: .pot The data is packed as slices, each slice with a header of size 20 bytes. Byte order determination: File type and third dimension values must be less than 256*256. Data types: 1 = float. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>readdata</entry>
+                                <entry>
+<para>flag to activate reading of image data. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 29 of file rwGOODFORD.cpp.</para>
+    </section><anchor xml:id="_rw_g_o_o_d_f_o_r_d_8cpp_1ac047afa7827ca0b8e76174ecd10ee85c"/>    <section>
+    <title>writeGOODFORD()</title>
+<indexterm><primary>writeGOODFORD</primary><secondary>rwGOODFORD.cpp</secondary></indexterm>
+<indexterm><primary>rwGOODFORD.cpp</primary><secondary>writeGOODFORD</secondary></indexterm>
+<para><computeroutput>int writeGOODFORD (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>Writing Peter Goodford&apos;s GRID map image file format. A 3D image format used for electrostatic potential maps. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 103 of file rwGOODFORD.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_rw_g_o_o_d_f_o_r_d_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>rwGOODFORD.cpp</secondary></indexterm>
+<indexterm><primary>rwGOODFORD.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

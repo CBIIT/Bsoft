@@ -1,0 +1,458 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_img__radon_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/radon/img_radon.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/radon/img_radon.cpp</primary></indexterm>
+<para>
+
+<para>Radon transform functions. </para>
+ 
+</para>
+<programlisting>#include &quot;kernlut.h&quot;
+#include &quot;gal_ricoI.h&quot;
+#include &quot;sin_gal.h&quot;
+#include &quot;pocs_tool.h&quot;
+#include &quot;proj_tool.h&quot;
+#include &quot;radon_util.h&quot;
+#include &quot;img_radon.h&quot;
+#include &quot;mg_processing.h&quot;
+#include &quot;Bimage.h&quot;
+#include &quot;symmetry.h&quot;
+#include &quot;Matrix.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_img__radon_8cpp_1a6afea6b8c6463fb45b923ffeabbf8d21">img_radon_transform</link> (<link linkend="_class_bimage">Bimage</link> *p, int type, int nkernel, int kernel_power, int padd, int ntheta)</para>
+
+<para>Calculates the Radon transform of an image. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_img__radon_8cpp_1aaaac7e6b6ab4f1a582a12f7fdf0718f8">img_radon_inverse_transform</link> (<link linkend="_class_bimage">Bimage</link> *p, int type, int nkernel, int kernel_power, int padd)</para>
+
+<para>Calculates a 3D image from a Radon transform. </para>
+</listitem>
+            <listitem><para>int <link linkend="_img__radon_8cpp_1a73423fd21ba5ea2c702ca9c77566f3b8">img_radon_pocs_filter</link> (<link linkend="_class_bimage">Bimage</link> *p, int n_cyc_out, int n_cyc_in, double rad_3D, double rad_plane, int support, <link linkend="_class_bimage">Bimage</link> *pmask)</para>
+
+<para>Filters a radon transform using the POCS method. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_img__radon_8cpp_1aaaad07f1faeff63036e7895a8dbf2b0c">img_radon_reconstruction</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, <link linkend="_class_bstring">Bstring</link> &amp;file_mask, int rec_size, int ntheta, int table_size, double threshold, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, int nkernel, int kernel_power)</para>
+
+<para>Reconstructs a Radon transform from a set of projections. </para>
+</listitem>
+            <listitem><para>int <link linkend="_img__radon_8cpp_1a0ee4aca6e28c5af867db195ba50c0371">img_resize_to_next_power2</link> (<link linkend="_class_bimage">Bimage</link> *p, int fill_type, double fill)</para>
+
+<para>Resizes without interpolation or rescaling to the next power of 2. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_img__radon_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Radon transform functions. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Salvatore Lanzavecchia, Francesca Cantele and Pier Luigi Bellon Dip. Chimica Strutturale e Stereochimica Inorganica, Via Venezian 21, 20133 Milano, Italy </para>
+
+<para>Bernard Heymann Rm 1515, 50 South Dr., NIH, Bethesda, MD, 20892, USA </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 2001 05 19 </para>
+
+<para>Modified: 20160728 (BH) </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_img__radon_8cpp_1aaaac7e6b6ab4f1a582a12f7fdf0718f8"/>    <section>
+    <title>img_radon_inverse_transform()</title>
+<indexterm><primary>img_radon_inverse_transform</primary><secondary>img_radon.cpp</secondary></indexterm>
+<indexterm><primary>img_radon.cpp</primary><secondary>img_radon_inverse_transform</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_radon_inverse_transform (<link linkend="_class_bimage">Bimage</link> * p, int type, int nkernel, int kernel_power, int padd)</computeroutput></para><para>
+
+<para>Calculates a 3D image from a Radon transform. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>radon transform to be back-transformed. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>type</entry>
+                                <entry>
+<para>type of transformation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nkernel</entry>
+                                <entry>
+<para>kernel size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>kernel_power</entry>
+                                <entry>
+<para>kernel exponent (usually 2). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>padd</entry>
+                                <entry>
+<para>padding flag (0=no padding, 1=padding twofold). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* transformed image. <literallayout><computeroutput>Type:
+1 = From single axis proj. to 3D structure, output is a 3D image with size (z,z,z)
+2 = From quarter radon transform to single axis proj., output is a gallery of ntheta 2D image with size (z,z)
+3 = From full radon transform to 3D structure, output is a 3D image with size (z,z,z)
+4 = From quarter radon transform to 3D structure, output is a 3D image with size (z,z,z)
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 141 of file img_radon.cpp.</para>
+    </section><anchor xml:id="_img__radon_8cpp_1a73423fd21ba5ea2c702ca9c77566f3b8"/>    <section>
+    <title>img_radon_pocs_filter()</title>
+<indexterm><primary>img_radon_pocs_filter</primary><secondary>img_radon.cpp</secondary></indexterm>
+<indexterm><primary>img_radon.cpp</primary><secondary>img_radon_pocs_filter</secondary></indexterm>
+<para><computeroutput>int img_radon_pocs_filter (<link linkend="_class_bimage">Bimage</link> * p, int n_cyc_out, int n_cyc_in, double rad_3D, double rad_plane, int support, <link linkend="_class_bimage">Bimage</link> * pmask)</computeroutput></para><para>
+
+<para>Filters a radon transform using the POCS method. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>radon transform. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n_cyc_out</entry>
+                                <entry>
+<para>outer cycles, swapping r,phi and r,theta planes </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n_cyc_in</entry>
+                                <entry>
+<para>inner cycles, within r,phi and r,theta planes </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rad_3D</entry>
+                                <entry>
+<para>limiting radius in 3D. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rad_plane</entry>
+                                <entry>
+<para>limiting radius in plane. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>support</entry>
+                                <entry>
+<para>flag to impose finiteness in real space. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask</entry>
+                                <entry>
+<para>mask of dimension (ntheta/2,ntheta/2). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* transformed image. <literallayout><computeroutput>Filters a Radon transform to impose consistency and/or to fill holes.
+It can be used in two ways:
+a) When the Radon transform is not completely filled, it fills the holes
+    described in the mask file produced by proj_to_radon.
+b) When the Radon transform is filled and noisy, it impose consistency.
+The mask must have the same dimensions as a plane in the radon transform.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 221 of file img_radon.cpp.</para>
+    </section><anchor xml:id="_img__radon_8cpp_1aaaad07f1faeff63036e7895a8dbf2b0c"/>    <section>
+    <title>img_radon_reconstruction()</title>
+<indexterm><primary>img_radon_reconstruction</primary><secondary>img_radon.cpp</secondary></indexterm>
+<indexterm><primary>img_radon.cpp</primary><secondary>img_radon_reconstruction</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_radon_reconstruction (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, <link linkend="_class_bstring">Bstring</link> &amp; file_mask, int rec_size, int ntheta, int table_size, double threshold, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, int nkernel, int kernel_power)</computeroutput></para><para>
+
+<para>Reconstructs a Radon transform from a set of projections. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>image processing parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;sym</entry>
+                                <entry>
+<para>point group symmetry. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;file_mask</entry>
+                                <entry>
+<para>output file name of mask of dimension (ntheta,ntheta). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rec_size</entry>
+                                <entry>
+<para>reconstruction size (x,y,z) </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ntheta</entry>
+                                <entry>
+<para>number of angles in the 2*PI range. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>table_size</entry>
+                                <entry>
+<para>lookup table size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>threshold</entry>
+                                <entry>
+<para>threshold for rejecting images. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>origin reference for shifts. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nkernel</entry>
+                                <entry>
+<para>kernel size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>kernel_power</entry>
+                                <entry>
+<para>kernel exponent (usually 2). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* transformed image. <literallayout><computeroutput>The parameters are defined in the hierarchical project structure.
+The radon transform of each image is calculated and all its 
+symmetry-related views are written into the reconstruction volume.
+A mask image is calculated for the angular coverage of orientation
+space and used to weigh the reconstruction.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 292 of file img_radon.cpp.</para>
+    </section><anchor xml:id="_img__radon_8cpp_1a6afea6b8c6463fb45b923ffeabbf8d21"/>    <section>
+    <title>img_radon_transform()</title>
+<indexterm><primary>img_radon_transform</primary><secondary>img_radon.cpp</secondary></indexterm>
+<indexterm><primary>img_radon.cpp</primary><secondary>img_radon_transform</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_radon_transform (<link linkend="_class_bimage">Bimage</link> * p, int type, int nkernel, int kernel_power, int padd, int ntheta)</computeroutput></para><para>
+
+<para>Calculates the Radon transform of an image. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image to be transformed. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>type</entry>
+                                <entry>
+<para>type of transformation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nkernel</entry>
+                                <entry>
+<para>kernel size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>kernel_power</entry>
+                                <entry>
+<para>kernel exponent (usually 2). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>padd</entry>
+                                <entry>
+<para>padding flag (0=no padding, 1=padding twofold). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ntheta</entry>
+                                <entry>
+<para>number of angles in the 2*PI range. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* transformed image. <literallayout><computeroutput>Computes the Radon transform of a 3D image with all sides equal
+(a cube) and a power of 2. The transform is calculated in spherical
+coordinates where ntheta is the number of sampling points in the 
+range 0 - 2*PI along the two angular axes. Because half of this 
+range is redundant (0-PI is enough), a smaller output can be 
+generated.
+    Type:
+1 = From 3D structure to single axis proj., output is a gallery of ntheta 2D image with size (x,x)
+2 = From single axis proj. to quarter radon transform, output is a 3D image with size (x,ntheta/2,ntheta/2)
+3 = From 3D structure to full radon transform, output is a 3D image with size (x,ntheta,ntheta)
+4 = From 3D structure to quarter radon transform, output is a 3D image with size (x,ntheta/2,ntheta/2)
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 54 of file img_radon.cpp.</para>
+    </section><anchor xml:id="_img__radon_8cpp_1a0ee4aca6e28c5af867db195ba50c0371"/>    <section>
+    <title>img_resize_to_next_power2()</title>
+<indexterm><primary>img_resize_to_next_power2</primary><secondary>img_radon.cpp</secondary></indexterm>
+<indexterm><primary>img_radon.cpp</primary><secondary>img_resize_to_next_power2</secondary></indexterm>
+<para><computeroutput>int img_resize_to_next_power2 (<link linkend="_class_bimage">Bimage</link> * p, int fill_type, double fill)</computeroutput></para><para>
+
+<para>Resizes without interpolation or rescaling to the next power of 2. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>p</entry>
+                                <entry>
+<para>image (modified). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fill_type</entry>
+                                <entry>
+<para>FILL_AVERAGE, FILL_BACKGROUND, FILL_USER </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fill</entry>
+                                <entry>
+<para>value to fill in new regions. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>An image is resized to the next power of two in each dimension
+greater than 1 with translation and filling of new regions with 
+a given value.
+The new data replaces the old data.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 457 of file img_radon.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_img__radon_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>img_radon.cpp</secondary></indexterm>
+<indexterm><primary>img_radon.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

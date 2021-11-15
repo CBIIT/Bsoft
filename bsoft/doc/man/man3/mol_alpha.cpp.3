@@ -1,0 +1,388 @@
+.TH "/Users/bernard/b20/bsoft/src/mol/mol_alpha.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mol/mol_alpha.cpp \- Functions to make and analyze alpha helices\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmolecule\&.h'\fP
+.br
+\fC#include 'mol_alpha\&.h'\fP
+.br
+\fC#include 'mol_transform\&.h'\fP
+.br
+\fC#include 'mol_util\&.h'\fP
+.br
+\fC#include 'Bimage\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'Matrix3\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBAlphaTemplate\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNTEMPATOM\fP   6"
+.br
+.ti -1c
+.RI "#define \fBDAXIS\fP   2\&.303"
+.br
+.ti -1c
+.RI "#define \fBHRISE\fP   1\&.5"
+.br
+.ti -1c
+.RI "#define \fBHANGLE\fP   100"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBmolgroup\fP * \fBmolgroup_generate_alpha_helix\fP (int \fBlength\fP)"
+.br
+.RI "Generates an alpha helix of the desired length\&. 
+.br
+ "
+.ti -1c
+.RI "\fBBmolecule\fP * \fBmol_generate_alpha_helix\fP (int \fBlength\fP)"
+.br
+.RI "Generates an alpha helix of the desired length\&. 
+.br
+ "
+.ti -1c
+.RI "int \fBmolgroup_set_alpha_helix\fP (\fBBmolgroup\fP *molgroup, int helix_start, int helix_end)"
+.br
+.RI "Sets a residue range to an alpha helix in all molecules\&. 
+.br
+ "
+.ti -1c
+.RI "int \fBmolgroup_find_helical_axes\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Calculates the centers and orientations of all alpha helices\&. 
+.br
+ "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBalpha_find_center\fP (\fBBresidue\fP *resfirst, \fBBresidue\fP *reslast)"
+.br
+.RI "Calculates the center of an alpha helix\&. 
+.br
+ "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBalpha_find_orientation\fP (\fBBresidue\fP *resfirst, \fBBresidue\fP *reslast)"
+.br
+.RI "Calculates the orientation of an alpha helix\&. 
+.br
+ "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmol_find_alpha_orientation\fP (\fBBmolecule\fP *mol, int set_std)"
+.br
+.RI "Calculates the orientation of an alpha helix\&. 
+.br
+ "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBpoint_on_helix_axis\fP (\fBVector3\fP< double > ca1, \fBVector3\fP< double > ca2, \fBVector3\fP< double > ca3)"
+.br
+.RI "Calculates a point on an alpha helix corresponding to a Ca atom\&. 
+.br
+ "
+.ti -1c
+.RI "long \fBfind_closest_mean\fP (long k, \fBVector3\fP< double > *mc, \fBVector3\fP< double > *ma, \fBVector3\fP< double > c, \fBVector3\fP< double > a, double afac)"
+.br
+.ti -1c
+.RI "\fBBmolgroup\fP * \fBmolgroup_consolidate_alpha\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Cluster a set of alpha helices to consolidate helices\&. 
+.br
+ "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "struct \fBAlphaTemplate\fP \fBalpha_template\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to make and analyze alpha helices\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20050315 
+.PP
+Modified: 20111030 
+.RE
+.PP
+
+.PP
+Definition in file \fBmol_alpha\&.cpp\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define DAXIS   2\&.303"
+
+.PP
+Definition at line 33 of file mol_alpha\&.cpp\&.
+.SS "#define HANGLE   100"
+
+.PP
+Definition at line 35 of file mol_alpha\&.cpp\&.
+.SS "#define HRISE   1\&.5"
+
+.PP
+Definition at line 34 of file mol_alpha\&.cpp\&.
+.SS "#define NTEMPATOM   6"
+
+.PP
+Definition at line 32 of file mol_alpha\&.cpp\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBVector3\fP<double> alpha_find_center (\fBBresidue\fP * resfirst, \fBBresidue\fP * reslast)"
+
+.PP
+Calculates the center of an alpha helix\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*resfirst\fP first residue in helix\&. 
+.br
+\fI*reslast\fP last residue in helix\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP center\&. 
+.RE
+.PP
+
+.PP
+Definition at line 179 of file mol_alpha\&.cpp\&.
+.SS "\fBVector3\fP<double> alpha_find_orientation (\fBBresidue\fP * resfirst, \fBBresidue\fP * reslast)"
+
+.PP
+Calculates the orientation of an alpha helix\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*resfirst\fP first residue in helix\&. 
+.br
+\fI*reslast\fP last residue in helix\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP axis\&. 
+.RE
+.PP
+
+.PP
+Definition at line 208 of file mol_alpha\&.cpp\&.
+.SS "long find_closest_mean (long k, \fBVector3\fP< double > * mc, \fBVector3\fP< double > * ma, \fBVector3\fP< double > c, \fBVector3\fP< double > a, double afac)"
+
+.PP
+Definition at line 359 of file mol_alpha\&.cpp\&.
+.SS "\fBVector3\fP<double> mol_find_alpha_orientation (\fBBmolecule\fP * mol, int set_std)"
+
+.PP
+Calculates the orientation of an alpha helix\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol\fP molecule\&. 
+.br
+\fIset_std\fP rotate and shift to a standard orientation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP axis\&. 
+.RE
+.PP
+
+.PP
+Definition at line 249 of file mol_alpha\&.cpp\&.
+.SS "\fBBmolecule\fP* mol_generate_alpha_helix (int length)"
+
+.PP
+Generates an alpha helix of the desired length\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fIlength\fP number of alanines to generate\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 68 of file mol_alpha\&.cpp\&.
+.SS "\fBBmolgroup\fP* molgroup_consolidate_alpha (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Cluster a set of alpha helices to consolidate helices\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group with alpha helices (deallocated)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolgroup* new molecule group\&. 
+.RE
+.PP
+
+.PP
+Definition at line 382 of file mol_alpha\&.cpp\&.
+.SS "int molgroup_find_helical_axes (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Calculates the centers and orientations of all alpha helices\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 147 of file mol_alpha\&.cpp\&.
+.SS "\fBBmolgroup\fP* molgroup_generate_alpha_helix (int length)"
+
+.PP
+Generates an alpha helix of the desired length\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fIlength\fP number of alanines to generate\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 54 of file mol_alpha\&.cpp\&.
+.SS "int molgroup_set_alpha_helix (\fBBmolgroup\fP * molgroup, int helix_start, int helix_end)"
+
+.PP
+Sets a residue range to an alpha helix in all molecules\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fIhelix_start\fP first residue in helix\&. 
+.br
+\fIhelix_end\fP last residue in helix\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 117 of file mol_alpha\&.cpp\&.
+.SS "\fBVector3\fP<double> point_on_helix_axis (\fBVector3\fP< double > ca1, \fBVector3\fP< double > ca2, \fBVector3\fP< double > ca3)"
+
+.PP
+Calculates a point on an alpha helix corresponding to a Ca atom\&. 
+.br
+ 
+.PP
+.nf
+The point on the alpha helix corresponding to the second Ca atom is returned.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fIca1\fP first Ca atom\&. 
+.br
+\fIca2\fP second Ca atom\&. 
+.br
+\fIca3\fP third Ca atom\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP point on alpha helix\&. 
+.RE
+.PP
+
+.PP
+Definition at line 349 of file mol_alpha\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "struct \fBAlphaTemplate\fP alpha_template[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    {"N",  {1\&.378, -0\&.646, -0\&.926}},
+    {"CA", {2\&.303,  0\&.000,  0\&.000}},
+    {"C",  {1\&.599,  0\&.860,  1\&.028}},
+    {"O",  {2\&.020,  1\&.002,  2\&.171}},
+    {"CB", {3\&.260,  0\&.864, -0\&.824}},
+    {"H",  {1\&.279, -0\&.316, -1\&.865}}
+}
+.fi
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

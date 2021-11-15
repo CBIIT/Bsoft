@@ -1,0 +1,144 @@
+.TH "/Users/bernard/b20/bsoft/src/balign.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/balign.cpp \- Aligns two images\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'ps_marker\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTransform\fP \fBimg_align\fP (\fBBimage\fP *p1, \fBBimage\fP *p2, \fBVector3\fP< long > tile_size, double res_lo, double res_hi, double max_shift, int filter_flag, int refine_flag)"
+.br
+.RI "Aligns the second image to the first\&. "
+.ti -1c
+.RI "int \fBmain\fP (int argc, char *argv[])"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Aligns two images\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20021111 
+.PP
+Modified: 20160603 
+.RE
+.PP
+
+.PP
+Definition in file \fBbalign\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBTransform\fP img_align (\fBBimage\fP * p1, \fBBimage\fP * p2, \fBVector3\fP< long > tile_size, double res_lo, double res_hi, double max_shift, int filter_flag, int refine_flag)"
+
+.PP
+Aligns the second image to the first\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p1\fP first image\&. 
+.br
+\fI*p2\fP second image (transformed) 
+.br
+\fItile_size\fP 3-valued vector for the size of sub-images\&. 
+.br
+\fIres_lo\fP low resolution limit for cross-correlation\&. 
+.br
+\fIres_hi\fP high resolution limit for cross-correlation\&. 
+.br
+\fImax_shift\fP maximum shift allowed (default 1/4 of tile)\&. 
+.br
+\fIfilter_flag\fP flag to filter micrograph extremes\&. 
+.br
+\fIrefine_flag\fP flag to turn on refinement of shift\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBTransform\fP structure with shift, scale, rotation angle, and R factor\&. 
+.PP
+.nf
+The second image is transformed to fit on the first image.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 144 of file balign\&.cpp\&.
+.SS "int main (int argc, char * argv[])"
+
+.PP
+Definition at line 45 of file balign\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+" ",
+"Usage: balign [options] input1\&.img input2\&.img output\&.img",
+"--------------------------------------------------------",
+"The second input image is aligned to the first, transformed and output\&.",
+"(Note: This program is intended to align very large micrograph images)\&.",
+" ",
+"Actions:",
+"-add                     Add input images after transforming the second\&.",
+"-filterextremes          Filter micrograph extremes before aligning\&.",
+" ",
+"Parameters:",
+"-verbose 7               Verbosity of output\&.",
+"-datatype u              Force writing of a new data type\&.",
+"-sampling 1\&.5,1\&.5,1\&.5    Sampling (A/pixel; a single value can be given)\&.",
+"-tile 1024,1024,5        Size of tiles for correlation (default 512,512,1)\&.",
+"-resolution 30,500       High and low resolution limits for cross-correlation (default 0\&.1,1000)\&.",
+"-maxshift 55             Maximum allowed shift (default 1/4 of tile)\&.",
+" ",
+NULL
+}
+.fi
+.PP
+Definition at line 23 of file balign\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,123 @@
+.TH "/Users/bernard/b20/bsoft/src/rwimg/rwBrookhavenSTEM.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/rwimg/rwBrookhavenSTEM.cpp \- Functions for reading and writing Brookhaven STEM files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwBrookhavenSTEM\&.h'\fP
+.br
+\fC#include 'file_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBLUTSIZE\fP   256"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBimg_stem_lut_apply\fP (\fBBimage\fP *p, int neg_stain_flag)"
+.br
+.ti -1c
+.RI "int \fBreadBrookhavenSTEM\fP (\fBBimage\fP *p, int readdata)"
+.br
+.RI "Reading a BrookhavenSTEM image file format\&. "
+.ti -1c
+.RI "int \fBwriteBrookhavenSTEM\fP (\fBBimage\fP *p)"
+.br
+.RI "Writing a BrookhavenSTEM image file format\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for reading and writing Brookhaven STEM files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20050729 
+.PP
+Modified: 20130307 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwBrookhavenSTEM\&.cpp\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define LUTSIZE   256"
+
+.PP
+Definition at line 16 of file rwBrookhavenSTEM\&.cpp\&.
+.SH "Function Documentation"
+.PP 
+.SS "int img_stem_lut_apply (\fBBimage\fP * p, int neg_stain_flag)"
+
+.PP
+Definition at line 18 of file rwBrookhavenSTEM\&.cpp\&.
+.SS "int readBrookhavenSTEM (\fBBimage\fP * p, int readdata)"
+
+.PP
+Reading a BrookhavenSTEM image file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.br
+\fIreaddata\fP flag to activate reading of image data\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. A 2D image format used for the Brookhaven STEM\&. It has a text header of 4096 bytes (fixed size)\&. The default size is 512x512\&. File format extension: \&.dat\&. Data type: unsigned char\&. The header specifies the following keywords: SCAN: pixel size in internal units The data is packed into two interleaved channels which are unpacked into two separate images in this function\&. The first image contains the signal from the LA (large area) detector and the second image contains the signal from either the SA (small area) detector, or the BF (bright field) detector\&. The data is corrected for signal non-linearity on the fly when read in\&. 
+.RE
+.PP
+
+.PP
+Definition at line 101 of file rwBrookhavenSTEM\&.cpp\&.
+.SS "int writeBrookhavenSTEM (\fBBimage\fP * p)"
+
+.PP
+Writing a BrookhavenSTEM image file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. A 2D image format used for the Brookhaven STEM\&. 
+.RE
+.PP
+
+.PP
+Definition at line 188 of file rwBrookhavenSTEM\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

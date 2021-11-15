@@ -1,0 +1,183 @@
+<textarea name="textarea" cols="80" rows="60" readonly>
+#!/bin/tcsh -f
+
+# bomrun
+# A script to find particle orientations using distributed processing
+# Usage:
+#       psubmit bomrun -symmetry <symbol> -full -angles <theta,phi> -side <degrees> -annuli <pixels> 
+#			-edge <pixels> -resolution <resolution> -bands <spec> -CTF -reference <file> -sets <number> <files> -ss
+# Example:
+#		bomrun -sym I -full -ang 1 -ann 70,120 -res 25,200 -CTF -ref ../run8/kshv_run8_masked.pif -sets 50 ../run8/kshv_run8r.star
+#       psubmit bomrun -sym D5 -full -ang 2 -ann 10,100 -edge 76 -res 30,500 -CTF -ref map.pif -sets 30 "*.star" -ss
+# Bernard Heymann
+# 20031104 - 20100826
+
+
+# Defaults
+set SYM = "C1"
+set FUL = ""
+set ANG = "2,2"
+set SIDE = ""
+set SIDE_ANG = 0
+set ANN = "10,200"
+set EDGE = "0"
+set RB = "-resol 20,200"
+set SET_SIZE = 20
+set CTF = " "
+set TEST = 0
+
+# Peach switch
+set PSWITCH = 0
+if ( $?HASH_WORD ) set PSWITCH = 1
+
+# Command line
+echo -n bomrun
+set a = 1
+while ( $a <= $#argv )
+	echo -n " $argv[$a]"
+	@ a++
+end
+echo " "
+
+if ( $#argv < 1 ) then
+	echo "No input!"
+	exit
+endif
+
+
+# Interpret options
+set a = 1
+while ( "x$argv[$a]" =~ x-* )
+#	echo $a $argv[$a]
+	if ( "x$argv[$a]" =~ x-sym* ) then
+		@ a++
+		set SYM = $argv[$a]
+	endif
+	if ( "x$argv[$a]" =~ x-ful* ) then
+		set FUL = "-fullasu"
+	endif
+	if ( "x$argv[$a]" =~ x-ang* ) then
+		@ a++
+		set ANG = $argv[$a]
+	endif
+	if ( "x$argv[$a]" =~ x-sid* ) then
+		@ a++
+		set SIDE_ANG = $argv[$a]
+		set SIDE = "-side $SIDE_ANG"
+	endif
+	if ( "x$argv[$a]" =~ x-ann* ) then
+		@ a++
+		set ANN = $argv[$a]
+	endif
+	if ( "x$argv[$a]" =~ x-edg* ) then
+		@ a++
+		set EDGE = $argv[$a]
+	endif
+	if ( "x$argv[$a]" =~ x-res* ) then
+		@ a++
+		set RB = "-resol $argv[$a]"
+	endif
+	if ( "x$argv[$a]" =~ x-ban* ) then
+		@ a++
+		set RB = "-bands $argv[$a]"
+	endif
+	if ( "x$argv[$a]" =~ x-CTF* ) then
+		set CTF = "-CTF"
+	endif
+	if ( "x$argv[$a]" =~ x-ref* ) then
+		@ a++
+		set REF = $argv[$a]
+	endif
+	if ( "x$argv[$a]" =~ x-set* ) then
+		@ a++
+		set SET_SIZE = $argv[$a]
+	endif
+	if ( "x$argv[$a]" =~ x-tes* ) then
+		set TEST = 1
+	endif
+	@ a++
+end
+
+set INSTAR = $argv[$a]
+
+
+if ( $PSWITCH ) then
+	set CMD = "bpartsel -verb 3 -all -sets ${SET_SIZE},1 -split 4 -out in.star $INSTAR"
+else
+	set CMD = "bpartsel -verb 3 -all -sets $SET_SIZE -out in.star $INSTAR"
+endif
+echo $CMD
+$CMD > t.t
+set SETS = `grep "Number of sets" t.t | cut -f2 -d":"`
+rm t.t
+
+
+echo "Setup for orientation-finding:"
+echo "-----------------------------"
+date
+echo "Symmetry    = $SYM"
+echo "Full ASU    = $FUL"
+echo "Angles      = $ANG"
+echo "Side angle  = $SIDE_ANG"
+echo "Annuli      = $ANN"
+echo "Edge radius = $EDGE"
+echo "Resolution  = $RB"
+echo "Reference   = $REF"
+echo "Set size    = $SET_SIZE"
+echo "Sets        = $SETS"
+echo "Parameters  = $INSTAR"
+
+if ( ! -e temp/temp_proj0000.spi ) then
+	if ( $TEST == 0 ) borient -verb 1 -sym $SYM $FUL -ang $ANG $SIDE -mult -ref $REF
+endif
+
+set M = 1
+set N = 1
+while ( $N <= $SETS )
+	set INSTAR = "in.star"
+	if ( $PSWITCH ) then
+		set FND = 0
+		while ( $FND == 0 )
+			set MT = `printf %04d $M`
+			set INSTAR = in_${MT}.star
+			if ( ! -e $INSTAR ) then
+				echo "$INSTAR does not exist!"
+				exit
+			endif
+			set GS = `bpartsel -verb 1 -getsel $INSTAR`
+			while ( $status )
+				set GS = `bpartsel -verb 1 -getsel $INSTAR`
+			end
+			set GS = `echo $GS | awk '{ for ( i=4; i<=NF; i++ ) print $i }'`
+			set FND = `echo $GS | awk -v n=$N ' { t=0; for ( i=1; i<=NF; i++ ) if ( $i == n ) t=1; print t }'`
+			echo $N $M $GS - $FND
+			if ( $FND == 0 ) then
+				set GS1 = `echo $GS | cut -f1 -d" "`
+				if ( $GS1 > $N ) then
+					@ M--
+				else
+					@ M++
+				endif
+			endif
+		end
+	endif
+	set ST = `printf %04d $N`
+	set JN = set_$ST
+	set OUTSTAR = out_${ST}.star
+	if ( ! -e $OUTSTAR ) then
+		echo $JN
+		set CMD = "borient -verb 1 -sym $SYM $FUL -ang $ANG $SIDE $RB -ann $ANN -edge $EDGE -mode ccc -select $N $CTF -mult -out $OUTSTAR $INSTAR"
+		if ( $TEST ) then
+			echo $CMD
+		else if ( $PSWITCH ) then
+			psubmit $CMD -jn $JN
+			sleep 1
+		else
+			$CMD >& ${JN}.log &
+			sleep 1
+		endif
+	endif
+	@ N++
+end
+        
+</textarea>

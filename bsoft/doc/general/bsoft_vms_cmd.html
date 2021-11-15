@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: VMS Commands</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+      <h2>The Bsoft command line:<br />
+      </h2>
+      <h4> </h4>
+The prototype command line for a Bsoft program is:<br />
+      <div id="command"><p>program [options] files</p></div>
+      <br />
+      </div>
+Typing only the program name produces usage information, describing the
+intent of the program and the options that can be used. Each option
+starts with a hyphen followed by a tag of one to several characters.
+The user can use any truncated version of a tag as long as it is
+unique. For options taking one or more values, the comma-separated list
+of values must be separated from the tag by a space:<br />
+      <div id="command"><p>-&lt;tag&gt; &lt;val1&gt;,&lt;val2&gt;,...</p></div>
+      <br />
+Data file formats are recognized by the file extension following the last
+period (&quot;.&quot;) in the file name. A file can be read using a particular format
+by specifying this format's extension after a colon (&quot;:&quot;), e.g.:
+      <div id="command"><p>bimg -verbose 7 file.img:mrc file.img:tif</p></div>
+	  <br/>
+      <h3> VMS command line</h3>
+On VMS machines, all command line characters are converted to lower case
+before passing it to the program. Many options in the programs in the Bsoft
+package are case sensitive, and usage as on unix-based systems implies
+ambiguity for options where both upper and lower case letters are used.
+The only mechanism to overcome this is to embed the options in quotes,
+with each option getting its own set of quotes, e.g.:
+      <div id="command"><p>bhisto &quot;-verbose 7&quot; &quot;-Histogram 300&quot; &quot;-datatype f&quot; file_in.img file_out.img</p></div>
+      <p>In addition, the VMS command line is much more restrictive in
+VMS than
+in Unix, with the following additional problems: </p>
+      <ul>
+        <li>File name expansion or globbing when using wild cards in file names does
+not work as in Unix.</li>
+        <li>The VMS command line limit is only 256 characters, much
+shorter than that for Unix.</li>
+      </ul>
+      <h2><span style="font-weight: bold;">Scripts</span></h2>
+      <h3> Bview: Image display</h3>
+      <span style="font-weight: bold;">The &quot;bview.com&quot; script </span>
+      uses the program &quot;bmontage&quot; to generate
+a montage of the slices of a 3D image or a set of 2D images and the program
+&quot;display&quot; from the Image Magick package to display it
+      <p>3D map file: </p>
+      <div id="command"><p>@bview -slices 0,0 2omf.grd</p></div>
+      <p>2D multi-image file: </p>
+      <div id="command"><p>@bview -images 0,0 file.pif</p></div>
+      This requies the Image Magick package to be installed.
+</div>
+<div id="footer">
+  Bernard Heymann  20120126
+</div>
+</body>
+</html>

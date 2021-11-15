@@ -1,0 +1,86 @@
+<HTML>
+<HEAD>
+	<meta name="Author" content="Bernard Heymann">
+	<TITLE>Bsoft: bsim </TITLE>
+	<link type="image/png" href="Bsoft_16x16.png" rel="icon">
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+<h2><i><font color="#000099">Bsoft program</font></i></h2>
+<center><h1><font color="#FF0000">bsim</font></h1></center>  <h3>Usage: bsim [options] in.star [in2.star]</h3>
+Simulates TEM images from atomic coordinates. <br>
+The program has different entry and exit points: A new STAR file can be generated (use -generate or -symmetry option and no input STAR file)    or parameters can be read in from existing STAR files. The provision of a coordinate file leads to calculation of potential slices. <h3>Input of STAR file(s) without a coordinate file implies that the potentials</h3>
+<table><tbody>
+<tr><td></td><td>   have already been calculated and will be used for multislice simulation.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Actions:</h3>
+<table><tbody>
+<tr><td>-generate 10,3,50</td><td>Generate a project, specifying number of fields, number of</td></tr>
+<tr><td></td><td>                         micrographs per field and number particles per micrograph.</td></tr>
+<tr><td>-symmetry C5</td><td>Generates images based on a grid in the asymmetric unit.</td></tr>
+<tr><td>-coordinates file.pdb</td><td>Input coordinate file, generate simulated images in project.</td></tr>
+<tr><td>-image</td><td>Generate a final image and parameter file (default not).</td></tr>
+<tr><td>-poisson</td><td>Add poisson noise (default not).</td></tr>
+<tr><td>-gaussian 0.2</td><td>Add gaussian noise with the given signal-to-noise ratio.</td></tr>
+<tr><td>-MTF 17.5</td><td>Set the MTF decay constant (required to impose MTF).</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Parameters:</h3>
+<table><tbody>
+<tr><td>-verbose 7</td><td>Verbosity of output.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Parameters for generation:</h3>
+<table><tbody>
+<tr><td>-translate 2.4</td><td>Standard deviation for random translation (default 0).</td></tr>
+<tr><td>-origin 120</td><td>Set the particle image origin (default 50 pixels).</td></tr>
+<tr><td>-angles 8,6</td><td>Step sizes for theta and phi in the asymmetric unit, one value sets both.</td></tr>
+<tr><td></td><td>                         Use with the -symmetry option (default 10,10).</td></tr>
+<tr><td>-Pixelsize 5.5</td><td>Set the particle pixel size (default 1 angstrom/pixel).</td></tr>
+<tr><td>-electrondose 35.5</td><td>Set the electron dose (default 20 electrons/angstrom).</td></tr>
+<tr><td>-Cs 2.0</td><td>Set the spherical aberration, Cs (default 2 mm).</td></tr>
+<tr><td>-Cc 2.0</td><td>Set the chromatic aberration, Cc (default 2.0 mm).</td></tr>
+<tr><td>-alpha 0.15</td><td>Set the illumination half-angle (default 0.1 milliradians).</td></tr>
+<tr><td>-energyspread 2e-5</td><td>Set the effective energy spread (default 1e-5).</td></tr>
+<tr><td>-Volt 100</td><td>Set the acceleration voltage (default 120 kV).</td></tr>
+<tr><td>-Amplitude 0.07</td><td>Set the amplitude contrast (fraction, default 0.07).</td></tr>
+<tr><td>-Defocus 0.5,3.4</td><td>Defocus range (required to apply CTF).</td></tr>
+<tr><td>-fieldbasename field</td><td>Field-of-view base name (default field).</td></tr>
+<tr><td>-fieldnumber 5</td><td>Field starting number (default 1).</td></tr>
+<tr><td>-mgbasename mg</td><td>Micrograph base name (default mg).</td></tr>
+<tr><td>-mgnumber 23</td><td>Micrograph starting number (default 1).</td></tr>
+<tr><td>-partbasename part</td><td>Particle base name (default part).</td></tr>
+<tr><td>-partnumber 158</td><td>Particle starting number (default 1).</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Parameters for simulation:</h3>
+<table><tbody>
+<tr><td>-fieldname field</td><td>Field-of-view name (for selecting a specific field).</td></tr>
+<tr><td>-mgname mg</td><td>Micrograph base name (for selecting a specific micrograph).</td></tr>
+<tr><td>-partselect 132</td><td>Particle selection for potential generation (default all).</td></tr>
+<tr><td>-type real</td><td>Type of potential calculation (default reciprocal, other gauss).</td></tr>
+<tr><td>-size 100,80,120</td><td>Size of enclosing box (default based on input coordinates).</td></tr>
+<tr><td>-thickness 20</td><td>Slice thickness in angstrom (default 10 A).</td></tr>
+<tr><td>-resolution 8.5</td><td>Resolution limits (default Nyquest frequency).</td></tr>
+<tr><td>-Bfactor 24.5</td><td>Set the overall temperature factor (default 0 A^2).</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Input:</h3>
+<table><tbody>
+<tr><td>-parameters param.star</td><td>Parameter file name for electron scattering curves (default atom_prop.star).</td></tr>
+<tr><td>-Water water.pdb</td><td>Block of water to embed the molecule into (default none).</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Output:</h3>
+<table><tbody>
+<tr><td>-output mg.star</td><td>Parameter file (use with generate option).</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table>
+<br>Bsoft version 2.0.7-20200917 (64 bit)<br>
+<HR WIDTH="100%"><BR>
+Generated by bdoc.pl on Mon Oct 26 08:20:11 2020 <BR>
+<HR WIDTH="100%"><BR>
+<center><a href="bsoft.html">Back to the Bsoft home</a></center>
+<HR WIDTH="100%"><BR>
+</BODY>
+</HTML>

@@ -1,0 +1,398 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_molecule__to__map_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mol/molecule_to_map.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mol/molecule_to_map.cpp</primary></indexterm>
+<para>
+
+<para>Functions to calculate a 3D map from atomic coordinates. </para>
+ 
+</para>
+<programlisting>#include &quot;molecule_to_map.h&quot;
+#include &quot;scatter.h&quot;
+#include &quot;Complex.h&quot;
+#include &quot;UnitCell.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+#include &lt;fstream&gt;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_molecule__to__map_8cpp_1ad419f2b3c00bc72917da247d53185987">MAXSID</link>   1024</para>
+</listitem>
+            <listitem><para>#define <link linkend="_molecule__to__map_8cpp_1a5e0fa705e3cada0affeb47a62c08e2ec">MAXSCAT</link>   100</para>
+</listitem>
+            <listitem><para>#define <link linkend="_molecule__to__map_8cpp_1a38db2df72431d81d10b615a01a77c950">MAXRAD</link>   100</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_molecule__to__map_8cpp_1a4ac56f27e88e4dc10710b54496377cf7">mol_to_image</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bimage">Bimage</link> *p, <link linkend="_struct_batomtype">Batomtype</link> *atompar, double resolution, double Bfactor, int wrap, int gextype)</para>
+</listitem>
+            <listitem><para>int <link linkend="_molecule__to__map_8cpp_1a7569a9ba38adb1fc94709efed4757042">mol_to_structure_factors</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bimage">Bimage</link> *p, <link linkend="_struct_batomtype">Batomtype</link> *atompar, double resolution, int wrap, double Bfactor)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_molecule__to__map_8cpp_1af85ba2b05a3d736b68f7a06eea91ed0b">img_from_molecule</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sampling, double resolution, double Bfactor, int wrap, int gextype, int spacegroup, <link linkend="_class_unit_cell">UnitCell</link> unit_cell)</para>
+
+<para>Calculates a 3D density map from a set of atomic coordinates. </para>
+</listitem>
+            <listitem><para>int <link linkend="_molecule__to__map_8cpp_1ad6932a99e443e01ee795bc949815a070">compare_mol_map</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bimage">Bimage</link> *pcalc, <link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>Compares reference and calculated maps and calculates an occupancy for every atom in the molecule set. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_molecule__to__map_8cpp_1a495b08d807cde0814b737433119a4b25">img_sf_from_molecule</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sampling, double resolution, int spacegroup, <link linkend="_class_unit_cell">UnitCell</link> unit_cell, int wrap, double Bfactor, <link linkend="_class_bstring">Bstring</link> &amp;paramfile)</para>
+
+<para>Calculates a 3D set of structure factors from a set of atomic coordinates. </para>
+</listitem>
+            <listitem><para>double <link linkend="_molecule__to__map_8cpp_1a3e542758a0cdbda503ea77e29536f886">one_sf</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bimage">Bimage</link> *p, long i, double s, double scale, double *scat)</para>
+</listitem>
+            <listitem><para>double * <link linkend="_molecule__to__map_8cpp_1a3ffe103357ed07d21bf9a68bb963db70">get_potential_curves</link> (<link linkend="_struct_batomtype">Batomtype</link> *atompar, double interval)</para>
+</listitem>
+            <listitem><para>double * <link linkend="_molecule__to__map_8cpp_1a556567729af00947e21caf11ac9590d3">get_scattering_curves</link> (<link linkend="_struct_batomtype">Batomtype</link> *atompar, double Bfactor, double recip_interval, long &amp;nscat)</para>
+</listitem>
+            <listitem><para>map&lt; string, vector&lt; double &gt; &gt; <link linkend="_molecule__to__map_8cpp_1aefd4f4efdf789a215a1cae2d0d4928a5">get_scattering_curves</link> (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp;types, double Bfactor, double recip_interval)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_molecule__to__map_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions to calculate a 3D map from atomic coordinates. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19970914 </para>
+
+<para>Modified: 20210216 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_molecule__to__map_8cpp_1a38db2df72431d81d10b615a01a77c950"/>    <section>
+    <title>MAXRAD</title>
+<indexterm><primary>MAXRAD</primary><secondary>molecule_to_map.cpp</secondary></indexterm>
+<indexterm><primary>molecule_to_map.cpp</primary><secondary>MAXRAD</secondary></indexterm>
+<para><computeroutput>#define MAXRAD   100</computeroutput></para><para>
+Definition at line 23 of file molecule_to_map.cpp.</para>
+    </section><anchor xml:id="_molecule__to__map_8cpp_1a5e0fa705e3cada0affeb47a62c08e2ec"/>    <section>
+    <title>MAXSCAT</title>
+<indexterm><primary>MAXSCAT</primary><secondary>molecule_to_map.cpp</secondary></indexterm>
+<indexterm><primary>molecule_to_map.cpp</primary><secondary>MAXSCAT</secondary></indexterm>
+<para><computeroutput>#define MAXSCAT   100</computeroutput></para><para>
+Definition at line 22 of file molecule_to_map.cpp.</para>
+    </section><anchor xml:id="_molecule__to__map_8cpp_1ad419f2b3c00bc72917da247d53185987"/>    <section>
+    <title>MAXSID</title>
+<indexterm><primary>MAXSID</primary><secondary>molecule_to_map.cpp</secondary></indexterm>
+<indexterm><primary>molecule_to_map.cpp</primary><secondary>MAXSID</secondary></indexterm>
+<para><computeroutput>#define MAXSID   1024</computeroutput></para><para>
+Definition at line 21 of file molecule_to_map.cpp.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_molecule__to__map_8cpp_1ad6932a99e443e01ee795bc949815a070"/>    <section>
+    <title>compare_mol_map()</title>
+<indexterm><primary>compare_mol_map</primary><secondary>molecule_to_map.cpp</secondary></indexterm>
+<indexterm><primary>molecule_to_map.cpp</primary><secondary>compare_mol_map</secondary></indexterm>
+<para><computeroutput>int compare_mol_map (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bimage">Bimage</link> * pcalc, <link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>Compares reference and calculated maps and calculates an occupancy for every atom in the molecule set. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>set of molecules with atomic coordinates. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pcalc</entry>
+                                <entry>
+<para>map calculated from the set of molecules. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>reference map. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 280 of file molecule_to_map.cpp.</para>
+    </section><anchor xml:id="_molecule__to__map_8cpp_1a3ffe103357ed07d21bf9a68bb963db70"/>    <section>
+    <title>get_potential_curves()</title>
+<indexterm><primary>get_potential_curves</primary><secondary>molecule_to_map.cpp</secondary></indexterm>
+<indexterm><primary>molecule_to_map.cpp</primary><secondary>get_potential_curves</secondary></indexterm>
+<para><computeroutput>double* get_potential_curves (<link linkend="_struct_batomtype">Batomtype</link> * atompar, double interval)</computeroutput></para><para>
+Definition at line 664 of file molecule_to_map.cpp.</para>
+    </section><anchor xml:id="_molecule__to__map_8cpp_1a556567729af00947e21caf11ac9590d3"/>    <section>
+    <title>get_scattering_curves()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>get_scattering_curves</primary><secondary>molecule_to_map.cpp</secondary></indexterm>
+<indexterm><primary>molecule_to_map.cpp</primary><secondary>get_scattering_curves</secondary></indexterm>
+<para><computeroutput>double* get_scattering_curves (<link linkend="_struct_batomtype">Batomtype</link> * atompar, double Bfactor, double recip_interval, long &amp; nscat)</computeroutput></para><para>
+Definition at line 726 of file molecule_to_map.cpp.</para>
+    </section><anchor xml:id="_molecule__to__map_8cpp_1aefd4f4efdf789a215a1cae2d0d4928a5"/>    <section>
+    <title>get_scattering_curves()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>get_scattering_curves</primary><secondary>molecule_to_map.cpp</secondary></indexterm>
+<indexterm><primary>molecule_to_map.cpp</primary><secondary>get_scattering_curves</secondary></indexterm>
+<para><computeroutput>map&lt;string, vector&lt;double&gt; &gt; get_scattering_curves (map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp; types, double Bfactor, double recip_interval)</computeroutput></para><para>
+Definition at line 799 of file molecule_to_map.cpp.</para>
+    </section><anchor xml:id="_molecule__to__map_8cpp_1af85ba2b05a3d736b68f7a06eea91ed0b"/>    <section>
+    <title>img_from_molecule()</title>
+<indexterm><primary>img_from_molecule</primary><secondary>molecule_to_map.cpp</secondary></indexterm>
+<indexterm><primary>molecule_to_map.cpp</primary><secondary>img_from_molecule</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_from_molecule (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sampling, double resolution, double Bfactor, int wrap, int gextype, int spacegroup, <link linkend="_class_unit_cell">UnitCell</link> unit_cell)</computeroutput></para><para>
+
+<para>Calculates a 3D density map from a set of atomic coordinates. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>set of molecules with atomic coordinates. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>3-valued origin vector (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>3-valued size vector (voxels). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sampling</entry>
+                                <entry>
+<para>sampling/voxel size (angstrom/voxel). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>resolution</entry>
+                                <entry>
+<para>resolution (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Bfactor</entry>
+                                <entry>
+<para>global B-factor to use, if 0, use individual atom B-factors </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wrap</entry>
+                                <entry>
+<para>wrapping flag. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>gextype</entry>
+                                <entry>
+<para>type of gaussian used: 0 = single, 1 = atomic potential </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>spacegroup</entry>
+                                <entry>
+<para>crystal space group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>unit_cell</entry>
+                                <entry>
+<para>6-valued vector of unit cell parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* the new map. <literallayout><computeroutput>A 3D map is calculated from atomic coordinates by placing a gaussian
+sphere at each set of atomic coordinates. The resolution is set as
+twice the sigma coefficient of the gaussian function. The amplitude
+of the gaussian function is set so that the total density calculated
+equals the atomic mass. The resultant map therefore has the density
+units of Dalton/voxel.
+The statistics of the new image is calculated.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 54 of file molecule_to_map.cpp.</para>
+    </section><anchor xml:id="_molecule__to__map_8cpp_1a495b08d807cde0814b737433119a4b25"/>    <section>
+    <title>img_sf_from_molecule()</title>
+<indexterm><primary>img_sf_from_molecule</primary><secondary>molecule_to_map.cpp</secondary></indexterm>
+<indexterm><primary>molecule_to_map.cpp</primary><secondary>img_sf_from_molecule</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_sf_from_molecule (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sampling, double resolution, int spacegroup, <link linkend="_class_unit_cell">UnitCell</link> unit_cell, int wrap, double Bfactor, <link linkend="_class_bstring">Bstring</link> &amp; paramfile)</computeroutput></para><para>
+
+<para>Calculates a 3D set of structure factors from a set of atomic coordinates. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>set of molecules with atomic coordinates. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>3-valued origin vector (voxels). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>3-valued size vector (voxels). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sampling</entry>
+                                <entry>
+<para>sampling/voxel size (angstrom/voxel). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>resolution</entry>
+                                <entry>
+<para>resolution (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>spacegroup</entry>
+                                <entry>
+<para>crystal space group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>unit_cell</entry>
+                                <entry>
+<para>6-valued vector of unit cell parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wrap</entry>
+                                <entry>
+<para>0=cut atoms outside box, 1=wrap coordinates within unit cell. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Bfactor</entry>
+                                <entry>
+<para>constant for decay curve. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;paramfile</entry>
+                                <entry>
+<para>parameter file with scattering coefficients. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* the new structure factors. <literallayout><computeroutput>All structure factors within a given resolution are calculated from
+all the selected atomic coordinates. The coordinates are fractionalized
+to fit into the given size box. If the size of the box is not given,
+it defaults to:
+    x_size = (max(x_coor) - min(x_coor)) / x_sampling
+The atomic scattering profiles are read from the STAR database as the
+amplitudes and B-factors of reciprocal space gaussians. For each profile,
+a lookup table is calculated to speed up further calculations.
+The statistics of the new image is calculated.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 360 of file molecule_to_map.cpp.</para>
+    </section><anchor xml:id="_molecule__to__map_8cpp_1a4ac56f27e88e4dc10710b54496377cf7"/>    <section>
+    <title>mol_to_image()</title>
+<indexterm><primary>mol_to_image</primary><secondary>molecule_to_map.cpp</secondary></indexterm>
+<indexterm><primary>molecule_to_map.cpp</primary><secondary>mol_to_image</secondary></indexterm>
+<para><computeroutput>int mol_to_image (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bimage">Bimage</link> * p, <link linkend="_struct_batomtype">Batomtype</link> * atompar, double resolution, double Bfactor, int wrap, int gextype)</computeroutput></para><para>
+Definition at line 130 of file molecule_to_map.cpp.</para>
+    </section><anchor xml:id="_molecule__to__map_8cpp_1a7569a9ba38adb1fc94709efed4757042"/>    <section>
+    <title>mol_to_structure_factors()</title>
+<indexterm><primary>mol_to_structure_factors</primary><secondary>molecule_to_map.cpp</secondary></indexterm>
+<indexterm><primary>molecule_to_map.cpp</primary><secondary>mol_to_structure_factors</secondary></indexterm>
+<para><computeroutput>int mol_to_structure_factors (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bimage">Bimage</link> * p, <link linkend="_struct_batomtype">Batomtype</link> * atompar, double resolution, int wrap, double Bfactor)</computeroutput></para><para>
+Definition at line 478 of file molecule_to_map.cpp.</para>
+    </section><anchor xml:id="_molecule__to__map_8cpp_1a3e542758a0cdbda503ea77e29536f886"/>    <section>
+    <title>one_sf()</title>
+<indexterm><primary>one_sf</primary><secondary>molecule_to_map.cpp</secondary></indexterm>
+<indexterm><primary>molecule_to_map.cpp</primary><secondary>one_sf</secondary></indexterm>
+<para><computeroutput>double one_sf (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bimage">Bimage</link> * p, long i, double s, double scale, double * scat)</computeroutput></para><para>
+Definition at line 413 of file molecule_to_map.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_molecule__to__map_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>molecule_to_map.cpp</secondary></indexterm>
+<indexterm><primary>molecule_to_map.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

@@ -1,0 +1,463 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_model__color_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/model/model_color.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/model/model_color.cpp</primary></indexterm>
+<para>
+
+<para>Functions to color models. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmodel.h&quot;
+#include &quot;model_poly.h&quot;
+#include &quot;model_shell.h&quot;
+#include &quot;model_views.h&quot;
+#include &quot;model_util.h&quot;
+#include &quot;Color.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_model__color_8cpp_1af6b971dfe275d27a120e5b9ecd19b074">model_color_uniformly</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_r_g_b_a">RGBA</link>&lt; float &gt; color)</para>
+
+<para>Colors model components uniformly. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__color_8cpp_1a21eba4858620100ec77d1f6998d9f166">model_color_selected</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_r_g_b_a">RGBA</link>&lt; float &gt; color)</para>
+
+<para>Colors selected model components. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__color_8cpp_1afb6f41d2a72b03843da6556fc64c9dc0">model_color_by_order</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Colors model components in order from red to blue. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__color_8cpp_1aacedd1a76daa3eb3317347d356aa8f3d">model_color_by_density</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Colors model components by density. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__color_8cpp_1ad1fbaae2e80977153c67ed832cbeafe2">model_color_by_fom</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Colors model components by fom. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__color_8cpp_1adb5fae43f3815b5c9fdd7c3f5f2a3d05">model_color_by_selection</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Colors model components by the selection number. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__color_8cpp_1acfc5f34b1bdeb0fce87cff75254595db">model_color_selected_types</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_r_g_b_a">RGBA</link>&lt; float &gt; rgba)</para>
+
+<para>Colors model components by fom. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__color_8cpp_1a00d3cc6e1cc4cc0a6751afe42329a326">model_color_curvature</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Colors model vertices and links as a function of curvature. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__color_8cpp_1af91ec8557600f94fcebd5a4d1a5d4b5f">model_color_chiral_vertices</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Colors model vertices as a function of chirality. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_model__color_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions to color models. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20080206 </para>
+
+<para>Modified: 20210319 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_model__color_8cpp_1aacedd1a76daa3eb3317347d356aa8f3d"/>    <section>
+    <title>model_color_by_density()</title>
+<indexterm><primary>model_color_by_density</primary><secondary>model_color.cpp</secondary></indexterm>
+<indexterm><primary>model_color.cpp</primary><secondary>model_color_by_density</secondary></indexterm>
+<para><computeroutput>int model_color_by_density (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Colors model components by density. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model to color. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Color assignments are:
+    density = 0     blue
+    density = 0.5   green
+    density = 1     red
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 118 of file model_color.cpp.</para>
+    </section><anchor xml:id="_model__color_8cpp_1ad1fbaae2e80977153c67ed832cbeafe2"/>    <section>
+    <title>model_color_by_fom()</title>
+<indexterm><primary>model_color_by_fom</primary><secondary>model_color.cpp</secondary></indexterm>
+<indexterm><primary>model_color.cpp</primary><secondary>model_color_by_fom</secondary></indexterm>
+<para><computeroutput>int model_color_by_fom (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Colors model components by fom. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model to color. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Color assignments are:
+    FOM = 0     blue
+    FOM = 0.5   green
+    FOM = 1     red
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 159 of file model_color.cpp.</para>
+    </section><anchor xml:id="_model__color_8cpp_1afb6f41d2a72b03843da6556fc64c9dc0"/>    <section>
+    <title>model_color_by_order()</title>
+<indexterm><primary>model_color_by_order</primary><secondary>model_color.cpp</secondary></indexterm>
+<indexterm><primary>model_color.cpp</primary><secondary>model_color_by_order</secondary></indexterm>
+<para><computeroutput>int model_color_by_order (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Colors model components in order from red to blue. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model to color. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 82 of file model_color.cpp.</para>
+    </section><anchor xml:id="_model__color_8cpp_1adb5fae43f3815b5c9fdd7c3f5f2a3d05"/>    <section>
+    <title>model_color_by_selection()</title>
+<indexterm><primary>model_color_by_selection</primary><secondary>model_color.cpp</secondary></indexterm>
+<indexterm><primary>model_color.cpp</primary><secondary>model_color_by_selection</secondary></indexterm>
+<para><computeroutput>int model_color_by_selection (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Colors model components by the selection number. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model to color. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Color assignments are:
+    FOM = 0     blue
+    FOM = 0.5   green
+    FOM = 1     red
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 200 of file model_color.cpp.</para>
+    </section><anchor xml:id="_model__color_8cpp_1af91ec8557600f94fcebd5a4d1a5d4b5f"/>    <section>
+    <title>model_color_chiral_vertices()</title>
+<indexterm><primary>model_color_chiral_vertices</primary><secondary>model_color.cpp</secondary></indexterm>
+<indexterm><primary>model_color.cpp</primary><secondary>model_color_chiral_vertices</secondary></indexterm>
+<para><computeroutput>int model_color_chiral_vertices (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Colors model vertices as a function of chirality. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model to color. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of chiral vertices. <literallayout><computeroutput>Chiral vertices are colored blue for + and red for - handedness.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 301 of file model_color.cpp.</para>
+    </section><anchor xml:id="_model__color_8cpp_1a00d3cc6e1cc4cc0a6751afe42329a326"/>    <section>
+    <title>model_color_curvature()</title>
+<indexterm><primary>model_color_curvature</primary><secondary>model_color.cpp</secondary></indexterm>
+<indexterm><primary>model_color.cpp</primary><secondary>model_color_curvature</secondary></indexterm>
+<para><computeroutput>int model_color_curvature (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Colors model vertices and links as a function of curvature. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model to color. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 270 of file model_color.cpp.</para>
+    </section><anchor xml:id="_model__color_8cpp_1a21eba4858620100ec77d1f6998d9f166"/>    <section>
+    <title>model_color_selected()</title>
+<indexterm><primary>model_color_selected</primary><secondary>model_color.cpp</secondary></indexterm>
+<indexterm><primary>model_color.cpp</primary><secondary>model_color_selected</secondary></indexterm>
+<para><computeroutput>int model_color_selected (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_r_g_b_a">RGBA</link>&lt; float &gt; color)</computeroutput></para><para>
+
+<para>Colors selected model components. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model to color. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>color</entry>
+                                <entry>
+<para>4-value color vector ([0,1]). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 55 of file model_color.cpp.</para>
+    </section><anchor xml:id="_model__color_8cpp_1acfc5f34b1bdeb0fce87cff75254595db"/>    <section>
+    <title>model_color_selected_types()</title>
+<indexterm><primary>model_color_selected_types</primary><secondary>model_color.cpp</secondary></indexterm>
+<indexterm><primary>model_color.cpp</primary><secondary>model_color_selected_types</secondary></indexterm>
+<para><computeroutput>int model_color_selected_types (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_r_g_b_a">RGBA</link>&lt; float &gt; rgba)</computeroutput></para><para>
+
+<para>Colors model components by fom. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model to color. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rgba</entry>
+                                <entry>
+<para><link linkend="_class_r_g_b_a">RGBA</link> color. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Color assignments are:
+    FOM = 0     blue
+    FOM = 0.5   green
+    FOM = 1     red
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 243 of file model_color.cpp.</para>
+    </section><anchor xml:id="_model__color_8cpp_1af6b971dfe275d27a120e5b9ecd19b074"/>    <section>
+    <title>model_color_uniformly()</title>
+<indexterm><primary>model_color_uniformly</primary><secondary>model_color.cpp</secondary></indexterm>
+<indexterm><primary>model_color.cpp</primary><secondary>model_color_uniformly</secondary></indexterm>
+<para><computeroutput>int model_color_uniformly (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_r_g_b_a">RGBA</link>&lt; float &gt; color)</computeroutput></para><para>
+
+<para>Colors model components uniformly. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model to color. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>color</entry>
+                                <entry>
+<para>4-value color vector ([0,1]). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Both selected and non-selected elements are colored.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 29 of file model_color.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_model__color_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>model_color.cpp</secondary></indexterm>
+<indexterm><primary>model_color.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

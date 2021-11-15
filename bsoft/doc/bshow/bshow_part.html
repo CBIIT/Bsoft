@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Bshow Particle Picking</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+      <p><img src="box_active.gif" alt="Box" width="36" height="36" /></p>
+      <p>To activate particle picking, select the &quot;Micrograph/Pick particles&quot;
+	  	menu item or the boxing tool (square and circle icon). A window will open with a
+  		&quot;Boxes&quot; menu and a listing of parameters in a window:
+      </p>
+  <ul>
+        <li>Boxes:
+        <ul>
+          <li>Delete all boxes - delete all boxes in memory (no recovery!).</li>
+          <li>Delete unselected boxes - delete not selected boxes in memory (no recovery!).</li>
+          <li>Renumber particles - start from 1 and renumber all particles.</li>
+          <li>Pick particles - automatically pick particles (see the dialog box below).</li>
+          <li>Extract particles - extract the picked particles.</li>
+          <li>Close - close window and deactivate particle picking.</li>
+        </ul></li>
+        <li>Parameters:
+        <ul>
+          <li>Box size - 3 dimensions of a box (z is always 1 for 2D images).</li>
+          <li>Bad radius - circle radius for bad regions.</li>
+          <li>Particles picked - number of particles picked in the current
+		  	micrograph and in the whole project.</li>
+          <li>Bad regions - counts bad regions (not modifyable).</li>
+          <li>FOM - a slider to select particles based on their FOM values.</li>
+          <li>Radiobuttons to display/hide boxes, labels and bad areas.</li>
+          <li>Automatic renumbering - turn this off to preserve particle numbers when deleting some.</li>
+          <li>Color by FOM - display boxes colored to reflect the FOM (red is high).</li>
+          <li>Previous/Next micrograph - buttons to navigate micrographs.</li>
+        </ul>
+      </li>
+      </ul>
+	<p>To see the particles more clearly at scales below one, select the
+	&quot;Averaging mode&quot;. This mode is slow because it displays an average of
+	the data under each pixel rather than just the nearest pixel. </p>
+	<p>The &quot;Pick particles&quot; menu item starts automatic picking, which is based on 
+	local cross-correlation with a generic template and may not work in many cases.</p>
+      <br />
+	  <center>
+      <img src="bshow_particles.png" alt="Bshow particles" width="800" />
+	  <p>Particles (yellow) and bad areas (red) picked on a typical micrograph</p>
+	  </center>
+	  <br />
+<br />
+      <h2>Mouse controls for particle picking</h2>
+    <ul>
+        <li>Left button: create a box, or move a box or bad circle</li>
+        <li>Middle button: create a bad circle, or move a box or bad circle</li>
+        <li>Control - left button: create a bad circle, or move a box or bad circle</li>
+        <li>Shift - left button: delete a box or bad circle</li>
+      </ul>
+      <p>Clicking the left mouse button in an empty region on the image creates
+	a new selection box. Clicking the left or middle button inside a box allows
+	that box to be moved. </p>
+      <p>Clicking the middle button in an empty region on the image creates a
+	new &quot;bad&quot; circle. Bad circles are areas that will be deleted when the
+	particles are extracted from the micrograph. On a Mac, pressing the control key
+	and clicking the mouse button have the same effect. Clicking the left or
+	middle button inside a bad circle allows that circle to be moved. </p>
+      <p>To delete a box or bad circle, hold down the shift key and click the
+	left button inside the box or circle. </p>
+      <p>The selection boxes are numbered consequtively, so that deleting a box
+	results in all the boxes with larger numbers being renumbered. </p>
+      <br/>
+      <h2>Saving and reading particle coordinates</h2>
+      <p>The &quot;Micrograph/Read parameters&quot; and &quot;Micrograph/Write parameters&quot; menu
+        items of the main Bshow window are used to read and write parameter
+        files (usually in STAR or XML formats).</p>
+      <br/>
+      <h2>Automatic particle picking</h2>
+      <p>Particles can be picked automatically using the menu option
+	  	&quot;Boxes/Pick particles&quot;. A circular disk is generated with a
+		specified radius and locally cross-correlated with the micrograph to
+		locate particles. The following parameters can be set:</p>
+      <center><img src="bshow_autopick.png" alt="Bshow automatic picking" width="200" />
+	  <p>Parameters for automatic particle picking</p>
+      </center>
+	  <ul>
+        <li>Particle radius - radius of synthetic circular disk used for automatic picking.</li>
+        <li>Particle edge - soft edge width used for automatic picking.</li>
+        <li>High resolution limit - maximum cross-correlation frequency (angstrom).</li>
+        <li>Low resolution limit - minimum cross-correlation frequency (angstrom).</li>
+        <li>FOM threshold - threshold in cross-correlation map to pick
+          particles automatically (-1 =&gt; threshold set automatically).</li>
+      </ul>
+      <p>(Note: The method may not yield acceptable results, especially for non-spherical particles)</p>
+      <br/>
+    <h2>3D particle picking</h2>
+      <p>Open a 3D image in bshow and before doing anything, make sure the pixel
+        size is set correctly. Find an appropriate scaling and contrast to see
+        the particles, perhaps using the &quot;Averaging mode&quot; to improve the visual
+        effect.</p>
+        <p>Select the &quot;Micrograph/Pick particles&quot; menu item. Choose a box size
+        that would comfortably include a particle in all 3 dimensions. The bad
+        area radius should typically be about half the box radius, but that is
+        up to the user. Use the &quot;Window/Magnify&quot; option to open a
+		magnified display of the three orthogonal slices at the cursor.
+		For each particle, go through the slices to find the
+        middle of the particle and click on the center to pick it. This 3D box
+        can be moved in x and y to position it better. To reposition it in z,
+        go up or down through the slices and click in a slice deemed to be
+        cutting through the middle of the particle. If there are bad features
+        close to a particle (i.e., intruding into the box), a bad area can be
+        selected by the middle button (or control-left button) and positioned
+        to cover an undesirable feature. Both boxes and bad areas can be
+        deleted with shift-left button.</p>
+         <p>When all the particles have been picked, make sure the &quot;Particles&quot;
+        window is in front by clicking on it. Then select the &quot;Boxes/Extract
+        particles&quot; menu item and save it to a multi-image file (only the PIF,
+        .pif, and SPIDER, .spi, formats are true 3D multi-image formats) or to
+		individual numbered files.</p>
+		<br/>
+      <h2>Reading and saving CTF parameters</h2>
+  		<p>Next click on the main window and select the &quot;Micrograph/Write
+        parameters&quot; item to save the micrograph parameters to a STAR or XML file
+        (extension .star or .xml). This parameter file can be read back into
+        bshow with the associated micrograph or particle image file.</p>
+	
+</div>
+<div id="footer">
+  <p>Bernard Heymann  20151227
+</div>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_dynamic__programming_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/util/dynamic_programming.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/util/dynamic_programming.cpp</primary></indexterm>
+<para>
+
+<para>Library functions for dynamic programming. </para>
+ 
+</para>
+<programlisting>#include &quot;dynamic_programming.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>long <link linkend="_dynamic__programming_8cpp_1a822f75d55c7e1dcdd04db55e00415230">dp_matrix_scoring</link> (<link linkend="_class_matrix">Matrix</link> mat, double gapopen, double gapextend)</para>
+
+<para>Calculates the scoring matrix in dynamic programming. </para>
+</listitem>
+            <listitem><para>int * <link linkend="_dynamic__programming_8cpp_1ae77a398c9878c29f3e648251b6e25ec1">dp_matrix_backtrace</link> (<link linkend="_class_matrix">Matrix</link> mat, double gapopen, double gapextend, long &amp;<link linkend="__vector3_8h_1a7baf5ed670fcf9bcca9a3a400820e292">length</link>)</para>
+
+<para>Backtraces the scoring matrix in dynamic programming. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_dynamic__programming_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library functions for dynamic programming. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20050622 </para>
+
+<para>Modified: 20110810 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_dynamic__programming_8cpp_1ae77a398c9878c29f3e648251b6e25ec1"/>    <section>
+    <title>dp_matrix_backtrace()</title>
+<indexterm><primary>dp_matrix_backtrace</primary><secondary>dynamic_programming.cpp</secondary></indexterm>
+<indexterm><primary>dynamic_programming.cpp</primary><secondary>dp_matrix_backtrace</secondary></indexterm>
+<para><computeroutput>int* dp_matrix_backtrace (<link linkend="_class_matrix">Matrix</link> mat, double gapopen, double gapextend, long &amp; length)</computeroutput></para><para>
+
+<para>Backtraces the scoring matrix in dynamic programming. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>mat</entry>
+                                <entry>
+<para>matrix. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>gapopen</entry>
+                                <entry>
+<para>gap opening penalty. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>gapextend</entry>
+                                <entry>
+<para>gap extension penalty. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*length</entry>
+                                <entry>
+<para>length of alignment. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int* alignment array with indices. <literallayout><computeroutput>Implementation of the Needleman-Wunsch algorithm.
+The scoring matrix for dynamic programming is backtraced into an integer 
+array holding the indices from the corresponding sequences, or -1 for gaps. 
+The array is double the length of the alignment and holds two sets of 
+indices, the first in the first half and the second in last half.
+The length of the alignment is returned in the pointer of the last argument.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 84 of file dynamic_programming.cpp.</para>
+    </section><anchor xml:id="_dynamic__programming_8cpp_1a822f75d55c7e1dcdd04db55e00415230"/>    <section>
+    <title>dp_matrix_scoring()</title>
+<indexterm><primary>dp_matrix_scoring</primary><secondary>dynamic_programming.cpp</secondary></indexterm>
+<indexterm><primary>dynamic_programming.cpp</primary><secondary>dp_matrix_scoring</secondary></indexterm>
+<para><computeroutput>long dp_matrix_scoring (<link linkend="_class_matrix">Matrix</link> mat, double gapopen, double gapextend)</computeroutput></para><para>
+
+<para>Calculates the scoring matrix in dynamic programming. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>mat</entry>
+                                <entry>
+<para>matrix. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>gapopen</entry>
+                                <entry>
+<para>gap opening penalty. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>gapextend</entry>
+                                <entry>
+<para>gap extension penalty. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long index of the maximum in the matrix. <literallayout><computeroutput>Implementation of the Needleman-Wunsch algorithm.
+The input matrix can be any form of similarity or coincidence matrix, and
+is modified by dynamic programming in preparation for backtracing.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 27 of file dynamic_programming.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_dynamic__programming_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>dynamic_programming.cpp</secondary></indexterm>
+<indexterm><primary>dynamic_programming.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

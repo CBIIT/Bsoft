@@ -1,0 +1,277 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_tcltk__bfil_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/tcltk/tcltk_bfil.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/tcltk/tcltk_bfil.cpp</primary></indexterm>
+<para>
+
+<para>A shared object to manage micrograph parameter files in TCL/Tk. </para>
+ 
+</para>
+<programlisting>#include &lt;tk.h&gt;
+#include &quot;tcltk_bfil.h&quot;
+#include &quot;mg_extract.h&quot;
+#include &quot;mg_helix.h&quot;
+#include &quot;mg_select.h&quot;
+#include &quot;rwmg.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;timer.h&quot;
+#include &quot;utilities.h&quot;
+#include &lt;sys/stat.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1ad328f4e31b1409c2bdafffa4baa26679">filament_count</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1a3b503f30f8eb9940d763fee82546f90c">filament_count</link> (<link linkend="_class_bfield">Bfield</link> *field)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1ace6c1e538b207008cfd250a6bb8ac520">filament_count</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1a3df329cd171a6aecaafd2a94c723eb2e">filament_count</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1afd5a4f5f9db0b3d0c98ff78f600cfb41">filament_delete</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1ae71a83dac8294d416f9ddc2c7c20c92f">filament_delete</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1a38ed48bf171514bf5ed2ab916620ee9b">filament_delete</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1ae947b68d32c6ca3d2011ce0295d53028">filament_extract</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_bimage">Bimage</link> *p, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1a2f1922a77be3134fbe6897f271348ef9">filament_profile</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_bimage">Bimage</link> *p, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1a6865d0b517cb08cc7175175cb0cd0fa3">filament_center</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_bimage">Bimage</link> *p, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1af4f767f5277847c294fc6005decd4ef3">filament_to_particles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1afd597f29c668b59bd8f91f3022083842">node_count</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1ad4c0c3ea10821de2de5ae31ff2b32342">node_count</link> (<link linkend="_class_bfield">Bfield</link> *field)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1a707991eb3b2c167a51e305b75cd2761e">node_count</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1a3dc02a261c01fd545ee5d653a42a8b12">node_count</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1a290f9b8ba662de8fe1c0d18f289d68dd">node_ids</link> (<link linkend="_class_bfilament">Bfilament</link> *fillist)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1a29a97d1bb2fb31f8969a942f65898305">node_location</link> (<link linkend="_class_bfilament">Bfilament</link> *fillist, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1a075daa7aaaaf809c5983ce9d560464dd">node_select</link> (<link linkend="_class_bfilament">Bfilament</link> *fillist, double radius, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1a0efb21131799bd9156c2ea938158d52e">node_move</link> (<link linkend="_class_bfilament">Bfilament</link> *fillist, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1a20476a191ad5c90651f13dd2b1c2fc64">node_create</link> (<link linkend="_class_bfilament">Bfilament</link> **fillist, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1a357176a0f4409e624b098c0131b6a2f4">node_delete</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1a2e5a3ee30fac74a43b88b2f84244930e">node_delete</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1ab27eff93e8aa2dae8889c9ce2e9c71e9">node_delete</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1ac3b313c8f59ad6937a580588b571ec9b">do_filament</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>int <link linkend="_tcltk__bfil_8cpp_1a92672fd0c009adb36e5f787d02c2956f">filament_renumber</link> (<link linkend="_class_bfilament">Bfilament</link> *fil)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bfil_8cpp_1ae803710b55c2c6172ef8e7c37ed4891d">do_node</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_tcltk__bfil_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_tcltk__bfil_8cpp_1a3628124083d8f4fbc4ffd16e5b6202bf">imglist</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>A shared object to manage micrograph parameter files in TCL/Tk. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20030813 </para>
+
+<para>Modified: 20150617 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_tcltk__bfil_8cpp_1ac3b313c8f59ad6937a580588b571ec9b"/>    <section>
+    <title>do_filament()</title>
+<indexterm><primary>do_filament</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>do_filament</secondary></indexterm>
+<para><computeroutput>Tcl_Obj* do_filament (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 77 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1ae803710b55c2c6172ef8e7c37ed4891d"/>    <section>
+    <title>do_node()</title>
+<indexterm><primary>do_node</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>do_node</secondary></indexterm>
+<para><computeroutput>Tcl_Obj* do_node (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 536 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1a6865d0b517cb08cc7175175cb0cd0fa3"/>    <section>
+    <title>filament_center()</title>
+<indexterm><primary>filament_center</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>filament_center</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * filament_center (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_bimage">Bimage</link> * p, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 464 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1a3b503f30f8eb9940d763fee82546f90c"/>    <section>
+    <title>filament_count()<computeroutput>[1/4]</computeroutput></title>
+<indexterm><primary>filament_count</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>filament_count</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * filament_count (<link linkend="_class_bfield">Bfield</link> * field)</computeroutput></para><para>
+Definition at line 197 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1ace6c1e538b207008cfd250a6bb8ac520"/>    <section>
+    <title>filament_count()<computeroutput>[2/4]</computeroutput></title>
+<indexterm><primary>filament_count</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>filament_count</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * filament_count (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg)</computeroutput></para><para>
+Definition at line 215 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1ad328f4e31b1409c2bdafffa4baa26679"/>    <section>
+    <title>filament_count()<computeroutput>[3/4]</computeroutput></title>
+<indexterm><primary>filament_count</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>filament_count</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * filament_count (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+Definition at line 172 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1a3df329cd171a6aecaafd2a94c723eb2e"/>    <section>
+    <title>filament_count()<computeroutput>[4/4]</computeroutput></title>
+<indexterm><primary>filament_count</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>filament_count</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * filament_count (<link linkend="_class_breconstruction">Breconstruction</link> * rec)</computeroutput></para><para>
+Definition at line 229 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1ae71a83dac8294d416f9ddc2c7c20c92f"/>    <section>
+    <title>filament_delete()<computeroutput>[1/3]</computeroutput></title>
+<indexterm><primary>filament_delete</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>filament_delete</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * filament_delete (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 317 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1afd5a4f5f9db0b3d0c98ff78f600cfb41"/>    <section>
+    <title>filament_delete()<computeroutput>[2/3]</computeroutput></title>
+<indexterm><primary>filament_delete</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>filament_delete</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * filament_delete (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 243 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1a38ed48bf171514bf5ed2ab916620ee9b"/>    <section>
+    <title>filament_delete()<computeroutput>[3/3]</computeroutput></title>
+<indexterm><primary>filament_delete</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>filament_delete</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * filament_delete (<link linkend="_class_breconstruction">Breconstruction</link> * rec, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 339 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1ae947b68d32c6ca3d2011ce0295d53028"/>    <section>
+    <title>filament_extract()</title>
+<indexterm><primary>filament_extract</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>filament_extract</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * filament_extract (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_bimage">Bimage</link> * p, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 371 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1a2f1922a77be3134fbe6897f271348ef9"/>    <section>
+    <title>filament_profile()</title>
+<indexterm><primary>filament_profile</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>filament_profile</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * filament_profile (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_bimage">Bimage</link> * p, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 422 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1a92672fd0c009adb36e5f787d02c2956f"/>    <section>
+    <title>filament_renumber()</title>
+<indexterm><primary>filament_renumber</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>filament_renumber</secondary></indexterm>
+<para><computeroutput>int filament_renumber (<link linkend="_class_bfilament">Bfilament</link> * fil)</computeroutput></para><para>
+Definition at line 361 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1af4f767f5277847c294fc6005decd4ef3"/>    <section>
+    <title>filament_to_particles()</title>
+<indexterm><primary>filament_to_particles</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>filament_to_particles</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * filament_to_particles (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 495 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1ad4c0c3ea10821de2de5ae31ff2b32342"/>    <section>
+    <title>node_count()<computeroutput>[1/4]</computeroutput></title>
+<indexterm><primary>node_count</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>node_count</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * node_count (<link linkend="_class_bfield">Bfield</link> * field)</computeroutput></para><para>
+Definition at line 646 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1a707991eb3b2c167a51e305b75cd2761e"/>    <section>
+    <title>node_count()<computeroutput>[2/4]</computeroutput></title>
+<indexterm><primary>node_count</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>node_count</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * node_count (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg)</computeroutput></para><para>
+Definition at line 664 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1afd597f29c668b59bd8f91f3022083842"/>    <section>
+    <title>node_count()<computeroutput>[3/4]</computeroutput></title>
+<indexterm><primary>node_count</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>node_count</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * node_count (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+Definition at line 620 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1a3dc02a261c01fd545ee5d653a42a8b12"/>    <section>
+    <title>node_count()<computeroutput>[4/4]</computeroutput></title>
+<indexterm><primary>node_count</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>node_count</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * node_count (<link linkend="_class_breconstruction">Breconstruction</link> * rec)</computeroutput></para><para>
+Definition at line 680 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1a20476a191ad5c90651f13dd2b1c2fc64"/>    <section>
+    <title>node_create()</title>
+<indexterm><primary>node_create</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>node_create</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * node_create (<link linkend="_class_bfilament">Bfilament</link> ** fillist, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 812 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1a2e5a3ee30fac74a43b88b2f84244930e"/>    <section>
+    <title>node_delete()<computeroutput>[1/3]</computeroutput></title>
+<indexterm><primary>node_delete</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>node_delete</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * node_delete (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 897 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1a357176a0f4409e624b098c0131b6a2f4"/>    <section>
+    <title>node_delete()<computeroutput>[2/3]</computeroutput></title>
+<indexterm><primary>node_delete</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>node_delete</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * node_delete (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 866 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1ab27eff93e8aa2dae8889c9ce2e9c71e9"/>    <section>
+    <title>node_delete()<computeroutput>[3/3]</computeroutput></title>
+<indexterm><primary>node_delete</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>node_delete</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * node_delete (<link linkend="_class_breconstruction">Breconstruction</link> * rec, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 928 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1a290f9b8ba662de8fe1c0d18f289d68dd"/>    <section>
+    <title>node_ids()</title>
+<indexterm><primary>node_ids</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>node_ids</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * node_ids (<link linkend="_class_bfilament">Bfilament</link> * fillist)</computeroutput></para><para>
+Definition at line 696 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1a29a97d1bb2fb31f8969a942f65898305"/>    <section>
+    <title>node_location()</title>
+<indexterm><primary>node_location</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>node_location</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * node_location (<link linkend="_class_bfilament">Bfilament</link> * fillist, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 716 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1a0efb21131799bd9156c2ea938158d52e"/>    <section>
+    <title>node_move()</title>
+<indexterm><primary>node_move</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>node_move</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * node_move (<link linkend="_class_bfilament">Bfilament</link> * fillist, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 780 of file tcltk_bfil.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1a075daa7aaaaf809c5983ce9d560464dd"/>    <section>
+    <title>node_select()</title>
+<indexterm><primary>node_select</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>node_select</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * node_select (<link linkend="_class_bfilament">Bfilament</link> * fillist, double radius, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 741 of file tcltk_bfil.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_tcltk__bfil_8cpp_1a3628124083d8f4fbc4ffd16e5b6202bf"/>    <section>
+    <title>imglist</title>
+<indexterm><primary>imglist</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>imglist</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* imglist<computeroutput>[extern]</computeroutput></computeroutput></para><para>
+Definition at line 32 of file bshow.cpp.</para>
+    </section><anchor xml:id="_tcltk__bfil_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>tcltk_bfil.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bfil.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

@@ -1,0 +1,731 @@
+.TH "/Users/bernard/b20/bsoft/src/mg/mg_align.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mg/mg_align.cpp \- Functions to align micrographs or coordinates from micrographs and apply the resultant transformation\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Bimage\&.h'\fP
+.br
+\fC#include 'mg_align\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_img_proc\&.h'\fP
+.br
+\fC#include 'mg_ctf_fit\&.h'\fP
+.br
+\fC#include 'mg_select\&.h'\fP
+.br
+\fC#include 'mg_tomography\&.h'\fP
+.br
+\fC#include 'marker\&.h'\fP
+.br
+\fC#include 'matrix_linear\&.h'\fP
+.br
+\fC#include 'simplex\&.h'\fP
+.br
+\fC#include 'ps_marker\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmg_align_coordinates\fP (\fBBproject\fP *\fBproject\fP, int refset)"
+.br
+.RI "Aligns the particle coordinates of a series of micrographs\&. "
+.ti -1c
+.RI "\fBTransform\fP \fBimg_align\fP (\fBBimage\fP *p1, \fBBimage\fP *p2, \fBVector3\fP< long > tile_size, double res_lo, double res_hi, double max_shift, int filter_flag, int refine_flag)"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_sum_subset\fP (\fBBimage\fP *p, \fBBstring\fP &subset, double dose_per_frame, double time_per_frame)"
+.br
+.ti -1c
+.RI "int \fBmg_align_micrographs\fP (\fBBproject\fP *\fBproject\fP, int refset, \fBVector3\fP< long > tile_size, double res_lo, double res_hi, double max_shift, int filter_flag, int refine_flag)"
+.br
+.RI "Aligns a focal series of micrographs\&. "
+.ti -1c
+.RI "\fBBmarker\fP * \fBimg_extract_features\fP (\fBBimage\fP *p, int extract_method, int target_num, double threshold)"
+.br
+.ti -1c
+.RI "int \fBmg_align_feature_extraction\fP (\fBBproject\fP *\fBproject\fP, int max_features, double res_low, double res_high, double thresh, int extract_method)"
+.br
+.RI "Aligns images by feature extraction\&. "
+.ti -1c
+.RI "int \fBmg_apply_transform\fP (\fBBmicrograph\fP *mg_ref, \fBBmicrograph\fP *mg_apply)"
+.br
+.RI "Applies a transformation to particle coordinates in a reference micrograph and writes them into an application micrograph structure\&. "
+.ti -1c
+.RI "int \fBmg_merge_focal_series\fP (\fBBproject\fP *\fBproject\fP, int use_old_origins)"
+.br
+.RI "Merges corresponding particle images in each focal series\&. "
+.ti -1c
+.RI "double \fBfield_write_aligned_average\fP (\fBBfield\fP *field, \fBBimage\fP *pgr, \fBBstring\fP &imgfile, \fBDataType\fP datatype, \fBBstring\fP &subset)"
+.br
+.ti -1c
+.RI "double \fBproject_write_aligned_images\fP (\fBBproject\fP *\fBproject\fP, \fBBimage\fP *pgr, \fBBstring\fP &imgfile, \fBDataType\fP datatype)"
+.br
+.RI "Calculates aligned micrograph images and write them to a file\&. "
+.ti -1c
+.RI "double \fBproject_write_aligned_averages\fP (\fBBproject\fP *\fBproject\fP, \fBBimage\fP *pgr, \fBBstring\fP &imgfile, \fBDataType\fP datatype, \fBBstring\fP &subset)"
+.br
+.RI "Calculates aligned micrograph images and write them to a file\&. "
+.ti -1c
+.RI "double \fBmg_write_frame_sum\fP (\fBBmicrograph\fP *mg, \fBBimage\fP *pgr, \fBDataType\fP datatype, \fBBstring\fP &subset, int flag)"
+.br
+.ti -1c
+.RI "double \fBproject_write_frame_sums\fP (\fBBproject\fP *\fBproject\fP, \fBBimage\fP *pgr, \fBDataType\fP datatype, \fBBstring\fP &subset, int flag)"
+.br
+.RI "Sums aligned micrograph frames and write them to files\&. "
+.ti -1c
+.RI "double \fBmg_align_frames\fP (\fBBmicrograph\fP *mg, long ref_num, long window, long step, \fBBimage\fP *pgr, \fBBimage\fP *pmask, double hi_res, double lo_res, double shift_limit, double edge_width, double gauss_width, long bin, \fBBstring\fP &subset, int flag)"
+.br
+.ti -1c
+.RI "double \fBproject_align_frames\fP (\fBBproject\fP *\fBproject\fP, int ref_img, long window, long step, \fBBimage\fP *pgr, \fBBimage\fP *pmask, \fBVector3\fP< double > origin, double hi_res, double lo_res, double shift_limit, double edge_width, double gauss_width, long bin, \fBBstring\fP &subset, int flag)"
+.br
+.RI "Aligns a series of micrographs by cross-correlation\&. "
+.ti -1c
+.RI "double \fBmg_align_series\fP (\fBBmicrograph\fP *mg, \fBBmicrograph\fP *mg_ref, \fBBimage\fP *pref, \fBBimage\fP *pgr, \fBBimage\fP *pmask, double hi_res, double lo_res, double shift_limit, double edge_width, double gauss_width, long bin, \fBfft_plan\fP \fBplanf\fP, \fBfft_plan\fP \fBplanb\fP)"
+.br
+.ti -1c
+.RI "double \fBfield_align_series\fP (\fBBfield\fP *field, int ref_img, \fBBimage\fP *pgr, \fBBimage\fP *pmask, \fBVector3\fP< double > origin, double hi_res, double lo_res, double shift_limit, double edge_width, double gauss_width, long bin, \fBBstring\fP &subset, int flag)"
+.br
+.ti -1c
+.RI "double \fBproject_align_series\fP (\fBBproject\fP *\fBproject\fP, int ref_img, \fBBimage\fP *pgr, \fBBimage\fP *pmask, \fBVector3\fP< double > origin, double hi_res, double lo_res, double shift_limit, double edge_width, double gauss_width, long bin, \fBBstring\fP &subset, int flag)"
+.br
+.RI "Aligns a series of micrographs by cross-correlation\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBmg_tomo_reconstruct\fP (\fBBmicrograph\fP **mgarr, long mg_id, long mg_min, long mg_max, double hi_res, double scale, \fBVector3\fP< long > size, long ft_size, \fBfft_plan\fP \fBplanf\fP, \fBfft_plan\fP \fBplanb\fP)"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBmg_tomo_reconstruct2D\fP (\fBBproject\fP *\fBproject\fP, long dimg, \fBVector3\fP< long > size, double scale, double hi_res)"
+.br
+.RI "Reconstructs the zero-tilt image of a tilt-series\&. "
+.ti -1c
+.RI "double \fBmg_reconstruct_align\fP (\fBBmicrograph\fP **mgarr, long nmg, long mg_id, long dimg, double resolution, double shift_limit, \fBVector3\fP< long > size, double edge_width, double gauss_width, long ft_size, \fBfft_plan\fP \fBplanf\fP, \fBfft_plan\fP \fBplanb\fP)"
+.br
+.ti -1c
+.RI "long \fBproject_tomo_align\fP (\fBBproject\fP *\fBproject\fP, long thickness, long iter, double dchange, long dimg, double resolution, double shift_limit, double edge_width, double gauss_width)"
+.br
+.RI "Aligns a series of micrographs by cross-correlation sequentially\&. "
+.ti -1c
+.RI "double \fBfield_ssnr\fP (\fBBfield\fP *field, \fBfft_plan\fP plan)"
+.br
+.ti -1c
+.RI "double \fBproject_ssnr\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.ti -1c
+.RI "double \fBprogressive_snr_R\fP (\fBBsimplex\fP &simp)"
+.br
+.ti -1c
+.RI "double \fBfit_progressive_snr\fP (vector< double > &x, vector< double > &y, double &snr, double &cd)"
+.br
+.ti -1c
+.RI "int \fBmg_frames_snr\fP (\fBBmicrograph\fP *mg, double res_hi, double sampling_ratio, long window, \fBBstring\fP &subset, \fBVector3\fP< long > tile_size, int flag)"
+.br
+.ti -1c
+.RI "int \fBproject_frames_snr\fP (\fBBproject\fP *\fBproject\fP, double res_hi, double sampling_ratio, long window, \fBBstring\fP &subset, \fBVector3\fP< long > tile_size, int flag)"
+.br
+.RI "Calculates the estimated SNR from aligned movie frames\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to align micrographs or coordinates from micrographs and apply the resultant transformation\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann and Samuel Payne 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20000505 
+.PP
+Modified: 20210805 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_align\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double field_align_series (\fBBfield\fP * field, int ref_img, \fBBimage\fP * pgr, \fBBimage\fP * pmask, \fBVector3\fP< double > origin, double hi_res, double lo_res, double shift_limit, double edge_width, double gauss_width, long bin, \fBBstring\fP & subset, int flag)"
+
+.PP
+Definition at line 1400 of file mg_align\&.cpp\&.
+.SS "double field_ssnr (\fBBfield\fP * field, \fBfft_plan\fP plan)"
+
+.PP
+Definition at line 1978 of file mg_align\&.cpp\&.
+.SS "double field_write_aligned_average (\fBBfield\fP * field, \fBBimage\fP * pgr, \fBBstring\fP & imgfile, \fBDataType\fP datatype, \fBBstring\fP & subset)"
+
+.PP
+Definition at line 871 of file mg_align\&.cpp\&.
+.SS "double fit_progressive_snr (vector< double > & x, vector< double > & y, double & snr, double & cd)"
+
+.PP
+Definition at line 2099 of file mg_align\&.cpp\&.
+.SS "\fBTransform\fP img_align (\fBBimage\fP * p1, \fBBimage\fP * p2, \fBVector3\fP< long > tile_size, double res_lo, double res_hi, double max_shift, int filter_flag, int refine_flag)"
+
+.PP
+Definition at line 112 of file mg_align\&.cpp\&.
+.SS "\fBBmarker\fP* img_extract_features (\fBBimage\fP * p, int extract_method, int target_num, double threshold)"
+
+.PP
+Definition at line 411 of file mg_align\&.cpp\&.
+.SS "\fBBimage\fP* img_sum_subset (\fBBimage\fP * p, \fBBstring\fP & subset, double dose_per_frame, double time_per_frame)"
+
+.PP
+Definition at line 254 of file mg_align\&.cpp\&.
+.SS "int mg_align_coordinates (\fBBproject\fP * project, int refset)"
+
+.PP
+Aligns the particle coordinates of a series of micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIrefset\fP reference image or set of coordinates (-1 means undefined)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The sets of micrograph coordinates of a focal series in an image 
+processing parameter structure are fitted to each other, giving a 
+rotation angle, and shifting and scaling in x and y for each pair 
+of micrographs.
+There must be the same number of particles in each micrograph
+of a focal series.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 43 of file mg_align\&.cpp\&.
+.SS "int mg_align_feature_extraction (\fBBproject\fP * project, int max_features, double res_low, double res_high, double thresh, int extract_method)"
+
+.PP
+Aligns images by feature extraction\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Samuel Payne 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP the set of image parameters 
+.br
+\fImax_features\fP the maximum number of features to extract 
+.br
+\fIres_low\fP the low resolution limit 
+.br
+\fIres_high\fP the high resolution limit 
+.br
+\fIthresh\fP threshold used for feature extraction 
+.br
+\fIextract_method\fP method used for finding the center of particles 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code\&.
+.RE
+.PP
+Calculates the transformation parameters for each set images, by picking features in the images and finding the best fit for the matching of the features\&.
+.PP
+The features are picked and returned using function \fBimg_extract_features()\fP\&. The set of features is sent to find_transform_params() that finds the transformation parameters that relate the images to each other\&. The shift in xy directions, the scale in xy directions, and rotation angle is returned\&. The program works best if the images have at least 40 distinct features\&. 
+.PP
+Definition at line 550 of file mg_align\&.cpp\&.
+.SS "double mg_align_frames (\fBBmicrograph\fP * mg, long ref_num, long window, long step, \fBBimage\fP * pgr, \fBBimage\fP * pmask, double hi_res, double lo_res, double shift_limit, double edge_width, double gauss_width, long bin, \fBBstring\fP & subset, int flag)"
+
+.PP
+Definition at line 1191 of file mg_align\&.cpp\&.
+.SS "int mg_align_micrographs (\fBBproject\fP * project, int refset, \fBVector3\fP< long > tile_size, double res_lo, double res_hi, double max_shift, int filter_flag, int refine_flag)"
+
+.PP
+Aligns a focal series of micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure\&. 
+.br
+\fIrefset\fP reference image or set of coordinates (< 1 means undefined)\&. 
+.br
+\fItile_size\fP 3-valued vector for the size of sub-images\&. 
+.br
+\fIres_lo\fP low resolution limit for cross-correlation\&. 
+.br
+\fIres_hi\fP high resolution limit for cross-correlation\&. 
+.br
+\fImax_shift\fP maximum shift allowed (default 1/4 of tile)\&. 
+.br
+\fIfilter_flag\fP flag to filter micrograph extremes\&. 
+.br
+\fIrefine_flag\fP flag to turn on refinement of shift\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+A series of micrograph images specified in an image processing 
+parameter structure are aligned by segmented cross-correlation. The 
+micrograph data blocks are assumed to be arranged with a series in
+consequent data blocks. The micrographs are segmented into tiles 
+and the tile shifts with respect to each other determined by 
+cross-correlation. The shifts are assumed to most accurately 
+represent the displacement of the center of one tile with respect 
+to the center of the corresponding tile in the other micrograph.
+The resultant sets of coordinates are fitted to each
+other, giving a 3-value shift vector, a 3-value scale vector,
+and a rotation angle for each pair of micrographs.
+A reference micrograph is chosen as:
+    1.  the first micrograph with particle coordinates
+    2.  otherwise, the first micrograph
+If coordinates are supplied for particles in the reference micrograph,
+the determined transformation parameters are applied and written into
+the other micrograph structures.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 324 of file mg_align\&.cpp\&.
+.SS "double mg_align_series (\fBBmicrograph\fP * mg, \fBBmicrograph\fP * mg_ref, \fBBimage\fP * pref, \fBBimage\fP * pgr, \fBBimage\fP * pmask, double hi_res, double lo_res, double shift_limit, double edge_width, double gauss_width, long bin, \fBfft_plan\fP planf, \fBfft_plan\fP planb)"
+
+.PP
+Definition at line 1357 of file mg_align\&.cpp\&.
+.SS "int mg_apply_transform (\fBBmicrograph\fP * mg_ref, \fBBmicrograph\fP * mg_apply)"
+
+.PP
+Applies a transformation to particle coordinates in a reference micrograph and writes them into an application micrograph structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg_ref\fP micrograph used as reference\&. 
+.br
+\fI*mg_apply\fP micrograph to apply transformation to\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The transformation parameters specified in the second micrograph
+are used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 639 of file mg_align\&.cpp\&.
+.SS "int mg_frames_snr (\fBBmicrograph\fP * mg, double res_hi, double sampling_ratio, long window, \fBBstring\fP & subset, \fBVector3\fP< long > tile_size, int flag)"
+
+.PP
+Definition at line 2119 of file mg_align\&.cpp\&.
+.SS "int mg_merge_focal_series (\fBBproject\fP * project, int use_old_origins)"
+
+.PP
+Merges corresponding particle images in each focal series\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIuse_old_origins\fP flag to use old origins rather than cross-correlation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code\&. 
+.RE
+.PP
+
+.PP
+Definition at line 771 of file mg_align\&.cpp\&.
+.SS "double mg_reconstruct_align (\fBBmicrograph\fP ** mgarr, long nmg, long mg_id, long dimg, double resolution, double shift_limit, \fBVector3\fP< long > size, double edge_width, double gauss_width, long ft_size, \fBfft_plan\fP planf, \fBfft_plan\fP planb)"
+
+.PP
+Definition at line 1763 of file mg_align\&.cpp\&.
+.SS "\fBBimage\fP* mg_tomo_reconstruct (\fBBmicrograph\fP ** mgarr, long mg_id, long mg_min, long mg_max, double hi_res, double scale, \fBVector3\fP< long > size, long ft_size, \fBfft_plan\fP planf, \fBfft_plan\fP planb)"
+
+.PP
+Definition at line 1575 of file mg_align\&.cpp\&.
+.SS "\fBBimage\fP* mg_tomo_reconstruct2D (\fBBproject\fP * project, long dimg, \fBVector3\fP< long > size, double scale, double hi_res)"
+
+.PP
+Reconstructs the zero-tilt image of a tilt-series\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIdimg\fP number of adjacent images in reconstructions\&. 
+.br
+\fIsize\fP reconstruction size\&. 
+.br
+\fIscale\fP reconstruction scale\&. 
+.br
+\fIhi_res\fP high resolution limit (angstrom)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* new 2D image\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1705 of file mg_align\&.cpp\&.
+.SS "double mg_write_frame_sum (\fBBmicrograph\fP * mg, \fBBimage\fP * pgr, \fBDataType\fP datatype, \fBBstring\fP & subset, int flag)"
+
+.PP
+Definition at line 1091 of file mg_align\&.cpp\&.
+.SS "double progressive_snr_R (\fBBsimplex\fP & simp)"
+
+.PP
+Definition at line 2080 of file mg_align\&.cpp\&.
+.SS "double project_align_frames (\fBBproject\fP * project, int ref_img, long window, long step, \fBBimage\fP * pgr, \fBBimage\fP * pmask, \fBVector3\fP< double > origin, double hi_res, double lo_res, double shift_limit, double edge_width, double gauss_width, long bin, \fBBstring\fP & subset, int flag)"
+
+.PP
+Aligns a series of micrographs by cross-correlation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIref_img\fP reference frame number (starts from 0)\&. 
+.br
+\fIwindow\fP moving sum window (default 1, no moving sum)\&. 
+.br
+\fIstep\fP moving sum interval (default 1)\&. 
+.br
+\fI*pgr\fP gain reference\&. 
+.br
+\fI*pmask\fP reciprocal space mask, 0's and 1's\&. 
+.br
+\fIorigin\fP tilt origin\&. 
+.br
+\fIhi_res\fP high resolution limit\&. 
+.br
+\fIlo_res\fP low resolution limit\&. 
+.br
+\fIshift_limit\fP maximum shift from nominal origin of image\&. 
+.br
+\fIedge_width\fP edge smoothing width (not done if 0)\&. 
+.br
+\fIgauss_width\fP edge decay width\&. 
+.br
+\fIbin\fP integer bin factor\&. 
+.br
+\fIsubset\fP a subset to sum\&. 
+.br
+\fIflag\fP options flag\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double root-mean-square of offsets\&. 
+.PP
+.nf
+Each micrograph frame is cross-correlated with the reference
+frame and the shift determined.
+Options encoded in the flag:
+1   rescale image based on histogram.
+2   weigh by accumulated dose.
+4   write aligned frames with insert "_aln".
+8   write aligned frame sum with insert "_sum".
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1310 of file mg_align\&.cpp\&.
+.SS "double project_align_series (\fBBproject\fP * project, int ref_img, \fBBimage\fP * pgr, \fBBimage\fP * pmask, \fBVector3\fP< double > origin, double hi_res, double lo_res, double shift_limit, double edge_width, double gauss_width, long bin, \fBBstring\fP & subset, int flag)"
+
+.PP
+Aligns a series of micrographs by cross-correlation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIref_img\fP reference micrograph number (starts from 0)\&. 
+.br
+\fI*pgr\fP gain reference\&. 
+.br
+\fI*pmask\fP reciprocal space mask, 0's and 1's\&. 
+.br
+\fIorigin\fP tilt origin\&. 
+.br
+\fIhi_res\fP high resolution limit\&. 
+.br
+\fIlo_res\fP low resolution limit\&. 
+.br
+\fIshift_limit\fP maximum shift from nominal origin of image\&. 
+.br
+\fIedge_width\fP edge smoothing width (not done if 0)\&. 
+.br
+\fIgauss_width\fP edge decay width\&. 
+.br
+\fIbin\fP 3-value vector of integer bin factors\&. 
+.br
+\fI&subset\fP subset to average (all if empty) 
+.br
+\fIflag\fP options flag\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double root-mean-square of offsets\&. 
+.PP
+.nf
+Each micrograph in the series is cross-correlated with the reference
+micrograph and the shift determined.
+Options encoded in the flag:
+1   rescale image based on histogram.
+2   weigh by accumulated dose.
+4   write aligned frames with insert "_aln".
+8   write aligned frame sum with insert "_avg".
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1533 of file mg_align\&.cpp\&.
+.SS "int project_frames_snr (\fBBproject\fP * project, double res_hi, double sampling_ratio, long window, \fBBstring\fP & subset, \fBVector3\fP< long > tile_size, int flag)"
+
+.PP
+Calculates the estimated SNR from aligned movie frames\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIres_hi\fP high resolution limit\&. 
+.br
+\fIsampling_ratio\fP radial sampling ratio (1 or larger)\&. 
+.br
+\fIwindow\fP number of frames to sum for each curve\&. 
+.br
+\fI&subset\fP subset to average (all if empty)\&. 
+.br
+\fItile_size\fP tile size for tiled SNR\&. 
+.br
+\fIflag\fP flag to convert to counts (1) and calculate a progressive sum (2)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on failure\&. 
+.PP
+.nf
+The SNR is calculated as for reconstructions.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2253 of file mg_align\&.cpp\&.
+.SS "double project_ssnr (\fBBproject\fP * project)"
+
+.PP
+Definition at line 2037 of file mg_align\&.cpp\&.
+.SS "long project_tomo_align (\fBBproject\fP * project, long thickness, long iter, double dchange, long dimg, double resolution, double shift_limit, double edge_width, double gauss_width)"
+
+.PP
+Aligns a series of micrographs by cross-correlation sequentially\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIthickness\fP reconstruction thickness\&. 
+.br
+\fIiter\fP number of alignment iterations\&. 
+.br
+\fIdchange\fP threshold change in origin\&. 
+.br
+\fIdimg\fP number of adjacent images in reconstructions\&. 
+.br
+\fIresolution\fP high resolution limit (angstrom)\&. 
+.br
+\fIshift_limit\fP limit on shift search (pixels)\&. 
+.br
+\fIedge_width\fP smoothing edge width\&. 
+.br
+\fIgauss_width\fP smoothing edge decay\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long 0, <0 on failure\&. 
+.PP
+.nf
+Each pair of adjacent micrographs in the series is cross-correlated
+and the relative shift determined. The relative shifts are adjusted
+relative to the reference micrograph, defined as the one closest
+to a zero degree tilt.
+The images are stretched to compensate for tilt difference.
+The relationship between an euler representation of the view and
+the tilt axis and tilt angle is:
+    tilt_axis = phi - 90 = - psi - 90
+    tilt_angle = theta
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1876 of file mg_align\&.cpp\&.
+.SS "double project_write_aligned_averages (\fBBproject\fP * project, \fBBimage\fP * pgr, \fBBstring\fP & imgfile, \fBDataType\fP datatype, \fBBstring\fP & subset)"
+
+.PP
+Calculates aligned micrograph images and write them to a file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph project\&. 
+.br
+\fI*pgr\fP gain reference\&. 
+.br
+\fI&imgfile\fP output image file name\&. 
+.br
+\fIdatatype\fP output data type\&. 
+.br
+\fI&subset\fP subset to average (all if empty) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double average SNR\&. 
+.PP
+.nf
+Only the origin is adjusted.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1029 of file mg_align\&.cpp\&.
+.SS "double project_write_aligned_images (\fBBproject\fP * project, \fBBimage\fP * pgr, \fBBstring\fP & imgfile, \fBDataType\fP datatype)"
+
+.PP
+Calculates aligned micrograph images and write them to a file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph project\&. 
+.br
+\fI*pgr\fP gain reference\&. 
+.br
+\fI&imgfile\fP output image file name\&. 
+.br
+\fIdatatype\fP output data type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double 0\&. 
+.PP
+.nf
+Only the origin is adjusted.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 957 of file mg_align\&.cpp\&.
+.SS "double project_write_frame_sums (\fBBproject\fP * project, \fBBimage\fP * pgr, \fBDataType\fP datatype, \fBBstring\fP & subset, int flag)"
+
+.PP
+Sums aligned micrograph frames and write them to files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph project\&. 
+.br
+\fI*pgr\fP gain reference\&. 
+.br
+\fIdatatype\fP output data type\&. 
+.br
+\fI&subset\fP subset to average (all if empty)\&. 
+.br
+\fIflag\fP flag to calculate counts from histogram\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double average SNR\&. 
+.PP
+.nf
+Only the origin is adjusted.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1172 of file mg_align\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

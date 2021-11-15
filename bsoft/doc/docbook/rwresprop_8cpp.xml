@@ -1,0 +1,350 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rwresprop_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/rwparam/rwresprop.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/rwparam/rwresprop.cpp</primary></indexterm>
+<para>
+
+<para>Library routines to read and write residue properties. </para>
+ 
+</para>
+<programlisting>#include &quot;rwresprop.h&quot;
+#include &quot;star.h&quot;
+#include &quot;mol_tags.h&quot;
+#include &quot;seq_util.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structresprop">resprop</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_struct_bresidue__type">Bresidue_type</link> * <link linkend="_rwresprop_8cpp_1a215e705d2a54639c3bde9e67141bf978">residue_type_add</link> (<link linkend="_struct_bresidue__type">Bresidue_type</link> **rtype, char c)</para>
+</listitem>
+            <listitem><para><link linkend="_struct_bresidue__type">Bresidue_type</link> * <link linkend="_rwresprop_8cpp_1a912c04ecc24e2b709cbd72f7d2c333b9">read_residue_prop_star</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+</listitem>
+            <listitem><para><link linkend="_struct_bresidue__type">Bresidue_type</link> * <link linkend="_rwresprop_8cpp_1a21fd3ebda7034af68f1004dfd13eec47">read_residue_properties</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwresprop_8cpp_1aa5231c7f3689b7c6046f859d52dac88e">write_residue_prop_star</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_struct_bresidue__type">Bresidue_type</link> *rt)</para>
+</listitem>
+            <listitem><para><link linkend="_struct_bresidue__matrix">Bresidue_matrix</link> * <link linkend="_rwresprop_8cpp_1a9776e6539e0970fcd9755b3e1a49170c">read_residue_mat_star</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+</listitem>
+            <listitem><para><link linkend="_struct_bresidue__type">Bresidue_type</link> * <link linkend="_rwresprop_8cpp_1a42c9985c5db6edd823ce180e258dfef8">get_residue_properties</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+
+<para>Reading residue properties from parameter files. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwresprop_8cpp_1aaf53417d13a6d74673819ce3d73d6a19">write_residue_properties</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_struct_bresidue__type">Bresidue_type</link> *rt)</para>
+
+<para>Writing residue properties from a parameter file. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bresidue__matrix">Bresidue_matrix</link> * <link linkend="_rwresprop_8cpp_1aba09db586847121bd20eefa4abe085ad">get_residue_matrix</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+
+<para>Reading a residue matrix from a file. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwresprop_8cpp_1a36a63ac68c6da6483f7c79236359d100">residue_matrix_kill</link> (<link linkend="_struct_bresidue__matrix">Bresidue_matrix</link> *resmat)</para>
+
+<para>Deallocating a residue matrix. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rwresprop_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structresprop">resprop</link> <link linkend="_rwresprop_8cpp_1a304625aa383217190c4c9be2a2411a9e">defaultprops</link> []</para>
+</listitem>
+            <listitem><para>char <link linkend="_rwresprop_8cpp_1a62c24aa34f08258b91a9998c3f19957e">defaultcode</link> [] = &quot;-*ABCDEFGHIKLMNPQRSTVWXYZ&quot;</para>
+</listitem>
+            <listitem><para>float <link linkend="_rwresprop_8cpp_1af8db9860b6743bffd4f1f304e7a9c35e">defaultsim</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines to read and write residue properties. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19991114 </para>
+
+<para>Modified: 20210328 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rwresprop_8cpp_1aba09db586847121bd20eefa4abe085ad"/>    <section>
+    <title>get_residue_matrix()</title>
+<indexterm><primary>get_residue_matrix</primary><secondary>rwresprop.cpp</secondary></indexterm>
+<indexterm><primary>rwresprop.cpp</primary><secondary>get_residue_matrix</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bresidue__matrix">Bresidue_matrix</link>* get_residue_matrix (<link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+
+<para>Reading a residue matrix from a file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bresidue_matrix* residue matrix property structure, NULL on failure. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 164 of file rwresprop.cpp.</para>
+    </section><anchor xml:id="_rwresprop_8cpp_1a42c9985c5db6edd823ce180e258dfef8"/>    <section>
+    <title>get_residue_properties()</title>
+<indexterm><primary>get_residue_properties</primary><secondary>rwresprop.cpp</secondary></indexterm>
+<indexterm><primary>rwresprop.cpp</primary><secondary>get_residue_properties</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bresidue__type">Bresidue_type</link>* get_residue_properties (<link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+
+<para>Reading residue properties from parameter files. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bresidue_type* the residue property structure, NULL on failure. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 99 of file rwresprop.cpp.</para>
+    </section><anchor xml:id="_rwresprop_8cpp_1a9776e6539e0970fcd9755b3e1a49170c"/>    <section>
+    <title>read_residue_mat_star()</title>
+<indexterm><primary>read_residue_mat_star</primary><secondary>rwresprop.cpp</secondary></indexterm>
+<indexterm><primary>rwresprop.cpp</primary><secondary>read_residue_mat_star</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bresidue__matrix">Bresidue_matrix</link> * read_residue_mat_star (<link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+Definition at line 410 of file rwresprop.cpp.</para>
+    </section><anchor xml:id="_rwresprop_8cpp_1a912c04ecc24e2b709cbd72f7d2c333b9"/>    <section>
+    <title>read_residue_prop_star()</title>
+<indexterm><primary>read_residue_prop_star</primary><secondary>rwresprop.cpp</secondary></indexterm>
+<indexterm><primary>rwresprop.cpp</primary><secondary>read_residue_prop_star</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bresidue__type">Bresidue_type</link> * read_residue_prop_star (<link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+Definition at line 240 of file rwresprop.cpp.</para>
+    </section><anchor xml:id="_rwresprop_8cpp_1a21fd3ebda7034af68f1004dfd13eec47"/>    <section>
+    <title>read_residue_properties()</title>
+<indexterm><primary>read_residue_properties</primary><secondary>rwresprop.cpp</secondary></indexterm>
+<indexterm><primary>rwresprop.cpp</primary><secondary>read_residue_properties</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bresidue__type">Bresidue_type</link> * read_residue_properties (<link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+Definition at line 342 of file rwresprop.cpp.</para>
+    </section><anchor xml:id="_rwresprop_8cpp_1a36a63ac68c6da6483f7c79236359d100"/>    <section>
+    <title>residue_matrix_kill()</title>
+<indexterm><primary>residue_matrix_kill</primary><secondary>rwresprop.cpp</secondary></indexterm>
+<indexterm><primary>rwresprop.cpp</primary><secondary>residue_matrix_kill</secondary></indexterm>
+<para><computeroutput>int residue_matrix_kill (<link linkend="_struct_bresidue__matrix">Bresidue_matrix</link> * resmat)</computeroutput></para><para>
+
+<para>Deallocating a residue matrix. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*resmat</entry>
+                                <entry>
+<para>the residue matrix property structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 208 of file rwresprop.cpp.</para>
+    </section><anchor xml:id="_rwresprop_8cpp_1a215e705d2a54639c3bde9e67141bf978"/>    <section>
+    <title>residue_type_add()</title>
+<indexterm><primary>residue_type_add</primary><secondary>rwresprop.cpp</secondary></indexterm>
+<indexterm><primary>rwresprop.cpp</primary><secondary>residue_type_add</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bresidue__type">Bresidue_type</link> * residue_type_add (<link linkend="_struct_bresidue__type">Bresidue_type</link> ** rtype, char c)</computeroutput></para><para>
+Definition at line 221 of file rwresprop.cpp.</para>
+    </section><anchor xml:id="_rwresprop_8cpp_1aa5231c7f3689b7c6046f859d52dac88e"/>    <section>
+    <title>write_residue_prop_star()</title>
+<indexterm><primary>write_residue_prop_star</primary><secondary>rwresprop.cpp</secondary></indexterm>
+<indexterm><primary>rwresprop.cpp</primary><secondary>write_residue_prop_star</secondary></indexterm>
+<para><computeroutput>int write_residue_prop_star (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_struct_bresidue__type">Bresidue_type</link> * rt)</computeroutput></para><para>
+Definition at line 299 of file rwresprop.cpp.</para>
+    </section><anchor xml:id="_rwresprop_8cpp_1aaf53417d13a6d74673819ce3d73d6a19"/>    <section>
+    <title>write_residue_properties()</title>
+<indexterm><primary>write_residue_properties</primary><secondary>rwresprop.cpp</secondary></indexterm>
+<indexterm><primary>rwresprop.cpp</primary><secondary>write_residue_properties</secondary></indexterm>
+<para><computeroutput>int write_residue_properties (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_struct_bresidue__type">Bresidue_type</link> * rt)</computeroutput></para><para>
+
+<para>Writing residue properties from a parameter file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*rt</entry>
+                                <entry>
+<para>the residue property structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 152 of file rwresprop.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_rwresprop_8cpp_1a62c24aa34f08258b91a9998c3f19957e"/>    <section>
+    <title>defaultcode</title>
+<indexterm><primary>defaultcode</primary><secondary>rwresprop.cpp</secondary></indexterm>
+<indexterm><primary>rwresprop.cpp</primary><secondary>defaultcode</secondary></indexterm>
+<para><computeroutput>char defaultcode[] = &quot;-*ABCDEFGHIKLMNPQRSTVWXYZ&quot;</computeroutput></para><para>
+Definition at line 65 of file rwresprop.cpp.</para>
+    </section><anchor xml:id="_rwresprop_8cpp_1a304625aa383217190c4c9be2a2411a9e"/>    <section>
+    <title>defaultprops</title>
+<indexterm><primary>defaultprops</primary><secondary>rwresprop.cpp</secondary></indexterm>
+<indexterm><primary>rwresprop.cpp</primary><secondary>defaultprops</secondary></indexterm>
+<para><computeroutput>struct <link linkend="_structresprop">resprop</link> defaultprops[]</computeroutput></para><emphasis role="strong">Initial value:</emphasis><programlisting>=&#32;{
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;-&apos;</emphasis>,&#32;&#32;&#32;0.00,&#32;&#32;&#32;0.0,&#32;&#32;0.0,&#32;&#32;0.00,&#32;&#32;0.0,&#32;&#32;0.0},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;*&apos;</emphasis>,&#32;&#32;&#32;0.00,&#32;&#32;&#32;0.0,&#32;&#32;0.0,&#32;&#32;0.00,&#32;&#32;0.0,&#32;&#32;0.0},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;A&apos;</emphasis>,&#32;&#32;89.09,&#32;&#32;89.0,&#32;&#32;3.4,&#32;&#32;0.10,&#32;&#32;0.0,&#32;-1.6},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;B&apos;</emphasis>,&#32;132.61,&#32;118.0,&#32;&#32;5.5,&#32;&#32;0.50,&#32;-0.5,&#32;&#32;7.0},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;C&apos;</emphasis>,&#32;121.15,&#32;103.0,&#32;&#32;4.4,&#32;&#32;0.24,&#32;&#32;0.0,&#32;-2.0},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;D&apos;</emphasis>,&#32;133.10,&#32;114.0,&#32;&#32;5.5,&#32;&#32;0.50,&#32;-1.0,&#32;&#32;9.2},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;E&apos;</emphasis>,&#32;147.13,&#32;139.0,&#32;&#32;6.1,&#32;&#32;0.50,&#32;-1.0,&#32;&#32;8.2},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;F&apos;</emphasis>,&#32;165.19,&#32;199.0,&#32;&#32;6.7,&#32;&#32;0.32,&#32;&#32;0.0,&#32;-3.7},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;G&apos;</emphasis>,&#32;&#32;75.07,&#32;&#32;64.0,&#32;&#32;2.3,&#32;&#32;0.07,&#32;&#32;0.0,&#32;-1.0},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;H&apos;</emphasis>,&#32;155.16,&#32;157.0,&#32;&#32;6.0,&#32;&#32;0.50,&#32;&#32;0.5,&#32;&#32;3.0},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;I&apos;</emphasis>,&#32;131.17,&#32;163.0,&#32;&#32;5.1,&#32;&#32;0.22,&#32;&#32;0.0,&#32;-3.1},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;K&apos;</emphasis>,&#32;146.19,&#32;165.0,&#32;&#32;6.7,&#32;&#32;0.50,&#32;&#32;1.0,&#32;&#32;8.8},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;L&apos;</emphasis>,&#32;131.17,&#32;163.0,&#32;&#32;5.5,&#32;&#32;0.20,&#32;&#32;0.0,&#32;-2.8},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;M&apos;</emphasis>,&#32;149.21,&#32;166.0,&#32;&#32;6.1,&#32;&#32;0.45,&#32;&#32;0.0,&#32;-3.4},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;N&apos;</emphasis>,&#32;132.12,&#32;122.0,&#32;&#32;5.5,&#32;&#32;0.50,&#32;&#32;0.0,&#32;&#32;4.8},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;P&apos;</emphasis>,&#32;115.13,&#32;122.0,&#32;&#32;4.4,&#32;&#32;0.50,&#32;&#32;0.0,&#32;&#32;0.2},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;Q&apos;</emphasis>,&#32;146.15,&#32;147.0,&#32;&#32;6.1,&#32;&#32;0.50,&#32;&#32;0.0,&#32;&#32;4.1},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;R&apos;</emphasis>,&#32;174.23,&#32;191.0,&#32;&#32;7.3,&#32;&#32;0.50,&#32;&#32;1.0,&#32;12.0},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;S&apos;</emphasis>,&#32;105.09,&#32;&#32;94.0,&#32;&#32;4.4,&#32;&#32;0.50,&#32;&#32;0.0,&#32;-0.6},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;T&apos;</emphasis>,&#32;119.12,&#32;120.0,&#32;&#32;4.5,&#32;&#32;0.50,&#32;&#32;0.0,&#32;-1.2},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;V&apos;</emphasis>,&#32;117.15,&#32;138.0,&#32;&#32;4.5,&#32;&#32;0.12,&#32;&#32;0.0,&#32;-2.6},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;W&apos;</emphasis>,&#32;204.23,&#32;226.0,&#32;&#32;7.4,&#32;&#32;0.61,&#32;&#32;0.0,&#32;-1.9},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;X&apos;</emphasis>,&#32;128.16,&#32;144.0,&#32;&#32;5.5,&#32;&#32;0.50,&#32;&#32;0.0,&#32;&#32;0.0},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;Y&apos;</emphasis>,&#32;181.19,&#32;195.0,&#32;&#32;7.3,&#32;&#32;0.50,&#32;&#32;0.0,&#32;&#32;0.7},
+&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;Z&apos;</emphasis>,&#32;146.64,&#32;143.0,&#32;&#32;6.1,&#32;&#32;0.50,&#32;-0.5,&#32;&#32;6.2},
+}
+</programlisting>    </section><anchor xml:id="_rwresprop_8cpp_1af8db9860b6743bffd4f1f304e7a9c35e"/>    <section>
+    <title>defaultsim</title>
+<indexterm><primary>defaultsim</primary><secondary>rwresprop.cpp</secondary></indexterm>
+<indexterm><primary>rwresprop.cpp</primary><secondary>defaultsim</secondary></indexterm>
+<para><computeroutput>float defaultsim[]</computeroutput></para><emphasis role="strong">Initial value:</emphasis><programlisting>=&#32;{
+&#32;&#32;&#32;&#32;1.0,1.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,
+&#32;&#32;&#32;&#32;1.0,1.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,-4.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,4.0,-2.0,0.0,-2.0,-1.0,-2.0,0.0,-2.0,-1.0,-1.0,-1.0,-1.0,-2.0,-1.0,-1.0,-1.0,1.0,0.0,0.0,-3.0,0.0,-2.0,-1.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,-2.0,4.0,-3.0,4.0,1.0,-3.0,-1.0,0.0,-3.0,0.0,-4.0,-3.0,3.0,-2.0,0.0,-1.0,0.0,-1.0,-3.0,-4.0,-1.0,-3.0,1.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,0.0,-3.0,9.0,-3.0,-4.0,-2.0,-3.0,-3.0,-1.0,-3.0,-1.0,-1.0,-3.0,-3.0,-3.0,-3.0,-1.0,-1.0,-1.0,-2.0,-2.0,-2.0,-3.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,-2.0,4.0,-3.0,6.0,2.0,-3.0,-1.0,-1.0,-3.0,-1.0,-4.0,-3.0,1.0,-1.0,0.0,-2.0,0.0,-1.0,-3.0,-4.0,-1.0,-3.0,1.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,-1.0,1.0,-4.0,2.0,5.0,-3.0,-2.0,0.0,-3.0,1.0,-3.0,-2.0,0.0,-1.0,2.0,0.0,0.0,-1.0,-2.0,-3.0,-1.0,-2.0,4.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,-2.0,-3.0,-2.0,-3.0,-3.0,6.0,-3.0,-1.0,0.0,-3.0,0.0,0.0,-3.0,-4.0,-3.0,-3.0,-2.0,-2.0,-1.0,1.0,-1.0,3.0,-3.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,0.0,-1.0,-3.0,-1.0,-2.0,-3.0,6.0,-2.0,-4.0,-2.0,-4.0,-3.0,0.0,-2.0,-2.0,-2.0,0.0,-2.0,-3.0,-2.0,-1.0,-3.0,-2.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,-2.0,0.0,-3.0,-1.0,0.0,-1.0,-2.0,8.0,-3.0,-1.0,-3.0,-2.0,1.0,-2.0,0.0,0.0,-1.0,-2.0,-3.0,-2.0,-1.0,2.0,0.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,-1.0,-3.0,-1.0,-3.0,-3.0,0.0,-4.0,-3.0,4.0,-3.0,2.0,1.0,-3.0,-3.0,-3.0,-3.0,-2.0,-1.0,3.0,-3.0,-1.0,-1.0,-3.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,-1.0,0.0,-3.0,-1.0,1.0,-3.0,-2.0,-1.0,-3.0,5.0,-2.0,-1.0,0.0,-1.0,1.0,2.0,0.0,-1.0,-2.0,-3.0,-1.0,-2.0,1.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,-1.0,-4.0,-1.0,-4.0,-3.0,0.0,-4.0,-3.0,2.0,-2.0,4.0,2.0,-3.0,-3.0,-2.0,-2.0,-2.0,-1.0,1.0,-2.0,-1.0,-1.0,-3.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,-1.0,-3.0,-1.0,-3.0,-2.0,0.0,-3.0,-2.0,1.0,-1.0,2.0,5.0,-2.0,-2.0,0.0,-1.0,-1.0,-1.0,1.0,-1.0,-1.0,-1.0,-1.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,-2.0,3.0,-3.0,1.0,0.0,-3.0,0.0,1.0,-3.0,0.0,-3.0,-2.0,6.0,-2.0,0.0,0.0,1.0,0.0,-3.0,-4.0,-1.0,-2.0,0.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,-1.0,-2.0,-3.0,-1.0,-1.0,-4.0,-2.0,-2.0,-3.0,-1.0,-3.0,-2.0,-2.0,7.0,-1.0,-2.0,-1.0,-1.0,-2.0,-4.0,-2.0,-3.0,-1.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,-1.0,0.0,-3.0,0.0,2.0,-3.0,-2.0,0.0,-3.0,1.0,-2.0,0.0,0.0,-1.0,5.0,1.0,0.0,-1.0,-2.0,-2.0,-1.0,-1.0,3.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,-1.0,-1.0,-3.0,-2.0,0.0,-3.0,-2.0,0.0,-3.0,2.0,-2.0,-1.0,0.0,-2.0,1.0,5.0,-1.0,-1.0,-3.0,-3.0,-1.0,-2.0,0.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,1.0,0.0,-1.0,0.0,0.0,-2.0,0.0,-1.0,-2.0,0.0,-2.0,-1.0,1.0,-1.0,0.0,-1.0,4.0,1.0,-2.0,-3.0,0.0,-2.0,0.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,0.0,-1.0,-1.0,-1.0,-1.0,-2.0,-2.0,-2.0,-1.0,-1.0,-1.0,-1.0,0.0,-1.0,-1.0,-1.0,1.0,5.0,0.0,-2.0,0.0,-2.0,-1.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,0.0,-3.0,-1.0,-3.0,-2.0,-1.0,-3.0,-3.0,3.0,-2.0,1.0,1.0,-3.0,-2.0,-2.0,-3.0,-2.0,0.0,4.0,-3.0,-1.0,-1.0,-2.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,-3.0,-4.0,-2.0,-4.0,-3.0,1.0,-2.0,-2.0,-3.0,-3.0,-2.0,-1.0,-4.0,-4.0,-2.0,-3.0,-3.0,-2.0,-3.0,11.0,-2.0,2.0,-3.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,0.0,-1.0,-2.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-2.0,-1.0,-1.0,0.0,0.0,-1.0,-2.0,-1.0,-1.0,-1.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,-2.0,-3.0,-2.0,-3.0,-2.0,3.0,-3.0,2.0,-1.0,-2.0,-1.0,-1.0,-2.0,-3.0,-1.0,-2.0,-2.0,-2.0,-1.0,2.0,-1.0,7.0,-2.0,
+&#32;&#32;&#32;&#32;-4.0,-4.0,-1.0,1.0,-3.0,1.0,4.0,-3.0,-2.0,0.0,-3.0,1.0,-3.0,-1.0,0.0,-1.0,3.0,0.0,0.0,-1.0,-2.0,-3.0,-1.0,-2.0,4.0,
+}
+</programlisting><para>
+Definition at line 66 of file rwresprop.cpp.</para>
+    </section><anchor xml:id="_rwresprop_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>rwresprop.cpp</secondary></indexterm>
+<indexterm><primary>rwresprop.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

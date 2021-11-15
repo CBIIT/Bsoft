@@ -1,0 +1,309 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_matrix__linear_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/matrix_linear.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/matrix_linear.h</primary></indexterm>
+<para>
+
+<para>Header file for matrix functions. </para>
+ 
+</para>
+<programlisting>#include &quot;Matrix.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>double <link linkend="_matrix__linear_8h_1ad7620824278a2da0d259913e6bd73776">linear_least_squares</link> (int n1, int n2, double *x, double *y, double &amp;a, double &amp;b)</para>
+
+<para>Does a linear least squares fit between two vectors. </para>
+</listitem>
+            <listitem><para>double <link linkend="_matrix__linear_8h_1aeccddb4bcf56b7a1fcceb9b0123584f7">linear_least_squares</link> (int n1, int n2, vector&lt; double &gt; &amp;x, vector&lt; double &gt; &amp;y, double &amp;a, double &amp;b)</para>
+</listitem>
+            <listitem><para>double <link linkend="_matrix__linear_8h_1a7853a2c181452d67d5b790c5c25f2eaa">fit_polynomial</link> (int n, double *x, double *y, int order, double *coeff)</para>
+
+<para>Fits a data set to a polynomial function. </para>
+</listitem>
+            <listitem><para>double <link linkend="_matrix__linear_8h_1a96b9d5bb2d1930cc83e25fc3e3c424e4">fit_polynomial</link> (int n, vector&lt; double &gt; &amp;x, vector&lt; double &gt; &amp;y, int order, vector&lt; double &gt; &amp;coeff)</para>
+
+<para>Fits a data set to a polynomial function. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_matrix__linear_8h_1ac48f8a8eabfcd6cdbafafa2a59484608">fit_plane</link> (<link linkend="_class_matrix">Matrix</link> a, vector&lt; double &gt; b)</para>
+
+<para>Solves for fitting a plane through a model. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for matrix functions. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20000501 </para>
+
+<para>Modified: 20210728 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_matrix__linear_8h_1ac48f8a8eabfcd6cdbafafa2a59484608"/>    <section>
+    <title>fit_plane()</title>
+<indexterm><primary>fit_plane</primary><secondary>matrix_linear.h</secondary></indexterm>
+<indexterm><primary>matrix_linear.h</primary><secondary>fit_plane</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; fit_plane (<link linkend="_class_matrix">Matrix</link> a, vector&lt; double &gt; b)</computeroutput></para><para>
+
+<para>Solves for fitting a plane through a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>a</entry>
+                                <entry>
+<para>3x3 matrix with cross-terms. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>b</entry>
+                                <entry>
+<para>3 vector with averages. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> plane normal. <literallayout><computeroutput>A plane is fit through the components and the normal calculated from:
+    n•p = d
+where n is the normal vector, p is a point in the plane, and d is the offset.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 285 of file matrix_linear.cpp.</para>
+    </section><anchor xml:id="_matrix__linear_8h_1a7853a2c181452d67d5b790c5c25f2eaa"/>    <section>
+    <title>fit_polynomial()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>fit_polynomial</primary><secondary>matrix_linear.h</secondary></indexterm>
+<indexterm><primary>matrix_linear.h</primary><secondary>fit_polynomial</secondary></indexterm>
+<para><computeroutput>double fit_polynomial (int n, double * x, double * y, int order, double * coeff)</computeroutput></para><para>
+
+<para>Fits a data set to a polynomial function. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>number of data points. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*x</entry>
+                                <entry>
+<para>x array (at least order+1 values). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*y</entry>
+                                <entry>
+<para>y array (at least order+1 values). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>order</entry>
+                                <entry>
+<para>polynomial order. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*coeff</entry>
+                                <entry>
+<para>array in which coefficients are returned (order+1 values) (if NULL, no coefficients returned). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double the deviation. <literallayout><computeroutput>A polynomial of any order is fitted to the data using a least squares.
+The polynomial is defined as:
+    f(x) = a0 + a1*x + a2*x^2 + ...
+The number of coefficients returned is the order plus one.
+The deviation is defined as:
+    R = sqrt(sum(y - f(x))^2/n)
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 224 of file matrix_linear.cpp.</para>
+    </section><anchor xml:id="_matrix__linear_8h_1a96b9d5bb2d1930cc83e25fc3e3c424e4"/>    <section>
+    <title>fit_polynomial()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>fit_polynomial</primary><secondary>matrix_linear.h</secondary></indexterm>
+<indexterm><primary>matrix_linear.h</primary><secondary>fit_polynomial</secondary></indexterm>
+<para><computeroutput>double fit_polynomial (int n, vector&lt; double &gt; &amp; x, vector&lt; double &gt; &amp; y, int order, vector&lt; double &gt; &amp; coeff)</computeroutput></para><para>
+
+<para>Fits a data set to a polynomial function. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>number of data points. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;x</entry>
+                                <entry>
+<para>x array (at least order+1 values). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;y</entry>
+                                <entry>
+<para>y array (at least order+1 values). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>order</entry>
+                                <entry>
+<para>polynomial order. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;coeff</entry>
+                                <entry>
+<para>array in which coefficients are returned (order+1 values) (if NULL, no coefficients returned). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double the deviation. <literallayout><computeroutput>A polynomial of any order is fitted to the data using a least squares.
+The polynomial is defined as:
+    f(x) = a0 + a1*x + a2*x^2 + ...
+The number of coefficients returned is the order plus one.
+The deviation is defined as:
+    R = sqrt(sum(y - f(x))^2/n)
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 157 of file matrix_linear.cpp.</para>
+    </section><anchor xml:id="_matrix__linear_8h_1ad7620824278a2da0d259913e6bd73776"/>    <section>
+    <title>linear_least_squares()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>linear_least_squares</primary><secondary>matrix_linear.h</secondary></indexterm>
+<indexterm><primary>matrix_linear.h</primary><secondary>linear_least_squares</secondary></indexterm>
+<para><computeroutput>double linear_least_squares (int n1, int n2, double * x, double * y, double &amp; a, double &amp; b)</computeroutput></para><para>
+
+<para>Does a linear least squares fit between two vectors. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>n1</entry>
+                                <entry>
+<para>the starting index in each vector (usually 0). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n2</entry>
+                                <entry>
+<para>the final index in each vector. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*x</entry>
+                                <entry>
+<para>x vector (at least n2+1 elements). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*y</entry>
+                                <entry>
+<para>y vector (at least n2+1 elements). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;a</entry>
+                                <entry>
+<para>the intercept. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;b</entry>
+                                <entry>
+<para>the slope. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double the correlation index. <literallayout><computeroutput>The two input vectors must have elements between indices n1 and n2.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 28 of file matrix_linear.cpp.</para>
+    </section><anchor xml:id="_matrix__linear_8h_1aeccddb4bcf56b7a1fcceb9b0123584f7"/>    <section>
+    <title>linear_least_squares()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>linear_least_squares</primary><secondary>matrix_linear.h</secondary></indexterm>
+<indexterm><primary>matrix_linear.h</primary><secondary>linear_least_squares</secondary></indexterm>
+<para><computeroutput>double linear_least_squares (int n1, int n2, vector&lt; double &gt; &amp; x, vector&lt; double &gt; &amp; y, double &amp; a, double &amp; b)</computeroutput></para><para>
+Definition at line 81 of file matrix_linear.cpp.</para>
+</section>
+</section>
+</section>

@@ -1,0 +1,125 @@
+.TH "/Users/bernard/b20/bsoft/include/rwGOODFORD.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/rwGOODFORD.h \- Header file for reading and writing Peter Goodford's GRID files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBGOODFORDhead\fP"
+.br
+.ti -1c
+.RI "struct \fBGFslice_head\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBGOODFORDSIZE\fP   168"
+.br
+.ti -1c
+.RI "#define \fBGFSLICESIZE\fP   20"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBreadGOODFORD\fP (\fBBimage\fP *p, int readdata)"
+.br
+.RI "Reading Peter Goodford's GRID map image file format\&. A 3D image format used for electrostatic potential maps\&. Header size: 168 bytes (fixed)\&. File format extensions: \&.pot The data is packed as slices, each slice with a header of size 20 bytes\&. Byte order determination: File type and third dimension values must be less than 256*256\&. Data types: 1 = float\&. "
+.ti -1c
+.RI "int \fBwriteGOODFORD\fP (\fBBimage\fP *p)"
+.br
+.RI "Writing Peter Goodford's GRID map image file format\&. A 3D image format used for electrostatic potential maps\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for reading and writing Peter Goodford's GRID files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20000924 
+.PP
+Modified: 20111217 
+.PP
+.nf
+Format: 3D electrostatic potential format for UHBD
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwGOODFORD\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define GFSLICESIZE   20"
+
+.PP
+Definition at line 14 of file rwGOODFORD\&.h\&.
+.SS "#define GOODFORDSIZE   168"
+
+.PP
+Definition at line 13 of file rwGOODFORD\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int readGOODFORD (\fBBimage\fP * p, int readdata)"
+
+.PP
+Reading Peter Goodford's GRID map image file format\&. A 3D image format used for electrostatic potential maps\&. Header size: 168 bytes (fixed)\&. File format extensions: \&.pot The data is packed as slices, each slice with a header of size 20 bytes\&. Byte order determination: File type and third dimension values must be less than 256*256\&. Data types: 1 = float\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.br
+\fIreaddata\fP flag to activate reading of image data\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 29 of file rwGOODFORD\&.cpp\&.
+.SS "int writeGOODFORD (\fBBimage\fP * p)"
+
+.PP
+Writing Peter Goodford's GRID map image file format\&. A 3D image format used for electrostatic potential maps\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 103 of file rwGOODFORD\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

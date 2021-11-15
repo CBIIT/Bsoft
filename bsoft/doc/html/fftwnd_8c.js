@@ -1,0 +1,26 @@
+var fftwnd_8c =
+[
+    [ "FFTWND_BUFFER_PADDING", "fftwnd_8c.html#a847c48fa65d18acce56e6b2e471e81e1", null ],
+    [ "FFTWND_DEFAULT_NBUFFERS", "fftwnd_8c.html#a9f2fcd9ef04b9459c0a12f25c733c41f", null ],
+    [ "FFTWND_NBUFFERS", "fftwnd_8c.html#aa18cc13b55fc3fd094e59f20c2125878", null ],
+    [ "fftw2d_create_plan", "fftwnd_8c.html#a53081a4ff74b66d3103c4c025b5913f3", null ],
+    [ "fftw2d_create_plan_specific", "fftwnd_8c.html#a8b369bf04598410c30c858a4b986a2fb", null ],
+    [ "fftw3d_create_plan", "fftwnd_8c.html#aa6a0e93289c4d3fba302be97a04e73c7", null ],
+    [ "fftw3d_create_plan_specific", "fftwnd_8c.html#a4c355f2187d5e69d5fa36bf1554efd54", null ],
+    [ "fftw_buffered", "fftwnd_8c.html#a525024f4c067b74dd00b9b6374413e8d", null ],
+    [ "fftwnd", "fftwnd_8c.html#ad87c9de85f6f12a86d504198c2886d4a", null ],
+    [ "fftwnd_aux", "fftwnd_8c.html#a84beec4180e50a9580b2dc81112a360b", null ],
+    [ "fftwnd_aux_howmany", "fftwnd_8c.html#aa314259c9eaefeb9ba3089730b99ca60", null ],
+    [ "fftwnd_create_plan", "fftwnd_8c.html#a7400f413b6a49bec656469f79dfddb40", null ],
+    [ "fftwnd_create_plan_aux", "fftwnd_8c.html#ac6a166d5f5df7fb1a36c8b8b0f897eb1", null ],
+    [ "fftwnd_create_plan_specific", "fftwnd_8c.html#a352cef9ecfab272d60cf42d57b8c4650", null ],
+    [ "fftwnd_create_plans_generic", "fftwnd_8c.html#ac3d9dbae8e40931884f217113a606754", null ],
+    [ "fftwnd_create_plans_specific", "fftwnd_8c.html#a564bcab78b080b1139369b746b3fcfe3", null ],
+    [ "fftwnd_destroy_plan", "fftwnd_8c.html#a619dc890e299e13a3facb5a57717fd2b", null ],
+    [ "fftwnd_fprint_plan", "fftwnd_8c.html#afc933d64d0879a331e0ac443d454a920", null ],
+    [ "fftwnd_measure_runtime", "fftwnd_8c.html#af21b6dc7d08c32a29d81fcdf46bd6ae6", null ],
+    [ "fftwnd_new_plan_array", "fftwnd_8c.html#a9eafc785d0ee34be5f548ee91ffd7449", null ],
+    [ "fftwnd_one", "fftwnd_8c.html#a4024dd7f20bf5bca2094fc81db6ba4e4", null ],
+    [ "fftwnd_print_plan", "fftwnd_8c.html#ab6484c04b8baf3e04ac9a4bb64134ff1", null ],
+    [ "fftwnd_work_size", "fftwnd_8c.html#a4c866593b86fc3230602092eed5fc1d6", null ]
+];

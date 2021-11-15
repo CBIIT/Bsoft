@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_balign_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/balign.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/balign.cpp</primary></indexterm>
+<para>
+
+<para>Aligns two images. </para>
+ 
+</para>
+<programlisting>#include &quot;rwimg.h&quot;
+#include &quot;ps_marker.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;options.h&quot;
+#include &quot;utilities.h&quot;
+#include &quot;timer.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_transform">Transform</link> <link linkend="_balign_8cpp_1a19ceb9be403a648693874979f82d7feb">img_align</link> (<link linkend="_class_bimage">Bimage</link> *p1, <link linkend="_class_bimage">Bimage</link> *p2, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; tile_size, double res_lo, double res_hi, double max_shift, int filter_flag, int refine_flag)</para>
+
+<para>Aligns the second image to the first. </para>
+</listitem>
+            <listitem><para>int <link linkend="_balign_8cpp_1a0ddf1224851353fc92bfbff6f499fa97">main</link> (int argc, char *argv[])</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_balign_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>const char * <link linkend="_balign_8cpp_1a4de0ad4c7190962494815c0fa7f948df">use</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Aligns two images. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20021111 </para>
+
+<para>Modified: 20160603 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_balign_8cpp_1a19ceb9be403a648693874979f82d7feb"/>    <section>
+    <title>img_align()</title>
+<indexterm><primary>img_align</primary><secondary>balign.cpp</secondary></indexterm>
+<indexterm><primary>balign.cpp</primary><secondary>img_align</secondary></indexterm>
+<para><computeroutput><link linkend="_class_transform">Transform</link> img_align (<link linkend="_class_bimage">Bimage</link> * p1, <link linkend="_class_bimage">Bimage</link> * p2, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; tile_size, double res_lo, double res_hi, double max_shift, int filter_flag, int refine_flag)</computeroutput></para><para>
+
+<para>Aligns the second image to the first. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p1</entry>
+                                <entry>
+<para>first image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p2</entry>
+                                <entry>
+<para>second image (transformed) </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tile_size</entry>
+                                <entry>
+<para>3-valued vector for the size of sub-images. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_lo</entry>
+                                <entry>
+<para>low resolution limit for cross-correlation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_hi</entry>
+                                <entry>
+<para>high resolution limit for cross-correlation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_shift</entry>
+                                <entry>
+<para>maximum shift allowed (default 1/4 of tile). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>filter_flag</entry>
+                                <entry>
+<para>flag to filter micrograph extremes. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>refine_flag</entry>
+                                <entry>
+<para>flag to turn on refinement of shift. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_transform">Transform</link> structure with shift, scale, rotation angle, and R factor. <literallayout><computeroutput>The second image is transformed to fit on the first image.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 144 of file balign.cpp.</para>
+    </section><anchor xml:id="_balign_8cpp_1a0ddf1224851353fc92bfbff6f499fa97"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>balign.cpp</secondary></indexterm>
+<indexterm><primary>balign.cpp</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char * argv[])</computeroutput></para><para>
+Definition at line 45 of file balign.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_balign_8cpp_1a4de0ad4c7190962494815c0fa7f948df"/>    <section>
+    <title>use</title>
+<indexterm><primary>use</primary><secondary>balign.cpp</secondary></indexterm>
+<indexterm><primary>balign.cpp</primary><secondary>use</secondary></indexterm>
+<para><computeroutput>const char* use[]</computeroutput></para><emphasis role="strong">Initial value:</emphasis><programlisting>=&#32;{
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Usage:&#32;balign&#32;[options]&#32;input1.img&#32;input2.img&#32;output.img&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;--------------------------------------------------------&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;The&#32;second&#32;input&#32;image&#32;is&#32;aligned&#32;to&#32;the&#32;first,&#32;transformed&#32;and&#32;output.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;(Note:&#32;This&#32;program&#32;is&#32;intended&#32;to&#32;align&#32;very&#32;large&#32;micrograph&#32;images).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Actions:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-add&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Add&#32;input&#32;images&#32;after&#32;transforming&#32;the&#32;second.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-filterextremes&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Filter&#32;micrograph&#32;extremes&#32;before&#32;aligning.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Parameters:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-verbose&#32;7&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Verbosity&#32;of&#32;output.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-datatype&#32;u&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Force&#32;writing&#32;of&#32;a&#32;new&#32;data&#32;type.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-sampling&#32;1.5,1.5,1.5&#32;&#32;&#32;&#32;Sampling&#32;(A/pixel;&#32;a&#32;single&#32;value&#32;can&#32;be&#32;given).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-tile&#32;1024,1024,5&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Size&#32;of&#32;tiles&#32;for&#32;correlation&#32;(default&#32;512,512,1).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-resolution&#32;30,500&#32;&#32;&#32;&#32;&#32;&#32;&#32;High&#32;and&#32;low&#32;resolution&#32;limits&#32;for&#32;cross-correlation&#32;(default&#32;0.1,1000).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-maxshift&#32;55&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Maximum&#32;allowed&#32;shift&#32;(default&#32;1/4&#32;of&#32;tile).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+NULL
+}
+</programlisting><para>
+Definition at line 23 of file balign.cpp.</para>
+    </section><anchor xml:id="_balign_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>balign.cpp</secondary></indexterm>
+<indexterm><primary>balign.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

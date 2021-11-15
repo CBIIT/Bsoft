@@ -1,0 +1,294 @@
+.TH "/Users/bernard/b20/bsoft/include/rwmodel_bild.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/rwmodel_bild.h \- Header file for reading and writing Chimera BILD files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBmodel\fP * \fBread_model_bild\fP (\fBBstring\fP *\fBfile_list\fP)"
+.br
+.RI "Reads Chimera BILD model parameters\&. "
+.ti -1c
+.RI "int \fBwrite_model_bild\fP (\fBBstring\fP &filename, \fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Writes Chimera BILD model parameters\&. "
+.ti -1c
+.RI "int \fBmodel_to_bild_orientations\fP (\fBBstring\fP &filename, \fBBmodel\fP *\fBmodel\fP, int vec_type, int color_type)"
+.br
+.RI "Converts a model into a representation with views\&. "
+.ti -1c
+.RI "int \fBmodel_to_bild_view_sphere\fP (\fBBstring\fP &filename, \fBBmodel\fP *\fBmodel\fP, int color_type)"
+.br
+.RI "Converts a model into a representation with views\&. "
+.ti -1c
+.RI "int \fBmodel_to_bild_force_vectors\fP (\fBBstring\fP &filename, \fBBmodel\fP *\fBmodel\fP, int color_type)"
+.br
+.RI "Converts a model into a representation with views\&. "
+.ti -1c
+.RI "int \fBmodel_to_bild_view_polygons\fP (\fBBstring\fP &filename, \fBBmodel\fP *\fBmodel\fP, int order, int color_type)"
+.br
+.RI "Converts a model into a representation with view polygons\&. "
+.ti -1c
+.RI "int \fBmodel_to_bild_polygons\fP (\fBBstring\fP &filename, \fBBmodel\fP *\fBmodel\fP, int color_type)"
+.br
+.RI "Converts a model into a bild polygon representation\&. "
+.ti -1c
+.RI "int \fBmodel_to_bild_neighbor_planes\fP (\fBBstring\fP &filename, \fBBmodel\fP *\fBmodel\fP, int color_type)"
+.br
+.RI "Converts a model into a bild neighbor plane representation\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for reading and writing Chimera BILD files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20140706 
+.PP
+Modified: 20210305 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwmodel_bild\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int model_to_bild_force_vectors (\fBBstring\fP & filename, \fBBmodel\fP * model, int color_type)"
+
+.PP
+Converts a model into a representation with views\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP bild format file name\&. 
+.br
+\fI*model\fP model structure\&. 
+.br
+\fIcolor_type\fP flag to color components\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+A sphere is drawn for every component with a cylinder indicating its view.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 457 of file rwmodel_bild\&.cpp\&.
+.SS "int model_to_bild_neighbor_planes (\fBBstring\fP & filename, \fBBmodel\fP * model, int color_type)"
+
+.PP
+Converts a model into a bild neighbor plane representation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP bild format file name\&. 
+.br
+\fI*model\fP model structure\&. 
+.br
+\fIcolor_type\fP flag to color planes\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+Color scheme types:
+    1   spectrum/rainbow.
+    2   fom.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 684 of file rwmodel_bild\&.cpp\&.
+.SS "int model_to_bild_orientations (\fBBstring\fP & filename, \fBBmodel\fP * model, int vec_type, int color_type)"
+
+.PP
+Converts a model into a representation with views\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP bild format file name\&. 
+.br
+\fI*model\fP model structure\&. 
+.br
+\fIvec_type\fP 0=views, 1=vectors, 2=velocity vectors\&. 
+.br
+\fIcolor_type\fP flag to color components\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+A sphere is drawn for every component with a cylinder indicating its view.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 287 of file rwmodel_bild\&.cpp\&.
+.SS "int model_to_bild_polygons (\fBBstring\fP & filename, \fBBmodel\fP * model, int color_type)"
+
+.PP
+Converts a model into a bild polygon representation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP bild format file name\&. 
+.br
+\fI*model\fP model structure\&. 
+.br
+\fIcolor_type\fP flag to color polygons\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+Color scheme types:
+    1   spectrum/rainbow.
+    2   fom.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 614 of file rwmodel_bild\&.cpp\&.
+.SS "int model_to_bild_view_polygons (\fBBstring\fP & filename, \fBBmodel\fP * model, int order, int color_type)"
+
+.PP
+Converts a model into a representation with view polygons\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP bild format file name\&. 
+.br
+\fI*model\fP model structure\&. 
+.br
+\fIorder\fP polygon order\&. 
+.br
+\fIcolor_type\fP flag to color components\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+A sphere is drawn for every component with a cylinder indicating its view.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 535 of file rwmodel_bild\&.cpp\&.
+.SS "int model_to_bild_view_sphere (\fBBstring\fP & filename, \fBBmodel\fP * model, int color_type)"
+
+.PP
+Converts a model into a representation with views\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP bild format file name\&. 
+.br
+\fI*model\fP model structure\&. 
+.br
+\fIcolor_type\fP flag to color components\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+A sphere is drawn for every component with a cylinder indicating its view.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 374 of file rwmodel_bild\&.cpp\&.
+.SS "\fBBmodel\fP* read_model_bild (\fBBstring\fP * file_list)"
+
+.PP
+Reads Chimera BILD model parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*file_list\fP list of model parameter file names\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* model parameters\&. 
+.RE
+.PP
+
+.PP
+Definition at line 47 of file rwmodel_bild\&.cpp\&.
+.SS "int write_model_bild (\fBBstring\fP & filename, \fBBmodel\fP * model)"
+
+.PP
+Writes Chimera BILD model parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP model parameter file name\&. 
+.br
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int models written\&. 
+.RE
+.PP
+
+.PP
+Definition at line 238 of file rwmodel_bild\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,112 @@
+.TH "/Users/bernard/b20/bsoft/include/rwmgSerialEM.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/rwmgSerialEM.h \- Converts between SerialEM MDOC files and a micrograph parameter file\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBread_project_serialem\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP, int flag)"
+.br
+.RI "Creates a project structure using SerialEM MDOC parameters\&. "
+.ti -1c
+.RI "int \fBwrite_project_serialem\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Creates SerialEM MDOC files from a project structure\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Converts between SerialEM MDOC files and a micrograph parameter file\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20190109 
+.PP
+Modified: 20190109 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwmgSerialEM\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int read_project_serialem (\fBBstring\fP & filename, \fBBproject\fP * project, int flag)"
+
+.PP
+Creates a project structure using SerialEM MDOC parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIfilename\fP SerialEM MDOC file name\&. 
+.br
+\fI*project\fP initialized project structure\&. 
+.br
+\fIflag\fP flag to indicate conversion of the image file\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.PP
+.nf
+Requirements:
+    Tilt series micrograph image (if 3D then converted to multi-2D)
+    2D transform file (.xf)
+    Tilt angle file (.tlt)
+Calculations:
+    Tilt angle: from tilt angle file
+    Tilt axis: ta = (atan2(-A11, A12) + atan2(-A22, -A21))/2
+    Mg origin: o = on - Ad
+where
+    A:  2x2 transformation matrix
+    ta: tilt axis angle
+    on: nominal micrograph origin (center of mg)
+    o:  aligned micrograph origin
+    d:  shift for micrograph
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 44 of file rwmgSerialEM\&.cpp\&.
+.SS "int write_project_serialem (\fBBstring\fP & filename, \fBBproject\fP * project)"
+
+.PP
+Creates SerialEM MDOC files from a project structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIfilename\fP SerialEM MDOC file name\&. 
+.br
+\fIproject\fP project structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 195 of file rwmgSerialEM\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,782 @@
+.TH "/Users/bernard/b20/bsoft/include/mg_extract.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/mg_extract.h \- Header file for functions to extract particles from micrographs\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBparticle_setup_filenames\fP (\fBBparticle\fP *part, \fBBstring\fP filename, \fBBstring\fP partpath)"
+.br
+.RI "Sets up individual particle file names for extraction\&. "
+.ti -1c
+.RI "int \fBfilament_setup_filenames\fP (\fBBfilament\fP *fil, \fBBstring\fP filename, \fBBstring\fP filpath)"
+.br
+.RI "Sets up individual filament file names for extraction\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > * \fBvector3_spline_from_nodes\fP (\fBBfilnode\fP *fnode, long &nspline)"
+.br
+.RI "Calculates a spline curve from a set of filament nodes\&. "
+.ti -1c
+.RI "long \fBproject_extract_particles\fP (\fBBproject\fP *\fBproject\fP, double scale, int back_flag, int norm_flag, int fill_type, double fill, int mask_width, int \fBsplit\fP, \fBBstring\fP &partbase, \fBBstring\fP &partpath, \fBBstring\fP &partext)"
+.br
+.RI "Extracts particle images from micrographs defined in a project\&. "
+.ti -1c
+.RI "long \fBmicrograph_extract_particles\fP (\fBBmicrograph\fP *mg, \fBBimage\fP *p, double scale, int back_flag, int norm_flag, double fill, int mask_width)"
+.br
+.RI "Extracts particle images from a micrograph\&. "
+.ti -1c
+.RI "long \fBreconstruction_extract_particles\fP (\fBBreconstruction\fP *rec, \fBBimage\fP *p, double scale, int back_flag, int norm_flag, double fill, int mask_width)"
+.br
+.RI "Extracts particle images from a reconstruction\&. "
+.ti -1c
+.RI "\fBBparticle\fP * \fBreconstruction_project_extract_particles\fP (\fBBreconstruction\fP *rec, \fBBimage\fP *p, double scale, int back_flag, int norm_flag, double fill, int mask_width)"
+.br
+.RI "Extracts and projects 3D particle images from a reconstruction and return a 2D list\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBparticle_extract\fP (\fBBparticle\fP *particles, \fBBbadarea\fP *bad_areas, \fBBimage\fP *p, \fBVector3\fP< long > size, double scale, double bad_radius, int back_flag, int norm_flag, double fill, int mask_width)"
+.br
+.RI "Extracts particle images from an image\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBmicrograph_extract_gold\fP (\fBBmicrograph\fP *mg, \fBBimage\fP *p, double radius)"
+.br
+.RI "Extracts gold particle images from a micrograph\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBreconstruction_extract_gold\fP (\fBBreconstruction\fP *rec, \fBBimage\fP *p, double radius)"
+.br
+.RI "Extracts gold particle images from a reconstruction\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBmarker_extract_gold\fP (\fBBmarker\fP *\fBmarker_list\fP, \fBBimage\fP *p, int img_num, double radius)"
+.br
+.RI "Extracts gold particle images from an image\&. "
+.ti -1c
+.RI "long \fBproject_extract_filaments\fP (\fBBproject\fP *\fBproject\fP, int filament_width, int axis, \fBBstring\fP &\fBbase\fP, \fBBstring\fP &path, \fBBstring\fP &ext, int \fBsplit\fP)"
+.br
+.RI "Extracts filament images from micrographs defined in a project\&. "
+.ti -1c
+.RI "long \fBmicrograph_extract_filaments\fP (\fBBmicrograph\fP *mg, \fBBimage\fP *p, double width, int axis)"
+.br
+.RI "Extracts filament images from a micrograph\&. "
+.ti -1c
+.RI "long \fBreconstruction_extract_filaments\fP (\fBBreconstruction\fP *rec, \fBBimage\fP *p, double width, int axis)"
+.br
+.RI "Extracts filament images from a micrograph\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBfilament_extract\fP (\fBBfilament\fP *filaments, \fBBimage\fP *p, double width, int axis)"
+.br
+.RI "Extracts filament images from a micrograph\&. "
+.ti -1c
+.RI "int \fBproject_filaments_to_particles\fP (\fBBproject\fP *\fBproject\fP, \fBVector3\fP< long > box_size, double boxing_interval, double rise, double \fBangle\fP)"
+.br
+.RI "Converts filaments to sets of particles\&. "
+.ti -1c
+.RI "int \fBmicrograph_filaments_to_particles\fP (\fBBmicrograph\fP *mg, \fBVector3\fP< long > box_size, double boxing_interval, double rise, double \fBangle\fP)"
+.br
+.RI "Converts filaments to sets of particles\&. "
+.ti -1c
+.RI "int \fBreconstruction_filaments_to_particles\fP (\fBBreconstruction\fP *rec, \fBVector3\fP< long > box_size, double boxing_interval, double rise, double \fBangle\fP)"
+.br
+.RI "Converts filaments to sets of particles\&. "
+.ti -1c
+.RI "\fBBparticle\fP * \fBfilaments_to_particles\fP (\fBBfilament\fP *filaments, \fBVector3\fP< double > pixel_size, \fBVector3\fP< long > box_size, double boxing_interval, double rise, double \fBangle\fP)"
+.br
+.RI "Converts filaments to sets of particles\&. "
+.ti -1c
+.RI "int \fBproject_mask_filament_particles\fP (\fBBproject\fP *\fBproject\fP, int mask_width)"
+.br
+.RI "Masks particles extracted from filaments\&. "
+.ti -1c
+.RI "int \fBproject_rotate_mask_filament_particles\fP (\fBBproject\fP *\fBproject\fP, int rotation_axis, int back_flag, int mask_width)"
+.br
+.RI "Rotates and masks particles extracted from filaments\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for functions to extract particles from micrographs\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20040406 
+.PP
+Modified: 20200616 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_extract\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBimage\fP* filament_extract (\fBBfilament\fP * filaments, \fBBimage\fP * p, double width, int axis)"
+
+.PP
+Extracts filament images from a micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*filaments\fP filament parameters\&. 
+.br
+\fI*p\fP image\&. 
+.br
+\fIwidth\fP width of box around filament to extract\&. 
+.br
+\fIaxis\fP helical axis alignment: x=1, y=2, z=3\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* multi-filament image\&. 
+.PP
+.nf
+If the file names for individual filaments are specified, they are
+used to write individual filaments to files.
+Default axis alignment (for axis==0):
+    2D images:  x-axis (1)
+    3D images:  z-axis (3)
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 934 of file mg_extract\&.cpp\&.
+.SS "int filament_setup_filenames (\fBBfilament\fP * fil, \fBBstring\fP filename, \fBBstring\fP filpath)"
+
+.PP
+Sets up individual filament file names for extraction\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fil\fP filament list\&. 
+.br
+\fIfilename\fP filament file name base\&. 
+.br
+\fIfilpath\fP filament path with optional wild card characters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of filaments\&. 
+.PP
+.nf
+The filament path can have wildcard characters ('?') that specify
+the number of digits to use to insert numbers in the path and
+the file name.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 86 of file mg_extract\&.cpp\&.
+.SS "\fBBparticle\fP* filaments_to_particles (\fBBfilament\fP * filaments, \fBVector3\fP< double > pixel_size, \fBVector3\fP< long > box_size, double boxing_interval, double rise, double angle)"
+
+.PP
+Converts filaments to sets of particles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*filaments\fP filament parameters\&. 
+.br
+\fIpixel_size\fP sampling\&. 
+.br
+\fIbox_size\fP size of particle box\&. 
+.br
+\fIboxing_interval\fP step size between boxes\&. 
+.br
+\fIrise\fP rise per asymmetric unit in angstrom\&. 
+.br
+\fIangle\fP angular rotation per asymmetric unit in radians\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bparticle* pointer to new list of particles\&. 
+.PP
+.nf
+Particle coordinates are calculated along a spline curve through
+the filament nodes, separated by half the given width.
+Different filaments in a micrograph are indicated by the selection number.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1113 of file mg_extract\&.cpp\&.
+.SS "\fBBimage\fP* marker_extract_gold (\fBBmarker\fP * marker_list, \fBBimage\fP * p, int img_num, double radius)"
+
+.PP
+Extracts gold particle images from an image\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*marker_list\fP marker parameters\&. 
+.br
+\fI*p\fP image\&. 
+.br
+\fIimg_num\fP sub-image number\&. 
+.br
+\fIradius\fP radius of gold particle\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* multi-particle image\&. 
+.RE
+.PP
+
+.PP
+Definition at line 702 of file mg_extract\&.cpp\&.
+.SS "long micrograph_extract_filaments (\fBBmicrograph\fP * mg, \fBBimage\fP * p, double width, int axis)"
+
+.PP
+Extracts filament images from a micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph parameters\&. 
+.br
+\fI*p\fP micrograph image\&. 
+.br
+\fIwidth\fP width of box around filament to extract\&. 
+.br
+\fIaxis\fP helical axis alignment: x=1, y=2, z=3\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of filaments\&. 
+.RE
+.PP
+
+.PP
+Definition at line 875 of file mg_extract\&.cpp\&.
+.SS "\fBBimage\fP* micrograph_extract_gold (\fBBmicrograph\fP * mg, \fBBimage\fP * p, double radius)"
+
+.PP
+Extracts gold particle images from a micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph parameters\&. 
+.br
+\fI*p\fP micrograph image\&. 
+.br
+\fIradius\fP radius of gold particle\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* multi-particle image\&. 
+.RE
+.PP
+
+.PP
+Definition at line 665 of file mg_extract\&.cpp\&.
+.SS "long micrograph_extract_particles (\fBBmicrograph\fP * mg, \fBBimage\fP * p, double scale, int back_flag, int norm_flag, double fill, int mask_width)"
+
+.PP
+Extracts particle images from a micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph parameters\&. 
+.br
+\fI*p\fP micrograph image\&. 
+.br
+\fIscale\fP scale to extract (usually 1)\&. 
+.br
+\fIback_flag\fP background correction flag\&. 
+.br
+\fInorm_flag\fP normalization flag\&. 
+.br
+\fIfill\fP value to fill in new regions\&. 
+.br
+\fImask_width\fP filament mask width, if 0, don't apply\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles\&. 
+.RE
+.PP
+
+.PP
+Definition at line 352 of file mg_extract\&.cpp\&.
+.SS "int micrograph_filaments_to_particles (\fBBmicrograph\fP * mg, \fBVector3\fP< long > box_size, double boxing_interval, double rise, double angle)"
+
+.PP
+Converts filaments to sets of particles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph parameters\&. 
+.br
+\fIbox_size\fP size of particle box\&. 
+.br
+\fIboxing_interval\fP step size between boxes\&. 
+.br
+\fIrise\fP rise per asymmetric unit in angstrom\&. 
+.br
+\fIangle\fP angular rotation per asymmetric unit in radians\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of filaments converted\&. 
+.PP
+.nf
+Particle coordinates are calculated along a spline curve through
+the filament nodes, separated by half the given width.
+Different filaments in a micrograph are indicated by the selection number.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1040 of file mg_extract\&.cpp\&.
+.SS "\fBBimage\fP* particle_extract (\fBBparticle\fP * particles, \fBBbadarea\fP * bad_areas, \fBBimage\fP * p, \fBVector3\fP< long > size, double scale, double bad_radius, int back_flag, int norm_flag, double fill, int mask_width)"
+
+.PP
+Extracts particle images from an image\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*particles\fP particle parameters\&. 
+.br
+\fI*bad_areas\fP bad area parameters\&. 
+.br
+\fI*p\fP image\&. 
+.br
+\fIsize\fP size of box to extract\&. 
+.br
+\fIscale\fP scale to extract (usually 1)\&. 
+.br
+\fIbad_radius\fP radius of bad area\&. 
+.br
+\fIback_flag\fP background correction flag\&. 
+.br
+\fInorm_flag\fP normalization flag\&. 
+.br
+\fIfill\fP value to fill in new regions\&. 
+.br
+\fImask_width\fP filament mask width, if 0, don't apply\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* multi-particle image\&. 
+.PP
+.nf
+If the background flag is specified, the particle mask is set in the 
+background, defined as outside the inscribing circle.
+The mask is set within every bad area in the micrograph and
+transferred to the mask for a particle where it overlaps.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 491 of file mg_extract\&.cpp\&.
+.SS "int particle_setup_filenames (\fBBparticle\fP * part, \fBBstring\fP filename, \fBBstring\fP partpath)"
+
+.PP
+Sets up individual particle file names for extraction\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*part\fP particle list\&. 
+.br
+\fIfilename\fP particle file name base\&. 
+.br
+\fIpartpath\fP particle path with optional wild card characters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles\&. 
+.PP
+.nf
+The particle path can have wildcard characters ('?') that specify
+the number of digits to use to insert numbers in the path and
+the file name.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 36 of file mg_extract\&.cpp\&.
+.SS "long project_extract_filaments (\fBBproject\fP * project, int filament_width, int axis, \fBBstring\fP & base, \fBBstring\fP & path, \fBBstring\fP & ext, int split)"
+
+.PP
+Extracts filament images from micrographs defined in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph project\&. 
+.br
+\fIfilament_width\fP extracted filament width\&. 
+.br
+\fIaxis\fP helical axis alignment: x=1, y=2, z=3\&. 
+.br
+\fI&base\fP file name base\&. 
+.br
+\fI&path\fP path to filament file\&. 
+.br
+\fI&ext\fP filament file extension\&. 
+.br
+\fIsplit\fP flag to split filaments into individual files\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of filaments, <0 on error\&. 
+.RE
+.PP
+
+.PP
+Definition at line 766 of file mg_extract\&.cpp\&.
+.SS "long project_extract_particles (\fBBproject\fP * project, double scale, int back_flag, int norm_flag, int fill_type, double fill, int mask_width, int split, \fBBstring\fP & partbase, \fBBstring\fP & partpath, \fBBstring\fP & partext)"
+
+.PP
+Extracts particle images from micrographs defined in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph project\&. 
+.br
+\fIscale\fP scale to extract (usually 1)\&. 
+.br
+\fIback_flag\fP background correction flag\&. 
+.br
+\fInorm_flag\fP normalization flag\&. 
+.br
+\fIfill_type\fP FILL_AVERAGE, FILL_BACKGROUND, FILL_USER\&. 
+.br
+\fIfill\fP value to fill in new regions\&. 
+.br
+\fImask_width\fP filament mask width, if 0, don't apply\&. 
+.br
+\fIsplit\fP flag to split images into separate files\&. 
+.br
+\fI&partbase\fP file name base\&. 
+.br
+\fI&partpath\fP path to particle file\&. 
+.br
+\fI&partext\fP particle file extension\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles, <0 on error\&. 
+.RE
+.PP
+
+.PP
+Definition at line 161 of file mg_extract\&.cpp\&.
+.SS "int project_filaments_to_particles (\fBBproject\fP * project, \fBVector3\fP< long > box_size, double boxing_interval, double rise, double angle)"
+
+.PP
+Converts filaments to sets of particles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameters\&. 
+.br
+\fIbox_size\fP size of particle box\&. 
+.br
+\fIboxing_interval\fP step size between boxes\&. 
+.br
+\fIrise\fP rise per asymmetric unit in angstrom\&. 
+.br
+\fIangle\fP angular rotation per asymmetric unit in radians\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of filaments converted\&. 
+.PP
+.nf
+Particle coordinates are calculated along a spline curve through
+the filament nodes, separated by half the given width.
+Different filaments in a micrograph are indicated by the selection number.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1006 of file mg_extract\&.cpp\&.
+.SS "int project_mask_filament_particles (\fBBproject\fP * project, int mask_width)"
+
+.PP
+Masks particles extracted from filaments\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameters\&. 
+.br
+\fImask_width\fP width of mask to apply\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of particles masked\&. 
+.PP
+.nf
+The orientation of the filament is inferred from the view angle and
+the adjacent regions are set to the background.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1176 of file mg_extract\&.cpp\&.
+.SS "int project_rotate_mask_filament_particles (\fBBproject\fP * project, int rotation_axis, int back_flag, int mask_width)"
+
+.PP
+Rotates and masks particles extracted from filaments\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameters\&. 
+.br
+\fIrotation_axis\fP axis to rotate to: 1=x, 2=y, 3=z\&. 
+.br
+\fIback_flag\fP background correction flag\&. 
+.br
+\fImask_width\fP width of mask to apply\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of particles masked\&. 
+.PP
+.nf
+The orientation of the filament is inferred from the view angle and
+the particle is rotated to orient the filament axis along a cartesian axis. 
+The mask is applied and adjacent regions are set to the background.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1208 of file mg_extract\&.cpp\&.
+.SS "long reconstruction_extract_filaments (\fBBreconstruction\fP * rec, \fBBimage\fP * p, double width, int axis)"
+
+.PP
+Extracts filament images from a micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*rec\fP reconstruction parameters\&. 
+.br
+\fI*p\fP reconstruction image\&. 
+.br
+\fIwidth\fP width of box around filament to extract\&. 
+.br
+\fIaxis\fP helical axis alignment: x=1, y=2, z=3\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of filaments\&. 
+.RE
+.PP
+
+.PP
+Definition at line 901 of file mg_extract\&.cpp\&.
+.SS "\fBBimage\fP* reconstruction_extract_gold (\fBBreconstruction\fP * rec, \fBBimage\fP * p, double radius)"
+
+.PP
+Extracts gold particle images from a reconstruction\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*rec\fP reconstruction parameters\&. 
+.br
+\fI*p\fP reconstruction image\&. 
+.br
+\fIradius\fP radius of gold particle\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* multi-particle image\&. 
+.RE
+.PP
+
+.PP
+Definition at line 683 of file mg_extract\&.cpp\&.
+.SS "long reconstruction_extract_particles (\fBBreconstruction\fP * rec, \fBBimage\fP * p, double scale, int back_flag, int norm_flag, double fill, int mask_width)"
+
+.PP
+Extracts particle images from a reconstruction\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*rec\fP reconstruction parameters\&. 
+.br
+\fI*p\fP micrograph image\&. 
+.br
+\fIscale\fP scale to extract (usually 1)\&. 
+.br
+\fIback_flag\fP background correction flag\&. 
+.br
+\fInorm_flag\fP normalization flag\&. 
+.br
+\fIfill\fP value to fill in new regions\&. 
+.br
+\fImask_width\fP filament mask width, if 0, don't apply\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles\&. 
+.RE
+.PP
+
+.PP
+Definition at line 386 of file mg_extract\&.cpp\&.
+.SS "int reconstruction_filaments_to_particles (\fBBreconstruction\fP * rec, \fBVector3\fP< long > box_size, double boxing_interval, double rise, double angle)"
+
+.PP
+Converts filaments to sets of particles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*rec\fP reconstruction parameters\&. 
+.br
+\fIbox_size\fP size of particle box\&. 
+.br
+\fIboxing_interval\fP step size between boxes\&. 
+.br
+\fIrise\fP rise per asymmetric unit in angstrom\&. 
+.br
+\fIangle\fP angular rotation per asymmetric unit in radians\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of filaments converted\&. 
+.PP
+.nf
+Particle coordinates are calculated along a spline curve through
+the filament nodes, separated by half the given width.
+Different filaments in a micrograph are indicated by the selection number.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1076 of file mg_extract\&.cpp\&.
+.SS "\fBBparticle\fP* reconstruction_project_extract_particles (\fBBreconstruction\fP * rec, \fBBimage\fP * p, double scale, int back_flag, int norm_flag, double fill, int mask_width)"
+
+.PP
+Extracts and projects 3D particle images from a reconstruction and return a 2D list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*rec\fP reconstruction parameters\&. 
+.br
+\fI*p\fP micrograph image\&. 
+.br
+\fIscale\fP scale to extract (usually 1)\&. 
+.br
+\fIback_flag\fP background correction flag\&. 
+.br
+\fInorm_flag\fP normalization flag\&. 
+.br
+\fIfill\fP value to fill in new regions\&. 
+.br
+\fImask_width\fP filament mask width, if 0, don't apply\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bparticle* list of 2D particles\&. 
+.PP
+.nf
+The file name of the new particles is returned in the image file name.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 423 of file mg_extract\&.cpp\&.
+.SS "\fBVector3\fP<double>* vector3_spline_from_nodes (\fBBfilnode\fP * fnode, long & nspline)"
+
+.PP
+Calculates a spline curve from a set of filament nodes\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fnode\fP node list\&. 
+.br
+\fI&nspline\fP number of elements in the spline array\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP* array of spline coordinates\&. 
+.PP
+.nf
+The node coordinates are copied into a new array used to calculate the spline array.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 128 of file mg_extract\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

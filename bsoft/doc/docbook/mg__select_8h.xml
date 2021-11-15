@@ -1,0 +1,2170 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__select_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/mg_select.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/mg_select.h</primary></indexterm>
+<para>
+
+<para>Header file for micrograph processing. </para>
+ 
+</para>
+<programlisting>#include &quot;ctf.h&quot;
+#include &quot;symmetry.h&quot;
+#include &quot;marker.h&quot;
+#include &quot;View.h&quot;
+#include &quot;Euler.h&quot;
+#include &quot;Bstring.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bfield">Bfield</link> * <link linkend="_mg__select_8h_1a45810a20edb8af24806e4714c16c500d">field_find_id</link> (<link linkend="_class_bfield">Bfield</link> *field, <link linkend="_class_bstring">Bstring</link> &amp;field_id)</para>
+
+<para>Finds a field-of-view based on its identifier. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmicrograph">Bmicrograph</link> * <link linkend="_mg__select_8h_1aade03929a0337e4503da2409863ca1a0">field_find_micrograph</link> (<link linkend="_class_bfield">Bfield</link> *field, int mg_select, int mg_index, double mg_ang)</para>
+
+<para>Returns a pointer to a specific micrograph in a field-of-view structure based on a unique characteristic of that micrograph. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmicrograph">Bmicrograph</link> * <link linkend="_mg__select_8h_1a1eb0089167cd6208688f200f90862a3c">field_find_micrograph_n</link> (<link linkend="_class_bfield">Bfield</link> *field, int n)</para>
+
+<para>Returns a pointer to the nth micrograph in a field-of-view structure. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmicrograph">Bmicrograph</link> * <link linkend="_mg__select_8h_1a0f1c206ae9649cf3264251635461e9ca">field_find_micrograph_by_focus</link> (<link linkend="_class_bfield">Bfield</link> *field, int focus_opt, int index)</para>
+
+<para>Returns a pointer to the micrograph in a field-of-view structure based on the focus level and iteration index. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmicrograph">Bmicrograph</link> * <link linkend="_mg__select_8h_1a75786ba6e6327763d476677bb3886cf9">field_find_micrograph_by_rotang</link> (<link linkend="_class_bfield">Bfield</link> *field, double rotang)</para>
+
+<para>Returns a pointer to the micrograph in a field-of-view structure with the specified in-plane rotational angle. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmicrograph">Bmicrograph</link> * <link linkend="_mg__select_8h_1a09911941af317755d147a980ab5b5ef1">field_find_micrograph_by_tiltang</link> (<link linkend="_class_bfield">Bfield</link> *field, double tiltang)</para>
+
+<para>Returns a pointer to the micrograph in a field-of-view structure with the specified tilt angle. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmicrograph">Bmicrograph</link> * <link linkend="_mg__select_8h_1ab68ac92873bb04a571d551897be28818">field_find_zero_tilt_mg</link> (<link linkend="_class_bfield">Bfield</link> *field)</para>
+
+<para>Finds the micrograph closest to a zero degree tilt in a series. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmicrograph">Bmicrograph</link> * <link linkend="_mg__select_8h_1ac464f306aa2ec99c9b3fcc56db4a4a55">field_find_low_tilt_mg_with_markers</link> (<link linkend="_class_bfield">Bfield</link> *field)</para>
+
+<para>Finds the micrograph closest to a zero degree tilt in a series with markers. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1ab65655cea9125617c8610d258ee0afe6">project_count_fields</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Counts all the fields in the project structure. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1ae7ec8c0272ecc20f2e00134bd115c6c6">project_count_micrographs</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Counts all the micrographs in the project structure. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1af94c66caf43ea55ce68b469b0c353205">project_count_mg_selected</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Counts all the selected micrographs in the project structure. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1a2b8f534ce8411fb9faae15b227c3cc0c">project_count_reconstructions</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Counts all the reconstructions in the project structure. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1a219067937f105e127cdeae560d170a28">project_count_rec_selected</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Counts all the selected reconstructions in the project structure. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1abdcbe054bc2eb7387070ef0204eae53b">project_count_mg_particles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Counts all the particles in the project structure. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1ac78e776a3d10f232a11edd0adc416c07">project_count_mg_part_selected</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Counts the number of particles in a project. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1a11b83d64b7e65cdd6c2e491a02382782">project_count_mg_part_selected</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int num_select)</para>
+
+<para>Counts the number of particles in a project. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1aeeeacdda010c707cde1d2a8e8e14d626">project_count_mg_groups</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Counts the number of groups of particles in the project structure. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1a4efdd292985f662bb53672cd8144676f">project_count_mg_groups_selected</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Counts the number of groups of particles in the project structure. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1a377da990cda46b5c6d05c59dec0b21e9">project_count_rec_particles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Counts all the particles in the project structure. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1a9ed00f7aa3050401f5022b3092d4c01d">project_count_rec_part_selected</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Counts all the particles in the project structure. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1a6c1fe6a0c2a9e6634097fddd73d2096b">project_count_rec_groups</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Counts all the particles in the project structure. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1afbe966628abe7c5c63aeb0abe104d2d5">project_count_mg_filaments</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Counts the number of filaments in a project. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1a3a5ca4e452b8145a7d849a30debda167">project_count_mg_filament_nodes</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Counts the number of filament nodes in a project. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1a022e277e7acd99366640c185961f033e">project_count_rec_filaments</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Counts the number of filaments in a project. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1ab6127567379d468759d5193c978d5112">project_count_rec_filament_nodes</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Counts the number of filaments in a project. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1a8b9440b7753c5e27937b70f2b91efab8">field_count</link> (<link linkend="_class_bfield">Bfield</link> *field)</para>
+
+<para>Counts the number of fields-of-view in a linked list. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1a8c8fd17fd2e25fa143b54137504cb981">field_count_micrographs</link> (<link linkend="_class_bfield">Bfield</link> *field)</para>
+
+<para>Counts all the micrographs in the field-of-view structure. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1aa85a8cf575c3102cb40552403ef65445">field_count_mg_selected</link> (<link linkend="_class_bfield">Bfield</link> *field)</para>
+
+<para>Counts all the micrographs in the field-of-view structure. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1aeccd8a8335fcaf638970bdd8df8eca02">field_count_particles</link> (<link linkend="_class_bfield">Bfield</link> *field)</para>
+
+<para>Counts all the particles in the field-of-view structure. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1a1b9c9f1f16f2cde664a0e66ce3e9e22d">micrograph_count</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg)</para>
+
+<para>Counts the number of micrographs in a linked list. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1a668b2fb525abf5f02bc4dceaa9bfe2b6">micrograph_count_particles</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg)</para>
+
+<para>Counts all the particles in the micrograph structure. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1a10778be3402dbb9922caded8fe0affd3">particle_count</link> (<link linkend="_class_bparticle">Bparticle</link> *part)</para>
+
+<para>Counts the number of particles in a linked list. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1aa63b3ac40737891c46a7b6b54a3d30f5">particle_count_selected</link> (<link linkend="_class_bparticle">Bparticle</link> *part)</para>
+
+<para>Counts the number of particles in a linked list. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1abd2ce8451867b8cd759c7526a04dbd15">filament_count</link> (<link linkend="_class_bfilament">Bfilament</link> *fil)</para>
+
+<para>Counts the number of filaments in a linked list of filaments. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1a90f978ea4f28efcf0704b83df007c62f">filament_node_count</link> (<link linkend="_class_bfilament">Bfilament</link> *fil)</para>
+
+<para>Counts the number of filament nodes in a linked list of filaments. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1a5acf16ba92a77c0e854c480d19db058f">project_maximum_selection</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Finds the maximum selection number for a project. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1aeb9c4608e15f4cf4f6908a814e24e0d8">project_show_selection_numbers</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Shows the selection numbers for the particles in a project. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1a97fc171f988871c9c8fc370be3f1d37b">project_show_selected</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Shows the selected particles in a project. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1acd49f1260bf7041db25dd602f7ad834b">project_show_selected_parameters</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int <link linkend="_rw_d_m_8cpp_1ae83c07067345faf98c959261a0b7db76">show</link>)</para>
+
+<para>Shows the selected particle parameters in a project. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1af1b38150c0a1df4d6746325b1dfa42c5">project_show_mg_parameter</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;tag)</para>
+
+<para>Shows the micrograph parameter indicated by the tag in a project. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1ac559a8cf4ad4b9574e68431f233c7988">project_show_part_parameter</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;tag)</para>
+
+<para>Shows the particle parameter indicated by the tag in a project. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1ab5558d805567d27e100e5f5f546a4a65">project_show_fom_histogram</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long bins, double min, double max)</para>
+
+<para>Shows a histogram of the FOM values. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1ac8da48b93def94d02a1130cb05f4a25b">project_show_mag_histogram</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long bins, double increment)</para>
+
+<para>Shows the histogram for magnification values for selected particles. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__select_8h_1a52af723733b19a7fde714bbdad1d2dbf">project_select_field</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;field_id)</para>
+
+<para>Selects a field from the project and deletes the rest. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__select_8h_1ae686468b6ee193bd928049b85425e476">project_select_micrograph</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;mg_id)</para>
+
+<para>Selects a micrograph from the project and deletes the rest. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__select_8h_1ae96c1483046e630beb7b9f3deb8cfb0f">project_select_with_particles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long part_sel)</para>
+
+<para>Selects micrographs with particles. </para>
+</listitem>
+            <listitem><para>vector&lt; pair&lt; <link linkend="_class_bmicrograph">Bmicrograph</link> *, double &gt; &gt; <link linkend="_mg__select_8h_1a9df87dc01a090c3a19cbbf07ead07eaf">project_mg_sort</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> tag)</para>
+
+<para>Sorts the micrographs by a selected parameter. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for micrograph processing. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20000426 </para>
+
+<para>Modified: 20210515 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__select_8h_1a8b9440b7753c5e27937b70f2b91efab8"/>    <section>
+    <title>field_count()</title>
+<indexterm><primary>field_count</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>field_count</secondary></indexterm>
+<para><computeroutput>long field_count (<link linkend="_class_bfield">Bfield</link> * field)</computeroutput></para><para>
+
+<para>Counts the number of fields-of-view in a linked list. </para>
+</para>
+
+<para><literallayout><computeroutput>The function counts fields-of-view in the list from the given pointer,
+and does not count fields-of-view prior to this one.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*field</entry>
+                                <entry>
+<para>pointer to any field-of-view in the list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of fields-of-view. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 679 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1aa85a8cf575c3102cb40552403ef65445"/>    <section>
+    <title>field_count_mg_selected()</title>
+<indexterm><primary>field_count_mg_selected</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>field_count_mg_selected</secondary></indexterm>
+<para><computeroutput>long field_count_mg_selected (<link linkend="_class_bfield">Bfield</link> * field)</computeroutput></para><para>
+
+<para>Counts all the micrographs in the field-of-view structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*field</entry>
+                                <entry>
+<para>field-of-view parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of micrographs of field. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 708 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a8c8fd17fd2e25fa143b54137504cb981"/>    <section>
+    <title>field_count_micrographs()</title>
+<indexterm><primary>field_count_micrographs</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>field_count_micrographs</secondary></indexterm>
+<para><computeroutput>long field_count_micrographs (<link linkend="_class_bfield">Bfield</link> * field)</computeroutput></para><para>
+
+<para>Counts all the micrographs in the field-of-view structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*field</entry>
+                                <entry>
+<para>field-of-view parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of micrographs of field. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 693 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1aeccd8a8335fcaf638970bdd8df8eca02"/>    <section>
+    <title>field_count_particles()</title>
+<indexterm><primary>field_count_particles</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>field_count_particles</secondary></indexterm>
+<para><computeroutput>long field_count_particles (<link linkend="_class_bfield">Bfield</link> * field)</computeroutput></para><para>
+
+<para>Counts all the particles in the field-of-view structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*field</entry>
+                                <entry>
+<para>field-of-view parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles in field. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 723 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a45810a20edb8af24806e4714c16c500d"/>    <section>
+    <title>field_find_id()</title>
+<indexterm><primary>field_find_id</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>field_find_id</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bfield">Bfield</link>* field_find_id (<link linkend="_class_bfield">Bfield</link> * field, <link linkend="_class_bstring">Bstring</link> &amp; field_id)</computeroutput></para><para>
+
+<para>Finds a field-of-view based on its identifier. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*field</entry>
+                                <entry>
+<para>pointer to first field-of-view in the list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;field_id</entry>
+                                <entry>
+<para>field-of-view identifier. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bfield* field-of-view or NULL if not found. <literallayout><computeroutput>The function searches a linked list for the field-of-view
+identifier and returns a pointer to that structure or NULL if
+it cannot find it.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 33 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1ac464f306aa2ec99c9b3fcc56db4a4a55"/>    <section>
+    <title>field_find_low_tilt_mg_with_markers()</title>
+<indexterm><primary>field_find_low_tilt_mg_with_markers</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>field_find_low_tilt_mg_with_markers</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmicrograph">Bmicrograph</link>* field_find_low_tilt_mg_with_markers (<link linkend="_class_bfield">Bfield</link> * field)</computeroutput></para><para>
+
+<para>Finds the micrograph closest to a zero degree tilt in a series with markers. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*field</entry>
+                                <entry>
+<para>field-of-view. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmicrograph* micrograph closest to zero degrees tilt with markers. <literallayout><computeroutput>The first micrograph with the smallest deviation from zero degree
+tilt with defined markers is returned.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 312 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1aade03929a0337e4503da2409863ca1a0"/>    <section>
+    <title>field_find_micrograph()</title>
+<indexterm><primary>field_find_micrograph</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>field_find_micrograph</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmicrograph">Bmicrograph</link>* field_find_micrograph (<link linkend="_class_bfield">Bfield</link> * field, int mg_select, int mg_index, double mg_ang)</computeroutput></para><para>
+
+<para>Returns a pointer to a specific micrograph in a field-of-view structure based on a unique characteristic of that micrograph. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>David Belnap </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*field</entry>
+                                <entry>
+<para>field-of-view. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mg_select</entry>
+                                <entry>
+<para>selection criterion. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mg_index</entry>
+                                <entry>
+<para>Reference by its index in field (for mg_ref_select=0|1|2). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mg_ang</entry>
+                                <entry>
+<para>Reference by micrograph rotation or tilt angle (for mg_ref_select=3|4). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmicrograph* Pointer to the selected micrograph <literallayout><computeroutput>Calls functions that find a micrograph by index number within the
+field, by focus level, in-plane rotational angle, tilt angle, or
+tilt angle plus focus level or index number:
+
+criterion                        mg_select   mg_index  mg_ang
+--------------------------------------------------------------
+nth closest-to-focus                 0           n        -
+nth farthest-from-focus              1           n        -
+index number in series (1...n)       2         index      -
+in-plane rotation angle              3           -      angle
+tilt angle                           4           -      angle
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 64 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a0f1c206ae9649cf3264251635461e9ca"/>    <section>
+    <title>field_find_micrograph_by_focus()</title>
+<indexterm><primary>field_find_micrograph_by_focus</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>field_find_micrograph_by_focus</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmicrograph">Bmicrograph</link>* field_find_micrograph_by_focus (<link linkend="_class_bfield">Bfield</link> * field, int focus_opt, int iselect)</computeroutput></para><para>
+
+<para>Returns a pointer to the micrograph in a field-of-view structure based on the focus level and iteration index. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>David Belnap and Bernard Heymann </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*field</entry>
+                                <entry>
+<para>a field-of-view structure </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>focus_opt</entry>
+                                <entry>
+<para>0=closest-to-focus, 1=farthest-from-focus </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>iselect</entry>
+                                <entry>
+<para>0,1,...,n; select (index+1)th-closest or (index+1)th-farthest focus </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmicrograph* mg Micrograph at specified focus level Loops through micrographs in the field-of-view. Orders focus values in an array from smallest to largest. Selects the (index+1)th closest-to-focus or farthest-from-focus value. (focus_opt determines whether the closest or farthest value is selected.) Loops through micrographs again to find the micrograph with the selected value. Tests if there are zero or multiple micrographs with the same focus value and exits program if so. Otherwise, the pointer to the micrograph with the specified focus level is returned. An example, if index=1 and focus_opt=0, a pointer to the 2nd closest-to-focus micrograph will be returned. To get the closest-to-focus or farthest-from-focus value, the index must be zero. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 142 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a75786ba6e6327763d476677bb3886cf9"/>    <section>
+    <title>field_find_micrograph_by_rotang()</title>
+<indexterm><primary>field_find_micrograph_by_rotang</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>field_find_micrograph_by_rotang</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmicrograph">Bmicrograph</link>* field_find_micrograph_by_rotang (<link linkend="_class_bfield">Bfield</link> * field, double rotang)</computeroutput></para><para>
+
+<para>Returns a pointer to the micrograph in a field-of-view structure with the specified in-plane rotational angle. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>David Belnap and Bernard Heymann </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*field</entry>
+                                <entry>
+<para>a field-of-view </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rotang</entry>
+                                <entry>
+<para>in-plane rotational angle of micrograph (in radians) </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmicrograph* mg Pointer to micrograph with rotang <literallayout><computeroutput>Loop through all micrographs in the field-of-view to find
+micrograph with the specified angle.  Test if there are zero or
+multiple micrographs with the same rotational angle, halt program 
+if true.  If not true, then return pointer to the micrograph with 
+the specified angle.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 199 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a09911941af317755d147a980ab5b5ef1"/>    <section>
+    <title>field_find_micrograph_by_tiltang()</title>
+<indexterm><primary>field_find_micrograph_by_tiltang</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>field_find_micrograph_by_tiltang</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmicrograph">Bmicrograph</link>* field_find_micrograph_by_tiltang (<link linkend="_class_bfield">Bfield</link> * field, double tiltang)</computeroutput></para><para>
+
+<para>Returns a pointer to the micrograph in a field-of-view structure with the specified tilt angle. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>David Belnap </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*field</entry>
+                                <entry>
+<para>a field-of-view </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tiltang</entry>
+                                <entry>
+<para>tilt angle of micrograph (in radians) </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmicrograph* micrograph with rotang <literallayout><computeroutput>Loop through all micrographs in the field-of-view to find
+micrograph with the specified tilt angle.  Test if there are zero
+or multiple micrographs with the same angle, halt program if true.
+If not true, then return pointer to the micrograph with the 
+specified angle.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 243 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a1eb0089167cd6208688f200f90862a3c"/>    <section>
+    <title>field_find_micrograph_n()</title>
+<indexterm><primary>field_find_micrograph_n</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>field_find_micrograph_n</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmicrograph">Bmicrograph</link>* field_find_micrograph_n (<link linkend="_class_bfield">Bfield</link> * field, int n)</computeroutput></para><para>
+
+<para>Returns a pointer to the nth micrograph in a field-of-view structure. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>David Belnap and Bernard Heymann </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*field</entry>
+                                <entry>
+<para>a field-of-view </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>nth micrograph index (first index number = 1) </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmicrograph* Pointer to the nth micrograph <literallayout><computeroutput>Loop through micrographs in the field-of-view until the nth 
+micrograph is reached.  Return pointer to that micrograph.
+Tests whether n is within the appropriate range.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 104 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1ab68ac92873bb04a571d551897be28818"/>    <section>
+    <title>field_find_zero_tilt_mg()</title>
+<indexterm><primary>field_find_zero_tilt_mg</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>field_find_zero_tilt_mg</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmicrograph">Bmicrograph</link>* field_find_zero_tilt_mg (<link linkend="_class_bfield">Bfield</link> * field)</computeroutput></para><para>
+
+<para>Finds the micrograph closest to a zero degree tilt in a series. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*field</entry>
+                                <entry>
+<para>field-of-view. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmicrograph* micrograph closest to zero degrees tilt. <literallayout><computeroutput>The first micrograph with the smallest deviation from zero degree
+tilt is returned.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 281 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1abd2ce8451867b8cd759c7526a04dbd15"/>    <section>
+    <title>filament_count()</title>
+<indexterm><primary>filament_count</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>filament_count</secondary></indexterm>
+<para><computeroutput>long filament_count (<link linkend="_class_bfilament">Bfilament</link> * fil)</computeroutput></para><para>
+
+<para>Counts the number of filaments in a linked list of filaments. </para>
+</para>
+
+<para><literallayout><computeroutput>The function counts filaments in the list from the given pointer,
+and does not count filaments prior to this one.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*fil</entry>
+                                <entry>
+<para>pointer to any filament in the list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of filaments. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 813 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a90f978ea4f28efcf0704b83df007c62f"/>    <section>
+    <title>filament_node_count()</title>
+<indexterm><primary>filament_node_count</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>filament_node_count</secondary></indexterm>
+<para><computeroutput>long filament_node_count (<link linkend="_class_bfilament">Bfilament</link> * fil)</computeroutput></para><para>
+
+<para>Counts the number of filament nodes in a linked list of filaments. </para>
+</para>
+
+<para><literallayout><computeroutput>The function counts filament nodes in the list from the given pointer,
+and does not count filaments prior to this one.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*fil</entry>
+                                <entry>
+<para>pointer to any filament in the list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of filament nodes. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 831 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a1b9c9f1f16f2cde664a0e66ce3e9e22d"/>    <section>
+    <title>micrograph_count()</title>
+<indexterm><primary>micrograph_count</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>micrograph_count</secondary></indexterm>
+<para><computeroutput>long micrograph_count (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg)</computeroutput></para><para>
+
+<para>Counts the number of micrographs in a linked list. </para>
+</para>
+
+<para><literallayout><computeroutput>The function counts micrographs in the list from the given pointer,
+and does not count micrographs prior to this one.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>pointer to any micrograph in the list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of micrographs. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 744 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a668b2fb525abf5f02bc4dceaa9bfe2b6"/>    <section>
+    <title>micrograph_count_particles()</title>
+<indexterm><primary>micrograph_count_particles</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>micrograph_count_particles</secondary></indexterm>
+<para><computeroutput>long micrograph_count_particles (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg)</computeroutput></para><para>
+
+<para>Counts all the particles in the micrograph structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles in micrograph. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 758 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a10778be3402dbb9922caded8fe0affd3"/>    <section>
+    <title>particle_count()</title>
+<indexterm><primary>particle_count</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>particle_count</secondary></indexterm>
+<para><computeroutput>long particle_count (<link linkend="_class_bparticle">Bparticle</link> * part)</computeroutput></para><para>
+
+<para>Counts the number of particles in a linked list. </para>
+</para>
+
+<para><literallayout><computeroutput>The function counts particles in the list from the given pointer,
+and does not count particles prior to this one.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*part</entry>
+                                <entry>
+<para>pointer to any particle in the list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 777 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1aa63b3ac40737891c46a7b6b54a3d30f5"/>    <section>
+    <title>particle_count_selected()</title>
+<indexterm><primary>particle_count_selected</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>particle_count_selected</secondary></indexterm>
+<para><computeroutput>long particle_count_selected (<link linkend="_class_bparticle">Bparticle</link> * part)</computeroutput></para><para>
+
+<para>Counts the number of particles in a linked list. </para>
+</para>
+
+<para><literallayout><computeroutput>The function counts particles in the list from the given pointer,
+and does not count particles prior to this one.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*part</entry>
+                                <entry>
+<para>pointer to any particle in the list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 795 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1ab65655cea9125617c8610d258ee0afe6"/>    <section>
+    <title>project_count_fields()</title>
+<indexterm><primary>project_count_fields</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_count_fields</secondary></indexterm>
+<para><computeroutput>long project_count_fields (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Counts all the fields in the project structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of fields in project. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 335 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a3a5ca4e452b8145a7d849a30debda167"/>    <section>
+    <title>project_count_mg_filament_nodes()</title>
+<indexterm><primary>project_count_mg_filament_nodes</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_count_mg_filament_nodes</secondary></indexterm>
+<para><computeroutput>long project_count_mg_filament_nodes (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Counts the number of filament nodes in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of filament nodes. <literallayout><computeroutput>The function counts all the filament nodes in a project.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 609 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1afbe966628abe7c5c63aeb0abe104d2d5"/>    <section>
+    <title>project_count_mg_filaments()</title>
+<indexterm><primary>project_count_mg_filaments</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_count_mg_filaments</secondary></indexterm>
+<para><computeroutput>long project_count_mg_filaments (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Counts the number of filaments in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of filaments. <literallayout><computeroutput>The function counts all the filaments in a project.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 586 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1aeeeacdda010c707cde1d2a8e8e14d626"/>    <section>
+    <title>project_count_mg_groups()</title>
+<indexterm><primary>project_count_mg_groups</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_count_mg_groups</secondary></indexterm>
+<para><computeroutput>long project_count_mg_groups (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Counts the number of groups of particles in the project structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of groups in project. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 483 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a4efdd292985f662bb53672cd8144676f"/>    <section>
+    <title>project_count_mg_groups_selected()</title>
+<indexterm><primary>project_count_mg_groups_selected</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_count_mg_groups_selected</secondary></indexterm>
+<para><computeroutput>long project_count_mg_groups_selected (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Counts the number of groups of particles in the project structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of groups selected in project. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 505 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1ac78e776a3d10f232a11edd0adc416c07"/>    <section>
+    <title>project_count_mg_part_selected()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>project_count_mg_part_selected</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_count_mg_part_selected</secondary></indexterm>
+<para><computeroutput>long project_count_mg_part_selected (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Counts the number of particles in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>The function counts all the selected particles in a project.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 437 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a11b83d64b7e65cdd6c2e491a02382782"/>    <section>
+    <title>project_count_mg_part_selected()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>project_count_mg_part_selected</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_count_mg_part_selected</secondary></indexterm>
+<para><computeroutput>long project_count_mg_part_selected (<link linkend="_class_bproject">Bproject</link> * project, int num_select)</computeroutput></para><para>
+
+<para>Counts the number of particles in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>num_select</entry>
+                                <entry>
+<para>selection number. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>The function counts all the selected particles in a project.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 461 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1abdcbe054bc2eb7387070ef0204eae53b"/>    <section>
+    <title>project_count_mg_particles()</title>
+<indexterm><primary>project_count_mg_particles</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_count_mg_particles</secondary></indexterm>
+<para><computeroutput>long project_count_mg_particles (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Counts all the particles in the project structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles in project. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 415 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1af94c66caf43ea55ce68b469b0c353205"/>    <section>
+    <title>project_count_mg_selected()</title>
+<indexterm><primary>project_count_mg_selected</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_count_mg_selected</secondary></indexterm>
+<para><computeroutput>long project_count_mg_selected (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Counts all the selected micrographs in the project structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of micrographs selected in project. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 367 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1ae7ec8c0272ecc20f2e00134bd115c6c6"/>    <section>
+    <title>project_count_micrographs()</title>
+<indexterm><primary>project_count_micrographs</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_count_micrographs</secondary></indexterm>
+<para><computeroutput>long project_count_micrographs (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Counts all the micrographs in the project structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of micrographs in project. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 350 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1ab6127567379d468759d5193c978d5112"/>    <section>
+    <title>project_count_rec_filament_nodes()</title>
+<indexterm><primary>project_count_rec_filament_nodes</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_count_rec_filament_nodes</secondary></indexterm>
+<para><computeroutput>long project_count_rec_filament_nodes (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Counts the number of filaments in a project. </para>
+</para>
+
+<para><literallayout><computeroutput>The function counts all the filaments in a project.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of filaments. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 655 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a022e277e7acd99366640c185961f033e"/>    <section>
+    <title>project_count_rec_filaments()</title>
+<indexterm><primary>project_count_rec_filaments</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_count_rec_filaments</secondary></indexterm>
+<para><computeroutput>long project_count_rec_filaments (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Counts the number of filaments in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of filaments. <literallayout><computeroutput>The function counts all the filaments in a project.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 634 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a6c1fe6a0c2a9e6634097fddd73d2096b"/>    <section>
+    <title>project_count_rec_groups()</title>
+<indexterm><primary>project_count_rec_groups</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_count_rec_groups</secondary></indexterm>
+<para><computeroutput>long project_count_rec_groups (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Counts all the particles in the project structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles in project. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 563 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a9ed00f7aa3050401f5022b3092d4c01d"/>    <section>
+    <title>project_count_rec_part_selected()</title>
+<indexterm><primary>project_count_rec_part_selected</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_count_rec_part_selected</secondary></indexterm>
+<para><computeroutput>long project_count_rec_part_selected (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Counts all the particles in the project structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles in project. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 545 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a377da990cda46b5c6d05c59dec0b21e9"/>    <section>
+    <title>project_count_rec_particles()</title>
+<indexterm><primary>project_count_rec_particles</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_count_rec_particles</secondary></indexterm>
+<para><computeroutput>long project_count_rec_particles (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Counts all the particles in the project structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles in project. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 528 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a219067937f105e127cdeae560d170a28"/>    <section>
+    <title>project_count_rec_selected()</title>
+<indexterm><primary>project_count_rec_selected</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_count_rec_selected</secondary></indexterm>
+<para><computeroutput>long project_count_rec_selected (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Counts all the selected reconstructions in the project structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of reconstructions selected in project. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 399 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a2b8f534ce8411fb9faae15b227c3cc0c"/>    <section>
+    <title>project_count_reconstructions()</title>
+<indexterm><primary>project_count_reconstructions</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_count_reconstructions</secondary></indexterm>
+<para><computeroutput>long project_count_reconstructions (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Counts all the reconstructions in the project structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of reconstructions in project. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 384 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a5acf16ba92a77c0e854c480d19db058f"/>    <section>
+    <title>project_maximum_selection()</title>
+<indexterm><primary>project_maximum_selection</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_maximum_selection</secondary></indexterm>
+<para><computeroutput>long project_maximum_selection (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Finds the maximum selection number for a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long maximum selection number. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 847 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a9df87dc01a090c3a19cbbf07ead07eaf"/>    <section>
+    <title>project_mg_sort()</title>
+<indexterm><primary>project_mg_sort</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_mg_sort</secondary></indexterm>
+<para><computeroutput>vector&lt;pair&lt;<link linkend="_class_bmicrograph">Bmicrograph</link>*,double&gt; &gt; project_mg_sort (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> tag)</computeroutput></para><para>
+
+<para>Sorts the micrographs by a selected parameter. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tag</entry>
+                                <entry>
+<para>parameter tag. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;pair&lt;Bmicrograph*,double&gt;&gt; array of micrograph links and values. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1653 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a52af723733b19a7fde714bbdad1d2dbf"/>    <section>
+    <title>project_select_field()</title>
+<indexterm><primary>project_select_field</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_select_field</secondary></indexterm>
+<para><computeroutput>int project_select_field (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; field_id)</computeroutput></para><para>
+
+<para>Selects a field from the project and deletes the rest. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;field_id</entry>
+                                <entry>
+<para>field to select. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1490 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1ae686468b6ee193bd928049b85425e476"/>    <section>
+    <title>project_select_micrograph()</title>
+<indexterm><primary>project_select_micrograph</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_select_micrograph</secondary></indexterm>
+<para><computeroutput>int project_select_micrograph (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; mg_id)</computeroutput></para><para>
+
+<para>Selects a micrograph from the project and deletes the rest. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;mg_id</entry>
+                                <entry>
+<para>micrograph to select. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1522 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1ae96c1483046e630beb7b9f3deb8cfb0f"/>    <section>
+    <title>project_select_with_particles()</title>
+<indexterm><primary>project_select_with_particles</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_select_with_particles</secondary></indexterm>
+<para><computeroutput>long project_select_with_particles (<link linkend="_class_bproject">Bproject</link> * project, long part_sel)</computeroutput></para><para>
+
+<para>Selects micrographs with particles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>part_sel</entry>
+                                <entry>
+<para>flag to select only with this selection number </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1563 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1ab5558d805567d27e100e5f5f546a4a65"/>    <section>
+    <title>project_show_fom_histogram()</title>
+<indexterm><primary>project_show_fom_histogram</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_show_fom_histogram</secondary></indexterm>
+<para><computeroutput>long project_show_fom_histogram (<link linkend="_class_bproject">Bproject</link> * project, long bins, double min, double max)</computeroutput></para><para>
+
+<para>Shows a histogram of the FOM values. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bins</entry>
+                                <entry>
+<para>number of bins, if 0, set to 100. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>min</entry>
+                                <entry>
+<para>FOM for the first bin. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max</entry>
+                                <entry>
+<para>FOM for the last bin. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1341 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1ac8da48b93def94d02a1130cb05f4a25b"/>    <section>
+    <title>project_show_mag_histogram()</title>
+<indexterm><primary>project_show_mag_histogram</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_show_mag_histogram</secondary></indexterm>
+<para><computeroutput>long project_show_mag_histogram (<link linkend="_class_bproject">Bproject</link> * project, long bins, double increment)</computeroutput></para><para>
+
+<para>Shows the histogram for magnification values for selected particles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bins</entry>
+                                <entry>
+<para>number of bins. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>increment</entry>
+                                <entry>
+<para>increment between bins. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1444 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1af1b38150c0a1df4d6746325b1dfa42c5"/>    <section>
+    <title>project_show_mg_parameter()</title>
+<indexterm><primary>project_show_mg_parameter</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_show_mg_parameter</secondary></indexterm>
+<para><computeroutput>long project_show_mg_parameter (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; tag)</computeroutput></para><para>
+
+<para>Shows the micrograph parameter indicated by the tag in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;tag</entry>
+                                <entry>
+<para>parameter tag. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of micrographs selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1262 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1ac559a8cf4ad4b9574e68431f233c7988"/>    <section>
+    <title>project_show_part_parameter()</title>
+<indexterm><primary>project_show_part_parameter</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_show_part_parameter</secondary></indexterm>
+<para><computeroutput>long project_show_part_parameter (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; tag)</computeroutput></para><para>
+
+<para>Shows the particle parameter indicated by the tag in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;tag</entry>
+                                <entry>
+<para>parameter tag. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1290 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1a97fc171f988871c9c8fc370be3f1d37b"/>    <section>
+    <title>project_show_selected()</title>
+<indexterm><primary>project_show_selected</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_show_selected</secondary></indexterm>
+<para><computeroutput>long project_show_selected (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Shows the selected particles in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 929 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1acd49f1260bf7041db25dd602f7ad834b"/>    <section>
+    <title>project_show_selected_parameters()</title>
+<indexterm><primary>project_show_selected_parameters</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_show_selected_parameters</secondary></indexterm>
+<para><computeroutput>long project_show_selected_parameters (<link linkend="_class_bproject">Bproject</link> * project, int show)</computeroutput></para><para>
+
+<para>Shows the selected particle parameters in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>show</entry>
+                                <entry>
+<para>selection number to show. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1120 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__select_8h_1aeb9c4608e15f4cf4f6908a814e24e0d8"/>    <section>
+    <title>project_show_selection_numbers()</title>
+<indexterm><primary>project_show_selection_numbers</primary><secondary>mg_select.h</secondary></indexterm>
+<indexterm><primary>mg_select.h</primary><secondary>project_show_selection_numbers</secondary></indexterm>
+<para><computeroutput>long project_show_selection_numbers (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Shows the selection numbers for the particles in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 874 of file mg_select.cpp.</para>
+</section>
+</section>
+</section>

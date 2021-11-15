@@ -1,0 +1,301 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_bmod2part_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/bmod2part.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/bmod2part.cpp</primary></indexterm>
+<para>
+
+<para>Converting from a pseudo-atomic model to particle parameters. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmodel.h&quot;
+#include &quot;model_select.h&quot;
+#include &quot;model_util.h&quot;
+#include &quot;rwmg.h&quot;
+#include &quot;mg_processing.h&quot;
+#include &quot;rwimg.h&quot;
+#include &quot;file_util.h&quot;
+#include &quot;utilities.h&quot;
+#include &quot;options.h&quot;
+#include &quot;timer.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bproject">Bproject</link> * <link linkend="_bmod2part_8cpp_1a8d34e2d92789192fed0eb431e39101ba">project_part_from_model</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sampling, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; box_size)</para>
+
+<para>Converts component coordinates in a model to reconstruction particle coordinates. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_bmod2part_8cpp_1aae04021a2afba540e1c07b15334273e1">models_from_particles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Converts particle coordinates for a reconstruction into model component coordinates. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_bmod2part_8cpp_1a44b54882a189598ac2921095760a1a6e">components_from_2D_particles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Converts particle coordinates from micrographs into model component coordinates. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_bmod2part_8cpp_1afa9520414990ed4846670d9e7a77f9cf">components_from_3D_particles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Converts particle coordinates for a reconstruction into model component coordinates. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para>int <link linkend="_bmod2part_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_bmod2part_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>const char * <link linkend="_bmod2part_8cpp_1a4de0ad4c7190962494815c0fa7f948df">use</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Converting from a pseudo-atomic model to particle parameters. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20070423 </para>
+
+<para>Modified: 20160616 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_bmod2part_8cpp_1a44b54882a189598ac2921095760a1a6e"/>    <section>
+    <title>components_from_2D_particles()</title>
+<indexterm><primary>components_from_2D_particles</primary><secondary>bmod2part.cpp</secondary></indexterm>
+<indexterm><primary>bmod2part.cpp</primary><secondary>components_from_2D_particles</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link> * components_from_2D_particles (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Converts particle coordinates from micrographs into model component coordinates. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project with micrographs. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new project. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 277 of file bmod2part.cpp.</para>
+    </section><anchor xml:id="_bmod2part_8cpp_1afa9520414990ed4846670d9e7a77f9cf"/>    <section>
+    <title>components_from_3D_particles()</title>
+<indexterm><primary>components_from_3D_particles</primary><secondary>bmod2part.cpp</secondary></indexterm>
+<indexterm><primary>bmod2part.cpp</primary><secondary>components_from_3D_particles</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link> * components_from_3D_particles (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Converts particle coordinates for a reconstruction into model component coordinates. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project with reconstruction. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new project. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 321 of file bmod2part.cpp.</para>
+    </section><anchor xml:id="_bmod2part_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>bmod2part.cpp</secondary></indexterm>
+<indexterm><primary>bmod2part.cpp</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 58 of file bmod2part.cpp.</para>
+    </section><anchor xml:id="_bmod2part_8cpp_1aae04021a2afba540e1c07b15334273e1"/>    <section>
+    <title>models_from_particles()</title>
+<indexterm><primary>models_from_particles</primary><secondary>bmod2part.cpp</secondary></indexterm>
+<indexterm><primary>bmod2part.cpp</primary><secondary>models_from_particles</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link> * models_from_particles (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Converts particle coordinates for a reconstruction into model component coordinates. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project with reconstruction. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new project. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 234 of file bmod2part.cpp.</para>
+    </section><anchor xml:id="_bmod2part_8cpp_1a8d34e2d92789192fed0eb431e39101ba"/>    <section>
+    <title>project_part_from_model()</title>
+<indexterm><primary>project_part_from_model</primary><secondary>bmod2part.cpp</secondary></indexterm>
+<indexterm><primary>bmod2part.cpp</primary><secondary>project_part_from_model</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bproject">Bproject</link> * project_part_from_model (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sampling, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; box_size)</computeroutput></para><para>
+
+<para>Converts component coordinates in a model to reconstruction particle coordinates. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>map origin in voxel coordinates. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sampling</entry>
+                                <entry>
+<para>voxel size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>box_size</entry>
+                                <entry>
+<para>particle box size. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bproject* new project. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 188 of file bmod2part.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_bmod2part_8cpp_1a4de0ad4c7190962494815c0fa7f948df"/>    <section>
+    <title>use</title>
+<indexterm><primary>use</primary><secondary>bmod2part.cpp</secondary></indexterm>
+<indexterm><primary>bmod2part.cpp</primary><secondary>use</secondary></indexterm>
+<para><computeroutput>const char* use[]</computeroutput></para><emphasis role="strong">Initial value:</emphasis><programlisting>=&#32;{
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Usage:&#32;bmod2part&#32;[options]&#32;input.star&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-------------------------------------&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Converting&#32;between&#32;model&#32;components&#32;and&#32;reconstruction&#32;particle&#32;parameters.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Actions:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-reconstructions&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Operate&#32;on&#32;reconstruction&#32;parameters&#32;rather&#32;than&#32;micrographs.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-all&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Reset&#32;selection&#32;to&#32;all&#32;components&#32;before&#32;other&#32;selections.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-type&#32;comp&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Type&#32;of&#32;conversion:&#32;part-&gt;models&#32;or&#32;part-&gt;components.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Parameters:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-verbose&#32;7&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Verbose&#32;output.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-origin&#32;0,0,0&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Origin&#32;placement&#32;within&#32;image&#32;(default&#32;0,0,0).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-sampling&#32;2.3,2.3,1&#32;&#32;&#32;&#32;&#32;&#32;Sampling&#32;(angstrom/voxel,&#32;one&#32;value&#32;sets&#32;all).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-box&#32;100,83,120&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Particle&#32;box&#32;size&#32;(default&#32;50,50,50;&#32;one&#32;sets&#32;all).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Input:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-map&#32;image.spi&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Input&#32;3D&#32;map&#32;file.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-parameters&#32;param.star&#32;&#32;&#32;Input&#32;atomic&#32;parameter&#32;file.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Output:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-output&#32;part.star&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Output&#32;particle&#32;parameter&#32;or&#32;model&#32;file.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+NULL
+}
+</programlisting><para>
+Definition at line 31 of file bmod2part.cpp.</para>
+    </section><anchor xml:id="_bmod2part_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>bmod2part.cpp</secondary></indexterm>
+<indexterm><primary>bmod2part.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

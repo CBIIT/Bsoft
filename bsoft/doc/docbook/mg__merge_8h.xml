@@ -1,0 +1,184 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__merge_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/mg_merge.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/mg_merge.h</primary></indexterm>
+<para>
+
+<para>Header file for functions to merge images. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+#include &quot;rwimg.h&quot;
+#include &quot;Bstring.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mg__merge_8h_1a960b8a71887aed5cb5da3fd2f6734184">mg_particle_merge_series</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int mg_ref_select, int mg_index, float mg_rot_ang, int mg_ori_select, <link linkend="_class_bstring">Bstring</link> outimg)</para>
+
+<para>Aligns and merges (sums) 2D particle images from a focal, or other, series and writes to new image file(s). </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__merge_8h_1aa44b120ddd8afdaba9f4fbb15792b1da">mg_particle_unmerge</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bproject">Bproject</link> *orientations, float fom_diff)</para>
+
+<para>Gives corresponding particles in a field-of-view the same orientation, figure-of-merit (FOM), and selection&#8211;allows selection of best orientation based on best FOM. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for functions to merge images. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>David Belnap &amp; Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20030410 </para>
+
+<para>Modified: 20030901 (BH) </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__merge_8h_1a960b8a71887aed5cb5da3fd2f6734184"/>    <section>
+    <title>mg_particle_merge_series()</title>
+<indexterm><primary>mg_particle_merge_series</primary><secondary>mg_merge.h</secondary></indexterm>
+<indexterm><primary>mg_merge.h</primary><secondary>mg_particle_merge_series</secondary></indexterm>
+<para><computeroutput>int mg_particle_merge_series (<link linkend="_class_bproject">Bproject</link> * project, int mg_ref_select, int mg_index, float mg_rot_ang, int mg_ori_select, <link linkend="_class_bstring">Bstring</link> outimg)</computeroutput></para><para>
+
+<para>Aligns and merges (sums) 2D particle images from a focal, or other, series and writes to new image file(s). </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>David Belnap and Bernard Heymann</para>
+</formalpara>
+Find the reference micrograph based on the input criterion. Read the reference particle images first, followed by the non-reference images. Find shifts and origins, shift each non-reference image to align the two origins and rotate by the difference in in-plane rotational angle (if any) of the two micrographs. Return the normalized sum of images. Images are converted to floating point.</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>Project parameter structure </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mg_ref_select</entry>
+                                <entry>
+<para>0, closest-to-focus; 1, furthest-from-focus; 2, by index; 3, by rotation angle </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mg_index</entry>
+                                <entry>
+<para>Reference by its index in field (for mg_ref_select=2) </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mg_rot_ang</entry>
+                                <entry>
+<para>Reference by micrograph rotation angle (for mg_ref_select=3) </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mg_ori_select</entry>
+                                <entry>
+<para>0, from parameter file; 1, from cross-correlation; 2, from images; -1, no alignment </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>outimg</entry>
+                                <entry>
+<para>prefix and extension for output files </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 76 of file mg_merge.cpp.</para>
+    </section><anchor xml:id="_mg__merge_8h_1aa44b120ddd8afdaba9f4fbb15792b1da"/>    <section>
+    <title>mg_particle_unmerge()</title>
+<indexterm><primary>mg_particle_unmerge</primary><secondary>mg_merge.h</secondary></indexterm>
+<indexterm><primary>mg_merge.h</primary><secondary>mg_particle_unmerge</secondary></indexterm>
+<para><computeroutput>int mg_particle_unmerge (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bproject">Bproject</link> * orientations, float fom_diff)</computeroutput></para><para>
+
+<para>Gives corresponding particles in a field-of-view the same orientation, figure-of-merit (FOM), and selection&#8211;allows selection of best orientation based on best FOM. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>David Belnap </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>Project structure for micrographs </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*orientations</entry>
+                                <entry>
+<para>Project structure containing orientations to use </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_diff</entry>
+                                <entry>
+<para>Threshold for difference between FOMs </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code. <literallayout><computeroutput>Intended for use in un-merging data from a micrograph series, where 
+the particle images had been merged previously and there is only one
+set of parameters per field.
+  Set orientations, FOMs, and selection for corresponding particles 
+in a field-of-view to that found in the project structure named 
+orientations.  If user wishes to select the orientation and
+selection value with the highest FOM, the highest FOM (within the
+specified threshold) is selected.
+  Differences in micrograph rotation angles (with respect to the
+&quot;reference&quot; micrograph that contains the orientations to be applied)
+are applied to the output orientation.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 271 of file mg_merge.cpp.</para>
+</section>
+</section>
+</section>

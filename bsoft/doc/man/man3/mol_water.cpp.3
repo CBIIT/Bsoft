@@ -1,0 +1,221 @@
+.TH "/Users/bernard/b20/bsoft/src/mol/mol_water.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mol/mol_water.cpp \- Generating and managing water\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmolecule\&.h'\fP
+.br
+\fC#include 'mol_bonds\&.h'\fP
+.br
+\fC#include 'Matrix3\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBmolecule\fP * \fBmol_generate_one_water\fP (\fBBmolecule\fP **mollist, char *watername, \fBVector3\fP< double > Ocoord)"
+.br
+.RI "Generates one water molecule at a given location\&. "
+.ti -1c
+.RI "\fBBmolgroup\fP * \fBmolgroup_generate_regular_water\fP (\fBVector3\fP< double > size, int type)"
+.br
+.RI "Generates a block of water based on a regular lattice\&. "
+.ti -1c
+.RI "\fBBmolgroup\fP * \fBmolgroup_generate_random_water\fP (\fBVector3\fP< double > size)"
+.br
+.RI "Generates a block of water with random placement\&. "
+.ti -1c
+.RI "\fBBbond\fP * \fBwater_bond_list\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Generates a bond list for a block of waters\&. "
+.ti -1c
+.RI "\fBBangle\fP * \fBwater_angle_list\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Generates a bond angle list for a block of waters\&. "
+.ti -1c
+.RI "int \fBmolgroup_calc_water_rdf\fP (\fBBmolgroup\fP *molgroup, double interval, double cutoff)"
+.br
+.RI "Calculates a radial distribution function for water molecules\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Generating and managing water\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20001014 
+.PP
+Modified: 20110811 
+.RE
+.PP
+
+.PP
+Definition in file \fBmol_water\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBmolecule\fP* mol_generate_one_water (\fBBmolecule\fP ** mollist, char * watername, \fBVector3\fP< double > Ocoord)"
+
+.PP
+Generates one water molecule at a given location\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**mollist\fP molecule list\&. 
+.br
+\fI*watername\fP molecule name\&. 
+.br
+\fIOcoord\fP oxygen coordinates\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolecule* new water molecule\&. 
+.RE
+.PP
+
+.PP
+Definition at line 26 of file mol_water\&.cpp\&.
+.SS "int molgroup_calc_water_rdf (\fBBmolgroup\fP * molgroup, double interval, double cutoff)"
+
+.PP
+Calculates a radial distribution function for water molecules\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fIinterval\fP interval between bins\&. 
+.br
+\fIcutoff\fP distance cutoff\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 323 of file mol_water\&.cpp\&.
+.SS "\fBBmolgroup\fP* molgroup_generate_random_water (\fBVector3\fP< double > size)"
+
+.PP
+Generates a block of water with random placement\&. 
+.PP
+.nf
+The number of water molecules generated is calculated as:
+    n = volume * 0.03346.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsize\fP size of block\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolgroup* new molecule group\&. 
+.RE
+.PP
+
+.PP
+Definition at line 181 of file mol_water\&.cpp\&.
+.SS "\fBBmolgroup\fP* molgroup_generate_regular_water (\fBVector3\fP< double > size, int type)"
+
+.PP
+Generates a block of water based on a regular lattice\&. 
+.PP
+.nf
+The number of water molecules generated is calculated as:
+    n = volume * 0.03346.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsize\fP size of block\&. 
+.br
+\fItype\fP type of lattice, 2=rectangular, 3=tetrahedral\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolgroup* new molecule group\&. 
+.RE
+.PP
+
+.PP
+Definition at line 89 of file mol_water\&.cpp\&.
+.SS "\fBBangle\fP* water_angle_list (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Generates a bond angle list for a block of waters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bangle* new bond angle list\&. 
+.RE
+.PP
+
+.PP
+Definition at line 291 of file mol_water\&.cpp\&.
+.SS "\fBBbond\fP* water_bond_list (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Generates a bond list for a block of waters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bbond* new bond list\&. 
+.RE
+.PP
+
+.PP
+Definition at line 249 of file mol_water\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

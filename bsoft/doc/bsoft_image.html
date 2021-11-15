@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Image</title>
+<link href="bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body>
+
+<div id="content">
+ <h2>The Image Data Model</h2>
+<p>Images are ubiquitous objects used on all electronic media,
+    implemented in a large number of ways with different file formats,
+    different access strategies and different notions of information. The most
+    general notion of an image is a 2D raster of values representing gray
+    scale or colour values at particular sampled points within the image. An
+    extension of the basic image model is the time-evolving model (i.e., movie
+    or animation), with time representing a third dimension. In structural
+    biology, we deal with 3D structures, often viewed as static, but in
+    reality subject to time-dependent variation. In electron microscopy, the
+    images taken are approximations of 2D projections of 3D structures. The
+    problem with most available software is that none supports the concept of
+    an image in its most general form.</p>
+<br/>
+<h2>The image as a five-dimensional data set</h2>
+<p>The structures studied in structural biology is inherently 3D,
+      thus the basis of the image model is also 3D. In addition, we would like
+      to pack multiple 2D images into a single file. However, packing 2D
+      images as the sections of a 3D map confuses the distinction between 2D
+      and 3D and should be avoided. Furthermore, we also want to be able to
+      store multiple 3D maps, requiring an additional dimension.</p>
+<p>Most of the data sets we work with have single values at each
+      pixel or voxel (gray scale values), but situations may arise where each
+      voxel may have multiple values. The most common usage of multiple pixel
+      values is to represent complex numbers and colour, such as RGB (Red-Green-Blue) and CMYK
+      (Cyan-Magenta-Yellow -blacK). More extensive use may be to associate a
+      list of values or spectrum at each pixel. This requires yet another
+      dimension in the image model. The meaning of the channels is captured in
+      the notion of a compound type, including simple (one value), complex(two values), RGB color (three values, etc.</p>
+<p>The five dimensions are therefore (in storage order):</p>
+<ul>
+<li><p>Channels - one or more values associated with each voxel</p></li>
+<li><p>X-dimension</p></li>
+<li><p>Y-dimension</p></li>
+<li><p>Z-dimension</p></li>
+<li><p>Images - a series of images, typically with some relationship
+          (such as 2D projections of the same particle, a tilt series, or a
+          time series)</p></li>
+</ul>
+<br/>
+<h2>Data types</h2>
+<p>Each channel in the image contains a single value, where the data
+      types supported in Bsoft are listed in Table 1. Images with multiple
+      channels can have any data type. This makes the image data model more
+      general and as an example, allows for specification of color images as
+      floating point values.</p>
+<table summary="Bsoft image data types" border="1">
+ <caption>Table 1. Bsoft image data types</caption>
+<thead><tr><th align="center">Enumerated data type</th><th align="center">C data type</th><th align="center">Size (bytes)</th><th align="center">Single letter code</th></tr></thead>
+<tbody>
+<tr><td>UChar</td><td>unsigned char</td><td align="center">1</td><td align="center">b</td></tr>
+<tr><td>SChar</td><td>signed char</td><td align="center">1</td><td align="center">c</td></tr>
+<tr><td>UShort</td><td>unsigned short</td><td align="center">2</td><td align="center">u</td></tr>
+<tr><td>Short</td><td>short</td><td align="center">2</td><td align="center">s</td></tr>
+<tr><td>Int</td><td>int</td><td align="center">4</td><td align="center">i</td></tr>
+<tr><td>Long</td><td>long</td><td align="center">8</td><td align="center">l</td></tr>
+<tr><td>Float</td><td>float</td><td align="center">4</td><td align="center">f</td></tr>
+<tr><td>Double</td><td>double</td><td align="center">8</td><td align="center">d</td></tr>
+</tbody>
+</table>
+<br/>
+<h2>Compound types</h2>
+<p>The definition of the channels is captured in the compound type, where the types supported are listed in Table 2.</p>
+<table summary="Bsoft image compound types" border="1">
+<caption>Table 2. Bsoft image compound types</caption>
+<thead><tr><th align="center">Enumerated compound type</th><th align="center">Elements</th><th align="center">Size (values)</th><th align="center">Single letter code</th></tr></thead>
+<tbody>
+<tr><td>TSimple</td><td>gray value</td><td align="center">1</td><td align="center">S</td></tr>
+<tr><td>TComplex</td><td>real, imaginary</td><td align="center">2</td><td align="center">C</td></tr>
+<tr><td>TVector2</td><td>x, y</td><td align="center">3</td><td align="center">V</td></tr>
+<tr><td>TVector3</td><td>x, y, z</td><td align="center">3</td><td align="center">V</td></tr>
+<tr><td>TView</td><td>x, y, z, a</td><td align="center">4</td><td align="center">O</td></tr>
+<tr><td>TRGB</td><td>r, g, b</td><td align="center">3</td><td align="center">R</td></tr>
+<tr><td>TRGBA</td><td>r, g, b, a</td><td align="center">4</td><td align="center">A</td></tr>
+<tr><td>TCMYK</td><td>c, m, y, k</td><td align="center">4</td><td align="center">K</td></tr>
+<tr><td>TMulti</td><td>array of values</td><td align="center">n</td><td align="center">M</td></tr>
+</tbody>
+</table>
+<br/>
+<h2>Image file formats</h2>
+<p>It seems that every image processing software package has one or
+      more of its own image file formats. Even in packages where external
+      formats have been adopted, changes in those formats literally made them
+      different formats. There are many conversion programs dealing with
+      specific pairwise conversions - not a particularly efficient solution to
+      the user. Bsoft attempts to deal with images as generalized constructs,
+      encapsulating most of the information embedded in the image files in an
+      internal structure. The notion of conversion is now trivial, as reading
+      and writing of multiple file formats are supported. The limiting factor
+      in this is still the limitations within each file format. E.g., you
+      cannot expect file formats designed for single images (such as MRC and
+      EM) to store multiple images (whether 2D or 3D).</p>
+<table summary="Image file format features (as implemented in Bsoft)" border="1">
+<caption>Table 3. Image file format features (as implemented in Bsoft)</caption>
+<thead>
+<tr><th align="center">Image format</th><th align="center">Extensions</th><th align="center">Data types</th><th align="center">Dimensions</th><th align="center">Fourier/Complex</th><th align="center">Sampling Info</th><th align="center">Remarks</th></tr>
+</thead>
+<tbody>
+<tr><td>ASCII</td><td>.asc, .txt</td><td>(text)</td><td>3D, single</td><td>List</td><td>No</td><td> </td></tr>
+<tr><td>BioRad</td><td>.pic</td><td>b, u</td><td>3D, single</td><td>No</td><td>No</td><td>Confocal microscopy</td></tr>
+<tr><td>Brix</td><td>.brx</td><td>b</td><td>3D, single</td><td>No</td><td>Indirect</td><td>O package, Xtal</td></tr>
+<tr><td>Brookhaven STEM</td><td>.dat</td><td>b</td><td>2D, double interleaved</td><td>No</td><td>One value</td><td>STEM corrections applied on reading</td></tr>
+<tr><td>CCP4</td><td>.map, .ccp, .ccp4</td><td>c, s, f, S, F</td><td>3D, single</td><td>Centered hermitian</td><td>Indirect</td><td>Xtal</td></tr>
+<tr><td>Digital Instruments</td><td>.di</td><td>s</td><td>2D, double</td><td>No</td><td>No</td><td>No write support</td></tr>
+<tr><td>Digital Micrograph</td><td>.dm, .dm3, .dm4</td><td>b, s, i, f, F</td><td>2D, single</td><td>No</td><td>No</td><td>Proprietary format</td></tr>
+<tr><td>Ditabis image plate reader</td><td>.IPL, .IPH, .IPR, .IPC</td><td>s, i</td><td>2D, single</td><td>No</td><td>Two values</td><td>Micron package</td></tr>
+<tr><td>DSN6</td><td>.dsn6, .dn6, .omap</td><td>b</td><td>3D, single</td><td>No</td><td>Indirect</td><td>O package, Xtal</td></tr>
+<tr><td>DX</td><td>.dx</td><td>f</td><td>3D, single</td><td>No</td><td>Three values</td><td>OpenDX, visualization</td></tr>
+<tr><td>EM</td><td>.em</td><td>b, s, i, f</td><td>3D, single</td><td>Hermitian</td><td>No</td><td>EM package</td></tr>
+<tr><td>Goodford</td><td>.pot</td><td>f</td><td>3D, single</td><td>No</td><td>One value</td><td>Electrostatic potential</td></tr>
+<tr><td>GRD</td><td>.grd</td><td>(all)</td><td>3D, multiple</td><td>No</td><td>Three values</td><td>Complete Bsoft image data model</td></tr>
+<tr><td>HKL</td><td>.hkl</td><td>(text)</td><td>3D, single</td><td>List</td><td>No</td><td>Structure factor format</td></tr>
+<tr><td>Imagic</td><td>.img (.hed)</td><td>b, s, f, F</td><td>2D, multiple</td><td>Centered</td><td>No</td><td>Header in a separate file</td></tr>
+<tr><td>Image Magick</td><td>.miff</td><td>b (RGB)</td><td>2D, multiple</td><td>No</td><td>No</td><td>X-window display program</td></tr>
+<tr><td>JPEG</td><td>.jpg, .jpeg</td><td>b (RGB)</td><td>2D, single</td><td>No</td><td>No</td><td>Web image format</td></tr>
+<tr><td>MFF</td><td>.mff</td><td>b, f</td><td>3D, single</td><td>No</td><td>Three values</td><td>Whatif package</td></tr>
+<tr><td>MRC</td><td>.mrc</td><td>b, s, f, S, F</td><td>3D, multiple</td><td>Centered hermitian</td><td>Indirect</td><td>MRC package</td></tr>
+<tr><td>PIC BP</td><td>.bp</td><td>b</td><td>2D, single</td><td>No</td><td>No</td><td>PIC package</td></tr>
+<tr><td>PIF</td><td>.pif</td><td>b, s, i, f, S, F</td><td>3D, multiple</td><td>Binary list</td><td>Three values</td><td>PFT/EM3DR package</td></tr>
+<tr><td>PNG</td><td>.png</td><td>b, s (RGB)</td><td>2D, single</td><td>No</td><td>Two values</td><td>Network image format</td></tr>
+<tr><td>PNM</td><td>.pbm, .pgm, .ppm</td><td>b (RGB)</td><td>2D, single</td><td>No</td><td>None</td><td>Simple image format</td></tr>
+<tr><td>Ser</td><td>.ser</td><td>f</td><td>2D, multiple</td><td>No</td><td>None</td><td>FEI series format</td></tr>
+<tr><td>Situs</td><td>.situs</td><td>f</td><td>3D, single</td><td>No</td><td>One value</td><td>Situs package</td></tr>
+<tr><td>SPE</td><td>.spe</td><td>f</td><td>2D, single</td><td>No</td><td>None</td><td>SPE CCD format</td></tr>
+<tr><td>Spider</td><td>.spi</td><td>f</td><td>3D, multiple</td><td>Hermitian</td><td>One value</td><td>Spider package</td></tr>
+<tr><td>Suprim</td><td>.spm, .sup, .f</td><td>b, s, i, f (RGB)</td><td>3D, single</td><td>Standard</td><td>One value</td><td>Suprim package</td></tr>
+<tr><td>TIFF</td><td>.tif, .tiff</td><td>b, s, i, f (RGB)</td><td>3D, multiple</td><td>No</td><td>Two values</td><td>Only the byte data type is common</td></tr>
+</tbody>
+</table>
+
+<p>Sampling information: The sampling or voxel/pixel size information
+      is represented as three values (for x, y and z), or two values (TIFF
+      only provides for sampling information in the x and y directions), or
+      one value (for all three directions). Crystallographic formats (such as
+      CCP4 and MRC) give sampling indirectly, calculated from the ratios of
+      the unit cell dimensions and the voxel size of the unit cell (this leads
+      to inaccuracies due to round-off).</p>
+<br/>
+<h2>Raw files - custom interpretation of image files</h2>
+<p>Bsoft offers a "raw" format to be able to load image files where
+      the format is either not supported, or there is a problem with the
+      header information in the file. Any input file name appended with a
+      series of tag-value pairs as described below, invokes an attempt to read
+      the file based on the command-line information given by the user, and to
+      ignore any information in the file header itself. The image file name
+      must be following by a string using the sharp character, "#", as
+      delimiter between tag-value pairs. E.g., to interpret the file
+      "input.file" according to particular data type and size
+      parameters:</p>
+	  <div id="command"><p>bimg -verbose 7 input.file#d=f#x=120,120,55#h=1024
+      output.map</p></div>
+	  <p>This line will interpret the file as containing a
+      3D image in floating point format, with the data starting at byte 1024.
+      Typically, the minimum necessary to interpret a file is the data type,
+      the size, and the header bytes to skip</p>
+<table summary="Tag-value descriptions for custom interpretation of image&#10;        files" border="1">
+<caption>Table 4. Tag-value descriptions for custom interpretation of image
+        files</caption>
+<thead>
+<tr><th align="center">Tag</th><th align="center">Value</th><th align="center">Description</th></tr></thead>
+<tbody>
+<tr><td align="center">h</td><td>bytes</td><td>Header size = initial number of bytes to skip</td></tr>
+<tr><td align="center">d</td><td>datatype_letter</td><td>Data type character (1,b,c,u,s,j,i,k,l,f,d,S,I,F,D)</td></tr>
+<tr><td align="center">x</td><td>size_x,size_y,size_z</td><td>Image size in voxels</td></tr>
+<tr><td align="center">p</td><td>page_x,page_y,page_z</td><td>Page size in voxels</td></tr>
+<tr><td align="center">a</td><td>bytes</td><td>Number of bytes to pad between pages</td></tr>
+<tr><td align="center">s</td><td>sampling_x,sampling_y,sampling_z</td><td>Sampling/voxel size in angstrom/voxel</td></tr>
+<tr><td align="center">c</td><td>number_channels</td><td>Number of channels (gray scale = 1, RGB = 3)</td></tr>
+<tr><td align="center">n</td><td>number_images</td><td>Number of images in the file</td></tr>
+<tr><td align="center">i</td><td>selected_image</td><td>Select one image to read</td></tr>
+<tr><td align="center">f</td><td>transform_type</td><td>n=NoTransform, s=Standard, c=Centered, h=Hermitian, q=CentHerm</td></tr>
+<tr><td align="center">b</td><td>0/1</td><td>Byte swapping flag</td></tr>
+<tr><td align="center">v</td><td>0/1</td><td>VAX floating point flag</td></tr>
+</tbody>
+</table>
+
+</div>
+<div id="footer">
+  Bernard Heymann 20210416
+</div>
+</body>
+</html>

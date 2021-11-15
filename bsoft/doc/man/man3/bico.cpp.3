@@ -1,0 +1,339 @@
+.TH "/Users/bernard/b20/bsoft/src/bico.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/bico.cpp \- Program to analyze icosahedral subtomograms\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_reconstruct\&.h'\fP
+.br
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'rwsymop\&.h'\fP
+.br
+\fC#include 'symmetry\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_vertex_reconstruct\fP (\fBBproject\fP *\fBproject\fP, \fBVector3\fP< long > size, double maxres)"
+.br
+.ti -1c
+.RI "long \fBproject_ico_worst_vertex\fP (\fBBproject\fP *\fBproject\fP, \fBBimage\fP *pref, \fBBimage\fP *pmask, \fBBimage\fP *pfsmask, double hires, double lores)"
+.br
+.RI "Determines the special vertex for icosahedral symmetry and returns two maps\&. "
+.ti -1c
+.RI "long \fBproject_ico_opposite_vertex\fP (\fBBproject\fP *\fBproject\fP, \fBBimage\fP *pmask, \fBBimage\fP *pfsmask, double hires, double lores)"
+.br
+.RI "Determines the special vertex for icosahedral symmetry and returns two maps\&. "
+.ti -1c
+.RI "long \fBproject_ico_best_c5\fP (\fBBproject\fP *\fBproject\fP, \fBBimage\fP *pref, \fBBimage\fP *pmask, \fBBimage\fP *pfsmask, double hires, double lores)"
+.br
+.RI "Determines the best 5-fold orientation of the vertex wrt a reference\&. "
+.ti -1c
+.RI "long \fBproject_assign_special_vertex_orientations\fP (\fBBproject\fP *\fBproject\fP, \fBBproject\fP *project_specvert)"
+.br
+.ti -1c
+.RI "long \fBproject_analyze_vertices\fP (\fBBproject\fP *\fBproject\fP, double threshold)"
+.br
+.ti -1c
+.RI "long \fBproject_analyze_vertices2\fP (\fBBproject\fP *\fBproject\fP, double significance)"
+.br
+.ti -1c
+.RI "long \fBproject_analyze_vertices3\fP (\fBBproject\fP *\fBproject\fP, long maxcut)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_read_orient_mask\fP (\fBBstring\fP &filename, \fBBimage\fP *pmask, \fBView\fP view)"
+.br
+.ti -1c
+.RI "double \fBimg_cc\fP (\fBBimage\fP *p1, \fBBimage\fP *p2, \fBBimage\fP *pfsmask, double hires, double lores)"
+.br
+.ti -1c
+.RI "long \fBparticle_worst_vertex\fP (\fBBparticle\fP *vert, \fBBimage\fP *pref, \fBBimage\fP *pmask, \fBBimage\fP *pfsmask, double hires, double lores)"
+.br
+.ti -1c
+.RI "long \fBparticle_cc_opposite_vertices\fP (\fBBparticle\fP *vert, \fBBimage\fP *pmask, \fBBimage\fP *pfsmask, double hires, double lores)"
+.br
+.ti -1c
+.RI "long \fBparticle_worst_opposite_vertex\fP (\fBBparticle\fP *vert, \fBBimage\fP *pref, \fBBimage\fP *pmask, \fBBimage\fP *pfsmask, double hires, double lores)"
+.br
+.ti -1c
+.RI "long \fBparticle_best_c5\fP (\fBBparticle\fP *part, \fBBimage\fP *pref, \fBBimage\fP *pmask, \fBBimage\fP *pfsmask, double hires, double lores)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "\fBfft_plan\fP \fBplanf\fP"
+.br
+.ti -1c
+.RI "\fBfft_plan\fP \fBplanb\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Program to analyze icosahedral subtomograms\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20180427 
+.PP
+Modified: 20201124 
+.RE
+.PP
+
+.PP
+Definition in file \fBbico\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double img_cc (\fBBimage\fP * p1, \fBBimage\fP * p2, \fBBimage\fP * pfsmask, double hires, double lores)"
+
+.PP
+Definition at line 228 of file bico\&.cpp\&.
+.SS "\fBBimage\fP* img_read_orient_mask (\fBBstring\fP & filename, \fBBimage\fP * pmask, \fBView\fP view)"
+
+.PP
+Definition at line 210 of file bico\&.cpp\&.
+.SS "\fBBimage\fP * img_vertex_reconstruct (\fBBproject\fP * project, \fBVector3\fP< long > size, double maxres)"
+
+.PP
+Definition at line 252 of file bico\&.cpp\&.
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 67 of file bico\&.cpp\&.
+.SS "long particle_best_c5 (\fBBparticle\fP * part, \fBBimage\fP * pref, \fBBimage\fP * pmask, \fBBimage\fP * pfsmask, double hires, double lores)"
+
+.PP
+Definition at line 388 of file bico\&.cpp\&.
+.SS "long particle_cc_opposite_vertices (\fBBparticle\fP * vert, \fBBimage\fP * pmask, \fBBimage\fP * pfsmask, double hires, double lores)"
+
+.PP
+Definition at line 311 of file bico\&.cpp\&.
+.SS "long particle_worst_opposite_vertex (\fBBparticle\fP * vert, \fBBimage\fP * pref, \fBBimage\fP * pmask, \fBBimage\fP * pfsmask, double hires, double lores)"
+
+.PP
+Definition at line 355 of file bico\&.cpp\&.
+.SS "long particle_worst_vertex (\fBBparticle\fP * vert, \fBBimage\fP * pref, \fBBimage\fP * pmask, \fBBimage\fP * pfsmask, double hires, double lores)"
+
+.PP
+Definition at line 266 of file bico\&.cpp\&.
+.SS "long project_analyze_vertices (\fBBproject\fP * project, double threshold)"
+
+.PP
+Definition at line 707 of file bico\&.cpp\&.
+.SS "long project_analyze_vertices2 (\fBBproject\fP * project, double significance)"
+
+.PP
+Definition at line 778 of file bico\&.cpp\&.
+.SS "long project_analyze_vertices3 (\fBBproject\fP * project, long maxcut)"
+
+.PP
+Definition at line 844 of file bico\&.cpp\&.
+.SS "long project_assign_special_vertex_orientations (\fBBproject\fP * project, \fBBproject\fP * project_specvert)"
+
+.PP
+Definition at line 667 of file bico\&.cpp\&.
+.SS "long project_ico_best_c5 (\fBBproject\fP * project, \fBBimage\fP * pref, \fBBimage\fP * pmask, \fBBimage\fP * pfsmask, double hires, double lores)"
+
+.PP
+Determines the best 5-fold orientation of the vertex wrt a reference\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fI*pref\fP reference map\&. 
+.br
+\fI*pmask\fP real space mask\&. 
+.br
+\fI*pfsmask\fP frequency space mask\&. 
+.br
+\fIhires\fP maximum resolution for correlation\&. 
+.br
+\fIlores\fP minimum resolution for correlation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long 1 if done, 0 on error\&. 
+.PP
+.nf
+The function compares opposite vertices of the twelve for every particle
+to identify the pair that is most dissimilar. 
+One of these is a candidate for the special vertex.
+A reference map is then calculated from all the rest of the vertices.
+The previously selected pair is then correlated agiants the reference
+and the one with the worst coefficient selected as final candidate.
+Two averages are calculated, the first for the non-special vertices,
+and the second for the special vertices.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 613 of file bico\&.cpp\&.
+.SS "long project_ico_opposite_vertex (\fBBproject\fP * project, \fBBimage\fP * pmask, \fBBimage\fP * pfsmask, double hires, double lores)"
+
+.PP
+Determines the special vertex for icosahedral symmetry and returns two maps\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fI*pmask\fP real space mask\&. 
+.br
+\fI*pfsmask\fP frequency space mask\&. 
+.br
+\fIhires\fP maximum resolution for correlation\&. 
+.br
+\fIlores\fP minimum resolution for correlation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long 1 if done, 0 on error\&. 
+.PP
+.nf
+The function compares opposite vertices of the twelve for every particle
+to identify the pair that is most dissimilar. 
+One of these is a candidate for the special vertex.
+A reference map is then calculated from all the rest of the vertices.
+The previously selected pair is then correlated agiants the reference
+and the one with the worst coefficient selected as final candidate.
+Two averages are calculated, the first for the non-special vertices,
+and the second for the special vertices.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 522 of file bico\&.cpp\&.
+.SS "long project_ico_worst_vertex (\fBBproject\fP * project, \fBBimage\fP * pref, \fBBimage\fP * pmask, \fBBimage\fP * pfsmask, double hires, double lores)"
+
+.PP
+Determines the special vertex for icosahedral symmetry and returns two maps\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fI*pref\fP reference map\&. 
+.br
+\fI*pmask\fP real space mask\&. 
+.br
+\fI*pfsmask\fP frequency space mask\&. 
+.br
+\fIhires\fP maximum resolution for correlation\&. 
+.br
+\fIlores\fP minimum resolution for correlation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long 1 if done, 0 on error\&. 
+.PP
+.nf
+The function correlates each vertex with the reference, and selects the one
+out of the twelve for each particle with the worst coefficient as the 
+likely special vertex.
+Two averages are calculated, the first for the non-special vertices,
+and the second for the special vertices.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 448 of file bico\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "\fBfft_plan\fP planb"
+
+.PP
+Definition at line 24 of file bico\&.cpp\&.
+.SS "\fBfft_plan\fP planf"
+
+.PP
+Definition at line 24 of file bico\&.cpp\&.
+.SS "const char* use[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+" ",
+"Usage: bico [options] tomo\&.star",
+"-------------------------------",
+"Analyzes icosahedral subtomograms\&.",
+" ",
+"Actions:",
+"-find opp                Type of correlation: worst, opposite, c5\&.",
+"-analyze 0\&.1             Calculate statistics for vertices\&.",
+" ",
+"Parameters:",
+"-verbose 7               Verbosity of output\&.",
+"-resolution 15\&.6,200     Resolution limits for cross-correlation (default 0,inf)\&.",
+"-maxresolution 9\&.5       Maximum reconstruction resolution limit (default Nyquist)\&.",
+" ",
+"Input:",
+"-reference image\&.map     Reference for cross-correlation\&.",
+"-mask image\&.map          Real space mask\&.",
+"-Mask fsmask\&.mrc         Frequency space mask (missing data)\&.",
+"-special vert\&.star       Parameter file with special vertex orientations\&.",
+" ",
+"Output:",
+"-output file\&.star        Output parameter file\&.",
+"-reconstruction file\&.ext Reconstruction file name\&.",
+" ",
+NULL
+}
+.fi
+.PP
+Definition at line 39 of file bico\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

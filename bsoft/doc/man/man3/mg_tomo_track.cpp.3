@@ -1,0 +1,729 @@
+.TH "/Users/bernard/b20/bsoft/src/mg/mg_tomo_track.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mg/mg_tomo_track.cpp \- Functions to track fiducial markers in a tomographic series of images\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Bimage\&.h'\fP
+.br
+\fC#include 'mg_tomography\&.h'\fP
+.br
+\fC#include 'mg_tomo_track\&.h'\fP
+.br
+\fC#include 'mg_select\&.h'\fP
+.br
+\fC#include 'mg_img_proc\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'qsort_functions\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmg_marker_z_search\fP (\fBBmicrograph\fP *mg, \fBBmarker\fP *\fBmodel\fP, \fBVector3\fP< double > oriref, \fBBimage\fP *pgold, double thickness, int cc_type, int iz, double *z)"
+.br
+.ti -1c
+.RI "int \fBmg_z_matrix_update\fP (\fBBmarker\fP *\fBmodel\fP, int nmg, int nmark, double *z, double *w, int recenter)"
+.br
+.ti -1c
+.RI "double \fBfom_from_distance\fP (double \fBdistance\fP, double sigma)"
+.br
+.ti -1c
+.RI "int \fBmarker_show\fP (\fBBmarker\fP *m1, \fBBmarker\fP *m2)"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_marker_projection\fP (\fBVector3\fP< long > size, \fBVector3\fP< double > offset, double radius, \fBBimage\fP *pmark, \fBBmarker\fP *mark)"
+.br
+.RI "Generates a projection image of the global marker model\&. "
+.ti -1c
+.RI "double \fBmg_find_tilt_axis\fP (\fBBmicrograph\fP *mgp, \fBBmicrograph\fP *mgn, \fBBmicrograph\fP *mg_ref, double axis_angle, \fBBimage\fP *pgold, double hi_res, double lo_res, double shift_limit, \fBfft_plan\fP \fBplanf\fP, \fBfft_plan\fP \fBplanb\fP)"
+.br
+.ti -1c
+.RI "double \fBproject_find_tilt_axis\fP (\fBBproject\fP *\fBproject\fP, double tilt, double axis_start, double axis_end, double axis_step, double hi_res, double lo_res, double shift_limit)"
+.br
+.RI "Finds the tilt axis for a tomographic tilt series\&. "
+.ti -1c
+.RI "int \fBproject_track_markers\fP (\fBBproject\fP *\fBproject\fP, double hi_res, double lo_res, double shift_limit, double thickness, int max_cycle, double target, int cc_type, int recenter, \fBBstring\fP paramfile)"
+.br
+.RI "Aligns markers in a tomographic series\&. "
+.ti -1c
+.RI "int \fBproject_track_markers_dual\fP (\fBBproject\fP *\fBproject\fP, double hi_res, double lo_res, double shift_limit, double thickness, int max_cycle, double target, int cc_type, int recenter, \fBBstring\fP paramfile)"
+.br
+.RI "Aligns markers in a tomographic series\&. "
+.ti -1c
+.RI "double \fBmarker_refine\fP (\fBBmarker\fP *mark, \fBBmarker\fP *marklist, \fBBimage\fP *p, \fBBimage\fP *pgold, double radius, double hi_res, double lo_res)"
+.br
+.ti -1c
+.RI "int \fBproject_refine_markers\fP (\fBBproject\fP *\fBproject\fP, double hi_res, double lo_res)"
+.br
+.RI "Refines marker positions in a tomographic series\&. "
+.ti -1c
+.RI "int \fBproject_refine_one_marker\fP (\fBBproject\fP *\fBproject\fP, int id, double hi_res, double lo_res)"
+.br
+.RI "Refines marker positions in a tomographic series\&. "
+.ti -1c
+.RI "int \fBmg_refine_markers\fP (\fBBmicrograph\fP *mg, \fBBimage\fP *pgold, double hi_res, double lo_res)"
+.br
+.RI "Refines marker positions in a tomographic micrograph\&. "
+.ti -1c
+.RI "double \fBproject_refine\fP (\fBBproject\fP *\fBproject\fP, int iter, double tol, \fBBstring\fP refop)"
+.br
+.RI "Refines all the alignment parameters\&. "
+.ti -1c
+.RI "double \fBtomo_z_residual\fP (\fBBproject\fP *\fBproject\fP, \fBBmarker\fP *mark)"
+.br
+.ti -1c
+.RI "double \fBproject_refine_z\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Refines the z coordinates of the marker model\&. "
+.ti -1c
+.RI "double \fBproject_refine\fP (\fBBproject\fP *\fBproject\fP, int do_view, int do_origin, int do_scale)"
+.br
+.RI "Refines the views from the marker positions and marker model\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBfit_line\fP (vector< \fBVector3\fP< double >> d)"
+.br
+.ti -1c
+.RI "double \fBproject_tilt_axis_from_markers\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Calculates the tilt axis from the marker trajectories\&. "
+.ti -1c
+.RI "double \fBmg_marker_shift\fP (\fBBmicrograph\fP *mg, \fBBimage\fP *pgold, double hi_res, double lo_res, double shift_limit, \fBfft_plan\fP \fBplanf\fP, \fBfft_plan\fP \fBplanb\fP)"
+.br
+.RI "Finds the shift of a micrograph wrt the reference using markers\&. "
+.ti -1c
+.RI "double \fBmarker_fom\fP (\fBBimage\fP *p, \fBVector3\fP< double > loc, double radius)"
+.br
+.ti -1c
+.RI "double \fBmg_marker_z_search_one\fP (\fBBmicrograph\fP *mg, \fBBimage\fP *p, \fBBmarker\fP *modmark, \fBVector3\fP< double > oriref, \fBBimage\fP *pgold, double thickness, int cc_type, int i, double *z, \fBfft_plan\fP \fBplanf\fP, \fBfft_plan\fP \fBplanb\fP)"
+.br
+.ti -1c
+.RI "int \fBproject_transfer_seed\fP (\fBBproject\fP *\fBproject\fP, double rot_start, double rot_end, double rot_step, double hi_res, double lo_res, double shift_limit)"
+.br
+.RI "Transfers the seed markers from the first to the second project\&. "
+.ti -1c
+.RI "int \fBproject_transform_dual\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Calculates the transformation of the second tilt series to fit the first\&. "
+.ti -1c
+.RI "double \fBproject_dual_zcompare\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Lists two sets of Z coordinates for comparison\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to track fiducial markers in a tomographic series of images\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20020416 
+.PP
+Modified: 20210112 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_tomo_track\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBVector3\fP<double> fit_line (vector< \fBVector3\fP< double >> d)"
+
+.PP
+Definition at line 1147 of file mg_tomo_track\&.cpp\&.
+.SS "double fom_from_distance (double distance, double sigma)"
+
+.PP
+Definition at line 29 of file mg_tomo_track\&.cpp\&.
+.SS "\fBBimage\fP* img_marker_projection (\fBVector3\fP< long > size, \fBVector3\fP< double > offset, double radius, \fBBimage\fP * pmark, \fBBmarker\fP * mark)"
+
+.PP
+Generates a projection image of the global marker model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsize\fP size of image\&. 
+.br
+\fIoffset\fP offset to add to marker locations\&. 
+.br
+\fIradius\fP gold fiducial marker radius\&. 
+.br
+\fI*pmark\fP average marker image (can be NULL)\&. 
+.br
+\fI*mark\fP list of markers\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* marker projection image\&. 
+.PP
+.nf
+If the input marker image is NULL, synthetic particle images are 
+generated using the input radius.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 59 of file mg_tomo_track\&.cpp\&.
+.SS "double marker_fom (\fBBimage\fP * p, \fBVector3\fP< double > loc, double radius)"
+
+.PP
+Definition at line 1277 of file mg_tomo_track\&.cpp\&.
+.SS "double marker_refine (\fBBmarker\fP * mark, \fBBmarker\fP * marklist, \fBBimage\fP * p, \fBBimage\fP * pgold, double radius, double hi_res, double lo_res)"
+
+.PP
+Definition at line 645 of file mg_tomo_track\&.cpp\&.
+.SS "int marker_show (\fBBmarker\fP * m1, \fBBmarker\fP * m2)"
+
+.PP
+Definition at line 38 of file mg_tomo_track\&.cpp\&.
+.SS "double mg_find_tilt_axis (\fBBmicrograph\fP * mgp, \fBBmicrograph\fP * mgn, \fBBmicrograph\fP * mg_ref, double axis_angle, \fBBimage\fP * pgold, double hi_res, double lo_res, double shift_limit, \fBfft_plan\fP planf, \fBfft_plan\fP planb)"
+
+.PP
+Definition at line 90 of file mg_tomo_track\&.cpp\&.
+.SS "double mg_marker_shift (\fBBmicrograph\fP * mg, \fBBimage\fP * pgold, double hi_res, double lo_res, double shift_limit, \fBfft_plan\fP planf, \fBfft_plan\fP planb)"
+
+.PP
+Finds the shift of a micrograph wrt the reference using markers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph\&. 
+.br
+\fI*pgold\fP marker reference image (can be NULL)\&. 
+.br
+\fIhi_res\fP high resolution limit for cross-correlation\&. 
+.br
+\fIlo_res\fP low resolution limit for cross-correlation\&. 
+.br
+\fIshift_limit\fP maximum micrograph shift to search for\&. 
+.br
+\fIplanf\fP FFT forward plan\&. 
+.br
+\fIplanb\fP FFT backward plan\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double correlation coefficient\&. 
+.PP
+.nf
+The marker locations and marker radius must already be set.
+The correlation coefficient for the correlation between the micrograph
+and the 2D image generated from the markers is retuned.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1237 of file mg_tomo_track\&.cpp\&.
+.SS "int mg_marker_z_search (\fBBmicrograph\fP * mg, \fBBmarker\fP * model, \fBVector3\fP< double > oriref, \fBBimage\fP * pgold, double thickness, int cc_type, int iz, double * z)"
+
+.PP
+Definition at line 1362 of file mg_tomo_track\&.cpp\&.
+.SS "double mg_marker_z_search_one (\fBBmicrograph\fP * mg, \fBBimage\fP * p, \fBBmarker\fP * modmark, \fBVector3\fP< double > oriref, \fBBimage\fP * pgold, double thickness, int cc_type, int i, double * z, \fBfft_plan\fP planf, \fBfft_plan\fP planb)"
+
+.PP
+Definition at line 1288 of file mg_tomo_track\&.cpp\&.
+.SS "int mg_refine_markers (\fBBmicrograph\fP * mg, \fBBimage\fP * pgold, double hi_res, double lo_res)"
+
+.PP
+Refines marker positions in a tomographic micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph\&. 
+.br
+\fI*pgold\fP marker reference image (can be NULL)\&. 
+.br
+\fIhi_res\fP high resolution limit for cross-correlation\&. 
+.br
+\fIlo_res\fP low resolution limit for cross-correlation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The area around a marker is extracted and cross-correlated with the
+corresponding projection from the 3D marker model.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 833 of file mg_tomo_track\&.cpp\&.
+.SS "int mg_z_matrix_update (\fBBmarker\fP * model, int nmg, int nmark, double * z, double * w, int recenter)"
+
+.PP
+Definition at line 1450 of file mg_tomo_track\&.cpp\&.
+.SS "double project_dual_zcompare (\fBBproject\fP * project)"
+
+.PP
+Lists two sets of Z coordinates for comparison\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Jessica Mavadia, Bernard Heymann 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project with two tilt series\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double root-mean-square-difference\&. 
+.PP
+.nf
+The root-mean-square-difference between the z coordinates is calculated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1767 of file mg_tomo_track\&.cpp\&.
+.SS "double project_find_tilt_axis (\fBBproject\fP * project, double tilt, double axis_start, double axis_end, double axis_step, double hi_res, double lo_res, double shift_limit)"
+
+.PP
+Finds the tilt axis for a tomographic tilt series\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fItilt\fP user-chosen tilt angle to use (radians)\&. 
+.br
+\fIaxis_start\fP starting tilt axis angle\&. 
+.br
+\fIaxis_end\fP ending tilt axis angle\&. 
+.br
+\fIaxis_step\fP tilt axis angle step size (radians)\&. 
+.br
+\fIhi_res\fP high resolution limit for cross-correlation\&. 
+.br
+\fIlo_res\fP low resolution limit for cross-correlation\&. 
+.br
+\fIshift_limit\fP maximum micrograph shift to search for\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double best correlation coefficient\&. 
+.PP
+.nf
+The zero-tilt reference marker set must be defined.
+The micrographs closest to the positive and negative values of the
+given tilt angle is selected to find the tilt axis.
+The tilt axis for each of these micrographs is incremented from
+-PI to PI, markers generated from the reference seed, and 
+cross-correlated with the micrograph image.
+The tilt axis angle giving the best cross-correlation is chosen
+and assigned to all the micrographs.
+The markers for the chosen tilted micrographs are deleted.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 154 of file mg_tomo_track\&.cpp\&.
+.SS "double project_refine (\fBBproject\fP * project, int do_view, int do_origin, int do_scale)"
+
+.PP
+Refines the views from the marker positions and marker model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph project\&. 
+.br
+\fIdo_view\fP refine micrograph views\&. 
+.br
+\fIdo_origin\fP refine micrograph origins\&. 
+.br
+\fIdo_scale\fP refine micrograph scales\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double best residual\&. 
+.PP
+.nf
+Requires the matrices in the micrograph structures to be defined.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1007 of file mg_tomo_track\&.cpp\&.
+.SS "double project_refine (\fBBproject\fP * project, int iter, double tol, \fBBstring\fP refop)"
+
+.PP
+Refines all the alignment parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph project\&. 
+.br
+\fIiter\fP maximum number of iterations\&. 
+.br
+\fItol\fP tolerance for exit condition\&. 
+.br
+\fIrefop\fP string holding sequence of refinement operations\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double marker RMSD\&. 
+.RE
+.PP
+
+.PP
+Definition at line 870 of file mg_tomo_track\&.cpp\&.
+.SS "int project_refine_markers (\fBBproject\fP * project, double hi_res, double lo_res)"
+
+.PP
+Refines marker positions in a tomographic series\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIhi_res\fP high resolution limit for cross-correlation\&. 
+.br
+\fIlo_res\fP low resolution limit for cross-correlation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+The area around a marker is extracted and cross-correlated with the
+corresponding projection from the 3D marker model.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 685 of file mg_tomo_track\&.cpp\&.
+.SS "int project_refine_one_marker (\fBBproject\fP * project, int id, double hi_res, double lo_res)"
+
+.PP
+Refines marker positions in a tomographic series\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIid\fP marker identifier\&. 
+.br
+\fIhi_res\fP high resolution limit for cross-correlation\&. 
+.br
+\fIlo_res\fP low resolution limit for cross-correlation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+The area around a marker is extracted and cross-correlated with the
+corresponding projection from the 3D marker model.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 770 of file mg_tomo_track\&.cpp\&.
+.SS "double project_refine_z (\fBBproject\fP * project)"
+
+.PP
+Refines the z coordinates of the marker model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph project\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double overall RMS change\&. 
+.RE
+.PP
+
+.PP
+Definition at line 950 of file mg_tomo_track\&.cpp\&.
+.SS "double project_tilt_axis_from_markers (\fBBproject\fP * project)"
+
+.PP
+Calculates the tilt axis from the marker trajectories\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph project\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double best residual\&. 
+.PP
+.nf
+If the rotation is around a single axis, the trajectory of a marker should lie in a plane.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1188 of file mg_tomo_track\&.cpp\&.
+.SS "int project_track_markers (\fBBproject\fP * project, double hi_res, double lo_res, double shift_limit, double thickness, int max_cycle, double target, int cc_type, int recenter, \fBBstring\fP paramfile)"
+
+.PP
+Aligns markers in a tomographic series\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIhi_res\fP high resolution limit for cross-correlation\&. 
+.br
+\fIlo_res\fP low resolution limit for cross-correlation\&. 
+.br
+\fIshift_limit\fP maximum micrograph shift to search for\&. 
+.br
+\fIthickness\fP estimated tomogram thickness (angstrom)\&. 
+.br
+\fImax_cycle\fP maximum number of iterations\&. 
+.br
+\fItarget\fP target residual to terminate tracking\&. 
+.br
+\fIcc_type\fP indicates type of marker correlation: 0=real space, 1=cross correlation 
+.br
+\fIrecenter\fP flag to recenter z coordinates\&. 
+.br
+\fIparamfile\fP output parameter file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+From the fiducial marker seed in the zero-degree tilt image, the 
+z coordinates of the markers as well as the image shift for 
+each micrograph is determined. The algorithm first attempts to 
+find the z-coordinate for each marker in an image by doing 
+real space correlations along a line determined by the tilt direction. 
+It then generates a projection image from the whole marker set at 
+the nominal tilt angle and cross-correlates it with the image to 
+find the shift. The process proceeds from the low-angle tilts to 
+higher tilts in both directions, using the lower dependence of the 
+low-tilt images on correct marker z-coordinates. This process is 
+iterated (typically 2-5 times) until the change in z-coordinates drops
+below one pixel on average or up to the maximum number of iterations. 
+The resolution limits are used in the cross-correlations.
+The shift limit prevents setting micrograph origin to far from the nominal origin.
+The thickness determines the extent of searching for the z coordinate of a marker.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 314 of file mg_tomo_track\&.cpp\&.
+.SS "int project_track_markers_dual (\fBBproject\fP * project, double hi_res, double lo_res, double shift_limit, double thickness, int max_cycle, double target, int cc_type, int recenter, \fBBstring\fP paramfile)"
+
+.PP
+Aligns markers in a tomographic series\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIhi_res\fP high resolution limit for cross-correlation\&. 
+.br
+\fIlo_res\fP low resolution limit for cross-correlation\&. 
+.br
+\fIshift_limit\fP maximum micrograph shift to search for\&. 
+.br
+\fIthickness\fP estimated tomogram thickness (angstrom)\&. 
+.br
+\fImax_cycle\fP maximum number of iterations\&. 
+.br
+\fItarget\fP target residual to terminate tracking\&. 
+.br
+\fIcc_type\fP indicates type of marker correlation: 0=real space, 1=cross correlation 
+.br
+\fIrecenter\fP flag to recenter z coordinates\&. 
+.br
+\fIparamfile\fP output parameter file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+From the fiducial marker seed in the zero-degree tilt image, the 
+z coordinates of the markers as well as the image shift for 
+each micrograph is determined. The algorithm first attempts to 
+find the z-coordinate for each marker in an image by doing 
+real space correlations along a line determined by the tilt direction. 
+It then generates a projection image from the whole marker set at 
+the nominal tilt angle and cross-correlates it with the image to 
+find the shift. The process proceeds from the low-angle tilts to 
+higher tilts in both directions, using the lower dependence of the 
+low-tilt images on correct marker z-coordinates. This process is 
+iterated (typically 2-5 times) until the change in z-coordinates drops
+below one pixel on average or up to the maximum number of iterations. 
+The resolution limits are used in the cross-correlations.
+The shift limit prevents setting micrograph origin to far from the nominal origin.
+The thickness determines the extent of searching for the z coordinate of a marker.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 490 of file mg_tomo_track\&.cpp\&.
+.SS "int project_transfer_seed (\fBBproject\fP * project, double rot_start, double rot_end, double rot_step, double hi_res, double lo_res, double shift_limit)"
+
+.PP
+Transfers the seed markers from the first to the second project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project with seed markers in first field\&. 
+.br
+\fIrot_start\fP starting rotation angle\&. 
+.br
+\fIrot_end\fP final rotation angle\&. 
+.br
+\fIrot_step\fP angular search step size\&. 
+.br
+\fIhi_res\fP high resolution limit for cross-correlation\&. 
+.br
+\fIlo_res\fP low resolution limit for cross-correlation\&. 
+.br
+\fIshift_limit\fP maximum micrograph shift to search for\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of markers\&. 
+.PP
+.nf
+The markers from the first series are rotated around the micrograph
+origin by the search angle. The markers are then used to generate
+an image with synthetic markers, and this image is cross-correlated 
+with the zero-tilt micrograph of the second series. The search angle
+giving the best correlation coefficient is selected and the seed marker
+locations for the second series are calculated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1544 of file mg_tomo_track\&.cpp\&.
+.SS "int project_transform_dual (\fBBproject\fP * project)"
+
+.PP
+Calculates the transformation of the second tilt series to fit the first\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project with seed markers\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of markers compared\&. 
+.PP
+.nf
+The 3D marker coordinates from the second series are fitted to those
+of the first series to determine the rotation matrix and shifts.
+The 3D marker locations and the micrograph orientations and origins
+of the second series are then adkjusted to correspond to the first.
+Restrictions: The first two fields should contain the two tilt series
+and the first two reconstructions the corresponding 3D marker sets.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1667 of file mg_tomo_track\&.cpp\&.
+.SS "double tomo_z_residual (\fBBproject\fP * project, \fBBmarker\fP * mark)"
+
+.PP
+Definition at line 910 of file mg_tomo_track\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

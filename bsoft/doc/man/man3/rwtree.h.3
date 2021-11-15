@@ -1,0 +1,213 @@
+.TH "/Users/bernard/b20/bsoft/include/rwtree.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/rwtree.h \- Header file for reading (and writing) trees\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBBnode\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fB_Bnode_\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBnode\fP * \fBread_tree\fP (char *filename)"
+.br
+.RI "Reads a phylip format tree file\&. "
+.ti -1c
+.RI "\fBBnode\fP * \fBtree_read_node\fP (char **handle, \fBBnode\fP *parent)"
+.br
+.RI "Reads a node into a tree structure\&. "
+.ti -1c
+.RI "int \fBtree_calculate_angle\fP (\fBBnode\fP *node, int *itip, float tip_angle)"
+.br
+.RI "Calculates an angle for each node for plotting\&. "
+.ti -1c
+.RI "int \fBtree_delete_node\fP (\fBBnode\fP *node)"
+.br
+.RI "Deletes a node with all daughter nodes\&. "
+.ti -1c
+.RI "int \fBtree_rotate\fP (\fBBnode\fP *node, float \fBangle\fP)"
+.br
+.RI "Adds an angle to all nodes\&. "
+.ti -1c
+.RI "int \fBtree_show\fP (\fBBnode\fP *node)"
+.br
+.RI "Shows a node with all daughter nodes\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for reading (and writing) trees\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010722 
+.PP
+Modified: 20010805 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwtree\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _Bnode_"
+
+.PP
+Definition at line 31 of file rwtree\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBnode\fP* read_tree (char * filename)"
+
+.PP
+Reads a phylip format tree file\&. 
+.PP
+.nf
+Reads the tree file using a recursive approach.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*filename\fP tree file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bnode* a pointer to the root node of the tree\&. 
+.RE
+.PP
+
+.PP
+Definition at line 23 of file rwtree\&.cpp\&.
+.SS "int tree_calculate_angle (\fBBnode\fP * node, int * itip, float tip_angle)"
+
+.PP
+Calculates an angle for each node for plotting\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*node\fP node\&. 
+.br
+\fI*itip\fP the number of tip nodes passed\&. 
+.br
+\fItip_angle\fP the angular increment for each tip node\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 133 of file rwtree\&.cpp\&.
+.SS "int tree_delete_node (\fBBnode\fP * node)"
+
+.PP
+Deletes a node with all daughter nodes\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*node\fP node\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 160 of file rwtree\&.cpp\&.
+.SS "\fBBnode\fP* tree_read_node (char ** handle, \fBBnode\fP * one)"
+
+.PP
+Reads a node into a tree structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**handle\fP pointer to the buffer holding the phylip format tree\&. 
+.br
+\fI*one\fP one node\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bnode* a pointer to the new node of the tree\&. 
+.RE
+.PP
+
+.PP
+Definition at line 75 of file rwtree\&.cpp\&.
+.SS "int tree_rotate (\fBBnode\fP * node, float angle)"
+
+.PP
+Adds an angle to all nodes\&. 
+.PP
+.nf
+The angle must be specified in radians.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*node\fP node\&. 
+.br
+\fIangle\fP rotation angle (radians)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 184 of file rwtree\&.cpp\&.
+.SS "int tree_show (\fBBnode\fP * node)"
+
+.PP
+Shows a node with all daughter nodes\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*node\fP node\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 204 of file rwtree\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

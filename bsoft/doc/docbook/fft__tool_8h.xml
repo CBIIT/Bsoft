@@ -1,0 +1,378 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_fft__tool_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/radon/fft_tool.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/radon/fft_tool.h</primary></indexterm>
+<programlisting>#include &quot;rwimg.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_fft__tool_8h_1a177c07fb26dc39eef19f998ddedb022b">fft_1D_forward</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+</listitem>
+            <listitem><para>int <link linkend="_fft__tool_8h_1ac407fb918038dd5595cb4f4c1806cc8a">fft_1D_backward</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+</listitem>
+            <listitem><para>int <link linkend="_fft__tool_8h_1a379361604478470b1a6d22067f8ffdac">fft_2D_forward</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+</listitem>
+            <listitem><para>int <link linkend="_fft__tool_8h_1af38a17f74d28ce647500c835dc4cc9e6">fft_2D_backward</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+</listitem>
+            <listitem><para>int <link linkend="_fft__tool_8h_1a6a809ee33abd2a493d35b12a32705509">farfarig</link> (<link linkend="_class_bimage">Bimage</link> *p, int ifl)</para>
+
+<para>With MIXRIG and SCRAMRIG fast Fourier transform a 2D image. </para>
+</listitem>
+            <listitem><para>int <link linkend="_fft__tool_8h_1af078341dad09b3c39c295f40936e6ba9">mixrig</link> (<link linkend="_class_bimage">Bimage</link> *p, int ifl)</para>
+
+<para>With FARFARIG and SCRAMRIG fast Fourier transform a 2D image. </para>
+</listitem>
+            <listitem><para>int <link linkend="_fft__tool_8h_1a9f8e8663e78c9be5e82afed20b1220aa">scramrig</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>With FARFARIG and MIXRIG fast Fourier transform a 2D image. </para>
+</listitem>
+            <listitem><para>int <link linkend="_fft__tool_8h_1a8d92752f79a1a63d4a0b8a709238dc70">abtori</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>Changes direct Fourier transform representation. </para>
+</listitem>
+            <listitem><para>int <link linkend="_fft__tool_8h_1abe018b1e6b260a0b96eb8d2a4f3b55fd">ritoab</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>Changes direct Fourier transform representation. </para>
+</listitem>
+            <listitem><para>int <link linkend="_fft__tool_8h_1ada96f09b09814fa144f5c2619fb36819">zeroes</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+</listitem>
+            <listitem><para>int <link linkend="_fft__tool_8h_1a313b6dd3834c9237b34672451fbd77f6">rephase_orig</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>Shifting the origin by half the complex image size. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para><formalpara><title>Author</title>
+
+<para>P.L. Bellon, F. Cantele and S. Lanzavecchia Dip. Chimica Strutturale e Stereochimica Inorganica Via Venezian 21, 20133 Milano, Italy</para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 7 04 2003 </para>
+
+<para>Modified: 07 07 2005 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_fft__tool_8h_1a8d92752f79a1a63d4a0b8a709238dc70"/>    <section>
+    <title>abtori()</title>
+<indexterm><primary>abtori</primary><secondary>fft_tool.h</secondary></indexterm>
+<indexterm><primary>fft_tool.h</primary><secondary>abtori</secondary></indexterm>
+<para><computeroutput>int abtori (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>Changes direct Fourier transform representation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 <literallayout><computeroutput>This subroutine changes the way in which a direct transform 
+is represented; from the conventional form Txryr, Txiyr,
+Txryi, Txiyi (here called a,b,c,d ) it produces a new 
+representation in which real and imaginary parts
+are calculated, for the frequencies of the type f(Kx,Ky)
+and f(Kx,-Ky) .      
+Coefficients are addressed by pointers in this way:
+pp1 --&gt; real f(Kx,Ky)       pp2 --&gt; imaginary f(Kx,Ky)
+pp3 --&gt; imaginary f(Kx,-Ky) pp4 --&gt; real f(Kx,-Ky)
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 280 of file fft_tool.cpp.</para>
+    </section><anchor xml:id="_fft__tool_8h_1a6a809ee33abd2a493d35b12a32705509"/>    <section>
+    <title>farfarig()</title>
+<indexterm><primary>farfarig</primary><secondary>fft_tool.h</secondary></indexterm>
+<indexterm><primary>fft_tool.h</primary><secondary>farfarig</secondary></indexterm>
+<para><computeroutput>int farfarig (<link linkend="_class_bimage">Bimage</link> * p, int ifl)</computeroutput></para><para>
+
+<para>With MIXRIG and SCRAMRIG fast Fourier transform a 2D image. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ifl</entry>
+                                <entry>
+<para>direction of transformation (-1 = direct / 1 = inverse) </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 </para>
+</formalpara>
+</para>
+<para>
+Definition at line 75 of file fft_tool.cpp.</para>
+    </section><anchor xml:id="_fft__tool_8h_1ac407fb918038dd5595cb4f4c1806cc8a"/>    <section>
+    <title>fft_1D_backward()</title>
+<indexterm><primary>fft_1D_backward</primary><secondary>fft_tool.h</secondary></indexterm>
+<indexterm><primary>fft_tool.h</primary><secondary>fft_1D_backward</secondary></indexterm>
+<para><computeroutput>int fft_1D_backward (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+Definition at line 29 of file fft_tool.cpp.</para>
+    </section><anchor xml:id="_fft__tool_8h_1a177c07fb26dc39eef19f998ddedb022b"/>    <section>
+    <title>fft_1D_forward()</title>
+<indexterm><primary>fft_1D_forward</primary><secondary>fft_tool.h</secondary></indexterm>
+<indexterm><primary>fft_tool.h</primary><secondary>fft_1D_forward</secondary></indexterm>
+<para><computeroutput>int fft_1D_forward (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+Definition at line 17 of file fft_tool.cpp.</para>
+    </section><anchor xml:id="_fft__tool_8h_1af38a17f74d28ce647500c835dc4cc9e6"/>    <section>
+    <title>fft_2D_backward()</title>
+<indexterm><primary>fft_2D_backward</primary><secondary>fft_tool.h</secondary></indexterm>
+<indexterm><primary>fft_tool.h</primary><secondary>fft_2D_backward</secondary></indexterm>
+<para><computeroutput>int fft_2D_backward (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+Definition at line 55 of file fft_tool.cpp.</para>
+    </section><anchor xml:id="_fft__tool_8h_1a379361604478470b1a6d22067f8ffdac"/>    <section>
+    <title>fft_2D_forward()</title>
+<indexterm><primary>fft_2D_forward</primary><secondary>fft_tool.h</secondary></indexterm>
+<indexterm><primary>fft_tool.h</primary><secondary>fft_2D_forward</secondary></indexterm>
+<para><computeroutput>int fft_2D_forward (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+Definition at line 41 of file fft_tool.cpp.</para>
+    </section><anchor xml:id="_fft__tool_8h_1af078341dad09b3c39c295f40936e6ba9"/>    <section>
+    <title>mixrig()</title>
+<indexterm><primary>mixrig</primary><secondary>fft_tool.h</secondary></indexterm>
+<indexterm><primary>fft_tool.h</primary><secondary>mixrig</secondary></indexterm>
+<para><computeroutput>int mixrig (<link linkend="_class_bimage">Bimage</link> * p, int ifl)</computeroutput></para><para>
+
+<para>With FARFARIG and SCRAMRIG fast Fourier transform a 2D image. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ifl</entry>
+                                <entry>
+<para>direction of transformation (0 = direct / 1 = inverse) </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 </para>
+</formalpara>
+</para>
+<para>
+Definition at line 136 of file fft_tool.cpp.</para>
+    </section><anchor xml:id="_fft__tool_8h_1a313b6dd3834c9237b34672451fbd77f6"/>    <section>
+    <title>rephase_orig()</title>
+<indexterm><primary>rephase_orig</primary><secondary>fft_tool.h</secondary></indexterm>
+<indexterm><primary>fft_tool.h</primary><secondary>rephase_orig</secondary></indexterm>
+<para><computeroutput>int rephase_orig (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>Shifting the origin by half the complex image size. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 <literallayout><computeroutput>Coefficients are addressed by pointers in this way:
+pp1 --&gt; real f(Kx,Ky)      pp2 --&gt; imaginary f(Kx,-Ky)
+pp3 --&gt; imaginary f(Kx,Ky) pp4 --&gt; real f(Kx,-Ky)
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 407 of file fft_tool.cpp.</para>
+    </section><anchor xml:id="_fft__tool_8h_1abe018b1e6b260a0b96eb8d2a4f3b55fd"/>    <section>
+    <title>ritoab()</title>
+<indexterm><primary>ritoab</primary><secondary>fft_tool.h</secondary></indexterm>
+<indexterm><primary>fft_tool.h</primary><secondary>ritoab</secondary></indexterm>
+<para><computeroutput>int ritoab (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>Changes direct Fourier transform representation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>p</entry>
+                                <entry>
+<para>image </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 <literallayout><computeroutput>This subroutine changes the representation of the
+direct transform: from real &amp; imaginary parts to the 
+conventional one; here a,b,c,d ,pointed by pp1,pp2,
+pp3 and pp4, have the following meaning:
+a=TXrYr    b=TXiYi    c=TXrYi    d=TXiYr
+where TX(Y)r(i) means real (imaginary) part of the coefficients 
+obtained by a direct transform computed along the X (Y) direction.
+A quartet a,b,c,d is defined for each point of the reciprocal
+space in the first quadrant (i.e. points with positive Kx &amp; Ky
+coordinates.     
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 332 of file fft_tool.cpp.</para>
+    </section><anchor xml:id="_fft__tool_8h_1a9f8e8663e78c9be5e82afed20b1220aa"/>    <section>
+    <title>scramrig()</title>
+<indexterm><primary>scramrig</primary><secondary>fft_tool.h</secondary></indexterm>
+<indexterm><primary>fft_tool.h</primary><secondary>scramrig</secondary></indexterm>
+<para><computeroutput>int scramrig (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>With FARFARIG and MIXRIG fast Fourier transform a 2D image. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 <literallayout><computeroutput>Rearrange each row in the complex image.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 225 of file fft_tool.cpp.</para>
+    </section><anchor xml:id="_fft__tool_8h_1ada96f09b09814fa144f5c2619fb36819"/>    <section>
+    <title>zeroes()</title>
+<indexterm><primary>zeroes</primary><secondary>fft_tool.h</secondary></indexterm>
+<indexterm><primary>fft_tool.h</primary><secondary>zeroes</secondary></indexterm>
+<para><computeroutput>int zeroes (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para>
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 </para>
+</formalpara>
+</para>
+<para>
+Definition at line 373 of file fft_tool.cpp.</para>
+</section>
+</section>
+</section>

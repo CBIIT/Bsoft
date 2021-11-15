@@ -1,0 +1,808 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mol__edit_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mol/mol_edit.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mol/mol_edit.cpp</primary></indexterm>
+<para>
+
+<para>Library routines used for atomic coordinates. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmolecule.h&quot;
+#include &quot;rwatomprop.h&quot;
+#include &quot;rwresprop.h&quot;
+#include &quot;mol_transform.h&quot;
+#include &quot;mol_edit.h&quot;
+#include &quot;mol_util.h&quot;
+#include &quot;seq_util.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;Matrix3.h&quot;
+#include &quot;random_numbers.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>long <link linkend="_mol__edit_8cpp_1a4745158030c0fca6b7f098646866539d">molgroup_set_atom_types_to_elements</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Sets atom types to element names. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__edit_8cpp_1aa1c1f605d88003969341ce8da7ef6a40">molgroup_remove_hydrogens</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Removes all hydrogens from a molecular system. </para>
+</listitem>
+            <listitem><para>bool <link linkend="_mol__edit_8cpp_1a9217c52284f90cbe1ca3407e77c8eafa">bond_find</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_struct_batom">Batom</link> *atom1, <link linkend="_struct_batom">Batom</link> *atom2)</para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__edit_8cpp_1a76cba44c6292b09f0246fc2dc0807bf9">molgroup_add_disulfides</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double <link linkend="__vector3_8h_1aa60745aa4e45acde64f733424e37dbb9">distance</link>)</para>
+
+<para>Adds disulfide bonds when sulfur atoms are close to each other. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolgroup">Bmolgroup</link> ** <link linkend="_mol__edit_8cpp_1a3a06d5bd1f61e1897fba28fbcb0565fa">molgroup_split_into_slices</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double slice_thickness, int &amp;nslices)</para>
+
+<para>Splits a set of coordinates into slices with a given thickness. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__edit_8cpp_1a48871355748ff5aa4edff0f1601e9e4f">molgroup_insert</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_struct_bmolgroup">Bmolgroup</link> *molinsert, double <link linkend="__vector3_8h_1aa60745aa4e45acde64f733424e37dbb9">distance</link>)</para>
+
+<para>Inserts one set of molecules into another. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__edit_8cpp_1aa267f1617f1c7099c5c2eeea4ce5c572">molgroup_randomize</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double random_max)</para>
+
+<para>Applies random displacements to coordinates. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__edit_8cpp_1a2bc1aef1ec8d623e781b42f27e0fdf13">molgroup_randomize_B</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double B)</para>
+
+<para>Applies random displacements to coordinates. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__edit_8cpp_1ae640eba49218481946b33b395c348b6c">molgroup_remove_overlapping_atoms</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double mindist)</para>
+
+<para>Removes overlapping atoms. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__edit_8cpp_1aab0ff8906cf1d61c32b67896e1e7f06b">molgroup_bond_pseudo_atoms</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, int atoms_per_bond, int wrap)</para>
+
+<para>Places pseudo-atoms on bonds. </para>
+</listitem>
+            <listitem><para>char * <link linkend="_mol__edit_8cpp_1a9d0d3afaeec978b5cc473012448cd92b">grid_from_molgroup</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; min, double sampling, <link linkend="_class_vector3">Vector3</link>&lt; int &gt; size)</para>
+</listitem>
+            <listitem><para>char * <link linkend="_mol__edit_8cpp_1a859e78662a70d3d490276036c117d77d">grid_from_molecule</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; min, double sampling, <link linkend="_class_vector3">Vector3</link>&lt; int &gt; size)</para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__edit_8cpp_1a9fc27585ed2774c18e0b5c08e4fbc153">molgroup_prune_molecules</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Deletes overlapping molecules. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mol__edit_8cpp_1aba744cca7dca048e594adc97e1ab4416">molgroup_delete_deselected_molecules</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Deletes deselected molecules. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mol__edit_8cpp_1a64cb3e986b2fa0c639fee7f5e61b8730">molgroup_prune_overlapping_atoms</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double mindist)</para>
+
+<para>Prunes overlapping atoms based on a distance criterion. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mol__edit_8cpp_1a70718830ad603a6c81893e36a2f41073">molgroup_delete_deselected_atoms</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Deletes deselected atoms. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__edit_8cpp_1a94d56334045b4895d87bd354281bdc8e">molgroup_untangle_molecules</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double sampling, double lambda)</para>
+
+<para>Moves overlapping molecules away from each other. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__edit_8cpp_1a747415d2487eaa79ffc0463224bbcdc4">molgroup_untangle_groups</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double sampling, double lambda)</para>
+
+<para>Moves overlapping molecules away from each other. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mol__edit_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines used for atomic coordinates. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19980214 </para>
+
+<para>Modified: 20110811 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mol__edit_8cpp_1a9217c52284f90cbe1ca3407e77c8eafa"/>    <section>
+    <title>bond_find()</title>
+<indexterm><primary>bond_find</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>bond_find</secondary></indexterm>
+<para><computeroutput>bool bond_find (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_struct_batom">Batom</link> * atom1, <link linkend="_struct_batom">Batom</link> * atom2)</computeroutput></para><para>
+Definition at line 85 of file mol_edit.cpp.</para>
+    </section><anchor xml:id="_mol__edit_8cpp_1a859e78662a70d3d490276036c117d77d"/>    <section>
+    <title>grid_from_molecule()</title>
+<indexterm><primary>grid_from_molecule</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>grid_from_molecule</secondary></indexterm>
+<para><computeroutput>char* grid_from_molecule (<link linkend="_struct_bmolecule">Bmolecule</link> * mol, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; min, double sampling, <link linkend="_class_vector3">Vector3</link>&lt; int &gt; size)</computeroutput></para><para>
+Definition at line 576 of file mol_edit.cpp.</para>
+    </section><anchor xml:id="_mol__edit_8cpp_1a9d0d3afaeec978b5cc473012448cd92b"/>    <section>
+    <title>grid_from_molgroup()</title>
+<indexterm><primary>grid_from_molgroup</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>grid_from_molgroup</secondary></indexterm>
+<para><computeroutput>char* grid_from_molgroup (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; min, double sampling, <link linkend="_class_vector3">Vector3</link>&lt; int &gt; size)</computeroutput></para><para>
+Definition at line 551 of file mol_edit.cpp.</para>
+    </section><anchor xml:id="_mol__edit_8cpp_1a76cba44c6292b09f0246fc2dc0807bf9"/>    <section>
+    <title>molgroup_add_disulfides()</title>
+<indexterm><primary>molgroup_add_disulfides</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>molgroup_add_disulfides</secondary></indexterm>
+<para><computeroutput>int molgroup_add_disulfides (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double distance)</computeroutput></para><para>
+
+<para>Adds disulfide bonds when sulfur atoms are close to each other. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>distance</entry>
+                                <entry>
+<para>maximum separation between sulfur atoms. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of disulfide bonds added. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 101 of file mol_edit.cpp.</para>
+    </section><anchor xml:id="_mol__edit_8cpp_1aab0ff8906cf1d61c32b67896e1e7f06b"/>    <section>
+    <title>molgroup_bond_pseudo_atoms()</title>
+<indexterm><primary>molgroup_bond_pseudo_atoms</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>molgroup_bond_pseudo_atoms</secondary></indexterm>
+<para><computeroutput>int molgroup_bond_pseudo_atoms (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, int atoms_per_bond, int wrap)</computeroutput></para><para>
+
+<para>Places pseudo-atoms on bonds. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>atoms_per_bond</entry>
+                                <entry>
+<para>number of pseudo-atoms per bond. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wrap</entry>
+                                <entry>
+<para>wrap around periodic boundaries if !=0. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bbond* new bond list. <literallayout><computeroutput>The requested number of new atoms are placed to coincide with each bond.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 530 of file mol_edit.cpp.</para>
+    </section><anchor xml:id="_mol__edit_8cpp_1a70718830ad603a6c81893e36a2f41073"/>    <section>
+    <title>molgroup_delete_deselected_atoms()</title>
+<indexterm><primary>molgroup_delete_deselected_atoms</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>molgroup_delete_deselected_atoms</secondary></indexterm>
+<para><computeroutput>long molgroup_delete_deselected_atoms (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Deletes deselected atoms. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure to be modified. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of atoms deleted. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 717 of file mol_edit.cpp.</para>
+    </section><anchor xml:id="_mol__edit_8cpp_1aba744cca7dca048e594adc97e1ab4416"/>    <section>
+    <title>molgroup_delete_deselected_molecules()</title>
+<indexterm><primary>molgroup_delete_deselected_molecules</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>molgroup_delete_deselected_molecules</secondary></indexterm>
+<para><computeroutput>long molgroup_delete_deselected_molecules (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Deletes deselected molecules. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure to be modified. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of molecules deleted. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 645 of file mol_edit.cpp.</para>
+    </section><anchor xml:id="_mol__edit_8cpp_1a48871355748ff5aa4edff0f1601e9e4f"/>    <section>
+    <title>molgroup_insert()</title>
+<indexterm><primary>molgroup_insert</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>molgroup_insert</secondary></indexterm>
+<para><computeroutput>int molgroup_insert (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_struct_bmolgroup">Bmolgroup</link> * molinsert, double distance)</computeroutput></para><para>
+
+<para>Inserts one set of molecules into another. </para>
+</para>
+
+<para><literallayout><computeroutput>Molecules overlapping in the receiving molecule group are deleted.
+The footprint of the molecules being inserted is calculated on a grid
+and all atoms within this footprint is tested for deletion.
+Note: The molecule list is transferred from the insertion group to 
+    the main group and the insertion group is deallocated.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure to be modified. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*molinsert</entry>
+                                <entry>
+<para>molecule group structure to insert. (deallocated) </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>distance</entry>
+                                <entry>
+<para>cutoff distance to remove atoms. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 244 of file mol_edit.cpp.</para>
+    </section><anchor xml:id="_mol__edit_8cpp_1a9fc27585ed2774c18e0b5c08e4fbc153"/>    <section>
+    <title>molgroup_prune_molecules()</title>
+<indexterm><primary>molgroup_prune_molecules</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>molgroup_prune_molecules</secondary></indexterm>
+<para><computeroutput>int molgroup_prune_molecules (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Deletes overlapping molecules. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 603 of file mol_edit.cpp.</para>
+    </section><anchor xml:id="_mol__edit_8cpp_1a64cb3e986b2fa0c639fee7f5e61b8730"/>    <section>
+    <title>molgroup_prune_overlapping_atoms()</title>
+<indexterm><primary>molgroup_prune_overlapping_atoms</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>molgroup_prune_overlapping_atoms</secondary></indexterm>
+<para><computeroutput>long molgroup_prune_overlapping_atoms (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double mindist)</computeroutput></para><para>
+
+<para>Prunes overlapping atoms based on a distance criterion. </para>
+</para>
+
+<para><literallayout><computeroutput>The first atom in any pair of overlapping atoms is kept.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure to be modified. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mindist</entry>
+                                <entry>
+<para>distance criterion. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of remaining atoms. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 686 of file mol_edit.cpp.</para>
+    </section><anchor xml:id="_mol__edit_8cpp_1aa267f1617f1c7099c5c2eeea4ce5c572"/>    <section>
+    <title>molgroup_randomize()</title>
+<indexterm><primary>molgroup_randomize</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>molgroup_randomize</secondary></indexterm>
+<para><computeroutput>int molgroup_randomize (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double random_max)</computeroutput></para><para>
+
+<para>Applies random displacements to coordinates. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure to be modified. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>random_max</entry>
+                                <entry>
+<para>maximum displacement. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 369 of file mol_edit.cpp.</para>
+    </section><anchor xml:id="_mol__edit_8cpp_1a2bc1aef1ec8d623e781b42f27e0fdf13"/>    <section>
+    <title>molgroup_randomize_B()</title>
+<indexterm><primary>molgroup_randomize_B</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>molgroup_randomize_B</secondary></indexterm>
+<para><computeroutput>int molgroup_randomize_B (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double B)</computeroutput></para><para>
+
+<para>Applies random displacements to coordinates. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure to be modified. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>B</entry>
+                                <entry>
+<para>B factor. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 403 of file mol_edit.cpp.</para>
+    </section><anchor xml:id="_mol__edit_8cpp_1aa1c1f605d88003969341ce8da7ef6a40"/>    <section>
+    <title>molgroup_remove_hydrogens()</title>
+<indexterm><primary>molgroup_remove_hydrogens</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>molgroup_remove_hydrogens</secondary></indexterm>
+<para><computeroutput>int molgroup_remove_hydrogens (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Removes all hydrogens from a molecular system. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of hydrogens removed. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 52 of file mol_edit.cpp.</para>
+    </section><anchor xml:id="_mol__edit_8cpp_1ae640eba49218481946b33b395c348b6c"/>    <section>
+    <title>molgroup_remove_overlapping_atoms()</title>
+<indexterm><primary>molgroup_remove_overlapping_atoms</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>molgroup_remove_overlapping_atoms</secondary></indexterm>
+<para><computeroutput>int molgroup_remove_overlapping_atoms (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double mindist)</computeroutput></para><para>
+
+<para>Removes overlapping atoms. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mindist</entry>
+                                <entry>
+<para>minimum distance allowed between atoms. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of atoms removed, &lt;0 on error. <literallayout><computeroutput>The input molecule group is checked for any atom pairs closer than
+a minimum allowed distance. The second atom of an overlapping pair
+is removed. This is intended to clean up after symmetry operations
+that generate overlapping pseudo-atoms lying on symmetry axes.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 441 of file mol_edit.cpp.</para>
+    </section><anchor xml:id="_mol__edit_8cpp_1a4745158030c0fca6b7f098646866539d"/>    <section>
+    <title>molgroup_set_atom_types_to_elements()</title>
+<indexterm><primary>molgroup_set_atom_types_to_elements</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>molgroup_set_atom_types_to_elements</secondary></indexterm>
+<para><computeroutput>long molgroup_set_atom_types_to_elements (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Sets atom types to element names. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of atoms. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 29 of file mol_edit.cpp.</para>
+    </section><anchor xml:id="_mol__edit_8cpp_1a3a06d5bd1f61e1897fba28fbcb0565fa"/>    <section>
+    <title>molgroup_split_into_slices()</title>
+<indexterm><primary>molgroup_split_into_slices</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>molgroup_split_into_slices</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolgroup">Bmolgroup</link>** molgroup_split_into_slices (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double slice_thickness, int &amp; nslices)</computeroutput></para><para>
+
+<para>Splits a set of coordinates into slices with a given thickness. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>slice_thickness</entry>
+                                <entry>
+<para>slice thickness (in angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;nslices</entry>
+                                <entry>
+<para>pointer to the number of slices generated </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolgroup** set of molecule groups. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 158 of file mol_edit.cpp.</para>
+    </section><anchor xml:id="_mol__edit_8cpp_1a747415d2487eaa79ffc0463224bbcdc4"/>    <section>
+    <title>molgroup_untangle_groups()</title>
+<indexterm><primary>molgroup_untangle_groups</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>molgroup_untangle_groups</secondary></indexterm>
+<para><computeroutput>int molgroup_untangle_groups (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double sampling, double lambda)</computeroutput></para><para>
+
+<para>Moves overlapping molecules away from each other. </para>
+</para>
+
+<para><literallayout><computeroutput>The overlap of molecules are assessed by projecting atom positions
+onto a grid. Overlapping molecules are then moved away from each other
+along a vector through their centers-of-mass.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sampling</entry>
+                                <entry>
+<para>grid sampling (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lambda</entry>
+                                <entry>
+<para>damping factor. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 882 of file mol_edit.cpp.</para>
+    </section><anchor xml:id="_mol__edit_8cpp_1a94d56334045b4895d87bd354281bdc8e"/>    <section>
+    <title>molgroup_untangle_molecules()</title>
+<indexterm><primary>molgroup_untangle_molecules</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>molgroup_untangle_molecules</secondary></indexterm>
+<para><computeroutput>int molgroup_untangle_molecules (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double sampling, double lambda)</computeroutput></para><para>
+
+<para>Moves overlapping molecules away from each other. </para>
+</para>
+
+<para><literallayout><computeroutput>The overlap of molecules are assessed by projecting atom positions
+onto a grid. Overlapping molecules are then moved away from each other
+along a vector through their centers-of-mass.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sampling</entry>
+                                <entry>
+<para>grid sampling (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lambda</entry>
+                                <entry>
+<para>damping factor. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 799 of file mol_edit.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_mol__edit_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>mol_edit.cpp</secondary></indexterm>
+<indexterm><primary>mol_edit.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

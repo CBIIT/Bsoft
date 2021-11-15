@@ -1,0 +1,241 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rwatomprop_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/rwatomprop.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/rwatomprop.h</primary></indexterm>
+<para>
+
+<para>Header file for reading atom property files. </para>
+ 
+</para>
+<programlisting>#include &lt;Bstring.h&gt;
+</programlisting><simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_struct_batomtype">Batomtype</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_rwatomprop_8h_1a3fd1be8909d66e8782ef57bcdc50cb57">_Batomtype_</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_struct_batomtype">Batomtype</link> * <link linkend="_rwatomprop_8h_1a9a32fa70e7dff67815cfde9fa241a06f">get_atom_properties</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+
+<para>Reading atomic properties from parameter files. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwatomprop_8h_1ab3a42af0ab9d63829c6af616b2cd0fb6">write_atom_properties</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_struct_batomtype">Batomtype</link> *at)</para>
+
+<para>Writing atomic properties from parameter files. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_batomtype">Batomtype</link> * <link linkend="_rwatomprop_8h_1aab8b8ff0e1d3b39c947e3b75c687ee9f">atom_type_add</link> (<link linkend="_struct_batomtype">Batomtype</link> **atype, const char *aname)</para>
+
+<para>Adds an atom type structure to a linked list. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwatomprop_8h_1a189dacb3a249bad04a9e113a37a02c29">atom_type_kill</link> (<link linkend="_struct_batomtype">Batomtype</link> *atype)</para>
+
+<para>Destroys an atom type. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for reading atom property files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19980822 </para>
+
+<para>Modified: 20110810 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_rwatomprop_8h_1a3fd1be8909d66e8782ef57bcdc50cb57"/>    <section>
+    <title>_Batomtype_</title>
+<indexterm><primary>_Batomtype_</primary><secondary>rwatomprop.h</secondary></indexterm>
+<indexterm><primary>rwatomprop.h</primary><secondary>_Batomtype_</secondary></indexterm>
+<para><computeroutput>#define _Batomtype_</computeroutput></para><para>
+Definition at line 35 of file rwatomprop.h.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rwatomprop_8h_1aab8b8ff0e1d3b39c947e3b75c687ee9f"/>    <section>
+    <title>atom_type_add()</title>
+<indexterm><primary>atom_type_add</primary><secondary>rwatomprop.h</secondary></indexterm>
+<indexterm><primary>rwatomprop.h</primary><secondary>atom_type_add</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_batomtype">Batomtype</link>* atom_type_add (<link linkend="_struct_batomtype">Batomtype</link> ** atype, const char * aname)</computeroutput></para><para>
+
+<para>Adds an atom type structure to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**atype</entry>
+                                <entry>
+<para>pointer to any atom type in the list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*aname</entry>
+                                <entry>
+<para>atom type name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Batomtype* new atom type. <literallayout><computeroutput>The function allocates memory for a new atom type structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 143 of file rwatomprop.cpp.</para>
+    </section><anchor xml:id="_rwatomprop_8h_1a189dacb3a249bad04a9e113a37a02c29"/>    <section>
+    <title>atom_type_kill()</title>
+<indexterm><primary>atom_type_kill</primary><secondary>rwatomprop.h</secondary></indexterm>
+<indexterm><primary>rwatomprop.h</primary><secondary>atom_type_kill</secondary></indexterm>
+<para><computeroutput>int atom_type_kill (<link linkend="_struct_batomtype">Batomtype</link> * atype)</computeroutput></para><para>
+
+<para>Destroys an atom type. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>atype</entry>
+                                <entry>
+<para>the atom type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 176 of file rwatomprop.cpp.</para>
+    </section><anchor xml:id="_rwatomprop_8h_1a9a32fa70e7dff67815cfde9fa241a06f"/>    <section>
+    <title>get_atom_properties()</title>
+<indexterm><primary>get_atom_properties</primary><secondary>rwatomprop.h</secondary></indexterm>
+<indexterm><primary>rwatomprop.h</primary><secondary>get_atom_properties</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_batomtype">Batomtype</link>* get_atom_properties (<link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+
+<para>Reading atomic properties from parameter files. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file name (if empty, use a default file). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Batomtype* atom property structure, NULL on failure. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 46 of file rwatomprop.cpp.</para>
+    </section><anchor xml:id="_rwatomprop_8h_1ab3a42af0ab9d63829c6af616b2cd0fb6"/>    <section>
+    <title>write_atom_properties()</title>
+<indexterm><primary>write_atom_properties</primary><secondary>rwatomprop.h</secondary></indexterm>
+<indexterm><primary>rwatomprop.h</primary><secondary>write_atom_properties</secondary></indexterm>
+<para><computeroutput>int write_atom_properties (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_struct_batomtype">Batomtype</link> * at)</computeroutput></para><para>
+
+<para>Writing atomic properties from parameter files. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*at</entry>
+                                <entry>
+<para>the atom property structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 112 of file rwatomprop.cpp.</para>
+</section>
+</section>
+</section>

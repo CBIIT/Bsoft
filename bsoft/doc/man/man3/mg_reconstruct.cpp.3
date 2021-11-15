@@ -1,0 +1,637 @@
+.TH "/Users/bernard/b20/bsoft/src/mg/mg_reconstruct.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mg/mg_reconstruct.cpp \- Functions for reconstruction\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_select\&.h'\fP
+.br
+\fC#include 'mg_img_proc\&.h'\fP
+.br
+\fC#include 'mg_particle_select\&.h'\fP
+.br
+\fC#include 'mg_reconstruct\&.h'\fP
+.br
+\fC#include 'mg_ctf\&.h'\fP
+.br
+\fC#include 'Complex\&.h'\fP
+.br
+\fC#include 'symmetry\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+\fC#include <fcntl\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBpart_ft_size\fP (int xsize, double scale, int pad_factor)"
+.br
+.RI "Sets the Fourier transform size for 2D particle images for reconstruction\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBparticle_reconstruct\fP (\fBBparticle\fP *partlist, \fBBsymmetry\fP sym, int sym_mode, double hi_res, \fBVector3\fP< double > scale, \fBVector3\fP< long > size, int ft_size, \fBfft_plan\fP plan, int interp_type, int ctf_action, double wiener, int flags, int first)"
+.br
+.RI "Reciprocal space reconstruction from 2D particle images\&. 
+.br
+ "
+.ti -1c
+.RI "\fBBparticle\fP * \fBproject_reconstruction_partlist\fP (\fBBproject\fP *\fBproject\fP, int num_select, int bootstrap)"
+.br
+.RI "List of particle images for reciprocal space reconstruction\&. 
+.br
+ "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_reconstruction_sum_weigh\fP (\fBBimage\fP **pacc, int imap, int nmaps, int maps_per_class, double hi_res)"
+.br
+.RI "Combines and weighs a map from several partial maps and weight sets\&. "
+.ti -1c
+.RI "double \fBpart_single_reconstruction\fP (\fBBparticle\fP *part, \fBVector3\fP< long > size, \fBBimage\fP *pmask, \fBBsymmetry\fP &sym, double hi_res, \fBVector3\fP< double > scale, int ft_size, \fBfft_plan\fP img_plan, \fBfft_plan\fP map_plan, double part_weight, int interp_type, \fBCTFparam\fP *\fBmg_ctf\fP, int ctf_action, double wiener, int flags)"
+.br
+.ti -1c
+.RI "long \fBproject_single_particle_reconstruction\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &maskfile, \fBBsymmetry\fP &sym, int num_select, double hi_res, \fBVector3\fP< double > scale, \fBVector3\fP< long > size, int pad_factor, int interp_type, int ctf_action, double wiener, int flags)"
+.br
+.RI "Reciprocal space reconstruction from the images in a multi-image file\&. 
+.br
+ "
+.ti -1c
+.RI "\fBVector3\fP< long > \fBproject_set_reconstruction_size\fP (\fBBproject\fP *\fBproject\fP, double scale, int twoD_flag)"
+.br
+.RI "Sets the reconstruction size for reconstruction from 2D particle images\&. "
+.ti -1c
+.RI "int \fBproject_configure_for_reconstruction\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP classes, long &nmaps, long &nthreads)"
+.br
+.RI "Sets up the particle selection for reconstruction\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBproject_reconstruct_2D\fP (\fBBproject\fP *\fBproject\fP, int transform_output)"
+.br
+.RI "Creates a 2D reconstruction from the images in a multi-image file\&. 
+.br
+ "
+.ti -1c
+.RI "\fBBparticle\fP * \fBimg_reconstruct_2D\fP (long i, \fBBproject\fP *\fBproject\fP, \fBBimage\fP *prec, double hires, \fBfft_plan\fP \fBplanf\fP, \fBfft_plan\fP \fBplanb\fP)"
+.br
+.ti -1c
+.RI "long \fBimg_reconstruct_2D_fspace\fP (long i, \fBBproject\fP *\fBproject\fP, \fBBimage\fP *prec, double hires, \fBfft_plan\fP \fBplanf\fP, \fBfft_plan\fP \fBplanb\fP)"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBproject_reconstruct_2D_fast\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBproject_reconstruct_3D\fP (\fBBproject\fP *\fBproject\fP, long selnum, int calcfom, \fBVector3\fP< long > size)"
+.br
+.RI "Transforms 3D maps and calculates an average\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBproject_reconstruct_3D\fP (\fBBproject\fP *\fBproject\fP, long selnum, \fBVector3\fP< long > size, double resolution)"
+.br
+.RI "Transforms 3D maps and calculates an average\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBproject_back_projection\fP (\fBBproject\fP *\fBproject\fP, long num_select, \fBVector3\fP< long > map_size, \fBVector3\fP< double > sam, double scale, double resolution, \fBfft_plan\fP \fBplanf\fP, \fBfft_plan\fP \fBplanb\fP)"
+.br
+.RI "Back projects a set of 2D images into a 3D volume\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_backprojection_accumulate\fP (\fBBimage\fP **pacc, int imap, int nmaps, int nthreads)"
+.br
+.RI "Accumulates multiple backprojections\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for reconstruction\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010403 
+.PP
+Modified: 20200127 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_reconstruct\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBimage\fP* img_backprojection_accumulate (\fBBimage\fP ** pacc, int imap, int nmaps, int nthreads)"
+
+.PP
+Accumulates multiple backprojections\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**pacc\fP array of partial maps with linked weight maps\&. 
+.br
+\fIimap\fP which output map to weigh\&. 
+.br
+\fInmaps\fP number of output maps (1,2,3)\&. 
+.br
+\fInthreads\fP number of threads per map (= number of partial maps)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1673 of file mg_reconstruct\&.cpp\&.
+.SS "\fBBparticle\fP* img_reconstruct_2D (long i, \fBBproject\fP * project, \fBBimage\fP * prec, double hires, \fBfft_plan\fP planf, \fBfft_plan\fP planb)"
+
+.PP
+Definition at line 983 of file mg_reconstruct\&.cpp\&.
+.SS "long img_reconstruct_2D_fspace (long i, \fBBproject\fP * project, \fBBimage\fP * prec, double hires, \fBfft_plan\fP planf, \fBfft_plan\fP planb)"
+
+.PP
+Definition at line 1046 of file mg_reconstruct\&.cpp\&.
+.SS "\fBBimage\fP* img_reconstruction_sum_weigh (\fBBimage\fP ** pacc, int imap, int nmaps, int maps_per_class, double hi_res)"
+
+.PP
+Combines and weighs a map from several partial maps and weight sets\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**pacc\fP array of partial maps with linked weight maps\&. 
+.br
+\fIimap\fP which output map to weigh\&. 
+.br
+\fInmaps\fP number of output maps (1,2,3)\&. 
+.br
+\fImaps_per_class\fP number of threads per map (= number of partial maps)\&. 
+.br
+\fIhi_res\fP high resolution limit\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* weighed reconstruction with FOM block\&. 
+.PP
+.nf
+The input is a set of partially integrated complex maps with associated 
+weigths as follows:
+    voxel power sums            FOM block of map.
+    voxel weight sums           linked image.
+    voxel weight squared sums   linked image FOM block.
+The partial sums are completed into corresponding blocks in three possible
+ways based on the value of imap and nmap:
+    nmap    imap    result
+    1       0       one map from all input maps
+    2       0,1     one map from half of the input maps
+    3       0       one map from all input maps
+    3       1,2     one map from half of the input maps
+The total number of maps in the array is nclasses*nmaps.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 331 of file mg_reconstruct\&.cpp\&.
+.SS "int part_ft_size (int xsize, double scale, int pad_factor)"
+
+.PP
+Sets the Fourier transform size for 2D particle images for reconstruction\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIxsize\fP size of x dimension\&. 
+.br
+\fIscale\fP scale of reconstruction\&. 
+.br
+\fIpad_factor\fP factor that determines image padding\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int transform size\&. 
+.PP
+.nf
+The reconstruction size must be set.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 38 of file mg_reconstruct\&.cpp\&.
+.SS "double part_single_reconstruction (\fBBparticle\fP * part, \fBVector3\fP< long > size, \fBBimage\fP * pmask, \fBBsymmetry\fP & sym, double hi_res, \fBVector3\fP< double > scale, int ft_size, \fBfft_plan\fP img_plan, \fBfft_plan\fP map_plan, double part_weight, int interp_type, \fBCTFparam\fP * mg_ctf, int ctf_action, double wiener, int flags)"
+
+.PP
+Definition at line 430 of file mg_reconstruct\&.cpp\&.
+.SS "\fBBimage\fP* particle_reconstruct (\fBBparticle\fP * partlist, \fBBsymmetry\fP sym, int sym_mode, double hi_res, \fBVector3\fP< double > scale, \fBVector3\fP< long > size, int ft_size, \fBfft_plan\fP plan, int interp_type, int ctf_action, double wiener, int flags, int first)"
+
+.PP
+Reciprocal space reconstruction from 2D particle images\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*partlist\fP a list of 2D particle image parameters\&. 
+.br
+\fI*sym\fP point group symmetry\&. 
+.br
+\fIsym_mode\fP 0=apply symmetry, 1=C1, 2=random symmetry view 
+.br
+\fIhi_res\fP high resolution limit\&. 
+.br
+\fIscale\fP scale of reconstruction\&. 
+.br
+\fIsize\fP size of reconstruction\&. 
+.br
+\fIft_size\fP Fourier transform size\&. 
+.br
+\fIplan\fP Fourier transform plan\&. 
+.br
+\fIinterp_type\fP interpolation type\&. 
+.br
+\fIctf_action\fP flag to apply CTF to projections\&. 
+.br
+\fIwiener\fP Wiener factor\&. 
+.br
+\fIflags\fP 1=rescale particles, 2=2D reconstruction, 4=bootstrap\&. 
+.br
+\fIfirst\fP flag to indicate the first thread\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* 3D reconstructed map\&. 
+.PP
+.nf
+The orientation parameters, view vector, angle of rotation and origin,
+must all be set. Each image is padded to at least two times its size 
+and its Fourier transform packed into 3D reciprocal space.
+The figure-of-merit calculated for each reciprocal space voxel is:
+           sum(w*re)^2 + sum(w*im)^2
+    FOM = ---------------------------
+          sum(w)*sum(w*(re^2 + im^2))
+where
+    re  real part
+    im  imaginary part
+    w   weight (inverse distance of image pixel to closest grid point)
+For voxels with only one data pixel contributing to it, FOM = 0.
+A bootstrap reconstruction uses the particle selection to weigh each
+selected particle.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 99 of file mg_reconstruct\&.cpp\&.
+.SS "\fBBimage\fP* project_back_projection (\fBBproject\fP * project, long num_select, \fBVector3\fP< long > map_size, \fBVector3\fP< double > sam, double scale, double resolution, \fBfft_plan\fP planf, \fBfft_plan\fP planb)"
+
+.PP
+Back projects a set of 2D images into a 3D volume\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP image processing parameter structure\&. 
+.br
+\fInum_select\fP selection number from the selection column\&. 
+.br
+\fImap_size\fP 3-valued vector for the new map size\&. 
+.br
+\fIsam\fP 3-value vector for the voxel size in angstrom\&. 
+.br
+\fIscale\fP reconstruction scale\&. 
+.br
+\fIresolution\fP resolution for low-pass filtering\&. 
+.br
+\fIplanf\fP 2D forward Fourier transform plan\&. 
+.br
+\fIplanb\fP 2D backward Fourier transform plan\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* the new 3D reconstruction map\&. 
+.PP
+.nf
+All the information needed to do a 3D reconstruction is passed in through
+an image processing structure. The new 3D volume is initialized.
+Each sub-image in each particle file is read individually and 
+back-projected within the new volume. The orientation parameters from
+the image processing structure is transferred to the sub-image
+structure in the 2D image before calling the function packing one
+image into the volume. The default origin is the center of the image.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1558 of file mg_reconstruct\&.cpp\&.
+.SS "int project_configure_for_reconstruction (\fBBproject\fP * project, \fBBstring\fP classes, long & nmaps, long & nthreads)"
+
+.PP
+Sets up the particle selection for reconstruction\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIclasses\fP string specifying classes to use\&. 
+.br
+\fInmaps\fP number of maps per class (1,2,3)\&. 
+.br
+\fInthreads\fP number of threads per class (must be even if nmaps > 1)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of classes\&. 
+.PP
+.nf
+The classes are specified in a string of comma-separated numbers,
+also allowing hyphened ranges (e.g., "2,5-7,9").
+The selection numbers for the particles in the project are set to
+calculate partial maps so that there are nthread maps per class.
+Each such partial map will be calculated in its own thread and
+integrated with others from the same class afterwards.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 723 of file mg_reconstruct\&.cpp\&.
+.SS "\fBBimage\fP* project_reconstruct_2D (\fBBproject\fP * project, int transform_output)"
+
+.PP
+Creates a 2D reconstruction from the images in a multi-image file\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP image processing parameter structure\&. 
+.br
+\fItransform_output\fP flag to output transformed images\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* 2D reconstruction image\&. 
+.PP
+.nf
+The angle of rotation and the x,y origins must already have been found 
+and placed in the appropriate arrays within the Bproject structure.
+Each selected image is transformed, and then added to the reconstruction
+image corresponding to the original projection image chosen.
+If the transform_output flag is set, then the transformed images are written
+into a new image with a "_proj.spi" ending.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 850 of file mg_reconstruct\&.cpp\&.
+.SS "\fBBimage\fP* project_reconstruct_2D_fast (\fBBproject\fP * project)"
+
+.PP
+Definition at line 1150 of file mg_reconstruct\&.cpp\&.
+.SS "\fBBimage\fP* project_reconstruct_3D (\fBBproject\fP * project, long selnum, int calcfom, \fBVector3\fP< long > size)"
+
+.PP
+Transforms 3D maps and calculates an average\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fIselnum\fP selection number of reconstructions or particles\&. 
+.br
+\fIcalcfom\fP flag to calculate FOM block (1=var, 2=std)\&. 
+.br
+\fIsize\fP size of particles to extract (only when extraction needed)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* average map with FOM block defined\&. 
+.PP
+.nf
+The orientations of the maps in the project must already be specified.
+Each map is transformed and added to an average map.
+A FOM block is optionally calculated with either the variance or
+standard deviation.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1253 of file mg_reconstruct\&.cpp\&.
+.SS "\fBBimage\fP* project_reconstruct_3D (\fBBproject\fP * project, long selnum, \fBVector3\fP< long > size, double resolution)"
+
+.PP
+Transforms 3D maps and calculates an average\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fIselnum\fP selection number of reconstructions or particles\&. 
+.br
+\fIsize\fP size of particles to extract (only when extraction needed)\&. 
+.br
+\fIresolution\fP maximum reconstruction resolution (in angstrom, default Nyquest)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* average map with FOM block defined\&. 
+.PP
+.nf
+The orientations of the maps in the project must already be specified.
+Each map is transformed and added to an average map.
+A FOM block is optionally calculated with either the variance or
+standard deviation.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1396 of file mg_reconstruct\&.cpp\&.
+.SS "\fBBparticle\fP* project_reconstruction_partlist (\fBBproject\fP * project, int num_select, int bootstrap)"
+
+.PP
+List of particle images for reciprocal space reconstruction\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP image processing parameter structure\&. 
+.br
+\fInum_select\fP selection number from the selection column\&. 
+.br
+\fIbootstrap\fP flag to indicate a bootstrap reconstruction\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* 3D reconstructed map\&. 
+.PP
+.nf
+An image is used in the reconstruction if its selection flag has been set.
+If the selection number is less than zero, all particles with selection flags
+greater than zero are used. If the selection number is zero or above, all
+particles with the selection flag set to the same number are used.
+A bootstrap reconstruction uses the particle selection to weigh each
+selected particle.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 246 of file mg_reconstruct\&.cpp\&.
+.SS "\fBVector3\fP<long> project_set_reconstruction_size (\fBBproject\fP * project, double scale, int twoD_flag)"
+
+.PP
+Sets the reconstruction size for reconstruction from 2D particle images\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIscale\fP scale of reconstruction\&. 
+.br
+\fItwoD_flag\fP doing a 2D reconstruction rather than 3D\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<long>\fP reconstruction size\&. 
+.PP
+.nf
+The reconstruction size is set from the first particle image size found.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 658 of file mg_reconstruct\&.cpp\&.
+.SS "long project_single_particle_reconstruction (\fBBproject\fP * project, \fBBstring\fP & maskfile, \fBBsymmetry\fP & sym, int num_select, double hi_res, \fBVector3\fP< double > scale, \fBVector3\fP< long > size, int pad_factor, int interp_type, int ctf_action, double wiener, int flags)"
+
+.PP
+Reciprocal space reconstruction from the images in a multi-image file\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP image processing parameter structure\&. 
+.br
+\fI&maskfile\fP mask to determine density statistics\&. 
+.br
+\fI*sym\fP point group symmetry\&. 
+.br
+\fInum_select\fP selection number from the selection column\&. 
+.br
+\fIhi_res\fP high resolution limit\&. 
+.br
+\fIscale\fP scale of reconstruction\&. 
+.br
+\fIsize\fP size of reconstruction\&. 
+.br
+\fIpad_factor\fP image padding factor\&. 
+.br
+\fIinterp_type\fP interpolation type (provisional)\&. 
+.br
+\fIctf_action\fP flag to apply CTF to projections\&. 
+.br
+\fIwiener\fP Wiener factor\&. 
+.br
+\fIflags\fP option flags\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long particles processed\&. 
+.PP
+.nf
+The orientation parameters, view vector, angle of rotation and origin,
+must all be set. Each image is padded to at least two times its size 
+and its Fourier transform packed into 3D reciprocal space.
+The figure-of-merit calculated for each reciprocal space voxel is:
+           sum(w*re)^2 + sum(w*im)^2
+    FOM = ---------------------------
+          sum(w)*sum(w*(re^2 + im^2))
+where
+    re  real part
+    im  imaginary part
+    w   weight (inverse distance of image pixel to closest grid point)
+For voxels with only one data pixel contributing to it, FOM = 0.
+An image is used in the reconstruction if its selection flag has been set.
+If the selection number is less than zero, all particles with selection flags
+greater than zero are used. If the selection number is zero or above, all
+particles with the selection flag set to the same number are used.
+A bootstrap reconstruction uses the particle selection to weigh each
+selected particle.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 519 of file mg_reconstruct\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

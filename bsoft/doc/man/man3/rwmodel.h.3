@@ -1,0 +1,795 @@
+.TH "/Users/bernard/b20/bsoft/include/rwmodel.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/rwmodel.h \- Header file for reading and writing atomic model files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'View2\&.h'\fP
+.br
+\fC#include 'Bstring\&.h'\fP
+.br
+\fC#include 'Color\&.h'\fP
+.br
+\fC#include <map>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBBcomptype\fP"
+.br
+.ti -1c
+.RI "class \fBBlinktype\fP"
+.br
+.ti -1c
+.RI "class \fBBangletype\fP"
+.br
+.ti -1c
+.RI "class \fBBcomponent\fP"
+.br
+.ti -1c
+.RI "class \fBBlink\fP"
+.br
+.ti -1c
+.RI "class \fBBpolygon\fP"
+.br
+.ti -1c
+.RI "class \fBBmodel\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMAXLINK\fP   10"
+.br
+.ti -1c
+.RI "#define \fB_Bmodel_\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBmodel\fP * \fBread_model\fP (\fBBstring\fP &filename)"
+.br
+.ti -1c
+.RI "\fBBmodel\fP * \fBread_model\fP (\fBBstring\fP *\fBfile_list\fP)"
+.br
+.ti -1c
+.RI "\fBBmodel\fP * \fBread_model\fP (\fBBstring\fP &filename, \fBBstring\fP &paramfile)"
+.br
+.ti -1c
+.RI "\fBBmodel\fP * \fBread_model\fP (\fBBstring\fP *\fBfile_list\fP, \fBBstring\fP &paramfile)"
+.br
+.RI "Reads model parameters\&. "
+.ti -1c
+.RI "int \fBwrite_model\fP (\fBBstring\fP &filename, \fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Writes model parameters\&. "
+.ti -1c
+.RI "int \fBwrite_model\fP (\fBBstring\fP &filename, \fBBmodel\fP *\fBmodel\fP, int \fBsplit\fP)"
+.br
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_add\fP (\fBBmodel\fP **\fBmodel\fP, string id)"
+.br
+.RI "Adds a model to a linked list\&. "
+.ti -1c
+.RI "\fBBcomponent\fP * \fBcomponent_add\fP (\fBBcomponent\fP **comp, string &id)"
+.br
+.RI "Adds a component to a linked list\&. "
+.ti -1c
+.RI "\fBBcomponent\fP * \fBcomponent_add\fP (\fBBcomponent\fP **comp, unsigned long number)"
+.br
+.ti -1c
+.RI "\fBBlink\fP * \fBlink_add\fP (\fBBlink\fP **link, \fBBcomponent\fP *comp1, \fBBcomponent\fP *comp2, double \fBlength\fP, double radius)"
+.br
+.RI "Adds a component link to a linked list\&. "
+.ti -1c
+.RI "\fBBlink\fP * \fBlink_add\fP (\fBBlink\fP **link, \fBBcomponent\fP *comp1, \fBBcomponent\fP *comp2)"
+.br
+.ti -1c
+.RI "int \fBmodel_set_map_filenames\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP &mapfile)"
+.br
+.RI "Sets all the map file names of selected models\&. "
+.ti -1c
+.RI "int \fBmodel_set_type\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP &set_type)"
+.br
+.RI "Reset the component types\&. "
+.ti -1c
+.RI "int \fBmodel_change_type\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP &change_type)"
+.br
+.RI "Change a component type name\&. "
+.ti -1c
+.RI "int \fBmodel_check\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP path)"
+.br
+.RI "Checks model properties\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_list_copy\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Copies a model\&. "
+.ti -1c
+.RI "int \fBcomponent_kill\fP (\fBBcomponent\fP *comp)"
+.br
+.RI "Deallocates memory for one component\&. "
+.ti -1c
+.RI "int \fBcomponent_list_kill\fP (\fBBcomponent\fP *comp)"
+.br
+.RI "Deallocates memory for a list of components\&. "
+.ti -1c
+.RI "int \fBcomp_type_kill\fP (\fBBcomptype\fP *type)"
+.br
+.RI "Deallocates memory for one component type\&. "
+.ti -1c
+.RI "int \fBcomp_type_list_kill\fP (\fBBcomptype\fP *type)"
+.br
+.RI "Deallocates memory for a list of component types\&. "
+.ti -1c
+.RI "int \fBmodel_link_list_kill\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Deallocates memory for a list of component links\&. "
+.ti -1c
+.RI "int \fBlink_kill\fP (\fBBlink\fP **link_list, \fBBcomponent\fP *comp, int i)"
+.br
+.RI "Deletes a link\&. "
+.ti -1c
+.RI "int \fBlink_kill\fP (\fBBlink\fP **link_list, \fBBcomponent\fP *comp, \fBBcomponent\fP *comp2)"
+.br
+.RI "Deletes a link\&. "
+.ti -1c
+.RI "int \fBpoly_list_kill\fP (\fBBpolygon\fP *poly)"
+.br
+.RI "Deallocates memory for a list of polygons\&. "
+.ti -1c
+.RI "int \fBcomp_associated_links_kill\fP (\fBBcomponent\fP *comp, \fBBlink\fP **link)"
+.br
+.RI "Deallocates memory for links associated with a component\&. "
+.ti -1c
+.RI "int \fBmodel_kill\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Deallocates all memory in the list\&. "
+.ti -1c
+.RI "int \fBmodel_associate\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP &associate_type, \fBBstring\fP &associate_file)"
+.br
+.RI "Associates a model file with a component type\&. "
+.ti -1c
+.RI "int \fBmodel_associate_mass\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP &associate_type, double mass)"
+.br
+.RI "Associates a mass with a component type\&. "
+.ti -1c
+.RI "int \fBmodel_set_comptype_filenames\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP &filename)"
+.br
+.RI "Sets the filenames of all selected component types to the given string\&. "
+.ti -1c
+.RI "long \fBmodel_set_component_radius\fP (\fBBmodel\fP *\fBmodel\fP, double comprad)"
+.br
+.RI "Set the display radius for all components to a specific value\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for reading and writing atomic model files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20060919 
+.PP
+Modified: 20210221 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwmodel\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _Bmodel_"
+
+.PP
+Definition at line 976 of file rwmodel\&.h\&.
+.SS "#define MAXLINK   10"
+
+.PP
+Definition at line 16 of file rwmodel\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int comp_associated_links_kill (\fBBcomponent\fP * comp, \fBBlink\fP ** link)"
+
+.PP
+Deallocates memory for links associated with a component\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*comp\fP associated componet\&. 
+.br
+\fI**link\fP pointer to component link list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of component links deallocated\&. 
+.RE
+.PP
+
+.PP
+Definition at line 688 of file rwmodel\&.cpp\&.
+.SS "int comp_type_kill (\fBBcomptype\fP * type)"
+
+.PP
+Deallocates memory for one component type\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*type\fP component type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 510 of file rwmodel\&.cpp\&.
+.SS "int comp_type_list_kill (\fBBcomptype\fP * type)"
+
+.PP
+Deallocates memory for a list of component types\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*type\fP component type list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int total number of component types\&. 
+.RE
+.PP
+
+.PP
+Definition at line 522 of file rwmodel\&.cpp\&.
+.SS "\fBBcomponent\fP* component_add (\fBBcomponent\fP ** comp, string & id)"
+
+.PP
+Adds a component to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**comp\fP component list\&. 
+.br
+\fI&id\fP component identifier\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBBcomponent\fP new component\&.
+.RE
+.PP
+.PP
+.nf
+The function allocates memory for a new component structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+.fi
+.PP
+ 
+.PP
+Definition at line 185 of file rwmodel\&.cpp\&.
+.SS "\fBBcomponent\fP* component_add (\fBBcomponent\fP ** comp, unsigned long number)"
+
+.SS "int component_kill (\fBBcomponent\fP * comp)"
+
+.PP
+Deallocates memory for one component\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*comp\fP component\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 476 of file rwmodel\&.cpp\&.
+.SS "int component_list_kill (\fBBcomponent\fP * comp)"
+
+.PP
+Deallocates memory for a list of components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*comp\fP component list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int total number of components\&. 
+.RE
+.PP
+
+.PP
+Definition at line 489 of file rwmodel\&.cpp\&.
+.SS "\fBBlink\fP* link_add (\fBBlink\fP ** link, \fBBcomponent\fP * comp1, \fBBcomponent\fP * comp2)"
+
+.PP
+Definition at line 240 of file rwmodel\&.cpp\&.
+.SS "\fBBlink\fP* link_add (\fBBlink\fP ** link, \fBBcomponent\fP * comp1, \fBBcomponent\fP * comp2, double length, double radius)"
+
+.PP
+Adds a component link to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**link\fP component link list\&. 
+.br
+\fI*comp1\fP first component\&. 
+.br
+\fI*comp2\fP second component\&. 
+.br
+\fIlength\fP length of link\&. 
+.br
+\fIradius\fP display radius\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBBcomponent\fP new component\&. 
+.PP
+.nf
+The function allocates memory for a new link structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 216 of file rwmodel\&.cpp\&.
+.SS "int link_kill (\fBBlink\fP ** link_list, \fBBcomponent\fP * comp, \fBBcomponent\fP * comp2)"
+
+.PP
+Deletes a link\&. 
+.PP
+.nf
+The link in the model link list is removed.
+The associated references to the link in the component link arrays
+are removed and the link arrays reorganized.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**link_list\fP pointer to list of links\&. 
+.br
+\fI*comp\fP one component in the link\&. 
+.br
+\fI*comp2\fP second component in the link\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bdistmat* new distance matrix structure\&. 
+.RE
+.PP
+
+.PP
+Definition at line 647 of file rwmodel\&.cpp\&.
+.SS "int link_kill (\fBBlink\fP ** link_list, \fBBcomponent\fP * comp, int i)"
+
+.PP
+Deletes a link\&. 
+.PP
+.nf
+The link in the model link list is removed.
+The associated references to the link in the component link arrays
+are removed and the link arrays reorganized.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**link_list\fP pointer to list of links\&. 
+.br
+\fI*comp\fP one component in the link\&. 
+.br
+\fIi\fP index for second component in link array of first component\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bdistmat* new distance matrix structure\&. 
+.RE
+.PP
+
+.PP
+Definition at line 584 of file rwmodel\&.cpp\&.
+.SS "\fBBmodel\fP* model_add (\fBBmodel\fP ** model, string id)"
+
+.PP
+Adds a model to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**model\fP model list\&. 
+.br
+\fIid\fP model identifier\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model\&. 
+.PP
+.nf
+The function allocates memory for a new model structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 163 of file rwmodel\&.cpp\&.
+.SS "int model_associate (\fBBmodel\fP * model, \fBBstring\fP & associate_type, \fBBstring\fP & associate_file)"
+
+.PP
+Associates a model file with a component type\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP the model\&. 
+.br
+\fI&associate_type\fP component type\&. 
+.br
+\fI&associate_file\fP component file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of types associated\&. 
+.PP
+.nf
+Model files can be coordinates or maps.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 748 of file rwmodel\&.cpp\&.
+.SS "int model_associate_mass (\fBBmodel\fP * model, \fBBstring\fP & associate_type, double mass)"
+
+.PP
+Associates a mass with a component type\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model list\&. 
+.br
+\fI&associate_type\fP component type\&. 
+.br
+\fImass\fP component type mass\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of types associated\&. 
+.RE
+.PP
+
+.PP
+Definition at line 778 of file rwmodel\&.cpp\&.
+.SS "int model_change_type (\fBBmodel\fP * model, \fBBstring\fP & change_type)"
+
+.PP
+Change a component type name\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fI&change_type\fP component type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of models\&. 
+.PP
+.nf
+Sets all the component types to the given string.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 299 of file rwmodel\&.cpp\&.
+.SS "int model_check (\fBBmodel\fP * model, \fBBstring\fP path)"
+
+.PP
+Checks model properties\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fIpath\fP search path to find map files\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 323 of file rwmodel\&.cpp\&.
+.SS "int model_kill (\fBBmodel\fP * model)"
+
+.PP
+Deallocates all memory in the list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 720 of file rwmodel\&.cpp\&.
+.SS "int model_link_list_kill (\fBBmodel\fP * model)"
+
+.PP
+Deallocates memory for a list of component links\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int total number of component links\&. 
+.RE
+.PP
+
+.PP
+Definition at line 546 of file rwmodel\&.cpp\&.
+.SS "\fBBmodel\fP* model_list_copy (\fBBmodel\fP * model)"
+
+.PP
+Copies a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* model copy\&. 
+.PP
+.nf
+Copies all the models in a list.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 375 of file rwmodel\&.cpp\&.
+.SS "long model_set_component_radius (\fBBmodel\fP * model, double comprad)"
+
+.PP
+Set the display radius for all components to a specific value\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIcomprad\fP component display radius\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 831 of file rwmodel\&.cpp\&.
+.SS "int model_set_comptype_filenames (\fBBmodel\fP * model, \fBBstring\fP & filename)"
+
+.PP
+Sets the filenames of all selected component types to the given string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fI&filename\fP component file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of component types set\&. 
+.PP
+.nf
+The image numbers are sequentially set as well.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 810 of file rwmodel\&.cpp\&.
+.SS "int model_set_map_filenames (\fBBmodel\fP * model, \fBBstring\fP & mapfile)"
+
+.PP
+Sets all the map file names of selected models\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fI&mapfile\fP map file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 251 of file rwmodel\&.cpp\&.
+.SS "int model_set_type (\fBBmodel\fP * model, \fBBstring\fP & set_type)"
+
+.PP
+Reset the component types\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fI&set_type\fP component type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of models\&. 
+.PP
+.nf
+Sets all the component types to the given string.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 270 of file rwmodel\&.cpp\&.
+.SS "int poly_list_kill (\fBBpolygon\fP * poly)"
+
+.PP
+Deallocates memory for a list of polygons\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*poly\fP polygon list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int total number of polygons\&. 
+.RE
+.PP
+
+.PP
+Definition at line 666 of file rwmodel\&.cpp\&.
+.SS "\fBBmodel\fP* read_model (\fBBstring\fP & filename)"
+
+.PP
+Definition at line 29 of file rwmodel\&.cpp\&.
+.SS "\fBBmodel\fP* read_model (\fBBstring\fP & filename, \fBBstring\fP & paramfile)"
+
+.PP
+Definition at line 40 of file rwmodel\&.cpp\&.
+.SS "\fBBmodel\fP* read_model (\fBBstring\fP * file_list)"
+
+.PP
+Definition at line 34 of file rwmodel\&.cpp\&.
+.SS "\fBBmodel\fP* read_model (\fBBstring\fP * file_list, \fBBstring\fP & paramfile)"
+
+.PP
+Reads model parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*file_list\fP list of model parameter file names\&. 
+.br
+\fI&paramfile\fP parameter file\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* model parameters\&. 
+.RE
+.PP
+
+.PP
+Definition at line 51 of file rwmodel\&.cpp\&.
+.SS "int write_model (\fBBstring\fP & filename, \fBBmodel\fP * model)"
+
+.PP
+Writes model parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP model parameter file name\&. 
+.br
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of models\&. 
+.RE
+.PP
+
+.PP
+Definition at line 95 of file rwmodel\&.cpp\&.
+.SS "int write_model (\fBBstring\fP & filename, \fBBmodel\fP * model, int split)"
+
+.PP
+Definition at line 100 of file rwmodel\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

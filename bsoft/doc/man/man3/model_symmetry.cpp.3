@@ -1,0 +1,244 @@
+.TH "/Users/bernard/b20/bsoft/src/model/model_symmetry.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/model/model_symmetry.cpp \- Library routines used for model symmetry operations\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'model_util\&.h'\fP
+.br
+\fC#include 'model_transform\&.h'\fP
+.br
+\fC#include 'model_select\&.h'\fP
+.br
+\fC#include 'model_compare\&.h'\fP
+.br
+\fC#include 'mol_transform\&.h'\fP
+.br
+\fC#include 'mol_compare\&.h'\fP
+.br
+\fC#include 'mol_util\&.h'\fP
+.br
+\fC#include 'symmetry\&.h'\fP
+.br
+\fC#include 'Matrix3\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "long \fBmodel_find_asymmetric_unit\fP (\fBBmodel\fP *\fBmodel\fP, string &symmetry_string)"
+.br
+.RI "Set model component locations within the asymmetric unit\&. "
+.ti -1c
+.RI "long \fBmodel_apply_point_group\fP (\fBBmodel\fP *\fBmodel\fP, string &symmetry_string, \fBVector3\fP< double > origin, \fBView\fP ref_view, int flags)"
+.br
+.RI "Applying symmetry to model components\&. "
+.ti -1c
+.RI "long \fBmodels_apply_point_group\fP (\fBBmodel\fP *\fBmodel\fP, string &symmetry_string, \fBVector3\fP< double > origin, \fBView\fP ref_view, int flags)"
+.br
+.RI "Applying symmetry to model components\&. "
+.ti -1c
+.RI "long \fBmodel_symmetrize\fP (\fBBmodel\fP *\fBmodel\fP, string &symmetry_string)"
+.br
+.RI "Symmetrize a model\&. "
+.ti -1c
+.RI "long \fBmodel_symmetry_related\fP (\fBBmodel\fP *\fBmodel\fP, string &symmetry_string)"
+.br
+.RI "Generates a list of symmetry-related models\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines used for model symmetry operations\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20060908 
+.PP
+Modified: 20191101 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_symmetry\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "long model_apply_point_group (\fBBmodel\fP * model, string & symmetry_string, \fBVector3\fP< double > origin, \fBView\fP ref_view, int flags)"
+
+.PP
+Applying symmetry to model components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fI&symmetry_string\fP symmetry code\&. 
+.br
+\fIorigin\fP transformation origin\&. 
+.br
+\fIref_view\fP reference view\&. 
+.br
+\fIflags\fP 1=find asu\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components (<0 means failure)\&. 
+.PP
+.nf
+Only the first model is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 69 of file model_symmetry\&.cpp\&.
+.SS "long model_find_asymmetric_unit (\fBBmodel\fP * model, string & symmetry_string)"
+
+.PP
+Set model component locations within the asymmetric unit\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fI&symmetry_string\fP symmetry code\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components (<0 means failure)\&. 
+.PP
+.nf
+Only the first model is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 34 of file model_symmetry\&.cpp\&.
+.SS "long model_symmetrize (\fBBmodel\fP * model, string & symmetry_string)"
+
+.PP
+Symmetrize a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fI&symmetry_string\fP symmetry code\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long error code (<0 means failure)\&. 
+.PP
+.nf
+For each component, a new location is calculated from the average location
+of the closest symmetry-related components.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 273 of file model_symmetry\&.cpp\&.
+.SS "long model_symmetry_related (\fBBmodel\fP * model, string & symmetry_string)"
+
+.PP
+Generates a list of symmetry-related models\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fI&symmetry_string\fP symmetry code\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long total number of components\&. 
+.PP
+.nf
+For each component, a new location is calculated from the average location
+of the closest symmetry-related components.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 368 of file model_symmetry\&.cpp\&.
+.SS "long models_apply_point_group (\fBBmodel\fP * model, string & symmetry_string, \fBVector3\fP< double > origin, \fBView\fP ref_view, int flags)"
+
+.PP
+Applying symmetry to model components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fI&symmetry_string\fP symmetry code\&. 
+.br
+\fIorigin\fP transformation origin\&. 
+.br
+\fIref_view\fP reference view\&. 
+.br
+\fIflags\fP 1=find asu\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long error code (<0 means failure)\&. 
+.PP
+.nf
+All models in the list are processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 190 of file model_symmetry\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

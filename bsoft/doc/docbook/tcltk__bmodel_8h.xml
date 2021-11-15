@@ -1,0 +1,127 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_tcltk__bmodel_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/tcltk/tcltk_bmodel.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/tcltk/tcltk_bmodel.h</primary></indexterm>
+<para>
+
+<para>A shared object to manage model parameter files in TCL/Tk. </para>
+ 
+</para>
+<programlisting>#include &lt;tk.h&gt;
+#include &quot;rwmodel.h&quot;
+#include &quot;rwimg.h&quot;
+#include &quot;mg_processing.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_tcltk__bmodel_8h_1a6079935c2d39127dcb96bfb4e45cd444">model_processing</link> (Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[])</para>
+
+<para>Implements the &quot;Bmodel&quot; command in Tcl/Tk to access model parameter files through Bsoft. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>A shared object to manage model parameter files in TCL/Tk. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20071002 </para>
+
+<para>Modified: 20130924 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_tcltk__bmodel_8h_1a6079935c2d39127dcb96bfb4e45cd444"/>    <section>
+    <title>model_processing()</title>
+<indexterm><primary>model_processing</primary><secondary>tcltk_bmodel.h</secondary></indexterm>
+<indexterm><primary>tcltk_bmodel.h</primary><secondary>model_processing</secondary></indexterm>
+<para><computeroutput>int model_processing (Tcl_Interp * interp, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+
+<para>Implements the &quot;Bmodel&quot; command in Tcl/Tk to access model parameter files through Bsoft. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*interp</entry>
+                                <entry>
+<para>a Tcl interpreter within Tcl. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>objc</entry>
+                                <entry>
+<para>number of arguments passed (+1). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*objv[]</entry>
+                                <entry>
+<para>arguments passed as Tcl objects. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int Tcl result. <literallayout><computeroutput>Bmodel command syntax:
+    Bmodel &lt;action&gt; &lt;arguments&gt;.
+    where:
+        action          &quot;create&quot;, &quot;exists&quot;, &quot;read&quot;, &quot;write&quot;, &quot;kill&quot;, &quot;get&quot;, &quot;set&quot;, &quot;delete&quot;
+                        &quot;delete_non_selected&quot;, &quot;components_to_particles&quot;, &quot;extract_segments&quot;,
+                        &quot;comptype&quot;, &quot;component&quot;, &quot;link&quot;
+        arguments           action-specific arguments:
+            &quot;create&quot;        &lt;id&gt;
+            &quot;read&quot;          &lt;filename&gt;
+            &quot;write&quot;         &lt;filename&gt;
+            &quot;get&quot;           &lt;property&gt; [arguments]
+            &quot;set&quot;           &lt;property&gt; &lt;value&gt;
+            &quot;delete&quot;        &lt;property&gt;
+            &quot;delete_non_selected&quot;   &lt;property&gt; &lt;selection&gt;
+            &quot;components_to_particles&quot;
+            &quot;extract_segments&quot;  &lt;filename&gt; [multilevel]
+            &quot;comptype&quot;      [arguments]
+            &quot;component&quot;     [arguments]
+            &quot;link&quot;          [arguments]
+            where:
+                property    &quot;id &lt;string&gt;&quot;
+                            &quot;map &lt;string&gt; &lt;value&gt;&quot;
+                            &quot;number &lt;value&gt;&quot;
+                            &quot;radius &lt;value&gt;&quot;
+                            &quot;linkradius &lt;value&gt;&quot;
+Return values:
+    Each action may have a return value:
+        &quot;create&quot;    (none)
+        &quot;exists&quot;    0=no, 1=yes
+        &quot;read&quot;      model id
+        &quot;write&quot;     (none)
+        &quot;kill&quot;      (none)
+        &quot;get&quot;       return value based on property
+        &quot;set&quot;       modify model property
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 120 of file tcltk_bmodel.cpp.</para>
+</section>
+</section>
+</section>

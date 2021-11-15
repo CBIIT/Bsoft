@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rw_m_f_f_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/rwMFF.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/rwMFF.h</primary></indexterm>
+<para>
+
+<para>Header file for reading and writing the What If MFF files. </para>
+ 
+</para>
+<programlisting>#include &quot;rwimg.h&quot;
+</programlisting><simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_struct_m_f_fhead">MFFhead</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_rw_m_f_f_8h_1af56dfdb68a538c5c176b3e64860389c8">MFFSIZE</link>   268</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_m_f_f_8h_1a34cd19ab0e9690313858708c229a463a">readMFF</link> (<link linkend="_class_bimage">Bimage</link> *p, int readdata)</para>
+
+<para>Reading a MFF image format. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_m_f_f_8h_1a82dd3eabd5434b3f1b0ef9b07991dee4">writeMFF</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>Writeing a MFF image format. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for reading and writing the What If MFF files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19990424 </para>
+
+<para>Modified: 20111217 <literallayout><computeroutput>Format: 3D crystallographic image file format for the program WHAT IF
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_rw_m_f_f_8h_1af56dfdb68a538c5c176b3e64860389c8"/>    <section>
+    <title>MFFSIZE</title>
+<indexterm><primary>MFFSIZE</primary><secondary>rwMFF.h</secondary></indexterm>
+<indexterm><primary>rwMFF.h</primary><secondary>MFFSIZE</secondary></indexterm>
+<para><computeroutput>#define MFFSIZE   268</computeroutput></para><para>
+Definition at line 13 of file rwMFF.h.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rw_m_f_f_8h_1a34cd19ab0e9690313858708c229a463a"/>    <section>
+    <title>readMFF()</title>
+<indexterm><primary>readMFF</primary><secondary>rwMFF.h</secondary></indexterm>
+<indexterm><primary>rwMFF.h</primary><secondary>readMFF</secondary></indexterm>
+<para><computeroutput>int readMFF (<link linkend="_class_bimage">Bimage</link> * p, int readdata)</computeroutput></para><para>
+
+<para>Reading a MFF image format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>readdata</entry>
+                                <entry>
+<para>flag to activate reading of image data. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). A 3D file format developed with the What If molecular dynamics package. Header size: 268 bytes (fixed). File format extensions: .mff. Byte order determination: The third dimension must be less than 256*256. Data type: float. Special features: The MFF files are written with double integers separating different records by What If. 
+<literallayout>&#160;&#xa;</literallayout>
+ This was solved by adding &quot;padding&quot; fields in the header and adding 8 bytes to every page (= section) offset. The data is stored as 2D pages separated by 8 bytes. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 32 of file rwMFF.cpp.</para>
+    </section><anchor xml:id="_rw_m_f_f_8h_1a82dd3eabd5434b3f1b0ef9b07991dee4"/>    <section>
+    <title>writeMFF()</title>
+<indexterm><primary>writeMFF</primary><secondary>rwMFF.h</secondary></indexterm>
+<indexterm><primary>rwMFF.h</primary><secondary>writeMFF</secondary></indexterm>
+<para><computeroutput>int writeMFF (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>Writeing a MFF image format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). A 3D file format developed with the What If molecular dynamics package. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 104 of file rwMFF.cpp.</para>
+</section>
+</section>
+</section>

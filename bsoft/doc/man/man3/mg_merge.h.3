@@ -1,0 +1,133 @@
+.TH "/Users/bernard/b20/bsoft/include/mg_merge.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/mg_merge.h \- Header file for functions to merge images\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'Bstring\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmg_particle_merge_series\fP (\fBBproject\fP *\fBproject\fP, int mg_ref_select, int mg_index, float mg_rot_ang, int mg_ori_select, \fBBstring\fP outimg)"
+.br
+.RI "Aligns and merges (sums) 2D particle images from a focal, or other, series and writes to new image file(s)\&. "
+.ti -1c
+.RI "int \fBmg_particle_unmerge\fP (\fBBproject\fP *\fBproject\fP, \fBBproject\fP *orientations, float fom_diff)"
+.br
+.RI "Gives corresponding particles in a field-of-view the same orientation, figure-of-merit (FOM), and selection--allows selection of best orientation based on best FOM\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for functions to merge images\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+David Belnap & Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20030410 
+.PP
+Modified: 20030901 (BH) 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_merge\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int mg_particle_merge_series (\fBBproject\fP * project, int mg_ref_select, int mg_index, float mg_rot_ang, int mg_ori_select, \fBBstring\fP outimg)"
+
+.PP
+Aligns and merges (sums) 2D particle images from a focal, or other, series and writes to new image file(s)\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+David Belnap and Bernard Heymann
+.RE
+.PP
+Find the reference micrograph based on the input criterion\&. Read the reference particle images first, followed by the non-reference images\&. Find shifts and origins, shift each non-reference image to align the two origins and rotate by the difference in in-plane rotational angle (if any) of the two micrographs\&. Return the normalized sum of images\&. Images are converted to floating point\&.
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP Project parameter structure 
+.br
+\fImg_ref_select\fP 0, closest-to-focus; 1, furthest-from-focus; 2, by index; 3, by rotation angle 
+.br
+\fImg_index\fP Reference by its index in field (for mg_ref_select=2) 
+.br
+\fImg_rot_ang\fP Reference by micrograph rotation angle (for mg_ref_select=3) 
+.br
+\fImg_ori_select\fP 0, from parameter file; 1, from cross-correlation; 2, from images; -1, no alignment 
+.br
+\fIoutimg\fP prefix and extension for output files 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code\&. 
+.RE
+.PP
+
+.PP
+Definition at line 76 of file mg_merge\&.cpp\&.
+.SS "int mg_particle_unmerge (\fBBproject\fP * project, \fBBproject\fP * orientations, float fom_diff)"
+
+.PP
+Gives corresponding particles in a field-of-view the same orientation, figure-of-merit (FOM), and selection--allows selection of best orientation based on best FOM\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+David Belnap 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP Project structure for micrographs 
+.br
+\fI*orientations\fP Project structure containing orientations to use 
+.br
+\fIfom_diff\fP Threshold for difference between FOMs 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code\&. 
+.PP
+.nf
+Intended for use in un-merging data from a micrograph series, where 
+the particle images had been merged previously and there is only one
+set of parameters per field.
+  Set orientations, FOMs, and selection for corresponding particles 
+in a field-of-view to that found in the project structure named 
+orientations.  If user wishes to select the orientation and
+selection value with the highest FOM, the highest FOM (within the
+specified threshold) is selected.
+  Differences in micrograph rotation angles (with respect to the
+"reference" micrograph that contains the orientations to be applied)
+are applied to the output orientation.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 271 of file mg_merge\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

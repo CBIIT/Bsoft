@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rw_g_r_d_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/rwimg/rwGRD.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/rwimg/rwGRD.cpp</primary></indexterm>
+<para>
+
+<para>Functions for reading and writing GRD files. </para>
+ 
+</para>
+<programlisting>#include &quot;rwGRD.h&quot;
+#include &quot;file_util.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_g_r_d_8cpp_1a169c0307d10f4148f146191f6168ee6e">grid_decompress</link> (<link linkend="_class_bimage">Bimage</link> *p, long len, unsigned char *buf)</para>
+</listitem>
+            <listitem><para>unsigned char * <link linkend="_rw_g_r_d_8cpp_1ae33c2c7f81ac87f7f45b21995d2e7e18">grid_compress</link> (<link linkend="_class_bimage">Bimage</link> *p, long &amp;compress)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_g_r_d_8cpp_1a5064e901791c99c13210aaa73327f3ed">readGRD</link> (<link linkend="_class_bimage">Bimage</link> *p, int readdata, int img_select)</para>
+
+<para>Reading a Basel GRD map image file format. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_g_r_d_8cpp_1a355ed4943907ca11d04ccb4faa1a0a33">writeGRD</link> (<link linkend="_class_bimage">Bimage</link> *p, int flags)</para>
+
+<para>Writing a Basel GRD map image file format. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_g_r_d_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions for reading and writing GRD files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19990410 </para>
+
+<para>Modified: 20210304 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rw_g_r_d_8cpp_1ae33c2c7f81ac87f7f45b21995d2e7e18"/>    <section>
+    <title>grid_compress()</title>
+<indexterm><primary>grid_compress</primary><secondary>rwGRD.cpp</secondary></indexterm>
+<indexterm><primary>rwGRD.cpp</primary><secondary>grid_compress</secondary></indexterm>
+<para><computeroutput>unsigned char* grid_compress (<link linkend="_class_bimage">Bimage</link> * p, long &amp; compress)</computeroutput></para><para>
+Definition at line 42 of file rwGRD.cpp.</para>
+    </section><anchor xml:id="_rw_g_r_d_8cpp_1a169c0307d10f4148f146191f6168ee6e"/>    <section>
+    <title>grid_decompress()</title>
+<indexterm><primary>grid_decompress</primary><secondary>rwGRD.cpp</secondary></indexterm>
+<indexterm><primary>rwGRD.cpp</primary><secondary>grid_decompress</secondary></indexterm>
+<para><computeroutput>int grid_decompress (<link linkend="_class_bimage">Bimage</link> * p, long len, unsigned char * buf)</computeroutput></para><para>
+Definition at line 16 of file rwGRD.cpp.</para>
+    </section><anchor xml:id="_rw_g_r_d_8cpp_1a5064e901791c99c13210aaa73327f3ed"/>    <section>
+    <title>readGRD()</title>
+<indexterm><primary>readGRD</primary><secondary>rwGRD.cpp</secondary></indexterm>
+<indexterm><primary>rwGRD.cpp</primary><secondary>readGRD</secondary></indexterm>
+<para><computeroutput>int readGRD (<link linkend="_class_bimage">Bimage</link> * p, int readdata, int img_select)</computeroutput></para><para>
+
+<para>Reading a Basel GRD map image file format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>readdata</entry>
+                                <entry>
+<para>flag to activate reading of image data. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>img_select</entry>
+                                <entry>
+<para>image selection in multi-image file (-1 = all images). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). A 3D image format used in electron microscopy. Header size: 512 bytes (fixed). File format extensions: .grd The identifier is a 4-byte magic number (not used). Machine identifier: 1 = little endian, 2 = big endian. Byte order determination: Data type and third dimension values must be less than 256*256. Old data types: 1 = byte, 2 = float, 3 = complex float 4 = 3-value vector (float), 5 = view (float) 6 = <link linkend="_class_r_g_b">RGB</link> byte, 7 = <link linkend="_class_r_g_b">RGB</link> float 8 = <link linkend="_class_r_g_b_a">RGBA</link> byte, 9 = <link linkend="_class_r_g_b_a">RGBA</link> float 10 = multi The Bsoft data type and compound type are combined to give the mode: mode = 100*compound_type + data_type </para>
+</formalpara>
+</para>
+<para>
+Definition at line 93 of file rwGRD.cpp.</para>
+    </section><anchor xml:id="_rw_g_r_d_8cpp_1a355ed4943907ca11d04ccb4faa1a0a33"/>    <section>
+    <title>writeGRD()</title>
+<indexterm><primary>writeGRD</primary><secondary>rwGRD.cpp</secondary></indexterm>
+<indexterm><primary>rwGRD.cpp</primary><secondary>writeGRD</secondary></indexterm>
+<para><computeroutput>int writeGRD (<link linkend="_class_bimage">Bimage</link> * p, int flags)</computeroutput></para><para>
+
+<para>Writing a Basel GRD map image file format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>flags to set output properties. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). A 3D image format used in electron microscopy. flags: 0 no compression 1 rul-length compression (only byte data types) </para>
+</formalpara>
+</para>
+<para>
+Definition at line 223 of file rwGRD.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_rw_g_r_d_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>rwGRD.cpp</secondary></indexterm>
+<indexterm><primary>rwGRD.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

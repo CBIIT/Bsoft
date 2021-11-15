@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Geometry</title>
+<link href="bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body>
+
+<div id="content">
+
+<h2>Geometry and Conventions</h2>
+<p>Bsoft deals with real space objects, whether they are densities
+    (encoded in images) or molecular structures. Understanding the conventions
+    adopted in Bsoft is important to doing image and molecular processing
+    effectively.</p>
+<h2>Coordinate system</h2>
+<ul type="disc">
+<li><p>Orthogonal/Cartesian (exceptions are periodic cases such as
+          crystals or helices, and spherical or cylindrical coordinate
+          systems).</p></li>
+<li><p>Right-handed (implicitly defining a right-handed rotation
+          convention).</p></li>
+<li><p>Default view is down the z-axis (vector {0,0,1}, with z values
+          decreasing with distance from the viewer.</p></li>
+</ul>
+<p>The use of an orthogonal coordinate system may seem obvious, but
+      non-orthogonal systems are used in fields such as crystallography, where
+      certain mathematical operations are simplified by using non-orthogonal
+      coordinate systems. Other alternatives include spherical and cylindrical
+      coordinate systems. In the absence of mathematical utility, the simplest
+      choice is an orthogonal or Cartesian system. The options of right-handed
+      and left-handed coordinate systems are equivalent, with the choice going
+      to the most commonly used one. The right-handed rotation implicit in a
+      right-handed coordinate system is defined as a clockwise rotation around
+      an axis, with the viewer looking in the positive direction of the axis.
+      There are an infinite number of possibilities for the default view.
+      Defining one of the major axes of the coordinate system as the default
+      view direction, and placing the other two axes in vertical and
+      horizontal directions, offers a finite number of possibilities. Two such
+      views are common, both using the z-axis, but in opposite directions, and
+      placing the x-axis horizontally and the y-axis vertically. The first
+      convention views space in the positive z direction, i.e., z values
+      increase with distance from the viewer (up the axis {0,0,1}). This
+      convention is consistent with conventions in text and the arrangement of
+      pixels on a computer monitor, i.e., start in the top-left corner and
+      read row-by-row. The second convention views space in the negative z
+      direction, which is a 180 degree rotation around the x-axis with respect
+      to the first viewing convention (thus down the axis {0,0,1}). The worth
+      of this convention is that it orients the x and y axes in the same way
+      as one would do to plot a curve on a graph. Mathematical operations
+      therefore become easier to understand from the user's point of
+      view.</p>
+<br/>
+<h2>Discretization/digitization/sampling of space</h2>
+<ul type="disc"><li><p>Independent sampling intervals along all the major axes are
+          always defined {unit_x, unit_y, unit_z}.</p></li>
+<li><p>The origin of any reference object is always considered to be
+          {0,0,0} in real space.</p></li>
+<li><p>The sampling unit is angstrom/voxel edge length.</p></li>
+<li><p>The origin of this object within the image is therefore given
+          as the location in voxel units, so that the real space coordinates
+          in angstroms are always given by: real_x = ( x - origin_x ) *
+          unit_x.</p></li></ul>
+<p>Independent sampling intervals are supported because assumptions
+      such as isotropic sampling are restrictive and does not allow a sensible
+      treatment of cases where for instance the z-direction is not as well
+      sampled as the other directions.</p>
+<br/>
+<h2>Rotations and views</h2>
+<ul type="disc"><li><p>The direction of rotations is given as a change in the viewing
+          orientation with respect to the scene or object coordinate
+          frame.</p></li>
+<li><p>The unit vector describing the viewing orientation is related
+          to the reference vector as: view = R * ref_view, where the ref_view
+          = {0,0,1}. Additionally, the rotation angle around the view vector
+          needs to be given.</p></li>
+<li><p>The Euler angles defined as R(psi,theta,phi) =
+          R(psi)*R(theta)*R(phi) with the individual angles taken around the
+          z-, y- and z-axes, respectively, are related to the view vector and
+          rotation angle around that vector as:</p>
+	<ul type="circle"><li><p>phi = arctan(view_y/view_x)</p></li>
+	<li><p>theta = arccos(view_z)</p></li>
+	<li><p>psi = angle - phi</p></li></ul>
+</li></ul>
+<ul type="disc"><li><p>Given Euler angles, the view vector and rotation angle is
+          calculated as:</p>
+	<ul type="circle"><li><p>view_x = cos(phi) * sin(theta)</p></li>
+	<li><p>view_y = sin(phi) * sin(theta)</p></li>
+	<li><p>view_z = cos(theta)</p></li>
+	<li><p>angle = psi + phi</p></li></ul>
+</li></ul>
+<p>All calculations are passed through quaternion intermediates to
+      avoid numerical instabilities in using Euler angles directly.</p>
+<br/>
+<h2>Origin: Placement of objects</h2>
+<p>The origin of objects is always related to whatever symmetry it has:</p>
+<ul type="disc"><li><p>An object with any form of symmetry is oriented such that a
+          symmetry axis is parallel to the z-axis.</p></li>
+<li><p>The origin is defined as the point where several symmetry axes
+          intersect, expressed as the offset from the first pixel or voxel in
+          the image.</p></li></ul>
+<h3>Point group symmetry</h3>
+<ul type="disc"><li><p>A symmetry axis lies on the z-axis in all cases, in most it
+            is the major symmetry axis.</p></li>
+<li><p>The origin is defined as the point in the image grid where
+            symmetry axes intersect and has pixel or voxel units.</p></li>
+<li><p>Schoenflies notation is used to identify point
+            groups.</p></li></ul>
+<table summary="Point group symmetry conventions" border="1">
+<caption>Table 4.1. Point group symmetry conventions</caption>
+<thead><tr><th align="center">Symmetry</th><th align="center">Notation</th><th align="center">Origin</th><th align="center">Orientation</th></tr></thead>
+<tbody><tr><td>Asymmetric</td><td>C1</td><td>User-defined</td><td>user-defined</td></tr>
+<tr><td>Cyclic</td><td>C&lt;n&gt;</td><td>On symmetry axis</td><td>n-fold axis on z-axis</td></tr>
+<tr><td>Dihedral</td><td>D&lt;n&gt;</td><td>Intersection of symmetry axes</td><td>n-fold axis on z-axis, 2-fold axis on
+                      x-axis</td></tr>
+<tr><td>Tetrahedral</td><td>T</td><td>Intersection of symmetry axes</td><td>2-fold axes on x, y, and z-axes</td></tr>
+<tr><td>Octahedral/Cubic</td><td>O</td><td>Intersection of symmetry axes</td><td>4-fold axes on x, y, and z-axes</td></tr>
+<tr><td>Icosahedral/Dodecahedral</td><td>I</td><td>Intersection of symmetry axes</td><td>2-fold axes on x, y, and z-axes, front 5-fold
+                      axes in yz plane</td></tr>
+</tbody></table>
+<p>where &lt;n&gt; is the symmetry order of the major axis
+            of the cyclic and dihedral point groups.</p><p>Icosahedral symmetry have two commonly used orientations:
+            The front most 5-fold axes may lie in the yz plane (consistent
+            with X-ray crystallographic convention), or they may lie in the xz
+            plane (consistent with some EM packages, notably PFT and EM3DR).
+            The first is the preferable orientation, indicated by the symbol
+            I, while the second is 90 degrees rotated from the first and
+            indicated by I90.</p>
+<br/>
+<h3>Helical symmetry</h3>
+<p>Helical symmetry is indicated by up to five parts:</p>
+<ul type="disc"><li><p>Rise per asymmetric unit (translation along the helical axis
+            oriented on the z-axis)</p></li>
+<li><p>Rotation angle around the helical axis per asymmetric
+            unit</p></li>
+<li><p>Presence of a dyad axis (perpendicular to the helical axis
+            and oriented on the x-axis)</p></li>
+<li><p>Cyclic symmetry around the helical axis</p></li>
+<li><p>Presence of seam and shift along the seam</p></li>
+</ul>
+<p>The notation is:
+	H&lt;rise&gt;,&lt;angle&gt;,&lt;dyad&gt;,&lt;n&gt;,&lt;seam&gt;</p>
+<br/>
+<h3>Crystallographic symmetry</h3>
+<p>Schoenflies notation and International Table numbers are used to
+        identify space groups.</p>
+<br/>
+</div>
+<div id="footer">
+  Bernard Heymann 20120126
+</div>
+</body>
+</html>

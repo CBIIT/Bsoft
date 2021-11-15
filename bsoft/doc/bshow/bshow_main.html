@@ -1,0 +1,191 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Bshow</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+      <h1>Running Bshow</h1>
+Bshow requires Tcl/Tk version 8.3 or later. Bshow can be started from the command line with or without an image
+file name:
+      <div id="command"><p>bshow</p>
+        <p>bshow file.img</p></div>
+      <h3>Macintosh OS X</h3>
+      <p>On Macintosh OS X, bshow needs to be set up to properly use it on the command line or through double clicking on the Bshow application (see <a href="../bsoft_unix.html">Installation</a>). On the command line, bshow has to be started through
+        an intermediate script called bshowX:      </p>
+      <div id="command"><p>bshowX file.img</p></div>
+Alternatively, bshow can be started by double clicking on its application: /Applications/Bshow. <br />
+      <hr size="2" width="100%" />
+      <h1>The main window</h1>
+The main window has a menu bar, a panel for the display of 2D images and slices of 3D images, and a list of controls and information fields on the right side.
+     
+      (The tool panel on the left is described <a href="bshow_tools.html">here</a>.)
+<p><img src="bshow.png" alt="Bshow main window" width="662"/><br />
+    </p>
+    <h3>Menu bar:</h3>
+      <ul>
+        <li>File:
+        <ul>
+          <li>Open - read an image file</li>
+          <li>Save - overwrite the current image file</li>
+          <li>Save as - write an image with a new file name</li>
+          <li>Save region - write a selected region or the displayed slice to an image file</li>
+          <li>File browser - open a persistent dialog box to select images.</li>
+          <li>Revert - reset the image to last version on disk.</li>
+          <li>Get info - open a dialog box with image information.</li>
+          <li>Write PostScript - capture the image window into a PostScript file.</li>
+          <li>Quit</li>
+        </ul>
+        </li>
+        <li>Image:
+          <ul>
+            <li>Set scales - alternative to using the sliders (see
+              below).</li>
+            <li>Switch slices and images - change how an image is arranged.</li>
+            <li>Modify image - change the image in memory.</li>
+            <li>Fix type sign - change between signed and unsigned integer types.</li>
+            <li>Set origin - Specify the image origin.</li>
+            <li>Center origin - shift the origin to the center of the image.</li>
+            <li>Shift origin to zero - shift the origin to the lower left back corner.</li>
+            <li>Crop - crop the image based on the region selected by the selection tool.</li>
+            <li>Pad - pad the image to a larger size.</li>
+            <li>Bin - bin the image by an integer factor.</li>
+            <li>Montage - lay out a montage of slices or multiple 2D images.</li>
+            <li>Histogram - display a simple histogram of the image.</li>
+            <li>Fourier transform - calculate the Fourier transform (preserves the complex nature of the data).</li>
+            <li>Power spectrum - calculate a power spectrum from the
+              image (loses the phase information).</li>
+            <li>Diffraction - analyse a diffraction pattern.<br />
+            </li>
+          </ul>
+        </li>
+        <li>Micrograph:
+          <ul>
+          <li>Read parameters - read micrograph parameters from a file
+			(such as a STAR file).</li>
+          <li>Write parameters - write micrograph parameters to a file
+			(such as a STAR file).</li>
+          <li>Edit parameters - open a text editor to display and modify
+			the current parameter file.<</li>
+          <li>Change image - select another image from a micrograph parameter file.<</li>
+          <li><a href="bshow_ctf.html">Fit CTF</a> - open a dialog box for fitting a CTF curve to a power spectrum.</li>
+          <li><a href="bshow_part.html">Particles</a> - open a dialog box for picking single
+		  	particle images in a micrograph.</li>
+          <li><a href="bshow_fil.html">Filaments</a> - open a dialog box for picking filaments in a micrograph.</li>
+          <li><a href="bshow_helix.html">Helix</a> - open a dialog box for analysis of helical diffraction patterns.</li>
+          <li><a href="bshow_xtal.html">Crystallography</a> - open a dialog box for analysis of crystallographic diffraction patterns.</li>
+          <li><a href="bshow_tomo.html">Tomography</a> - open a dialog box for tomographic alignment
+            and reconstruction.</li>
+          </ul>
+        </li>
+        <li><a href="bshow_model.html">Model</a>:
+          <ul>
+            <li>Read model - read model of components from a file (STAR, PDB or CMM).</li>
+            <li>Write model - write model of components to a file (STAR, PDB, CMM).</li>
+            <li>Edit model - open a text editor to display and modify the current model file.</li>
+            <li>Set views - calculate default views for model components.</li>
+            <li>Delete all components - delete all components and links.</li>
+            <li>Delete non-selected components - delete components not selected.</li>
+            <li>Add or update component type - add or change a component type.</li>
+            <li>Extract marked panels - extract panels marked as components from a multi-level mask.</li>
+            <li>Generate particles - convert components into particles.</li>
+            <li>Analyze component symmetry - determine the point group symmetry of a model.</li>
+		  </ul>
+        </li>
+        <li>Window (exposes existing windows):
+        <ul>
+          <li>Main</li>
+          <li><a href="bshow_tools.html">Tools</a></li>
+          <li><a href="bshow_magnify.html">Magnify</a> - show a magnified view of
+		  	the region under the mouse in 2D or 3D.</li>
+		  <li>Voxels - record clicked voxel coordinates and values.</li>
+		  <li>Selection - select a region and reports the statistics.</li>
+          <li><a href="bshow_ctf.html">CTF</a></li>
+          <li><a href="bshow_part.html">Particles</a></li>
+          <li><a href="bshow_fil.html">Filaments</a></li>
+          <li><a href="bshow_helix.html">Helix</a></li>
+          <li><a href="bshow_xtal.html">Crystallography</a></li>
+          <li><a href="bshow_tomo.html">Tomography</a></li>
+          <li><a href="bshow_model.html">Model</a></li>
+          </ul>
+        </li>
+        <li>Help:
+          <ul>
+          <li>Bshow Help  - switch to on-line help with bshow.</li>
+		  <li>About Bshow - open a message box with information about Bshow version</li>
+          <li>Change cursor - select a cursors.</li>
+		  <li>Preferences - open a dialog box with user settings: parameters and colors of objects</li>
+          <li>Save settings - save global parameters to the .bshow file</li>
+        </ul></li>
+      </ul>
+     <h3>Image type:</h3>
+	 <p>Indicates and sets the type of image displayed to specify type-specific behavior:</p>
+	 	<ul>
+		<li>(blank) - no image type associated with the image.</li>
+		<li>mg - micrograph (2D)</li>
+		<li>frame - movie frames (2D)</li>
+		<li>part - particle image</li>
+		<li>fil - filament image</li>
+		<li>rec - reconstruction (3D)</li>
+		<li>ft - Fourier transform (complex, showing intensities)</li>
+		<li>ps - power spectrum (intensities)</li>
+		<li>mod - image associated with a model</li>
+	 	</ul>
+     <h3>Averaging mode:</h3>
+      <p>With the scale below one, this mode
+		averages all the values of the pixels neighboring a display pixel. The
+		default is to display the nearest neighbor only.</p>
+     <h3>Invert:</h3>
+      <p>Sets the display to invert the contrast.</p>
+      <h3>Status bar with 3 values:</h3>
+      <ul>
+        <li>Voxel x coordinate adjusted for scaling.</li>
+        <li>Voxel y coordinate adjusted for scaling.</li>
+        <li>Voxel value for the image (not the display) - can be one or more values, depending on the voxel content.</li>
+      </ul>
+      <h3>Pixel size entry:</h3>
+	<p>Pixel size is typically used as angstrom/voxel
+	(required for CTF calculations). </p>
+      <h3>Origin:</h3>
+		<p>The origin for the current image is displayed. This can be reset using the &quot;Image/Set origin&quot; menu item.</p>
+      <h3>Distance reporter:</h3>
+      <p>Gives the distance from the image origin, or the distance between mouse clicks
+when the distance measure tool is selected.
+      For a power spectrum or Fourier transform, it gives the frequency space distance.</p>
+      <h3>Sliders:</h3>
+      <ul>
+        <li>Image number</li>
+        <li>Slice number</li>
+        <li>Scale - range 0.1 - 10.</li>
+        <li>Minimum - for the image.</li>
+        <li>Maximum - for the image. <br />
+        </li>
+      </ul>
+
+      <h3>Range step:</h3>
+   		<p>The step size in the minimum and maximum sliders can be set here to allow for either fine or coarse grain control of contrast changes.</p>
+      <h3>Autoscale:</h3>
+      <p>Scale the image display quickly to &plusmn; 5 standard deviation units of the average.</p>
+      <h3>Image only:</h3>
+      <p>Scale the image display to the current image statistic rather than the whole file.</p>
+	  <h3>Animate:</h3>
+    	<p>This animates the display by going through the images or slices of a 3D image. The speed can be set to make the animation slower or faster.</p>
+	<h3>Key mappings:</h3>
+	<ul>
+	<li>Up and down arrows - Pan through images</li>
+	<li>Left and right arrows - Pan through slices</li>
+	<li>i - Invert display contrast</li>
+	</ul>
+</div>
+<div id="footer">
+  Bernard Heymann  20191112
+</div>
+</body>
+</html>

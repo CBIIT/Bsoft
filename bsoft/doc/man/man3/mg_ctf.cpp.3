@@ -1,0 +1,1062 @@
+.TH "/Users/bernard/b20/bsoft/src/mg/mg_ctf.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mg/mg_ctf.cpp \- Functions for CTF (contrast transfer function) processing\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'mg_ctf\&.h'\fP
+.br
+\fC#include 'mg_ctf_fit\&.h'\fP
+.br
+\fC#include 'ps_plot\&.h'\fP
+.br
+\fC#include 'ps_ctf_plot\&.h'\fP
+.br
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_ctf_calculate\fP (\fBCTFparam\fP cp, int action, double wiener, \fBVector3\fP< long > size, \fBVector3\fP< double > sam, double lores, double hires)"
+.br
+.RI "Calculates a CTF complex image\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_wave_aberration\fP (\fBCTFparam\fP cp, \fBVector3\fP< long > size, \fBVector3\fP< double > sam)"
+.br
+.RI "Calculates a wave aberration function\&. "
+.ti -1c
+.RI "int \fBimg_ctf_apply\fP (\fBBimage\fP *p, \fBCTFparam\fP em_ctf, int action, double wiener, double lores, double hires)"
+.br
+.RI "Applies or corrects for the contrast transfer function (CTF)\&. "
+.ti -1c
+.RI "int \fBimg_ctf_apply\fP (\fBBimage\fP *p, \fBCTFparam\fP em_ctf, int action, double wiener, double lores, double hires, \fBfft_plan\fP planf_2D, \fBfft_plan\fP planb_2D)"
+.br
+.ti -1c
+.RI "int \fBimg_ttf_apply_one\fP (\fBBimage\fP *p, long nn, \fBCTFparam\fP ctf, int action, double wiener, double def, double res_lo, double res_hi, \fBVector3\fP< long > psize, \fBfft_plan\fP \fBplanf\fP, \fBfft_plan\fP \fBplanb\fP)"
+.br
+.ti -1c
+.RI "int \fBimg_ctf_apply_to_proj\fP (\fBBimage\fP *proj, \fBCTFparam\fP em_ctf, double defocus, double res_lo, double res_hi, \fBfft_plan\fP planf_2D, \fBfft_plan\fP planb_2D)"
+.br
+.RI "Applies a CTF to a projection image\&. "
+.ti -1c
+.RI "int \fBimg_ttf_apply\fP (\fBBimage\fP *p, \fBCTFparam\fP ctf, int action, double wiener, \fBVector3\fP< long > tile_size, double tilt, double axis, double res_lo, double res_hi)"
+.br
+.RI "Applies or corrects for the tilted contrast transfer function (TTF)\&. "
+.ti -1c
+.RI "int \fBmg_ps_name\fP (\fBBmicrograph\fP *mg, int img_num, \fBBstring\fP &path, \fBBstring\fP &newname, \fBBstring\fP \fBinsert\fP)"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBmg_ctf_prepare\fP (\fBBmicrograph\fP *mg, int action, double lores, double hires, \fBVector3\fP< long > tile_size, double def_start, double def_end, double def_inc, int flags)"
+.br
+.ti -1c
+.RI "int \fBrec_ctf_prepare\fP (\fBBreconstruction\fP *rec, int action, double lores, double hires, \fBVector3\fP< long > tile_size, double def_start, double def_end, double def_inc, \fBBstring\fP &newname, int flags)"
+.br
+.ti -1c
+.RI "int \fBproject_ctf_prepare\fP (\fBBproject\fP *\fBproject\fP, int action, double lores, double hires, \fBVector3\fP< long > tile_size, double def_start, double def_end, double def_inc, \fBBstring\fP &path, \fBBstring\fP &newname, int flags)"
+.br
+.RI "Calculates power spectra and optionally fits CTF curves\&. "
+.ti -1c
+.RI "int \fBpart_ctf\fP (\fBBparticle\fP *partlist, int action, double lores, double hires, double wiener, \fBDataType\fP datatype, \fBBstring\fP &partpath, \fBBstring\fP &newname, int flags)"
+.br
+.ti -1c
+.RI "int \fBmg_ctf\fP (\fBBmicrograph\fP *mg, \fBBimage\fP *pmg, int action, double lores, double hires, double wiener, \fBVector3\fP< long > tile_size, \fBDataType\fP datatype, \fBBstring\fP &newname, int flags)"
+.br
+.ti -1c
+.RI "int \fBrec_ctf\fP (\fBBreconstruction\fP *rec, int action, double lores, double hires, double wiener, \fBDataType\fP datatype, \fBBstring\fP &newname, int flags)"
+.br
+.ti -1c
+.RI "int \fBproject_ctf\fP (\fBBproject\fP *\fBproject\fP, int action, double lores, double hires, \fBVector3\fP< long > tile_size, double wiener, \fBDataType\fP datatype, \fBBstring\fP &partpath, \fBBstring\fP &newname, int flags)"
+.br
+.RI "Calculates or fits CTF curves to multiple power spectra\&. "
+.ti -1c
+.RI "double \fBimg_ctf_isotropy\fP (\fBBimage\fP *p, long n, \fBCTFparam\fP &em_ctf, double lores, double hires)"
+.br
+.RI "Calculates the isotropy of the power spectrum adjusted for astigmatism\&. "
+.ti -1c
+.RI "double \fBsinc_find_argument\fP (double v)"
+.br
+.ti -1c
+.RI "int \fBproject_powerspectrum_isotropy\fP (\fBBproject\fP *\fBproject\fP, double lores, double hires)"
+.br
+.RI "Calculates the isotropy at the CTF maxima\&. "
+.ti -1c
+.RI "\fBJSvalue\fP \fBproject_defocus_range\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Determines the minimum and maximum defocus values\&. "
+.ti -1c
+.RI "int \fBproject_ctf_average\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &psname)"
+.br
+.RI "Calculates or fits CTF curves to multiple power spectra\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBproject_powerspectrum_average\fP (\fBBproject\fP *\fBproject\fP, double deftarget)"
+.br
+.RI "Averages multiple power spectra based on defocus estimates\&. "
+.ti -1c
+.RI "int \fBproject_merge_CTF_parameters\fP (\fBBproject\fP *\fBproject\fP, \fBBproject\fP *ctfproject)"
+.br
+.RI "Puts CTF parameters from one project into another\&. "
+.ti -1c
+.RI "int \fBproject_CTF_to_part\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Transfers CTF parameters from micrographs to particles\&. "
+.ti -1c
+.RI "int \fBproject_set_defocus\fP (\fBBproject\fP *\fBproject\fP, double def_avg, double def_dev, double ast_angle)"
+.br
+.RI "Sets the defocus values of all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_astigmatism\fP (\fBBproject\fP *\fBproject\fP, double def_dev, double ast_angle)"
+.br
+.RI "Sets the defocus deviation and astigmatism angle of all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_update_ctf\fP (\fBBproject\fP *\fBproject\fP, \fBJSvalue\fP &jsctf)"
+.br
+.RI "Sets the acceleration voltage of all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_volts\fP (\fBBproject\fP *\fBproject\fP, double volts)"
+.br
+.RI "Sets the acceleration voltage of all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_Cs\fP (\fBBproject\fP *\fBproject\fP, double Cs)"
+.br
+.RI "Sets the spherical aberation constant of all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_amp_shift\fP (\fBBproject\fP *\fBproject\fP, double amp_shift)"
+.br
+.RI "Sets the amplitude contribution of all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_focal_length\fP (\fBBproject\fP *\fBproject\fP, double focal_length)"
+.br
+.RI "Sets the focal length of all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_aperture\fP (\fBBproject\fP *\fBproject\fP, double aperture)"
+.br
+.RI "Sets the objective aperture of all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_slit_width\fP (\fBBproject\fP *\fBproject\fP, double slit)"
+.br
+.RI "Sets the energy filter slit width of all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_alpha\fP (\fBBproject\fP *\fBproject\fP, double alpha)"
+.br
+.RI "Sets the beam source size/divergence angle of all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_envelope_type\fP (\fBBproject\fP *\fBproject\fP, int type)"
+.br
+.RI "Sets the envelope type of all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_envelope\fP (\fBBproject\fP *\fBproject\fP, int type, double *coeff)"
+.br
+.RI "Sets the envelope equations of all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_coherence_envelope\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Replaces envelope equations with those based on partial coherence in all micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_baseline_type\fP (\fBBproject\fP *\fBproject\fP, int type)"
+.br
+.RI "Sets the baseline type of all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_set_baseline\fP (\fBBproject\fP *\fBproject\fP, int type, double *coeff)"
+.br
+.RI "Sets the baseline equations of all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_update_first_zero\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Updates the first zero from the defocus average for all the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_plot_ctf\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &filename)"
+.br
+.RI "Plots the CTF curves\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for CTF (contrast transfer function) processing\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19970715 
+.PP
+Modified: 20210817 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_ctf\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int img_ctf_apply (\fBBimage\fP * p, \fBCTFparam\fP em_ctf, int action, double wiener, double lores, double hires)"
+
+.PP
+Applies or corrects for the contrast transfer function (CTF)\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image (modified)\&. 
+.br
+\fI*em_ctf\fP CTF parameter structure\&. 
+.br
+\fIaction\fP action to be taken\&. 
+.br
+\fIwiener\fP Wiener factor (fraction)\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fIhires\fP high resolution limit\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+The actions for this funtion are:
+1   flip phase (multiply by the sign of the CTF)
+2   apply a CTF (multiply with the CTF)
+3   correct for the CTF: ctf/(ctf^2 + wiener_factor)
+4   correct for the CTF: env*ctf/((env*ctf)^2 + noise^2)
+5   correct for the CTF with baseline: ctf/(ctf^2*noise^2 + wiener_factor)
+6   correct for the CTF with baseline: 1/(ctf*noise + sign*wiener_factor)
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 249 of file mg_ctf\&.cpp\&.
+.SS "int img_ctf_apply (\fBBimage\fP * p, \fBCTFparam\fP em_ctf, int action, double wiener, double lores, double hires, \fBfft_plan\fP planf_2D, \fBfft_plan\fP planb_2D)"
+
+.PP
+Definition at line 288 of file mg_ctf\&.cpp\&.
+.SS "int img_ctf_apply_to_proj (\fBBimage\fP * proj, \fBCTFparam\fP em_ctf, double defocus, double res_lo, double res_hi, \fBfft_plan\fP planf_2D, \fBfft_plan\fP planb_2D)"
+
+.PP
+Applies a CTF to a projection image\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*proj\fP projection image\&. 
+.br
+\fIem_ctf\fP CTF parameters\&. 
+.br
+\fIdefocus\fP defocus\&. 
+.br
+\fIres_lo\fP low resolution limit (angstrom)\&. 
+.br
+\fIres_hi\fP high resolution limit (angstrom)\&. 
+.br
+\fIplanf_2D\fP 2D forward fourier transform plan\&. 
+.br
+\fIplanb_2D\fP 2D backward fourier transform plan\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code\&. 
+.RE
+.PP
+
+.PP
+Definition at line 366 of file mg_ctf\&.cpp\&.
+.SS "\fBBimage\fP* img_ctf_calculate (\fBCTFparam\fP cp, int action, double wiener, \fBVector3\fP< long > size, \fBVector3\fP< double > sam, double lores, double hires)"
+
+.PP
+Calculates a CTF complex image\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIcp\fP CTF parameters\&. 
+.br
+\fIaction\fP type of CTF calculated (1-8)\&. 
+.br
+\fIwiener\fP Wiener factor (fraction)\&. 
+.br
+\fIsize\fP new image size\&. 
+.br
+\fIsam\fP new image pixel size\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fIhires\fP high resolution limit\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* new CTF function image\&. 
+.PP
+.nf
+Functions:
+    angle = atan(y/x)
+    s2 = x*x + y*y
+    defocus_average = (defocus_max + defocus_min)/2
+    defocus_deviation = (defocus_max - defocus_min)/2
+    defocus = defocus_average + defocus_deviation*cos(2*(angle - astigmatism_angle))
+    phase = 0.5*PI*lambda*lambda*lambda*Cs*s2*s2 - PI*lambda*defocus*s2 - amp_shift;
+    CTF = sin(phase)
+Note: Defocus is positive for underfocus and negative for overfocus.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 46 of file mg_ctf\&.cpp\&.
+.SS "double img_ctf_isotropy (\fBBimage\fP * p, long n, \fBCTFparam\fP & em_ctf, double lores, double hires)"
+
+.PP
+Calculates the isotropy of the power spectrum adjusted for astigmatism\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image structure\&. 
+.br
+\fIn\fP sub-image number\&. 
+.br
+\fI&em_ctf\fP CTF parameter structure\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fIhires\fP high resolution limit 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double radial average std/avg ratio\&. 
+.PP
+.nf
+A power spectrum with its origin at the center.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1233 of file mg_ctf\&.cpp\&.
+.SS "int img_ttf_apply (\fBBimage\fP * p, \fBCTFparam\fP ctf, int action, double wiener, \fBVector3\fP< long > tile_size, double tilt, double axis, double res_lo, double res_hi)"
+
+.PP
+Applies or corrects for the tilted contrast transfer function (TTF)\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image (modified)\&. 
+.br
+\fIctf\fP CTF parameter structure\&. 
+.br
+\fIaction\fP action to be taken\&. 
+.br
+\fIwiener\fP Wiener factor (fraction)\&. 
+.br
+\fItile_size\fP tile size for tilted CTF operations\&. 
+.br
+\fItilt\fP tilt angle (radians)\&. 
+.br
+\fIaxis\fP tilt axis angle (radians)\&. 
+.br
+\fIres_lo\fP high resolution limit\&. 
+.br
+\fIres_hi\fP low resolution limit\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+The actions for this funtion are:
+1   flip phase (multiply by the sign of the CTF)
+2   apply a CTF (multiply with the CTF)
+3   correct for the CTF: ctf/(ctf^2 + wiener_factor)
+4   correct for the CTF: env*ctf/((env*ctf)^2 + noise^2)
+5   correct for the CTF with baseline: ctf/(ctf^2*noise^2 + wiener_factor)
+6   correct for the CTF with baseline: 1/(ctf*noise + sign*wiener_factor)
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 400 of file mg_ctf\&.cpp\&.
+.SS "int img_ttf_apply_one (\fBBimage\fP * p, long nn, \fBCTFparam\fP ctf, int action, double wiener, double def, double res_lo, double res_hi, \fBVector3\fP< long > psize, \fBfft_plan\fP planf, \fBfft_plan\fP planb)"
+
+.PP
+Definition at line 327 of file mg_ctf\&.cpp\&.
+.SS "\fBBimage\fP* img_wave_aberration (\fBCTFparam\fP cp, \fBVector3\fP< long > size, \fBVector3\fP< double > sam)"
+
+.PP
+Calculates a wave aberration function\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIcp\fP CTF parameters\&. 
+.br
+\fIsize\fP new image size\&. 
+.br
+\fIsam\fP new image pixel size\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* new wave aberration function image\&. 
+.PP
+.nf
+Functions:
+    angle = atan(y/x)
+    s2 = x*x + y*y
+    defocus_average = (defocus_max + defocus_min)/2
+    defocus_deviation = (defocus_max - defocus_min)/2
+    defocus = defocus_average + defocus_deviation*cos(2*(angle - astigmatism_angle))
+    phase = 0.5*PI*lambda*lambda*lambda*Cs*s2*s2 - PI*lambda*defocus*s2;
+Note: Defocus is positive for underfocus and negative for overfocus.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 186 of file mg_ctf\&.cpp\&.
+.SS "int mg_ctf (\fBBmicrograph\fP * mg, \fBBimage\fP * pmg, int action, double lores, double hires, double wiener, \fBVector3\fP< long > tile_size, \fBDataType\fP datatype, \fBBstring\fP & newname, int flags)"
+
+.PP
+Definition at line 987 of file mg_ctf\&.cpp\&.
+.SS "\fBBimage\fP* mg_ctf_prepare (\fBBmicrograph\fP * mg, int action, double lores, double hires, \fBVector3\fP< long > tile_size, double def_start, double def_end, double def_inc, int flags)"
+
+.PP
+Definition at line 531 of file mg_ctf\&.cpp\&.
+.SS "int mg_ps_name (\fBBmicrograph\fP * mg, int img_num, \fBBstring\fP & path, \fBBstring\fP & newname, \fBBstring\fP insert)"
+
+.PP
+Definition at line 502 of file mg_ctf\&.cpp\&.
+.SS "int part_ctf (\fBBparticle\fP * partlist, int action, double lores, double hires, double wiener, \fBDataType\fP datatype, \fBBstring\fP & partpath, \fBBstring\fP & newname, int flags)"
+
+.PP
+Definition at line 834 of file mg_ctf\&.cpp\&.
+.SS "int project_ctf (\fBBproject\fP * project, int action, double lores, double hires, \fBVector3\fP< long > tile_size, double wiener, \fBDataType\fP datatype, \fBBstring\fP & partpath, \fBBstring\fP & newname, int flags)"
+
+.PP
+Calculates or fits CTF curves to multiple power spectra\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIaction\fP CTF processing action\&. 
+.br
+\fIlores\fP low resolution limit for CTF operations\&. 
+.br
+\fIhires\fP high resolution limit for CTF operations\&. 
+.br
+\fItile_size\fP tile size for tilted CTF operations\&. 
+.br
+\fIwiener\fP Wiener factor\&. 
+.br
+\fIdatatype\fP corrected particle file data type\&. 
+.br
+\fI&partpath\fP corrected particle file path\&. 
+.br
+\fI&newname\fP new file name for output\&. 
+.br
+\fIflags\fP 1=use mg or rec, 2=filter, 4=background, 8=astigmatism, 16=use frmaes 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+The default is to use the particle file. If the particle file is not
+specified, the micrograph is used. The selection can also be done with
+the use_mg flag.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1134 of file mg_ctf\&.cpp\&.
+.SS "int project_ctf_average (\fBBproject\fP * project, \fBBstring\fP & psname)"
+
+.PP
+Calculates or fits CTF curves to multiple power spectra\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&psname\fP postscript file name for output\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+The default is to use the particle file. If the particle file is not
+specified, the micrograph is used. The selection can also be done with
+the use_mg flag.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1473 of file mg_ctf\&.cpp\&.
+.SS "int project_ctf_prepare (\fBBproject\fP * project, int action, double lores, double hires, \fBVector3\fP< long > tile_size, double def_start, double def_end, double def_inc, \fBBstring\fP & path, \fBBstring\fP & newname, int flags)"
+
+.PP
+Calculates power spectra and optionally fits CTF curves\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIaction\fP CTF processing action\&. 
+.br
+\fIlores\fP low resolution limit for CTF operations\&. 
+.br
+\fIhires\fP high resolution limit for CTF operations\&. 
+.br
+\fItile_size\fP tile size for power spectrum generation\&. 
+.br
+\fIdef_start\fP defocus search start (default 1e3)\&. 
+.br
+\fIdef_end\fP defocus search end (default 2e5)\&. 
+.br
+\fIdef_inc\fP defocus search increment (default 1e3)\&. 
+.br
+\fI&path\fP new power spectrum directory for output\&. 
+.br
+\fI&newname\fP new file name for output\&. 
+.br
+\fIflags\fP 1=use mg or rec, 2=filter, 4=background, 8=astigmatism, 16=frames 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+The default is to use the particle file. If the particle file is not
+specified, the micrograph is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 731 of file mg_ctf\&.cpp\&.
+.SS "int project_CTF_to_part (\fBBproject\fP * project)"
+
+.PP
+Transfers CTF parameters from micrographs to particles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure with all parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1636 of file mg_ctf\&.cpp\&.
+.SS "\fBJSvalue\fP project_defocus_range (\fBBproject\fP * project)"
+
+.PP
+Determines the minimum and maximum defocus values\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBJSvalue\fP JSON object with the minimum and maximum values\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1417 of file mg_ctf\&.cpp\&.
+.SS "int project_merge_CTF_parameters (\fBBproject\fP * project, \fBBproject\fP * ctfproject)"
+
+.PP
+Puts CTF parameters from one project into another\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure with all parameters\&. 
+.br
+\fI*ctfproject\fP project parameter structure with CTF parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1597 of file mg_ctf\&.cpp\&.
+.SS "int project_plot_ctf (\fBBproject\fP * project, \fBBstring\fP & filename)"
+
+.PP
+Plots the CTF curves\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&filename\fP Postscript file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2183 of file mg_ctf\&.cpp\&.
+.SS "\fBBimage\fP* project_powerspectrum_average (\fBBproject\fP * project, double deftarget)"
+
+.PP
+Averages multiple power spectra based on defocus estimates\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIdeftarget\fP target defocus (angstrom)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* average power spectrum\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1546 of file mg_ctf\&.cpp\&.
+.SS "int project_powerspectrum_isotropy (\fBBproject\fP * project, double lores, double hires)"
+
+.PP
+Calculates the isotropy at the CTF maxima\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fIhires\fP high resolution limit 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1369 of file mg_ctf\&.cpp\&.
+.SS "int project_set_alpha (\fBBproject\fP * project, double alpha)"
+
+.PP
+Sets the beam source size/divergence angle of all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIalpha\fP beam source size/divergence angle (radians)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1968 of file mg_ctf\&.cpp\&.
+.SS "int project_set_amp_shift (\fBBproject\fP * project, double amp_shift)"
+
+.PP
+Sets the amplitude contribution of all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIamp_shift\fP amplitude contribution phase shift\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1854 of file mg_ctf\&.cpp\&.
+.SS "int project_set_aperture (\fBBproject\fP * project, double aperture)"
+
+.PP
+Sets the objective aperture of all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIaperture\fP objective aperture in angstrom\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1911 of file mg_ctf\&.cpp\&.
+.SS "int project_set_astigmatism (\fBBproject\fP * project, double def_dev, double ast_angle)"
+
+.PP
+Sets the defocus deviation and astigmatism angle of all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIdef_dev\fP defocus deviation\&. 
+.br
+\fIast_angle\fP astigmatism angle\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1728 of file mg_ctf\&.cpp\&.
+.SS "int project_set_baseline (\fBBproject\fP * project, int type, double * coeff)"
+
+.PP
+Sets the baseline equations of all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fItype\fP baseline type\&. 
+.br
+\fI*coeff\fP 5 baseline coefficients\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2118 of file mg_ctf\&.cpp\&.
+.SS "int project_set_baseline_type (\fBBproject\fP * project, int type)"
+
+.PP
+Sets the baseline type of all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fItype\fP baseline type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2088 of file mg_ctf\&.cpp\&.
+.SS "int project_set_coherence_envelope (\fBBproject\fP * project)"
+
+.PP
+Replaces envelope equations with those based on partial coherence in all micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Partial coherence envelope:
+    env = amp*exp(-(pi*alpha*defocus*s)^2)
+The amplitude, defocus and alpha values are taken from the fields 
+in each micrograph. The defocus must already be determined.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2060 of file mg_ctf\&.cpp\&.
+.SS "int project_set_Cs (\fBBproject\fP * project, double Cs)"
+
+.PP
+Sets the spherical aberation constant of all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fICs\fP spherical aberation constant in angstrom\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1825 of file mg_ctf\&.cpp\&.
+.SS "int project_set_defocus (\fBBproject\fP * project, double def_avg, double def_dev, double ast_angle)"
+
+.PP
+Sets the defocus values of all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIdef_avg\fP defocus average\&. 
+.br
+\fIdef_dev\fP defocus deviation\&. 
+.br
+\fIast_angle\fP astigmatism angle\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1677 of file mg_ctf\&.cpp\&.
+.SS "int project_set_envelope (\fBBproject\fP * project, int type, double * coeff)"
+
+.PP
+Sets the envelope equations of all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fItype\fP envelope type\&. 
+.br
+\fI*coeff\fP 5 envelope coefficients\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2025 of file mg_ctf\&.cpp\&.
+.SS "int project_set_envelope_type (\fBBproject\fP * project, int type)"
+
+.PP
+Sets the envelope type of all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fItype\fP envelope type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1996 of file mg_ctf\&.cpp\&.
+.SS "int project_set_focal_length (\fBBproject\fP * project, double focal_length)"
+
+.PP
+Sets the focal length of all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIfocal_length\fP focal length in angstrom\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1882 of file mg_ctf\&.cpp\&.
+.SS "int project_set_slit_width (\fBBproject\fP * project, double slit)"
+
+.PP
+Sets the energy filter slit width of all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIslit\fP slit width in eV\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1940 of file mg_ctf\&.cpp\&.
+.SS "int project_set_volts (\fBBproject\fP * project, double volts)"
+
+.PP
+Sets the acceleration voltage of all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIvolts\fP acceleration voltage\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1795 of file mg_ctf\&.cpp\&.
+.SS "int project_update_ctf (\fBBproject\fP * project, \fBJSvalue\fP & jsctf)"
+
+.PP
+Sets the acceleration voltage of all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIjsctf\fP JSON parameters to be updated\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1762 of file mg_ctf\&.cpp\&.
+.SS "int project_update_first_zero (\fBBproject\fP * project)"
+
+.PP
+Updates the first zero from the defocus average for all the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2148 of file mg_ctf\&.cpp\&.
+.SS "int rec_ctf (\fBBreconstruction\fP * rec, int action, double lores, double hires, double wiener, \fBDataType\fP datatype, \fBBstring\fP & newname, int flags)"
+
+.PP
+Definition at line 1061 of file mg_ctf\&.cpp\&.
+.SS "int rec_ctf_prepare (\fBBreconstruction\fP * rec, int action, double lores, double hires, \fBVector3\fP< long > tile_size, double def_start, double def_end, double def_inc, \fBBstring\fP & newname, int flags)"
+
+.PP
+Definition at line 631 of file mg_ctf\&.cpp\&.
+.SS "double sinc_find_argument (double v)"
+
+.PP
+Definition at line 1352 of file mg_ctf\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

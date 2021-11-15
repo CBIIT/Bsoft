@@ -1,0 +1,327 @@
+.TH "Matrix" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Matrix
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <Matrix\&.h>\fP
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBRow\fP"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBMatrix\fP ()"
+.br
+.ti -1c
+.RI "\fBMatrix\fP (const \fBMatrix\fP &mat)"
+.br
+.ti -1c
+.RI "\fBMatrix\fP (long \fBrows\fP, long cols)"
+.br
+.ti -1c
+.RI "\fBMatrix\fP (\fBBstring\fP &filename)"
+.br
+.ti -1c
+.RI "\fB~Matrix\fP ()"
+.br
+.ti -1c
+.RI "void \fBwrite\fP (\fBBstring\fP &filename)"
+.br
+.ti -1c
+.RI "double * \fBdata\fP ()"
+.br
+.ti -1c
+.RI "\fBRow\fP \fBoperator[]\fP (long i)"
+.br
+.ti -1c
+.RI "\fBMatrix\fP \fBoperator=\fP (const \fBMatrix\fP mat)"
+.br
+.ti -1c
+.RI "\fBMatrix\fP \fBoperator\-\fP ()"
+.br
+.ti -1c
+.RI "\fBMatrix\fP \fBoperator*\fP (\fBMatrix\fP &mat)"
+.br
+.ti -1c
+.RI "vector< double > \fBoperator*\fP (vector< double > &vec)"
+.br
+.ti -1c
+.RI "long \fBrows\fP ()"
+.br
+.ti -1c
+.RI "long \fBcolumns\fP ()"
+.br
+.ti -1c
+.RI "long \fBsize\fP ()"
+.br
+.ti -1c
+.RI "void \fBshow_below_cutoff\fP (double d)"
+.br
+.ti -1c
+.RI "void \fBswap_rows_columns\fP (long rc1, long rc2)"
+.br
+.ti -1c
+.RI "\fBMatrix\fP \fBdelete_row_column\fP (long rc)"
+.br
+.ti -1c
+.RI "\fBMatrix\fP \fBtranspose\fP () const"
+.br
+.ti -1c
+.RI "void \fBfill\fP (double v)"
+.br
+.ti -1c
+.RI "int \fBcheck_for_singularity\fP ()"
+.br
+.ti -1c
+.RI "void \fBnormalize\fP ()"
+.br
+.ti -1c
+.RI "void \fBrandomize\fP ()"
+.br
+.ti -1c
+.RI "int \fBmultiply_in_place\fP (vector< double > &vec)"
+.br
+.ti -1c
+.RI "double \fBdeterminant\fP ()"
+.br
+.ti -1c
+.RI "double \fBLU_decomposition\fP ()"
+.br
+.RI "\fBMatrix\fP inversion by LU decomposition\&. "
+.ti -1c
+.RI "double \fBLU_decomposition\fP (vector< double > &b)"
+.br
+.ti -1c
+.RI "double \fBsingular_value_decomposition\fP ()"
+.br
+.RI "Singular value decomposition of a matrix \&. "
+.ti -1c
+.RI "double \fBsingular_value_decomposition\fP (vector< double > &b)"
+.br
+.ti -1c
+.RI "int \fBjrotate\fP (double s, double tau, long i, long j, long k, long l)"
+.br
+.ti -1c
+.RI "vector< double > \fBjacobi_rotation\fP ()"
+.br
+.RI "Computes all eigenvalues and eigenvectors of a real symmetric matrix\&. "
+.ti -1c
+.RI "void \fBeigen_sort\fP (vector< double > &val)"
+.br
+.RI "Computes all eigenvalues and eigenvectors of a real symmetric matrix\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 21 of file Matrix\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Matrix::Matrix ()\fC [inline]\fP"
+
+.PP
+Definition at line 40 of file Matrix\&.h\&.
+.SS "Matrix::Matrix (const \fBMatrix\fP & mat)\fC [inline]\fP"
+
+.PP
+Definition at line 41 of file Matrix\&.h\&.
+.SS "Matrix::Matrix (long rows, long cols)\fC [inline]\fP"
+
+.PP
+Definition at line 45 of file Matrix\&.h\&.
+.SS "Matrix::Matrix (\fBBstring\fP & filename)\fC [inline]\fP"
+
+.PP
+Definition at line 48 of file Matrix\&.h\&.
+.SS "Matrix::~Matrix ()\fC [inline]\fP"
+
+.PP
+Definition at line 93 of file Matrix\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "int Matrix::check_for_singularity ()\fC [inline]\fP"
+
+.PP
+Definition at line 211 of file Matrix\&.h\&.
+.SS "long Matrix::columns ()\fC [inline]\fP"
+
+.PP
+Definition at line 169 of file Matrix\&.h\&.
+.SS "double* Matrix::data ()\fC [inline]\fP"
+
+.PP
+Definition at line 111 of file Matrix\&.h\&.
+.SS "\fBMatrix\fP Matrix::delete_row_column (long rc)\fC [inline]\fP"
+
+.PP
+Definition at line 188 of file Matrix\&.h\&.
+.SS "double Matrix::determinant ()\fC [inline]\fP"
+
+.PP
+Definition at line 270 of file Matrix\&.h\&.
+.SS "void Matrix::eigen_sort (vector< double > & val)"
+
+.PP
+Computes all eigenvalues and eigenvectors of a real symmetric matrix\&. 
+.PP
+\fBReturns\fP
+.RS 4
+double* val eigenvalues\&.
+.RE
+.PP
+The eigenvectors are returned in the columns of the input matrix\&. Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&.
+.PP
+Sorts eigenvalues into descending order and rearranges matrix columns accordingly\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIval\fP eigenvalues\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+void \&. 
+.PP
+.nf
+The eigenvectors are in the columns.
+This method uses straight insertion.
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.RE
+.PP
+
+.PP
+Definition at line 677 of file matrix\&.cpp\&.
+.SS "void Matrix::fill (double v)\fC [inline]\fP"
+
+.PP
+Definition at line 209 of file Matrix\&.h\&.
+.SS "vector< double > Matrix::jacobi_rotation ()"
+
+.PP
+Computes all eigenvalues and eigenvectors of a real symmetric matrix\&. 
+.PP
+\fBReturns\fP
+.RS 4
+double* val eigenvalues\&.
+.RE
+.PP
+The eigenvectors are returned in the columns of the input matrix\&. Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.PP
+Definition at line 421 of file matrix\&.cpp\&.
+.SS "int Matrix::jrotate (double s, double tau, long i, long j, long k, long l)"
+
+.PP
+Definition at line 394 of file matrix\&.cpp\&.
+.SS "double Matrix::LU_decomposition ()"
+
+.PP
+\fBMatrix\fP inversion by LU decomposition\&. 
+.PP
+\fBReturns\fP
+.RS 4
+double determinant\&. 
+.PP
+.nf
+This inverts matrix A by LU decomposition.
+The matrix A must be square and is converted to and replaced by its inverse.
+Note: The matrix is modified.
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.RE
+.PP
+
+.PP
+Definition at line 78 of file matrix\&.cpp\&.
+.SS "double Matrix::LU_decomposition (vector< double > & b)\fC [inline]\fP"
+
+.PP
+Definition at line 277 of file Matrix\&.h\&.
+.SS "int Matrix::multiply_in_place (vector< double > & vec)"
+
+.PP
+Definition at line 49 of file matrix\&.cpp\&.
+.SS "void Matrix::normalize ()\fC [inline]\fP"
+The rows and columns are alternatively iteratively normalized until the error is small enough\&. 
+.PP
+Definition at line 225 of file Matrix\&.h\&.
+.SS "\fBMatrix\fP Matrix::operator* (\fBMatrix\fP & mat)\fC [inline]\fP"
+
+.PP
+Definition at line 143 of file Matrix\&.h\&.
+.SS "vector<double> Matrix::operator* (vector< double > & vec)\fC [inline]\fP"
+
+.PP
+Definition at line 155 of file Matrix\&.h\&.
+.SS "\fBMatrix\fP Matrix::operator\- ()\fC [inline]\fP"
+
+.PP
+Definition at line 138 of file Matrix\&.h\&.
+.SS "\fBMatrix\fP Matrix::operator= (const \fBMatrix\fP mat)\fC [inline]\fP"
+
+.PP
+Definition at line 131 of file Matrix\&.h\&.
+.SS "\fBRow\fP Matrix::operator[] (long i)\fC [inline]\fP"
+
+.PP
+Definition at line 126 of file Matrix\&.h\&.
+.SS "void Matrix::randomize ()\fC [inline]\fP"
+
+.PP
+Definition at line 260 of file Matrix\&.h\&.
+.SS "long Matrix::rows ()\fC [inline]\fP"
+
+.PP
+Definition at line 168 of file Matrix\&.h\&.
+.SS "void Matrix::show_below_cutoff (double d)\fC [inline]\fP"
+
+.PP
+Definition at line 172 of file Matrix\&.h\&.
+.SS "double Matrix::singular_value_decomposition ()"
+
+.PP
+Singular value decomposition of a matrix \&. 
+.PP
+\fBReturns\fP
+.RS 4
+double* 0\&.
+.RE
+.PP
+The matrix A is replaced by the matrix U\&. Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.PP
+Definition at line 177 of file matrix\&.cpp\&.
+.SS "double Matrix::singular_value_decomposition (vector< double > & b)\fC [inline]\fP"
+
+.PP
+Definition at line 288 of file Matrix\&.h\&.
+.SS "long Matrix::size ()\fC [inline]\fP"
+
+.PP
+Definition at line 170 of file Matrix\&.h\&.
+.SS "void Matrix::swap_rows_columns (long rc1, long rc2)\fC [inline]\fP"
+
+.PP
+Definition at line 182 of file Matrix\&.h\&.
+.SS "\fBMatrix\fP Matrix::transpose () const\fC [inline]\fP"
+
+.PP
+Definition at line 201 of file Matrix\&.h\&.
+.SS "void Matrix::write (\fBBstring\fP & filename)\fC [inline]\fP"
+
+.PP
+Definition at line 95 of file Matrix\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

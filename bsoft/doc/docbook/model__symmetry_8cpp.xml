@@ -1,0 +1,341 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_model__symmetry_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/model/model_symmetry.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/model/model_symmetry.cpp</primary></indexterm>
+<para>
+
+<para>Library routines used for model symmetry operations. </para>
+ 
+</para>
+<programlisting>#include &quot;model_util.h&quot;
+#include &quot;model_transform.h&quot;
+#include &quot;model_select.h&quot;
+#include &quot;model_compare.h&quot;
+#include &quot;mol_transform.h&quot;
+#include &quot;mol_compare.h&quot;
+#include &quot;mol_util.h&quot;
+#include &quot;symmetry.h&quot;
+#include &quot;Matrix3.h&quot;
+#include &quot;random_numbers.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>long <link linkend="_model__symmetry_8cpp_1a4331ffd77a6d032146a0d295f7424aec">model_find_asymmetric_unit</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, string &amp;symmetry_string)</para>
+
+<para>Set model component locations within the asymmetric unit. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__symmetry_8cpp_1a9867fee367bbc35a3ed25450e9f5996a">model_apply_point_group</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, string &amp;symmetry_string, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_view">View</link> ref_view, int flags)</para>
+
+<para>Applying symmetry to model components. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__symmetry_8cpp_1a46a8b870e37df2cbefcaa680d014ac8d">models_apply_point_group</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, string &amp;symmetry_string, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_view">View</link> ref_view, int flags)</para>
+
+<para>Applying symmetry to model components. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__symmetry_8cpp_1a1bca3a0e6ec4a90a03f139e2200997f6">model_symmetrize</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, string &amp;symmetry_string)</para>
+
+<para>Symmetrize a model. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__symmetry_8cpp_1a933e8a33de9c60605e7fb815ec43cc0c">model_symmetry_related</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, string &amp;symmetry_string)</para>
+
+<para>Generates a list of symmetry-related models. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_model__symmetry_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines used for model symmetry operations. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20060908 </para>
+
+<para>Modified: 20191101 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_model__symmetry_8cpp_1a9867fee367bbc35a3ed25450e9f5996a"/>    <section>
+    <title>model_apply_point_group()</title>
+<indexterm><primary>model_apply_point_group</primary><secondary>model_symmetry.cpp</secondary></indexterm>
+<indexterm><primary>model_symmetry.cpp</primary><secondary>model_apply_point_group</secondary></indexterm>
+<para><computeroutput>long model_apply_point_group (<link linkend="_class_bmodel">Bmodel</link> * model, string &amp; symmetry_string, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_view">View</link> ref_view, int flags)</computeroutput></para><para>
+
+<para>Applying symmetry to model components. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;symmetry_string</entry>
+                                <entry>
+<para>symmetry code. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>transformation origin. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ref_view</entry>
+                                <entry>
+<para>reference view. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>1=find asu. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components (&lt;0 means failure). <literallayout><computeroutput>Only the first model is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 69 of file model_symmetry.cpp.</para>
+    </section><anchor xml:id="_model__symmetry_8cpp_1a4331ffd77a6d032146a0d295f7424aec"/>    <section>
+    <title>model_find_asymmetric_unit()</title>
+<indexterm><primary>model_find_asymmetric_unit</primary><secondary>model_symmetry.cpp</secondary></indexterm>
+<indexterm><primary>model_symmetry.cpp</primary><secondary>model_find_asymmetric_unit</secondary></indexterm>
+<para><computeroutput>long model_find_asymmetric_unit (<link linkend="_class_bmodel">Bmodel</link> * model, string &amp; symmetry_string)</computeroutput></para><para>
+
+<para>Set model component locations within the asymmetric unit. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;symmetry_string</entry>
+                                <entry>
+<para>symmetry code. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components (&lt;0 means failure). <literallayout><computeroutput>Only the first model is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 34 of file model_symmetry.cpp.</para>
+    </section><anchor xml:id="_model__symmetry_8cpp_1a1bca3a0e6ec4a90a03f139e2200997f6"/>    <section>
+    <title>model_symmetrize()</title>
+<indexterm><primary>model_symmetrize</primary><secondary>model_symmetry.cpp</secondary></indexterm>
+<indexterm><primary>model_symmetry.cpp</primary><secondary>model_symmetrize</secondary></indexterm>
+<para><computeroutput>long model_symmetrize (<link linkend="_class_bmodel">Bmodel</link> * model, string &amp; symmetry_string)</computeroutput></para><para>
+
+<para>Symmetrize a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;symmetry_string</entry>
+                                <entry>
+<para>symmetry code. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long error code (&lt;0 means failure). <literallayout><computeroutput>For each component, a new location is calculated from the average location
+of the closest symmetry-related components.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 273 of file model_symmetry.cpp.</para>
+    </section><anchor xml:id="_model__symmetry_8cpp_1a933e8a33de9c60605e7fb815ec43cc0c"/>    <section>
+    <title>model_symmetry_related()</title>
+<indexterm><primary>model_symmetry_related</primary><secondary>model_symmetry.cpp</secondary></indexterm>
+<indexterm><primary>model_symmetry.cpp</primary><secondary>model_symmetry_related</secondary></indexterm>
+<para><computeroutput>long model_symmetry_related (<link linkend="_class_bmodel">Bmodel</link> * model, string &amp; symmetry_string)</computeroutput></para><para>
+
+<para>Generates a list of symmetry-related models. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;symmetry_string</entry>
+                                <entry>
+<para>symmetry code. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long total number of components. <literallayout><computeroutput>For each component, a new location is calculated from the average location
+of the closest symmetry-related components.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 368 of file model_symmetry.cpp.</para>
+    </section><anchor xml:id="_model__symmetry_8cpp_1a46a8b870e37df2cbefcaa680d014ac8d"/>    <section>
+    <title>models_apply_point_group()</title>
+<indexterm><primary>models_apply_point_group</primary><secondary>model_symmetry.cpp</secondary></indexterm>
+<indexterm><primary>model_symmetry.cpp</primary><secondary>models_apply_point_group</secondary></indexterm>
+<para><computeroutput>long models_apply_point_group (<link linkend="_class_bmodel">Bmodel</link> * model, string &amp; symmetry_string, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_view">View</link> ref_view, int flags)</computeroutput></para><para>
+
+<para>Applying symmetry to model components. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;symmetry_string</entry>
+                                <entry>
+<para>symmetry code. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>transformation origin. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ref_view</entry>
+                                <entry>
+<para>reference view. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>1=find asu. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long error code (&lt;0 means failure). <literallayout><computeroutput>All models in the list are processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 190 of file model_symmetry.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_model__symmetry_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>model_symmetry.cpp</secondary></indexterm>
+<indexterm><primary>model_symmetry.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

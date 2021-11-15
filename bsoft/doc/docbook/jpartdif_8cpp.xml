@@ -1,0 +1,108 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_jpartdif_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/jpartdif.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/jpartdif.cpp</primary></indexterm>
+<para>
+
+<para>Analysis of particle differences between two starfiles. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmg.h&quot;
+#include &quot;mg_processing.h&quot;
+#include &quot;mg_multiple.h&quot;
+#include &quot;mg_particle_select.h&quot;
+#include &quot;Matrix.h&quot;
+#include &quot;utilities.h&quot;
+#include &quot;options.h&quot;
+#include &quot;timer.h&quot;
+#include &quot;Vector3.h&quot;
+#include &quot;View.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_jpartdif_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_jpartdif_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>const char * <link linkend="_jpartdif_8cpp_1a4de0ad4c7190962494815c0fa7f948df">use</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Analysis of particle differences between two starfiles. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Juha Huiskonen </para>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20071214 </para>
+
+<para>Modified: 20111506 </para>
+
+<para>Modified: 20120106 </para>
+
+<para>Modified: 20150108 (BH) - incorporated into Bsoft </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_jpartdif_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>jpartdif.cpp</secondary></indexterm>
+<indexterm><primary>jpartdif.cpp</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 53 of file jpartdif.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_jpartdif_8cpp_1a4de0ad4c7190962494815c0fa7f948df"/>    <section>
+    <title>use</title>
+<indexterm><primary>use</primary><secondary>jpartdif.cpp</secondary></indexterm>
+<indexterm><primary>jpartdif.cpp</primary><secondary>use</secondary></indexterm>
+<para><computeroutput>const char* use[]</computeroutput></para><emphasis role="strong">Initial value:</emphasis><programlisting>=&#32;{
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Usage:&#32;jpartdif&#32;[options]&#32;input1.star&#32;input2.star&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-------------------------------------------------&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Calculates&#32;the&#32;difference&#32;in&#32;the&#32;particle&#32;parameters,&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;or&#32;selects&#32;particles&#32;based&#32;on&#32;the&#32;fom&#32;difference.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Parameters:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-verbose&#32;7&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Verbosity&#32;of&#32;output.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-consolidate&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Only&#32;consolidate&#32;particles&#32;based&#32;on&#32;distance.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-locdiff&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Calculate&#32;the&#32;difference&#32;in&#32;the&#32;locations.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-fomdiff&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Calculate&#32;the&#32;difference&#32;in&#32;the&#32;foms.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-printlocdiff&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Print&#32;the&#32;difference&#32;in&#32;the&#32;locations.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-printanglediff&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Print&#32;the&#32;difference&#32;in&#32;the&#32;view&#32;angle.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-printalphadiff&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Print&#32;the&#32;difference&#32;in&#32;the&#32;alpha&#32;angles.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-thrlocdiff&#32;10.0&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Analyse&#32;only&#32;particles&#32;below&#32;threshold&#32;(pixels).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-thranglediff&#32;20.0&#32;&#32;&#32;&#32;&#32;&#32;&#32;Analyse&#32;only&#32;particles&#32;below&#32;threshold&#32;(degrees).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-remove&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Remove&#32;all&#32;particles&#32;with&#32;selection&#32;number&#32;0.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Output:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-output&#32;file.star&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Output&#32;parameter&#32;file.&quot;</emphasis>,
+
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+NULL
+}
+</programlisting><para>
+Definition at line 27 of file jpartdif.cpp.</para>
+    </section><anchor xml:id="_jpartdif_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>jpartdif.cpp</secondary></indexterm>
+<indexterm><primary>jpartdif.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

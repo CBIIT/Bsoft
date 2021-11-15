@@ -1,0 +1,587 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__helix_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mg/mg_helix.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mg/mg_helix.cpp</primary></indexterm>
+<para>
+
+<para>Functions to process helical data. </para>
+ 
+</para>
+<programlisting>#include &quot;Bimage.h&quot;
+#include &quot;mg_processing.h&quot;
+#include &quot;mg_img_proc.h&quot;
+#include &quot;mg_helix.h&quot;
+#include &quot;mg_extract.h&quot;
+#include &quot;spline.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;Complex.h&quot;
+#include &quot;utilities.h&quot;
+#include &quot;timer.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>double * <link linkend="_mg__helix_8cpp_1a7b53f981c637a68d2b5a934201a67263">filament_profile</link> (<link linkend="_class_bfilnode">Bfilnode</link> *fnode, <link linkend="_class_bimage">Bimage</link> *p, long img_num, int id, double width, long &amp;n)</para>
+
+<para>Calculates a filament profile and node profile. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__helix_8cpp_1a603d675b91827afa11a3220615bf9756">nodes_center</link> (<link linkend="_class_bfilnode">Bfilnode</link> *fnode, <link linkend="_class_bimage">Bimage</link> *p, long img_num, int width)</para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__helix_8cpp_1af4c4f475ea76831cf0528b97728616ff">filaments_center</link> (<link linkend="_class_bfilament">Bfilament</link> *fillist, <link linkend="_class_bimage">Bimage</link> *p, long img_num, int filament_width)</para>
+
+<para>Centers filament nodes in a micrograph. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__helix_8cpp_1a4bc1bd806b78d007608af4edfde99413">project_center_filaments</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int filament_width)</para>
+
+<para>Centers filament nodes in all micrographs in a project. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__helix_8cpp_1a753d69fa801d98a90d6db73f137e9fd0">project_filament_powerspectrum</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int pad, int rotated, <link linkend="_class_bstring">Bstring</link> &amp;path)</para>
+
+<para>Calculates and average power spectrum from filaments. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__helix_8cpp_1af36e19a039842e91b2f64d3090dff8d8">project_filament_density</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int filament_width)</para>
+
+<para>Extracts filament images from micrographs defined in a project and estimates their density per length. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__helix_8cpp_1ad9b0684bd6206356c1c4d830154f9168">mg_generate_layer_lines</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, int rad_lim)</para>
+
+<para>Generates layer lines given the unit cell vectors. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__helix_8cpp_1a39490bfd39e6a1597db054fcdc149c8e">img_mask_layer_lines</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_blayerline">Blayerline</link> *layer_line, float helix_axis, float width)</para>
+
+<para>Masks the image using the list of layer lines. </para>
+</listitem>
+            <listitem><para>double * <link linkend="_mg__helix_8cpp_1add29f6609942a0f9a60df95f0332ec2a">img_extract_layer_line</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_blayerline">Blayerline</link> *line, float helix_axis, int <link linkend="__vector3_8h_1a7baf5ed670fcf9bcca9a3a400820e292">length</link>)</para>
+
+<para>Extracts one layer line from an image. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__helix_8cpp_1ac34d00a04d25a3b5e631225efdafcd8a">mg_extract_show_layer_lines</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, int <link linkend="__vector3_8h_1a7baf5ed670fcf9bcca9a3a400820e292">length</link>, int <link linkend="_rw_d_m_8cpp_1ae83c07067345faf98c959261a0b7db76">show</link>)</para>
+
+<para>Extracts and prints layer lines from an image with corresponding Bessel functions. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mg__helix_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions to process helical data. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20061110 </para>
+
+<para>Modified: 20170623 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__helix_8cpp_1a7b53f981c637a68d2b5a934201a67263"/>    <section>
+    <title>filament_profile()</title>
+<indexterm><primary>filament_profile</primary><secondary>mg_helix.cpp</secondary></indexterm>
+<indexterm><primary>mg_helix.cpp</primary><secondary>filament_profile</secondary></indexterm>
+<para><computeroutput>double* filament_profile (<link linkend="_class_bfilnode">Bfilnode</link> * fnode, <link linkend="_class_bimage">Bimage</link> * p, long img_num, int id, double width, long &amp; n)</computeroutput></para><para>
+
+<para>Calculates a filament profile and node profile. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*fnode</entry>
+                                <entry>
+<para>node list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image with filament. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>img_num</entry>
+                                <entry>
+<para>sub-image number. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>id</entry>
+                                <entry>
+<para>identifier of selected node. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>width</entry>
+                                <entry>
+<para>width of box around filament. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;n</entry>
+                                <entry>
+<para>number of elements in the profile. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double* two profile arrays, each length n. <literallayout><computeroutput>A filament image is extracted from the micrograph along a spline through
+the nodes. The overall profile and the profile around a specified node
+are calculated and returned in a single array.
+It only works for 2D images.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 39 of file mg_helix.cpp.</para>
+    </section><anchor xml:id="_mg__helix_8cpp_1af4c4f475ea76831cf0528b97728616ff"/>    <section>
+    <title>filaments_center()</title>
+<indexterm><primary>filaments_center</primary><secondary>mg_helix.cpp</secondary></indexterm>
+<indexterm><primary>mg_helix.cpp</primary><secondary>filaments_center</secondary></indexterm>
+<para><computeroutput>double filaments_center (<link linkend="_class_bfilament">Bfilament</link> * fillist, <link linkend="_class_bimage">Bimage</link> * p, long img_num, int filament_width)</computeroutput></para><para>
+
+<para>Centers filament nodes in a micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*fillist</entry>
+                                <entry>
+<para>list of filaments. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image with filament. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>img_num</entry>
+                                <entry>
+<para>sub-image number. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>filament_width</entry>
+                                <entry>
+<para>width of box around filament. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double average correlation coefficient. <literallayout><computeroutput>The profile for each node is calculated and centered by cross-correlation
+with the mirrored profile.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 190 of file mg_helix.cpp.</para>
+    </section><anchor xml:id="_mg__helix_8cpp_1add29f6609942a0f9a60df95f0332ec2a"/>    <section>
+    <title>img_extract_layer_line()</title>
+<indexterm><primary>img_extract_layer_line</primary><secondary>mg_helix.cpp</secondary></indexterm>
+<indexterm><primary>mg_helix.cpp</primary><secondary>img_extract_layer_line</secondary></indexterm>
+<para><computeroutput>double* img_extract_layer_line (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_blayerline">Blayerline</link> * line, float helix_axis, int length)</computeroutput></para><para>
+
+<para>Extracts one layer line from an image. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>power spectrum. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*line</entry>
+                                <entry>
+<para>layer line. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>helix_axis</entry>
+                                <entry>
+<para>helix axis angle. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>length</entry>
+                                <entry>
+<para>length of line. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double* array with line values. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 551 of file mg_helix.cpp.</para>
+    </section><anchor xml:id="_mg__helix_8cpp_1a39490bfd39e6a1597db054fcdc149c8e"/>    <section>
+    <title>img_mask_layer_lines()</title>
+<indexterm><primary>img_mask_layer_lines</primary><secondary>mg_helix.cpp</secondary></indexterm>
+<indexterm><primary>mg_helix.cpp</primary><secondary>img_mask_layer_lines</secondary></indexterm>
+<para><computeroutput>int img_mask_layer_lines (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_blayerline">Blayerline</link> * layer_line, float helix_axis, float width)</computeroutput></para><para>
+
+<para>Masks the image using the list of layer lines. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>complex image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*layer_line</entry>
+                                <entry>
+<para>layer line list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>helix_axis</entry>
+                                <entry>
+<para>helix axis angle. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>width</entry>
+                                <entry>
+<para>width of mask for a line. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of lines or error code. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 499 of file mg_helix.cpp.</para>
+    </section><anchor xml:id="_mg__helix_8cpp_1ac34d00a04d25a3b5e631225efdafcd8a"/>    <section>
+    <title>mg_extract_show_layer_lines()</title>
+<indexterm><primary>mg_extract_show_layer_lines</primary><secondary>mg_helix.cpp</secondary></indexterm>
+<indexterm><primary>mg_helix.cpp</primary><secondary>mg_extract_show_layer_lines</secondary></indexterm>
+<para><computeroutput>int mg_extract_show_layer_lines (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, int length, int show)</computeroutput></para><para>
+
+<para>Extracts and prints layer lines from an image with corresponding Bessel functions. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>length</entry>
+                                <entry>
+<para>length of line. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>show</entry>
+                                <entry>
+<para>show: 1=extracted layer lines, 2=Bessel functions, 3=both </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 580 of file mg_helix.cpp.</para>
+    </section><anchor xml:id="_mg__helix_8cpp_1ad9b0684bd6206356c1c4d830154f9168"/>    <section>
+    <title>mg_generate_layer_lines()</title>
+<indexterm><primary>mg_generate_layer_lines</primary><secondary>mg_helix.cpp</secondary></indexterm>
+<indexterm><primary>mg_helix.cpp</primary><secondary>mg_generate_layer_lines</secondary></indexterm>
+<para><computeroutput>int mg_generate_layer_lines (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, int rad_lim)</computeroutput></para><para>
+
+<para>Generates layer lines given the unit cell vectors. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rad_lim</entry>
+                                <entry>
+<para>layer line radial limit. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of layer lines generated, &lt;0 on error. <literallayout><computeroutput>The structure factor location is given by:
+    x = uh + vk
+where u and v are the unit cell vectors,
+and h and k are the associated Miller indices.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 456 of file mg_helix.cpp.</para>
+    </section><anchor xml:id="_mg__helix_8cpp_1a603d675b91827afa11a3220615bf9756"/>    <section>
+    <title>nodes_center()</title>
+<indexterm><primary>nodes_center</primary><secondary>mg_helix.cpp</secondary></indexterm>
+<indexterm><primary>mg_helix.cpp</primary><secondary>nodes_center</secondary></indexterm>
+<para><computeroutput>double nodes_center (<link linkend="_class_bfilnode">Bfilnode</link> * fnode, <link linkend="_class_bimage">Bimage</link> * p, long img_num, int width)</computeroutput></para><para>
+Definition at line 102 of file mg_helix.cpp.</para>
+    </section><anchor xml:id="_mg__helix_8cpp_1a4bc1bd806b78d007608af4edfde99413"/>    <section>
+    <title>project_center_filaments()</title>
+<indexterm><primary>project_center_filaments</primary><secondary>mg_helix.cpp</secondary></indexterm>
+<indexterm><primary>mg_helix.cpp</primary><secondary>project_center_filaments</secondary></indexterm>
+<para><computeroutput>double project_center_filaments (<link linkend="_class_bproject">Bproject</link> * project, int filament_width)</computeroutput></para><para>
+
+<para>Centers filament nodes in all micrographs in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project object. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>filament_width</entry>
+                                <entry>
+<para>width of box around filament. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double average correlation coefficient. <literallayout><computeroutput>The profile for each node is calculated and centered by cross-correlation
+with the mirrored profile.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 221 of file mg_helix.cpp.</para>
+    </section><anchor xml:id="_mg__helix_8cpp_1af36e19a039842e91b2f64d3090dff8d8"/>    <section>
+    <title>project_filament_density()</title>
+<indexterm><primary>project_filament_density</primary><secondary>mg_helix.cpp</secondary></indexterm>
+<indexterm><primary>mg_helix.cpp</primary><secondary>project_filament_density</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* project_filament_density (<link linkend="_class_bproject">Bproject</link> * project, int filament_width)</computeroutput></para><para>
+
+<para>Extracts filament images from micrographs defined in a project and estimates their density per length. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>micrograph project. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>filament_width</entry>
+                                <entry>
+<para>extracted filament width. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* image with all densities. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 375 of file mg_helix.cpp.</para>
+    </section><anchor xml:id="_mg__helix_8cpp_1a753d69fa801d98a90d6db73f137e9fd0"/>    <section>
+    <title>project_filament_powerspectrum()</title>
+<indexterm><primary>project_filament_powerspectrum</primary><secondary>mg_helix.cpp</secondary></indexterm>
+<indexterm><primary>mg_helix.cpp</primary><secondary>project_filament_powerspectrum</secondary></indexterm>
+<para><computeroutput>int project_filament_powerspectrum (<link linkend="_class_bproject">Bproject</link> * project, int pad, int rotated, <link linkend="_class_bstring">Bstring</link> &amp; path)</computeroutput></para><para>
+
+<para>Calculates and average power spectrum from filaments. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pad</entry>
+                                <entry>
+<para>additional padding before transformation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rotated</entry>
+                                <entry>
+<para>flag to indicate if particles are already rotated. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;path</entry>
+                                <entry>
+<para>path to write power spectra. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Particles derived from picked filaments are extracted and transformed
+to orient the helical axis along the x-axis. These images are then
+Fourier transformed and their power spectra averaged.
+One average per micrograph is calculated.
+Requirements: The filaments must be picked and converted to particle locations.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 278 of file mg_helix.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_mg__helix_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>mg_helix.cpp</secondary></indexterm>
+<indexterm><primary>mg_helix.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

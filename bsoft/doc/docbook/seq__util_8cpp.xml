@@ -1,0 +1,721 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_seq__util_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mol/seq_util.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mol/seq_util.cpp</primary></indexterm>
+<para>
+
+<para>Sequence utility functions. </para>
+ 
+</para>
+<programlisting>#include &quot;rwgencode.h&quot;
+#include &quot;seq_analysis.h&quot;
+#include &quot;seq_util.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+#include &lt;map&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_seq__util_8cpp_1a0131524f8dc6e2893374f91e46e25919">seq_show</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Shows all molecular sequences. </para>
+</listitem>
+            <listitem><para>int <link linkend="_seq__util_8cpp_1a9c5d1648df23fc068c8c3632ec7a7214">seq_mass</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Shows the masses of all molecular sequences. </para>
+</listitem>
+            <listitem><para>vector&lt; double &gt; <link linkend="_seq__util_8cpp_1a0ab11bf252009cd080b568ee6ec4b2e4">seq_elements</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bstring">Bstring</link> &amp;paramfile)</para>
+
+<para>Shows the elemental composition of all molecular sequences. </para>
+</listitem>
+            <listitem><para>int <link linkend="_seq__util_8cpp_1a2da82fee1baa352a4facf527843b46be">seq_complement_all</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Complements all nucleotide sequences. </para>
+</listitem>
+            <listitem><para>int <link linkend="_seq__util_8cpp_1ac110ae1f671d69cd06380b9181ac744f">seq_translate_all</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, int frame, <link linkend="_class_bstring">Bstring</link> &amp;gcfile)</para>
+
+<para>Translates all nucleotide sequences to protein sequences. </para>
+</listitem>
+            <listitem><para>long <link linkend="_seq__util_8cpp_1abb216e011307a3a5910a636775281c34">seq_find_dna</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bstring">Bstring</link> &amp;seq)</para>
+
+<para>Finds a nucleotide sequence. </para>
+</listitem>
+            <listitem><para>long <link linkend="_seq__util_8cpp_1a80fdf0bcc3bf2bbad13c328a87eb2fb7">seq_find_protein</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bstring">Bstring</link> &amp;seq)</para>
+
+<para>Finds an amino acid sequence. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="_seq__util_8cpp_1af198e989e08420c1c646b7d0a18be328">seq_find_protein_in_dna</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bstring">Bstring</link> &amp;seq, int seqlenmin, int seqlenmax, int side1, int side2, double threshold, <link linkend="_class_bstring">Bstring</link> &amp;gcfile)</para>
+
+<para>Finds the coding region for an amino acid sequence. </para>
+</listitem>
+            <listitem><para>int <link linkend="_seq__util_8cpp_1ac6a6db39c8a191ff819caff2760782ff">getcode3</link> (char c, char *cod)</para>
+
+<para>Converts a one-letter amino acid designation to the three-letter equivalent. </para>
+</listitem>
+            <listitem><para>char <link linkend="_seq__util_8cpp_1a0fa4f20db9d3f89205ccdf014ca6c296">getcode1</link> (char *acode)</para>
+
+<para>Converts a three-letter amino acid designation to the one-letter equivalent. </para>
+</listitem>
+            <listitem><para>int <link linkend="_seq__util_8cpp_1a6e4824763eb30074358cbf56e4027423">complement_sequence</link> (<link linkend="_class_bstring">Bstring</link> &amp;nucseq)</para>
+
+<para>Complements a nucleotide sequence in place. </para>
+</listitem>
+            <listitem><para>char <link linkend="_seq__util_8cpp_1a9b8d83f79574d07f03345795c5646b3b">get_complement</link> (char nuc)</para>
+
+<para>Get the Watson-Crick complement of a nucleotide base. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="_seq__util_8cpp_1a19b8cfade6fc13ee72379d8a7ab4ec4a">sequence_translate</link> (<link linkend="_class_bstring">Bstring</link> &amp;nucseq, long frame, <link linkend="_class_bstring">Bstring</link> &amp;gencode)</para>
+
+<para>Translates a nucleotide sequence to a protein sequence. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_seq__util_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>const map&lt; char, string &gt; <link linkend="_seq__util_8cpp_1ae95c2f2847a62381e6b5575341329795">res_code</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Sequence utility functions. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20001029 </para>
+
+<para>Modified: 20190613 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_seq__util_8cpp_1a6e4824763eb30074358cbf56e4027423"/>    <section>
+    <title>complement_sequence()</title>
+<indexterm><primary>complement_sequence</primary><secondary>seq_util.cpp</secondary></indexterm>
+<indexterm><primary>seq_util.cpp</primary><secondary>complement_sequence</secondary></indexterm>
+<para><computeroutput>int complement_sequence (<link linkend="_class_bstring">Bstring</link> &amp; nucseq)</computeroutput></para><para>
+
+<para>Complements a nucleotide sequence in place. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;nucseq</entry>
+                                <entry>
+<para>nucleotide sequence to be translated. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 547 of file seq_util.cpp.</para>
+    </section><anchor xml:id="_seq__util_8cpp_1a9b8d83f79574d07f03345795c5646b3b"/>    <section>
+    <title>get_complement()</title>
+<indexterm><primary>get_complement</primary><secondary>seq_util.cpp</secondary></indexterm>
+<indexterm><primary>seq_util.cpp</primary><secondary>get_complement</secondary></indexterm>
+<para><computeroutput>char get_complement (char nuc)</computeroutput></para><para>
+
+<para>Get the Watson-Crick complement of a nucleotide base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>nuc</entry>
+                                <entry>
+<para>nucleotide. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>char complementing nucleotide. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 567 of file seq_util.cpp.</para>
+    </section><anchor xml:id="_seq__util_8cpp_1a0fa4f20db9d3f89205ccdf014ca6c296"/>    <section>
+    <title>getcode1()</title>
+<indexterm><primary>getcode1</primary><secondary>seq_util.cpp</secondary></indexterm>
+<indexterm><primary>seq_util.cpp</primary><secondary>getcode1</secondary></indexterm>
+<para><computeroutput>char getcode1 (char * acode)</computeroutput></para><para>
+
+<para>Converts a three-letter amino acid designation to the one-letter equivalent. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*acode</entry>
+                                <entry>
+<para>the desired amino acid three-letter code </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>char the corresponding one-letter code <literallayout><computeroutput>Search through a list of 3-1 mappings for the desired three-letter code.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 528 of file seq_util.cpp.</para>
+    </section><anchor xml:id="_seq__util_8cpp_1ac6a6db39c8a191ff819caff2760782ff"/>    <section>
+    <title>getcode3()</title>
+<indexterm><primary>getcode3</primary><secondary>seq_util.cpp</secondary></indexterm>
+<indexterm><primary>seq_util.cpp</primary><secondary>getcode3</secondary></indexterm>
+<para><computeroutput>int getcode3 (char c, char * cod)</computeroutput></para><para>
+
+<para>Converts a one-letter amino acid designation to the three-letter equivalent. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>c</entry>
+                                <entry>
+<para>the desired amino acid code letter </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*cod</entry>
+                                <entry>
+<para>the corresponding three-letter code </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Search through a list of 1-3 mappings for the desired letter.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 507 of file seq_util.cpp.</para>
+    </section><anchor xml:id="_seq__util_8cpp_1a2da82fee1baa352a4facf527843b46be"/>    <section>
+    <title>seq_complement_all()</title>
+<indexterm><primary>seq_complement_all</primary><secondary>seq_util.cpp</secondary></indexterm>
+<indexterm><primary>seq_util.cpp</primary><secondary>seq_complement_all</secondary></indexterm>
+<para><computeroutput>int seq_complement_all (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Complements all nucleotide sequences. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Search through a list of 1-3 mappings for the desired letter.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 265 of file seq_util.cpp.</para>
+    </section><anchor xml:id="_seq__util_8cpp_1a0ab11bf252009cd080b568ee6ec4b2e4"/>    <section>
+    <title>seq_elements()</title>
+<indexterm><primary>seq_elements</primary><secondary>seq_util.cpp</secondary></indexterm>
+<indexterm><primary>seq_util.cpp</primary><secondary>seq_elements</secondary></indexterm>
+<para><computeroutput>vector&lt;double&gt; seq_elements (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bstring">Bstring</link> &amp; paramfile)</computeroutput></para><para>
+
+<para>Shows the elemental composition of all molecular sequences. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>set of sequences. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;paramfile</entry>
+                                <entry>
+<para>file of residue parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;double&gt; array of element numbers: HCNOS </para>
+</formalpara>
+</para>
+<para>
+Definition at line 176 of file seq_util.cpp.</para>
+    </section><anchor xml:id="_seq__util_8cpp_1abb216e011307a3a5910a636775281c34"/>    <section>
+    <title>seq_find_dna()</title>
+<indexterm><primary>seq_find_dna</primary><secondary>seq_util.cpp</secondary></indexterm>
+<indexterm><primary>seq_util.cpp</primary><secondary>seq_find_dna</secondary></indexterm>
+<para><computeroutput>long seq_find_dna (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bstring">Bstring</link> &amp; seq)</computeroutput></para><para>
+
+<para>Finds a nucleotide sequence. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;seq</entry>
+                                <entry>
+<para>sequence to find. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long position. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 314 of file seq_util.cpp.</para>
+    </section><anchor xml:id="_seq__util_8cpp_1a80fdf0bcc3bf2bbad13c328a87eb2fb7"/>    <section>
+    <title>seq_find_protein()</title>
+<indexterm><primary>seq_find_protein</primary><secondary>seq_util.cpp</secondary></indexterm>
+<indexterm><primary>seq_util.cpp</primary><secondary>seq_find_protein</secondary></indexterm>
+<para><computeroutput>long seq_find_protein (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bstring">Bstring</link> &amp; seq)</computeroutput></para><para>
+
+<para>Finds an amino acid sequence. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;seq</entry>
+                                <entry>
+<para>sequence to find. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long position. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 356 of file seq_util.cpp.</para>
+    </section><anchor xml:id="_seq__util_8cpp_1af198e989e08420c1c646b7d0a18be328"/>    <section>
+    <title>seq_find_protein_in_dna()</title>
+<indexterm><primary>seq_find_protein_in_dna</primary><secondary>seq_util.cpp</secondary></indexterm>
+<indexterm><primary>seq_util.cpp</primary><secondary>seq_find_protein_in_dna</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> seq_find_protein_in_dna (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bstring">Bstring</link> &amp; seq, int seqlenmin, int seqlenmax, int side1, int side2, double threshold, <link linkend="_class_bstring">Bstring</link> &amp; gcfile)</computeroutput></para><para>
+
+<para>Finds the coding region for an amino acid sequence. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;seq</entry>
+                                <entry>
+<para>sequence to find. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>seqlenmin</entry>
+                                <entry>
+<para>sequence length minimum. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>seqlenmax</entry>
+                                <entry>
+<para>sequence length maximum. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>side1</entry>
+                                <entry>
+<para>preceding sequence length to include. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>side2</entry>
+                                <entry>
+<para>succeeding sequence length to include. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>threshold</entry>
+                                <entry>
+<para>threshold for reporting possible hits. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;gcfile</entry>
+                                <entry>
+<para>file with genetic code. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_bstring">Bstring</link> coding sequence. <literallayout><computeroutput>All molecules in the group are searched in all 6 possible frames.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 394 of file seq_util.cpp.</para>
+    </section><anchor xml:id="_seq__util_8cpp_1a9c5d1648df23fc068c8c3632ec7a7214"/>    <section>
+    <title>seq_mass()</title>
+<indexterm><primary>seq_mass</primary><secondary>seq_util.cpp</secondary></indexterm>
+<indexterm><primary>seq_util.cpp</primary><secondary>seq_mass</secondary></indexterm>
+<para><computeroutput>int seq_mass (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Shows the masses of all molecular sequences. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>set of sequences. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 </para>
+</formalpara>
+</para>
+<para>
+Definition at line 131 of file seq_util.cpp.</para>
+    </section><anchor xml:id="_seq__util_8cpp_1a0131524f8dc6e2893374f91e46e25919"/>    <section>
+    <title>seq_show()</title>
+<indexterm><primary>seq_show</primary><secondary>seq_util.cpp</secondary></indexterm>
+<indexterm><primary>seq_util.cpp</primary><secondary>seq_show</secondary></indexterm>
+<para><computeroutput>int seq_show (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Shows all molecular sequences. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>set of sequences. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 </para>
+</formalpara>
+</para>
+<para>
+Definition at line 81 of file seq_util.cpp.</para>
+    </section><anchor xml:id="_seq__util_8cpp_1ac110ae1f671d69cd06380b9181ac744f"/>    <section>
+    <title>seq_translate_all()</title>
+<indexterm><primary>seq_translate_all</primary><secondary>seq_util.cpp</secondary></indexterm>
+<indexterm><primary>seq_util.cpp</primary><secondary>seq_translate_all</secondary></indexterm>
+<para><computeroutput>int seq_translate_all (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, int frame, <link linkend="_class_bstring">Bstring</link> &amp; gcfile)</computeroutput></para><para>
+
+<para>Translates all nucleotide sequences to protein sequences. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>frame</entry>
+                                <entry>
+<para>the frame for translation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;gcfile</entry>
+                                <entry>
+<para>file with genetic code. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Each nucleic acid sequence in the molecule group is translated to the
+protein sequence.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 289 of file seq_util.cpp.</para>
+    </section><anchor xml:id="_seq__util_8cpp_1a19b8cfade6fc13ee72379d8a7ab4ec4a"/>    <section>
+    <title>sequence_translate()</title>
+<indexterm><primary>sequence_translate</primary><secondary>seq_util.cpp</secondary></indexterm>
+<indexterm><primary>seq_util.cpp</primary><secondary>sequence_translate</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> sequence_translate (<link linkend="_class_bstring">Bstring</link> &amp; nucseq, long frame, <link linkend="_class_bstring">Bstring</link> &amp; gencode)</computeroutput></para><para>
+
+<para>Translates a nucleotide sequence to a protein sequence. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;nucseq</entry>
+                                <entry>
+<para>nucleotide sequence to be translated. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>frame</entry>
+                                <entry>
+<para>coding frame. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;gencode</entry>
+                                <entry>
+<para>genetic code: array of amino acids. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_bstring">Bstring</link> translated protein sequence. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 590 of file seq_util.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_seq__util_8cpp_1ae95c2f2847a62381e6b5575341329795"/>    <section>
+    <title>res_code</title>
+<indexterm><primary>res_code</primary><secondary>seq_util.cpp</secondary></indexterm>
+<indexterm><primary>seq_util.cpp</primary><secondary>res_code</secondary></indexterm>
+<para><computeroutput>const map&lt;char, string&gt; res_code</computeroutput></para><emphasis role="strong">Initial value:</emphasis><programlisting>=&#32;{
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;-&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;GAP&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;*&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;UNK&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;A&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;ALA&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;B&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;ASX&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;C&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;CYS&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;D&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;ASP&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;E&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;GLU&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;F&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;PHE&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;G&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;GLY&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;H&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;HIS&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;I&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;ILE&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;K&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;LYS&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;L&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;LEU&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;M&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;MET&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;N&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;ASN&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;P&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;PRO&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;Q&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;GLN&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;R&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;ARG&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;S&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;SER&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;T&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;THR&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;V&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;VAL&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;W&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;TRP&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;Y&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;TYR&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;Z&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;GLX&quot;</emphasis>},&#32;
+&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;{<emphasis role="charliteral">&apos;X&apos;</emphasis>,&#32;<emphasis role="stringliteral">&quot;UNK&quot;</emphasis>}
+}
+</programlisting><para>
+Definition at line 48 of file seq_util.cpp.</para>
+    </section><anchor xml:id="_seq__util_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>seq_util.cpp</secondary></indexterm>
+<indexterm><primary>seq_util.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

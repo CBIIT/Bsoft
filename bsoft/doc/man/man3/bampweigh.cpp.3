@@ -1,0 +1,114 @@
+.TH "/Users/bernard/b20/bsoft/src/bampweigh.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/bampweigh.cpp \- Program to filter images\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'rwFSC_XML\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBplot\fP * \fBread_rps\fP (\fBBstring\fP &filename)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Program to filter images\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20040714 
+.PP
+Modified: 20191125 
+.RE
+.PP
+
+.PP
+Definition in file \fBbampweigh\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 106 of file bampweigh\&.cpp\&.
+.SS "\fBBplot\fP* read_rps (\fBBstring\fP & filename)"
+
+.PP
+Definition at line 49 of file bampweigh\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+" ",
+"Usage: bampweigh [options] input\&.img output\&.img",
+"-----------------------------------------------",
+"Weighs the amplitudes of a map using a reference map's amplitudes\&.",
+" ",
+"Actions:",
+"-invert                  Invert density in the image\&.",
+"-rescale -0\&.1,5\&.2        Rescale data to average and standard deviation after filtering\&.",
+"-dose 2\&.5                Weigh the amplitudes by accumulated dose using the given dose/frame (e/Å2)\&.",
+"-normalize 2             Normalize amplitudes (1:amplitude; 2:power)\&.",
+"-root                    Weigh by the square root of the amplitudes\&.",
+"-square                  Weigh by the squares of the amplitudes\&.",
+" ",
+"Parameters:",
+"-verbose 7               Verbosity of output\&.",
+"-datatype u              Force writing of a new data type\&.",
+"-sampling 1\&.5,1\&.5,1\&.5    Sampling (A/pixel; default from input file; a single value can be given)\&.",
+"-resolution 15           Resolution limit (angstrom)",
+" ",
+"Input:",
+"-RPS file\&.txt            Radial power spectrum\&.",
+"-FSC file\&.xml            FSC curve\&.",
+"-Reference file\&.map      Reference map\&.",
+"-Mask mask\&.tif           Mask file to exclude regions in reciprocal space\&.",
+"-mask mask\&.mrc           Real space mask to apply before weighing\&.",
+" ",
+NULL
+}
+.fi
+.PP
+Definition at line 19 of file bampweigh\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

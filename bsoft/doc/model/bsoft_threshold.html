@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Segmentation</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h2>Thresholding</h2>
+<p>An important part of interpretation of an image is to identify and isolate regions of interest, a process called segmentation. The notion of regions-of-interest (ROI) makes it a subjective process, with decisive user interaction determining the outcome. The granularity of segmentation ranges from a voxel by voxel assignment to regions (highly subjective), to choosing one or a few parameters (mildly subjective), such as a threshold. Highly subjective segmentation is rarely justifiable, while a parameter such as a threshold can be justified from estimated volume-inclusion or the presence of certain indicator densities in a map. The emphasis here is therefore on finding ways to segment with having to choose the least number of parameters.</p>
+<p>Note: Most segmentation procedures assume that density is positive (i.e., density is white).</p>
+
+<p>The simplest segmentation on a gray-scale density map is thresholding. When generating an isosurface representation of a map, the implicit segmentation is between foreground (density), and background (everything else). The choice of threshold is important, because the isosurface reflects the amount and location of density, but only if it exceeds the threshold. The aim of the user further determines how the threshold level will be justified.</p>
+<h3>Case 1: Included volume</h3>
+<p>The user wants to visualize the map such that the volume within the isosurface corresponds to the volume of all the constituents of the particle. The appropriate threshold can then be calculated from the estimated molecular weight:</p>
+<div id="command"><p>bsegment -v 7 -mass 23.5m map.pif</p></div>
+<p>The inverse can also be calculated (e.g., to calculate how much difference a change in threshold will make to the included volume):</p>
+<div id="command"><p>bsegment -v 7 -threshold 1.45 map.pif</p></div>
+<p>Similar information can be extracted from the histogram of the map:</p>
+<div id="command"><p>bhisto -v 7 -bins 200 map.pif</p></div>
+<h3>Case 2: Differentiating parts of the structure</h3>
+<p>More often than not, parts of a map has lower occupancy than others due to conformational flexibility or compositional variability. A threshold can be chosen visually to include or exclude these lower-occupancy regions.</p>
+<p>In proteins, the alpha helices have the highest density. In maps of sufficient resolution, the helices can be identified and visualized by choosing a high threshold.</p>
+<h3>Generating a binary mask</h3>
+<p>A threshold can be used to simply generate a mask that distinguished foreground from background:</p>
+<div id="command"><p>bmask -v 7 -threshold 1.3 map.pif mask.tif</p></div>
+<p>&nbsp;</p>
+<h2>Multi-region segmentation</h2>
+<p>In a gray scale map, the density variations provide the only information for defining the location and extent of regions. The regions are typically associated with local peaks, and their extend limited to a threshold defining the distinction between foreground and background.</p>
+</div>
+<div id="footer">
+  Bernard Heymann  20141223
+</div>
+</body>
+</html>

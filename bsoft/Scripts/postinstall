@@ -1,0 +1,42 @@
+#!/usr/bin/env sh
+
+# Script to set Bsoft paths and links
+# Bernard Heymann
+# 20170511
+
+BSOFT="/usr/local/bsoft"
+#BSOFT=$2
+
+cd $BSOFT
+
+cd bin
+
+rm -f bshow*
+rm -f brun*
+
+ln -s ../tcltk/bshow .
+ln -s ../tcltk/bshowX .
+ln -s ../tcltk/brun .
+ln -s ../tcltk/brunX .
+
+./benv
+
+if [[ -d /etc/profile.d ]]; then
+        cp ${BSOFT}/bsoft.bashrc /etc/profile.d/bsoft.sh
+elif [[ -e /etc/profile ]]; then
+        if [[ `grep bsoft /etc/profile` ]]; then
+                sed -i.orig '/.*bsoft.*/d' /etc/profile
+        fi
+        echo source ${BSOFT}/bsoft.bashrc >> /etc/profile
+fi
+
+
+if [[ -e /etc/csh.cshrc ]]; then
+        if [[ `grep bsoft /etc/csh.cshrc` ]]; then
+                sed -i.orig '/.*bsoft.*/d' /etc/csh.cshrc
+        fi
+        echo source ${BSOFT}/bsoft.cshrc >> /etc/csh.cshrc
+fi
+
+exit 0
+

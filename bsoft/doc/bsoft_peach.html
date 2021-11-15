@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- Author: Bernard Heymann -->
+<!-- Created: 20100925 -->
+<!-- Modified: 20110812 -->
+<title>Bsoft: Distributed Processing</title>
+<link href="bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+      <h1><span style="color: rgb(0, 0, 102);">Peach</span></h1>
+      <h2><span style="color: rgb(0, 0, 102);">Managed distributed processing</span></h2>
+      <br />
+Peach was developed to allow the user to launch multiple jobs on a
+distributed cluster composed of different platforms and capabilities.
+Peach is described and available from the web site below and will only
+briefly be covered here:<br />
+      <br />
+      <a href="https://lsbr.niams.nih.gov/Peach">https://lsbr.niams.nih.gov/Peach/</a><br />
+      <br />
+The setup explained above can be used, where Peach is installed on the
+common disk as:<br />
+/common_disk/Peach<br />
+      <br />
+The only further environmental setup is to add the &quot;PEACH&quot; variable to
+the resource file and include it in the &quot;PATH&quot; variable:<br />
+      <br />
+setenv PEACH ${PROGS}/Peach<br />
+setenv PATH ${PEACH}:$PATH<br />
+      <br />
+Peach controls its own environmental variables, and these are specified
+in the .Peachpath file in the Peach directory. Here is an example of
+what such a file need to look like:<br />
+      <br />
+# .Peachpath<br />
+# type in all required enviromental variables needed for running
+programs on the<br />
+&nbsp;respective systems<br />
+      <br />
+Darwin:<br />
+$ENV{PATH} =
+&quot;./:/bin:/usr/bin:/common_disk/Darwin/bsoft32/bin:/common_disk/Darwin/bsoft/bin&quot;;<br />
+$ENV{BPARAM} = &quot;/common_disk/Darwin/bsoft/parameters/&quot;;<br />
+$ENV{DYLD_LIBRARY_PATH} =
+&quot;/common_disk/Darwin/bsoft32/lib:/common_disk/Darwin/bsoft/lib:&quot;;<br />
+      <br />
+Linux i686:<br />
+$ENV{PATH} = &quot;./:/bin:/usr/bin:/common_disk/Linux/bsoft32/bin&quot;;<br />
+$ENV{BPARAM} = &quot;/common_disk/Linux/bsoft32/parameters/&quot;;<br />
+$ENV{LD_LIBRARY_PATH} = &quot;/common_disk/Linux/bsoft32/lib&quot;;<br />
+      <br />
+Linux x86_64:<br />
+$ENV{PATH} = &quot;./:/bin:/usr/bin:/common_disk/Linux/bsoft/bin&quot;;<br />
+$ENV{BPARAM} = &quot;/common_disk/Linux/bsoft/parameters/&quot;;<br />
+$ENV{LD_LIBRARY_PATH} = &quot;/common_disk/Linux/bsoft/lib&quot;;<br />
+      <br />
+IRIX64:<br />
+$ENV{PATH} = &quot;./:/bin:/usr/bin:/common_disk/IRIX64/bsoft/bin:&quot;;<br />
+$ENV{BPARAM} = &quot;/common_disk/IRIX64/bsoft/parameters/&quot;;<br />
+$ENV{LD_LIBRARY_PATH} = &quot;/common_disk/IRIX64/bsoft/lib&quot;;<br />
+$ENV{LD_LIBRARYN32_PATH} = &quot;/common_disk/IRIX64/bsoft32/lib&quot;;<br />
+$ENV{LD_LIBRARY64_PATH} = &quot;/common_disk/IRIX64/bsoft/lib&quot;;<br />
+      <br />
+OSF1:<br />
+$ENV{PATH} = &quot;./:/bin:/usr/bin:/common_disk/OSF1/bsoft/bin&quot;;<br />
+$ENV{BPARAM} = &quot;/common_disk/OSF1/bsoft/parameters/&quot;;<br />
+$ENV{LD_LIBRARY_PATH} = &quot;/common_disk/OSF1/bsoft/lib&quot;;<br />
+      <br />
+</div>
+<div id="footer">
+  Bernard Heymann  20110812
+</div>
+</body>
+</html>

@@ -1,0 +1,2190 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rwstar_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/rwstar.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/rwstar.h</primary></indexterm>
+<para>
+
+<para>A header file for STAR format files. </para>
+ 
+</para>
+<programlisting>#include &quot;Bstring.h&quot;
+</programlisting><simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_struct_bstar__item">Bstar_item</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_struct_bstar__block">Bstar_block</link></para>
+
+<para>Structure for a data block with multiple items in a STAR database. </para>
+</listitem>
+            <listitem><para>class <link linkend="_struct_bstar">Bstar</link></para>
+
+<para>Overall STAR class to hold all data blocks and options for I/O.. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_rwstar_8h_1a10e8c7b8458375c3dbfbb4010a2aba8c">LINELENGTH</link>   80</para>
+</listitem>
+            <listitem><para>#define <link linkend="_rwstar_8h_1ab149357b9241e00615ab6b7e812e8cfd">_STAR_</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Enumerations    </title>
+        <itemizedlist>
+            <listitem><para>enum <link linkend="_rwstar_8h_1a8435d7365a22ddeb114cbb1a37e7f524">StarType</link> { <link linkend="_rwstar_8h_1a8435d7365a22ddeb114cbb1a37e7f524a323cb74d28ca805b406d0a44b4379c0b">CommentItem</link> = 0
+, <link linkend="_rwstar_8h_1a8435d7365a22ddeb114cbb1a37e7f524ae783438486301d16448686cd89218326">StringItem</link> = 1
+, <link linkend="_rwstar_8h_1a8435d7365a22ddeb114cbb1a37e7f524ad78ed29e734ea568da7295b8b056a6e4">NumberItem</link> = 2
+ }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_struct_bstar">Bstar</link> * <link linkend="_rwstar_8h_1a3da36ec73a14839d6609d6ecca9ed6e9">init_star</link> ()</para>
+
+<para>Creates a STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1aacf2ee8caef134e7342e9fbe7dcb716b">kill_star</link> (<link linkend="_struct_bstar">Bstar</link> *star)</para>
+
+<para>Destroys a STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a5f586aa260ee1bf4ddb55dd2a5bf9aa4">kill_block</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block)</para>
+
+<para>Destroys a STAR data block. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1abbfb661658d5495bc9f5b5c3d639ab7e">kill_item</link> (<link linkend="_struct_bstar__item">Bstar_item</link> *item)</para>
+
+<para>Destroys an item in a data block in a STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a67c056ba8792f5af8d2a8be042cfd019">read_star</link> (const char *filename, <link linkend="_struct_bstar">Bstar</link> *star)</para>
+
+<para>Reads paramaters and data into a STAR data base from a list of files. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a4a4086997d4889217f4e9f58b1b4f9a6">read_star</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_struct_bstar">Bstar</link> *star)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1abc364e4c411c14f2ba3139c04342045d">read_star</link> (<link linkend="_class_bstring">Bstring</link> *<link linkend="_file__util_8cpp_1a3c3411ced4b9632566ecc66ffa64a72a">file_list</link>, <link linkend="_struct_bstar">Bstar</link> *star)</para>
+</listitem>
+            <listitem><para><link linkend="_struct_bstar__block">Bstar_block</link> * <link linkend="_rwstar_8h_1a1b5835bcc1ace7c5109457437efe5a61">read_block</link> (ifstream *fstar, char *aptr, <link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+
+<para>Reads paramaters and data into a STAR data block from an open file. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bstar__item">Bstar_item</link> * <link linkend="_rwstar_8h_1add34c2c7ea9d935bc10c2dcee65e4767">read_single_item</link> (ifstream *fstar, char *aline)</para>
+
+<para>Reads a single-valued item or comment line into a STAR data block from an open file. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bstar__item">Bstar_item</link> * <link linkend="_rwstar_8h_1a6b3e6dc9008d9a54b40bb7662c437f77">read_loop_items</link> (ifstream *fstar)</para>
+
+<para>Reads a loop structure with multiple items into a STAR data block from an open file. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a786203b1039216fc3d828595196046c2">write_star</link> (const char *filename, <link linkend="_struct_bstar">Bstar</link> *star)</para>
+
+<para>Writes a STAR data base to one or more STAR format files. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1ae48a0142bf7ad7cb7b16685d423368eb">write_star</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_struct_bstar">Bstar</link> *star)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1ace3c337421bcd02b290a867b5b615347">write_block</link> (ofstream *fstar, <link linkend="_struct_bstar__block">Bstar_block</link> *block, int linelength)</para>
+
+<para>Writes paramaters and data from a STAR data block into an open file. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a085b4d6c6fa9814adc425025c422f5ab">star_update_comment</link> (<link linkend="_struct_bstar">Bstar</link> *star, int n, char **strings)</para>
+
+<para>Puts a set of strings and time in the main comment of the STAR data base. </para>
+</listitem>
+            <listitem><para>long <link linkend="_rwstar_8h_1a274ced1b392ca1197646bc4a75684a39">star_list_comments</link> (<link linkend="_struct_bstar">Bstar</link> *star, long len)</para>
+
+<para>Lists the command lines in the STAR header. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a39f5e8f3a17cbcf5225e5cfced93da61">star_set_string_lengths</link> (<link linkend="_struct_bstar">Bstar</link> *star)</para>
+
+<para>Sets the maximum string lengths for each item in each block. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a1e6876faa345e87e7beab4605f88cd19">item_change_tag</link> (<link linkend="_struct_bstar">Bstar</link> *star, const char *tag, const char *newtag)</para>
+
+<para>Replaces one tag with another in the STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1aa93156278c5777a075e1768c12e94a05">show_tags</link> (<link linkend="_struct_bstar">Bstar</link> *star)</para>
+
+<para>Prints the list of tags in the STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a02c34483bebd78754f6bbe4ef077edb2">item_index</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, const char *tag)</para>
+
+<para>Gets the STAR item associated with a tag in a STAR data block. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bstar__block">Bstar_block</link> * <link linkend="_rwstar_8h_1a59384967e4d313b84a52e21214d5ddb2">block_find_with_tag</link> (<link linkend="_struct_bstar">Bstar</link> *star, const char *tag)</para>
+
+<para>Gets the first block associated with a tag in a STAR data base. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bstar__item">Bstar_item</link> * <link linkend="_rwstar_8h_1a47a456f8569c8d2e37864aee2e5e4778">item_find</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, <link linkend="_class_bstring">Bstring</link> tag)</para>
+
+<para>Gets the STAR item associated with a tag in a STAR data block. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bstar__item">Bstar_item</link> * <link linkend="_rwstar_8h_1a6a453298ce0c0bff7a7a85d7005acf4c">item_find_or_make</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, const char *tag)</para>
+
+<para>Gets the STAR item associated with a tag in a STAR data block. </para>
+</listitem>
+            <listitem><para>long <link linkend="_rwstar_8h_1a9ce06d146bb8fbf32f5ff8918e58bf35">item_get_number</link> (<link linkend="_struct_bstar">Bstar</link> *star, const char *tag)</para>
+
+<para>Gets the number of values associated with a tag in a STAR data base. </para>
+</listitem>
+            <listitem><para>long <link linkend="_rwstar_8h_1ad4cf0d6be07daf858464f8006342cf71">item_get_number_for_block</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, const char *tag)</para>
+
+<para>Gets the number of values associated with a tag in a STAR data block. </para>
+</listitem>
+            <listitem><para>char * <link linkend="_rwstar_8h_1a4fe7b382f6dd75c6fa3f960f7503bc27">item_get_string</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, const char *tag)</para>
+
+<para>Gets a string value associated with a tag in a STAR data block. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a59cb76c6f1323f4dc5f1ec3a8415bf46">item_copy_string</link> (char *string, <link linkend="_struct_bstar__block">Bstar_block</link> *block, const char *tag)</para>
+
+<para>Copies a string value associated with a tag in a STAR data block. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1accc18ea99a4f17a3b256225c2064dc16">item_get_integer</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, const char *tag)</para>
+
+<para>Gets an integer value associated with a tag in a STAR data block. </para>
+</listitem>
+            <listitem><para>float <link linkend="_rwstar_8h_1a1a8287e33adbde115f08b2980d18bd1b">item_get_float</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, const char *tag)</para>
+
+<para>Gets a floating point value associated with a tag in a STAR data block. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1ad74b4a665b90e5a70150fa97babcb2a1">item_put_string</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, const char *tag, char *string)</para>
+
+<para>Writes a string into a data item associated with a specific data block and tag in a STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a28d9978bc4fb23b5f1f41ae4d1f946f4">item_put_string</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, const char *tag, <link linkend="_class_bstring">Bstring</link> &amp;string)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a98421e66e70eab11e06f793dda154d63">item_put_string_list</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, const char *tag, <link linkend="_class_bstring">Bstring</link> *list)</para>
+
+<para>Writes a list of strings into a data item associated with a specific data block and tag in a STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a49fa527a6e31f40b1a96f5902a1ae372">item_put_integer</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, const char *tag, int value, const char *format)</para>
+
+<para>Writes a integer into a data item associated with a specific data block and tag in a STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a877a1fb95096db3332cc3ab36d48eaad">item_put_float</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, const char *tag, float value, const char *format)</para>
+
+<para>Writes a floating point value into a data item associated with a specific data block and tag in a STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a25ff507201fa2d25ac996577cd6a620c">item_put_list</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, const char *tag, char *list, size_t offset, const char *format)</para>
+
+<para>Writes a list of string or numeric values into a data item associated with a specific data block and tag in a STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1acc484255b1ec0f7fb7aeafd30bba059b">item_put_float_array</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, const char *tag, int number, float *value, const char *format)</para>
+
+<para>Writes a list of floating point numbers into a data item associated with a specific data block and tag in a STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1adca46e4f15ac19f89b7c46f8c889d0dd">item_put_angle_list</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, const char *tag, char *list, size_t offset, const char *format)</para>
+
+<para>Writes a list of angular values in degrees into a data item associated with a specific data block and tag in a STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1ab5b89509d552c0f5a338d1349e56a93b">item_list</link> (<link linkend="_struct_bstar">Bstar</link> *star, <link linkend="_class_bstring">Bstring</link> &amp;tag)</para>
+
+<para>Lists all items associated with a given tag from the STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a3ef724654f507491bb6a5a2f4ec28e4c">item_delete_all</link> (<link linkend="_struct_bstar">Bstar</link> *star, const char *tag)</para>
+
+<para>Deletes all items associated with a given tag from the STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1ab8e094b7218edd05f596452a1599954c">item_delete_from_block</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, const char *tag)</para>
+
+<para>Deletes an item associated with a given tag from a block in the STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a27951e4f7d438e6a86b24e5cc636a26a">block_delete</link> (<link linkend="_struct_bstar">Bstar</link> *star, <link linkend="_class_bstring">Bstring</link> &amp;tag)</para>
+
+<para>Deletes all blocks with a given tag from the STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a8d19cc3fa7dc9d22c1eb0233ca75914d">item_integer_scale_shift</link> (<link linkend="_struct_bstar">Bstar</link> *star, <link linkend="_class_bstring">Bstring</link> &amp;tag, int iscale, int ishift)</para>
+
+<para>Scales and shifts all items associated with a given tag from the STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a8e374f1a8c62c6548e2cc5af6087745d">item_float_scale_shift</link> (<link linkend="_struct_bstar">Bstar</link> *star, <link linkend="_class_bstring">Bstring</link> &amp;tag, float scale, float shift)</para>
+
+<para>Scales and shifts all items associated with a given tag from the STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a0e4f939e092d258a21644385656ce313">loop_set_identifier</link> (<link linkend="_struct_bstar__block">Bstar_block</link> *block, int loop, int n,...)</para>
+
+<para>Assigns a loop identification number to items. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwstar_8h_1a7c74ff1f741335bc94a14c93b8e6048d">item_get_format</link> (<link linkend="_struct_bstar__item">Bstar_item</link> *item, char *format)</para>
+
+<para>Gets the format from the item. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>A header file for STAR format files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19990605 </para>
+
+<para>Modified: 20190819 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_rwstar_8h_1ab149357b9241e00615ab6b7e812e8cfd"/>    <section>
+    <title>_STAR_</title>
+<indexterm><primary>_STAR_</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>_STAR_</secondary></indexterm>
+<para><computeroutput>#define _STAR_</computeroutput></para><para>
+Definition at line 84 of file rwstar.h.</para>
+    </section><anchor xml:id="_rwstar_8h_1a10e8c7b8458375c3dbfbb4010a2aba8c"/>    <section>
+    <title>LINELENGTH</title>
+<indexterm><primary>LINELENGTH</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>LINELENGTH</secondary></indexterm>
+<para><computeroutput>#define LINELENGTH   80</computeroutput></para><para>
+Definition at line 12 of file rwstar.h.</para>
+</section>
+</section>
+<section>
+<title>Enumeration Type Documentation</title>
+<anchor xml:id="_rwstar_8h_1a8435d7365a22ddeb114cbb1a37e7f524"/>    <section>
+    <title>StarType</title>
+<indexterm><primary>StarType</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>StarType</secondary></indexterm>
+<para><computeroutput>enum <link linkend="_rwstar_8h_1a8435d7365a22ddeb114cbb1a37e7f524">StarType</link></computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>CommentItem</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>CommentItem</secondary></indexterm>
+<anchor xml:id="_rwstar_8h_1a8435d7365a22ddeb114cbb1a37e7f524a323cb74d28ca805b406d0a44b4379c0b"/>CommentItem</entry><entry></entry></row><row><entry><indexterm><primary>StringItem</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>StringItem</secondary></indexterm>
+<anchor xml:id="_rwstar_8h_1a8435d7365a22ddeb114cbb1a37e7f524ae783438486301d16448686cd89218326"/>StringItem</entry><entry></entry></row><row><entry><indexterm><primary>NumberItem</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>NumberItem</secondary></indexterm>
+<anchor xml:id="_rwstar_8h_1a8435d7365a22ddeb114cbb1a37e7f524ad78ed29e734ea568da7295b8b056a6e4"/>NumberItem</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 23 of file rwstar.h.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rwstar_8h_1a27951e4f7d438e6a86b24e5cc636a26a"/>    <section>
+    <title>block_delete()</title>
+<indexterm><primary>block_delete</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>block_delete</secondary></indexterm>
+<para><computeroutput>int block_delete (<link linkend="_struct_bstar">Bstar</link> * star, <link linkend="_class_bstring">Bstring</link> &amp; tag)</computeroutput></para><para>
+
+<para>Deletes all blocks with a given tag from the STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*star</entry>
+                                <entry>
+<para>the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;tag</entry>
+                                <entry>
+<para>tag for blocks to be deleted. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of blocks deleted. <literallayout><computeroutput>The blocks containing a given tag are deleted and the
+block pointers are rearranged to fill in the gap.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1675 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a59384967e4d313b84a52e21214d5ddb2"/>    <section>
+    <title>block_find_with_tag()</title>
+<indexterm><primary>block_find_with_tag</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>block_find_with_tag</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bstar__block">Bstar_block</link>* block_find_with_tag (<link linkend="_struct_bstar">Bstar</link> * star, const char * tag)</computeroutput></para><para>
+
+<para>Gets the first block associated with a tag in a STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*star</entry>
+                                <entry>
+<para>the STAR data base. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>a STAR tag string. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bstar_block* the block, NULL if not found. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1051 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a3da36ec73a14839d6609d6ecca9ed6e9"/>    <section>
+    <title>init_star()</title>
+<indexterm><primary>init_star</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>init_star</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bstar">Bstar</link>* init_star ( )</computeroutput></para><para>
+
+<para>Creates a STAR data base. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para>Bstar* the new STAR data base. <literallayout><computeroutput>A STAR structure is allocated.
+This function should be called before reading a STAR file, or before
+composing a STAR database for writing.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 111 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a1e6876faa345e87e7beab4605f88cd19"/>    <section>
+    <title>item_change_tag()</title>
+<indexterm><primary>item_change_tag</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_change_tag</secondary></indexterm>
+<para><computeroutput>int item_change_tag (<link linkend="_struct_bstar">Bstar</link> * star, const char * tag, const char * newtag)</computeroutput></para><para>
+
+<para>Replaces one tag with another in the STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*star</entry>
+                                <entry>
+<para>the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>old tag. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*newtag</entry>
+                                <entry>
+<para>new tag. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The item with a given tag has the tag replaced with a new one.
+If an item with the new tag exists, it is deleted first.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 967 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a59cb76c6f1323f4dc5f1ec3a8415bf46"/>    <section>
+    <title>item_copy_string()</title>
+<indexterm><primary>item_copy_string</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_copy_string</secondary></indexterm>
+<para><computeroutput>int item_copy_string (char * string, <link linkend="_struct_bstar__block">Bstar_block</link> * block, const char * tag)</computeroutput></para><para>
+
+<para>Copies a string value associated with a tag in a STAR data block. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*string</entry>
+                                <entry>
+<para>destination string - must exist on stack or allocated. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>block in the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>a STAR tag string. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The STAR data blocks is traversed to obtain the string
+value associated with a STAR tag defined in a header file.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1233 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a3ef724654f507491bb6a5a2f4ec28e4c"/>    <section>
+    <title>item_delete_all()</title>
+<indexterm><primary>item_delete_all</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_delete_all</secondary></indexterm>
+<para><computeroutput>int item_delete_all (<link linkend="_struct_bstar">Bstar</link> * star, const char * tag)</computeroutput></para><para>
+
+<para>Deletes all items associated with a given tag from the STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*star</entry>
+                                <entry>
+<para>the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>tag for items to be deleted. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The item with a given tag is deleted in all blocks it is found
+and the item pointers are rearranged to fill in the gap.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1616 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1ab8e094b7218edd05f596452a1599954c"/>    <section>
+    <title>item_delete_from_block()</title>
+<indexterm><primary>item_delete_from_block</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_delete_from_block</secondary></indexterm>
+<para><computeroutput>int item_delete_from_block (<link linkend="_struct_bstar__block">Bstar_block</link> * block, const char * tag)</computeroutput></para><para>
+
+<para>Deletes an item associated with a given tag from a block in the STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>block in the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>tag for items to be deleted. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The item with a given tag is deleted in the specified block it is found
+and the item pointers are rearranged to fill in the gap.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1639 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a47a456f8569c8d2e37864aee2e5e4778"/>    <section>
+    <title>item_find()</title>
+<indexterm><primary>item_find</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_find</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bstar__item">Bstar_item</link>* item_find (<link linkend="_struct_bstar__block">Bstar_block</link> * block, <link linkend="_class_bstring">Bstring</link> tag)</computeroutput></para><para>
+
+<para>Gets the STAR item associated with a tag in a STAR data block. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>a STAR data block. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>a STAR tag string. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bstar_item* the STAR item, NULL if the tag doesn&apos;t exist. <literallayout><computeroutput>The items in the STAR data block are traversed to find the item
+associated with a STAR tag defined in a header file.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1096 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a6a453298ce0c0bff7a7a85d7005acf4c"/>    <section>
+    <title>item_find_or_make()</title>
+<indexterm><primary>item_find_or_make</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_find_or_make</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bstar__item">Bstar_item</link>* item_find_or_make (<link linkend="_struct_bstar__block">Bstar_block</link> * block, const char * tag)</computeroutput></para><para>
+
+<para>Gets the STAR item associated with a tag in a STAR data block. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>a STAR data block. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>a STAR tag string. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bstar_item* the STAR item, NULL if the tag doesn&apos;t exist. <literallayout><computeroutput>The items in the STAR data block are traversed to find the item
+associated with a STAR tag defined in a header file.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1118 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a8e374f1a8c62c6548e2cc5af6087745d"/>    <section>
+    <title>item_float_scale_shift()</title>
+<indexterm><primary>item_float_scale_shift</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_float_scale_shift</secondary></indexterm>
+<para><computeroutput>int item_float_scale_shift (<link linkend="_struct_bstar">Bstar</link> * star, <link linkend="_class_bstring">Bstring</link> &amp; tag, float scale, float shift)</computeroutput></para><para>
+
+<para>Scales and shifts all items associated with a given tag from the STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*star</entry>
+                                <entry>
+<para>the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;tag</entry>
+                                <entry>
+<para>tag for items to be modified. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>multiplier. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift</entry>
+                                <entry>
+<para>value added. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int total number of values changed. <literallayout><computeroutput>The item must be numeric and is modified as:
+    new_value = old_value*scale + shift.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1764 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a1a8287e33adbde115f08b2980d18bd1b"/>    <section>
+    <title>item_get_float()</title>
+<indexterm><primary>item_get_float</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_get_float</secondary></indexterm>
+<para><computeroutput>float item_get_float (<link linkend="_struct_bstar__block">Bstar_block</link> * block, const char * tag)</computeroutput></para><para>
+
+<para>Gets a floating point value associated with a tag in a STAR data block. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>block in the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>a STAR tag string. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>float the floating point value, 0 if the tag doesn&apos;t exist. <literallayout><computeroutput>The STAR data block is traversed to obtain the floating point
+value associated with a STAR tag defined in a header file.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1286 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a7c74ff1f741335bc94a14c93b8e6048d"/>    <section>
+    <title>item_get_format()</title>
+<indexterm><primary>item_get_format</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_get_format</secondary></indexterm>
+<para><computeroutput>int item_get_format (<link linkend="_struct_bstar__item">Bstar_item</link> * item, char * format)</computeroutput></para><para>
+
+<para>Gets the format from the item. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*item</entry>
+                                <entry>
+<para>STAR item. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*format</entry>
+                                <entry>
+<para>pointer to pre-allocated format string (modified). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int data type: 0=string, 1=integer, 2=float. <literallayout><computeroutput>Returns the format in the given format string.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1850 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1accc18ea99a4f17a3b256225c2064dc16"/>    <section>
+    <title>item_get_integer()</title>
+<indexterm><primary>item_get_integer</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_get_integer</secondary></indexterm>
+<para><computeroutput>int item_get_integer (<link linkend="_struct_bstar__block">Bstar_block</link> * block, const char * tag)</computeroutput></para><para>
+
+<para>Gets an integer value associated with a tag in a STAR data block. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>block in the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>a STAR tag string. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int the integer value, 0 if the tag doesn&apos;t exist. <literallayout><computeroutput>The STAR data block is traversed to obtain the first integer
+value associated with a STAR tag defined in a header file.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1258 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a9ce06d146bb8fbf32f5ff8918e58bf35"/>    <section>
+    <title>item_get_number()</title>
+<indexterm><primary>item_get_number</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_get_number</secondary></indexterm>
+<para><computeroutput>long item_get_number (<link linkend="_struct_bstar">Bstar</link> * star, const char * tag)</computeroutput></para><para>
+
+<para>Gets the number of values associated with a tag in a STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*star</entry>
+                                <entry>
+<para>the STAR data base. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>a STAR tag string. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long the number of values. <literallayout><computeroutput>All STAR data blocks are traversed to count the number of
+values associated with a STAR tag defined in a header file.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1147 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1ad4cf0d6be07daf858464f8006342cf71"/>    <section>
+    <title>item_get_number_for_block()</title>
+<indexterm><primary>item_get_number_for_block</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_get_number_for_block</secondary></indexterm>
+<para><computeroutput>long item_get_number_for_block (<link linkend="_struct_bstar__block">Bstar_block</link> * block, const char * tag)</computeroutput></para><para>
+
+<para>Gets the number of values associated with a tag in a STAR data block. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>block in the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>a STAR tag string. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long the number of values. <literallayout><computeroutput>The STAR data block is traversed to count the number of
+values associated with a STAR tag defined in a header file.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1176 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a4fe7b382f6dd75c6fa3f960f7503bc27"/>    <section>
+    <title>item_get_string()</title>
+<indexterm><primary>item_get_string</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_get_string</secondary></indexterm>
+<para><computeroutput>char* item_get_string (<link linkend="_struct_bstar__block">Bstar_block</link> * block, const char * tag)</computeroutput></para><para>
+
+<para>Gets a string value associated with a tag in a STAR data block. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>block in the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>a STAR tag string. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>char* the string value, NULL if the tag doesn&apos;t exist. <literallayout><computeroutput>The STAR data block is traversed to obtain the string
+value associated with a STAR tag defined in a header file.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1202 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a02c34483bebd78754f6bbe4ef077edb2"/>    <section>
+    <title>item_index()</title>
+<indexterm><primary>item_index</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_index</secondary></indexterm>
+<para><computeroutput>int item_index (<link linkend="_struct_bstar__block">Bstar_block</link> * block, const char * tag)</computeroutput></para><para>
+
+<para>Gets the STAR item associated with a tag in a STAR data block. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>a STAR data block. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>a STAR tag string. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int the STAR item index, -1 if the tag doesn&apos;t exist. <literallayout><computeroutput>The items in the STAR data block are traversed to find the item
+associated with a STAR tag defined in a header file.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1030 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a8d19cc3fa7dc9d22c1eb0233ca75914d"/>    <section>
+    <title>item_integer_scale_shift()</title>
+<indexterm><primary>item_integer_scale_shift</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_integer_scale_shift</secondary></indexterm>
+<para><computeroutput>int item_integer_scale_shift (<link linkend="_struct_bstar">Bstar</link> * star, <link linkend="_class_bstring">Bstring</link> &amp; tag, int iscale, int ishift)</computeroutput></para><para>
+
+<para>Scales and shifts all items associated with a given tag from the STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*star</entry>
+                                <entry>
+<para>the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;tag</entry>
+                                <entry>
+<para>tag for items to be modified. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>iscale</entry>
+                                <entry>
+<para>multiplier. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ishift</entry>
+                                <entry>
+<para>value added. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int total number of values changed. <literallayout><computeroutput>The item must be integer and is modified as:
+    new_value = old_value*scale + shift.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1722 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1ab5b89509d552c0f5a338d1349e56a93b"/>    <section>
+    <title>item_list()</title>
+<indexterm><primary>item_list</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_list</secondary></indexterm>
+<para><computeroutput>int item_list (<link linkend="_struct_bstar">Bstar</link> * star, <link linkend="_class_bstring">Bstring</link> &amp; tag)</computeroutput></para><para>
+
+<para>Lists all items associated with a given tag from the STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*star</entry>
+                                <entry>
+<para>the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;tag</entry>
+                                <entry>
+<para>tag for items to be listed. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The item with a given tag is listed to standard output as an end-of-line
+delimited array.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1584 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1adca46e4f15ac19f89b7c46f8c889d0dd"/>    <section>
+    <title>item_put_angle_list()</title>
+<indexterm><primary>item_put_angle_list</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_put_angle_list</secondary></indexterm>
+<para><computeroutput>int item_put_angle_list (<link linkend="_struct_bstar__block">Bstar_block</link> * block, const char * tag, char * list, size_t offset, const char * format)</computeroutput></para><para>
+
+<para>Writes a list of angular values in degrees into a data item associated with a specific data block and tag in a STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>block in the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>a STAR tag string. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*list</entry>
+                                <entry>
+<para>linked list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>offset</entry>
+                                <entry>
+<para>offset of structure element. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*format</entry>
+                                <entry>
+<para>string format. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code. <literallayout><computeroutput>Each angle in radians is first converted to degrees before writing it
+into a string.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1541 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a877a1fb95096db3332cc3ab36d48eaad"/>    <section>
+    <title>item_put_float()</title>
+<indexterm><primary>item_put_float</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_put_float</secondary></indexterm>
+<para><computeroutput>int item_put_float (<link linkend="_struct_bstar__block">Bstar_block</link> * block, const char * tag, float value, const char * format)</computeroutput></para><para>
+
+<para>Writes a floating point value into a data item associated with a specific data block and tag in a STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>block in the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>a STAR tag string. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>value</entry>
+                                <entry>
+<para>integer value. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*format</entry>
+                                <entry>
+<para>string format. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1414 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1acc484255b1ec0f7fb7aeafd30bba059b"/>    <section>
+    <title>item_put_float_array()</title>
+<indexterm><primary>item_put_float_array</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_put_float_array</secondary></indexterm>
+<para><computeroutput>int item_put_float_array (<link linkend="_struct_bstar__block">Bstar_block</link> * block, const char * tag, int number, float * value, const char * format)</computeroutput></para><para>
+
+<para>Writes a list of floating point numbers into a data item associated with a specific data block and tag in a STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>block in the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>a STAR tag string. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>the number of values. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*value</entry>
+                                <entry>
+<para>a list of floating point values. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*format</entry>
+                                <entry>
+<para>string format. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>NaN values are taken as missing numbers and indicated by a &apos;.&apos; in the
+STAR file.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1499 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a49fa527a6e31f40b1a96f5902a1ae372"/>    <section>
+    <title>item_put_integer()</title>
+<indexterm><primary>item_put_integer</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_put_integer</secondary></indexterm>
+<para><computeroutput>int item_put_integer (<link linkend="_struct_bstar__block">Bstar_block</link> * block, const char * tag, int value, const char * format)</computeroutput></para><para>
+
+<para>Writes a integer into a data item associated with a specific data block and tag in a STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>block in the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>a STAR tag string. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>value</entry>
+                                <entry>
+<para>integer value. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*format</entry>
+                                <entry>
+<para>string format. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1381 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a25ff507201fa2d25ac996577cd6a620c"/>    <section>
+    <title>item_put_list()</title>
+<indexterm><primary>item_put_list</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_put_list</secondary></indexterm>
+<para><computeroutput>int item_put_list (<link linkend="_struct_bstar__block">Bstar_block</link> * block, const char * tag, char * list, size_t offset, const char * format)</computeroutput></para><para>
+
+<para>Writes a list of string or numeric values into a data item associated with a specific data block and tag in a STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>block in the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>a STAR tag string. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*list</entry>
+                                <entry>
+<para>linked list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>offset</entry>
+                                <entry>
+<para>offset of structure element. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*format</entry>
+                                <entry>
+<para>string format. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1449 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a28d9978bc4fb23b5f1f41ae4d1f946f4"/>    <section>
+    <title>item_put_string()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>item_put_string</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_put_string</secondary></indexterm>
+<para><computeroutput>int item_put_string (<link linkend="_struct_bstar__block">Bstar_block</link> * block, const char * tag, <link linkend="_class_bstring">Bstring</link> &amp; string)</computeroutput></para><para>
+Definition at line 1319 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1ad74b4a665b90e5a70150fa97babcb2a1"/>    <section>
+    <title>item_put_string()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>item_put_string</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_put_string</secondary></indexterm>
+<para><computeroutput>int item_put_string (<link linkend="_struct_bstar__block">Bstar_block</link> * block, const char * tag, char * string)</computeroutput></para><para>
+
+<para>Writes a string into a data item associated with a specific data block and tag in a STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>block in the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>a STAR tag string. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*string</entry>
+                                <entry>
+<para>string value. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1313 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a98421e66e70eab11e06f793dda154d63"/>    <section>
+    <title>item_put_string_list()</title>
+<indexterm><primary>item_put_string_list</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>item_put_string_list</secondary></indexterm>
+<para><computeroutput>int item_put_string_list (<link linkend="_struct_bstar__block">Bstar_block</link> * block, const char * tag, <link linkend="_class_bstring">Bstring</link> * list)</computeroutput></para><para>
+
+<para>Writes a list of strings into a data item associated with a specific data block and tag in a STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>block in the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>a STAR tag string. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*list</entry>
+                                <entry>
+<para>list of strings. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1350 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a5f586aa260ee1bf4ddb55dd2a5bf9aa4"/>    <section>
+    <title>kill_block()</title>
+<indexterm><primary>kill_block</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>kill_block</secondary></indexterm>
+<para><computeroutput>int kill_block (<link linkend="_struct_bstar__block">Bstar_block</link> * block)</computeroutput></para><para>
+
+<para>Destroys a STAR data block. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>pointer to the STAR data block. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>A data block in a STAR data base structure and all of the items 
+associated with that data block are freed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 164 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1abbfb661658d5495bc9f5b5c3d639ab7e"/>    <section>
+    <title>kill_item()</title>
+<indexterm><primary>kill_item</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>kill_item</secondary></indexterm>
+<para><computeroutput>int kill_item (<link linkend="_struct_bstar__item">Bstar_item</link> * item)</computeroutput></para><para>
+
+<para>Destroys an item in a data block in a STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*item</entry>
+                                <entry>
+<para>the item. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>An item and all of the items referenced are freed. 
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 198 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1aacf2ee8caef134e7342e9fbe7dcb716b"/>    <section>
+    <title>kill_star()</title>
+<indexterm><primary>kill_star</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>kill_star</secondary></indexterm>
+<para><computeroutput>int kill_star (<link linkend="_struct_bstar">Bstar</link> * star)</computeroutput></para><para>
+
+<para>Destroys a STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*star</entry>
+                                <entry>
+<para>the STAR data base. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>A STAR data base structure and all of the data blocks and items are freed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 133 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a0e4f939e092d258a21644385656ce313"/>    <section>
+    <title>loop_set_identifier()</title>
+<indexterm><primary>loop_set_identifier</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>loop_set_identifier</secondary></indexterm>
+<para><computeroutput>int loop_set_identifier (<link linkend="_struct_bstar__block">Bstar_block</link> * block, int loop, int n,  ...)</computeroutput></para><para>
+
+<para>Assigns a loop identification number to items. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>block in the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>loop</entry>
+                                <entry>
+<para>loop identifier to use. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>number of patterns to test for. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>...</entry>
+                                <entry>
+<para>(tag_pattern) tag pattern to match to set the loop identifier. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number assigned. <literallayout><computeroutput>The items in the data block are rearranged so that the item assigned to 
+the loop follows the other loop items.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1816 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a1b5835bcc1ace7c5109457437efe5a61"/>    <section>
+    <title>read_block()</title>
+<indexterm><primary>read_block</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>read_block</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bstar__block">Bstar_block</link>* read_block (ifstream * fstar, char * aptr, <link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+
+<para>Reads paramaters and data into a STAR data block from an open file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*fstar</entry>
+                                <entry>
+<para>an open STAR format file. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*aptr</entry>
+                                <entry>
+<para>a pointer to the current line in the file. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file containing this block. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bstar_block* new block read. <literallayout><computeroutput>A block defines a unit of parameters or a unit of data. Every data 
+block is read separately and comments are preserved as far as possible.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 357 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a6b3e6dc9008d9a54b40bb7662c437f77"/>    <section>
+    <title>read_loop_items()</title>
+<indexterm><primary>read_loop_items</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>read_loop_items</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bstar__item">Bstar_item</link>* read_loop_items (ifstream * fstar)</computeroutput></para><para>
+
+<para>Reads a loop structure with multiple items into a STAR data block from an open file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*fstar</entry>
+                                <entry>
+<para>an open STAR format file. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bstar_item* first new item in list. <literallayout><computeroutput>The loop is read line by line, checking to get every column value in a row.
+A row may extend over multiple lines, as long as it contains the number values
+specified by the number of tags at the beginning of the loop.
+A multiple line string value must be enclosed in &quot;;&quot; as the first character
+in the lines before and after the string.
+The loop ends with an empty line or when too few values occur in a row.
+An empty line at the end of a loop is required.
+Note: The loop flag field of the STAR item is equal to the item index
+of the first item in the loop.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 529 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1add34c2c7ea9d935bc10c2dcee65e4767"/>    <section>
+    <title>read_single_item()</title>
+<indexterm><primary>read_single_item</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>read_single_item</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bstar__item">Bstar_item</link>* read_single_item (ifstream * fstar, char * aline)</computeroutput></para><para>
+
+<para>Reads a single-valued item or comment line into a STAR data block from an open file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*fstar</entry>
+                                <entry>
+<para>an open STAR format file. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*aline</entry>
+                                <entry>
+<para>a pointer to the current line in the file. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bstar_item* new STAR item. <literallayout><computeroutput>All tags with single values and outside loops are interpreted here.
+A single item is defined where the first non-space character on a
+line is an underscore. A comment is defined by a &apos;#&apos; or &apos;;&apos; as the
+first character on the line.
+Note: The loop flag field of the STAR item is equal to -1.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 428 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a4a4086997d4889217f4e9f58b1b4f9a6"/>    <section>
+    <title>read_star()<computeroutput>[1/3]</computeroutput></title>
+<indexterm><primary>read_star</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>read_star</secondary></indexterm>
+<para><computeroutput>int read_star (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_struct_bstar">Bstar</link> * star)</computeroutput></para><para>
+Definition at line 240 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1abc364e4c411c14f2ba3139c04342045d"/>    <section>
+    <title>read_star()<computeroutput>[2/3]</computeroutput></title>
+<indexterm><primary>read_star</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>read_star</secondary></indexterm>
+<para><computeroutput>int read_star (<link linkend="_class_bstring">Bstring</link> * file_list, <link linkend="_struct_bstar">Bstar</link> * star)</computeroutput></para><para>
+Definition at line 246 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a67c056ba8792f5af8d2a8be042cfd019"/>    <section>
+    <title>read_star()<computeroutput>[3/3]</computeroutput></title>
+<indexterm><primary>read_star</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>read_star</secondary></indexterm>
+<para><computeroutput>int read_star (const char * filename, <link linkend="_struct_bstar">Bstar</link> * star)</computeroutput></para><para>
+
+<para>Reads paramaters and data into a STAR data base from a list of files. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*filename</entry>
+                                <entry>
+<para>a list of file names separated by commas. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*star</entry>
+                                <entry>
+<para>an existing STAR data base. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). <literallayout><computeroutput>Every data block is read separately and comments are preserved as far 
+as possible.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 225 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1aa93156278c5777a075e1768c12e94a05"/>    <section>
+    <title>show_tags()</title>
+<indexterm><primary>show_tags</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>show_tags</secondary></indexterm>
+<para><computeroutput>int show_tags (<link linkend="_struct_bstar">Bstar</link> * star)</computeroutput></para><para>
+
+<para>Prints the list of tags in the STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*star</entry>
+                                <entry>
+<para>the STAR database </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of tags. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 992 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a274ced1b392ca1197646bc4a75684a39"/>    <section>
+    <title>star_list_comments()</title>
+<indexterm><primary>star_list_comments</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>star_list_comments</secondary></indexterm>
+<para><computeroutput>long star_list_comments (<link linkend="_struct_bstar">Bstar</link> * star, long len)</computeroutput></para><para>
+
+<para>Lists the command lines in the STAR header. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*star</entry>
+                                <entry>
+<para>the STAR data base. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>len</entry>
+                                <entry>
+<para>maximum line length, infinite if zero. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long the number of command lines. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 908 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a39f5e8f3a17cbcf5225e5cfced93da61"/>    <section>
+    <title>star_set_string_lengths()</title>
+<indexterm><primary>star_set_string_lengths</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>star_set_string_lengths</secondary></indexterm>
+<para><computeroutput>int star_set_string_lengths (<link linkend="_struct_bstar">Bstar</link> * star)</computeroutput></para><para>
+
+<para>Sets the maximum string lengths for each item in each block. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*star</entry>
+                                <entry>
+<para>the STAR data base. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>This is designed to clean up after creating a STAR database.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 939 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a085b4d6c6fa9814adc425025c422f5ab"/>    <section>
+    <title>star_update_comment()</title>
+<indexterm><primary>star_update_comment</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>star_update_comment</secondary></indexterm>
+<para><computeroutput>int star_update_comment (<link linkend="_struct_bstar">Bstar</link> * star, int n, char ** strings)</computeroutput></para><para>
+
+<para>Puts a set of strings and time in the main comment of the STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*star</entry>
+                                <entry>
+<para>the STAR data base. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>the number of strings. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>**strings</entry>
+                                <entry>
+<para>an array of strings. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int string length of the new comment. <literallayout><computeroutput>This is designed to pack the command line into a string followed by
+a second string for the time.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 881 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1ace3c337421bcd02b290a867b5b615347"/>    <section>
+    <title>write_block()</title>
+<indexterm><primary>write_block</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>write_block</secondary></indexterm>
+<para><computeroutput>int write_block (ofstream * fstar, <link linkend="_struct_bstar__block">Bstar_block</link> * block, int linelength)</computeroutput></para><para>
+
+<para>Writes paramaters and data from a STAR data block into an open file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*fstar</entry>
+                                <entry>
+<para>an open STAR format file. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*block</entry>
+                                <entry>
+<para>a data block. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>linelength</entry>
+                                <entry>
+<para>output maximum line length. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 on error). <literallayout><computeroutput>A block defines a unit of parameters or a unit of data.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 751 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1ae48a0142bf7ad7cb7b16685d423368eb"/>    <section>
+    <title>write_star()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>write_star</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>write_star</secondary></indexterm>
+<para><computeroutput>int write_star (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_struct_bstar">Bstar</link> * star)</computeroutput></para><para>
+Definition at line 673 of file rwstar.cpp.</para>
+    </section><anchor xml:id="_rwstar_8h_1a786203b1039216fc3d828595196046c2"/>    <section>
+    <title>write_star()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>write_star</primary><secondary>rwstar.h</secondary></indexterm>
+<indexterm><primary>rwstar.h</primary><secondary>write_star</secondary></indexterm>
+<para><computeroutput>int write_star (const char * filename, <link linkend="_struct_bstar">Bstar</link> * star)</computeroutput></para><para>
+
+<para>Writes a STAR data base to one or more STAR format files. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*filename</entry>
+                                <entry>
+<para>the base file name (can be NULL if star-&gt;split == 9). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*star</entry>
+                                <entry>
+<para>the STAR data base. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). <literallayout><computeroutput>The STAR data base structure contains a flag (star-&gt;split) to indicate
+whether one or multiple files should be written.  In the case of multiple
+files, the base name is taken from the input file name, with an underscore
+and a number appended. The length of the number is determined by the
+star-&gt;split variable.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 667 of file rwstar.cpp.</para>
+</section>
+</section>
+</section>

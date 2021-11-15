@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- Author: Bernard Heymann -->
+<!-- Created: 20100925 -->
+<!-- Modified: 20170223 -->
+<title>Bsoft: Scripts</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+    <h1> Scripts for Bsoft programs</h1>
+    <p>Intensive data processing tasks that require large amounts of time and memory can be distributed in various ways. These scripts provide ways to process data in pieces or subsets, either on one computer or through a distributed processing system.</p>
+      <br />
+<p>To retrieve a script, open it in a web page and copy the text to a text editor. Save the text file without an extension (e.g., &quot;bomrun&quot; or &quot;tomrec&quot;). Make the script executable:</p>
+<div id="command"><p>chmod u+x bomrun</p></div>
+<br />
+<p>Place the script in an accessible directory (such as ~/bin or /usr/local/bin).</p>
+ <br />
+
+<h2>Single particle analysis</h2>
+<ul>
+	<li><strong><a href="prepfit.html">prepfit</a></strong> - A set of micrographs is processed to generate power spectra and do an initial CTF fit.</li>
+	<li><strong><a href="mgprep.html">mgprep.pl</a></strong> - A set of micrographs is preprocessed, frames aligned, power spectra calculated, and an initial CTF fit done.</li>
+	<li><strong><a href="bomrun.html">bomrun</a></strong> - A set of particle images is divided into subsets where each subset is run on a single processor in a <a href="../bsoft_distproc.html">Peach distributed system</a>.</li>
+</ul>
+	<br />
+<h2>Tomography</h2>
+<p>In each of these cases, the script can be run on a single computer or 
+	using the <a href="../bsoft_distproc.html">Peach distributed system</a>. 
+	However, the availability of more capable computers 
+	means that most of these can be done using single command lines or bshow.</p>
+<ul>
+	<li><strong><a href="mgft.html">mgft</a></strong> - Fourier transforms all the micrographs in preparation for reconstruction or resolution determination.</li>
+	<li><strong><a href="tomax.html">tomax</a></strong> - Determines the residual for a series of tilt axis angles to be able to find the best one.</li>
+	<li><strong><a href="tomnad.html">tomnad</a></strong> - Divides a tomogram into overlapping tiles, denoises each tile by anisotropic diffusion, and patches the denoised tiles together.</li>
+	<li><strong><a href="tomrec.html">tomrec</a></strong> - Reconstructs a tomogram in Fourier space, requiring the micrographs to be transformed first with mgft.</li>
+	<li><strong><a href="tomres.html">tomres</a></strong> - Determines the resolution of each micrograph in a tilt series, requiring the micrographs to be transformed first with mgft.</li>
+</ul>
+</div>
+<div id="footer">
+  Bernard Heymann  20170223
+</div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: HSV CTF</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="../Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+      <h2>Determining/fitting the CTF of a micrograph<br />
+      </h2>
+Part of a micrograph of herpes simplex virus 1 (HSV 1) taken by Naiqian
+Cheng:
+	  <center>
+      <p><img src="hsv_eg.jpg" style="width: 300px; height: 300px;"
+ alt="hsv_eg.jpg" /></p>
+	  </center>
+
+      <h3>How to fit the CTF:</h3>
+      <ul>
+        <li>Open the image in <b>bshow</b> and transform using the
+&quot;Image/Power spectrum&quot; menu item. <br />
+        </li>
+        <li>Make sure the pixel size is correct (in this case it is
+5.526
+angstrom/pixel). <br />
+        </li>
+        <li>Select the &quot;Micrograph/Fit CTF&quot; menu item.</li>
+        <li>Make sure all the parameters
+(voltage, Cs and amplitude contrast) are correct. <br />
+        </li>
+        <li>Click on &quot;Defocus&quot;.</li>
+        <li>If the fit is unexpected, move the &quot;Defocus average&quot; slider
+to a more reasonable value.</li>
+        <li>Click on &quot;Refine&quot;.<br />
+        </li>
+        <li>Click on &quot;Subtract baseline&quot;.</li>
+        <li>Change the &quot;H scale&quot; and &quot;V scale&quot; parameters to adjust the
+plot
+scaling.</li>
+        <li>Click on &quot;Astigmatism&quot;.<br />
+        </li>
+        <li>Adjust the sliders to improve the fit.</li>
+        <li>Select the &quot;Micrograph/Write parameters&quot; menu item and save
+the parameters in a parameter file (a STAR file).<br />
+        </li>
+      </ul>
+      <p> </p>
+	  <center>
+      <p><img src="hsv_ctf.jpg" style="width: 500px; height: 445px;"
+ alt="bshow_ctf.jpg" /></p>
+	  </center>
+      <p>The same result can be obtained
+using bctf on the command line:<br />
+      </p>
+	<div id="command"><p>bctf -verbose 7 -action prepfit -Postscript hsv_ctfit.ps 
+	-sampling 5.526 hsv_eg.jpg</p></div>
+	The postscript file, hsv_ctfit.ps, contains details of the fit.
+</div>
+<div id="footer">
+  Bernard Heymann  20120126
+</div>
+</body>
+</html>

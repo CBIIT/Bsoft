@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+	<meta name="Author" content="Bernard Heymann">
+	<TITLE>Bsoft: bmodel </TITLE>
+	<link type="image/png" href="Bsoft_16x16.png" rel="icon">
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+<h2><i><font color="#000099">Bsoft program</font></i></h2>
+<center><h1><font color="#FF0000">bmodel</font></h1></center>  <h3>Usage: bmodel [options] in1.star [in2.star...]</h3>
+Manipulates models. <br>
+  <h3>Actions for preparation:</h3>
+<table><tbody>
+<tr><td>-addnumber</td><td>Add numbers to the model id's.</td></tr>
+<tr><td>-merge</td><td>Merge models in different files rather than concatenate.</td></tr>
+<tr><td>-all</td><td>Reset selection to all models and components before other selections.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Selections:</h3>
+<table><tbody>
+<tr><td>-select #232@14</td><td>Select models and components.</td></tr>
+<tr><td>-number 24,36</td><td>Select models based on the number of components.</td></tr>
+<tr><td>-closed order,3</td><td>Select models based on valency (valency,<n>) or polygon order (order,<n>).</td></tr>
+<tr><td>-fullerene</td><td>Select fullerene type models.</td></tr>
+<tr><td>-fom 0.25</td><td>Select: FOM cutoff.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Actions:</h3>
+<table><tbody>
+<tr><td>-listmodels</td><td>List model information in table form.</td></tr>
+<tr><td>-listcomponents</td><td>List component counts in table form.</td></tr>
+<tr><td>-showmass</td><td>Show model masses.</td></tr>
+<tr><td>-axes</td><td>Calculate principal axes.</td></tr>
+<tr><td>-delete B</td><td>Delete a component type.</td></tr>
+<tr><td>-setfom 0.8</td><td>Set the FOM of selected components to a specific value.</td></tr>
+<tr><td>-center</td><td>Center before all other operations.</td></tr>
+<tr><td>-average 4</td><td>Average sequential components and delete all but one in each set.</td></tr>
+<tr><td>-histogram 0.2</td><td>FOM histogram with the given step size.</td></tr>
+<tr><td>-id model1</td><td>Set model identifier.</td></tr>
+<tr><td>-map image.pif,2</td><td>Map and image number associated with model.</td></tr>
+<tr><td>-path ../map</td><td>Path to map.</td></tr>
+<tr><td>-views local</td><td>Calculate views for components. Modes: origin: current origin,</td></tr>
+<tr><td></td><td>                         com: center-of-mass origin, map: map origin, local: neigbor plane.</td></tr>
+<tr><td>-invert</td><td>Invert views for selected components.</td></tr>
+<tr><td>-rdf 1.2</td><td>Calculate the radial distribution function with the given sampling (angstrom).</td></tr>
+<tr><td>-curvature</td><td>Calculate the curvature associated with each component.</td></tr>
+<tr><td>-settype VER</td><td>Set all component types.</td></tr>
+<tr><td>-associate TRS,trs.pdb</td><td>Associate a component type with a file name.</td></tr>
+<tr><td>-mass TRS,288.7</td><td>Associate a component type with a mass.</td></tr>
+<tr><td>-translate 12.3,95,-10.5</td><td>Shift along a vector (x,y,z).</td></tr>
+<tr><td>-rotate 0.5,0,5.8,45</td><td>Rotate around a vector (x,y,z) by an angle.</td></tr>
+<tr><td>-scale 1.5,0.8,1</td><td>Scale around the origin.</td></tr>
+<tr><td>-reflect 0.4,-.22,0.5</td><td>Reflect through a mirror plane defined by the given normal.</td></tr>
+<tr><td>-linklength 56.3</td><td>Generate links with this maximum length.</td></tr>
+<tr><td>-setasu D8</td><td>Set components to within an asymmetric unit.</td></tr>
+<tr><td>-apply C5</td><td>Apply point group symmetry.</td></tr>
+<tr><td>-symmetrize C5</td><td>Symmetrize for a point group symmetry.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Actions for finishing:</h3>
+<table><tbody>
+<tr><td>-reset</td><td>Reset selection to all components before other selections.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Parameters:</h3>
+<table><tbody>
+<tr><td>-verbose 7</td><td>Verbose output.</td></tr>
+<tr><td>-componentradius 8.4</td><td>Set display radius for all components.</td></tr>
+<tr><td>-linkradius 5.1</td><td>Set display radius for all links.</td></tr>
+<tr><td>-origin 0,22.5,30</td><td>Set the origin for rotation and scaling.</td></tr>
+<tr><td>-separate</td><td>Each model is defined as a separate molecule group.</td></tr>
+<tr><td>-reference 0,1.5,-0.2,35</td><td>Reference symmetry axis and rotation angle (default 0,0,1,0).</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Input:</h3>
+<table><tbody>
+<tr><td>-parameters param.star</td><td>Input parameter file.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Output:</h3>
+<table><tbody>
+<tr><td>-output file.star</td><td>Output model parameter file.</td></tr>
+<tr><td>-split 3</td><td>Split models into individual files:</td></tr>
+<tr><td></td><td>                         Argument: 1-6: number of digits inserted before extension</td></tr>
+<tr><td></td><td>                         Argument: "id": model ID's are used as file names.</td></tr>
+<tr><td>-coordinates all.pdb</td><td>Output coordinate files.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table>
+<br>Bsoft version 2.0.7-20200917 (64 bit)<br>
+<HR WIDTH="100%"><BR>
+Generated by bdoc.pl on Mon Oct 26 08:20:11 2020 <BR>
+<HR WIDTH="100%"><BR>
+<center><a href="bsoft.html">Back to the Bsoft home</a></center>
+<HR WIDTH="100%"><BR>
+</BODY>
+</HTML>

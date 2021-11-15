@@ -1,0 +1,142 @@
+<h1>Tomax</h1>
+<p>Scripts to find the tilt axis from fiducial markers in tilt series</p>
+
+<h2>A C-shell script</h2>
+<textarea readonly rows="60" cols="80">
+#!/bin/tcsh -f
+
+# tomax
+# A script to find the approximate tilt axis angle in a tomographic series
+# Usage:
+#       tomax -angles <start,increment,end> <files>
+# Example:
+#       tomax -angles 40,1.5,60 "c*.star"
+# Author: Bernard Heymann
+# 20070209 - 20200326
+
+# Defaults
+set ANG = "-90,1,90"
+
+# Recreate command line
+echo -n tomax
+set a = 1
+while ( $a <= $#argv )
+	echo -n " $argv[$a]"
+	@ a++
+end
+echo " "
+
+if ( $#argv < 1 ) then
+	echo "No input!"
+	exit
+endif
+
+# Interpret options
+set a = 1
+while ( "x$argv[$a]" =~ x-* )
+#	echo $a $argv[$a]
+	if ( "x$argv[$a]" =~ x-ang* ) then
+		@ a++
+		set ANG = $argv[$a]
+	endif
+	@ a++
+end
+
+set PF = $argv[$a]
+set A = `echo $ANG | cut -f1 -d","`
+set AI = `echo $ANG | cut -f2 -d","`
+set AE = `echo $ANG | cut -f3 -d","`
+
+echo "Tilt axis angle determination:"
+echo "-----------------------------"
+date
+echo "File       = $PF"
+echo "Angles     = $ANG"
+echo ""
+echo Angle Residual
+
+set BRES = 1000.0
+set BANG = 0.0
+
+@ C = 1
+@ NDN = 1
+while ( $NDN )
+	set LN = `printf "tomax_%03d.log" $C`
+	set CMD = "btrack -v 1 -exclude none -reset -update -track 1 -axis $A -resol 20,1000 -recenter -refine markers $PF"
+	echo $CMD > $LN
+	$CMD >> $LN
+	set RES = `awk '$1=="Average" && $2=="residual" { print $4 }' $LN`
+	echo $A $RES
+	if ( `echo "$BRES > $RES" | bc` ) then
+		set BRES = $RES
+		set BANG = $A
+	endif
+	set A = `echo $A + $AI | bc`
+	set NDN = `echo "if ($A <= $AE) { print 1 } else { print 0 }" | bc `
+	@ C++
+end
+
+echo ""
+echo "Best tilt axis angle = $BANG"
+
+</textarea>
+
+<h2>A Perl script</h2>
+<textarea readonly rows="60" cols="80">
+#!/usr/bin/perl -w
+
+# tomax.pl
+# A script to find the approximate tilt axis angle in a tomographic tilt series
+# Usage:
+#       tomax.pl --start <angle> --end <angle> --inc <angle> --file file
+# Example:
+#       tomax.pl --start -30 --end 45 --inc 1.5 --file in.star
+# Author: Bernard Heymann
+# 20200326
+
+use strict;
+use Getopt::Long;
+
+my $pf = "";
+my $start = -90;
+my $end = 90;
+my $inc = 1;
+
+GetOptions ("file=s" => \$pf,		# parameter file
+			"start=f" => \$start, 	# starting angle
+			"end=f"	=> \$end,		# final angle
+			"inc=f"	=> \$inc)		# angular increment
+or die("Error in command line arguments\n");
+
+if ( ! -f $pf ) {
+	print "Error: File $pf not found!\n";
+	exit -1;
+}
+
+print "Tilt axis angle determination:\n";
+print "-----------------------------\n";
+print localtime() . "\n";
+print "File       = $pf\n";
+print "Angles     = $start,$end,$inc\n";
+print "\n";
+print "Angle Residual\n";
+
+my $best_angle = 0;
+my $best_residual = 1000;
+
+for ( my $a = $start; $a <= $end; $a += $inc ) {
+	my $result = `btrack -v 1 -exclude none -reset -update -track 1 -axis $a -resol 20,1000 -recenter -refine markers $pf 2>&1`;
+	foreach my $line ( split("\n", $result) ) {
+		if ( $line =~ /Average residual = ([\d.e]+)/ ) {
+			print "$a\t$1\n";
+			if ( $best_residual > $1 ) {
+				$best_residual = $1;
+				$best_angle = $a;
+			}
+        }
+	}
+}
+
+print "\nBest tilt axis angle = $best_angle\n";
+
+</textarea>

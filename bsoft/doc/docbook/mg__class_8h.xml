@@ -1,0 +1,124 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__class_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/mg_class.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/mg_class.h</primary></indexterm>
+<para>
+
+<para>Header file for classification of raw single particle images with respect to multiple models. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+#include &quot;FSI_Kernel.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>long <link linkend="_mg__class_8h_1a8bfc726d8f44a2f019b26e4a1b11632a">mg_classify</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double resolution_hi, double resolution_lo, int fom_type, double fom_cut, <link linkend="_class_f_s_i___kernel">FSI_Kernel</link> *<link linkend="_structkernel">kernel</link>, int ctf_apply, int img_out)</para>
+
+<para>Classifies particle images with respect to a series of reference maps. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for classification of raw single particle images with respect to multiple models. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010222 </para>
+
+<para>Modified: 20151008 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__class_8h_1a8bfc726d8f44a2f019b26e4a1b11632a"/>    <section>
+    <title>mg_classify()</title>
+<indexterm><primary>mg_classify</primary><secondary>mg_class.h</secondary></indexterm>
+<indexterm><primary>mg_class.h</primary><secondary>mg_classify</secondary></indexterm>
+<para><computeroutput>long mg_classify (<link linkend="_class_bproject">Bproject</link> * project, double resolution_hi, double resolution_lo, int fom_type, double fom_cut, <link linkend="_class_f_s_i___kernel">FSI_Kernel</link> * kernel, int ctf_apply, int img_out)</computeroutput></para><para>
+
+<para>Classifies particle images with respect to a series of reference maps. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>resolution_hi</entry>
+                                <entry>
+<para>upper resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>resolution_lo</entry>
+                                <entry>
+<para>lower resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_type</entry>
+                                <entry>
+<para>FOM type: 0=CC, 1=R, 2=PD. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_cut</entry>
+                                <entry>
+<para>input FOM threshold to classify a particle. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*kernel</entry>
+                                <entry>
+<para>frequency space interpolation kernel. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ctf_apply</entry>
+                                <entry>
+<para>apply CTF to projections. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>img_out</entry>
+                                <entry>
+<para>image output options: 0=none, 1=projections, 2=differences, 3=both </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long particles selected. <literallayout><computeroutput>For every particle image, a projection is made from every reference map
+according to the input orientation parameters and compared to the
+particle image. The FOM calculated is a real space correlation coefficient.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 39 of file mg_class.cpp.</para>
+</section>
+</section>
+</section>

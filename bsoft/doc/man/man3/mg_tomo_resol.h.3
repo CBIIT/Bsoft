@@ -1,0 +1,295 @@
+.TH "/Users/bernard/b20/bsoft/include/mg_tomo_resol.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/mg_tomo_resol.h \- Functions to assess the resoltion of a tomographic tilt series\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'ps_plot\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBimage\fP * \fBmg_tomo_resolution\fP (\fBBproject\fP *\fBproject\fP, int micrograph_id, double hi_res, double sampling_ratio, double scale, \fBVector3\fP< long > size, double fast_angle, int action, double wiener, double cutoff, \fBBstring\fP &psfile)"
+.br
+.RI "Estimating the resolution of one micrograph in an aligned tilt series\&. 
+.br
+ "
+.ti -1c
+.RI "vector< \fBBplot\fP * > \fBproject_tomo_resolution\fP (\fBBproject\fP *\fBproject\fP, double hi_res, double sampling_ratio, double scale, \fBVector3\fP< long > size, double fast_angle, int action, double wiener, double cutoff)"
+.br
+.RI "Estimating the resolution of the tomogram from an aligned tilt series\&. "
+.ti -1c
+.RI "\fBBplot\fP * \fBproject_tomo_particle_resolution\fP (\fBBproject\fP *\fBproject\fP, double hi_res, double sampling_ratio, double fast_angle, double cutoff)"
+.br
+.RI "Estimates the resolution for each particle image in each micrograph\&. "
+.ti -1c
+.RI "long \fBimg_pack_2D_into_central_section\fP (\fBBimage\fP *p, \fBBimage\fP *prec, \fBBimage\fP *prec2, long ft_size, double scale, double hi_res, \fBMatrix3\fP matr, \fBMatrix3\fP mat, int inplane)"
+.br
+.RI "Packs a 2D Fourier transform into a 3D reciprocal space volume\&. 
+.br
+ "
+.ti -1c
+.RI "\fBBplot\fP * \fBplot_tilt_resolution\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Plots the estimated resolution against the tilt angle\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to assess the resoltion of a tomographic tilt series\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20031205 
+.PP
+Modified: 20200723 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_tomo_resol\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "long img_pack_2D_into_central_section (\fBBimage\fP * p, \fBBimage\fP * prec, \fBBimage\fP * prec2, long ft_size, double scale, double hi_res, \fBMatrix3\fP matr, \fBMatrix3\fP mat, int inplane)"
+
+.PP
+Packs a 2D Fourier transform into a 3D reciprocal space volume\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 2D Fourier transform\&. 
+.br
+\fI*prec\fP 3D central section\&. 
+.br
+\fI*prec2\fP 3D central section with in-plane micrograph omitted\&. 
+.br
+\fIft_size\fP Fourier transform size\&. 
+.br
+\fIscale\fP reconstruction scale\&. 
+.br
+\fIhi_res\fP high resolution limit\&. 
+.br
+\fImatr\fP in plane or reference matrix\&. 
+.br
+\fImat\fP matrix of image being packed\&. 
+.br
+\fIinplane\fP flag to indicate an in plane image\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number voxels packed\&. 
+.PP
+.nf
+The rotation matrix is used to determine the plane in reciprocal space
+to which the 2D transform data is added. The map is assumed to be cubic
+and the 2D transform square. The orientation parameters must be written
+into the image structure. The real space 2D image must be supplied.
+This is then padded to more than twice its original size, fourier
+transformed, and packed into the 3D reciprocal space block.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 712 of file mg_tomo_resol\&.cpp\&.
+.SS "\fBBimage\fP* mg_tomo_resolution (\fBBproject\fP * project, int micrograph_id, double hi_res, double sampling_ratio, double scale, \fBVector3\fP< long > size, double fast_angle, int action, double wiener, double cutoff, \fBBstring\fP & psfile)"
+
+.PP
+Estimating the resolution of one micrograph in an aligned tilt series\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP image processing parameter structure\&. 
+.br
+\fImicrograph_id\fP micrograph number to use for resolution test\&. 
+.br
+\fIhi_res\fP high resolution limit\&. 
+.br
+\fIsampling_ratio\fP ratio for averaging window\&. 
+.br
+\fIscale\fP reconstruction scale\&. 
+.br
+\fIsize\fP reconstruction size\&. 
+.br
+\fIfast_angle\fP angle to select micrographs for reconstruction\&. 
+.br
+\fIaction\fP flag to apply CTF to projections\&. 
+.br
+\fIwiener\fP Wiener factor\&. 
+.br
+\fIcutoff\fP FRC cutoff\&. 
+.br
+\fI&psfile\fP postscript output file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* micrograph reconstruction, NULL on error\&. 
+.PP
+.nf
+The orientation parameters, view vector, angle of rotation and origin,
+must all be set. Each image is padded to at least two times its size 
+and its Fourier transform packed into 3D reciprocal space.
+The figure-of-merit calculated for each reciprocal space voxel is:
+           sum(w*re)^2 + sum(w*im)^2
+    FOM = ---------------------------
+          sum(w)*sum(w*(re^2 + im^2))
+where
+    re  real part
+    im  imaginary part
+    w   weight (inverse distance of image pixel to closest grid point)
+For voxels with only one data pixel contributing to it, FOM(0).
+An image is used in the reconstruction if its selection flag has been set.
+If the selection number is less than zero, all particles with selection flags
+greater than zero are used. If the selection number is zero or above, all
+particles with the selection flag set to the same number are used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 267 of file mg_tomo_resol\&.cpp\&.
+.SS "\fBBplot\fP* plot_tilt_resolution (\fBBproject\fP * project)"
+
+.PP
+Plots the estimated resolution against the tilt angle\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+*plot new plot\&. 
+.PP
+.nf
+The resolution estimates must be encoded in the micrograph FOM's.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1112 of file mg_tomo_resol\&.cpp\&.
+.SS "\fBBplot\fP* project_tomo_particle_resolution (\fBBproject\fP * project, double hi_res, double sampling_ratio, double fast_angle, double cutoff)"
+
+.PP
+Estimates the resolution for each particle image in each micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph project\&. 
+.br
+\fIhi_res\fP high resolution limit for resolution estimation\&. 
+.br
+\fIsampling_ratio\fP ratio for averaging window\&. 
+.br
+\fIfast_angle\fP angle to select micrographs for reconstruction\&. 
+.br
+\fIcutoff\fP FRC cutoff to use\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bplot* plot with average particle resolutions\&. 
+.PP
+.nf
+Requires the particles to be defined in all micrographs.
+The NLOO algorithm is used for each particle.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 431 of file mg_tomo_resol\&.cpp\&.
+.SS "vector<\fBBplot\fP*> project_tomo_resolution (\fBBproject\fP * project, double hi_res, double sampling_ratio, double scale, \fBVector3\fP< long > size, double fast_angle, int action, double wiener, double cutoff)"
+
+.PP
+Estimating the resolution of the tomogram from an aligned tilt series\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP image processing parameter structure\&. 
+.br
+\fIhi_res\fP high resolution limit\&. 
+.br
+\fIsampling_ratio\fP ratio for averaging window\&. 
+.br
+\fIscale\fP reconstruction scale\&. 
+.br
+\fIsize\fP reconstruction size\&. 
+.br
+\fIfast_angle\fP angle to select micrographs for reconstruction\&. 
+.br
+\fIaction\fP flag to apply CTF to projections\&. 
+.br
+\fIwiener\fP Wiener factor\&. 
+.br
+\fIcutoff\fP FRC cutoff\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<Bplot*> Two plots: Tilt-resolution and NLOO-3D\&. 
+.PP
+.nf
+The orientation parameters, view vector, angle of rotation and origin,
+must all be set. Each image is padded to at least two times its size
+and its Fourier transform packed into 3D reciprocal space.
+The figure-of-merit calculated for each reciprocal space voxel is:
+           sum(w*re)^2 + sum(w*im)^2
+    FOM = ---------------------------
+          sum(w)*sum(w*(re^2 + im^2))
+where
+    re  real part
+    im  imaginary part
+    w   weight (inverse distance of image pixel to closest grid point)
+For voxels with only one data pixel contributing to it, FOM(0).
+An image is used in the reconstruction if its selection flag has been set.
+If the selection number is less than zero, all particles with selection flags
+greater than zero are used. If the selection number is zero or above, all
+particles with the selection flag set to the same number are used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 346 of file mg_tomo_resol\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

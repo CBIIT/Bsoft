@@ -1,0 +1,670 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__view_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/util/View.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/util/View.cpp</primary></indexterm>
+<para>
+
+<para><link linkend="_class_view">View</link> functions. </para>
+ 
+</para>
+<programlisting>#include &quot;View.h&quot;
+#include &quot;View2.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;random_numbers.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>ostream &amp; <link linkend="__view_8cpp_1a730bdb673de29b867796373baaf68fd2">operator&lt;&lt;</link> (ostream &amp;output, <link linkend="_class_view">View</link> v)</para>
+</listitem>
+            <listitem><para>ostream &amp; <link linkend="__view_8cpp_1a70c38751a1b3d60f2340a9e645e66dc5">operator&lt;&lt;</link> (ostream &amp;output, <link linkend="_class_view2">View2</link>&lt; float &gt; v)</para>
+</listitem>
+            <listitem><para>ostream &amp; <link linkend="__view_8cpp_1a997ab4dd0c749dc15db923fb32e2a6fd">operator&lt;&lt;</link> (ostream &amp;output, <link linkend="_class_view2">View2</link>&lt; double &gt; v)</para>
+</listitem>
+            <listitem><para>int <link linkend="__view_8cpp_1a1255826e055f01756d66c2b24290bffa">show_views</link> (<link linkend="_class_view">View</link> *v)</para>
+
+<para>Displays a linked list of views. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> * <link linkend="__view_8cpp_1aa390c3619a3d1b6da3645d4814afe5a5">view_array</link> (<link linkend="_class_view">View</link> *v, long &amp;n)</para>
+
+<para>Copies views from a list into an array. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> * <link linkend="__view_8cpp_1abcb2f36adb97e474033f12ac625b88b1">tilt_views</link> (double ang_min, double ang_max, double ang_step, double axis)</para>
+
+<para>Initializes a set of views tilted around the y axis. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> <link linkend="__view_8cpp_1ad1ec5e2e8c1f4309d6a6d24a1f41c74d">random_view</link> ()</para>
+
+<para>Calculates a random view. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> <link linkend="__view_8cpp_1a204a9db1b96dbece1f6a0ff6c70834f9">view_random_reslice</link> ()</para>
+
+<para>Generates a random reslicing 3x3 rotation matrix. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> * <link linkend="__view_8cpp_1a605c4528295bd7fbc51e234ef869d060">random_views</link> (int nviews)</para>
+
+<para>Calculates a set of random views. </para>
+</listitem>
+            <listitem><para>double <link linkend="__view_8cpp_1a950e1907fcb9ccfae1fc9ce18d789e9e">random_view_error</link> (<link linkend="_class_view">View</link> &amp;v, double std)</para>
+
+<para>Calculates a new view with a random error from the given view. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> * <link linkend="__view_8cpp_1a6a04c543439db279e5c47f5aba28c6a8">views_within_limits</link> (<link linkend="_class_view">View</link> theview, double theta_step, double phi_step, double alpha_step, double view_angle_limit, double alpha_angle_limit)</para>
+
+<para>Generates a list of views within an angular distance from the input view. </para>
+</listitem>
+            <listitem><para>list&lt; <link linkend="_class_view2">View2</link>&lt; float &gt; &gt; <link linkend="__view_8cpp_1a80fe5e90497070509ce2d3a8a3baaae7">views_within_limits2</link> (<link linkend="_class_view2">View2</link>&lt; float &gt; theview, double theta_step, double phi_step, double alpha_step, double view_angle_limit, double alpha_angle_limit)</para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> * <link linkend="__view_8cpp_1a53f3f93a5a3a7baa71923b505dc8301b">views_for_refinement</link> (<link linkend="_class_view">View</link> theview, double alpha_step)</para>
+
+<para>Generates a 3x3 grid of views around an input view. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> * <link linkend="__view_8cpp_1a759f033a5592e8c2c82a502aff280fdd">views_for_refinement</link> (<link linkend="_class_view">View</link> theview, double alpha_step1, double alpha_step2, double alpha_step3, double max_alpha3)</para>
+
+<para>Generates a 3x3 grid of views around an input view. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> * <link linkend="__view_8cpp_1aaff8c4129d3b7691e9266feceb12ceb0">view_list_expand_angles</link> (<link linkend="_class_view">View</link> *views, double amin, double amax, double astep)</para>
+
+<para>Expands each view to several views with different rotation angles. </para>
+</listitem>
+            <listitem><para>int <link linkend="__view_8cpp_1a626d9d6f80812fc3e90a89d098580dea">view_list_subset</link> (<link linkend="_class_view">View</link> **view_list, int start, int size)</para>
+
+<para>Replaces a view list with a subset of it. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="__view_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para><link linkend="_class_view">View</link> functions. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010420 </para>
+
+<para>Modified: 20160708 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="__view_8cpp_1a730bdb673de29b867796373baaf68fd2"/>    <section>
+    <title>operator&lt;&lt;()<computeroutput>[1/3]</computeroutput></title>
+<indexterm><primary>operator&lt;&lt;</primary><secondary>View.cpp</secondary></indexterm>
+<indexterm><primary>View.cpp</primary><secondary>operator&lt;&lt;</secondary></indexterm>
+<para><computeroutput>ostream&amp; operator&lt;&lt; (ostream &amp; output, <link linkend="_class_view">View</link> v)</computeroutput></para><para>
+Definition at line 18 of file View.cpp.</para>
+    </section><anchor xml:id="__view_8cpp_1a997ab4dd0c749dc15db923fb32e2a6fd"/>    <section>
+    <title>operator&lt;&lt;()<computeroutput>[2/3]</computeroutput></title>
+<indexterm><primary>operator&lt;&lt;</primary><secondary>View.cpp</secondary></indexterm>
+<indexterm><primary>View.cpp</primary><secondary>operator&lt;&lt;</secondary></indexterm>
+<para><computeroutput>ostream&amp; operator&lt;&lt; (ostream &amp; output, <link linkend="_class_view2">View2</link>&lt; double &gt; v)</computeroutput></para><para>
+Definition at line 32 of file View.cpp.</para>
+    </section><anchor xml:id="__view_8cpp_1a70c38751a1b3d60f2340a9e645e66dc5"/>    <section>
+    <title>operator&lt;&lt;()<computeroutput>[3/3]</computeroutput></title>
+<indexterm><primary>operator&lt;&lt;</primary><secondary>View.cpp</secondary></indexterm>
+<indexterm><primary>View.cpp</primary><secondary>operator&lt;&lt;</secondary></indexterm>
+<para><computeroutput>ostream&amp; operator&lt;&lt; (ostream &amp; output, <link linkend="_class_view2">View2</link>&lt; float &gt; v)</computeroutput></para><para>
+Definition at line 26 of file View.cpp.</para>
+    </section><anchor xml:id="__view_8cpp_1ad1ec5e2e8c1f4309d6a6d24a1f41c74d"/>    <section>
+    <title>random_view()</title>
+<indexterm><primary>random_view</primary><secondary>View.cpp</secondary></indexterm>
+<indexterm><primary>View.cpp</primary><secondary>random_view</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link> random_view ( )</computeroutput></para><para>
+
+<para>Calculates a random view. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para><link linkend="_class_view">View</link> random view. <literallayout><computeroutput>A random seed should already have been generated.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 116 of file View.cpp.</para>
+    </section><anchor xml:id="__view_8cpp_1a950e1907fcb9ccfae1fc9ce18d789e9e"/>    <section>
+    <title>random_view_error()</title>
+<indexterm><primary>random_view_error</primary><secondary>View.cpp</secondary></indexterm>
+<indexterm><primary>View.cpp</primary><secondary>random_view_error</secondary></indexterm>
+<para><computeroutput>double random_view_error (<link linkend="_class_view">View</link> &amp; v, double std)</computeroutput></para><para>
+
+<para>Calculates a new view with a random error from the given view. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;v</entry>
+                                <entry>
+<para>given view (modified). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>std</entry>
+                                <entry>
+<para>standard deviation of gaussian distribution. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double random angle. <literallayout><computeroutput>The rotation between the given and new views is defined by the 
+gaussian distributed random angle and a random axis.
+A random seed should already have been generated.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 195 of file View.cpp.</para>
+    </section><anchor xml:id="__view_8cpp_1a605c4528295bd7fbc51e234ef869d060"/>    <section>
+    <title>random_views()</title>
+<indexterm><primary>random_views</primary><secondary>View.cpp</secondary></indexterm>
+<indexterm><primary>View.cpp</primary><secondary>random_views</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link>* random_views (int nviews)</computeroutput></para><para>
+
+<para>Calculates a set of random views. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>nviews</entry>
+                                <entry>
+<para>number of views. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>View* list of random views. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 162 of file View.cpp.</para>
+    </section><anchor xml:id="__view_8cpp_1a1255826e055f01756d66c2b24290bffa"/>    <section>
+    <title>show_views()</title>
+<indexterm><primary>show_views</primary><secondary>View.cpp</secondary></indexterm>
+<indexterm><primary>View.cpp</primary><secondary>show_views</secondary></indexterm>
+<para><computeroutput>int show_views (<link linkend="_class_view">View</link> * v)</computeroutput></para><para>
+
+<para>Displays a linked list of views. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*v</entry>
+                                <entry>
+<para>the linked list of views. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of views. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 43 of file View.cpp.</para>
+    </section><anchor xml:id="__view_8cpp_1abcb2f36adb97e474033f12ac625b88b1"/>    <section>
+    <title>tilt_views()</title>
+<indexterm><primary>tilt_views</primary><secondary>View.cpp</secondary></indexterm>
+<indexterm><primary>View.cpp</primary><secondary>tilt_views</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link>* tilt_views (double ang_min, double ang_max, double ang_step, double axis)</computeroutput></para><para>
+
+<para>Initializes a set of views tilted around the y axis. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>ang_min</entry>
+                                <entry>
+<para>starting angle (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ang_max</entry>
+                                <entry>
+<para>ending angle (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ang_step</entry>
+                                <entry>
+<para>angular step size (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>axis</entry>
+                                <entry>
+<para>tilt axis angle (radians). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>View* a set of 4-value views. <literallayout><computeroutput>A set of views is calculated corresponding to tilted views imaged
+during tomography. The tilt axis angle is taken as a counter-clockwise
+rotation from the x-axis.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 85 of file View.cpp.</para>
+    </section><anchor xml:id="__view_8cpp_1aa390c3619a3d1b6da3645d4814afe5a5"/>    <section>
+    <title>view_array()</title>
+<indexterm><primary>view_array</primary><secondary>View.cpp</secondary></indexterm>
+<indexterm><primary>View.cpp</primary><secondary>view_array</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link>* view_array (<link linkend="_class_view">View</link> * v, long &amp; n)</computeroutput></para><para>
+
+<para>Copies views from a list into an array. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*v</entry>
+                                <entry>
+<para>the linked list of views. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>number of views. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>View* view array. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 59 of file View.cpp.</para>
+    </section><anchor xml:id="__view_8cpp_1aaff8c4129d3b7691e9266feceb12ceb0"/>    <section>
+    <title>view_list_expand_angles()</title>
+<indexterm><primary>view_list_expand_angles</primary><secondary>View.cpp</secondary></indexterm>
+<indexterm><primary>View.cpp</primary><secondary>view_list_expand_angles</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link>* view_list_expand_angles (<link linkend="_class_view">View</link> * views, double amin, double amax, double astep)</computeroutput></para><para>
+
+<para>Expands each view to several views with different rotation angles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*views</entry>
+                                <entry>
+<para>view list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>amin</entry>
+                                <entry>
+<para>minimum angle. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>amax</entry>
+                                <entry>
+<para>maximum angle. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>astep</entry>
+                                <entry>
+<para>angular step. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>View* new view list. <literallayout><computeroutput>The new angles are added to the existing angles of the view.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 519 of file View.cpp.</para>
+    </section><anchor xml:id="__view_8cpp_1a626d9d6f80812fc3e90a89d098580dea"/>    <section>
+    <title>view_list_subset()</title>
+<indexterm><primary>view_list_subset</primary><secondary>View.cpp</secondary></indexterm>
+<indexterm><primary>View.cpp</primary><secondary>view_list_subset</secondary></indexterm>
+<para><computeroutput>int view_list_subset (<link linkend="_class_view">View</link> ** view_list, int start, int size)</computeroutput></para><para>
+
+<para>Replaces a view list with a subset of it. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**view_list</entry>
+                                <entry>
+<para>view list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>start</entry>
+                                <entry>
+<para>offset of first view of subset. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>number of views in subset. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of views selected, &lt;0 on error. <literallayout><computeroutput>The old view list is destroyed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 558 of file View.cpp.</para>
+    </section><anchor xml:id="__view_8cpp_1a204a9db1b96dbece1f6a0ff6c70834f9"/>    <section>
+    <title>view_random_reslice()</title>
+<indexterm><primary>view_random_reslice</primary><secondary>View.cpp</secondary></indexterm>
+<indexterm><primary>View.cpp</primary><secondary>view_random_reslice</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link> view_random_reslice ( )</computeroutput></para><para>
+
+<para>Generates a random reslicing 3x3 rotation matrix. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para><link linkend="_class_view">View</link> new view. <literallayout><computeroutput>The view represents any one or more 90 degree rotations,
+randomly chosen.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 138 of file View.cpp.</para>
+    </section><anchor xml:id="__view_8cpp_1a53f3f93a5a3a7baa71923b505dc8301b"/>    <section>
+    <title>views_for_refinement()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>views_for_refinement</primary><secondary>View.cpp</secondary></indexterm>
+<indexterm><primary>View.cpp</primary><secondary>views_for_refinement</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link>* views_for_refinement (<link linkend="_class_view">View</link> theview, double alpha_step)</computeroutput></para><para>
+
+<para>Generates a 3x3 grid of views around an input view. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>theview</entry>
+                                <entry>
+<para>the input view. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>alpha_step</entry>
+                                <entry>
+<para>angular step size around view vector (radians). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>View* a list of views. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 371 of file View.cpp.</para>
+    </section><anchor xml:id="__view_8cpp_1a759f033a5592e8c2c82a502aff280fdd"/>    <section>
+    <title>views_for_refinement()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>views_for_refinement</primary><secondary>View.cpp</secondary></indexterm>
+<indexterm><primary>View.cpp</primary><secondary>views_for_refinement</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link>* views_for_refinement (<link linkend="_class_view">View</link> theview, double alpha_step1, double alpha_step2, double alpha_step3, double max_alpha3)</computeroutput></para><para>
+
+<para>Generates a 3x3 grid of views around an input view. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>theview</entry>
+                                <entry>
+<para>the input view. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>alpha_step1</entry>
+                                <entry>
+<para>angular step size for view vector in one direction (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>alpha_step2</entry>
+                                <entry>
+<para>angular step size for view vector in second direction (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>alpha_step3</entry>
+                                <entry>
+<para>angular step size around view vector (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_alpha3</entry>
+                                <entry>
+<para>maximum for step 3. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>View* a list of views. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 438 of file View.cpp.</para>
+    </section><anchor xml:id="__view_8cpp_1a6a04c543439db279e5c47f5aba28c6a8"/>    <section>
+    <title>views_within_limits()</title>
+<indexterm><primary>views_within_limits</primary><secondary>View.cpp</secondary></indexterm>
+<indexterm><primary>View.cpp</primary><secondary>views_within_limits</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link>* views_within_limits (<link linkend="_class_view">View</link> theview, double theta_step, double phi_step, double alpha_step, double view_angle_limit, double alpha_angle_limit)</computeroutput></para><para>
+
+<para>Generates a list of views within an angular distance from the input view. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>theview</entry>
+                                <entry>
+<para>the input view. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>theta_step</entry>
+                                <entry>
+<para>theta step size (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>phi_step</entry>
+                                <entry>
+<para>phi step size (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>alpha_step</entry>
+                                <entry>
+<para>alpha step size (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view_angle_limit</entry>
+                                <entry>
+<para>angular distance limit from view vector (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>alpha_angle_limit</entry>
+                                <entry>
+<para>angular distance limit from view rotation angle (radians). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>View* a list of views. <literallayout><computeroutput>The list of views forms a 3D search grid in orientation space.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 222 of file View.cpp.</para>
+    </section><anchor xml:id="__view_8cpp_1a80fe5e90497070509ce2d3a8a3baaae7"/>    <section>
+    <title>views_within_limits2()</title>
+<indexterm><primary>views_within_limits2</primary><secondary>View.cpp</secondary></indexterm>
+<indexterm><primary>View.cpp</primary><secondary>views_within_limits2</secondary></indexterm>
+<para><computeroutput>list&lt;<link linkend="_class_view2">View2</link>&lt;float&gt; &gt; views_within_limits2 (<link linkend="_class_view2">View2</link>&lt; float &gt; theview, double theta_step, double phi_step, double alpha_step, double view_angle_limit, double alpha_angle_limit)</computeroutput></para><para>
+Definition at line 294 of file View.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="__view_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>View.cpp</secondary></indexterm>
+<indexterm><primary>View.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

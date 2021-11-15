@@ -1,0 +1,129 @@
+.TH "/Users/bernard/b20/bsoft/src/rwimg/rwCCP4.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/rwimg/rwCCP4.cpp \- Functions for reading and writing CCP4 files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwCCP4\&.h'\fP
+.br
+\fC#include 'UnitCell\&.h'\fP
+.br
+\fC#include 'file_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'rwsymop\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBset_CCP4_machine_stamp\fP (char *machine_stamp)"
+.br
+.RI "Setting a CCP4 style machine stamp\&. "
+.ti -1c
+.RI "int \fBreadCCP4\fP (\fBBimage\fP *p, int readdata)"
+.br
+.RI "Reading a CCP4 map image file format\&. "
+.ti -1c
+.RI "int \fBwriteCCP4\fP (\fBBimage\fP *p)"
+.br
+.RI "Writing a CCP4 map image file format\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for reading and writing CCP4 files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19990410 
+.PP
+Modified: 20120730 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwCCP4\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int readCCP4 (\fBBimage\fP * p, int readdata)"
+
+.PP
+Reading a CCP4 map image file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.br
+\fIreaddata\fP flag to activate reading of image data\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. A 3D image format used in X-ray crystallography\&. Header size: 1024 bytes followed by the symmetry operator table which is composed of 80 character lines, each line for a symmetry operator\&. File format extensions: \&.map, \&.ccp, \&.ccp4 The identifier is a 4-byte machine stamp: 1 Big-endian IEEE 17 17 00 00 2 VAX 34 65 00 00 3 Cray - 4 Little-endian IEEE 68 65 00 00 5 Convex 85 17 00 00 6 Fijitsu VP - (Note: not always implemented - so unreliable) Byte order determination: Data type and third dimension values must be less than 256*256\&. Data types: 0 = signed char, 1 = short, 2 = float, 3 = complex short, 4 = complex float\&. \fBTransform\fP type: Centered hermitian The x-dimension contains the x-size of the full transform 
+.RE
+.PP
+
+.PP
+Definition at line 81 of file rwCCP4\&.cpp\&.
+.SS "int set_CCP4_machine_stamp (char * machine_stamp)"
+
+.PP
+Setting a CCP4 style machine stamp\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*machine_stamp\fP machine stamp string\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. The 4-byte machine stamp: 1 Big-endian IEEE 17 17 00 00 2 VAX 34 65 00 00 3 Cray - 4 Little-endian IEEE 68 65 00 00 5 Convex 85 17 00 00 6 Fijitsu VP - (Note: not always implemented - so unreliable) 
+.RE
+.PP
+
+.PP
+Definition at line 34 of file rwCCP4\&.cpp\&.
+.SS "int writeCCP4 (\fBBimage\fP * p)"
+
+.PP
+Writing a CCP4 map image file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. A 3D image format used in X-ray crystallography\&. 
+.RE
+.PP
+
+.PP
+Definition at line 209 of file rwCCP4\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

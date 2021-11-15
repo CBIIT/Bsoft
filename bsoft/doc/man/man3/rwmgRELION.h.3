@@ -1,0 +1,124 @@
+.TH "/Users/bernard/b20/bsoft/include/rwmgRELION.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/rwmgRELION.h \- Header file for reading and writing micrograph parameters from and to the RELION STAR format\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'rwstar\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBread_project_relion\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Reading micrograph parameters from a Relion file\&. "
+.ti -1c
+.RI "int \fBwrite_project_relion\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP, int mg_select, int rec_select)"
+.br
+.RI "Writing micrograph parameters to a Relion file\&. "
+.ti -1c
+.RI "int \fBproject_split_particles\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP partfile, \fBBstring\fP path, \fBBstring\fP partext)"
+.br
+.RI "Modifies some micrograph parameters\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for reading and writing micrograph parameters from and to the RELION STAR format\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20061101 
+.PP
+Modified: 20180525 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwmgRELION\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int project_split_particles (\fBBproject\fP * project, \fBBstring\fP partfile, \fBBstring\fP path, \fBBstring\fP partext)"
+
+.PP
+Modifies some micrograph parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project structure\&. 
+.br
+\fIpartfile\fP Relion stack of particles file\&. 
+.br
+\fIpath\fP path to write new particle files\&. 
+.br
+\fIpartext\fP extension to set the new particle image format\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 273 of file rwmgRELION\&.cpp\&.
+.SS "int read_project_relion (\fBBstring\fP & filename, \fBBproject\fP * project)"
+
+.PP
+Reading micrograph parameters from a Relion file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name (or comma-delimited list)\&. 
+.br
+\fI*project\fP initialized project structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 222 of file rwmgRELION\&.cpp\&.
+.SS "int write_project_relion (\fBBstring\fP & filename, \fBBproject\fP * project, int mg_select, int rec_select)"
+
+.PP
+Writing micrograph parameters to a Relion file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*filename\fP file name\&. 
+.br
+\fI*project\fP project structure\&. 
+.br
+\fImg_select\fP flag to select micrograph\&. 
+.br
+\fIrec_select\fP flag to select reconstruction\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 251 of file rwmgRELION\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

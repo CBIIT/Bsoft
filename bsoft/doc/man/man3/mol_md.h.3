@@ -1,0 +1,314 @@
+.TH "/Users/bernard/b20/bsoft/include/mol_md.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/mol_md.h \- Header for molecular dynamics\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmd\&.h'\fP
+.br
+\fC#include 'rwmolecule\&.h'\fP
+.br
+\fC#include 'mol_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "double \fBmd_leapfrog\fP (\fBBmolgroup\fP *molgroup, \fBBmd\fP *md, int max_iter, double velocitylimit)"
+.br
+.RI "Molecular dynamics using the leapfrog integrator\&. "
+.ti -1c
+.RI "int \fBmd_zero_forces\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Zero all atomic forces\&. "
+.ti -1c
+.RI "double \fBmd_bond_forces\fP (\fBBmolgroup\fP *molgroup, double Kbond, int wrap)"
+.br
+.RI "Calculates the covalent bond length forces and energy\&. "
+.ti -1c
+.RI "double \fBmd_angular_forces\fP (\fBBmolgroup\fP *molgroup, double Kangle, int wrap)"
+.br
+.RI "Calculates the covalent bond angular forces and energy\&. "
+.ti -1c
+.RI "double \fBmd_nonbonded_forces\fP (\fBBmolgroup\fP *molgroup, \fBBmd\fP *md)"
+.br
+.RI "Calculates the non-bonded forces and energy\&. "
+.ti -1c
+.RI "int \fBatom_nonbonded_forces\fP (\fBBatom\fP *atom1, \fBBatom\fP *atom2, \fBBmd\fP *md, \fBVector3\fP< double > box)"
+.br
+.RI "Calculates the non-bonded forces and energy between two atoms\&. "
+.ti -1c
+.RI "double \fBmd_point_force\fP (\fBBmolgroup\fP *molgroup, \fBVector3\fP< double > point, double Kpoint, double decay)"
+.br
+.RI "Calculates the atomic forces and energy resulting from a single point force\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header for molecular dynamics\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010828 
+.PP
+Modified: 20060412 
+.RE
+.PP
+
+.PP
+Definition in file \fBmol_md\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int atom_nonbonded_forces (\fBBatom\fP * atom, \fBBatom\fP * atom2, \fBBmd\fP * md, \fBVector3\fP< double > box)"
+
+.PP
+Calculates the non-bonded forces and energy between two atoms\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*atom\fP central atom\&. 
+.br
+\fI*atom2\fP second atom\&. 
+.br
+\fI*md\fP molecular dynamics structure\&. 
+.br
+\fIbox\fP dynamics box\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double total non-bonded energy\&. 
+.PP
+.nf
+The energy is defined as a Lennard-Jones term for the Van der Waals 
+interactions based on a reference length, ro, and a Coulomb term for 
+electrostatic interactions based on the atomic charges, q1 and q2: 
+    Enb = Kvdw*((1/12)*(|ro|/|r|)^12 - (1/6)*(|ro|/|r|)^6) + Kelec*q1*q2/|r|
+The force is the derivative of the energy:
+    Fnb = -Kvdw*((|ro|/|r|)^12 - (|ro|/|r|)^6)*r/|r| + Kelec*q1*q2*r/|r|^3
+where r is the distance vector, Kvdw is the Van der Waals energy constant
+and Kelec is the electrostatic energy constant.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 368 of file mol_md\&.cpp\&.
+.SS "double md_angular_forces (\fBBmolgroup\fP * molgroup, double Kangle, int wrap)"
+
+.PP
+Calculates the covalent bond angular forces and energy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecular structure\&. 
+.br
+\fIKangle\fP bond angle energy constant\&. 
+.br
+\fIwrap\fP flag to wrap around periodic boundaries\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double total bond angle energy\&. 
+.PP
+.nf
+The energy is defined as a harmonic function around the reference 
+bond angle, a0:
+    Ea = Ka*(cos(a0)-r1*r2/(|r1|*|r2|))^2
+The force is the derivative of the energy on the first and last atoms:
+    Fa1 = 2*Ka*(cos(a0)-r1*r2/(|r1|*|r2|))/(|r1|*|r2|) * ((r1*r2/|r1|)*r1-r2)
+    Fa3 = 2*Ka*(cos(a0)-r1*r2/(|r1|*|r2|))/(|r1|*|r2|) * ((r1*r2/|r2|)*r2-r1)
+where r1 is the vector from atom 2 to atom 1, r2 is the vector from
+atom 2 to atom 3, and Ka is the bond angle energy constant.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 233 of file mol_md\&.cpp\&.
+.SS "double md_bond_forces (\fBBmolgroup\fP * molgroup, double Kbond, int wrap)"
+
+.PP
+Calculates the covalent bond length forces and energy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecular structure\&. 
+.br
+\fIKbond\fP bond energy constant\&. 
+.br
+\fIwrap\fP flag to wrap around periodic boundaries\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double total bond length energy\&. 
+.PP
+.nf
+The energy is defined as a harmonic function around the reference 
+bond length, |ro|:
+    Eb = Kb*(|r|-|ro|)^2
+The force is the derivative of the energy:
+    Fb = -2*Kb*(|r|-|ro|)*r/|r|
+where r is the distance vector and Kb is the bond energy constant.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 190 of file mol_md\&.cpp\&.
+.SS "double md_leapfrog (\fBBmolgroup\fP * molgroup, \fBBmd\fP * md, int max_iter, double velocitylimit)"
+
+.PP
+Molecular dynamics using the leapfrog integrator\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecular structure\&. 
+.br
+\fI*md\fP molecular dynamics parameters\&. 
+.br
+\fImax_iter\fP maximum number of iterations to run\&. 
+.br
+\fIvelocitylimit\fP limit on velocity per time step\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double energy\&. 
+.PP
+.nf
+Leapfrog integration for any coordinate x, velocity vx and force Fx:
+    x(t+1) = x(t) + vx(t+1) * dt
+    vx(t+1) = (Fx(t) * dt/m + vx(t)) * kf
+    where
+        kf: friction constant (1=no friction)
+        dt: time step
+        m: atomic mass
+The velocity is limited each time step to damp chaotic oscillations.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 38 of file mol_md\&.cpp\&.
+.SS "double md_nonbonded_forces (\fBBmolgroup\fP * molgroup, \fBBmd\fP * md)"
+
+.PP
+Calculates the non-bonded forces and energy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecular structure\&. 
+.br
+\fI*md\fP molecular dynamics structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double total non-bonded energy\&. 
+.PP
+.nf
+The energy is defined as a Lennard-Jones term for the Van der Waals 
+interactions based on a reference length, ro, and a Coulomb term for 
+electrostatic interactions based on the atomic charges, q1 and q2: 
+    Enb = Kvdw*((1/12)*(|ro|/|r|)^12 - (1/6)*(|ro|/|r|)^6) + Kelec*q1*q2/|r|
+The force is the derivative of the energy:
+    Fnb = -Kvdw*((|ro|/|r|)^12 - (|ro|/|r|)^6)*r/|r| + Kelec*q1*q2*r/|r|^3
+where r is the distance vector, Kvdw is the Van der Waals energy constant
+and Kelec is the electrostatic energy constant.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 283 of file mol_md\&.cpp\&.
+.SS "double md_point_force (\fBBmolgroup\fP * molgroup, \fBVector3\fP< double > point, double Kpoint, double decay)"
+
+.PP
+Calculates the atomic forces and energy resulting from a single point force\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecular structure\&. 
+.br
+\fIpoint\fP center of point force\&. 
+.br
+\fIKpoint\fP point force constant\&. 
+.br
+\fIdecay\fP energy decay with distance\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double point force energy\&. 
+.PP
+.nf
+The energy is defined as an exponential decay over distance from the 
+center of the point force:
+    Ep = Kp * exp(-decay*dist)
+The force is the derivative of the energy:
+    Fp = Kp * decay * dir * exp(-decay*dist)
+where Kp is the point force constant, dist is the distance of the atom 
+from the center of the point force, decay is the energy decay with distance
+from the point force center, and dir is the normalized direction vector
+pointing from the point force center to the atom, indicating the direction
+of force.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 428 of file mol_md\&.cpp\&.
+.SS "int md_zero_forces (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Zero all atomic forces\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecular structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 161 of file mol_md\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

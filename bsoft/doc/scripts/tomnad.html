@@ -1,0 +1,98 @@
+<textarea readonly rows="60" cols="80">
+#!/bin/tcsh -f
+
+# tomnad
+# A script to denoise a tomogram
+# Usage:
+#	tomnad -size <x,y,z> -overlap <x,y,z> -iterations <n> <input> <output>
+#	Distributed processing: The lines with "psubmit" can be used with the Peach distributed system.
+# Example:
+#	tomnad -size 400,400,240 -overlap 100,100,0 -iterations 100 tomo.pif denoised.pif
+#	psubmit tomnad -size 400,400,240 -overlap 100,100,0 -iterations 100 tomo.pif denoised.pif -ss
+# Author: Bernard Heymann
+# 20070327 - 20101203
+
+# Defaults
+set SIZE = "400,400,240"
+set OL = "100,100,0"
+set ITER = 100
+
+# Peach switch
+set PSWITCH = 0
+if ( $?HASH_WORD ) set PSWITCH = 1
+
+# Command line
+echo -n tomnad
+set a = 1
+while ( $a <= $#argv )
+	echo -n " $argv[$a]"
+	@ a++
+end
+echo " "
+
+if ( $#argv < 1 ) then
+	echo "No input!"
+	exit
+endif
+
+# Interpret options
+set a = 1
+while ( "x$argv[$a]" =~ x-* )
+#	echo $a $argv[$a]
+	if ( "x$argv[$a]" =~ x-siz* ) then
+		@ a++
+		set SIZE = $argv[$a]
+	endif
+	if ( "x$argv[$a]" =~ x-ove* ) then
+		@ a++
+		set OL = $argv[$a]
+	endif
+	if ( "x$argv[$a]" =~ x-ite* ) then
+		@ a++
+		set ITER = $argv[$a]
+	endif
+	@ a++
+end
+
+set INF = $argv[$a]
+@ a++
+set OTF = $argv[$a]
+
+echo "Denoising parameters:"
+echo "--------------------"
+date
+echo "Input file            = $INF"
+echo "Output file           = $OTF"
+echo "Size                  = $SIZE"
+echo "Overlap               = $OL"
+echo "Iterations            = $ITER"
+
+# Split image into tiles
+btile -v 7 -size $SIZE -overlap $OL $INF tile.mrc
+
+# Denoise tiles
+set NT = 0
+foreach FILE ( tile*.mrc )
+	set JOB = `echo $FILE | cut -f1 -d"."`
+	set NADFILE = ${JOB}"_nad.mrc"
+	set CMD = "bnad -v 7 -dat float -iter $ITER -out 10 $FILE $NADFILE"
+	echo $CMD
+	if ( $PSWITCH ) then
+		psubmit $CMD -jn $JOB -mem 2
+	else
+		$CMD
+	endif
+	@ NT++
+end
+
+# Check if all the tiles have been denoised
+set N = 0
+while ( $N < $NT )
+	sleep 10
+	set N = `ls -1 *_nad.mrc | wc -l`
+	echo "$N tiles denoised"
+end
+
+bpatch -v 7 -tiles tile.tiles -out $OTF tile0??_nad.mrc
+
+</textarea>

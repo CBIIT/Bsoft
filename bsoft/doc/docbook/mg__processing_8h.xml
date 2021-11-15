@@ -1,0 +1,3647 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__processing_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/mg_processing.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/mg_processing.h</primary></indexterm>
+<para>
+
+<para>Header file for micrograph processing. </para>
+ 
+</para>
+<programlisting>#include &quot;ctf.h&quot;
+#include &quot;symmetry.h&quot;
+#include &quot;marker.h&quot;
+#include &quot;View.h&quot;
+#include &quot;Euler.h&quot;
+#include &quot;Bstring.h&quot;
+</programlisting><simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>class <link linkend="_class_bframe">Bframe</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_class_bparticle">Bparticle</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_class_bfilnode">Bfilnode</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_class_bfilament">Bfilament</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_class_bbadarea">Bbadarea</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_class_bstrucfac">Bstrucfac</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_class_blayerline">Blayerline</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_class_bmicrograph">Bmicrograph</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_class_bfield">Bfield</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_class_breconstruction">Breconstruction</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_class_bproject">Bproject</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_mg__processing_8h_1ae84172dd7ca73ab08d8b2f3e05e4a1bd">NFOM</link>   10</para>
+</listitem>
+            <listitem><para>#define <link linkend="_mg__processing_8h_1aed7e6e228b7fd67f42ee99ed71c173a6">MODE_PPS</link>   0</para>
+</listitem>
+            <listitem><para>#define <link linkend="_mg__processing_8h_1a7b7c8de8641ef3ea15dcabe51f383ab7">MODE_SCC</link>   1</para>
+</listitem>
+            <listitem><para>#define <link linkend="_mg__processing_8h_1a9ccbffa539e7ddf4266ed8b7bad27973">MODE_CCC</link>   2</para>
+</listitem>
+            <listitem><para>#define <link linkend="_mg__processing_8h_1ab8c52c1b4c021ed3e6b6b677bd2ac019">MODE</link>   3</para>
+</listitem>
+            <listitem><para>#define <link linkend="_mg__processing_8h_1a362a277b8fa83a46fbc7b4581decd0a7">FULL_ASU</link>   8</para>
+</listitem>
+            <listitem><para>#define <link linkend="_mg__processing_8h_1aa57ecac6e63249e8231a06817499de4c">MULTI_FILE</link>   16</para>
+</listitem>
+            <listitem><para>#define <link linkend="_mg__processing_8h_1ad0c43e5f420b67c107d8438c4133e943">APPLY_CTF</link>   32</para>
+</listitem>
+            <listitem><para>#define <link linkend="_mg__processing_8h_1a4efb1cd58f357b727017352c32459516">PART_LOG</link>   64</para>
+</listitem>
+            <listitem><para>#define <link linkend="_mg__processing_8h_1a77f715c5f3253bfde0474db82eb74a39">WRITE_PPX</link>   128</para>
+</listitem>
+            <listitem><para>#define <link linkend="_mg__processing_8h_1a315ca3b720b034606534af8cb26c66f6">CHECK_PPX</link>   256</para>
+</listitem>
+            <listitem><para>#define <link linkend="_mg__processing_8h_1a430974fce3ad38f27921beab66fdece6">_ProjectParamStructs_</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Enumerations    </title>
+        <itemizedlist>
+            <listitem><para>enum <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cf">FOMType</link> { 
+<link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa551a40f8bc3d35846bcb2ae6febb93b8">NoFOM</link>
+, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa065fec74420cd18346040e497d71993b">FOM</link>
+, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa31fea2d078f06af81b75a599eacc5544">FOM_CC</link>
+, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfafb7b28c211352092896774d30fcdc430">FOM_CV</link>
+, 
+<link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa853bde58f48f6880c63975f331d07fcc">FOM_SNR</link>
+, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfae32e29507c39f153deba7ace768695d3">FOM_CC_AVG</link>
+, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa972c8989e3bb5a412f44e83ea8c02444">FOM_CC_STD</link>
+, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfaf9d9f40a64cf52ce9a80c9dd68e8a1cc">FOM_HAND_A</link>
+, 
+<link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfaa574bba0b5509f16ca3967d48f16a9f9">FOM_HAND_B</link>
+, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa325ae8565ed0b9da723eb4041d119789">FOM_PFT_CC</link>
+, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa0f7cf6ba784ead8c5c1bef385f42a123">FOM_PFT_PRJ</link>
+, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa558886b7c2e6aa390544613eb612805a">FOM_PFT_CMP</link>
+, 
+<link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa387a9049c8103c665076f444dc2a6b9d">FOM_RFACTORAB</link>
+, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa262482a438211935eea644171d5bb4a6">COVERAGE</link>
+, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa9d2cc316ab2e6e5637281696bebc6ffd">DENSITY</link>
+, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa4796eb9aeaa0065da5f9d02fb4eae41b">FOM1</link>
+, 
+<link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa1b537fdabec28a0449a00c9a8e5c1b38">FOM2</link>
+, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa698fcbc7f8c54f6c7f3eddb4ef024cff">FOM3</link>
+, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa062705311781ab80b8511b3d49947c2a">FOM4</link>
+, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa61415279d2d31f8f19fe24ad8be7eff2">FOM5</link>
+, 
+<link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfae3761d93cb832028164094e146a804d5">FOM6</link>
+, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa658a3bec97657b45aae11d337cce801c">FOM7</link>
+, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa20995c415282a30abdbec2715bbc220b">FOM8</link>
+, <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa3b7ec516a34eb052c38d7d9587a1e46a">FOM9</link>
+, 
+<link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa5207a631b67a0fdb7192250bc4a9a162">FOMlast</link>
+ }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bproject">Bproject</link> * <link linkend="_mg__processing_8h_1ad1f222bc7be0953672c332c6e46cdd38">project_create</link> (int nmg, int nrec)</para>
+
+<para>Creates a micrograph processing project parameter structure. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a25d3404c481c541d872a3b413356d35b">project_equal_mg_part_files</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Sets micrograph and particle files to be the same. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bfield">Bfield</link> * <link linkend="_mg__processing_8h_1a88699a90fd28e99ae75a6917983d2bcf">field_add</link> (<link linkend="_class_bfield">Bfield</link> **field, <link linkend="_class_bstring">Bstring</link> &amp;field_id)</para>
+
+<para>Adds a field-of-view parameter structure to a linked list. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmicrograph">Bmicrograph</link> * <link linkend="_mg__processing_8h_1a84eceae3d7e32e0020f1367e700c5067">micrograph_add</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> **mg, <link linkend="_class_bstring">Bstring</link> &amp;mg_id)</para>
+
+<para>Adds a micrograph parameter structure to a linked list. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bframe">Bframe</link> * <link linkend="_mg__processing_8h_1a773fc6768efab4512b2a5177adaa925f">frame_add</link> (<link linkend="_class_bframe">Bframe</link> **frame, int pid)</para>
+
+<para>Adds a movie frame parameter structure to a linked list. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> * <link linkend="_mg__processing_8h_1a0f7ed71becb7cca444d3fc3958ebfef6">particle_add</link> (<link linkend="_class_bparticle">Bparticle</link> **part, int pid)</para>
+
+<para>Adds a particle parameter structure to a linked list. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a576729ae5e5de904255d9ce75bf8bbc7">mg_part_links</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg)</para>
+
+<para>Sets the links from particles to micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1af15de191006cbacd08c1de606733be2c">rec_part_links</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec)</para>
+
+<para>Sets the links from particles to reconstructions. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> * <link linkend="_mg__processing_8h_1a11b5d8faa9780cb1e293a7964ca5d045">part_find_first</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Finds the first particle in a project. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bfilament">Bfilament</link> * <link linkend="_mg__processing_8h_1a3c3409ebfdf0c3c9f76e512276daed15">filament_add</link> (<link linkend="_class_bfilament">Bfilament</link> **fil, int pid)</para>
+
+<para>Adds a filament parameter structure to a linked list. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bfilnode">Bfilnode</link> * <link linkend="_mg__processing_8h_1afd15ba5092d93cbf73031268d633c70e">filament_node_add</link> (<link linkend="_class_bfilnode">Bfilnode</link> **fnode, int pid)</para>
+
+<para>Adds a filament node parameter structure to a linked list. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__processing_8h_1a81e8d85bf058042c71e7f2cee45ba6cb">filament_length</link> (<link linkend="_class_bfilament">Bfilament</link> *fil)</para>
+
+<para>Calculates the length of a filament. </para>
+</listitem>
+            <listitem><para><link linkend="_class_breconstruction">Breconstruction</link> * <link linkend="_mg__processing_8h_1a019bf8ef2ecc6aadc2089aec61cf5cdb">reconstruction_add</link> (<link linkend="_class_breconstruction">Breconstruction</link> **rec, <link linkend="_class_bstring">Bstring</link> &amp;rec_id)</para>
+
+<para>Adds a reconstruction parameter structure to a linked list. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a2ecd27087626538aead67b4680eabedd">project_kill</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Frees a whole project. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a551b2c584dd16bd057485003a2801ffa">field_kill</link> (<link linkend="_class_bfield">Bfield</link> *field)</para>
+
+<para>Frees a whole field-of-view structure. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1aac2cfa0e97d4f68525e858bc3ae40364">micrograph_kill</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg)</para>
+
+<para>Frees a whole micrograph parameter structure. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a2b69dff52f2fcb6b0e1e39694b2a3a96">particle_kill</link> (<link linkend="_class_bparticle">Bparticle</link> *part)</para>
+
+<para>Frees a list of particles. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a3ee2658715e2f7c3af32aeed7c64ec1c">filament_kill</link> (<link linkend="_class_bfilament">Bfilament</link> *fil)</para>
+
+<para>Frees a list of filaments. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a35fd2be48fa9fd8c2d4f52121955f491">reconstruction_kill</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec)</para>
+
+<para>Frees a whole reconstruction parameter structure. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> * <link linkend="_mg__processing_8h_1a9678ea3ba7ef13987104207071d9a938">particle_copy</link> (<link linkend="_class_bparticle">Bparticle</link> **partlist, <link linkend="_class_bparticle">Bparticle</link> *part)</para>
+
+<para>Adds one particle onto a list of particle parameters. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> * <link linkend="_mg__processing_8h_1a71aa16a9928deabf084c63c2a096b4bd">particle_copy</link> (<link linkend="_class_bparticle">Bparticle</link> *partlist)</para>
+
+<para>Copies a list of particle parameters to a new list. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmicrograph">Bmicrograph</link> * <link linkend="_mg__processing_8h_1aa3fd204c1c90abf01c5b9a23c8f2886a">micrograph_copy</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg)</para>
+
+<para>Copies a micrograph. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1af3004e278b3e2e1d6a73d9ad14a91c4c">project_update</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bproject">Bproject</link> *proj_new, int fom_index)</para>
+
+<para>Updates an existing project with new information. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1aefee0cf4f70f4bb0c5b04cc898a61746">micrograph_update</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_bmicrograph">Bmicrograph</link> *nu_mg, int fom_index, int flags)</para>
+
+<para>Updates an existing micrograph with new information. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a8b0300342a1926860c5f00aaceaae329">reconstruction_update</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_breconstruction">Breconstruction</link> *nu_rec, int fom_index, int flags)</para>
+
+<para>Updates an existing reconstruction with new information. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a16b899181944923c9787130ee0d2faf1">particle_update</link> (<link linkend="_class_bparticle">Bparticle</link> *part, <link linkend="_class_bparticle">Bparticle</link> *nu_part)</para>
+
+<para>Updates one existing particle with new information. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a69f1ed7884ccf41af26203eeef36175d">particle_update</link> (<link linkend="_class_bparticle">Bparticle</link> **pnt_part, <link linkend="_class_bparticle">Bparticle</link> *new_part, int fom_index)</para>
+
+<para>Updates an existing particle list with new information. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1af723b0c3832b459eabeb7e5d1eaafc98">project_merge_part_parameters</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bproject">Bproject</link> *partproject)</para>
+
+<para>Puts particle parameters from one project into another. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__processing_8h_1a2d742963893ed82ccc163ff4a0bb33f9">project_set_part_links</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Sets the links from particles back to the micrographs and reconstructions. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__processing_8h_1a1ccae53c51e7761e60a95432871bf859">micrograph_set_part_links</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg)</para>
+
+<para>Sets the links from particles back to the micrograph. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__processing_8h_1a118c1837845abfc4fd1a7cccea4ea0ea">reconstruction_set_part_links</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec)</para>
+
+<para>Sets the links from particles back to the reconstruction. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__processing_8h_1a996afef91cc83786c8b920577182a74f">project_divide</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long n)</para>
+
+<para>Divides a project into a number of micrograph subsets. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmicrograph">Bmicrograph</link> ** <link linkend="_mg__processing_8h_1ac7775046402a74604b11c5b5daa3b917">project_micrograph_array</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long &amp;nmg)</para>
+
+<para>Sets up an array of selected micrograph pointers. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> ** <link linkend="_mg__processing_8h_1a7d8e3d54d7cdbdc3bc6fa625cefd5aae">project_mg_particle_array</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int <link linkend="_tcltk__bmg_8cpp_1a66823305785303716aa59f76b0e3359d">part_select</link>, long &amp;npart)</para>
+
+<para>Sets up an array of selected particle pointers. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> ** <link linkend="_mg__processing_8h_1afd534ce20c532c899a3de0a0d9272e44">project_rec_particle_array</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int <link linkend="_tcltk__bmg_8cpp_1a66823305785303716aa59f76b0e3359d">part_select</link>, long &amp;npart)</para>
+
+<para>Sets up an array of selected particle pointers. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> ** <link linkend="_mg__processing_8h_1a934ea28ec4fdaebf09eba0cf9a09d92c">particle_array</link> (<link linkend="_class_bparticle">Bparticle</link> *partlist, int <link linkend="_tcltk__bmg_8cpp_1a66823305785303716aa59f76b0e3359d">part_select</link>, long &amp;npart)</para>
+
+<para>Sets up an array of selected particle pointers. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a3075fd6be8909579fc652695ab97dd85">project_revert_filenames</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bproject">Bproject</link> *project_old, int flag)</para>
+
+<para>Reverts file names to what it was in an old project. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1ac0eab102922702421184be84cd9790e0">project_set_field_id</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int nseries, <link linkend="_class_bstring">Bstring</link> &amp;field_id)</para>
+
+<para>Sets the field id&apos;s according to a regular series. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__processing_8h_1ac1a5ab271d20f9d10e6249f2a4809222">project_show_hierarchy</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Shows the project hierarchy. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__processing_8h_1a52ad936e0c81e64a41492fb9bc7caba4">project_show_class_averages</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Shows the class averages in a project. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__processing_8h_1a8cb6072793702839f396256ddc2cb44c">project_dump</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+
+<para>Dumps particle info in the project hierarchy. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1aee29d487e2a375832b196ac46b0694f4">project_set_micrograph_path</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;path)</para>
+
+<para>Sets the path to micrograph files for all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1ad65009a72674549e06c890235f29ffee">project_set_frame_path</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;path)</para>
+
+<para>Sets the path to micrograph frames files for all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1afd06e7a40a415af7fa3a7de73e92a96e">project_set_powerspectrum_path</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;path)</para>
+
+<para>Sets the path to powerspectrum files for all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a41d210cceebbdd0aa97df99a64e6964d">project_set_particle_path</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;path)</para>
+
+<para>Sets the path to particle files for all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a12cba281bae1f9834833568e64961c1d">project_set_filament_path</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;path)</para>
+
+<para>Sets the path to filament files for all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a22d446c5ff1b3fe7e1de4b7f19adb920">project_set_magnification</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double mag)</para>
+
+<para>Sets the magnification for all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1acacec50ef8e493074e15030974084eb1">project_set_scan_sampling</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double sampling)</para>
+
+<para>Sets the scan sampling for all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a1e5ee9690def3d887a946f3dab93c5c0">project_set_mg_pixel_size</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; pixel_size)</para>
+
+<para>Sets the pixel size for all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a62883ca3f620e935ac81e2eb3e0b503f">project_set_frame_pixel_size</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; pixel_size)</para>
+
+<para>Sets the pixel size for all the micrograph frames. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a4c2405fb8ae798ec4128881865706f47">project_set_rec_voxel_size</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; pixel_size)</para>
+
+<para>Sets the pixel size for all the reconstructions. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1ad9f100bb973cd8f86e5df25a7e47bfbb">project_set_part_pixel_size</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; pixel_size)</para>
+
+<para>Sets the pixel size for all the particles. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1ad250e318df7f1ff7bc6444fdb3d0d42b">project_set_tilt</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double tilt_axis, double tilt_angle)</para>
+
+<para>Sets the tilt parameters for all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1aeababf316e7b9e5c96b8ce4b26bfdd43">project_sort_by_tilt</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Sorts the micrographs in each field by tilt angle. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1aa9985beb915c1bd31465f809a388d624">project_set_exposure</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double exposure)</para>
+
+<para>Sets the aquisition time of all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a0066207317aba6c6a3b3319166ba37d9">project_set_dose</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double dose)</para>
+
+<para>Sets the electron dose of all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1adf8588fc616368792a2f5cf788ea8cfa">project_set_dose</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_j_svalue">JSvalue</link> &amp;dose_frac)</para>
+
+<para>Sets the dose fractionation scheme of all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a42a79dfd8f1a3cee5baa7735f633649e">project_set_micrograph_origins</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</para>
+
+<para>Sets micrograph origins to the given origin. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1ab82fb8a5bc69b0b3c2aa2485b83e09f1">project_add_origins_to_coords</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Adds the particle origins to the micrograph coordinates. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a876f72881c0e2829e517aaf0df8acdea">project_flip_origins</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int flip)</para>
+
+<para>Flip origin coordinates. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__processing_8h_1a5837277b95ef6a1dc1f39b98b9d759a3">project_renumber_particles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Renumbers particles. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1ac3e8f5e1616cc4e958cc5357eb3ab7b6">project_set_particle_box_size</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; box_size)</para>
+
+<para>Sets particle box size to the given value. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1aa0536e68060c07b48f4f4f9ca353743d">project_set_particle_box_size</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long box_size)</para>
+
+<para>Sets particle box size to the given value. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a6b50ea2d44fbded720f3b094e84a908d">project_set_particle_origins</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</para>
+
+<para>Sets particle origins to given values. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1adac6093c933222b384c57b1c3ad69b77">project_set_particle_asu_views</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;symmetry_asu)</para>
+
+<para>Sets particle views within the asymmetric unit. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a74a7cb32e550eea4b3fd51ed7363e3bb">project_set_particle_asu_views</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym)</para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1ab3dd826e459645bbab9daaa7147909cc">project_rotate_particle_views</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_view">View</link> view)</para>
+
+<para>Rotates particle views with respect to a reference view. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__processing_8h_1a60d84303b4561d17729dabed733e9ca0">project_apply_map_magnifications</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int mag_num, float *mag)</para>
+
+<para>Change particle pixel sizes for particles based on map magnifications. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__processing_8h_1a1e03f649f616356016b969a83599ab42">project_reset</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;reset)</para>
+
+<para>Reset a particle parameter from its micrograph. </para>
+</listitem>
+            <listitem><para><link linkend="_class_view">View</link> * <link linkend="_mg__processing_8h_1a48e44d868399e6ea7a48bd1143c40c87">views_from_project</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int selection)</para>
+
+<para>Retrieves the particle views from a project. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="_mg__processing_8h_1ad546987441fbc7af42ab2eda64275974">get_fom_tag</link> (<link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cf">FOMType</link> fom_type)</para>
+
+<para>Returns the tag associated with a particular FOM. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for micrograph processing. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20000426 </para>
+
+<para>Modified: 20210728 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_mg__processing_8h_1a430974fce3ad38f27921beab66fdece6"/>    <section>
+    <title>_ProjectParamStructs_</title>
+<indexterm><primary>_ProjectParamStructs_</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>_ProjectParamStructs_</secondary></indexterm>
+<para><computeroutput>#define _ProjectParamStructs_</computeroutput></para><para>
+Definition at line 537 of file mg_processing.h.</para>
+    </section><anchor xml:id="_mg__processing_8h_1ad0c43e5f420b67c107d8438c4133e943"/>    <section>
+    <title>APPLY_CTF</title>
+<indexterm><primary>APPLY_CTF</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>APPLY_CTF</secondary></indexterm>
+<para><computeroutput>#define APPLY_CTF   32</computeroutput></para><para>
+Definition at line 24 of file mg_processing.h.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a315ca3b720b034606534af8cb26c66f6"/>    <section>
+    <title>CHECK_PPX</title>
+<indexterm><primary>CHECK_PPX</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>CHECK_PPX</secondary></indexterm>
+<para><computeroutput>#define CHECK_PPX   256</computeroutput></para><para>
+Definition at line 27 of file mg_processing.h.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a362a277b8fa83a46fbc7b4581decd0a7"/>    <section>
+    <title>FULL_ASU</title>
+<indexterm><primary>FULL_ASU</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FULL_ASU</secondary></indexterm>
+<para><computeroutput>#define FULL_ASU   8</computeroutput></para><para>
+Definition at line 22 of file mg_processing.h.</para>
+    </section><anchor xml:id="_mg__processing_8h_1ab8c52c1b4c021ed3e6b6b677bd2ac019"/>    <section>
+    <title>MODE</title>
+<indexterm><primary>MODE</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>MODE</secondary></indexterm>
+<para><computeroutput>#define MODE   3</computeroutput></para><para>
+Definition at line 21 of file mg_processing.h.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a9ccbffa539e7ddf4266ed8b7bad27973"/>    <section>
+    <title>MODE_CCC</title>
+<indexterm><primary>MODE_CCC</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>MODE_CCC</secondary></indexterm>
+<para><computeroutput>#define MODE_CCC   2</computeroutput></para><para>
+Definition at line 20 of file mg_processing.h.</para>
+    </section><anchor xml:id="_mg__processing_8h_1aed7e6e228b7fd67f42ee99ed71c173a6"/>    <section>
+    <title>MODE_PPS</title>
+<indexterm><primary>MODE_PPS</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>MODE_PPS</secondary></indexterm>
+<para><computeroutput>#define MODE_PPS   0</computeroutput></para><para>
+Definition at line 18 of file mg_processing.h.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a7b7c8de8641ef3ea15dcabe51f383ab7"/>    <section>
+    <title>MODE_SCC</title>
+<indexterm><primary>MODE_SCC</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>MODE_SCC</secondary></indexterm>
+<para><computeroutput>#define MODE_SCC   1</computeroutput></para><para>
+Definition at line 19 of file mg_processing.h.</para>
+    </section><anchor xml:id="_mg__processing_8h_1aa57ecac6e63249e8231a06817499de4c"/>    <section>
+    <title>MULTI_FILE</title>
+<indexterm><primary>MULTI_FILE</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>MULTI_FILE</secondary></indexterm>
+<para><computeroutput>#define MULTI_FILE   16</computeroutput></para><para>
+Definition at line 23 of file mg_processing.h.</para>
+    </section><anchor xml:id="_mg__processing_8h_1ae84172dd7ca73ab08d8b2f3e05e4a1bd"/>    <section>
+    <title>NFOM</title>
+<indexterm><primary>NFOM</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>NFOM</secondary></indexterm>
+<para><computeroutput>#define NFOM   10</computeroutput></para><para>
+Definition at line 16 of file mg_processing.h.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a4efb1cd58f357b727017352c32459516"/>    <section>
+    <title>PART_LOG</title>
+<indexterm><primary>PART_LOG</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>PART_LOG</secondary></indexterm>
+<para><computeroutput>#define PART_LOG   64</computeroutput></para><para>
+Definition at line 25 of file mg_processing.h.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a77f715c5f3253bfde0474db82eb74a39"/>    <section>
+    <title>WRITE_PPX</title>
+<indexterm><primary>WRITE_PPX</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>WRITE_PPX</secondary></indexterm>
+<para><computeroutput>#define WRITE_PPX   128</computeroutput></para><para>
+Definition at line 26 of file mg_processing.h.</para>
+</section>
+</section>
+<section>
+<title>Enumeration Type Documentation</title>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cf"/>    <section>
+    <title>FOMType</title>
+<indexterm><primary>FOMType</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOMType</secondary></indexterm>
+<para><computeroutput>enum <link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cf">FOMType</link></computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>NoFOM</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>NoFOM</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa551a40f8bc3d35846bcb2ae6febb93b8"/>NoFOM</entry><entry></entry></row><row><entry><indexterm><primary>FOM</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa065fec74420cd18346040e497d71993b"/>FOM</entry><entry></entry></row><row><entry><indexterm><primary>FOM_CC</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM_CC</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa31fea2d078f06af81b75a599eacc5544"/>FOM_CC</entry><entry></entry></row><row><entry><indexterm><primary>FOM_CV</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM_CV</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfafb7b28c211352092896774d30fcdc430"/>FOM_CV</entry><entry></entry></row><row><entry><indexterm><primary>FOM_SNR</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM_SNR</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa853bde58f48f6880c63975f331d07fcc"/>FOM_SNR</entry><entry></entry></row><row><entry><indexterm><primary>FOM_CC_AVG</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM_CC_AVG</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfae32e29507c39f153deba7ace768695d3"/>FOM_CC_AVG</entry><entry></entry></row><row><entry><indexterm><primary>FOM_CC_STD</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM_CC_STD</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa972c8989e3bb5a412f44e83ea8c02444"/>FOM_CC_STD</entry><entry></entry></row><row><entry><indexterm><primary>FOM_HAND_A</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM_HAND_A</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfaf9d9f40a64cf52ce9a80c9dd68e8a1cc"/>FOM_HAND_A</entry><entry></entry></row><row><entry><indexterm><primary>FOM_HAND_B</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM_HAND_B</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfaa574bba0b5509f16ca3967d48f16a9f9"/>FOM_HAND_B</entry><entry></entry></row><row><entry><indexterm><primary>FOM_PFT_CC</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM_PFT_CC</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa325ae8565ed0b9da723eb4041d119789"/>FOM_PFT_CC</entry><entry></entry></row><row><entry><indexterm><primary>FOM_PFT_PRJ</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM_PFT_PRJ</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa0f7cf6ba784ead8c5c1bef385f42a123"/>FOM_PFT_PRJ</entry><entry></entry></row><row><entry><indexterm><primary>FOM_PFT_CMP</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM_PFT_CMP</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa558886b7c2e6aa390544613eb612805a"/>FOM_PFT_CMP</entry><entry></entry></row><row><entry><indexterm><primary>FOM_RFACTORAB</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM_RFACTORAB</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa387a9049c8103c665076f444dc2a6b9d"/>FOM_RFACTORAB</entry><entry></entry></row><row><entry><indexterm><primary>COVERAGE</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>COVERAGE</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa262482a438211935eea644171d5bb4a6"/>COVERAGE</entry><entry></entry></row><row><entry><indexterm><primary>DENSITY</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>DENSITY</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa9d2cc316ab2e6e5637281696bebc6ffd"/>DENSITY</entry><entry></entry></row><row><entry><indexterm><primary>FOM1</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM1</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa4796eb9aeaa0065da5f9d02fb4eae41b"/>FOM1</entry><entry></entry></row><row><entry><indexterm><primary>FOM2</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM2</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa1b537fdabec28a0449a00c9a8e5c1b38"/>FOM2</entry><entry></entry></row><row><entry><indexterm><primary>FOM3</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM3</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa698fcbc7f8c54f6c7f3eddb4ef024cff"/>FOM3</entry><entry></entry></row><row><entry><indexterm><primary>FOM4</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM4</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa062705311781ab80b8511b3d49947c2a"/>FOM4</entry><entry></entry></row><row><entry><indexterm><primary>FOM5</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM5</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa61415279d2d31f8f19fe24ad8be7eff2"/>FOM5</entry><entry></entry></row><row><entry><indexterm><primary>FOM6</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM6</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfae3761d93cb832028164094e146a804d5"/>FOM6</entry><entry></entry></row><row><entry><indexterm><primary>FOM7</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM7</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa658a3bec97657b45aae11d337cce801c"/>FOM7</entry><entry></entry></row><row><entry><indexterm><primary>FOM8</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM8</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa20995c415282a30abdbec2715bbc220b"/>FOM8</entry><entry></entry></row><row><entry><indexterm><primary>FOM9</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOM9</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa3b7ec516a34eb052c38d7d9587a1e46a"/>FOM9</entry><entry></entry></row><row><entry><indexterm><primary>FOMlast</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>FOMlast</secondary></indexterm>
+<anchor xml:id="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cfa5207a631b67a0fdb7192250bc4a9a162"/>FOMlast</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 38 of file mg_processing.h.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__processing_8h_1a88699a90fd28e99ae75a6917983d2bcf"/>    <section>
+    <title>field_add()</title>
+<indexterm><primary>field_add</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>field_add</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bfield">Bfield</link>* field_add (<link linkend="_class_bfield">Bfield</link> ** field, <link linkend="_class_bstring">Bstring</link> &amp; field_id)</computeroutput></para><para>
+
+<para>Adds a field-of-view parameter structure to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**field</entry>
+                                <entry>
+<para>pointer to any field-of-view in the list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>field_id</entry>
+                                <entry>
+<para>field identifier. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bfield* new field-of-view. <literallayout><computeroutput>The function allocates memory for a new field-of-view structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 106 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a551b2c584dd16bd057485003a2801ffa"/>    <section>
+    <title>field_kill()</title>
+<indexterm><primary>field_kill</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>field_kill</secondary></indexterm>
+<para><computeroutput>int field_kill (<link linkend="_class_bfield">Bfield</link> * field)</computeroutput></para><para>
+
+<para>Frees a whole field-of-view structure. </para>
+</para>
+
+<para><literallayout><computeroutput>Frees all the structures down the hierarchy.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*field</entry>
+                                <entry>
+<para>field-of-view parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 429 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a3c3409ebfdf0c3c9f76e512276daed15"/>    <section>
+    <title>filament_add()</title>
+<indexterm><primary>filament_add</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>filament_add</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bfilament">Bfilament</link>* filament_add (<link linkend="_class_bfilament">Bfilament</link> ** fil, int pid)</computeroutput></para><para>
+
+<para>Adds a filament parameter structure to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**fil</entry>
+                                <entry>
+<para>pointer to any filament in the list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pid</entry>
+                                <entry>
+<para>filament number in file (starts at 1). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bfilament* new filament. <literallayout><computeroutput>The function allocates memory for a new filament structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 288 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a3ee2658715e2f7c3af32aeed7c64ec1c"/>    <section>
+    <title>filament_kill()</title>
+<indexterm><primary>filament_kill</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>filament_kill</secondary></indexterm>
+<para><computeroutput>int filament_kill (<link linkend="_class_bfilament">Bfilament</link> * fil)</computeroutput></para><para>
+
+<para>Frees a list of filaments. </para>
+</para>
+
+<para><literallayout><computeroutput>Frees all the structures down the hierarchy.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*fil</entry>
+                                <entry>
+<para>filament parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 515 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a81e8d85bf058042c71e7f2cee45ba6cb"/>    <section>
+    <title>filament_length()</title>
+<indexterm><primary>filament_length</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>filament_length</secondary></indexterm>
+<para><computeroutput>double filament_length (<link linkend="_class_bfilament">Bfilament</link> * fil)</computeroutput></para><para>
+
+<para>Calculates the length of a filament. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*fil</entry>
+                                <entry>
+<para>pointer to a filament. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double length in coordinate units. <literallayout><computeroutput>The length is defined as the sum of the link lengths connecting the nodes.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 342 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1afd15ba5092d93cbf73031268d633c70e"/>    <section>
+    <title>filament_node_add()</title>
+<indexterm><primary>filament_node_add</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>filament_node_add</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bfilnode">Bfilnode</link>* filament_node_add (<link linkend="_class_bfilnode">Bfilnode</link> ** fnode, int pid)</computeroutput></para><para>
+
+<para>Adds a filament node parameter structure to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**fnode</entry>
+                                <entry>
+<para>pointer to any filament node in the list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pid</entry>
+                                <entry>
+<para>filament node number in file (starts at 1). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bfilnode* new filament node. <literallayout><computeroutput>The function allocates memory for a new filament node structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 317 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a773fc6768efab4512b2a5177adaa925f"/>    <section>
+    <title>frame_add()</title>
+<indexterm><primary>frame_add</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>frame_add</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bframe">Bframe</link>* frame_add (<link linkend="_class_bframe">Bframe</link> ** frame, int pid)</computeroutput></para><para>
+
+<para>Adds a movie frame parameter structure to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**frame</entry>
+                                <entry>
+<para>pointer to any frame in the list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pid</entry>
+                                <entry>
+<para>particle number in file (starts at 1). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bframe* new frame. <literallayout><computeroutput>The function allocates memory for a new frame structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 167 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1ad546987441fbc7af42ab2eda64275974"/>    <section>
+    <title>get_fom_tag()</title>
+<indexterm><primary>get_fom_tag</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>get_fom_tag</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> get_fom_tag (<link linkend="_mg__processing_8h_1a9b8250bcd3dbae566bd5ef8a6089b1cf">FOMType</link> fom_type)</computeroutput></para><para>
+
+<para>Returns the tag associated with a particular FOM. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>fom_type</entry>
+                                <entry>
+<para>type of FOM. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_bstring">Bstring</link> FOM tag. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2670 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a576729ae5e5de904255d9ce75bf8bbc7"/>    <section>
+    <title>mg_part_links()</title>
+<indexterm><primary>mg_part_links</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>mg_part_links</secondary></indexterm>
+<para><computeroutput>int mg_part_links (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg)</computeroutput></para><para>
+
+<para>Sets the links from particles to micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>pointer to micrograph. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 218 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a84eceae3d7e32e0020f1367e700c5067"/>    <section>
+    <title>micrograph_add()</title>
+<indexterm><primary>micrograph_add</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>micrograph_add</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmicrograph">Bmicrograph</link>* micrograph_add (<link linkend="_class_bmicrograph">Bmicrograph</link> ** mg, <link linkend="_class_bstring">Bstring</link> &amp; mg_id)</computeroutput></para><para>
+
+<para>Adds a micrograph parameter structure to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**mg</entry>
+                                <entry>
+<para>pointer to any micrograph in the list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mg_id</entry>
+                                <entry>
+<para>micrograph identifier. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmicrograph* new micrograph. <literallayout><computeroutput>The function allocates memory for a new micrograph structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 135 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1aa3fd204c1c90abf01c5b9a23c8f2886a"/>    <section>
+    <title>micrograph_copy()</title>
+<indexterm><primary>micrograph_copy</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>micrograph_copy</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmicrograph">Bmicrograph</link>* micrograph_copy (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg)</computeroutput></para><para>
+
+<para>Copies a micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph structure to be copied. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmicrograph* new micrograph. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 698 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1aac2cfa0e97d4f68525e858bc3ae40364"/>    <section>
+    <title>micrograph_kill()</title>
+<indexterm><primary>micrograph_kill</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>micrograph_kill</secondary></indexterm>
+<para><computeroutput>int micrograph_kill (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg)</computeroutput></para><para>
+
+<para>Frees a whole micrograph parameter structure. </para>
+</para>
+
+<para><literallayout><computeroutput>Frees all the structures down the hierarchy.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 456 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a1ccae53c51e7761e60a95432871bf859"/>    <section>
+    <title>micrograph_set_part_links()</title>
+<indexterm><primary>micrograph_set_part_links</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>micrograph_set_part_links</secondary></indexterm>
+<para><computeroutput>long micrograph_set_part_links (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg)</computeroutput></para><para>
+
+<para>Sets the links from particles back to the micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1135 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1aefee0cf4f70f4bb0c5b04cc898a61746"/>    <section>
+    <title>micrograph_update()</title>
+<indexterm><primary>micrograph_update</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>micrograph_update</secondary></indexterm>
+<para><computeroutput>int micrograph_update (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_bmicrograph">Bmicrograph</link> * nu_mg, int fom_index, int flags)</computeroutput></para><para>
+
+<para>Updates an existing micrograph with new information. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph structure to be updated. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*nu_mg</entry>
+                                <entry>
+<para>micrograph structure with new information. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>index of FOM to select on. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>flags indicating which parts to update. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The new information is encoded as a micrograph structure.
+All fields are updated if the new fields contain non-default data.
+Defaults are defined here as zero-length strings or zeroes.
+The particles in the original micrograph are matched by ID with 
+those in the new micrograph and updated, with any new particles 
+added from the new micrograph.
+The bad area and marker coordinates are replaced if they exist 
+in the new structure.
+The new micrograph structure is not modified, except for deletion 
+of bad areas and markers.
+
+Flags:
+    1   particles
+    2   bad areas
+    4   filaments
+    8   structure factors
+    16  layer lines
+    32  markers
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 842 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a11b5d8faa9780cb1e293a7964ca5d045"/>    <section>
+    <title>part_find_first()</title>
+<indexterm><primary>part_find_first</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>part_find_first</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>* part_find_first (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Finds the first particle in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>pointer to project. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bparticle* first particle with a filename. <literallayout><computeroutput>The function searches for the first particle with a filename.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 252 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a0f7ed71becb7cca444d3fc3958ebfef6"/>    <section>
+    <title>particle_add()</title>
+<indexterm><primary>particle_add</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>particle_add</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>* particle_add (<link linkend="_class_bparticle">Bparticle</link> ** part, int pid)</computeroutput></para><para>
+
+<para>Adds a particle parameter structure to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**part</entry>
+                                <entry>
+<para>pointer to any particle in the list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pid</entry>
+                                <entry>
+<para>particle number in file (starts at 1). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bparticle* new particle. <literallayout><computeroutput>The function allocates memory for a new particle structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 196 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a934ea28ec4fdaebf09eba0cf9a09d92c"/>    <section>
+    <title>particle_array()</title>
+<indexterm><primary>particle_array</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>particle_array</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>** particle_array (<link linkend="_class_bparticle">Bparticle</link> * partlist, int part_select, long &amp; npart)</computeroutput></para><para>
+
+<para>Sets up an array of selected particle pointers. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*partlist</entry>
+                                <entry>
+<para>particle linked list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>part_select</entry>
+                                <entry>
+<para>particle selection (-1 if none). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;npart</entry>
+                                <entry>
+<para>array length (modified). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bparticle** particle pointer array. <literallayout><computeroutput>FOM&apos;s of non-selected particles are zeroed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1325 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a9678ea3ba7ef13987104207071d9a938"/>    <section>
+    <title>particle_copy()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>particle_copy</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>particle_copy</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>* particle_copy (<link linkend="_class_bparticle">Bparticle</link> ** partlist, <link linkend="_class_bparticle">Bparticle</link> * part)</computeroutput></para><para>
+
+<para>Adds one particle onto a list of particle parameters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**partlist</entry>
+                                <entry>
+<para>destination particle list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*part</entry>
+                                <entry>
+<para>particle. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bparticle* new particle. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 577 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a71aa16a9928deabf084c63c2a096b4bd"/>    <section>
+    <title>particle_copy()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>particle_copy</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>particle_copy</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>* particle_copy (<link linkend="_class_bparticle">Bparticle</link> * partlist)</computeroutput></para><para>
+
+<para>Copies a list of particle parameters to a new list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*partlist</entry>
+                                <entry>
+<para>source particle list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bparticle* new list. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 606 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a2b69dff52f2fcb6b0e1e39694b2a3a96"/>    <section>
+    <title>particle_kill()</title>
+<indexterm><primary>particle_kill</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>particle_kill</secondary></indexterm>
+<para><computeroutput>int particle_kill (<link linkend="_class_bparticle">Bparticle</link> * part)</computeroutput></para><para>
+
+<para>Frees a list of particles. </para>
+</para>
+
+<para><literallayout><computeroutput>Frees all the structures down the hierarchy.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*part</entry>
+                                <entry>
+<para>particle parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 491 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a69f1ed7884ccf41af26203eeef36175d"/>    <section>
+    <title>particle_update()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>particle_update</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>particle_update</secondary></indexterm>
+<para><computeroutput>int particle_update (<link linkend="_class_bparticle">Bparticle</link> ** pnt_part, <link linkend="_class_bparticle">Bparticle</link> * nu_part, int fom_index)</computeroutput></para><para>
+
+<para>Updates an existing particle list with new information. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**pnt_part</entry>
+                                <entry>
+<para>particle structure list to be updated. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*nu_part</entry>
+                                <entry>
+<para>particle structure list with new information. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>index of FOM to select on. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The new information is encoded as a particle structure.
+All fields are updated if the new fields contain non-default data.
+Defaults are defined here as zeroes.
+The new particle structure is not modified.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1038 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a16b899181944923c9787130ee0d2faf1"/>    <section>
+    <title>particle_update()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>particle_update</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>particle_update</secondary></indexterm>
+<para><computeroutput>int particle_update (<link linkend="_class_bparticle">Bparticle</link> * part, <link linkend="_class_bparticle">Bparticle</link> * nu_part)</computeroutput></para><para>
+
+<para>Updates one existing particle with new information. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*part</entry>
+                                <entry>
+<para>particle structure to be updated. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*nu_part</entry>
+                                <entry>
+<para>particle structure with new information. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The new information is encoded as a particle structure.
+All fields are updated if the new fields contain non-default data.
+Defaults are defined here as zeroes.
+The new particle structure is not modified.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 991 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1ab82fb8a5bc69b0b3c2aa2485b83e09f1"/>    <section>
+    <title>project_add_origins_to_coords()</title>
+<indexterm><primary>project_add_origins_to_coords</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_add_origins_to_coords</secondary></indexterm>
+<para><computeroutput>int project_add_origins_to_coords (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Adds the particle origins to the micrograph coordinates. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The coordinates of particles from a micrograph and particle origins
+in an image processing parameter structure are added. The old
+micrograph coordinates are overwritten with the results.
+Requirement: The box radius for picked particles must be specified.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2214 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a60d84303b4561d17729dabed733e9ca0"/>    <section>
+    <title>project_apply_map_magnifications()</title>
+<indexterm><primary>project_apply_map_magnifications</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_apply_map_magnifications</secondary></indexterm>
+<para><computeroutput>int project_apply_map_magnifications (<link linkend="_class_bproject">Bproject</link> * project, int mag_num, float * mag)</computeroutput></para><para>
+
+<para>Change particle pixel sizes for particles based on map magnifications. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mag_num</entry>
+                                <entry>
+<para>number of maps; </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*mag</entry>
+                                <entry>
+<para>array of map magnifications. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2529 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1ad1f222bc7be0953672c332c6e46cdd38"/>    <section>
+    <title>project_create()</title>
+<indexterm><primary>project_create</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_create</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bproject">Bproject</link>* project_create (int nmg, int nrec)</computeroutput></para><para>
+
+<para>Creates a micrograph processing project parameter structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>nmg</entry>
+                                <entry>
+<para>number of micrograph structures. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nrec</entry>
+                                <entry>
+<para>number of reconstruction structures. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bproject* project parameter structure. <literallayout><computeroutput>The function allocates memory for the project structure, a field-of-view structure,
+and the requested number of micrographs and reconstructions.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 33 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a996afef91cc83786c8b920577182a74f"/>    <section>
+    <title>project_divide()</title>
+<indexterm><primary>project_divide</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_divide</secondary></indexterm>
+<para><computeroutput>long project_divide (<link linkend="_class_bproject">Bproject</link> * project, long n)</computeroutput></para><para>
+
+<para>Divides a project into a number of micrograph subsets. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>number of subsets. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of new projects created. <literallayout><computeroutput>Only selected micrographs are considered in the subdivision.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1169 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a8cb6072793702839f396256ddc2cb44c"/>    <section>
+    <title>project_dump()</title>
+<indexterm><primary>project_dump</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_dump</secondary></indexterm>
+<para><computeroutput>long project_dump (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+
+<para>Dumps particle info in the project hierarchy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>output file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles dumped. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1611 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a25d3404c481c541d872a3b413356d35b"/>    <section>
+    <title>project_equal_mg_part_files()</title>
+<indexterm><primary>project_equal_mg_part_files</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_equal_mg_part_files</secondary></indexterm>
+<para><computeroutput>int project_equal_mg_part_files (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Sets micrograph and particle files to be the same. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>If the micrograph file name exists, that is used, otherwise the
+particle file name is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 73 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a876f72881c0e2829e517aaf0df8acdea"/>    <section>
+    <title>project_flip_origins()</title>
+<indexterm><primary>project_flip_origins</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_flip_origins</secondary></indexterm>
+<para><computeroutput>int project_flip_origins (<link linkend="_class_bproject">Bproject</link> * project, int flip)</computeroutput></para><para>
+
+<para>Flip origin coordinates. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flip</entry>
+                                <entry>
+<para>axes to flip. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The particle origins are reversed.
+The specification of axes to flip is embedded in the flip number:
+    first bit  - x
+    second bit - y
+    third bit  - z
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2256 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a2ecd27087626538aead67b4680eabedd"/>    <section>
+    <title>project_kill()</title>
+<indexterm><primary>project_kill</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_kill</secondary></indexterm>
+<para><computeroutput>int project_kill (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Frees a whole project. </para>
+</para>
+
+<para><literallayout><computeroutput>Frees all the structures down the hierarchy.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 392 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1af723b0c3832b459eabeb7e5d1eaafc98"/>    <section>
+    <title>project_merge_part_parameters()</title>
+<indexterm><primary>project_merge_part_parameters</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_merge_part_parameters</secondary></indexterm>
+<para><computeroutput>int project_merge_part_parameters (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bproject">Bproject</link> * partproject)</computeroutput></para><para>
+
+<para>Puts particle parameters from one project into another. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*partproject</entry>
+                                <entry>
+<para>project parameter structure with particle parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1083 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a7d8e3d54d7cdbdc3bc6fa625cefd5aae"/>    <section>
+    <title>project_mg_particle_array()</title>
+<indexterm><primary>project_mg_particle_array</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_mg_particle_array</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>** project_mg_particle_array (<link linkend="_class_bproject">Bproject</link> * project, int part_select, long &amp; npart)</computeroutput></para><para>
+
+<para>Sets up an array of selected particle pointers. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>part_select</entry>
+                                <entry>
+<para>particle selection (-1 if none). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;npart</entry>
+                                <entry>
+<para>array length (modified). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bparticle** particle pointer array. <literallayout><computeroutput>FOM&apos;s of non-selected particles are zeroed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1247 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1ac7775046402a74604b11c5b5daa3b917"/>    <section>
+    <title>project_micrograph_array()</title>
+<indexterm><primary>project_micrograph_array</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_micrograph_array</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmicrograph">Bmicrograph</link>** project_micrograph_array (<link linkend="_class_bproject">Bproject</link> * project, long &amp; nmg)</computeroutput></para><para>
+
+<para>Sets up an array of selected micrograph pointers. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;nmg</entry>
+                                <entry>
+<para>array length (modified). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmicrograph** micrograph pointer array. <literallayout><computeroutput>FOM&apos;s of non-selected micrographs are zeroed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1219 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1afd534ce20c532c899a3de0a0d9272e44"/>    <section>
+    <title>project_rec_particle_array()</title>
+<indexterm><primary>project_rec_particle_array</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_rec_particle_array</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>** project_rec_particle_array (<link linkend="_class_bproject">Bproject</link> * project, int part_select, long &amp; npart)</computeroutput></para><para>
+
+<para>Sets up an array of selected particle pointers. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>part_select</entry>
+                                <entry>
+<para>particle selection (-1 if none). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;npart</entry>
+                                <entry>
+<para>array length (modified). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bparticle** particle pointer array. <literallayout><computeroutput>FOM&apos;s of non-selected particles are zeroed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1289 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a5837277b95ef6a1dc1f39b98b9d759a3"/>    <section>
+    <title>project_renumber_particles()</title>
+<indexterm><primary>project_renumber_particles</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_renumber_particles</secondary></indexterm>
+<para><computeroutput>long project_renumber_particles (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Renumbers particles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long total number of particles. <literallayout><computeroutput>For each micrograph the particles are renumbered starting from 1.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2307 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a1e03f649f616356016b969a83599ab42"/>    <section>
+    <title>project_reset()</title>
+<indexterm><primary>project_reset</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_reset</secondary></indexterm>
+<para><computeroutput>long project_reset (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; reset)</computeroutput></para><para>
+
+<para>Reset a particle parameter from its micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;reset</entry>
+                                <entry>
+<para>a string specifying the parameter. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles changed. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2574 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a3075fd6be8909579fc652695ab97dd85"/>    <section>
+    <title>project_revert_filenames()</title>
+<indexterm><primary>project_revert_filenames</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_revert_filenames</secondary></indexterm>
+<para><computeroutput>int project_revert_filenames (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bproject">Bproject</link> * project_old, int flag)</computeroutput></para><para>
+
+<para>Reverts file names to what it was in an old project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project_old</entry>
+                                <entry>
+<para>project parameter structure with old file names. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flag</entry>
+                                <entry>
+<para>1=mg, 2=ps, 4=rec, 8=part, 16=frames. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1353 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1ab3dd826e459645bbab9daaa7147909cc"/>    <section>
+    <title>project_rotate_particle_views()</title>
+<indexterm><primary>project_rotate_particle_views</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_rotate_particle_views</secondary></indexterm>
+<para><computeroutput>int project_rotate_particle_views (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_view">View</link> view)</computeroutput></para><para>
+
+<para>Rotates particle views with respect to a reference view. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Eduardo Sanz-Garcia </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view</entry>
+                                <entry>
+<para>reference view. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2487 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a0066207317aba6c6a3b3319166ba37d9"/>    <section>
+    <title>project_set_dose()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>project_set_dose</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_dose</secondary></indexterm>
+<para><computeroutput>int project_set_dose (<link linkend="_class_bproject">Bproject</link> * project, double dose)</computeroutput></para><para>
+
+<para>Sets the electron dose of all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>dose</entry>
+                                <entry>
+<para>electron dose (e/A2). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2112 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1adf8588fc616368792a2f5cf788ea8cfa"/>    <section>
+    <title>project_set_dose()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>project_set_dose</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_dose</secondary></indexterm>
+<para><computeroutput>int project_set_dose (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_j_svalue">JSvalue</link> &amp; dose_frac)</computeroutput></para><para>
+
+<para>Sets the dose fractionation scheme of all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>dose_frac</entry>
+                                <entry>
+<para>electron dose fractionation scheme. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2132 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1aa9985beb915c1bd31465f809a388d624"/>    <section>
+    <title>project_set_exposure()</title>
+<indexterm><primary>project_set_exposure</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_exposure</secondary></indexterm>
+<para><computeroutput>int project_set_exposure (<link linkend="_class_bproject">Bproject</link> * project, double exposure)</computeroutput></para><para>
+
+<para>Sets the aquisition time of all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>exposure</entry>
+                                <entry>
+<para>aquisition time (seconds). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2092 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1ac0eab102922702421184be84cd9790e0"/>    <section>
+    <title>project_set_field_id()</title>
+<indexterm><primary>project_set_field_id</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_field_id</secondary></indexterm>
+<para><computeroutput>int project_set_field_id (<link linkend="_class_bproject">Bproject</link> * project, int nseries, <link linkend="_class_bstring">Bstring</link> &amp; field_id)</computeroutput></para><para>
+
+<para>Sets the field id&apos;s according to a regular series. </para>
+</para>
+
+<para><literallayout><computeroutput>The micrograph data blocks must be arranged in a regular order with
+every nseries micrographs from the same field-of-view.
+The field id&apos;s are taken from the first micrograph id in a series.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nseries</entry>
+                                <entry>
+<para>number of micrographs per field-of-view. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;field_id</entry>
+                                <entry>
+<para>a user-specified field ID. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1421 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a12cba281bae1f9834833568e64961c1d"/>    <section>
+    <title>project_set_filament_path()</title>
+<indexterm><primary>project_set_filament_path</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_filament_path</secondary></indexterm>
+<para><computeroutput>int project_set_filament_path (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; path)</computeroutput></para><para>
+
+<para>Sets the path to filament files for all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;path</entry>
+                                <entry>
+<para>path to filament files. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>If the requested path is &quot;.&quot; or &quot;./&quot;, the path is completely removed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1868 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1ad65009a72674549e06c890235f29ffee"/>    <section>
+    <title>project_set_frame_path()</title>
+<indexterm><primary>project_set_frame_path</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_frame_path</secondary></indexterm>
+<para><computeroutput>int project_set_frame_path (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; path)</computeroutput></para><para>
+
+<para>Sets the path to micrograph frames files for all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;path</entry>
+                                <entry>
+<para>path to micrograph frames files. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>If the requested path is &quot;.&quot; or &quot;./&quot;, the path is completely removed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1760 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a62883ca3f620e935ac81e2eb3e0b503f"/>    <section>
+    <title>project_set_frame_pixel_size()</title>
+<indexterm><primary>project_set_frame_pixel_size</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_frame_pixel_size</secondary></indexterm>
+<para><computeroutput>int project_set_frame_pixel_size (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; pixel_size)</computeroutput></para><para>
+
+<para>Sets the pixel size for all the micrograph frames. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pixel_size</entry>
+                                <entry>
+<para>pixel size. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1986 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a22d446c5ff1b3fe7e1de4b7f19adb920"/>    <section>
+    <title>project_set_magnification()</title>
+<indexterm><primary>project_set_magnification</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_magnification</secondary></indexterm>
+<para><computeroutput>int project_set_magnification (<link linkend="_class_bproject">Bproject</link> * project, double mag)</computeroutput></para><para>
+
+<para>Sets the magnification for all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mag</entry>
+                                <entry>
+<para>magnification. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1919 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a1e5ee9690def3d887a946f3dab93c5c0"/>    <section>
+    <title>project_set_mg_pixel_size()</title>
+<indexterm><primary>project_set_mg_pixel_size</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_mg_pixel_size</secondary></indexterm>
+<para><computeroutput>int project_set_mg_pixel_size (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; pixel_size)</computeroutput></para><para>
+
+<para>Sets the pixel size for all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pixel_size</entry>
+                                <entry>
+<para>pixel size. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1962 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a42a79dfd8f1a3cee5baa7735f633649e"/>    <section>
+    <title>project_set_micrograph_origins()</title>
+<indexterm><primary>project_set_micrograph_origins</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_micrograph_origins</secondary></indexterm>
+<para><computeroutput>int project_set_micrograph_origins (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</computeroutput></para><para>
+
+<para>Sets micrograph origins to the given origin. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>particle origin. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>For each micrograph the micrograph origin is set to the given origin.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2182 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1aee29d487e2a375832b196ac46b0694f4"/>    <section>
+    <title>project_set_micrograph_path()</title>
+<indexterm><primary>project_set_micrograph_path</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_micrograph_path</secondary></indexterm>
+<para><computeroutput>int project_set_micrograph_path (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; path)</computeroutput></para><para>
+
+<para>Sets the path to micrograph files for all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;path</entry>
+                                <entry>
+<para>path to micrograph files. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>If the requested path is &quot;.&quot; or &quot;./&quot;, the path is completely removed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1731 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a2d742963893ed82ccc163ff4a0bb33f9"/>    <section>
+    <title>project_set_part_links()</title>
+<indexterm><primary>project_set_part_links</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_part_links</secondary></indexterm>
+<para><computeroutput>long project_set_part_links (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Sets the links from particles back to the micrographs and reconstructions. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1113 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1ad9f100bb973cd8f86e5df25a7e47bfbb"/>    <section>
+    <title>project_set_part_pixel_size()</title>
+<indexterm><primary>project_set_part_pixel_size</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_part_pixel_size</secondary></indexterm>
+<para><computeroutput>int project_set_part_pixel_size (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; pixel_size)</computeroutput></para><para>
+
+<para>Sets the pixel size for all the particles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pixel_size</entry>
+                                <entry>
+<para>pixel size. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2035 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1adac6093c933222b384c57b1c3ad69b77"/>    <section>
+    <title>project_set_particle_asu_views()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>project_set_particle_asu_views</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_particle_asu_views</secondary></indexterm>
+<para><computeroutput>int project_set_particle_asu_views (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; symmetry_asu)</computeroutput></para><para>
+
+<para>Sets particle views within the asymmetric unit. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;symmetry_asu</entry>
+                                <entry>
+<para>point group string. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>For each micrograph or reconstruction the particle view is set to within the asymmetric unit.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2443 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a74a7cb32e550eea4b3fd51ed7363e3bb"/>    <section>
+    <title>project_set_particle_asu_views()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>project_set_particle_asu_views</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_particle_asu_views</secondary></indexterm>
+<para><computeroutput>int project_set_particle_asu_views (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym)</computeroutput></para><para>
+Definition at line 2454 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1aa0536e68060c07b48f4f4f9ca353743d"/>    <section>
+    <title>project_set_particle_box_size()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>project_set_particle_box_size</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_particle_box_size</secondary></indexterm>
+<para><computeroutput>int project_set_particle_box_size (<link linkend="_class_bproject">Bproject</link> * project, long box_size)</computeroutput></para><para>
+
+<para>Sets particle box size to the given value. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>box_size</entry>
+                                <entry>
+<para>particle box size. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>For each micrograph or reconstruction the particle box size is set 
+to the given radius and the particle origins are adjusted as well.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2389 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1ac3e8f5e1616cc4e958cc5357eb3ab7b6"/>    <section>
+    <title>project_set_particle_box_size()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>project_set_particle_box_size</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_particle_box_size</secondary></indexterm>
+<para><computeroutput>int project_set_particle_box_size (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; box_size)</computeroutput></para><para>
+
+<para>Sets particle box size to the given value. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>box_size</entry>
+                                <entry>
+<para>particle box size. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>For each micrograph or reconstruction the particle box size is set 
+to the given radius and the particle origins are adjusted as well.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2344 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a6b50ea2d44fbded720f3b094e84a908d"/>    <section>
+    <title>project_set_particle_origins()</title>
+<indexterm><primary>project_set_particle_origins</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_particle_origins</secondary></indexterm>
+<para><computeroutput>int project_set_particle_origins (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</computeroutput></para><para>
+
+<para>Sets particle origins to given values. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>particle origin. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>For each micrograph or reconstruction the particle origin is set to the given origin.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2408 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a41d210cceebbdd0aa97df99a64e6964d"/>    <section>
+    <title>project_set_particle_path()</title>
+<indexterm><primary>project_set_particle_path</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_particle_path</secondary></indexterm>
+<para><computeroutput>int project_set_particle_path (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; path)</computeroutput></para><para>
+
+<para>Sets the path to particle files for all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;path</entry>
+                                <entry>
+<para>path to particle files. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>If the requested path is &quot;.&quot; or &quot;./&quot;, the path is completely removed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1818 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1afd06e7a40a415af7fa3a7de73e92a96e"/>    <section>
+    <title>project_set_powerspectrum_path()</title>
+<indexterm><primary>project_set_powerspectrum_path</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_powerspectrum_path</secondary></indexterm>
+<para><computeroutput>int project_set_powerspectrum_path (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; path)</computeroutput></para><para>
+
+<para>Sets the path to powerspectrum files for all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;path</entry>
+                                <entry>
+<para>path to powerspectrum files. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>If the requested path is &quot;.&quot; or &quot;./&quot;, the path is completely removed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1789 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a4c2405fb8ae798ec4128881865706f47"/>    <section>
+    <title>project_set_rec_voxel_size()</title>
+<indexterm><primary>project_set_rec_voxel_size</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_rec_voxel_size</secondary></indexterm>
+<para><computeroutput>int project_set_rec_voxel_size (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; pixel_size)</computeroutput></para><para>
+
+<para>Sets the pixel size for all the reconstructions. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pixel_size</entry>
+                                <entry>
+<para>pixel size. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2014 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1acacec50ef8e493074e15030974084eb1"/>    <section>
+    <title>project_set_scan_sampling()</title>
+<indexterm><primary>project_set_scan_sampling</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_scan_sampling</secondary></indexterm>
+<para><computeroutput>int project_set_scan_sampling (<link linkend="_class_bproject">Bproject</link> * project, double sampling)</computeroutput></para><para>
+
+<para>Sets the scan sampling for all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sampling</entry>
+                                <entry>
+<para>sampling. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Sampling is isotropic.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1942 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1ad250e318df7f1ff7bc6444fdb3d0d42b"/>    <section>
+    <title>project_set_tilt()</title>
+<indexterm><primary>project_set_tilt</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_set_tilt</secondary></indexterm>
+<para><computeroutput>int project_set_tilt (<link linkend="_class_bproject">Bproject</link> * project, double tilt_axis, double tilt_angle)</computeroutput></para><para>
+
+<para>Sets the tilt parameters for all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tilt_axis</entry>
+                                <entry>
+<para>micrograph tilt axis angle. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tilt_angle</entry>
+                                <entry>
+<para>micrograph tilt angle. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2069 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a52ad936e0c81e64a41492fb9bc7caba4"/>    <section>
+    <title>project_show_class_averages()</title>
+<indexterm><primary>project_show_class_averages</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_show_class_averages</secondary></indexterm>
+<para><computeroutput>long project_show_class_averages (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Shows the class averages in a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of class averages. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1582 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1ac1a5ab271d20f9d10e6249f2a4809222"/>    <section>
+    <title>project_show_hierarchy()</title>
+<indexterm><primary>project_show_hierarchy</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_show_hierarchy</secondary></indexterm>
+<para><computeroutput>long project_show_hierarchy (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Shows the project hierarchy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1471 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1aeababf316e7b9e5c96b8ce4b26bfdd43"/>    <section>
+    <title>project_sort_by_tilt()</title>
+<indexterm><primary>project_sort_by_tilt</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_sort_by_tilt</secondary></indexterm>
+<para><computeroutput>int project_sort_by_tilt (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Sorts the micrographs in each field by tilt angle. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1635 of file mg_select.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1af3004e278b3e2e1d6a73d9ad14a91c4c"/>    <section>
+    <title>project_update()</title>
+<indexterm><primary>project_update</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>project_update</secondary></indexterm>
+<para><computeroutput>int project_update (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bproject">Bproject</link> * proj_new, int fom_index)</computeroutput></para><para>
+
+<para>Updates an existing project with new information. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure to be updated. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*proj_new</entry>
+                                <entry>
+<para>project parameter structure with new information. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>index of FOM to select on. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0.</para>
+</formalpara>
+<literallayout><computeroutput>The new information is encoded as a project hierarchy.
+The original project hierarchy is searched for the micrograph ID
+tags that correspond to the original project hierarchy and those
+micrograph parameters are updated. Because the micrograph ID tags
+should be unique in themselves, the field ID tags are ignored and
+the two project hierarchies may have different field designations.
+If a micrograph ID from the new project hierarchy is not found in
+the original project hierarchy, it is added.
+The new project hierarchy is not modified.
+</computeroutput></literallayout> </para>
+<para>
+Definition at line 773 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1af15de191006cbacd08c1de606733be2c"/>    <section>
+    <title>rec_part_links()</title>
+<indexterm><primary>rec_part_links</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>rec_part_links</secondary></indexterm>
+<para><computeroutput>int rec_part_links (<link linkend="_class_breconstruction">Breconstruction</link> * rec)</computeroutput></para><para>
+
+<para>Sets the links from particles to reconstructions. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*rec</entry>
+                                <entry>
+<para>pointer to reconstruction. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 234 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a019bf8ef2ecc6aadc2089aec61cf5cdb"/>    <section>
+    <title>reconstruction_add()</title>
+<indexterm><primary>reconstruction_add</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>reconstruction_add</secondary></indexterm>
+<para><computeroutput><link linkend="_class_breconstruction">Breconstruction</link>* reconstruction_add (<link linkend="_class_breconstruction">Breconstruction</link> ** rec, <link linkend="_class_bstring">Bstring</link> &amp; rec_id)</computeroutput></para><para>
+
+<para>Adds a reconstruction parameter structure to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**rec</entry>
+                                <entry>
+<para>pointer to any reconstruction in the list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;rec_id</entry>
+                                <entry>
+<para>reconstruction identifier. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Breconstruction* new reconstruction. <literallayout><computeroutput>The function allocates memory for a new micrograph structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 365 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a35fd2be48fa9fd8c2d4f52121955f491"/>    <section>
+    <title>reconstruction_kill()</title>
+<indexterm><primary>reconstruction_kill</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>reconstruction_kill</secondary></indexterm>
+<para><computeroutput>int reconstruction_kill (<link linkend="_class_breconstruction">Breconstruction</link> * rec)</computeroutput></para><para>
+
+<para>Frees a whole reconstruction parameter structure. </para>
+</para>
+
+<para><literallayout><computeroutput>Frees all the structures down the hierarchy.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*rec</entry>
+                                <entry>
+<para>reconstruction parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 545 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a118c1837845abfc4fd1a7cccea4ea0ea"/>    <section>
+    <title>reconstruction_set_part_links()</title>
+<indexterm><primary>reconstruction_set_part_links</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>reconstruction_set_part_links</secondary></indexterm>
+<para><computeroutput>long reconstruction_set_part_links (<link linkend="_class_breconstruction">Breconstruction</link> * rec)</computeroutput></para><para>
+
+<para>Sets the links from particles back to the reconstruction. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*rec</entry>
+                                <entry>
+<para>reconstruction parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1150 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a8b0300342a1926860c5f00aaceaae329"/>    <section>
+    <title>reconstruction_update()</title>
+<indexterm><primary>reconstruction_update</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>reconstruction_update</secondary></indexterm>
+<para><computeroutput>int reconstruction_update (<link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_breconstruction">Breconstruction</link> * nu_rec, int fom_index, int flags)</computeroutput></para><para>
+
+<para>Updates an existing reconstruction with new information. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*rec</entry>
+                                <entry>
+<para>reconstruction structure to be updated. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*nu_rec</entry>
+                                <entry>
+<para>reconstruction structure with new information. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>index of FOM to select on. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>flags indicating which parts to update. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The new information is encoded as a reconstruction structure.
+The update is only done if the FOM of the new reconstruction is better.
+All fields are updated if the new fields contain non-default data.
+Defaults are defined here as zero-length strings or zeroes.
+The particles in the original reconstruction are matched by ID with 
+those in the new reconstruction and updated, with any new particles 
+added from the new reconstruction.
+The bad area and marker coordinates are replaced if they exist 
+in the new structure.
+The new reconstruction structure is not modified, except for deletion 
+of bad areas and markers.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 947 of file mg_processing.cpp.</para>
+    </section><anchor xml:id="_mg__processing_8h_1a48e44d868399e6ea7a48bd1143c40c87"/>    <section>
+    <title>views_from_project()</title>
+<indexterm><primary>views_from_project</primary><secondary>mg_processing.h</secondary></indexterm>
+<indexterm><primary>mg_processing.h</primary><secondary>views_from_project</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link>* views_from_project (<link linkend="_class_bproject">Bproject</link> * project, int selection)</computeroutput></para><para>
+
+<para>Retrieves the particle views from a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>selection</entry>
+                                <entry>
+<para>selection number (-1 selects positives, 0 selects all). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>View* linked list of views. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2624 of file mg_processing.cpp.</para>
+</section>
+</section>
+</section>

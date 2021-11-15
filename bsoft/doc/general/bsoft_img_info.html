@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Image information</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+
+<h1>Image information</h1>
+
+<h2>Header information</h2>
+<p>Bsoft is capable of reading many different image formats, each with its
+own header information. Internally, this is translated into a structure
+common to all images. To display this information, many programs reading
+images will display image header information when the -verbose option
+is set to a value that includes the third last bit (i.e. 4: use -verbose 4
+or -verbose 7):</p>
+<div id="command"><p>bhead -verbose 7 2omf.map</p></div>
+<p>Some of the header information is associated with individual sub-images
+in the file. To display this information, use the -information option:</p>
+<div id="command"><p>bhead -verbose 7 -info 2omf.map</p></div>
+<p>The header information can also be modified in various ways.
+ The following changes the unit cell parameters in the image header
+(note: if the second file name is the same as the first, the original
+file is overwritten):</p>
+<div id="command"><p>bhead -verbose 7 -unitcell 42.5,60,125.7,90,120,45 2omf.grd
+test.mrc</p></div>
+<p>For some image formats (such as MRC) many other software packages confuse
+the semantic difference between 2D images and slices of a 3D volume.
+This should be corrected in images used in Bsoft. To convert slices
+of a volume into 2D images:</p>
+<div id="command"><p>bhead -verbose 7 -images 2omf.mrc 2omf.mrc</p></div>
+<p>To convert a set of 2D images into a volume:</p>
+<div id="command"><p>bhead -verbose 7 -slices 2omf.mrc 2omf.mrc</p></div>
+<br/>
+<h2>Statistics and background</h2>
+<p>A good software package should write the appropriate header information
+into the file based on a published specification. However, often good
+practice is not observed and the image file contains strange information.
+The statistics of the image file can be recalculated:</p>
+<div id="command"><p>bhead -verbose 7 -recalc 2omf.mrc 2omf.mrc</p></div>
+<p>Similarly, the background (the area outside the oval/ovoid inscribed
+within the image) can be calculated and masked or subtracted with
+various options. To calculate and mask it:>/p:
+<div id="command"><p>bhead -verbose 7 -Back 2omf.mrc 2omf_bkg.mrc</p></div>
+<br/>
+<h2>Histogram</h2>
+<p>The histogram of an image and information content associated
+with it can be calculated over a given number of bins and output to a
+postscript file: </p>
+<div id="command"><p>bhisto -verb 7 -bins 200 -Post output.ps 2omf.grd</p></div>
+<br/>
+<h2>History</h2>
+<p>All Bsoft programs write text labels into the image headers. Most of these
+are the command lines used to generate those files. One can therefore always
+backtrack the sequence of processing done on a set of images (of course
+providing that intermediates have not been deleted).</p>
+<br/>
+<h2>Concatenating and splitting files</h2>
+<p>Multiple image files can be concatenated into one file as
+multiple images or as slices of a 3D image: </p>
+<div id="command"><p>bcat -verbose 7 -output file.mrc in*.map</p></div>
+<p>Similarly, image files can be split into their sub-images or into
+individual slices of a 3D volume:</p>
+<div id="command"><p>bsplit -verbose 7 file.mrc out.map</p></div>
+</div>
+<div id="footer">
+  Bernard Heymann  20150223
+</div>
+</body>
+</html>

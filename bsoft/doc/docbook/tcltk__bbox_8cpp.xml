@@ -1,0 +1,273 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_tcltk__bbox_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/tcltk/tcltk_bbox.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/tcltk/tcltk_bbox.cpp</primary></indexterm>
+<para>
+
+<para>A shared object to manage micrograph parameter files in TCL/Tk. </para>
+ 
+</para>
+<programlisting>#include &lt;tk.h&gt;
+#include &quot;tcltk_bbox.h&quot;
+#include &quot;tcltk_bimage.h&quot;
+#include &quot;mg_img_proc.h&quot;
+#include &quot;mg_select.h&quot;
+#include &quot;mg_particle_select.h&quot;
+#include &quot;mg_pick.h&quot;
+#include &quot;mg_ctf.h&quot;
+#include &quot;mg_extract.h&quot;
+#include &quot;rwmg.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;timer.h&quot;
+#include &quot;utilities.h&quot;
+#include &lt;sys/stat.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1aea0a91e468ba519f33cb4a8f5c1700ce">box_count</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1a4929578c5497a47f1357b33f202a6c2d">box_count</link> (<link linkend="_class_bparticle">Bparticle</link> *part, <link linkend="_class_bbadarea">Bbadarea</link> *bad, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1abd90b34d2d76d75f953532e225df5fd7">box_ids</link> (<link linkend="_class_bparticle">Bparticle</link> *part, <link linkend="_class_bbadarea">Bbadarea</link> *bad, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1ac566bd263b76e8859c13bceb5104f294">box_location</link> (<link linkend="_class_bparticle">Bparticle</link> *part, <link linkend="_class_bbadarea">Bbadarea</link> *bad, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1a3cd7c5af7e0d069dc05de76532ec1b0e">box_fom</link> (<link linkend="_class_bparticle">Bparticle</link> *part, <link linkend="_class_bbadarea">Bbadarea</link> *bad, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1a8e1211742e1bcd40bc0b6e39c2e0952e">box_fom_min</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1a8823ac27b5ffaa63bba5363417af2f83">box_fom_max</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1a8e353967ddc7f103a8f03c8de2d561ce">box_select</link> (<link linkend="_class_bparticle">Bparticle</link> *part, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1a7c1cd5f86c66997535c11865c928b2d1">box_select</link> (<link linkend="_class_bparticle">Bparticle</link> *part, <link linkend="_class_bbadarea">Bbadarea</link> *bad, <link linkend="_class_vector3">Vector3</link>&lt; float &gt; rad, double badrad, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1abe6b20c63e115f3a4eec768c9a3f2d4c">box_select_min</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1afda5cce25024a399574473f652295dc6">box_select_max</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1a8d699df1dcd493a25e0786079b4f83bb">box_move</link> (<link linkend="_class_bparticle">Bparticle</link> *part, <link linkend="_class_bbadarea">Bbadarea</link> *bad, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1a2e536f8cb3bcee0e007d2240f2d260a0">box_create</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1a9c7ce5059134218aa77b1faf19719b09">box_create</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1ac82096988fc2ac8fac4e1161a256e032">box_renumber</link> (<link linkend="_class_bparticle">Bparticle</link> *part, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1a6f5eb50ccfb5cde4a5796bbb3f9fdb5e">box_delete</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1ae403abbc9a5986d27f7b35445bf1d3a0">box_delete</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1af53ca0158d2bb3b740a8a7a367f68eed">box_delete</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1a2797007574027fad4e2ff960b5c59159">box_center</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_bimage">Bimage</link> *p, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1abcc4842a4d507b7f00f94feb83600e22">box_update_template</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_bimage">Bimage</link> *p, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1a89e5d690836f399adc3060c8a8e9c509">box_pickcc</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_bimage">Bimage</link> *p, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1a73cf3f6880408db05acd7b33351c3ace">box_pickvar</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_bimage">Bimage</link> *p, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1a7b7651ed904005298cf9c69b202ad667">box_extract</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_bimage">Bimage</link> *p, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bbox_8cpp_1aaccdc90206d279f29d0559438a656bbb">do_box</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_tcltk__bbox_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_tcltk__bbox_8cpp_1a3628124083d8f4fbc4ffd16e5b6202bf">imglist</link></para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_tcltk__bbox_8cpp_1ab2b23c1e2af77bb1c5afba4ca7f92d37">imgtemp</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>A shared object to manage micrograph parameter files in TCL/Tk. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20030813 </para>
+
+<para>Modified: 20200512 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_tcltk__bbox_8cpp_1a2797007574027fad4e2ff960b5c59159"/>    <section>
+    <title>box_center()</title>
+<indexterm><primary>box_center</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_center</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_center (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_bimage">Bimage</link> * p, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 805 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1a4929578c5497a47f1357b33f202a6c2d"/>    <section>
+    <title>box_count()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>box_count</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_count</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_count (<link linkend="_class_bparticle">Bparticle</link> * part, <link linkend="_class_bbadarea">Bbadarea</link> * bad, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 264 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1aea0a91e468ba519f33cb4a8f5c1700ce"/>    <section>
+    <title>box_count()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>box_count</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_count</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_count (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 253 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1a2e536f8cb3bcee0e007d2240f2d260a0"/>    <section>
+    <title>box_create()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>box_create</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_create</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_create (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 565 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1a9c7ce5059134218aa77b1faf19719b09"/>    <section>
+    <title>box_create()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>box_create</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_create</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_create (<link linkend="_class_breconstruction">Breconstruction</link> * rec, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 604 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1ae403abbc9a5986d27f7b35445bf1d3a0"/>    <section>
+    <title>box_delete()<computeroutput>[1/3]</computeroutput></title>
+<indexterm><primary>box_delete</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_delete</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_delete (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 716 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1a6f5eb50ccfb5cde4a5796bbb3f9fdb5e"/>    <section>
+    <title>box_delete()<computeroutput>[2/3]</computeroutput></title>
+<indexterm><primary>box_delete</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_delete</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_delete (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 654 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1af53ca0158d2bb3b740a8a7a367f68eed"/>    <section>
+    <title>box_delete()<computeroutput>[3/3]</computeroutput></title>
+<indexterm><primary>box_delete</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_delete</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_delete (<link linkend="_class_breconstruction">Breconstruction</link> * rec, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 760 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1a7b7651ed904005298cf9c69b202ad667"/>    <section>
+    <title>box_extract()</title>
+<indexterm><primary>box_extract</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_extract</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_extract (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_bimage">Bimage</link> * p, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 974 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1a3cd7c5af7e0d069dc05de76532ec1b0e"/>    <section>
+    <title>box_fom()</title>
+<indexterm><primary>box_fom</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_fom</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_fom (<link linkend="_class_bparticle">Bparticle</link> * part, <link linkend="_class_bbadarea">Bbadarea</link> * bad, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 337 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1a8823ac27b5ffaa63bba5363417af2f83"/>    <section>
+    <title>box_fom_max()</title>
+<indexterm><primary>box_fom_max</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_fom_max</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_fom_max (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 388 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1a8e1211742e1bcd40bc0b6e39c2e0952e"/>    <section>
+    <title>box_fom_min()</title>
+<indexterm><primary>box_fom_min</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_fom_min</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_fom_min (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 360 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1abd90b34d2d76d75f953532e225df5fd7"/>    <section>
+    <title>box_ids()</title>
+<indexterm><primary>box_ids</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_ids</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_ids (<link linkend="_class_bparticle">Bparticle</link> * part, <link linkend="_class_bbadarea">Bbadarea</link> * bad, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 281 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1ac566bd263b76e8859c13bceb5104f294"/>    <section>
+    <title>box_location()</title>
+<indexterm><primary>box_location</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_location</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_location (<link linkend="_class_bparticle">Bparticle</link> * part, <link linkend="_class_bbadarea">Bbadarea</link> * bad, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 309 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1a8d699df1dcd493a25e0786079b4f83bb"/>    <section>
+    <title>box_move()</title>
+<indexterm><primary>box_move</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_move</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_move (<link linkend="_class_bparticle">Bparticle</link> * part, <link linkend="_class_bbadarea">Bbadarea</link> * bad, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 538 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1a89e5d690836f399adc3060c8a8e9c509"/>    <section>
+    <title>box_pickcc()</title>
+<indexterm><primary>box_pickcc</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_pickcc</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_pickcc (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_bimage">Bimage</link> * p, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 900 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1a73cf3f6880408db05acd7b33351c3ace"/>    <section>
+    <title>box_pickvar()</title>
+<indexterm><primary>box_pickvar</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_pickvar</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_pickvar (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_bimage">Bimage</link> * p, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 935 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1ac82096988fc2ac8fac4e1161a256e032"/>    <section>
+    <title>box_renumber()</title>
+<indexterm><primary>box_renumber</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_renumber</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_renumber (<link linkend="_class_bparticle">Bparticle</link> * part, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 643 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1a7c1cd5f86c66997535c11865c928b2d1"/>    <section>
+    <title>box_select()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>box_select</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_select</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_select (<link linkend="_class_bparticle">Bparticle</link> * part, <link linkend="_class_bbadarea">Bbadarea</link> * bad, <link linkend="_class_vector3">Vector3</link>&lt; float &gt; rad, double badrad, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 438 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1a8e353967ddc7f103a8f03c8de2d561ce"/>    <section>
+    <title>box_select()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>box_select</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_select</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_select (<link linkend="_class_bparticle">Bparticle</link> * part, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 416 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1afda5cce25024a399574473f652295dc6"/>    <section>
+    <title>box_select_max()</title>
+<indexterm><primary>box_select_max</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_select_max</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_select_max (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 511 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1abe6b20c63e115f3a4eec768c9a3f2d4c"/>    <section>
+    <title>box_select_min()</title>
+<indexterm><primary>box_select_min</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_select_min</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_select_min (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 484 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1abcc4842a4d507b7f00f94feb83600e22"/>    <section>
+    <title>box_update_template()</title>
+<indexterm><primary>box_update_template</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>box_update_template</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * box_update_template (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_bimage">Bimage</link> * p, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 846 of file tcltk_bbox.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1aaccdc90206d279f29d0559438a656bbb"/>    <section>
+    <title>do_box()</title>
+<indexterm><primary>do_box</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>do_box</secondary></indexterm>
+<para><computeroutput>Tcl_Obj* do_box (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 115 of file tcltk_bbox.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_tcltk__bbox_8cpp_1a3628124083d8f4fbc4ffd16e5b6202bf"/>    <section>
+    <title>imglist</title>
+<indexterm><primary>imglist</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>imglist</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* imglist<computeroutput>[extern]</computeroutput></computeroutput></para><para>
+Definition at line 32 of file bshow.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1ab2b23c1e2af77bb1c5afba4ca7f92d37"/>    <section>
+    <title>imgtemp</title>
+<indexterm><primary>imgtemp</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>imgtemp</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* imgtemp<computeroutput>[extern]</computeroutput></computeroutput></para><para>
+Definition at line 36 of file bshow.cpp.</para>
+    </section><anchor xml:id="_tcltk__bbox_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>tcltk_bbox.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bbox.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

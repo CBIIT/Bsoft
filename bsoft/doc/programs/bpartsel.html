@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+	<meta name="Author" content="Bernard Heymann">
+	<TITLE>Bsoft: bpartsel </TITLE>
+	<link type="image/png" href="Bsoft_16x16.png" rel="icon">
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+<h2><i><font color="#000099">Bsoft program</font></i></h2>
+<center><h1><font color="#FF0000">bpartsel</font></h1></center>  <h3>Usage: bpartsel [options] input.star [input.star]</h3>
+<h3>Selects single particles for reconstruction and further processing.</h3>
+<table><tbody>
+<h3>Input particle selections are honoured, so that multiple restrictive selections</h3>
+<table><tbody>
+<tr><td></td><td>    can be made. To reset for a new selection, use the -all option.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Actions:</h3>
+<table><tbody>
+<tr><td>-check</td><td>Check particle records.</td></tr>
+<tr><td>-reconstructions</td><td>Operate on reconstruction parameters rather than micrographs.</td></tr>
+<tr><td>-renumber</td><td>Renumber particles starting from 1 for each micrograph or reconstruction.</td></tr>
+<tr><td>-all</td><td>Reset selection to all particles before other selections.</td></tr>
+<tr><td>-none</td><td>Unset selection to all particles before other selections.</td></tr>
+<tr><td>-mgselect 3-5,8,12-15</td><td>Select micrographs:</td></tr>
+<tr><td></td><td>                         Argument: 4-11,34: Select by the indicated micrographs (first = 1).</td></tr>
+<tr><td></td><td>                         Argument: part: Select only micrographs with selected particles.</td></tr>
+<tr><td>-divide 3</td><td>Divide the project into a number of subsets of fields.</td></tr>
+<tr><td>-consolidate 5</td><td>Consolidate selection under the given selection number.</td></tr>
+<tr><td>-setnumber 3</td><td>Select given selection number and set others to zero.</td></tr>
+<tr><td>-setfom 0.3</td><td>Set the FOM (must be in the range 0-1).</td></tr>
+<tr><td>-setasu D3</td><td>Set the views to the asymmetric unit.</td></tr>
+<tr><td>-setgroups</td><td>Transfer selection numbers to groups.</td></tr>
+<tr><td>-fixdefocus 0.15</td><td>Reset particle defocus differing from micrograph defocus.</td></tr>
+<tr><td>-group 3022</td><td>Select particles belonging to this group.</td></tr>
+<tr><td>-sets 20,1</td><td>Generate sets of this size of selected particles, </td></tr>
+<tr><td></td><td>                         with a flag not to select across micrograph or reconstruction boundaries.</td></tr>
+<tr><td>-series 25,1</td><td>Select: Particles that are all selected in a series and generating sets</td></tr>
+<tr><td></td><td>                         with a flag not to select across micrograph or reconstruction boundaries.</td></tr>
+<tr><td>-frames 3,11</td><td>Select: Particles from a series of frames of a field-of-view.</td></tr>
+<tr><td>-alternate 3</td><td>Select: Assign successive particles to different numbers.</td></tr>
+<tr><td>-reselect psi,0.1,0.9</td><td>Reselect based on a range of values associated with this tag.</td></tr>
+<tr><td>-origin 150,150,0,8</td><td>Select: Within a distance from the nominal origin: x,y,z,distance.</td></tr>
+<tr><td>-View 0.2,-0.5,0.3,15</td><td>Select: Within an angular distance from a view: x,y,z,angle.</td></tr>
+<tr><td>-sideview 17.8</td><td>Select: Side views within an angular distance from the equator.</td></tr>
+<tr><td>-Euler 2,50,-30,2,0,40</td><td>Select: Euler angle ranges: psi, theta, phi.</td></tr>
+<tr><td>-rank 4,1</td><td>Select a number of groups from FOM ranking and flag to adjust for defocus.</td></tr>
+<tr><td>-fom 0.25,1</td><td>Select: FOM cutoff and flag to adjust for defocus.</td></tr>
+<tr><td>-cv 0.55,1</td><td>Select: Cross validation cutoff and flag to adjust for defocus.</td></tr>
+<tr><td>-exclusion 210</td><td>Select: Deselect overlapping particles (default 0).</td></tr>
+<tr><td>-top 12.0,1</td><td>Select: number or % particles and flag to adjust for defocus, ranked by FOM[index].</td></tr>
+<tr><td>-deviation -2.0</td><td>Select: FOM >= average + factor*standard_deviation, using FOM[index].</td></tr>
+<tr><td>-angle 2.4</td><td>Select: difference angle between view vectors in focal or tilt series.</td></tr>
+<tr><td>-closesttofocus</td><td>Select: Particles from micrographs closest to focus.</td></tr>
+<tr><td>-furthestfromfocus</td><td>Select: Particles from micrographs furthest from focus.</td></tr>
+<tr><td>-random 23.6%</td><td>Select: random selection to get the given number, </td></tr>
+<tr><td></td><td>                         number in groups (g), fraction (<1) or percentage (%).</td></tr>
+<tr><td>-bootstrap 527</td><td>Select: random selection with replacement up to the given number.</td></tr>
+<tr><td>-views 4.5,7.2,3</td><td>Select: random selection within views defined on a grid with the </td></tr>
+<tr><td></td><td>                         given theta and phi step sizes (degrees) and up to the given number.</td></tr>
+<tr><td>-bestviews 4.5,7.2,3</td><td>Select: best particles within views defined on a grid with the </td></tr>
+<tr><td></td><td>                         given theta and phi step sizes (degrees), up to the given number.</td></tr>
+<tr><td>-maxsmooth 0.7,3,5,4.4</td><td>Select: above fraction specified by smoothed maxima surface.</td></tr>
+<tr><td></td><td>                         given theta and phi step sizes and smoothing sigma (degrees).</td></tr>
+<tr><td>-Fomfirst</td><td>Set orientations to first in field-of-view series.</td></tr>
+<tr><td>-Fombest</td><td>Set orientations to best FOM[index] in field-of-view series.</td></tr>
+<tr><td>-filament 60</td><td>Selects filament particles with clear direction based on percentage.</td></tr>
+<tr><td>-deselect 4,6,22</td><td>Deselect particles with the listed selection numbers.</td></tr>
+<tr><td>-getselection</td><td>Prints all the selection numbers.</td></tr>
+<tr><td>-show particle.fom</td><td>Show particle parameters indicated by the tag or selection number.</td></tr>
+<tr><td>-Fomhistogram 100,0.1.2</td><td>Show FOM histogram with parameters: bins, minimum and maximum.</td></tr>
+<tr><td>-focus</td><td>Show defocus minimum and maximum.</td></tr>
+<tr><td>-reset defocus</td><td>Reset particle defocus to micrograph defocus.</td></tr>
+<tr><td>-delete</td><td>Delete all non-selected particles from the parameter file.</td></tr>
+<tr><td>-remove</td><td>Do not write non-selected micrographs into the parameter file.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Parameters:</h3>
+<table><tbody>
+<tr><td>-verbose 7</td><td>Verbosity of output.</td></tr>
+<tr><td>-symmetry C5</td><td>Point group symmetry (required with the -angle and -views options).</td></tr>
+<tr><td>-index 1</td><td>FOM index to select on (default 0, options -setfom, -top, -deviation, -bestviews, -Fombest).</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Output:</h3>
+<table><tbody>
+<tr><td>-output file.star</td><td>Output parameter file.</td></tr>
+<tr><td>-split 3</td><td>Split micrograph or reconstruction data blocks into individual files:</td></tr>
+<tr><td></td><td>                         Argument: 1-6: number of digits inserted before extension</td></tr>
+<tr><td></td><td>                         Argument: "id": micrograph ID's are used as file names.</td></tr>
+<tr><td></td><td>                         Argument: "set": particle sets based on selection are used as output.</td></tr>
+<tr><td>-Particle views.ps</td><td>Postscript output with particle view and origin distributions.</td></tr>
+<tr><td>-Micrograph out.ps</td><td>Postscript output with particle micrograph distributions.</td></tr>
+<tr><td>-FOM histogram.ps</td><td>Postscript output with particle FOM distributions.</td></tr>
+<tr><td>-classes</td><td>Write stacks of particle images based on classes.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table>
+<br>Bsoft version 2.0.7-20200917 (64 bit)<br>
+<HR WIDTH="100%"><BR>
+Generated by bdoc.pl on Mon Oct 26 08:20:11 2020 <BR>
+<HR WIDTH="100%"><BR>
+<center><a href="bsoft.html">Back to the Bsoft home</a></center>
+<HR WIDTH="100%"><BR>
+</BODY>
+</HTML>

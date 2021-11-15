@@ -1,0 +1,476 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_model__views_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/model_views.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/model_views.h</primary></indexterm>
+<para>
+
+<para>Library routines used for analysing model component views. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmodel.h&quot;
+#include &quot;Bstring.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>list&lt; <link linkend="_class_view2">View2</link>&lt; float &gt; &gt; <link linkend="_model__views_8h_1af25243b9802e60f269e7e8ce6dee7991">views_from_model</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Returns a list of component views. </para>
+</listitem>
+            <listitem><para>list&lt; <link linkend="_class_view2">View2</link>&lt; float &gt; &gt; <link linkend="_model__views_8h_1a41149beb1c9457e5af5a3cc3b3c499e9">views_from_models</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Returns a list of component views. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__views_8h_1a4694e2f307e836ebf1a22d668e6ae16f">model_set_views</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_view2">View2</link>&lt; float &gt; view)</para>
+
+<para>Sets views. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__views_8h_1ab4a52d046ecc1b9301d459a7dccb17d6">model_invert_views</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Invert views. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__views_8h_1a0345f1eb3bc6a262b0b2cb3380562f0d">model_find_views</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bstring">Bstring</link> &amp;reffile, <link linkend="_class_bstring">Bstring</link> &amp;paramfile)</para>
+
+<para>Finds the molecule views with respect to a reference. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__views_8h_1a40a175d0d89957e8e9397b538bea42e2">model_calculate_views</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bstring">Bstring</link> &amp;mode)</para>
+
+<para>Calculates the views associated with each component. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__views_8h_1ac1dd84f5cfb44d9cd2879c87a27f223f">model_calculate_local_views</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Calculates the views associated with each component based on neighbors. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__views_8h_1a4c637e8d4a8a14abe7409a8101b5fe43">model_view_directions</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, int bin_width, int ref_flag)</para>
+
+<para>Analyzes view directions in a model. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__views_8h_1a8cbf78033c0eea385b6fd320920a21cc">component_hand</link> (<link linkend="_class_bstring">Bstring</link> s)</para>
+
+<para>Determines the hand of a component. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines used for analysing model component views. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20081120 </para>
+
+<para>Modified: 20141029 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_model__views_8h_1a8cbf78033c0eea385b6fd320920a21cc"/>    <section>
+    <title>component_hand()</title>
+<indexterm><primary>component_hand</primary><secondary>model_views.h</secondary></indexterm>
+<indexterm><primary>model_views.h</primary><secondary>component_hand</secondary></indexterm>
+<para><computeroutput>int component_hand (<link linkend="_class_bstring">Bstring</link> s)</computeroutput></para><para>
+
+<para>Determines the hand of a component. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;s</entry>
+                                <entry>
+<para>string with encoded order. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int the hand. <literallayout><computeroutput>Requirement: The string must be either a 3 or 6-digit code.
+The reverse of the string is generated and the canonical version 
+compared to the canonical version of the original string.
+The handedness is then returned as the sign of the comparison.
+The reverse of the 6-digit code is defined as reversing the
+first and last 3 digits separately.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 460 of file model_views.cpp.</para>
+    </section><anchor xml:id="_model__views_8h_1ac1dd84f5cfb44d9cd2879c87a27f223f"/>    <section>
+    <title>model_calculate_local_views()</title>
+<indexterm><primary>model_calculate_local_views</primary><secondary>model_views.h</secondary></indexterm>
+<indexterm><primary>model_views.h</primary><secondary>model_calculate_local_views</secondary></indexterm>
+<para><computeroutput>long model_calculate_local_views (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Calculates the views associated with each component based on neighbors. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure (views modified). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of selected components. <literallayout><computeroutput>The view for a vertex is calculated from the vertex vector and the first link.
+The vertex vector points away from the origin and is calculated as follows:
+Angles defined for the vertex:
+    vv = normalized sum of the cross products for each pair of links
+        constituting an angle
+Angles not defined:
+    vv = component coordinates - origin
+The origin is defined as the current zero coordinates, the center-of-mass,
+or from the map.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 312 of file model_views.cpp.</para>
+    </section><anchor xml:id="_model__views_8h_1a40a175d0d89957e8e9397b538bea42e2"/>    <section>
+    <title>model_calculate_views()</title>
+<indexterm><primary>model_calculate_views</primary><secondary>model_views.h</secondary></indexterm>
+<indexterm><primary>model_views.h</primary><secondary>model_calculate_views</secondary></indexterm>
+<para><computeroutput>long model_calculate_views (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bstring">Bstring</link> &amp; mode)</computeroutput></para><para>
+
+<para>Calculates the views associated with each component. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure (views modified). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;mode</entry>
+                                <entry>
+<para>none=current, com, map, local. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of selected components. <literallayout><computeroutput>The view for a vertex is calculated from the vertex vector and the first link.
+The vertex vector points away from the origin and is calculated as follows:
+Angles defined for the vertex:
+    vv = normalized sum of the cross products for each pair of links
+        constituting an angle
+Angles not defined:
+    vv = component coordinates - origin
+The origin is defined as the current zero coordinates, the center-of-mass,
+or from the map.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 257 of file model_views.cpp.</para>
+    </section><anchor xml:id="_model__views_8h_1a0345f1eb3bc6a262b0b2cb3380562f0d"/>    <section>
+    <title>model_find_views()</title>
+<indexterm><primary>model_find_views</primary><secondary>model_views.h</secondary></indexterm>
+<indexterm><primary>model_views.h</primary><secondary>model_find_views</secondary></indexterm>
+<para><computeroutput>long model_find_views (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bstring">Bstring</link> &amp; reffile, <link linkend="_class_bstring">Bstring</link> &amp; paramfile)</computeroutput></para><para>
+
+<para>Finds the molecule views with respect to a reference. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;reffile</entry>
+                                <entry>
+<para>reference molecule file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;paramfile</entry>
+                                <entry>
+<para>atomic parameter file. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of molecules selected. <literallayout><computeroutput>The positioning of each molecule is based on the center of mass of the reference.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 146 of file model_views.cpp.</para>
+    </section><anchor xml:id="_model__views_8h_1ab4a52d046ecc1b9301d459a7dccb17d6"/>    <section>
+    <title>model_invert_views()</title>
+<indexterm><primary>model_invert_views</primary><secondary>model_views.h</secondary></indexterm>
+<indexterm><primary>model_views.h</primary><secondary>model_invert_views</secondary></indexterm>
+<para><computeroutput>long model_invert_views (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Invert views. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of selected components. <literallayout><computeroutput>It calculates the inverse of each component view.
+Only the first model is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 119 of file model_views.cpp.</para>
+    </section><anchor xml:id="_model__views_8h_1a4694e2f307e836ebf1a22d668e6ae16f"/>    <section>
+    <title>model_set_views()</title>
+<indexterm><primary>model_set_views</primary><secondary>model_views.h</secondary></indexterm>
+<indexterm><primary>model_views.h</primary><secondary>model_set_views</secondary></indexterm>
+<para><computeroutput>long model_set_views (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_view2">View2</link>&lt; float &gt; view)</computeroutput></para><para>
+
+<para>Sets views. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view</entry>
+                                <entry>
+<para>set view. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of selected components. <literallayout><computeroutput>Each component view is set tot the given view.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 91 of file model_views.cpp.</para>
+    </section><anchor xml:id="_model__views_8h_1a4c637e8d4a8a14abe7409a8101b5fe43"/>    <section>
+    <title>model_view_directions()</title>
+<indexterm><primary>model_view_directions</primary><secondary>model_views.h</secondary></indexterm>
+<indexterm><primary>model_views.h</primary><secondary>model_view_directions</secondary></indexterm>
+<para><computeroutput>long model_view_directions (<link linkend="_class_bmodel">Bmodel</link> * model, int bin_width, int ref_flag)</computeroutput></para><para>
+
+<para>Analyzes view directions in a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin_width</entry>
+                                <entry>
+<para>bin width in degrees. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ref_flag</entry>
+                                <entry>
+<para>flag to select the reference vector (0=z-axis, 1=component location) </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of molecules selected. <literallayout><computeroutput>The angle between the component view and a reference vector is calculated.
+A histogram of the angles is constructed and reported.
+The reference vector can be the z-axis, or the component location.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 353 of file model_views.cpp.</para>
+    </section><anchor xml:id="_model__views_8h_1af25243b9802e60f269e7e8ce6dee7991"/>    <section>
+    <title>views_from_model()</title>
+<indexterm><primary>views_from_model</primary><secondary>model_views.h</secondary></indexterm>
+<indexterm><primary>model_views.h</primary><secondary>views_from_model</secondary></indexterm>
+<para><computeroutput>list&lt;<link linkend="_class_view2">View2</link>&lt;float&gt; &gt; views_from_model (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Returns a list of component views. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>list&lt;<link linkend="_class_view2">View2&lt;float&gt;</link>&gt; list of views. <literallayout><computeroutput>Only the first model is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 29 of file model_views.cpp.</para>
+    </section><anchor xml:id="_model__views_8h_1a41149beb1c9457e5af5a3cc3b3c499e9"/>    <section>
+    <title>views_from_models()</title>
+<indexterm><primary>views_from_models</primary><secondary>model_views.h</secondary></indexterm>
+<indexterm><primary>model_views.h</primary><secondary>views_from_models</secondary></indexterm>
+<para><computeroutput>list&lt;<link linkend="_class_view2">View2</link>&lt;float&gt; &gt; views_from_models (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Returns a list of component views. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>View* list of views. <literallayout><computeroutput>All models are processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 68 of file model_views.cpp.</para>
+</section>
+</section>
+</section>

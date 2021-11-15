@@ -1,0 +1,1576 @@
+.TH "/Users/bernard/b20/bsoft/src/mg/mg_tomography.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mg/mg_tomography.cpp \- Functions to manage tomographic series of images\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_tomography\&.h'\fP
+.br
+\fC#include 'mg_select\&.h'\fP
+.br
+\fC#include 'mg_img_proc\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'matrix_linear\&.h'\fP
+.br
+\fC#include 'simplex\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmg_marker_init\fP (\fBBmicrograph\fP *mg, \fBBmarker\fP *\fBmodel\fP)"
+.br
+.RI "Initializes markers from the reference\&. "
+.ti -1c
+.RI "int \fBmg_marker_update\fP (\fBBmicrograph\fP *mg, \fBBmarker\fP *\fBmodel\fP, \fBVector3\fP< double > oriref, int update_location)"
+.br
+.RI "Calculates the predicted positions of markers from the reference\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmg_3D_location_from_marker\fP (\fBVector3\fP< double > loc, \fBVector3\fP< double > ori3D, \fBMatrix3\fP mat, \fBVector3\fP< double > ori)"
+.br
+.ti -1c
+.RI "int \fBmg_update_model\fP (\fBBmicrograph\fP *mg, \fBBmarker\fP *\fBmodel\fP, \fBVector3\fP< double > oriref)"
+.br
+.RI "Fills in missing markers in the 3D model from micrograph markers\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmg_location_from_3D_model\fP (\fBVector3\fP< double > loc3D, \fBMatrix3\fP mat, \fBVector3\fP< double > ori)"
+.br
+.RI "Calculates the 2D location of a marker from a 3D model\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmg_location_from_3D_model\fP (\fBVector3\fP< double > loc3D, \fBMatrix3\fP mat, \fBVector3\fP< double > ori, \fBVector3\fP< double > scale)"
+.br
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmg_location_from_3D_model\fP (\fBVector3\fP< double > loc3D, \fBVector3\fP< double > ori3D, \fBMatrix3\fP mat, \fBVector3\fP< double > ori)"
+.br
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmg_location_from_3D_model\fP (\fBVector3\fP< double > loc3D, \fBVector3\fP< double > ori3D, \fBMatrix3\fP mat, \fBVector3\fP< double > ori, \fBVector3\fP< double > scale)"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_gold_particle\fP (\fBVector3\fP< long > size, double radius)"
+.br
+.RI "Generates an image representing a gold particle\&. "
+.ti -1c
+.RI "\fBBmarker\fP * \fBimg_find_gold_particles\fP (\fBBimage\fP *p, int img_select, double radius, long edge, double cutoff)"
+.br
+.RI "Finds gold particles in micrograph images\&. "
+.ti -1c
+.RI "int \fBproject_mass_normalize\fP (\fBBproject\fP *\fBproject\fP, double avg, double std, int norm_type, \fBDataType\fP datatype, int setinputZslices, int setoutputZslices, double cutmin, double cutmax, double replace_threshold)"
+.br
+.RI "Normalizes a set of images in a project to a desired average and standard deviation\&. "
+.ti -1c
+.RI "double \fBlambda_R\fP (\fBBsimplex\fP &simp)"
+.br
+.ti -1c
+.RI "vector< double > \fBsimplex_fit_tilt_intensities\fP (vector< double > &a, vector< double > &I)"
+.br
+.ti -1c
+.RI "\fBBplot\fP * \fBproject_intensity_plot\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Transfers the micrograph intensities for a field into a plot\&. "
+.ti -1c
+.RI "double \fBproject_fit_intensities\fP (\fBBproject\fP *\fBproject\fP, \fBBplot\fP *plot, int flag)"
+.br
+.RI "Determines the thickness to mean free path ratio from a tilt series\&. "
+.ti -1c
+.RI "double \fBproject_thickness_to_lambda_ratio\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Determines the thickness to mean free path ratio from a tilt series\&. "
+.ti -1c
+.RI "double \fBproject_lambda\fP (\fBBproject\fP *\fBproject\fP, double thickness)"
+.br
+.RI "Determines the mean free path from a tilt series and thickness\&. "
+.ti -1c
+.RI "double \fBproject_thickness\fP (\fBBproject\fP *\fBproject\fP, double lambda)"
+.br
+.RI "Determines the thickness from a tilt series and mean free path\&. "
+.ti -1c
+.RI "int \fBproject_sort_markers_by_id\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Sorts markers for each micrograph by ID number\&. "
+.ti -1c
+.RI "double \fBproject_tomo_residuals\fP (\fBBproject\fP *\fBproject\fP, int \fBshow\fP)"
+.br
+.RI "Calculates the residuals for an alignment solution\&. "
+.ti -1c
+.RI "double \fBmg_tomo_residuals\fP (\fBBmicrograph\fP *mg, \fBBmarker\fP *\fBmodel\fP, \fBVector3\fP< double > oriref)"
+.br
+.RI "Calculates the residuals for an alignment solution of one micrograph\&. "
+.ti -1c
+.RI "double \fBproject_tomo_errors\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Analyzes marker errors\&. "
+.ti -1c
+.RI "int \fBproject_calculate_model\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Calculates the z-coordinates of the marker model\&. "
+.ti -1c
+.RI "int \fBproject_generate_markers\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Generates missing micrograph and model markers\&. "
+.ti -1c
+.RI "long \fBimg_erase_markers\fP (\fBBimage\fP *p, \fBBmarker\fP *mark, double marker_radius)"
+.br
+.RI "Erases or paints markers in an image\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBmg_erase_markers\fP (\fBBmicrograph\fP *mg, double marker_radius)"
+.br
+.RI "Erases or paints markers in micrographs\&. "
+.ti -1c
+.RI "int \fBproject_erase_markers\fP (\fBBproject\fP *\fBproject\fP, double marker_radius)"
+.br
+.RI "Erases or paints markers in micrographs\&. "
+.ti -1c
+.RI "int \fBmg_reset_model\fP (\fBBmicrograph\fP *mg, \fBBmarker\fP *\fBmodel\fP)"
+.br
+.RI "Resets the model x and y coordinates from the zero-tilt micrograph\&. "
+.ti -1c
+.RI "long \fBproject_find_markers\fP (\fBBproject\fP *\fBproject\fP, long edge, int add)"
+.br
+.RI "Finds all markers in a project\&. "
+.ti -1c
+.RI "long \fBmg_find_markers\fP (\fBBmicrograph\fP *mg, long edge, int add)"
+.br
+.RI "Finds markers in a micrograph\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBmg_composite_particle\fP (\fBBmicrograph\fP *mg, \fBVector3\fP< long > size)"
+.br
+.RI "Generates an average particle image from a micrograph\&. "
+.ti -1c
+.RI "long \fBproject_count_markers\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Counts the markers in a project hierarchy\&. "
+.ti -1c
+.RI "long \fBproject_show_markers\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Shows the markers in a project hierarchy\&. "
+.ti -1c
+.RI "long \fBproject_show_errors\fP (\fBBproject\fP *\fBproject\fP, double error_cutoff)"
+.br
+.RI "Shows the errors in marker coordinates in a project hierarchy\&. "
+.ti -1c
+.RI "long \fBproject_deselect_markers\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &deselect_list)"
+.br
+.RI "Deletes selected markers in a project hierarchy\&. "
+.ti -1c
+.RI "long \fBproject_delete_markers\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &delete_list)"
+.br
+.RI "Deletes selected markers in a project hierarchy\&. "
+.ti -1c
+.RI "long \fBproject_renumber_markers\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Renumbers the markers in a project hierarchy\&. "
+.ti -1c
+.RI "long \fBproject_mg_select\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &mg_select)"
+.br
+.RI "Selects micrographs in a project hierarchy\&. "
+.ti -1c
+.RI "long \fBproject_mg_exclude\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &mg_exclude)"
+.br
+.RI "Deselects micrographs in a project hierarchy\&. "
+.ti -1c
+.RI "int \fBproject_set_tilt_axis\fP (\fBBproject\fP *\fBproject\fP, double tilt_axis)"
+.br
+.RI "Sets the tilt axis angle in a project parameter structure\&. "
+.ti -1c
+.RI "int \fBproject_invert_tilt_axis\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Inverts the tilt axis in a project parameter structure\&. "
+.ti -1c
+.RI "int \fBproject_set_tilt_angles\fP (\fBBproject\fP *\fBproject\fP, double tilt_start, double tilt_step)"
+.br
+.RI "Sets the tilt and tilt axis angles in a project parameter structure\&. "
+.ti -1c
+.RI "int \fBproject_mg_tilt_to_matrix\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Sets the matrix from the tilt and axis angles for each micrograph\&. "
+.ti -1c
+.RI "int \fBproject_calculate_angles\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Calculates tilt and tilt axis angles from matrices in a project parameter structure\&. "
+.ti -1c
+.RI "int \fBproject_invert_matrices\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Inverts the micrograph matrices in a project parameter structure\&. "
+.ti -1c
+.RI "int \fBproject_mg_marker_select\fP (\fBBproject\fP *\fBproject\fP, double fom)"
+.br
+.RI "Selects markers\&. "
+.ti -1c
+.RI "int \fBproject_set_marker_radius\fP (\fBBproject\fP *\fBproject\fP, double mark_radius)"
+.br
+.RI "Sets the marker radius in a project parameter structure\&. "
+.ti -1c
+.RI "int \fBproject_check_markers\fP (\fBBproject\fP *\fBproject\fP, int flags)"
+.br
+.RI "Checks if the markers in a project parameter structure fall within micrographs\&. "
+.ti -1c
+.RI "int \fBproject_fix_markers\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Checks if the markers in a project parameter structure fall within micrographs\&. "
+.ti -1c
+.RI "int \fBimg_clear_extraneous_areas\fP (\fBBimage\fP *p, double tilt_axis, double tilt_angle, long thickness, double width)"
+.br
+.RI "Clears extraneous areas from a micrograph\&. "
+.ti -1c
+.RI "int \fBmicrograph_clear_extraneous_areas\fP (\fBBmicrograph\fP *mg, \fBBimage\fP *p, long thickness, double width)"
+.br
+.RI "Clears extraneous areas from a micrograph\&. "
+.ti -1c
+.RI "int \fBproject_clear_extraneous_areas\fP (\fBBproject\fP *\fBproject\fP, long thickness, double width)"
+.br
+.RI "Clears areas from a tilt series not used in a reconstruction\&. "
+.ti -1c
+.RI "double \fBproject_marker_rotation_axis\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Determines the most likely rotation axis location for a tilt series\&. "
+.ti -1c
+.RI "int \fBproject_merge_rec_markers\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Merges the markers for two reconstructions\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to manage tomographic series of images\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20020416 
+.PP
+Modified: 20200306 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_tomography\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int img_clear_extraneous_areas (\fBBimage\fP * p, double tilt_axis, double tilt_angle, long thickness, double width)"
+
+.PP
+Clears extraneous areas from a micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP micrograph image\&. 
+.br
+\fItilt_axis\fP tilt axis angle (radians)\&. 
+.br
+\fItilt_angle\fP tilt angle (radians)\&. 
+.br
+\fIthickness\fP intended thickness of reconstruction\&. 
+.br
+\fIwidth\fP edge smoothing width\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2213 of file mg_tomography\&.cpp\&.
+.SS "long img_erase_markers (\fBBimage\fP * p, \fBBmarker\fP * mark, double marker_radius)"
+
+.PP
+Erases or paints markers in an image\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image parameter structure\&. 
+.br
+\fI*mark\fP linked list of markers\&. 
+.br
+\fImarker_radius\fP radius to mask out markers\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of markers erased\&. 
+.PP
+.nf
+Markers can be either erased to a background value or painted in with
+a set value.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1236 of file mg_tomography\&.cpp\&.
+.SS "\fBBmarker\fP* img_find_gold_particles (\fBBimage\fP * p, int img_select, double radius, long edge, double cutoff)"
+
+.PP
+Finds gold particles in micrograph images\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image\&. 
+.br
+\fIimg_select\fP selected subimage, -1 if all\&. 
+.br
+\fIradius\fP gold particle radius in voxel units\&. 
+.br
+\fIedge\fP edge width to eliminate particles\&. 
+.br
+\fIcutoff\fP FOM cutoff, if 0 then half of maximum FOM\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmarker* list of markers\&. 
+.PP
+.nf
+An image of the size of an input sub-image is generated with a gold
+particle (black or negative density) at its center.
+Each sub-image is cross-correlated with the gold particle image
+and the position within the image reported.
+The FOM cutoff is used to select cross-correlation peaks, except it
+is reset for the following:
+    cutoff == 0 ==> cutoff = FOMavg + FOMstd
+    cutoff <  0 ==> cutoff = FOMmax/2
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 228 of file mg_tomography\&.cpp\&.
+.SS "\fBBimage\fP* img_gold_particle (\fBVector3\fP< long > size, double radius)"
+
+.PP
+Generates an image representing a gold particle\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIsize\fP size of image to generate\&. 
+.br
+\fIradius\fP gold particle radius in voxel units\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* gold particle image\&. 
+.PP
+.nf
+An image of the size of an input sub-image is generated with a gold
+particle (black or negative density) at its center.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 188 of file mg_tomography\&.cpp\&.
+.SS "double lambda_R (\fBBsimplex\fP & simp)"
+
+.PP
+Definition at line 445 of file mg_tomography\&.cpp\&.
+.SS "\fBVector3\fP<double> mg_3D_location_from_marker (\fBVector3\fP< double > loc, \fBVector3\fP< double > ori3D, \fBMatrix3\fP mat, \fBVector3\fP< double > ori)"
+
+.PP
+Definition at line 91 of file mg_tomography\&.cpp\&.
+.SS "\fBBimage\fP* mg_composite_particle (\fBBmicrograph\fP * mg, \fBVector3\fP< long > size)"
+
+.PP
+Generates an average particle image from a micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph to extract marker images from\&. 
+.br
+\fIsize\fP size of image\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* composite marker projection image\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1459 of file mg_tomography\&.cpp\&.
+.SS "\fBBimage\fP* mg_erase_markers (\fBBmicrograph\fP * mg, double marker_radius)"
+
+.PP
+Erases or paints markers in micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph parameter structure\&. 
+.br
+\fImarker_radius\fP radius to mask out markers\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* new micrograph image with erased markers\&. 
+.PP
+.nf
+Markers can be either erased to a background value or painted in with
+a set value.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1260 of file mg_tomography\&.cpp\&.
+.SS "long mg_find_markers (\fBBmicrograph\fP * mg, long edge, int add)"
+
+.PP
+Finds markers in a micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP project parameter structure\&. 
+.br
+\fIedge\fP edge to exclude\&. 
+.br
+\fIadd\fP flag to add rather than replace the markers\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of markers\&. 
+.PP
+.nf
+The markers are located by cross-correlation with a synthetic reference
+whose size is defined by the marker radius. Markers close to the edge
+are eliminated using the given edge size. The main intent is to find 
+the seed for a 3D marker model in a zero degree tilt micrograph. 
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1419 of file mg_tomography\&.cpp\&.
+.SS "\fBVector3\fP<double> mg_location_from_3D_model (\fBVector3\fP< double > loc3D, \fBMatrix3\fP mat, \fBVector3\fP< double > ori)"
+
+.PP
+Calculates the 2D location of a marker from a 3D model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIloc3D\fP 3D marker location\&. 
+.br
+\fImat\fP micrograph view matrix\&. 
+.br
+\fIori\fP micrograph origin\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP transformed 2D marker location\&. 
+.RE
+.PP
+
+.PP
+Definition at line 140 of file mg_tomography\&.cpp\&.
+.SS "\fBVector3\fP<double> mg_location_from_3D_model (\fBVector3\fP< double > loc3D, \fBMatrix3\fP mat, \fBVector3\fP< double > ori, \fBVector3\fP< double > scale)"
+
+.PP
+Definition at line 151 of file mg_tomography\&.cpp\&.
+.SS "\fBVector3\fP<double> mg_location_from_3D_model (\fBVector3\fP< double > loc3D, \fBVector3\fP< double > ori3D, \fBMatrix3\fP mat, \fBVector3\fP< double > ori)"
+
+.PP
+Definition at line 163 of file mg_tomography\&.cpp\&.
+.SS "\fBVector3\fP<double> mg_location_from_3D_model (\fBVector3\fP< double > loc3D, \fBVector3\fP< double > ori3D, \fBMatrix3\fP mat, \fBVector3\fP< double > ori, \fBVector3\fP< double > scale)"
+
+.PP
+Definition at line 170 of file mg_tomography\&.cpp\&.
+.SS "int mg_marker_init (\fBBmicrograph\fP * mg, \fBBmarker\fP * model)"
+
+.PP
+Initializes markers from the reference\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph to initialize\&. 
+.br
+\fI*model\fP marker model\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 30 of file mg_tomography\&.cpp\&.
+.SS "int mg_marker_update (\fBBmicrograph\fP * mg, \fBBmarker\fP * model, \fBVector3\fP< double > oriref, int update_location)"
+
+.PP
+Calculates the predicted positions of markers from the reference\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph to update\&. 
+.br
+\fI*model\fP marker model\&. 
+.br
+\fIoriref\fP reference origin\&. 
+.br
+\fIupdate_location\fP flag to update location based on marker model\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+If the marker does not exist in the micrograph, a new one is generated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 60 of file mg_tomography\&.cpp\&.
+.SS "int mg_reset_model (\fBBmicrograph\fP * mg, \fBBmarker\fP * model)"
+
+.PP
+Resets the model x and y coordinates from the zero-tilt micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP reference micrograph parameter structure\&. 
+.br
+\fI*model\fP model marker list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int markers selected in model\&. 
+.PP
+.nf
+Missing model markers are added in and excessive model markers deleted.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1349 of file mg_tomography\&.cpp\&.
+.SS "double mg_tomo_residuals (\fBBmicrograph\fP * mg, \fBBmarker\fP * model, \fBVector3\fP< double > oriref)"
+
+.PP
+Calculates the residuals for an alignment solution of one micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph\&. 
+.br
+\fI*model\fP model marker list\&. 
+.br
+\fIoriref\fP reference origin\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double average residual\&. 
+.PP
+.nf
+Requires the matrices in the micrograph structures to be defined.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1006 of file mg_tomography\&.cpp\&.
+.SS "int mg_update_model (\fBBmicrograph\fP * mg, \fBBmarker\fP * model, \fBVector3\fP< double > oriref)"
+
+.PP
+Fills in missing markers in the 3D model from micrograph markers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph to update\&. 
+.br
+\fI*model\fP marker model\&. 
+.br
+\fIoriref\fP reference origin\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+If the marker does not exist in the model, a new one is generated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 111 of file mg_tomography\&.cpp\&.
+.SS "int micrograph_clear_extraneous_areas (\fBBmicrograph\fP * mg, \fBBimage\fP * p, long thickness, double width)"
+
+.PP
+Clears extraneous areas from a micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph parameter structure\&. 
+.br
+\fI*p\fP micrograph image\&. 
+.br
+\fIthickness\fP intended thickness of reconstruction\&. 
+.br
+\fIwidth\fP edge smoothing width\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2264 of file mg_tomography\&.cpp\&.
+.SS "int project_calculate_angles (\fBBproject\fP * project)"
+
+.PP
+Calculates tilt and tilt axis angles from matrices in a project parameter structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+From each matrix, a quaternion is calculated, giving the tilt axis
+and rotation angle.
+The level angle is calculated as the arcsin of the z-coordinate of the axis.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1993 of file mg_tomography\&.cpp\&.
+.SS "int project_calculate_model (\fBBproject\fP * project)"
+
+.PP
+Calculates the z-coordinates of the marker model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+If the project does not have markers, it returns without any change.
+If the reconstruction model is not defined, it is created.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1083 of file mg_tomography\&.cpp\&.
+.SS "int project_check_markers (\fBBproject\fP * project, int flags)"
+
+.PP
+Checks if the markers in a project parameter structure fall within micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIflags\fP flags to modify actions\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Markers outside the boundaries are dealt with based on the flags variable:
+1   show markers outside the image boundaries.
+2   set marker selections to zero.
+4   set marker fom's to zero.
+8   set marker errors to zero.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2143 of file mg_tomography\&.cpp\&.
+.SS "int project_clear_extraneous_areas (\fBBproject\fP * project, long thickness, double width)"
+
+.PP
+Clears areas from a tilt series not used in a reconstruction\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIthickness\fP intended thickness of reconstruction\&. 
+.br
+\fIwidth\fP edge smoothing width\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2285 of file mg_tomography\&.cpp\&.
+.SS "long project_count_markers (\fBBproject\fP * project)"
+
+.PP
+Counts the markers in a project hierarchy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of markers\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1512 of file mg_tomography\&.cpp\&.
+.SS "long project_delete_markers (\fBBproject\fP * project, \fBBstring\fP & delete_list)"
+
+.PP
+Deletes selected markers in a project hierarchy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&delete_list\fP list of markers to deselect\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of markers\&. 
+.PP
+.nf
+All the occurrences of selected markers in the tilt series are deleted.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1665 of file mg_tomography\&.cpp\&.
+.SS "long project_deselect_markers (\fBBproject\fP * project, \fBBstring\fP & deselect_list)"
+
+.PP
+Deletes selected markers in a project hierarchy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&deselect_list\fP list of markers to deselect\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of markers\&. 
+.PP
+.nf
+All the occurrences of selected markers in the tilt series are deleted.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1608 of file mg_tomography\&.cpp\&.
+.SS "int project_erase_markers (\fBBproject\fP * project, double marker_radius)"
+
+.PP
+Erases or paints markers in micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fImarker_radius\fP radius to mask out markers\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+Markers can be either erased to a background value or painted in with
+a set value.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1294 of file mg_tomography\&.cpp\&.
+.SS "long project_find_markers (\fBBproject\fP * project, long edge, int add)"
+
+.PP
+Finds all markers in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIedge\fP edge to exclude\&. 
+.br
+\fIadd\fP flag to add rather than replace the markers\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of markers\&. 
+.PP
+.nf
+Markers are located in each micrograph by cross-correlation.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1394 of file mg_tomography\&.cpp\&.
+.SS "double project_fit_intensities (\fBBproject\fP * project, \fBBplot\fP * plot, int flag)"
+
+.PP
+Determines the thickness to mean free path ratio from a tilt series\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project structure\&. 
+.br
+\fI*plot\fP plot structure with intensity-tilt data\&. 
+.br
+\fIflag\fP flag to apply tilt angle adjustment\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double ratio\&. 
+.PP
+.nf
+The micrographs should be unmodified gain-corrected images obtained from the detector.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 619 of file mg_tomography\&.cpp\&.
+.SS "int project_fix_markers (\fBBproject\fP * project)"
+
+.PP
+Checks if the markers in a project parameter structure fall within micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2178 of file mg_tomography\&.cpp\&.
+.SS "int project_generate_markers (\fBBproject\fP * project)"
+
+.PP
+Generates missing micrograph and model markers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+First the 3D model is updated to represent all markers from all micrographs.
+Then the missing markers in the micrographs are generated from the
+updated model.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1204 of file mg_tomography\&.cpp\&.
+.SS "\fBBplot\fP* project_intensity_plot (\fBBproject\fP * project)"
+
+.PP
+Transfers the micrograph intensities for a field into a plot\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bplot* plot structure\&. 
+.PP
+.nf
+The micrographs should be unmodified gain-corrected images obtained from the detector.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 515 of file mg_tomography\&.cpp\&.
+.SS "int project_invert_matrices (\fBBproject\fP * project)"
+
+.PP
+Inverts the micrograph matrices in a project parameter structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The tilt axis angle for all the micrographs are set to the same value.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2071 of file mg_tomography\&.cpp\&.
+.SS "int project_invert_tilt_axis (\fBBproject\fP * project)"
+
+.PP
+Inverts the tilt axis in a project parameter structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The tilt axis angle for all the micrographs are set to the same value.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1916 of file mg_tomography\&.cpp\&.
+.SS "double project_lambda (\fBBproject\fP * project, double thickness)"
+
+.PP
+Determines the mean free path from a tilt series and thickness\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project structure\&. 
+.br
+\fIthickness\fP tomogram thickness (in angstrom)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double ratio\&. 
+.PP
+.nf
+The micrographs should be unmodified gain-corrected images obtained from the detector.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 795 of file mg_tomography\&.cpp\&.
+.SS "double project_marker_rotation_axis (\fBBproject\fP * project)"
+
+.PP
+Determines the most likely rotation axis location for a tilt series\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double average z offset from marker z average\&. 
+.PP
+.nf
+All micrographs must have associated markers.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2369 of file mg_tomography\&.cpp\&.
+.SS "int project_mass_normalize (\fBBproject\fP * project, double avg, double std, int norm_type, \fBDataType\fP datatype, int setinputZslices, int setoutputZslices, double cutmin, double cutmax, double replace_threshold)"
+
+.PP
+Normalizes a set of images in a project to a desired average and standard deviation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project structure\&. 
+.br
+\fIavg\fP desired average\&. 
+.br
+\fIstd\fP desired standard deviation (if 0, use defaults)\&. 
+.br
+\fInorm_type\fP type of determining the effective average and standard deviation: 0=simple, 1=Gaussian, 2=Poisson\&. 
+.br
+\fIdatatype\fP data type for normalized images\&. 
+.br
+\fIsetinputZslices\fP convert z-slices in the input to 2D images\&. 
+.br
+\fIsetoutputZslices\fP convert output image back to z-slices\&. 
+.br
+\fIcutmin\fP truncate to minimum\&. 
+.br
+\fIcutmax\fP truncate to maximum\&. 
+.br
+\fIreplace_threshold\fP replace maxima above this threshold\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+The effective average and standard deviation for each image is obtained
+in one of three ways:
+    0.      The simple avergae and standard devaition for the image.
+    1.      Gaussian fit of the histogram.
+    2.      Poisson fit of the histogram.
+A histogram of an image is calculated with a given number of bins.
+The histogram is fit to a Gaussian or Poisson function with exclusion of a
+small number of bins in the histogram (defined as outliers).
+The effective average and standard deviation are used to 
+rescale the data for each image.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 379 of file mg_tomography\&.cpp\&.
+.SS "int project_merge_rec_markers (\fBBproject\fP * project)"
+
+.PP
+Merges the markers for two reconstructions\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of markers merged\&. 
+.PP
+.nf
+The reconstructions must have corresponding markers.
+The marker locations are set to the average of the two.
+The second reconstruction is removed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2408 of file mg_tomography\&.cpp\&.
+.SS "long project_mg_exclude (\fBBproject\fP * project, \fBBstring\fP & mg_exclude)"
+
+.PP
+Deselects micrographs in a project hierarchy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&mg_exclude\fP list of micrograph numbers\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of micrographs excluded\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1844 of file mg_tomography\&.cpp\&.
+.SS "int project_mg_marker_select (\fBBproject\fP * project, double fom)"
+
+.PP
+Selects markers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIfom\fP fom cutoff\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Selects all micrograph markers above the given fom cutoff.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2093 of file mg_tomography\&.cpp\&.
+.SS "long project_mg_select (\fBBproject\fP * project, \fBBstring\fP & mg_select)"
+
+.PP
+Selects micrographs in a project hierarchy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&mg_select\fP list of micrograph numbers\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of micrographs selected\&. 
+.PP
+.nf
+A micrograph is only selected when it has its selection already set
+and it is in the list of numbers.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1806 of file mg_tomography\&.cpp\&.
+.SS "int project_mg_tilt_to_matrix (\fBBproject\fP * project)"
+
+.PP
+Sets the matrix from the tilt and axis angles for each micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+This is in preparation for reconstruction.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1969 of file mg_tomography\&.cpp\&.
+.SS "long project_renumber_markers (\fBBproject\fP * project)"
+
+.PP
+Renumbers the markers in a project hierarchy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of markers\&. 
+.PP
+.nf
+The markers are assumed to correspond across micrographs and reconstructions.
+The existing marker ids are mapped to an array, and new marker ids generated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1737 of file mg_tomography\&.cpp\&.
+.SS "int project_set_marker_radius (\fBBproject\fP * project, double mark_radius)"
+
+.PP
+Sets the marker radius in a project parameter structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fImark_radius\fP gold fiducial marker radius (voxels)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 2114 of file mg_tomography\&.cpp\&.
+.SS "int project_set_tilt_angles (\fBBproject\fP * project, double tilt_start, double tilt_step)"
+
+.PP
+Sets the tilt and tilt axis angles in a project parameter structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fItilt_start\fP starting tilt angle (usually negative)\&. 
+.br
+\fItilt_step\fP tilt increment angle\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The single tilt series is defined by a starting tilt angle and a
+tilt increment angle, as well as the tilt axis angle.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1941 of file mg_tomography\&.cpp\&.
+.SS "int project_set_tilt_axis (\fBBproject\fP * project, double tilt_axis)"
+
+.PP
+Sets the tilt axis angle in a project parameter structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fItilt_axis\fP tilt axis angle (wrt x-axis)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The tilt axis angle for all the micrographs are set to the same value.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1894 of file mg_tomography\&.cpp\&.
+.SS "long project_show_errors (\fBBproject\fP * project, double error_cutoff)"
+
+.PP
+Shows the errors in marker coordinates in a project hierarchy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIerror_cutoff\fP threshold to show errors (distance in pixels)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of errors above threshold\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1570 of file mg_tomography\&.cpp\&.
+.SS "long project_show_markers (\fBBproject\fP * project)"
+
+.PP
+Shows the markers in a project hierarchy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of markers\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1540 of file mg_tomography\&.cpp\&.
+.SS "int project_sort_markers_by_id (\fBBproject\fP * project)"
+
+.PP
+Sorts markers for each micrograph by ID number\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph project\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Requires the matrices in the micrograph structures to be defined.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 844 of file mg_tomography\&.cpp\&.
+.SS "double project_thickness (\fBBproject\fP * project, double lambda)"
+
+.PP
+Determines the thickness from a tilt series and mean free path\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project structure\&. 
+.br
+\fIlambda\fP proportionality parameter (in angstrom)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double ratio\&. 
+.PP
+.nf
+The micrographs should be unmodified gain-corrected images obtained from the detector.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 820 of file mg_tomography\&.cpp\&.
+.SS "double project_thickness_to_lambda_ratio (\fBBproject\fP * project)"
+
+.PP
+Determines the thickness to mean free path ratio from a tilt series\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double ratio\&. 
+.PP
+.nf
+The micrographs should be unmodified gain-corrected images obtained from the detector.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 696 of file mg_tomography\&.cpp\&.
+.SS "double project_tomo_errors (\fBBproject\fP * project)"
+
+.PP
+Analyzes marker errors\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph project\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double 0\&. 
+.PP
+.nf
+Requires the marker errors to be calculated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1040 of file mg_tomography\&.cpp\&.
+.SS "double project_tomo_residuals (\fBBproject\fP * project, int show)"
+
+.PP
+Calculates the residuals for an alignment solution\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph project\&. 
+.br
+\fIshow\fP flag to indicate showing lists\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double average residual\&. 
+.PP
+.nf
+Requires the matrices in the micrograph structures to be defined.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 868 of file mg_tomography\&.cpp\&.
+.SS "vector<double> simplex_fit_tilt_intensities (vector< double > & a, vector< double > & I)"
+
+.PP
+Definition at line 470 of file mg_tomography\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

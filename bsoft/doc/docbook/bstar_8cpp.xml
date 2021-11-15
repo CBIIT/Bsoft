@@ -1,0 +1,349 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_bstar_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/bstar.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/bstar.cpp</primary></indexterm>
+<para>
+
+<para>Examines STAR format files. </para>
+ 
+</para>
+<programlisting>#include &quot;star.h&quot;
+#include &quot;utilities.h&quot;
+#include &quot;options.h&quot;
+#include &quot;timer.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_bstar_8cpp_1af70cc0b3e88725b7e01bc7b4c065c4b3">show_tags</link> (<link linkend="_class_bstar2">Bstar2</link> &amp;star)</para>
+
+<para>Prints the list of tags in the STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_bstar_8cpp_1af8ee9e6051b81136db87fb2cafb2842f">item_delete_all</link> (<link linkend="_class_bstar2">Bstar2</link> &amp;star, string &amp;tag)</para>
+
+<para>Deletes all items associated with a given tag from the STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_bstar_8cpp_1a971628c130ce69bfb66358e94744c5e7">item_scale_shift</link> (<link linkend="_class_bstar2">Bstar2</link> &amp;star, string &amp;tag, double scale, double shift, int flag)</para>
+
+<para>Scales and shifts all items associated with a given tag from the STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_bstar_8cpp_1ae525cc52612390e02f8cf70635fa20c9">item_list</link> (<link linkend="_class_bstar2">Bstar2</link> &amp;star, string &amp;tag)</para>
+
+<para>Lists all items associated with a given tag from the STAR data base. </para>
+</listitem>
+            <listitem><para>int <link linkend="_bstar_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+            <listitem><para>int <link linkend="_bstar_8cpp_1a027df13fe2acd89687160b7968650f5d">string_get_format</link> (string &amp;s, char *format)</para>
+
+<para>Gets the format from the item. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_bstar_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>const char * <link linkend="_bstar_8cpp_1a4de0ad4c7190962494815c0fa7f948df">use</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Examines STAR format files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010409 </para>
+
+<para>Modified: 20210214 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_bstar_8cpp_1af8ee9e6051b81136db87fb2cafb2842f"/>    <section>
+    <title>item_delete_all()</title>
+<indexterm><primary>item_delete_all</primary><secondary>bstar.cpp</secondary></indexterm>
+<indexterm><primary>bstar.cpp</primary><secondary>item_delete_all</secondary></indexterm>
+<para><computeroutput>int item_delete_all (<link linkend="_class_bstar2">Bstar2</link> &amp; star, string &amp; tag)</computeroutput></para><para>
+
+<para>Deletes all items associated with a given tag from the STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*star</entry>
+                                <entry>
+<para>the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*tag</entry>
+                                <entry>
+<para>tag for items to be deleted. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The item with a given tag is deleted in all blocks it is found
+and the item pointers are rearranged to fill in the gap.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 232 of file bstar.cpp.</para>
+    </section><anchor xml:id="_bstar_8cpp_1ae525cc52612390e02f8cf70635fa20c9"/>    <section>
+    <title>item_list()</title>
+<indexterm><primary>item_list</primary><secondary>bstar.cpp</secondary></indexterm>
+<indexterm><primary>bstar.cpp</primary><secondary>item_list</secondary></indexterm>
+<para><computeroutput>int item_list (<link linkend="_class_bstar2">Bstar2</link> &amp; star, string &amp; tag)</computeroutput></para><para>
+
+<para>Lists all items associated with a given tag from the STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;star</entry>
+                                <entry>
+<para>the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;tag</entry>
+                                <entry>
+<para>tag for items to be listed. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The item with a given tag is listed to standard output as an end-of-line
+delimited array.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 348 of file bstar.cpp.</para>
+    </section><anchor xml:id="_bstar_8cpp_1a971628c130ce69bfb66358e94744c5e7"/>    <section>
+    <title>item_scale_shift()</title>
+<indexterm><primary>item_scale_shift</primary><secondary>bstar.cpp</secondary></indexterm>
+<indexterm><primary>bstar.cpp</primary><secondary>item_scale_shift</secondary></indexterm>
+<para><computeroutput>int item_scale_shift (<link linkend="_class_bstar2">Bstar2</link> &amp; star, string &amp; tag, double scale, double shift, int flag)</computeroutput></para><para>
+
+<para>Scales and shifts all items associated with a given tag from the STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;star</entry>
+                                <entry>
+<para>the STAR database. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;tag</entry>
+                                <entry>
+<para>tag for items to be modified. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>multiplier. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift</entry>
+                                <entry>
+<para>value added. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flag</entry>
+                                <entry>
+<para>0=integer, 1=real. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int total number of values changed. <literallayout><computeroutput>The item must be integer and is modified as:
+    new_value = old_value*scale + shift.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 289 of file bstar.cpp.</para>
+    </section><anchor xml:id="_bstar_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>bstar.cpp</secondary></indexterm>
+<indexterm><primary>bstar.cpp</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 50 of file bstar.cpp.</para>
+    </section><anchor xml:id="_bstar_8cpp_1af70cc0b3e88725b7e01bc7b4c065c4b3"/>    <section>
+    <title>show_tags()</title>
+<indexterm><primary>show_tags</primary><secondary>bstar.cpp</secondary></indexterm>
+<indexterm><primary>bstar.cpp</primary><secondary>show_tags</secondary></indexterm>
+<para><computeroutput>int show_tags (<link linkend="_class_bstar2">Bstar2</link> &amp; star)</computeroutput></para><para>
+
+<para>Prints the list of tags in the STAR data base. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;star</entry>
+                                <entry>
+<para>the STAR database </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of tags. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 180 of file bstar.cpp.</para>
+    </section><anchor xml:id="_bstar_8cpp_1a027df13fe2acd89687160b7968650f5d"/>    <section>
+    <title>string_get_format()</title>
+<indexterm><primary>string_get_format</primary><secondary>bstar.cpp</secondary></indexterm>
+<indexterm><primary>bstar.cpp</primary><secondary>string_get_format</secondary></indexterm>
+<para><computeroutput>int string_get_format (string &amp; s, char * format)</computeroutput></para><para>
+
+<para>Gets the format from the item. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;s</entry>
+                                <entry>
+<para>string. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*format</entry>
+                                <entry>
+<para>pointer to pre-allocated format string (modified). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int data type: 0=string, 1=integer, 2=float. <literallayout><computeroutput>Returns the format in the given format string.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 256 of file bstar.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_bstar_8cpp_1a4de0ad4c7190962494815c0fa7f948df"/>    <section>
+    <title>use</title>
+<indexterm><primary>use</primary><secondary>bstar.cpp</secondary></indexterm>
+<indexterm><primary>bstar.cpp</primary><secondary>use</secondary></indexterm>
+<para><computeroutput>const char* use[]</computeroutput></para><emphasis role="strong">Initial value:</emphasis><programlisting>=&#32;{
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Usage:&#32;bstar&#32;[options]&#32;input.star&#32;[input.star]&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;----------------------------------------------&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Examines&#32;and&#32;modifies&#32;STAR&#32;format&#32;files.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Actions:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-header&#32;85&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;List&#32;all&#32;the&#32;header&#32;lines&#32;limited&#32;to&#32;the&#32;indicated&#32;length.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-split&#32;3&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Split&#32;the&#32;data&#32;blocks&#32;into&#32;individual&#32;files,&#32;inserting&#32;digits&#32;before&#32;the&#32;extension.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-list&#32;time_unit&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;List&#32;all&#32;items&#32;with&#32;this&#32;STAR&#32;tag.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-delete&#32;resolution&#32;&#32;&#32;&#32;&#32;&#32;&#32;Delete&#32;all&#32;items&#32;with&#32;this&#32;STAR&#32;tag.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-blockdelete&#32;symmetry&#32;&#32;&#32;&#32;Delete&#32;all&#32;data&#32;blocks&#32;containing&#32;this&#32;STAR&#32;tag.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-integerscale&#32;select,1,3&#32;Scale&#32;and&#32;shift&#32;all&#32;integer&#32;items&#32;with&#32;this&#32;STAR&#32;tag.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-floatscale&#32;psi,1.5,-5.1&#32;Scale&#32;and&#32;shift&#32;all&#32;floating&#32;point&#32;items&#32;with&#32;this&#32;STAR&#32;tag.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Parameters:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-verbose&#32;7&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Verbosity&#32;of&#32;output.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-linelength&#32;120&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Output&#32;line&#32;length&#32;(default&#32;100).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Output:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-output&#32;file.star&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Output&#32;STAR&#32;format&#32;file.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+NULL
+}
+</programlisting><para>
+Definition at line 25 of file bstar.cpp.</para>
+    </section><anchor xml:id="_bstar_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>bstar.cpp</secondary></indexterm>
+<indexterm><primary>bstar.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

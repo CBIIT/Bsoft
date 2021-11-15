@@ -1,0 +1,356 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_moving__average_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/util/moving_average.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/util/moving_average.cpp</primary></indexterm>
+<para>
+
+<para>Functions for moving average calculations. </para>
+ 
+</para>
+<programlisting>#include &quot;moving_average.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>double * <link linkend="_moving__average_8cpp_1aa8732a55dc8dd1934e9b549b5c9f4a57">moving_average</link> (long number, double *x, long window)</para>
+
+<para>Calculates a moving average over an array of data. </para>
+</listitem>
+            <listitem><para>vector&lt; double &gt; <link linkend="_moving__average_8cpp_1a80b68acc239a514110d1b01bad28fc0b">moving_average</link> (vector&lt; double &gt; &amp;x, long window)</para>
+
+<para>Calculates a moving average over an array of data. </para>
+</listitem>
+            <listitem><para><link linkend="_class_complex">Complex</link>&lt; float &gt; * <link linkend="_moving__average_8cpp_1a3d8db5f6e3c6c1743d3833ee93cb61b9">moving_average_complex</link> (long number, <link linkend="_class_complex">Complex</link>&lt; float &gt; *x, long window)</para>
+
+<para>Calculates a moving average over an array of complex data. </para>
+</listitem>
+            <listitem><para>vector&lt; <link linkend="_class_complex">Complex</link>&lt; float &gt; &gt; <link linkend="_moving__average_8cpp_1a233a585110bcfebb0f08f7a89f512b84">moving_average_complex</link> (vector&lt; <link linkend="_class_complex">Complex</link>&lt; float &gt;&gt; &amp;x, long window)</para>
+
+<para>Calculates a moving average over an array of complex data. </para>
+</listitem>
+            <listitem><para>vector&lt; double &gt; <link linkend="_moving__average_8cpp_1ac4dc6bea103bc02020c94a4bd769f646">moving_polynomial</link> (long order, long number, double *x, long window)</para>
+
+<para>Calculates a moving polynomial fit over an array of data. </para>
+</listitem>
+            <listitem><para>vector&lt; double &gt; <link linkend="_moving__average_8cpp_1afb06af5b6375df343ac54aabd32c900c">moving_polynomial</link> (long order, vector&lt; double &gt; &amp;x, long window)</para>
+</listitem>
+            <listitem><para>vector&lt; double &gt; <link linkend="_moving__average_8cpp_1a810f3e55bc4c3591c8b838b16b2c0687">moving_gradient</link> (vector&lt; double &gt; &amp;x, long window)</para>
+</listitem>
+            <listitem><para>vector&lt; double &gt; <link linkend="_moving__average_8cpp_1a05a0f21aa748ec4b335148e120110bc5">moving_curvature</link> (vector&lt; double &gt; &amp;x, long window)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_moving__average_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions for moving average calculations. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20000430 </para>
+
+<para>Modified: 20210404 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_moving__average_8cpp_1aa8732a55dc8dd1934e9b549b5c9f4a57"/>    <section>
+    <title>moving_average()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>moving_average</primary><secondary>moving_average.cpp</secondary></indexterm>
+<indexterm><primary>moving_average.cpp</primary><secondary>moving_average</secondary></indexterm>
+<para><computeroutput>double* moving_average (long number, double * x, long window)</computeroutput></para><para>
+
+<para>Calculates a moving average over an array of data. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>number of values in the array. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*x</entry>
+                                <entry>
+<para>the array. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>window</entry>
+                                <entry>
+<para>sliding window length. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double* the moving average array. <literallayout><computeroutput>All data points within a sliding window are averaged.
+The window moves over the ends of the array and averages only the 
+available points.
+A new array is allocated and the moving averages returned.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 28 of file moving_average.cpp.</para>
+    </section><anchor xml:id="_moving__average_8cpp_1a80b68acc239a514110d1b01bad28fc0b"/>    <section>
+    <title>moving_average()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>moving_average</primary><secondary>moving_average.cpp</secondary></indexterm>
+<indexterm><primary>moving_average.cpp</primary><secondary>moving_average</secondary></indexterm>
+<para><computeroutput>vector&lt;double&gt; moving_average (vector&lt; double &gt; &amp; x, long window)</computeroutput></para><para>
+
+<para>Calculates a moving average over an array of data. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*x</entry>
+                                <entry>
+<para>the array. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>window</entry>
+                                <entry>
+<para>sliding window length. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double* the moving average array. <literallayout><computeroutput>All data points within a sliding window are averaged.
+The window moves over the ends of the array and averages only the
+available points.
+A new array is allocated and the moving averages returned.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 73 of file moving_average.cpp.</para>
+    </section><anchor xml:id="_moving__average_8cpp_1a3d8db5f6e3c6c1743d3833ee93cb61b9"/>    <section>
+    <title>moving_average_complex()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>moving_average_complex</primary><secondary>moving_average.cpp</secondary></indexterm>
+<indexterm><primary>moving_average.cpp</primary><secondary>moving_average_complex</secondary></indexterm>
+<para><computeroutput><link linkend="_class_complex">Complex</link>&lt;float&gt;* moving_average_complex (long number, <link linkend="_class_complex">Complex</link>&lt; float &gt; * x, long window)</computeroutput></para><para>
+
+<para>Calculates a moving average over an array of complex data. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>number of values in the array. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*x</entry>
+                                <entry>
+<para>the array. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>window</entry>
+                                <entry>
+<para>sliding window length. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Complex&lt;float&gt;* the moving average complex array. <literallayout><computeroutput>All data points within a sliding window are averaged.
+The window moves over the ends of the array and averages only the 
+available points.
+A new array is allocated and the moving averages returned in it.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 120 of file moving_average.cpp.</para>
+    </section><anchor xml:id="_moving__average_8cpp_1a233a585110bcfebb0f08f7a89f512b84"/>    <section>
+    <title>moving_average_complex()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>moving_average_complex</primary><secondary>moving_average.cpp</secondary></indexterm>
+<indexterm><primary>moving_average.cpp</primary><secondary>moving_average_complex</secondary></indexterm>
+<para><computeroutput>vector&lt;<link linkend="_class_complex">Complex</link>&lt;float&gt; &gt; moving_average_complex (vector&lt; <link linkend="_class_complex">Complex</link>&lt; float &gt;&gt; &amp; x, long window)</computeroutput></para><para>
+
+<para>Calculates a moving average over an array of complex data. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*x</entry>
+                                <entry>
+<para>the array. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>window</entry>
+                                <entry>
+<para>sliding window length. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Complex&lt;float&gt;* the moving average complex array. <literallayout><computeroutput>All data points within a sliding window are averaged.
+The window moves over the ends of the array and averages only the
+available points.
+A new array is allocated and the moving averages returned in it.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 165 of file moving_average.cpp.</para>
+    </section><anchor xml:id="_moving__average_8cpp_1a05a0f21aa748ec4b335148e120110bc5"/>    <section>
+    <title>moving_curvature()</title>
+<indexterm><primary>moving_curvature</primary><secondary>moving_average.cpp</secondary></indexterm>
+<indexterm><primary>moving_average.cpp</primary><secondary>moving_curvature</secondary></indexterm>
+<para><computeroutput>vector&lt;double&gt; moving_curvature (vector&lt; double &gt; &amp; x, long window)</computeroutput></para><para>
+Definition at line 296 of file moving_average.cpp.</para>
+    </section><anchor xml:id="_moving__average_8cpp_1a810f3e55bc4c3591c8b838b16b2c0687"/>    <section>
+    <title>moving_gradient()</title>
+<indexterm><primary>moving_gradient</primary><secondary>moving_average.cpp</secondary></indexterm>
+<indexterm><primary>moving_average.cpp</primary><secondary>moving_gradient</secondary></indexterm>
+<para><computeroutput>vector&lt;double&gt; moving_gradient (vector&lt; double &gt; &amp; x, long window)</computeroutput></para><para>
+Definition at line 271 of file moving_average.cpp.</para>
+    </section><anchor xml:id="_moving__average_8cpp_1ac4dc6bea103bc02020c94a4bd769f646"/>    <section>
+    <title>moving_polynomial()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>moving_polynomial</primary><secondary>moving_average.cpp</secondary></indexterm>
+<indexterm><primary>moving_average.cpp</primary><secondary>moving_polynomial</secondary></indexterm>
+<para><computeroutput>vector&lt;double&gt; moving_polynomial (long order, long number, double * x, long window)</computeroutput></para><para>
+
+<para>Calculates a moving polynomial fit over an array of data. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>order</entry>
+                                <entry>
+<para>polynomial order. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>number of values in the array. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*x</entry>
+                                <entry>
+<para>the array. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>window</entry>
+                                <entry>
+<para>sliding window length. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double* the moving polynomial fit array. <literallayout><computeroutput>All data points within a sliding window are fit to a polynomial.
+The window moves over the ends of the array and fits only the 
+available points.
+A new array is allocated and the moving polynomial fit values returned.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 212 of file moving_average.cpp.</para>
+    </section><anchor xml:id="_moving__average_8cpp_1afb06af5b6375df343ac54aabd32c900c"/>    <section>
+    <title>moving_polynomial()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>moving_polynomial</primary><secondary>moving_average.cpp</secondary></indexterm>
+<indexterm><primary>moving_average.cpp</primary><secondary>moving_polynomial</secondary></indexterm>
+<para><computeroutput>vector&lt;double&gt; moving_polynomial (long order, vector&lt; double &gt; &amp; x, long window)</computeroutput></para><para>
+Definition at line 241 of file moving_average.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_moving__average_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>moving_average.cpp</secondary></indexterm>
+<indexterm><primary>moving_average.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Helical Map</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h2>Determining filament widths</h2>
+<p>The variation in the width of a filament with a long pitch may aid in
+establishing the cross-overs more accurately. To improve the contrast,
+the filament image can be smoothed with a moving average function, and by
+averaging the helical repeats.
+ The requirements are that the filament lies parallel to the y axis and in the
+ center of the image.</p>
+<center><img src="863-1-unbent.jpg" alt="CryoEM filament" height=400/>
+<p>Cropped example of a cryoEM image of a filament. </p></center>
+<p>The filament image can be preprocessed to set the image parameters, invert
+the contrast and smooth along the y axis:</p>
+<div id="command">bfilwidth -v 7 -sam 1.5 -ori 128,4000,0 -invert -average 1,30,1 863-crop_ctf_fil000001.pif 863-ccf_avg.pif</div>
+<p>The filament with at each y position is then calculated using a moving average
+window and limits on the expected width of the filament:</p>
+<div id="command">bfilwidth -v 7 -period 256,600,1 -width 30 -limits 55,100 -Post 863-ccf_per.ps 863-ccf_avg.pif 863-ccf_per.pif</div>
+<center><img src="863-ccf_per.jpg" alt="Periodically averaged filament" height=400/>
+<p>Periodically averaged filament to determine the widths along the helical axis.</p></center>
+
+<center><img src="863-ccf_per_plot.jpg" alt="Filament width plot" height=400/>
+<p>Plot of filament widths along the helical axis.</p></center>
+
+</div>
+<div id="footer">
+  Bernard Heymann  20141223
+</div>
+</body>
+</html>

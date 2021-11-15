@@ -1,0 +1,319 @@
+.TH "/Users/bernard/b20/bsoft/src/util/Bstring.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/util/Bstring.cpp \- Functions in the string class\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio\&.h>\fP
+.br
+\fC#include <string\&.h>\fP
+.br
+\fC#include <ctype\&.h>\fP
+.br
+\fC#include 'Bstring\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBstring\fP \fBoperator+\fP (const char *c, const \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "istream & \fBoperator>>\fP (istream &input, \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "ostream & \fBoperator<<\fP (ostream &output, \fBBstring\fP &s)"
+.br
+.ti -1c
+.RI "\fBBstring\fP * \fBstring_add\fP (\fBBstring\fP **list, const char *string)"
+.br
+.RI "Adds a string to a linked list\&. "
+.ti -1c
+.RI "\fBBstring\fP * \fBstring_add\fP (\fBBstring\fP **list, \fBBstring\fP &string)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBstring_catenate\fP (\fBBstring\fP *list)"
+.br
+.RI "Catenates a string linked list into one string\&. "
+.ti -1c
+.RI "int \fBstring_kill\fP (\fBBstring\fP *list)"
+.br
+.RI "Kills a string linked list\&. "
+.ti -1c
+.RI "\fBBstring\fP \fBparameter_file_path\fP (\fBBstring\fP filename)"
+.br
+.RI "Finds the parameter file path\&. "
+.ti -1c
+.RI "int \fBQsortSmallToLargeString\fP (const void *x, const void *y)"
+.br
+.RI "Utility function for sorting string lexically in qsort\&. "
+.ti -1c
+.RI "int \fBQsortLargeToSmallString\fP (const void *x, const void *y)"
+.br
+.RI "Utility function for sorting string lexically in qsort\&. "
+.ti -1c
+.RI "int \fBQsortSmallToLargeStringValue\fP (const void *x, const void *y)"
+.br
+.RI "Utility function for sorting string values in qsort\&. "
+.ti -1c
+.RI "int \fBQsortLargeToSmallStringValue\fP (const void *x, const void *y)"
+.br
+.RI "Utility function for sorting string values in qsort\&. "
+.ti -1c
+.RI "int \fBstring_sort\fP (\fBBstring\fP *slist, int descending, int value)"
+.br
+.RI "Sorts a list of strings in ascending (descending) lexical or value order\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions in the string class\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20051020 
+.PP
+Modified: 20210115 
+.RE
+.PP
+
+.PP
+Definition in file \fBBstring\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBstring\fP operator+ (const char * c, const \fBBstring\fP & s)"
+
+.PP
+Definition at line 682 of file Bstring\&.cpp\&.
+.SS "ostream& operator<< (ostream & output, \fBBstring\fP & s)"
+
+.PP
+Definition at line 695 of file Bstring\&.cpp\&.
+.SS "istream& operator>> (istream & input, \fBBstring\fP & s)"
+
+.PP
+Definition at line 688 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP parameter_file_path (\fBBstring\fP filename)"
+
+.PP
+Finds the parameter file path\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP the parameter filename\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBBstring\fP the full path and file name\&. 
+.PP
+.nf
+The parameter file path should primarily be defined in the environmental
+variable "BPARAM".
+Otherwise a default is used which may or may not be valid.
+The string returned has a length containing the path plus one byte.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 788 of file Bstring\&.cpp\&.
+.SS "int QsortLargeToSmallString (const void * x, const void * y)"
+
+.PP
+Utility function for sorting string lexically in qsort\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*x\fP first string pointer\&. 
+.br
+\fI*y\fP second string pointer\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+-1 if x < y and 1 otherwise\&. 
+.RE
+.PP
+
+.PP
+Definition at line 829 of file Bstring\&.cpp\&.
+.SS "int QsortLargeToSmallStringValue (const void * x, const void * y)"
+
+.PP
+Utility function for sorting string values in qsort\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*x\fP first string pointer\&. 
+.br
+\fI*y\fP second string pointer\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+-1 if x < y and 1 otherwise\&. 
+.RE
+.PP
+
+.PP
+Definition at line 857 of file Bstring\&.cpp\&.
+.SS "int QsortSmallToLargeString (const void * x, const void * y)"
+
+.PP
+Utility function for sorting string lexically in qsort\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*x\fP first string pointer\&. 
+.br
+\fI*y\fP second string pointer\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int -1 if x < y and 1 otherwise\&. 
+.RE
+.PP
+
+.PP
+Definition at line 815 of file Bstring\&.cpp\&.
+.SS "int QsortSmallToLargeStringValue (const void * x, const void * y)"
+
+.PP
+Utility function for sorting string values in qsort\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*x\fP first string pointer\&. 
+.br
+\fI*y\fP second string pointer\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+-1 if x < y and 1 otherwise\&. 
+.RE
+.PP
+
+.PP
+Definition at line 843 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP* string_add (\fBBstring\fP ** list, \fBBstring\fP & string)"
+
+.PP
+Definition at line 712 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP* string_add (\fBBstring\fP ** list, const char * string)"
+
+.PP
+Adds a string to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**list\fP the string linked list\&. 
+.br
+\fI&string\fP string - unchanged\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bstring* new string structure\&. 
+.RE
+.PP
+
+.PP
+Definition at line 706 of file Bstring\&.cpp\&.
+.SS "\fBBstring\fP string_catenate (\fBBstring\fP * list)"
+
+.PP
+Catenates a string linked list into one string\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*list\fP the string linked list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBBstring\fP new string\&. 
+.RE
+.PP
+
+.PP
+Definition at line 740 of file Bstring\&.cpp\&.
+.SS "int string_kill (\fBBstring\fP * list)"
+
+.PP
+Kills a string linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*list\fP the string linked list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 761 of file Bstring\&.cpp\&.
+.SS "int string_sort (\fBBstring\fP * slist, int descending, int value)"
+
+.PP
+Sorts a list of strings in ascending (descending) lexical or value order\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*slist\fP string list\&. 
+.br
+\fIdescending\fP flag to do a descending sort\&. 
+.br
+\fIvalue\fP sort in value order\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The string list is first convert to an array, quicksorted, and
+written back into the string list.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 876 of file Bstring\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

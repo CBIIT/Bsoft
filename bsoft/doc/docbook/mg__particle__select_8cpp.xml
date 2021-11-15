@@ -1,0 +1,2731 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__particle__select_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mg/mg_particle_select.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mg/mg_particle_select.cpp</primary></indexterm>
+<para>
+
+<para>Select particles. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+#include &quot;mg_tomography.h&quot;
+#include &quot;mg_select.h&quot;
+#include &quot;mg_particle_select.h&quot;
+#include &quot;mg_tags.h&quot;
+#include &quot;symmetry.h&quot;
+#include &quot;matrix_linear.h&quot;
+#include &quot;Matrix.h&quot;
+#include &quot;random_numbers.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_structint__float">int_float</link> * <link linkend="_mg__particle__select_8cpp_1a69a5683d4b5e133127eb336bb12d6583">project_fom_order</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long &amp;npart, int fom_index, int defocus_fit)</para>
+</listitem>
+            <listitem><para><link linkend="_structint__float">int_float</link> * <link linkend="_mg__particle__select_8cpp_1ae4b69be5fd8360c2f88836fa7a864624">part_fom_order</link> (<link linkend="_class_bparticle">Bparticle</link> *partlist, long &amp;npart, int fom_index)</para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a1d8c4cff2907b608ea2803147f51f28c">part_reset_selection</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int flag)</para>
+
+<para>Resets selection to all particles. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a41fac751b6e91e0bb5db4908f2ada1c6">part_unset_selection</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Unsets selection to no particles. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a608c973f1f270183ec21fea25d6ec22b">part_invert_selection</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Inverts the selection. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1af7c4047fd0427b6e25f11f687570006f">part_select_micrograph</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;mgselect)</para>
+
+<para>Sets selection to the micrographs indicated. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a4b7bae9e279cb73d86fcd0d5be6ddb1c">part_consolidate_selection</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int number)</para>
+
+<para>Consolidates selected particles under one selection number. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1af4fa7ca1bd3248221fb773cfe46e1e9c">part_set_selection</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int number)</para>
+
+<para>Selects one selection number and sets all others to zero. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1adee8557de60a30422b1790355aff3aff">part_set_sequential</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Selects one selection number and sets all others to zero. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a9cff744c245f58eb799a338dd5c54ea8">part_set_FOM</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int fom_index, double fom)</para>
+
+<para>Sets the FOM for all particles. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a827add4cabe2c61e1c46fb37139fff12">part_deselect_from_list</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> list)</para>
+
+<para>Deselects particles with selection numbers from a list. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a805d8a11fcf4182b911d942b7a388c48">part_deselect</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int fom_index, double fommin, double fommax)</para>
+
+<para>Deselects particles below a given FOM cutoff. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__particle__select_8cpp_1a6cdc8fd24cdb622cbf637f637fe26ee6">QsortLargeToSmallParticle</link> (const void *x, const void *y)</para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a7b09ad83abbf0cae58c2f10070b53af0">part_deselect_redundant</link> (<link linkend="_class_bparticle">Bparticle</link> *partlist, double excl_dist, int <link linkend="_tcltk__bmg_8cpp_1a66823305785303716aa59f76b0e3359d">part_select</link>, int fom_index)</para>
+
+<para>Deselects particles overlapping with better ones. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a1b5be62d3577c8059402ce5b3eef2714">part_deselect_redundant</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double excl_dist, int <link linkend="_tcltk__bmg_8cpp_1a66823305785303716aa59f76b0e3359d">part_select</link>, int fom_index)</para>
+
+<para>Deselects particles overlapping with better ones. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a85356d50a10121adf8c3ba5492f71b20">part_set_multi_maps</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int <link linkend="_tcltk__bmg_8cpp_1a66823305785303716aa59f76b0e3359d">part_select</link>, int nmaps)</para>
+
+<para>Sets selection for generating multiple maps. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1aad48c6923286adf4d2cf0a22f0a0561d">part_set_filament_maps</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Generates a selection number from the group number for each filament. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__particle__select_8cpp_1a454b2613f4d06f5d3f6474ffc20fcc4a">part_reselect</link> (<link linkend="_class_bparticle">Bparticle</link> *part, <link linkend="_class_bstring">Bstring</link> &amp;tag, double reselect_min, double reselect_max)</para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a206d00314f833a2c6371cf56b6e94939">part_reselect</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;tag, double reselect_min, double reselect_max)</para>
+
+<para>Reselects particles identified by an input STAR tag and between a minimum and maximum. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__particle__select_8cpp_1ac7094ca5598ce86ab703e45517fd6658">part_series_comparison</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double angle_cutoff)</para>
+
+<para>A function to select particles based on comparison of the orientations within a series. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1af6f04e5b09778935850b82f2ee5f8a32">part_convert_selection</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int *sel)</para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1af4b68a5b84b8e6133c8a33b7cbe47618">part_select_FOM_groups</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int ngroups, int fom_index, int defocus_fit)</para>
+
+<para>Selects groups of particles based on the FOM. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a09ffa8f997dd6f48a377a75207201ff1">part_select_percentage</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double percentage, int fom_index, int defocus_fit)</para>
+
+<para>Selects a percentage of particles based on the FOM. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a672fc3b3d8c0c3dcf907bcc4feb19214">part_select_best</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long number, int fom_index, int defocus_fit)</para>
+
+<para>Selects the best particles based on the FOM. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1aae7f25cf2e110f2b03a55f06a5da7e64">part_select_FOM_avg_std</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double factor, int fom_index)</para>
+
+<para>Selects particles based on FOM average and standard deviation. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a4b689a26908be5625d65eb4c20d1857e">part_select_random</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long number)</para>
+
+<para>Selects a specific number of particles randomly. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1af75de174b717c4f65831a63a8c014d26">part_select_random_fraction</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double fraction)</para>
+
+<para>Selects particles randomly based on a fraction of the total. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a79dd3fa98e448160a6b110edf1a0e090">part_select_random_group</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long number)</para>
+
+<para>Selects groups randomly to give at least a number of particles. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a4224656f5ee9c547a1b99be6e7dfa215">part_select_random_filaments</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int nmaps)</para>
+
+<para>Generates a selection number from the group number for each filament. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a9eb58d3bcce671293188d135142e88e2">part_select_bootstrap</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int number)</para>
+
+<para>Selects a given number of particles randomly with replacement. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1ac55d1405e764f9744b51e629f62168a6">part_select_random_within_view</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double theta_step, double phi_step, int number)</para>
+
+<para>Selects a given number of particles within each view. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1acb9d9c2915258d2a40f4b84a1b2eb84b">part_select_maxsmooth</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double theta_step, double phi_step, double threshfrac, double sigma, int fom_index)</para>
+
+<para>Selects particles based on a smoothed maximum surface. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a96a77c32bf5a2796baa3891ffab592f5">part_select_best_within_view</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double theta_step, double phi_step, int number, int fom_index)</para>
+
+<para>Selects the best number of particles within each view. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a01a7951c03e269873e63a9174724a474">part_select_to_group</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Transfer selection numbers to the group identifiers. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a8be61b52e8203330c8146202044df533">part_select_group</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int group)</para>
+
+<para>Selects particles with a given group identifier. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1ac94c4c6c46cac253f281f911819ce9c9">part_select_sets</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int size, int flag)</para>
+
+<para>Selects sets of particles, each set with the same size. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a7043b78f56c4c5b3e477374cbd8bb989">part_select_frames</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int frame_start, int frame_end)</para>
+
+<para>Select particles from frames in a series. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1adc23cdec51dcc19f581fb4e5afa0bdf8">part_fix_fil_direction</link> (<link linkend="_class_bparticle">Bparticle</link> *partlist)</para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1ae0a6770a9dc24cc47f13f8b0db4098d9">part_fix_fil_direction_old</link> (<link linkend="_class_bparticle">Bparticle</link> *partlist, double minpct)</para>
+</listitem>
+            <listitem><para>vector&lt; long &gt; <link linkend="_mg__particle__select_8cpp_1a9b292b99f451387d905149f7d898bab0">part_fix_fil_direction</link> (<link linkend="_class_bparticle">Bparticle</link> *partlist, double minpct)</para>
+</listitem>
+            <listitem><para>vector&lt; long &gt; <link linkend="_mg__particle__select_8cpp_1afc9898b8c01336d11f3edfed1269e096">part_fix_fil_direction</link> (<link linkend="_class_bparticle">Bparticle</link> *partlist, <link linkend="_class_bparticle">Bparticle</link> *partlist2, double minpct)</para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1ae51bad3980279a76ad310921e0626635">part_filament_direction</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double minpct)</para>
+
+<para>Checks the direction of particles associated with filaments. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1aea5ab2f35c1148c570fe951c459376e0">part_filament_direction</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bproject">Bproject</link> *project2, double minpct)</para>
+
+<para>Checks the direction of particles associated with filaments and compares with opposite filament direction. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a72245a5d264784a13e98b32e80f9488e">part_view_select</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_view">View</link> view, double <link linkend="__vector3_8h_1a4d0ad562e2f2e87c018fe778805aa3cf">angle</link>)</para>
+
+<para>Selects particles based on a distance from a reference view. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a6741532c36930fa71a6eda10143776c8">part_side_view_select</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double <link linkend="__vector3_8h_1a4d0ad562e2f2e87c018fe778805aa3cf">angle</link>)</para>
+
+<para>Selects particles based on a distance from a side view. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1aacf48588676a6277b69315f70fab79c9">part_euler_angle_select</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double *euler6)</para>
+
+<para>Selects particles based on <link linkend="_class_euler">Euler</link> angle limits. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a808ff53eb9e89bad9c1e2cd4e451693b">part_origin_select</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, double <link linkend="__vector3_8h_1aa60745aa4e45acde64f733424e37dbb9">distance</link>)</para>
+
+<para>Selects particles based on the distance from the nominal origin. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a2cf413a259d1676380530c28a898e7d9">part_set_first_view_in_series</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Sets all orientation parameters for a particle to the first in the set. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1af2be99c158afe30b5d7ea3991a53aa87">part_set_best_view_in_series</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int fom_index)</para>
+
+<para>Sets all orientation parameters for a particle to the best in the set. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a5a94fcb4c4e1b1ddba0c562e8c39b76d">part_select_series</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int size, int flag)</para>
+
+<para>Select series where all are already selected. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1ae2ad3fb1f429f08bdfb1b7620a0fcdb8">part_series_from_seed</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int flags)</para>
+
+<para>Calculates the locations of particles in a series from a seed. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__particle__select_8cpp_1a46283a21e655d0d30bf0349c972b730b">part_fom_defocus_fit</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int fom_index, double &amp;intercept, double &amp;slope)</para>
+
+<para>Fits the particle FOMs as a function of the defocus. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__particle__select_8cpp_1ad5f0a281f10b404ea6276c791ea05d94">part_fom_defocus_fit_deselect</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int fom_index, double cutoff)</para>
+
+<para>Deselects particles below a given FOM cutoff, adjusted for the defocus. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a3b21afcc207188270b1c10b723d10ac3">part_select_closest_to_focus</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Deselects all particles except those from micrographs closest to focus. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1ab01027d145a3a42e262a8b045c1580c7">part_select_furthest_from_focus</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Deselects all particles except those from micrographs furthest from focus. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a43126050917c85be24eac4a7b8b3d3a9">part_delete_deselected</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Deletes deselected particles and renumber the remaining. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1a36b9944e17dabfe14a1870acad1c9ca3">part_delete_deselected</link> (<link linkend="_class_bparticle">Bparticle</link> **partlist)</para>
+
+<para>Deletes deselected particles and renumber the remaining. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__particle__select_8cpp_1ad816007a64af24ab32741397e8971a6f">part_fix_defocus</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double max_dev)</para>
+
+<para>Resets defocus values for particles thata are too far off. </para>
+</listitem>
+            <listitem><para>vector&lt; pair&lt; <link linkend="_class_bparticle">Bparticle</link> *, double &gt; &gt; <link linkend="_mg__particle__select_8cpp_1a845af9a07b0bc85f4b2c9c39505ed18d">project_part_sort</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> tag)</para>
+
+<para>Sorts the Particles by a selected parameter. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mg__particle__select_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Select particles. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20000426 </para>
+
+<para>Modified: 20200517 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__particle__select_8cpp_1a4b7bae9e279cb73d86fcd0d5be6ddb1c"/>    <section>
+    <title>part_consolidate_selection()</title>
+<indexterm><primary>part_consolidate_selection</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_consolidate_selection</secondary></indexterm>
+<para><computeroutput>long part_consolidate_selection (<link linkend="_class_bproject">Bproject</link> * project, int number)</computeroutput></para><para>
+
+<para>Consolidates selected particles under one selection number. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>new selection number (1 if &lt; 1). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 283 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1af6f04e5b09778935850b82f2ee5f8a32"/>    <section>
+    <title>part_convert_selection()</title>
+<indexterm><primary>part_convert_selection</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_convert_selection</secondary></indexterm>
+<para><computeroutput>long part_convert_selection (<link linkend="_class_bproject">Bproject</link> * project, int * sel)</computeroutput></para><para>
+Definition at line 899 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a36b9944e17dabfe14a1870acad1c9ca3"/>    <section>
+    <title>part_delete_deselected()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>part_delete_deselected</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_delete_deselected</secondary></indexterm>
+<para><computeroutput>long part_delete_deselected (<link linkend="_class_bparticle">Bparticle</link> ** partlist)</computeroutput></para><para>
+
+<para>Deletes deselected particles and renumber the remaining. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**partlist</entry>
+                                <entry>
+<para>particle parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles remaining. <literallayout><computeroutput>The old list is deallocated.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 3118 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a43126050917c85be24eac4a7b8b3d3a9"/>    <section>
+    <title>part_delete_deselected()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>part_delete_deselected</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_delete_deselected</secondary></indexterm>
+<para><computeroutput>long part_delete_deselected (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Deletes deselected particles and renumber the remaining. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles remaining. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 3068 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a805d8a11fcf4182b911d942b7a388c48"/>    <section>
+    <title>part_deselect()</title>
+<indexterm><primary>part_deselect</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_deselect</secondary></indexterm>
+<para><computeroutput>long part_deselect (<link linkend="_class_bproject">Bproject</link> * project, int fom_index, double fommin, double fommax)</computeroutput></para><para>
+
+<para>Deselects particles below a given FOM cutoff. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>index of FOM value to test for. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fommin</entry>
+                                <entry>
+<para>minimum threshold for deselection. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fommax</entry>
+                                <entry>
+<para>maximum threshold for deselection. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 468 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a827add4cabe2c61e1c46fb37139fff12"/>    <section>
+    <title>part_deselect_from_list()</title>
+<indexterm><primary>part_deselect_from_list</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_deselect_from_list</secondary></indexterm>
+<para><computeroutput>long part_deselect_from_list (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> list)</computeroutput></para><para>
+
+<para>Deselects particles with selection numbers from a list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>list</entry>
+                                <entry>
+<para>comma-separated list of selection numbers. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 412 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a7b09ad83abbf0cae58c2f10070b53af0"/>    <section>
+    <title>part_deselect_redundant()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>part_deselect_redundant</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_deselect_redundant</secondary></indexterm>
+<para><computeroutput>long part_deselect_redundant (<link linkend="_class_bparticle">Bparticle</link> * partlist, double excl_dist, int part_select, int fom_index)</computeroutput></para><para>
+
+<para>Deselects particles overlapping with better ones. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*partlist</entry>
+                                <entry>
+<para>particle linked list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>excl_dist</entry>
+                                <entry>
+<para>minimum distance between particles. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>part_select</entry>
+                                <entry>
+<para>initial selection number (-1 means all &gt;0). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>index of FOM value to test for. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 520 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a1b5be62d3577c8059402ce5b3eef2714"/>    <section>
+    <title>part_deselect_redundant()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>part_deselect_redundant</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_deselect_redundant</secondary></indexterm>
+<para><computeroutput>long part_deselect_redundant (<link linkend="_class_bproject">Bproject</link> * project, double excl_dist, int part_select, int fom_index)</computeroutput></para><para>
+
+<para>Deselects particles overlapping with better ones. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>excl_dist</entry>
+                                <entry>
+<para>minimum distance between particles. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>part_select</entry>
+                                <entry>
+<para>initial selection number (-1 means all &gt;0). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>index of FOM value to test for. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 552 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1aacf48588676a6277b69315f70fab79c9"/>    <section>
+    <title>part_euler_angle_select()</title>
+<indexterm><primary>part_euler_angle_select</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_euler_angle_select</secondary></indexterm>
+<para><computeroutput>long part_euler_angle_select (<link linkend="_class_bproject">Bproject</link> * project, double * euler6)</computeroutput></para><para>
+
+<para>Selects particles based on <link linkend="_class_euler">Euler</link> angle limits. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*euler6</entry>
+                                <entry>
+<para>6-value vector of <link linkend="_class_euler">Euler</link> angle limits. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>Only particles already selected are subject to the test.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2568 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1aea5ab2f35c1148c570fe951c459376e0"/>    <section>
+    <title>part_filament_direction()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>part_filament_direction</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_filament_direction</secondary></indexterm>
+<para><computeroutput>long part_filament_direction (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bproject">Bproject</link> * project2, double minpct)</computeroutput></para><para>
+
+<para>Checks the direction of particles associated with filaments and compares with opposite filament direction. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project2</entry>
+                                <entry>
+<para>second project structure with opposite filamant directions. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>minpct</entry>
+                                <entry>
+<para>minimum percentage. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles with clear direction. <literallayout><computeroutput>The selected particles associated with a filament is checked for their
+in-plane direction. If the percentage of particles exceed the
+minimum desired, the particles with the corresponding direction
+are selected, and the rest deselected.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2411 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1ae51bad3980279a76ad310921e0626635"/>    <section>
+    <title>part_filament_direction()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>part_filament_direction</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_filament_direction</secondary></indexterm>
+<para><computeroutput>long part_filament_direction (<link linkend="_class_bproject">Bproject</link> * project, double minpct)</computeroutput></para><para>
+
+<para>Checks the direction of particles associated with filaments. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>minpct</entry>
+                                <entry>
+<para>minimum percentage. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles with clear direction. <literallayout><computeroutput>The selected particles associated with a filament is checked for their
+in-plane direction. If the percentage of particles exceed the
+minimum desired, the particles with the corresponding direction
+are selected, and the rest deselected.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2350 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1ad816007a64af24ab32741397e8971a6f"/>    <section>
+    <title>part_fix_defocus()</title>
+<indexterm><primary>part_fix_defocus</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_fix_defocus</secondary></indexterm>
+<para><computeroutput>long part_fix_defocus (<link linkend="_class_bproject">Bproject</link> * project, double max_dev)</computeroutput></para><para>
+
+<para>Resets defocus values for particles thata are too far off. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_dev</entry>
+                                <entry>
+<para>maximum defocus difference allowed. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of defocus values reset. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 3143 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1adc23cdec51dcc19f581fb4e5afa0bdf8"/>    <section>
+    <title>part_fix_fil_direction()<computeroutput>[1/3]</computeroutput></title>
+<indexterm><primary>part_fix_fil_direction</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_fix_fil_direction</secondary></indexterm>
+<para><computeroutput>long part_fix_fil_direction (<link linkend="_class_bparticle">Bparticle</link> * partlist)</computeroutput></para><para>
+Definition at line 2020 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1afc9898b8c01336d11f3edfed1269e096"/>    <section>
+    <title>part_fix_fil_direction()<computeroutput>[2/3]</computeroutput></title>
+<indexterm><primary>part_fix_fil_direction</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_fix_fil_direction</secondary></indexterm>
+<para><computeroutput>vector&lt;long&gt; part_fix_fil_direction (<link linkend="_class_bparticle">Bparticle</link> * partlist, <link linkend="_class_bparticle">Bparticle</link> * partlist2, double minpct)</computeroutput></para><para>
+Definition at line 2237 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a9b292b99f451387d905149f7d898bab0"/>    <section>
+    <title>part_fix_fil_direction()<computeroutput>[3/3]</computeroutput></title>
+<indexterm><primary>part_fix_fil_direction</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_fix_fil_direction</secondary></indexterm>
+<para><computeroutput>vector&lt;long&gt; part_fix_fil_direction (<link linkend="_class_bparticle">Bparticle</link> * partlist, double minpct)</computeroutput></para><para>
+Definition at line 2138 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1ae0a6770a9dc24cc47f13f8b0db4098d9"/>    <section>
+    <title>part_fix_fil_direction_old()</title>
+<indexterm><primary>part_fix_fil_direction_old</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_fix_fil_direction_old</secondary></indexterm>
+<para><computeroutput>long part_fix_fil_direction_old (<link linkend="_class_bparticle">Bparticle</link> * partlist, double minpct)</computeroutput></para><para>
+Definition at line 2076 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a46283a21e655d0d30bf0349c972b730b"/>    <section>
+    <title>part_fom_defocus_fit()</title>
+<indexterm><primary>part_fom_defocus_fit</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_fom_defocus_fit</secondary></indexterm>
+<para><computeroutput>double part_fom_defocus_fit (<link linkend="_class_bproject">Bproject</link> * project, int fom_index, double &amp; intercept, double &amp; slope)</computeroutput></para><para>
+
+<para>Fits the particle FOMs as a function of the defocus. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>index of FOM value to test for. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;intercept</entry>
+                                <entry>
+<para>fit intercept. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;slope</entry>
+                                <entry>
+<para>fit slope. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double correlation index of fit. <literallayout><computeroutput>The FOM is fit as a linear function of the defocus average.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2923 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1ad5f0a281f10b404ea6276c791ea05d94"/>    <section>
+    <title>part_fom_defocus_fit_deselect()</title>
+<indexterm><primary>part_fom_defocus_fit_deselect</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_fom_defocus_fit_deselect</secondary></indexterm>
+<para><computeroutput>double part_fom_defocus_fit_deselect (<link linkend="_class_bproject">Bproject</link> * project, int fom_index, double cutoff)</computeroutput></para><para>
+
+<para>Deselects particles below a given FOM cutoff, adjusted for the defocus. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>index of FOM value to test for. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>cutoff</entry>
+                                <entry>
+<para>threshold for deselection. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double correlation index of fit. <literallayout><computeroutput>The FOM is fit as a linear function of the defocus average.
+Particles are deselected based on the adjusted FOM cutoff:
+    adj_cut = slope * defocus + cut
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2983 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1ae4b69be5fd8360c2f88836fa7a864624"/>    <section>
+    <title>part_fom_order()</title>
+<indexterm><primary>part_fom_order</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_fom_order</secondary></indexterm>
+<para><computeroutput><link linkend="_structint__float">int_float</link>* part_fom_order (<link linkend="_class_bparticle">Bparticle</link> * partlist, long &amp; npart, int fom_index)</computeroutput></para><para>
+Definition at line 90 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a608c973f1f270183ec21fea25d6ec22b"/>    <section>
+    <title>part_invert_selection()</title>
+<indexterm><primary>part_invert_selection</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_invert_selection</secondary></indexterm>
+<para><computeroutput>long part_invert_selection (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Inverts the selection. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 204 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a808ff53eb9e89bad9c1e2cd4e451693b"/>    <section>
+    <title>part_origin_select()</title>
+<indexterm><primary>part_origin_select</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_origin_select</secondary></indexterm>
+<para><computeroutput>long part_origin_select (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, double distance)</computeroutput></para><para>
+
+<para>Selects particles based on the distance from the nominal origin. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>nominal origin. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>distance</entry>
+                                <entry>
+<para>maximum distance to accept. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>Only particles already selected are subject to the test.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2630 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a454b2613f4d06f5d3f6474ffc20fcc4a"/>    <section>
+    <title>part_reselect()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>part_reselect</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_reselect</secondary></indexterm>
+<para><computeroutput>int part_reselect (<link linkend="_class_bparticle">Bparticle</link> * part, <link linkend="_class_bstring">Bstring</link> &amp; tag, double reselect_min, double reselect_max)</computeroutput></para><para>
+Definition at line 691 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a206d00314f833a2c6371cf56b6e94939"/>    <section>
+    <title>part_reselect()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>part_reselect</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_reselect</secondary></indexterm>
+<para><computeroutput>long part_reselect (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; tag, double reselect_min, double reselect_max)</computeroutput></para><para>
+
+<para>Reselects particles identified by an input STAR tag and between a minimum and maximum. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;tag</entry>
+                                <entry>
+<para>tag indicating which data to select on. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>reselect_min</entry>
+                                <entry>
+<para>minimum value. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>reselect_max</entry>
+                                <entry>
+<para>maximum value. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>Only particles already selected are subject to reselection.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 750 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a1d8c4cff2907b608ea2803147f51f28c"/>    <section>
+    <title>part_reset_selection()</title>
+<indexterm><primary>part_reset_selection</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_reset_selection</secondary></indexterm>
+<para><computeroutput>long part_reset_selection (<link linkend="_class_bproject">Bproject</link> * project, int flag)</computeroutput></para><para>
+
+<para>Resets selection to all particles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flag</entry>
+                                <entry>
+<para>flag to limit resetting: 1=all, 2=part. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 133 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a672fc3b3d8c0c3dcf907bcc4feb19214"/>    <section>
+    <title>part_select_best()</title>
+<indexterm><primary>part_select_best</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_best</secondary></indexterm>
+<para><computeroutput>long part_select_best (<link linkend="_class_bproject">Bproject</link> * project, long number, int fom_index, int defocus_fit)</computeroutput></para><para>
+
+<para>Selects the best particles based on the FOM. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>number of particles. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>which FOM value to select on. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>defocus_fit</entry>
+                                <entry>
+<para>flag to compensate for defocus. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>Particles are ranked according to the figure-of-merit and the
+desired percentage selected.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1052 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a96a77c32bf5a2796baa3891ffab592f5"/>    <section>
+    <title>part_select_best_within_view()</title>
+<indexterm><primary>part_select_best_within_view</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_best_within_view</secondary></indexterm>
+<para><computeroutput>long part_select_best_within_view (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double theta_step, double phi_step, int number, int fom_index)</computeroutput></para><para>
+
+<para>Selects the best number of particles within each view. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>theta_step</entry>
+                                <entry>
+<para>angular step size from primary symmetry axis (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>phi_step</entry>
+                                <entry>
+<para>angular step size around primary symmetry axis (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>number within view to select. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>which FOM value to select on. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>The best particles within each view is selected.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1729 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a9eb58d3bcce671293188d135142e88e2"/>    <section>
+    <title>part_select_bootstrap()</title>
+<indexterm><primary>part_select_bootstrap</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_bootstrap</secondary></indexterm>
+<para><computeroutput>long part_select_bootstrap (<link linkend="_class_bproject">Bproject</link> * project, int number)</computeroutput></para><para>
+
+<para>Selects a given number of particles randomly with replacement. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>number to select. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>A random number between 1 and the number of selected particles is 
+generated the given number of times. The selection value for the
+selected particle is incremented each time. A particle may therefore
+be selected more than once.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1453 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a3b21afcc207188270b1c10b723d10ac3"/>    <section>
+    <title>part_select_closest_to_focus()</title>
+<indexterm><primary>part_select_closest_to_focus</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_closest_to_focus</secondary></indexterm>
+<para><computeroutput>long part_select_closest_to_focus (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Deselects all particles except those from micrographs closest to focus. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 3008 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1aae7f25cf2e110f2b03a55f06a5da7e64"/>    <section>
+    <title>part_select_FOM_avg_std()</title>
+<indexterm><primary>part_select_FOM_avg_std</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_FOM_avg_std</secondary></indexterm>
+<para><computeroutput>long part_select_FOM_avg_std (<link linkend="_class_bproject">Bproject</link> * project, double factor, int fom_index)</computeroutput></para><para>
+
+<para>Selects particles based on FOM average and standard deviation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>factor</entry>
+                                <entry>
+<para>factor to multiply standard deviation with. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>which FOM value to select on. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>Particles are selected using the average and standard deviation,
+with the level set as a function of difference from the average:
+    selected &gt; average + factor*std_dev
+Note the multiplying factor can be negative.
+Only particles already selected are subject to the test.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1108 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1af4b68a5b84b8e6133c8a33b7cbe47618"/>    <section>
+    <title>part_select_FOM_groups()</title>
+<indexterm><primary>part_select_FOM_groups</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_FOM_groups</secondary></indexterm>
+<para><computeroutput>long part_select_FOM_groups (<link linkend="_class_bproject">Bproject</link> * project, int ngroups, int fom_index, int defocus_fit)</computeroutput></para><para>
+
+<para>Selects groups of particles based on the FOM. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ngroups</entry>
+                                <entry>
+<para>number of groups of particles. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>index of FOM value to select on. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>defocus_fit</entry>
+                                <entry>
+<para>flag to compensate for defocus. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected in the first group. <literallayout><computeroutput>Particles are ranked according to the figure-of-merit and equal 
+numbers are distributed to the requested number of particle groups.
+The particle group selections are then written into a selection 
+array in the STAR data base, with the group with the best FOM&apos;s first.
+Only particles already selected are subject to the test.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 945 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a7043b78f56c4c5b3e477374cbd8bb989"/>    <section>
+    <title>part_select_frames()</title>
+<indexterm><primary>part_select_frames</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_frames</secondary></indexterm>
+<para><computeroutput>long part_select_frames (<link linkend="_class_bproject">Bproject</link> * project, int frame_start, int frame_end)</computeroutput></para><para>
+
+<para>Select particles from frames in a series. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>frame_start</entry>
+                                <entry>
+<para>first frame (starts at 1). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>frame_end</entry>
+                                <entry>
+<para>last frame. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>Particles in frames from a series in the same field-of-view are 
+selected. Only particles that are already selected are considered.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1994 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1ab01027d145a3a42e262a8b045c1580c7"/>    <section>
+    <title>part_select_furthest_from_focus()</title>
+<indexterm><primary>part_select_furthest_from_focus</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_furthest_from_focus</secondary></indexterm>
+<para><computeroutput>long part_select_furthest_from_focus (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Deselects all particles except those from micrographs furthest from focus. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 3038 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a8be61b52e8203330c8146202044df533"/>    <section>
+    <title>part_select_group()</title>
+<indexterm><primary>part_select_group</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_group</secondary></indexterm>
+<para><computeroutput>long part_select_group (<link linkend="_class_bproject">Bproject</link> * project, int group)</computeroutput></para><para>
+
+<para>Selects particles with a given group identifier. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>group</entry>
+                                <entry>
+<para>group identifier. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1862 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1acb9d9c2915258d2a40f4b84a1b2eb84b"/>    <section>
+    <title>part_select_maxsmooth()</title>
+<indexterm><primary>part_select_maxsmooth</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_maxsmooth</secondary></indexterm>
+<para><computeroutput>long part_select_maxsmooth (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double theta_step, double phi_step, double threshfrac, double sigma, int fom_index)</computeroutput></para><para>
+
+<para>Selects particles based on a smoothed maximum surface. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>theta_step</entry>
+                                <entry>
+<para>angular step size from primary symmetry axis (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>phi_step</entry>
+                                <entry>
+<para>angular step size around primary symmetry axis (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>threshfrac</entry>
+                                <entry>
+<para>fraction of maximum threshold. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sigma</entry>
+                                <entry>
+<para>smoothing parameter: gaussian sigma. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>which FOM value to select on. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>The best particles within each view is selected.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1616 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1af7c4047fd0427b6e25f11f687570006f"/>    <section>
+    <title>part_select_micrograph()</title>
+<indexterm><primary>part_select_micrograph</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_micrograph</secondary></indexterm>
+<para><computeroutput>long part_select_micrograph (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; mgselect)</computeroutput></para><para>
+
+<para>Sets selection to the micrographs indicated. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;mgselect</entry>
+                                <entry>
+<para>string with selection. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles. <literallayout><computeroutput>Only the micrograph selection fields are modified.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 247 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a09ffa8f997dd6f48a377a75207201ff1"/>    <section>
+    <title>part_select_percentage()</title>
+<indexterm><primary>part_select_percentage</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_percentage</secondary></indexterm>
+<para><computeroutput>long part_select_percentage (<link linkend="_class_bproject">Bproject</link> * project, double percentage, int fom_index, int defocus_fit)</computeroutput></para><para>
+
+<para>Selects a percentage of particles based on the FOM. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>David Belnap &amp; Bernard Heymann </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>percentage</entry>
+                                <entry>
+<para>percentage of particles (0 - 100). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>which FOM value to select on. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>defocus_fit</entry>
+                                <entry>
+<para>flag to compensate for defocus. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>Particles are ranked according to the figure-of-merit and the
+desired percentage selected.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 995 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a4b689a26908be5625d65eb4c20d1857e"/>    <section>
+    <title>part_select_random()</title>
+<indexterm><primary>part_select_random</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_random</secondary></indexterm>
+<para><computeroutput>long part_select_random (<link linkend="_class_bproject">Bproject</link> * project, long number)</computeroutput></para><para>
+
+<para>Selects a specific number of particles randomly. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>number to select. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>An array is set up for all selected particles. The given number of random
+elements is selected in the array and transfered as particle selections.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1163 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a4224656f5ee9c547a1b99be6e7dfa215"/>    <section>
+    <title>part_select_random_filaments()</title>
+<indexterm><primary>part_select_random_filaments</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_random_filaments</secondary></indexterm>
+<para><computeroutput>long part_select_random_filaments (<link linkend="_class_bproject">Bproject</link> * project, int nmaps)</computeroutput></para><para>
+
+<para>Generates a selection number from the group number for each filament. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nmaps</entry>
+                                <entry>
+<para>number of maps to select for. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1379 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1af75de174b717c4f65831a63a8c014d26"/>    <section>
+    <title>part_select_random_fraction()</title>
+<indexterm><primary>part_select_random_fraction</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_random_fraction</secondary></indexterm>
+<para><computeroutput>long part_select_random_fraction (<link linkend="_class_bproject">Bproject</link> * project, double fraction)</computeroutput></para><para>
+
+<para>Selects particles randomly based on a fraction of the total. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fraction</entry>
+                                <entry>
+<para>fraction of total to select. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>A random number between 0 and 1 is generated for each particle and if 
+it is smaller than the given fraction, the particle is selected.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1243 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a79dd3fa98e448160a6b110edf1a0e090"/>    <section>
+    <title>part_select_random_group()</title>
+<indexterm><primary>part_select_random_group</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_random_group</secondary></indexterm>
+<para><computeroutput>long part_select_random_group (<link linkend="_class_bproject">Bproject</link> * project, long number)</computeroutput></para><para>
+
+<para>Selects groups randomly to give at least a number of particles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>number to select. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>A random number between 0 and 1 is generated for each particle and if 
+it is smaller than the given fraction, the particle is selected.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1292 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1ac55d1405e764f9744b51e629f62168a6"/>    <section>
+    <title>part_select_random_within_view()</title>
+<indexterm><primary>part_select_random_within_view</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_random_within_view</secondary></indexterm>
+<para><computeroutput>long part_select_random_within_view (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double theta_step, double phi_step, int number)</computeroutput></para><para>
+
+<para>Selects a given number of particles within each view. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>theta_step</entry>
+                                <entry>
+<para>angular step size from primary symmetry axis (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>phi_step</entry>
+                                <entry>
+<para>angular step size around primary symmetry axis (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>number within view to select. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>A random number between 1 and the number of selected particles is 
+generated the given number of times. The selection value for the
+selected particle is incremented each time. A particle may therefore
+be selected more than once.
+This selection is meant to be used with the bootstrap reconstruction.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1512 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a5a94fcb4c4e1b1ddba0c562e8c39b76d"/>    <section>
+    <title>part_select_series()</title>
+<indexterm><primary>part_select_series</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_series</secondary></indexterm>
+<para><computeroutput>long part_select_series (<link linkend="_class_bproject">Bproject</link> * project, int size, int flag)</computeroutput></para><para>
+
+<para>Select series where all are already selected. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>number of particles in each set. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flag</entry>
+                                <entry>
+<para>flag to not count across mg or rec boundaries. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>This function selects those series where all the particles
+are already selected, and deselects the rest. Sets are selected
+with each series part of the same set.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2760 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1ac94c4c6c46cac253f281f911819ce9c9"/>    <section>
+    <title>part_select_sets()</title>
+<indexterm><primary>part_select_sets</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_sets</secondary></indexterm>
+<para><computeroutput>long part_select_sets (<link linkend="_class_bproject">Bproject</link> * project, int size, int flag)</computeroutput></para><para>
+
+<para>Selects sets of particles, each set with the same size. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>number of particles in each set. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flag</entry>
+                                <entry>
+<para>flag to not count across mg or rec boundaries. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>Sets up sets of particles, each set identified as a number in the
+selection array.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1911 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a01a7951c03e269873e63a9174724a474"/>    <section>
+    <title>part_select_to_group()</title>
+<indexterm><primary>part_select_to_group</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_select_to_group</secondary></indexterm>
+<para><computeroutput>long part_select_to_group (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Transfer selection numbers to the group identifiers. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1818 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1ac7094ca5598ce86ab703e45517fd6658"/>    <section>
+    <title>part_series_comparison()</title>
+<indexterm><primary>part_series_comparison</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_series_comparison</secondary></indexterm>
+<para><computeroutput>double part_series_comparison (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double angle_cutoff)</computeroutput></para><para>
+
+<para>A function to select particles based on comparison of the orientations within a series. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>symmetry. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>angle_cutoff</entry>
+                                <entry>
+<para>angle cutoff value (radians). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double average angular deviation. <literallayout><computeroutput>Only particles already selected are subject to the test.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 829 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1ae2ad3fb1f429f08bdfb1b7620a0fcdb8"/>    <section>
+    <title>part_series_from_seed()</title>
+<indexterm><primary>part_series_from_seed</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_series_from_seed</secondary></indexterm>
+<para><computeroutput>long part_series_from_seed (<link linkend="_class_bproject">Bproject</link> * project, int flags)</computeroutput></para><para>
+
+<para>Calculates the locations of particles in a series from a seed. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>micrograph project. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>bit 1=invert z, bit 2=use original particle view. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles created. <literallayout><computeroutput>The seed particle locations is either in the zero-degree tilt 2D micrograph,
+or a 3D reconstruction. The latter also gives the z-coordinate, resulting
+in a better definition of the particle location.
+The project selection flag indicates micrograph or reconstruction.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2819 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1af2be99c158afe30b5d7ea3991a53aa87"/>    <section>
+    <title>part_set_best_view_in_series()</title>
+<indexterm><primary>part_set_best_view_in_series</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_set_best_view_in_series</secondary></indexterm>
+<para><computeroutput>long part_set_best_view_in_series (<link linkend="_class_bproject">Bproject</link> * project, int fom_index)</computeroutput></para><para>
+
+<para>Sets all orientation parameters for a particle to the best in the set. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>index of FOM value to select on. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>This function uses the FOM to select the best orientation parameters
+for a particle in a set (typically a focal series) and sets all
+orientation parameters to the same values.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2716 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1aad48c6923286adf4d2cf0a22f0a0561d"/>    <section>
+    <title>part_set_filament_maps()</title>
+<indexterm><primary>part_set_filament_maps</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_set_filament_maps</secondary></indexterm>
+<para><computeroutput>long part_set_filament_maps (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Generates a selection number from the group number for each filament. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of maps selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 645 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a2cf413a259d1676380530c28a898e7d9"/>    <section>
+    <title>part_set_first_view_in_series()</title>
+<indexterm><primary>part_set_first_view_in_series</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_set_first_view_in_series</secondary></indexterm>
+<para><computeroutput>long part_set_first_view_in_series (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Sets all orientation parameters for a particle to the first in the set. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>This function sets the views of all the particles in the field-of-view to 
+the views for the first micrograph.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2682 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a9cff744c245f58eb799a338dd5c54ea8"/>    <section>
+    <title>part_set_FOM()</title>
+<indexterm><primary>part_set_FOM</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_set_FOM</secondary></indexterm>
+<para><computeroutput>long part_set_FOM (<link linkend="_class_bproject">Bproject</link> * project, int fom_index, double fom)</computeroutput></para><para>
+
+<para>Sets the FOM for all particles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>index of FOM value to set. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom</entry>
+                                <entry>
+<para>new FOM. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 382 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a85356d50a10121adf8c3ba5492f71b20"/>    <section>
+    <title>part_set_multi_maps()</title>
+<indexterm><primary>part_set_multi_maps</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_set_multi_maps</secondary></indexterm>
+<para><computeroutput>long part_set_multi_maps (<link linkend="_class_bproject">Bproject</link> * project, int part_select, int nmaps)</computeroutput></para><para>
+
+<para>Sets selection for generating multiple maps. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>part_select</entry>
+                                <entry>
+<para>initial selection number (-1 means all &gt;0). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nmaps</entry>
+                                <entry>
+<para>desired number of maps. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>Selected particles are sequentially assigned increasing integers
+up to desired number of maps (nmaps).
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 590 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1af4fa7ca1bd3248221fb773cfe46e1e9c"/>    <section>
+    <title>part_set_selection()</title>
+<indexterm><primary>part_set_selection</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_set_selection</secondary></indexterm>
+<para><computeroutput>long part_set_selection (<link linkend="_class_bproject">Bproject</link> * project, int number)</computeroutput></para><para>
+
+<para>Selects one selection number and sets all others to zero. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>selection number to keep. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 317 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1adee8557de60a30422b1790355aff3aff"/>    <section>
+    <title>part_set_sequential()</title>
+<indexterm><primary>part_set_sequential</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_set_sequential</secondary></indexterm>
+<para><computeroutput>long part_set_sequential (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Selects one selection number and sets all others to zero. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 352 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a6741532c36930fa71a6eda10143776c8"/>    <section>
+    <title>part_side_view_select()</title>
+<indexterm><primary>part_side_view_select</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_side_view_select</secondary></indexterm>
+<para><computeroutput>long part_side_view_select (<link linkend="_class_bproject">Bproject</link> * project, double angle)</computeroutput></para><para>
+
+<para>Selects particles based on a distance from a side view. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>angle</entry>
+                                <entry>
+<para>angular distance from the side view. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>Only particles already selected are subject to the test.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2520 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a41fac751b6e91e0bb5db4908f2ada1c6"/>    <section>
+    <title>part_unset_selection()</title>
+<indexterm><primary>part_unset_selection</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_unset_selection</secondary></indexterm>
+<para><computeroutput>long part_unset_selection (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Unsets selection to no particles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 168 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a72245a5d264784a13e98b32e80f9488e"/>    <section>
+    <title>part_view_select()</title>
+<indexterm><primary>part_view_select</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>part_view_select</secondary></indexterm>
+<para><computeroutput>long part_view_select (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_view">View</link> view, double angle)</computeroutput></para><para>
+
+<para>Selects particles based on a distance from a reference view. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view</entry>
+                                <entry>
+<para>central view to search for. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>angle</entry>
+                                <entry>
+<para>angular distance from the view. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>Only particles already selected are subject to the test.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2469 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a69a5683d4b5e133127eb336bb12d6583"/>    <section>
+    <title>project_fom_order()</title>
+<indexterm><primary>project_fom_order</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>project_fom_order</secondary></indexterm>
+<para><computeroutput><link linkend="_structint__float">int_float</link>* project_fom_order (<link linkend="_class_bproject">Bproject</link> * project, long &amp; npart, int fom_index, int defocus_fit)</computeroutput></para><para>
+Definition at line 24 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a845af9a07b0bc85f4b2c9c39505ed18d"/>    <section>
+    <title>project_part_sort()</title>
+<indexterm><primary>project_part_sort</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>project_part_sort</secondary></indexterm>
+<para><computeroutput>vector&lt;pair&lt;<link linkend="_class_bparticle">Bparticle</link>*,double&gt; &gt; project_part_sort (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> tag)</computeroutput></para><para>
+
+<para>Sorts the Particles by a selected parameter. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tag</entry>
+                                <entry>
+<para>parameter tag. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;pair&lt;Bparticle*,double&gt;&gt; array of particle links and values. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 3181 of file mg_particle_select.cpp.</para>
+    </section><anchor xml:id="_mg__particle__select_8cpp_1a6cdc8fd24cdb622cbf637f637fe26ee6"/>    <section>
+    <title>QsortLargeToSmallParticle()</title>
+<indexterm><primary>QsortLargeToSmallParticle</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>QsortLargeToSmallParticle</secondary></indexterm>
+<para><computeroutput>int QsortLargeToSmallParticle (const void * x, const void * y)</computeroutput></para><para>
+Definition at line 504 of file mg_particle_select.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_mg__particle__select_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>mg_particle_select.cpp</secondary></indexterm>
+<indexterm><primary>mg_particle_select.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

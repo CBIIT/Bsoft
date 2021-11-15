@@ -1,0 +1,273 @@
+.TH "/Users/bernard/b20/bsoft/radon/fft_tool.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/radon/fft_tool.cpp
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'fft_tool\&.h'\fP
+.br
+\fC#include 'Bimage\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBfft_1D_forward\fP (\fBBimage\fP *p)"
+.br
+.ti -1c
+.RI "int \fBfft_1D_backward\fP (\fBBimage\fP *p)"
+.br
+.ti -1c
+.RI "int \fBfft_2D_forward\fP (\fBBimage\fP *p)"
+.br
+.ti -1c
+.RI "int \fBfft_2D_backward\fP (\fBBimage\fP *p)"
+.br
+.ti -1c
+.RI "int \fBfarfarig\fP (\fBBimage\fP *p, int ifl)"
+.br
+.RI "With MIXRIG and SCRAMRIG fast Fourier transform a 2D image\&. "
+.ti -1c
+.RI "int \fBmixrig\fP (\fBBimage\fP *p, int ifl)"
+.br
+.RI "With FARFARIG and SCRAMRIG fast Fourier transform a 2D image\&. "
+.ti -1c
+.RI "int \fBscramrig\fP (\fBBimage\fP *p)"
+.br
+.RI "With FARFARIG and MIXRIG fast Fourier transform a 2D image\&. "
+.ti -1c
+.RI "int \fBabtori\fP (\fBBimage\fP *p)"
+.br
+.RI "Changes direct Fourier transform representation\&. "
+.ti -1c
+.RI "int \fBritoab\fP (\fBBimage\fP *p)"
+.br
+.RI "Changes direct Fourier transform representation\&. "
+.ti -1c
+.RI "int \fBzeroes\fP (\fBBimage\fP *p)"
+.br
+.ti -1c
+.RI "int \fBrephase_orig\fP (\fBBimage\fP *p)"
+.br
+.RI "Shifting the origin by half the complex image size\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bellon, F\&. Cantele and S\&. Lanzavecchia Dip\&. Chimica Strutturale e Stereochimica Inorganica Via Venezian 21, 20133 Milano, Italy
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 7 04 2003 
+.PP
+Modified: 07 07 2005 
+.RE
+.PP
+
+.PP
+Definition in file \fBfft_tool\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int abtori (\fBBimage\fP * p)"
+
+.PP
+Changes direct Fourier transform representation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.PP
+.nf
+This subroutine changes the way in which a direct transform 
+is represented; from the conventional form Txryr, Txiyr,
+Txryi, Txiyi (here called a,b,c,d ) it produces a new 
+representation in which real and imaginary parts
+are calculated, for the frequencies of the type f(Kx,Ky)
+and f(Kx,-Ky) .      
+Coefficients are addressed by pointers in this way:
+pp1 --> real f(Kx,Ky)       pp2 --> imaginary f(Kx,Ky)
+pp3 --> imaginary f(Kx,-Ky) pp4 --> real f(Kx,-Ky)
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 280 of file fft_tool\&.cpp\&.
+.SS "int farfarig (\fBBimage\fP * p, int ifl)"
+
+.PP
+With MIXRIG and SCRAMRIG fast Fourier transform a 2D image\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image 
+.br
+\fIifl\fP direction of transformation (-1 = direct / 1 = inverse) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 75 of file fft_tool\&.cpp\&.
+.SS "int fft_1D_backward (\fBBimage\fP * p)"
+
+.PP
+Definition at line 29 of file fft_tool\&.cpp\&.
+.SS "int fft_1D_forward (\fBBimage\fP * p)"
+
+.PP
+Definition at line 17 of file fft_tool\&.cpp\&.
+.SS "int fft_2D_backward (\fBBimage\fP * p)"
+
+.PP
+Definition at line 55 of file fft_tool\&.cpp\&.
+.SS "int fft_2D_forward (\fBBimage\fP * p)"
+
+.PP
+Definition at line 41 of file fft_tool\&.cpp\&.
+.SS "int mixrig (\fBBimage\fP * p, int ifl)"
+
+.PP
+With FARFARIG and SCRAMRIG fast Fourier transform a 2D image\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image 
+.br
+\fIifl\fP direction of transformation (0 = direct / 1 = inverse) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 136 of file fft_tool\&.cpp\&.
+.SS "int rephase_orig (\fBBimage\fP * p)"
+
+.PP
+Shifting the origin by half the complex image size\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.PP
+.nf
+Coefficients are addressed by pointers in this way:
+pp1 --> real f(Kx,Ky)      pp2 --> imaginary f(Kx,-Ky)
+pp3 --> imaginary f(Kx,Ky) pp4 --> real f(Kx,-Ky)
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 407 of file fft_tool\&.cpp\&.
+.SS "int ritoab (\fBBimage\fP * p)"
+
+.PP
+Changes direct Fourier transform representation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIp\fP image 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.PP
+.nf
+This subroutine changes the representation of the
+direct transform: from real & imaginary parts to the 
+conventional one; here a,b,c,d ,pointed by pp1,pp2,
+pp3 and pp4, have the following meaning:
+a=TXrYr    b=TXiYi    c=TXrYi    d=TXiYr
+where TX(Y)r(i) means real (imaginary) part of the coefficients 
+obtained by a direct transform computed along the X (Y) direction.
+A quartet a,b,c,d is defined for each point of the reciprocal
+space in the first quadrant (i.e. points with positive Kx & Ky
+coordinates.     
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 332 of file fft_tool\&.cpp\&.
+.SS "int scramrig (\fBBimage\fP * p)"
+
+.PP
+With FARFARIG and MIXRIG fast Fourier transform a 2D image\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.PP
+.nf
+Rearrange each row in the complex image.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 225 of file fft_tool\&.cpp\&.
+.SS "int zeroes (\fBBimage\fP * p)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 373 of file fft_tool\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

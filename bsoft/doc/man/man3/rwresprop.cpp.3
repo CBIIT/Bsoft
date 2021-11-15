@@ -1,0 +1,274 @@
+.TH "/Users/bernard/b20/bsoft/src/rwparam/rwresprop.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/rwparam/rwresprop.cpp \- Library routines to read and write residue properties\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwresprop\&.h'\fP
+.br
+\fC#include 'star\&.h'\fP
+.br
+\fC#include 'mol_tags\&.h'\fP
+.br
+\fC#include 'seq_util\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBresprop\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBresidue_type\fP * \fBresidue_type_add\fP (\fBBresidue_type\fP **rtype, char c)"
+.br
+.ti -1c
+.RI "\fBBresidue_type\fP * \fBread_residue_prop_star\fP (\fBBstring\fP &filename)"
+.br
+.ti -1c
+.RI "\fBBresidue_type\fP * \fBread_residue_properties\fP (\fBBstring\fP &filename)"
+.br
+.ti -1c
+.RI "int \fBwrite_residue_prop_star\fP (\fBBstring\fP &filename, \fBBresidue_type\fP *rt)"
+.br
+.ti -1c
+.RI "\fBBresidue_matrix\fP * \fBread_residue_mat_star\fP (\fBBstring\fP &filename)"
+.br
+.ti -1c
+.RI "\fBBresidue_type\fP * \fBget_residue_properties\fP (\fBBstring\fP &filename)"
+.br
+.RI "Reading residue properties from parameter files\&. "
+.ti -1c
+.RI "int \fBwrite_residue_properties\fP (\fBBstring\fP &filename, \fBBresidue_type\fP *rt)"
+.br
+.RI "Writing residue properties from a parameter file\&. "
+.ti -1c
+.RI "\fBBresidue_matrix\fP * \fBget_residue_matrix\fP (\fBBstring\fP &filename)"
+.br
+.RI "Reading a residue matrix from a file\&. "
+.ti -1c
+.RI "int \fBresidue_matrix_kill\fP (\fBBresidue_matrix\fP *resmat)"
+.br
+.RI "Deallocating a residue matrix\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "struct \fBresprop\fP \fBdefaultprops\fP []"
+.br
+.ti -1c
+.RI "char \fBdefaultcode\fP [] = '\-*ABCDEFGHIKLMNPQRSTVWXYZ'"
+.br
+.ti -1c
+.RI "float \fBdefaultsim\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines to read and write residue properties\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19991114 
+.PP
+Modified: 20210328 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwresprop\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBresidue_matrix\fP* get_residue_matrix (\fBBstring\fP & filename)"
+
+.PP
+Reading a residue matrix from a file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bresidue_matrix* residue matrix property structure, NULL on failure\&. 
+.RE
+.PP
+
+.PP
+Definition at line 164 of file rwresprop\&.cpp\&.
+.SS "\fBBresidue_type\fP* get_residue_properties (\fBBstring\fP & filename)"
+
+.PP
+Reading residue properties from parameter files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bresidue_type* the residue property structure, NULL on failure\&. 
+.RE
+.PP
+
+.PP
+Definition at line 99 of file rwresprop\&.cpp\&.
+.SS "\fBBresidue_matrix\fP * read_residue_mat_star (\fBBstring\fP & filename)"
+
+.PP
+Definition at line 410 of file rwresprop\&.cpp\&.
+.SS "\fBBresidue_type\fP * read_residue_prop_star (\fBBstring\fP & filename)"
+
+.PP
+Definition at line 240 of file rwresprop\&.cpp\&.
+.SS "\fBBresidue_type\fP * read_residue_properties (\fBBstring\fP & filename)"
+
+.PP
+Definition at line 342 of file rwresprop\&.cpp\&.
+.SS "int residue_matrix_kill (\fBBresidue_matrix\fP * resmat)"
+
+.PP
+Deallocating a residue matrix\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*resmat\fP the residue matrix property structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 208 of file rwresprop\&.cpp\&.
+.SS "\fBBresidue_type\fP * residue_type_add (\fBBresidue_type\fP ** rtype, char c)"
+
+.PP
+Definition at line 221 of file rwresprop\&.cpp\&.
+.SS "int write_residue_prop_star (\fBBstring\fP & filename, \fBBresidue_type\fP * rt)"
+
+.PP
+Definition at line 299 of file rwresprop\&.cpp\&.
+.SS "int write_residue_properties (\fBBstring\fP & filename, \fBBresidue_type\fP * rt)"
+
+.PP
+Writing residue properties from a parameter file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name\&. 
+.br
+\fI*rt\fP the residue property structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 152 of file rwresprop\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "char defaultcode[] = '\-*ABCDEFGHIKLMNPQRSTVWXYZ'"
+
+.PP
+Definition at line 65 of file rwresprop\&.cpp\&.
+.SS "struct \fBresprop\fP defaultprops[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    {'-',   0\&.00,   0\&.0,  0\&.0,  0\&.00,  0\&.0,  0\&.0},
+    {'*',   0\&.00,   0\&.0,  0\&.0,  0\&.00,  0\&.0,  0\&.0},
+    {'A',  89\&.09,  89\&.0,  3\&.4,  0\&.10,  0\&.0, -1\&.6},
+    {'B', 132\&.61, 118\&.0,  5\&.5,  0\&.50, -0\&.5,  7\&.0},
+    {'C', 121\&.15, 103\&.0,  4\&.4,  0\&.24,  0\&.0, -2\&.0},
+    {'D', 133\&.10, 114\&.0,  5\&.5,  0\&.50, -1\&.0,  9\&.2},
+    {'E', 147\&.13, 139\&.0,  6\&.1,  0\&.50, -1\&.0,  8\&.2},
+    {'F', 165\&.19, 199\&.0,  6\&.7,  0\&.32,  0\&.0, -3\&.7},
+    {'G',  75\&.07,  64\&.0,  2\&.3,  0\&.07,  0\&.0, -1\&.0},
+    {'H', 155\&.16, 157\&.0,  6\&.0,  0\&.50,  0\&.5,  3\&.0},
+    {'I', 131\&.17, 163\&.0,  5\&.1,  0\&.22,  0\&.0, -3\&.1},
+    {'K', 146\&.19, 165\&.0,  6\&.7,  0\&.50,  1\&.0,  8\&.8},
+    {'L', 131\&.17, 163\&.0,  5\&.5,  0\&.20,  0\&.0, -2\&.8},
+    {'M', 149\&.21, 166\&.0,  6\&.1,  0\&.45,  0\&.0, -3\&.4},
+    {'N', 132\&.12, 122\&.0,  5\&.5,  0\&.50,  0\&.0,  4\&.8},
+    {'P', 115\&.13, 122\&.0,  4\&.4,  0\&.50,  0\&.0,  0\&.2},
+    {'Q', 146\&.15, 147\&.0,  6\&.1,  0\&.50,  0\&.0,  4\&.1},
+    {'R', 174\&.23, 191\&.0,  7\&.3,  0\&.50,  1\&.0, 12\&.0},
+    {'S', 105\&.09,  94\&.0,  4\&.4,  0\&.50,  0\&.0, -0\&.6},
+    {'T', 119\&.12, 120\&.0,  4\&.5,  0\&.50,  0\&.0, -1\&.2},
+    {'V', 117\&.15, 138\&.0,  4\&.5,  0\&.12,  0\&.0, -2\&.6},
+    {'W', 204\&.23, 226\&.0,  7\&.4,  0\&.61,  0\&.0, -1\&.9},
+    {'X', 128\&.16, 144\&.0,  5\&.5,  0\&.50,  0\&.0,  0\&.0},
+    {'Y', 181\&.19, 195\&.0,  7\&.3,  0\&.50,  0\&.0,  0\&.7},
+    {'Z', 146\&.64, 143\&.0,  6\&.1,  0\&.50, -0\&.5,  6\&.2},
+}
+.fi
+.SS "float defaultsim[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+    1\&.0,1\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,
+    1\&.0,1\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,-4\&.0,
+    -4\&.0,-4\&.0,4\&.0,-2\&.0,0\&.0,-2\&.0,-1\&.0,-2\&.0,0\&.0,-2\&.0,-1\&.0,-1\&.0,-1\&.0,-1\&.0,-2\&.0,-1\&.0,-1\&.0,-1\&.0,1\&.0,0\&.0,0\&.0,-3\&.0,0\&.0,-2\&.0,-1\&.0,
+    -4\&.0,-4\&.0,-2\&.0,4\&.0,-3\&.0,4\&.0,1\&.0,-3\&.0,-1\&.0,0\&.0,-3\&.0,0\&.0,-4\&.0,-3\&.0,3\&.0,-2\&.0,0\&.0,-1\&.0,0\&.0,-1\&.0,-3\&.0,-4\&.0,-1\&.0,-3\&.0,1\&.0,
+    -4\&.0,-4\&.0,0\&.0,-3\&.0,9\&.0,-3\&.0,-4\&.0,-2\&.0,-3\&.0,-3\&.0,-1\&.0,-3\&.0,-1\&.0,-1\&.0,-3\&.0,-3\&.0,-3\&.0,-3\&.0,-1\&.0,-1\&.0,-1\&.0,-2\&.0,-2\&.0,-2\&.0,-3\&.0,
+    -4\&.0,-4\&.0,-2\&.0,4\&.0,-3\&.0,6\&.0,2\&.0,-3\&.0,-1\&.0,-1\&.0,-3\&.0,-1\&.0,-4\&.0,-3\&.0,1\&.0,-1\&.0,0\&.0,-2\&.0,0\&.0,-1\&.0,-3\&.0,-4\&.0,-1\&.0,-3\&.0,1\&.0,
+    -4\&.0,-4\&.0,-1\&.0,1\&.0,-4\&.0,2\&.0,5\&.0,-3\&.0,-2\&.0,0\&.0,-3\&.0,1\&.0,-3\&.0,-2\&.0,0\&.0,-1\&.0,2\&.0,0\&.0,0\&.0,-1\&.0,-2\&.0,-3\&.0,-1\&.0,-2\&.0,4\&.0,
+    -4\&.0,-4\&.0,-2\&.0,-3\&.0,-2\&.0,-3\&.0,-3\&.0,6\&.0,-3\&.0,-1\&.0,0\&.0,-3\&.0,0\&.0,0\&.0,-3\&.0,-4\&.0,-3\&.0,-3\&.0,-2\&.0,-2\&.0,-1\&.0,1\&.0,-1\&.0,3\&.0,-3\&.0,
+    -4\&.0,-4\&.0,0\&.0,-1\&.0,-3\&.0,-1\&.0,-2\&.0,-3\&.0,6\&.0,-2\&.0,-4\&.0,-2\&.0,-4\&.0,-3\&.0,0\&.0,-2\&.0,-2\&.0,-2\&.0,0\&.0,-2\&.0,-3\&.0,-2\&.0,-1\&.0,-3\&.0,-2\&.0,
+    -4\&.0,-4\&.0,-2\&.0,0\&.0,-3\&.0,-1\&.0,0\&.0,-1\&.0,-2\&.0,8\&.0,-3\&.0,-1\&.0,-3\&.0,-2\&.0,1\&.0,-2\&.0,0\&.0,0\&.0,-1\&.0,-2\&.0,-3\&.0,-2\&.0,-1\&.0,2\&.0,0\&.0,
+    -4\&.0,-4\&.0,-1\&.0,-3\&.0,-1\&.0,-3\&.0,-3\&.0,0\&.0,-4\&.0,-3\&.0,4\&.0,-3\&.0,2\&.0,1\&.0,-3\&.0,-3\&.0,-3\&.0,-3\&.0,-2\&.0,-1\&.0,3\&.0,-3\&.0,-1\&.0,-1\&.0,-3\&.0,
+    -4\&.0,-4\&.0,-1\&.0,0\&.0,-3\&.0,-1\&.0,1\&.0,-3\&.0,-2\&.0,-1\&.0,-3\&.0,5\&.0,-2\&.0,-1\&.0,0\&.0,-1\&.0,1\&.0,2\&.0,0\&.0,-1\&.0,-2\&.0,-3\&.0,-1\&.0,-2\&.0,1\&.0,
+    -4\&.0,-4\&.0,-1\&.0,-4\&.0,-1\&.0,-4\&.0,-3\&.0,0\&.0,-4\&.0,-3\&.0,2\&.0,-2\&.0,4\&.0,2\&.0,-3\&.0,-3\&.0,-2\&.0,-2\&.0,-2\&.0,-1\&.0,1\&.0,-2\&.0,-1\&.0,-1\&.0,-3\&.0,
+    -4\&.0,-4\&.0,-1\&.0,-3\&.0,-1\&.0,-3\&.0,-2\&.0,0\&.0,-3\&.0,-2\&.0,1\&.0,-1\&.0,2\&.0,5\&.0,-2\&.0,-2\&.0,0\&.0,-1\&.0,-1\&.0,-1\&.0,1\&.0,-1\&.0,-1\&.0,-1\&.0,-1\&.0,
+    -4\&.0,-4\&.0,-2\&.0,3\&.0,-3\&.0,1\&.0,0\&.0,-3\&.0,0\&.0,1\&.0,-3\&.0,0\&.0,-3\&.0,-2\&.0,6\&.0,-2\&.0,0\&.0,0\&.0,1\&.0,0\&.0,-3\&.0,-4\&.0,-1\&.0,-2\&.0,0\&.0,
+    -4\&.0,-4\&.0,-1\&.0,-2\&.0,-3\&.0,-1\&.0,-1\&.0,-4\&.0,-2\&.0,-2\&.0,-3\&.0,-1\&.0,-3\&.0,-2\&.0,-2\&.0,7\&.0,-1\&.0,-2\&.0,-1\&.0,-1\&.0,-2\&.0,-4\&.0,-2\&.0,-3\&.0,-1\&.0,
+    -4\&.0,-4\&.0,-1\&.0,0\&.0,-3\&.0,0\&.0,2\&.0,-3\&.0,-2\&.0,0\&.0,-3\&.0,1\&.0,-2\&.0,0\&.0,0\&.0,-1\&.0,5\&.0,1\&.0,0\&.0,-1\&.0,-2\&.0,-2\&.0,-1\&.0,-1\&.0,3\&.0,
+    -4\&.0,-4\&.0,-1\&.0,-1\&.0,-3\&.0,-2\&.0,0\&.0,-3\&.0,-2\&.0,0\&.0,-3\&.0,2\&.0,-2\&.0,-1\&.0,0\&.0,-2\&.0,1\&.0,5\&.0,-1\&.0,-1\&.0,-3\&.0,-3\&.0,-1\&.0,-2\&.0,0\&.0,
+    -4\&.0,-4\&.0,1\&.0,0\&.0,-1\&.0,0\&.0,0\&.0,-2\&.0,0\&.0,-1\&.0,-2\&.0,0\&.0,-2\&.0,-1\&.0,1\&.0,-1\&.0,0\&.0,-1\&.0,4\&.0,1\&.0,-2\&.0,-3\&.0,0\&.0,-2\&.0,0\&.0,
+    -4\&.0,-4\&.0,0\&.0,-1\&.0,-1\&.0,-1\&.0,-1\&.0,-2\&.0,-2\&.0,-2\&.0,-1\&.0,-1\&.0,-1\&.0,-1\&.0,0\&.0,-1\&.0,-1\&.0,-1\&.0,1\&.0,5\&.0,0\&.0,-2\&.0,0\&.0,-2\&.0,-1\&.0,
+    -4\&.0,-4\&.0,0\&.0,-3\&.0,-1\&.0,-3\&.0,-2\&.0,-1\&.0,-3\&.0,-3\&.0,3\&.0,-2\&.0,1\&.0,1\&.0,-3\&.0,-2\&.0,-2\&.0,-3\&.0,-2\&.0,0\&.0,4\&.0,-3\&.0,-1\&.0,-1\&.0,-2\&.0,
+    -4\&.0,-4\&.0,-3\&.0,-4\&.0,-2\&.0,-4\&.0,-3\&.0,1\&.0,-2\&.0,-2\&.0,-3\&.0,-3\&.0,-2\&.0,-1\&.0,-4\&.0,-4\&.0,-2\&.0,-3\&.0,-3\&.0,-2\&.0,-3\&.0,11\&.0,-2\&.0,2\&.0,-3\&.0,
+    -4\&.0,-4\&.0,0\&.0,-1\&.0,-2\&.0,-1\&.0,-1\&.0,-1\&.0,-1\&.0,-1\&.0,-1\&.0,-1\&.0,-1\&.0,-1\&.0,-1\&.0,-2\&.0,-1\&.0,-1\&.0,0\&.0,0\&.0,-1\&.0,-2\&.0,-1\&.0,-1\&.0,-1\&.0,
+    -4\&.0,-4\&.0,-2\&.0,-3\&.0,-2\&.0,-3\&.0,-2\&.0,3\&.0,-3\&.0,2\&.0,-1\&.0,-2\&.0,-1\&.0,-1\&.0,-2\&.0,-3\&.0,-1\&.0,-2\&.0,-2\&.0,-2\&.0,-1\&.0,2\&.0,-1\&.0,7\&.0,-2\&.0,
+    -4\&.0,-4\&.0,-1\&.0,1\&.0,-3\&.0,1\&.0,4\&.0,-3\&.0,-2\&.0,0\&.0,-3\&.0,1\&.0,-3\&.0,-1\&.0,0\&.0,-1\&.0,3\&.0,0\&.0,0\&.0,-1\&.0,-2\&.0,-3\&.0,-1\&.0,-2\&.0,4\&.0,
+}
+.fi
+.PP
+Definition at line 66 of file rwresprop\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

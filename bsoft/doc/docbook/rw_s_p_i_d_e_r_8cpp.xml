@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rw_s_p_i_d_e_r_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/rwimg/rwSPIDER.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/rwimg/rwSPIDER.cpp</primary></indexterm>
+<para>
+
+<para>Functions for reading and writing SPIDER files. </para>
+ 
+</para>
+<programlisting>#include &quot;utilities.h&quot;
+#include &quot;file_util.h&quot;
+#include &quot;rwSPIDER.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_view">View</link> <link linkend="_rw_s_p_i_d_e_r_8cpp_1a5b01127137dfde6dbb1d2c5b84a8ec47">view_from_spider_euler</link> (<link linkend="_struct_s_p_i_d_e_rhead">SPIDERhead</link> *header)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_s_p_i_d_e_r_8cpp_1adce6c2b11a9fad665a12f792ccfb2b72">spider_euler_from_view</link> (<link linkend="_struct_s_p_i_d_e_rhead">SPIDERhead</link> *header, <link linkend="_class_view">View</link> view)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_s_p_i_d_e_r_8cpp_1a1c2003dbc1b85ceb006bac06acac5b01">readSPIDER</link> (<link linkend="_class_bimage">Bimage</link> *p, int readdata, int img_select)</para>
+
+<para>Reading a SPIDER image file format. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_s_p_i_d_e_r_8cpp_1aba1c3760b7d40714d268ee5aecfc8c7d">writeSPIDER</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>Writing a SPIDER image file format. A 3D image format used in electron microscopy. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_s_p_i_d_e_r_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>char * <link linkend="_rw_s_p_i_d_e_r_8cpp_1abccbc24c7569657b2c2af7fcd59d2cc9">month</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions for reading and writing SPIDER files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19990410 </para>
+
+<para>Modified: 20120321 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rw_s_p_i_d_e_r_8cpp_1a1c2003dbc1b85ceb006bac06acac5b01"/>    <section>
+    <title>readSPIDER()</title>
+<indexterm><primary>readSPIDER</primary><secondary>rwSPIDER.cpp</secondary></indexterm>
+<indexterm><primary>rwSPIDER.cpp</primary><secondary>readSPIDER</secondary></indexterm>
+<para><computeroutput>int readSPIDER (<link linkend="_class_bimage">Bimage</link> * p, int readdata, int img_select)</computeroutput></para><para>
+
+<para>Reading a SPIDER image file format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>readdata</entry>
+                                <entry>
+<para>flag to activate reading of image data. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>img_select</entry>
+                                <entry>
+<para>image selection in multi-image file (-1 = all images). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). A 3D multi-image format used in electron microscopy. Header size: 1024 bytes (not same as data offset!). Data offset: sizeof(float)*x_size*ceil(1024/x_size) File format extensions: .spi The identifier is a 4-byte machine stamp: 1 Big-endian IEEE 17 17 00 00 2 VAX 34 65 00 00 3 Cray - 4 Little-endian IEEE 68 65 00 00 5 Convex 85 17 00 00 6 Fijitsu VP - (Note: not always implemented - so unreliable) Byte order determination: File type and third dimension values must be less than 256*256. Data type: only float. <link linkend="_class_transform">Transform</link> type: Hermitian The x-dimension contains the x-size of the full transform A multi-image file has a global header followed by a header and data for each sub-image. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 82 of file rwSPIDER.cpp.</para>
+    </section><anchor xml:id="_rw_s_p_i_d_e_r_8cpp_1adce6c2b11a9fad665a12f792ccfb2b72"/>    <section>
+    <title>spider_euler_from_view()</title>
+<indexterm><primary>spider_euler_from_view</primary><secondary>rwSPIDER.cpp</secondary></indexterm>
+<indexterm><primary>rwSPIDER.cpp</primary><secondary>spider_euler_from_view</secondary></indexterm>
+<para><computeroutput>int spider_euler_from_view (<link linkend="_struct_s_p_i_d_e_rhead">SPIDERhead</link> * header, <link linkend="_class_view">View</link> view)</computeroutput></para><para>
+Definition at line 37 of file rwSPIDER.cpp.</para>
+    </section><anchor xml:id="_rw_s_p_i_d_e_r_8cpp_1a5b01127137dfde6dbb1d2c5b84a8ec47"/>    <section>
+    <title>view_from_spider_euler()</title>
+<indexterm><primary>view_from_spider_euler</primary><secondary>rwSPIDER.cpp</secondary></indexterm>
+<indexterm><primary>rwSPIDER.cpp</primary><secondary>view_from_spider_euler</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link> view_from_spider_euler (<link linkend="_struct_s_p_i_d_e_rhead">SPIDERhead</link> * header)</computeroutput></para><para>
+Definition at line 18 of file rwSPIDER.cpp.</para>
+    </section><anchor xml:id="_rw_s_p_i_d_e_r_8cpp_1aba1c3760b7d40714d268ee5aecfc8c7d"/>    <section>
+    <title>writeSPIDER()</title>
+<indexterm><primary>writeSPIDER</primary><secondary>rwSPIDER.cpp</secondary></indexterm>
+<indexterm><primary>rwSPIDER.cpp</primary><secondary>writeSPIDER</secondary></indexterm>
+<para><computeroutput>int writeSPIDER (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>Writing a SPIDER image file format. A 3D image format used in electron microscopy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 243 of file rwSPIDER.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_rw_s_p_i_d_e_r_8cpp_1abccbc24c7569657b2c2af7fcd59d2cc9"/>    <section>
+    <title>month</title>
+<indexterm><primary>month</primary><secondary>rwSPIDER.cpp</secondary></indexterm>
+<indexterm><primary>rwSPIDER.cpp</primary><secondary>month</secondary></indexterm>
+<para><computeroutput>char* month[]<computeroutput>[extern]</computeroutput></computeroutput></para><para>
+Definition at line 58 of file rwimg.cpp.</para>
+    </section><anchor xml:id="_rw_s_p_i_d_e_r_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>rwSPIDER.cpp</secondary></indexterm>
+<indexterm><primary>rwSPIDER.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

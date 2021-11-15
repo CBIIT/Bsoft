@@ -1,0 +1,123 @@
+.TH "/Users/bernard/b20/bsoft/include/rwMRC.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/rwMRC.h \- Header file for reading and writing MRC files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBMRCheadold\fP"
+.br
+.ti -1c
+.RI "struct \fBMRChead2000\fP"
+.br
+.ti -1c
+.RI "struct \fBMRChead\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMRCSIZE\fP   1024"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBreadMRC\fP (\fBBimage\fP *p, int readdata, int img_select)"
+.br
+.RI "Reading a MRC map image file format\&. "
+.ti -1c
+.RI "int \fBwriteMRC\fP (\fBBimage\fP *p)"
+.br
+.RI "Writing a MRC map image file format\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for reading and writing MRC files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19990321 
+.PP
+Modified: 20111217 
+.PP
+.nf
+Format: 3D crystallographic image file format for the MRC package
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwMRC\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define MRCSIZE   1024"
+
+.PP
+Definition at line 13 of file rwMRC\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int readMRC (\fBBimage\fP * p, int readdata, int img_select)"
+
+.PP
+Reading a MRC map image file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.br
+\fIreaddata\fP flag to activate reading of image data\&. 
+.br
+\fIimg_select\fP image selection in multi-image file (-1 = all images)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. A 3D image format used in electron microscopy\&. Header size: 1024 bytes followed by the symmetry operator table which is composed of 80 character lines, each line for a symmetry operator\&. File format extensions: \&.mrc The identifier is a 4-byte machine stamp (same as for CCP4 maps): 1 Big-endian IEEE 17 17 00 00 2 VAX 34 65 00 00 3 Cray - 4 Little-endian IEEE 68 65 00 00 5 Convex 85 17 00 00 6 Fijitsu VP - (Note: not always implemented - so unreliable) Byte order determination: Data type and third dimension values must be less than 256*256\&. Data types: 0 = signed byte, 1 = short, 2 = float, 3 = complex short, 4 = complex float\&. \fBTransform\fP type: Centered hermitian The x-dimension contains the x-size of the full transform 
+.RE
+.PP
+
+.PP
+Definition at line 58 of file rwMRC\&.cpp\&.
+.SS "int writeMRC (\fBBimage\fP * p)"
+
+.PP
+Writing a MRC map image file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. A 3D image format used in electron microscopy\&. 
+.RE
+.PP
+
+.PP
+Definition at line 284 of file rwMRC\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

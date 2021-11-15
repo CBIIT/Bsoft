@@ -1,0 +1,934 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__multislice_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mg/mg_multislice.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mg/mg_multislice.cpp</primary></indexterm>
+<para>
+
+<para>Generates and manipulates projects for multislice calculations. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+#include &quot;mg_ctf.h&quot;
+#include &quot;molecule_to_map.h&quot;
+#include &quot;mol_transform.h&quot;
+#include &quot;mol_edit.h&quot;
+#include &quot;Complex.h&quot;
+#include &quot;Vector3.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;random_numbers.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__multislice_8cpp_1a1765f63c04d4545c5ab016ea65866845">img_calc_wave_propagator</link> (<link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sam, double thickness, double volt, double resolution)</para>
+
+<para>Calculates the wave propagation function between slices. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__multislice_8cpp_1a1a8f6e26f63cef8e906bd2d07a7101df">img_calc_multi_slice</link> (<link linkend="_class_bimage">Bimage</link> *pgrate, double thickness, double volt, double resolution)</para>
+
+<para>Simulates the electron imaging process using a multi-slice approach. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__multislice_8cpp_1a67d3ef4c7e35619dc2a6a8005efe098b">img_calc_potential</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sam, double thickness, double resolution, double Bfactor, <link linkend="_class_bstring">Bstring</link> &amp;paramfile, int type)</para>
+
+<para>Calculates the atomic potential. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__multislice_8cpp_1aea3c099478dc4eac1f08ecc7531ae7c7">img_calc_phase_grating</link> (<link linkend="_class_bimage">Bimage</link> *p, double volt)</para>
+
+<para>Calculates the phase grating approximation from the atomic potential. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__multislice_8cpp_1a5a9f3881ebb474b7d02477443d7209f1">img_apply_complex_CTF</link> (<link linkend="_class_bimage">Bimage</link> *p, double def_avg, double def_dev, double ast_angle, double volts, double Cs, double Cc, double amp_shift, double alpha, double energy_spread)</para>
+
+<para>Applies a complex CTF function to a Fourier transform. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bproject">Bproject</link> * <link linkend="_mg__multislice_8cpp_1a99d7ee18e575805516931636cd167f5c">project_generate</link> (int nfield, int nmg, int npart, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; pixel_size, double img_origin, double volt, double Cs, double Cc, double alpha, double energy_spread, double amp_shift, double def_min, double def_max, double dose, double tsigma, <link linkend="_class_bstring">Bstring</link> &amp;fieldbase, <link linkend="_class_bstring">Bstring</link> &amp;mgbase, <link linkend="_class_bstring">Bstring</link> &amp;partbase, int fieldnumber, int mgnumber, int partnumber)</para>
+
+<para>Generates a project for multislice simulations. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bproject">Bproject</link> * <link linkend="_mg__multislice_8cpp_1a46300b65a659f8d6e1ebf2e84e46fa10">project_generate_asu</link> (<link linkend="_class_bstring">Bstring</link> &amp;symmetry_string, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; pixel_size, double img_origin, double theta_step, double phi_step, double volt, double Cs, double Cc, double alpha, double energy_spread, double amp_shift, double defocus, double dose, <link linkend="_class_bstring">Bstring</link> &amp;mgbase, <link linkend="_class_bstring">Bstring</link> &amp;partbase)</para>
+
+<para>Generates a project for multislice calculations of an asymmetric unit. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__multislice_8cpp_1a41697c48743be269fef37b7d3d608990">project_generate_potential</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_struct_bmolgroup">Bmolgroup</link> *water, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;fieldname, <link linkend="_class_bstring">Bstring</link> &amp;mgname, int partselect, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, double thickness, double resolution, double Bfactor, int pottype, <link linkend="_class_bstring">Bstring</link> &amp;paramfile)</para>
+
+<para>Generates potential images using a multislice calculation. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__multislice_8cpp_1a7fb9b1ab1b7fab5e208b1e07cfc63e62">project_generate_image</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double thickness, double resolution)</para>
+
+<para>Generates final images from a multislice calculation. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__multislice_8cpp_1a2a972742c60c2e72d99a38bad116aa61">project_apply_distortions</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int poisson, double gauss, double kmtf)</para>
+
+<para>Applies imaging distortions to the final images from a multislice calculation. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mg__multislice_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Generates and manipulates projects for multislice calculations. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20030805 </para>
+
+<para>Modified: 20160604 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__multislice_8cpp_1a5a9f3881ebb474b7d02477443d7209f1"/>    <section>
+    <title>img_apply_complex_CTF()</title>
+<indexterm><primary>img_apply_complex_CTF</primary><secondary>mg_multislice.cpp</secondary></indexterm>
+<indexterm><primary>mg_multislice.cpp</primary><secondary>img_apply_complex_CTF</secondary></indexterm>
+<para><computeroutput>int img_apply_complex_CTF (<link linkend="_class_bimage">Bimage</link> * p, double def_avg, double def_dev, double ast_angle, double volts, double Cs, double Cc, double amp_shift, double alpha, double energy_spread)</computeroutput></para><para>
+
+<para>Applies a complex CTF function to a Fourier transform. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>complex Fourier transform (modified). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_avg</entry>
+                                <entry>
+<para>defocus minimum (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_dev</entry>
+                                <entry>
+<para>defocus maximum (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ast_angle</entry>
+                                <entry>
+<para>astigmatism angle (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>volts</entry>
+                                <entry>
+<para>acceleration voltage (volts). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Cs</entry>
+                                <entry>
+<para>spherical aberration (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Cc</entry>
+                                <entry>
+<para>chromatic aberration (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>amp_shift</entry>
+                                <entry>
+<para>amplitude contrast phase shift (radian). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>alpha</entry>
+                                <entry>
+<para>beam source size (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>energy_spread</entry>
+                                <entry>
+<para>effective energy spread (fraction: typically 10^-5) </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0.</para>
+</formalpara>
+<literallayout><computeroutput>The CTF is applied as a multiplication with a complex number:
+    new_datum.re = datum.re*amp_fac*cos(dphi) - datum.im*phi_fac*sin(dphi)
+    new_datum.re = datum.re*phi_fac*sin(dphi) + datum.im*amp_fac*cos(dphi)
+Both input and output are complex transforms.
+</computeroutput></literallayout> </para>
+<para>
+Definition at line 252 of file mg_multislice.cpp.</para>
+    </section><anchor xml:id="_mg__multislice_8cpp_1a1a8f6e26f63cef8e906bd2d07a7101df"/>    <section>
+    <title>img_calc_multi_slice()</title>
+<indexterm><primary>img_calc_multi_slice</primary><secondary>mg_multislice.cpp</secondary></indexterm>
+<indexterm><primary>mg_multislice.cpp</primary><secondary>img_calc_multi_slice</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_calc_multi_slice (<link linkend="_class_bimage">Bimage</link> * pgrate, double thickness, double volt, double resolution)</computeroutput></para><para>
+
+<para>Simulates the electron imaging process using a multi-slice approach. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*pgrate</entry>
+                                <entry>
+<para>phase grating multi-image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>thickness</entry>
+                                <entry>
+<para>slice thickness (in angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>volt</entry>
+                                <entry>
+<para>acceleration voltage (volt). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>resolution</entry>
+                                <entry>
+<para>resolution limit (angstrom). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* simulated projection image transform. <literallayout><computeroutput>The passage of the electron beam is simulated as the interaction of
+a planar wave with successive planar phase gratings spaced at regular 
+intervals, with the wave propagated between the 2D gratings. The
+phase gratings are derived from slabs of the atomic potential 
+calculated from the atomic structure using scattering profiles.
+Note: The final product is a 2D transform of the exit wave.
+Reference: Cowley, J. M. (1995) Diffraction Physics. 3rd Rev. Ed. 
+    Elsevier Science, Amsterdam.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 89 of file mg_multislice.cpp.</para>
+    </section><anchor xml:id="_mg__multislice_8cpp_1aea3c099478dc4eac1f08ecc7531ae7c7"/>    <section>
+    <title>img_calc_phase_grating()</title>
+<indexterm><primary>img_calc_phase_grating</primary><secondary>mg_multislice.cpp</secondary></indexterm>
+<indexterm><primary>mg_multislice.cpp</primary><secondary>img_calc_phase_grating</secondary></indexterm>
+<para><computeroutput>int img_calc_phase_grating (<link linkend="_class_bimage">Bimage</link> * p, double volt)</computeroutput></para><para>
+
+<para>Calculates the phase grating approximation from the atomic potential. </para>
+</para>
+
+<para><literallayout><computeroutput>All calculations are complex.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>atomic potential image (modified). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>volt</entry>
+                                <entry>
+<para>acceleration voltage (volt). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 206 of file mg_multislice.cpp.</para>
+    </section><anchor xml:id="_mg__multislice_8cpp_1a67d3ef4c7e35619dc2a6a8005efe098b"/>    <section>
+    <title>img_calc_potential()</title>
+<indexterm><primary>img_calc_potential</primary><secondary>mg_multislice.cpp</secondary></indexterm>
+<indexterm><primary>mg_multislice.cpp</primary><secondary>img_calc_potential</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_calc_potential (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sam, double thickness, double resolution, double Bfactor, <link linkend="_class_bstring">Bstring</link> &amp; paramfile, int type)</computeroutput></para><para>
+
+<para>Calculates the atomic potential. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>set of molecules. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of projection image (z = 1). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>origin in x and y. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sam</entry>
+                                <entry>
+<para>voxel size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>thickness</entry>
+                                <entry>
+<para>slice thickness (in angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>resolution</entry>
+                                <entry>
+<para>resolution limit (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Bfactor</entry>
+                                <entry>
+<para>overall temperature factor. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;paramfile</entry>
+                                <entry>
+<para>parameter file for atomic scattering coefficients. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>type</entry>
+                                <entry>
+<para>type of potential calculation: 0=reciprocal space, 1=real space, 2=gaussian </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* complex potential image. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 139 of file mg_multislice.cpp.</para>
+    </section><anchor xml:id="_mg__multislice_8cpp_1a1765f63c04d4545c5ab016ea65866845"/>    <section>
+    <title>img_calc_wave_propagator()</title>
+<indexterm><primary>img_calc_wave_propagator</primary><secondary>mg_multislice.cpp</secondary></indexterm>
+<indexterm><primary>mg_multislice.cpp</primary><secondary>img_calc_wave_propagator</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_calc_wave_propagator (<link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sam, double thickness, double volt, double resolution)</computeroutput></para><para>
+
+<para>Calculates the wave propagation function between slices. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of projection image (z = 1). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sam</entry>
+                                <entry>
+<para>pixel size in x and y, slice thickness in z. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>thickness</entry>
+                                <entry>
+<para>slice thickness (in angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>volt</entry>
+                                <entry>
+<para>acceleration voltage (volt). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>resolution</entry>
+                                <entry>
+<para>resolution limit (angstrom). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* wave propagation function image. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 32 of file mg_multislice.cpp.</para>
+    </section><anchor xml:id="_mg__multislice_8cpp_1a2a972742c60c2e72d99a38bad116aa61"/>    <section>
+    <title>project_apply_distortions()</title>
+<indexterm><primary>project_apply_distortions</primary><secondary>mg_multislice.cpp</secondary></indexterm>
+<indexterm><primary>mg_multislice.cpp</primary><secondary>project_apply_distortions</secondary></indexterm>
+<para><computeroutput>int project_apply_distortions (<link linkend="_class_bproject">Bproject</link> * project, int poisson, double gauss, double kmtf)</computeroutput></para><para>
+
+<para>Applies imaging distortions to the final images from a multislice calculation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure with parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>poisson</entry>
+                                <entry>
+<para>flag to add Poisson noise. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>gauss</entry>
+                                <entry>
+<para>width of gaussian noise to add (0=no noise). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>kmtf</entry>
+                                <entry>
+<para>mass transfer decay constant (0=no decay). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 675 of file mg_multislice.cpp.</para>
+    </section><anchor xml:id="_mg__multislice_8cpp_1a99d7ee18e575805516931636cd167f5c"/>    <section>
+    <title>project_generate()</title>
+<indexterm><primary>project_generate</primary><secondary>mg_multislice.cpp</secondary></indexterm>
+<indexterm><primary>mg_multislice.cpp</primary><secondary>project_generate</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bproject">Bproject</link>* project_generate (int nfield, int nmg, int npart, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; pixel_size, double img_origin, double volt, double Cs, double Cc, double alpha, double energy_spread, double amp_shift, double def_min, double def_max, double dose, double tsigma, <link linkend="_class_bstring">Bstring</link> &amp; fieldbase, <link linkend="_class_bstring">Bstring</link> &amp; mgbase, <link linkend="_class_bstring">Bstring</link> &amp; partbase, int fieldnumber, int mgnumber, int partnumber)</computeroutput></para><para>
+
+<para>Generates a project for multislice simulations. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>nfield</entry>
+                                <entry>
+<para>number of fields-of-view. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nmg</entry>
+                                <entry>
+<para>number of micrographs per field-of-view. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>npart</entry>
+                                <entry>
+<para>number of particles per micrograph. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pixel_size</entry>
+                                <entry>
+<para>micrograph pixel size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>img_origin</entry>
+                                <entry>
+<para>image origin within the simulation box. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>volt</entry>
+                                <entry>
+<para>acceleration voltage (volts). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Cs</entry>
+                                <entry>
+<para>spherical aberration coefficient (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Cc</entry>
+                                <entry>
+<para>chromatic aberration coefficient (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>alpha</entry>
+                                <entry>
+<para>beam divergence angle (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>energy_spread</entry>
+                                <entry>
+<para>energy spread (relative units). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>amp_shift</entry>
+                                <entry>
+<para>amplitude contribution phase shift (radian). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_min</entry>
+                                <entry>
+<para>defocus minimum (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_max</entry>
+                                <entry>
+<para>defocus maximum (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>dose</entry>
+                                <entry>
+<para>electron dose (e/angstrom^2). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tsigma</entry>
+                                <entry>
+<para>translation standard deviation (pixels). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;fieldbase</entry>
+                                <entry>
+<para>field base name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;mgbase</entry>
+                                <entry>
+<para>micrograph base name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;partbase</entry>
+                                <entry>
+<para>particle image base name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fieldnumber</entry>
+                                <entry>
+<para>field-of-view number. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mgnumber</entry>
+                                <entry>
+<para>micrograph number. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>partnumber</entry>
+                                <entry>
+<para>particle number. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bproject* project structure. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 344 of file mg_multislice.cpp.</para>
+    </section><anchor xml:id="_mg__multislice_8cpp_1a46300b65a659f8d6e1ebf2e84e46fa10"/>    <section>
+    <title>project_generate_asu()</title>
+<indexterm><primary>project_generate_asu</primary><secondary>mg_multislice.cpp</secondary></indexterm>
+<indexterm><primary>mg_multislice.cpp</primary><secondary>project_generate_asu</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bproject">Bproject</link>* project_generate_asu (<link linkend="_class_bstring">Bstring</link> &amp; symmetry_string, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; pixel_size, double img_origin, double theta_step, double phi_step, double volt, double Cs, double Cc, double alpha, double energy_spread, double amp_shift, double defocus, double dose, <link linkend="_class_bstring">Bstring</link> &amp; mgbase, <link linkend="_class_bstring">Bstring</link> &amp; partbase)</computeroutput></para><para>
+
+<para>Generates a project for multislice calculations of an asymmetric unit. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;symmetry_string</entry>
+                                <entry>
+<para>symmetry designation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pixel_size</entry>
+                                <entry>
+<para>micrograph pixel size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>img_origin</entry>
+                                <entry>
+<para>image origin within the simulation box. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>theta_step</entry>
+                                <entry>
+<para>step size in theta (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>phi_step</entry>
+                                <entry>
+<para>step size in phi (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>volt</entry>
+                                <entry>
+<para>acceleration voltage (volts). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Cs</entry>
+                                <entry>
+<para>spherical aberration coefficient (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Cc</entry>
+                                <entry>
+<para>chromatic aberration coefficient (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>alpha</entry>
+                                <entry>
+<para>beam divergence angle (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>energy_spread</entry>
+                                <entry>
+<para>energy spread (relative units). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>amp_shift</entry>
+                                <entry>
+<para>amplitude contribution (fraction). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>defocus</entry>
+                                <entry>
+<para>defocus minimum (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>dose</entry>
+                                <entry>
+<para>electron dose (e/angstrom^2). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;mgbase</entry>
+                                <entry>
+<para>micrograph base name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;partbase</entry>
+                                <entry>
+<para>particle image base name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bproject* project structure. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 442 of file mg_multislice.cpp.</para>
+    </section><anchor xml:id="_mg__multislice_8cpp_1a7fb9b1ab1b7fab5e208b1e07cfc63e62"/>    <section>
+    <title>project_generate_image()</title>
+<indexterm><primary>project_generate_image</primary><secondary>mg_multislice.cpp</secondary></indexterm>
+<indexterm><primary>mg_multislice.cpp</primary><secondary>project_generate_image</secondary></indexterm>
+<para><computeroutput>int project_generate_image (<link linkend="_class_bproject">Bproject</link> * project, double thickness, double resolution)</computeroutput></para><para>
+
+<para>Generates final images from a multislice calculation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure with parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>thickness</entry>
+                                <entry>
+<para>thickness of slices for the multislice calculation (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>resolution</entry>
+                                <entry>
+<para>resolution for the multislice calculation (angstrom). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 603 of file mg_multislice.cpp.</para>
+    </section><anchor xml:id="_mg__multislice_8cpp_1a41697c48743be269fef37b7d3d608990"/>    <section>
+    <title>project_generate_potential()</title>
+<indexterm><primary>project_generate_potential</primary><secondary>mg_multislice.cpp</secondary></indexterm>
+<indexterm><primary>mg_multislice.cpp</primary><secondary>project_generate_potential</secondary></indexterm>
+<para><computeroutput>int project_generate_potential (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_struct_bmolgroup">Bmolgroup</link> * water, <link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; fieldname, <link linkend="_class_bstring">Bstring</link> &amp; mgname, int partselect, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, double thickness, double resolution, double Bfactor, int pottype, <link linkend="_class_bstring">Bstring</link> &amp; paramfile)</computeroutput></para><para>
+
+<para>Generates potential images using a multislice calculation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*water</entry>
+                                <entry>
+<para>block of water as solvent. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure with parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;fieldname</entry>
+                                <entry>
+<para>selected field name (if &quot;&quot; do all). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;mgname</entry>
+                                <entry>
+<para>selected micrograph (if &quot;&quot; do all). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>partselect</entry>
+                                <entry>
+<para>selected particle ( if &lt;1 do all). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of simulation block (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>thickness</entry>
+                                <entry>
+<para>thickness of slices for the multislice calculation (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>resolution</entry>
+                                <entry>
+<para>resolution for the multislice calculation (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Bfactor</entry>
+                                <entry>
+<para>B-factor to apply to the multislice calculation (angstrom^2). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pottype</entry>
+                                <entry>
+<para>type of potential to calculate (???). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;paramfile</entry>
+                                <entry>
+<para>parameter file for scattering curves (???). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 503 of file mg_multislice.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_mg__multislice_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>mg_multislice.cpp</secondary></indexterm>
+<indexterm><primary>mg_multislice.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

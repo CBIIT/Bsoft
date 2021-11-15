@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Transformations</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+
+<h1>Image transformations</h1>
+
+<h2>Image translation</h2>
+<p>There are several types of image translations. The first is when the
+shift is by integer pixels/voxels so that no interpolation is necessary:</p>
+<div id="command"><p>bimg -verb 7 -trans 15,-10,8 2omf.grd 2omf_t.map</p></div>
+<p>Other options include a change in size with the -size option, and wrapping
+around the boundaries when the -wrap flag is specified:</p>
+<div id="command"><p>bimg -verb 7 -size 80,80,80 -trans 15,-10,8 -wrap 2omf.grd 2omf_t.map</p></div>
+<p>The second translation type is where the shift is not in integer units,
+requiring interpolation:</p>
+<div id="command"><p>bint -verb 7 -trans 8.37,5.04,-11.8 2omf.grd 2omf_t.map</p></div>
+<br/>
+<h2>Image rotation</h2>
+<p>As for translation, rotation can also be done in two ways. The first requires
+no interpolation and is commonly refered to as reslicing. This is also useful
+where different image processing packages have different
+conventions of axis order and image orientation. The following
+two examples rotate an image around the y axis by 90 degrees and mirror
+the image along the z axis: </p>
+<div id="command"><p>bimg -verbose 7 -reslice zy-x 2omf.grd test.mrc </p></div>
+<div id="command"><p>bimg -verbose 7 -reslice xy-z 2omf.grd test.mrc</p></div>
+<p>The more common rotations require interpolation. Rotations can be specified
+in many different ways:</p>
+<ul>
+	<li>Euler angles</li>
+	<li>Rotation around an axis by an angle</li>
+	<li>Rotation to or from a view</li>
+</ul>
+<p>Rotations occur around the origin specified in the image, or given
+on the command line. To rotate a volume around an axis {0.5,-0.3,0.2}
+by an angle 34°, using the origin {40,40,40}:</p>
+<div id="command"><p>bint -verb 7 -rotate 0.5,-0.3,0.2,34 -origin 40,40,40 2omf.grd test.mrc</p></div>
+<br/>
+<h2>Image scaling</h2>
+<p>An image can be scaled: </p>
+<div id="command"><p>bint -verbose 7 -scale 1.4,1.4,1.4 2omf.grd test.mrc</p></div>
+<p>This will resize the image as well based on the scaling. To obtain a particular
+out out size, use the -size option</p>
+<br/>
+<h2>Image binning</h2>
+<p>Images are often binned by an integer factor to save processing time.
+There are three types of binning in Bsoft:</p>
+<ul>
+	<li>Averaging binning</li>
+	<li>Median binning</li>
+	<li>Special integer binning</li>
+</ul>
+<p>The most common form of binning is averaging, where the values in the
+kernel are averaged. For median binning, the values in the kernel are ranked
+and the middle value picked. Special integer binning involves a kernel
+with weights that decay towards its edges. To do a simple averaging binning:</p>
+<div id="command"><p>bint -verbose 7 -bin 2,2,2 2omf.grd test.mrc</p></div>
+<br/>
+<h2>Combined image transformation</h2>
+<p>The operations of translation, rotation and scaling can be combined into
+one command line. The sampling and origin will be changed, so there are options
+to specify the original origin and sampling, and to specify the new origin
+and sampling desired in the output image:</p>
+<div id="command"><p>bint -verb 7 -size 150,150,150 -trans -4,-4,-4 -rot 0.5,-0.3,0.2,34 -ori 40,40,40 -scale 0.9,0.9,0.9 -newori 44,44,44 - newsam 1.67 2omf.grd test.mrc</p></div>
+</div>
+<div id="footer">
+  Bernard Heymann  20150223
+</div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Model</title>
+<link href="bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body>
+
+<div id="content">
+    <h2>The Molecule Data Model</h2>
+	<p>The Bsoft molecular object model is an attempt to implement the most
+    general pragmatic molecular structure. Sequence and atomic coordinates are
+    alternative representations of the same molecule. The molecules studied in
+    structural biology are typically proteins or nucleic acids with associated
+    sequence information. In Bsoft, these descriptors of molecules are grouped
+    into one structure with utilities for reconciling alternative
+    descriptions.</p>
+	<h2>The molecule group hierarchy</h2>
+	<p>A molecule is generally defined as a collection of covalently
+      bound atoms. Exceptions involve cross-links such as disulfide bonds, or
+      covalent bonding between what are considered different molecules. To
+      deal with multiple molecules in a data set, the notion of a "molecule
+      group" is defined in Bsoft. This loose concept can be used for all the
+      molecules in a quaternary structure, or for all the molecules in a
+      complete system (which may include solvent).</p>
+	<p>Simple molecules are usually small numbers of covalently bound
+      atoms. However, the polymeric macromolecules (such as proteins and
+      nucleic acids) require a hierarchical level between molecule and atom.
+      In Bsoft this intermediate level is a "residue", whether it is an amino
+      acid residue in a protein, a nucleotide in a nucleic acid, or a sugar
+      monomer in a polysaccharide. For simple monomeric molecules, the residue
+      is considered to be the whole molecule.</p>
+	  <p>The molecule group hierarchy is therefore:</p>
+	  <ul type="disc"><li><p>Molecule group</p>
+		<ul type="circle"><li><p>Molecule</p>
+			<ul type="square"><li><p>Residue</p>
+				<ul type="disc"><li><p>Atom</p>
+					</li></ul></li></ul></li></ul></li></ul>
+
+<h2>Sequences</h2>
+<p>The notion of a sequence is only useful in the context of a
+      polymer. In addition, a protein can be described by both an amino acid
+      residue sequence or a gene sequence.</p>
+
+<h2>Atomic and sequence file formats</h2>
+<table summary="Atomic and sequence file formats" border="1">
+<caption>Table 1. Atomic and sequence file formats</caption>
+<thead>
+<tr><th align="center">Format</th><th align="center">Extension(s)</th><th align="center">Type</th><th align="center">Remark</th></tr>
+</thead>
+<tbody>
+<tr><td>Clustal</td><td>.aln</td><td>Sequence</td><td> </td></tr>
+<tr><td>EMBL</td><td>.embl</td><td>Sequence</td><td>Minimal: ignore header info</td></tr>
+<tr><td>Fasta</td><td>.fasta</td><td>Sequence</td><td>Minimal: ignore header info</td></tr>
+<tr><td>Genbank</td><td>.gb</td><td>Sequence</td><td>Minimal: ignore header info</td></tr>
+<tr><td>Gromacs</td><td>.gro</td><td>Coordinates</td><td>Molecular dynamics</td></tr>
+<tr><td>PDB</td><td>.pdb</td><td>Coordinates</td><td>Minimal: ignore header info</td></tr>
+<tr><td>Phylip</td><td>.phylip</td><td>Sequence</td><td>Minimal: ignore header info</td></tr>
+<tr><td>PIR</td><td>.pir</td><td>Sequence</td><td>Minimal: ignore header info</td></tr>
+<tr><td>STAR/mmCIF</td><td>.star, .cif</td><td>Sequence+coordinates</td><td> </td></tr>
+<tr><td>Text</td><td>.txt</td><td>Sequence</td><td>Raw sequence, type inferred</td></tr>
+<tr><td>Wayne Hendrickson format</td><td>.wah, .wh</td><td>Coordinates</td><td>Minimal format</td></tr></tbody></table>
+
+<h2>The Representation of Models</h2>
+<p>In Bsoft, a model is an interpretative representation of the data,
+    similar in sense to molecular models, but at a coarser grain and with much
+    larger extent. A model is composed of components, component types,
+    connections between components, and higher order relationships, such as
+    polygons and polyhedra. The aim with models is to provide descriptions of
+    large assemblies of components while handling redundancies with component
+    types.</p>
+<h2>Model parameters</h2>
+<p>The unit parameter is the component, which can be molecule, a
+      molecule group, part of a molecule, or a density.</p>
+	  <ul type="disc"><li><p>Component type</p></li>
+	  <li><p>Component</p></li>
+	  <li><p>Link</p></li>
+	  <li><p>Polygon</p></li></ul>
+
+<h2>Model file formats</h2>
+<p>Some aspects of models can be encoded in molecular files such as
+      the PDB format, but these are too limited to encapsulate all the
+      complexity.</p>
+<ul type="disc"><li><p>Molecular files (Component coordinates and links)</p></li>
+<li><p>Chimera marker file (Component coordinates and links)</p></li>
+<li><p>Model STAR or XML file (Component types, coordinates, orientations
+          and links)</p></li>
+</ul>
+
+</div>
+<div id="footer">
+  Bernard Heymann 20110319
+</div>
+</body>
+</html>

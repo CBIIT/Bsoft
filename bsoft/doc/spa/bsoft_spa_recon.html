@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/bsoft.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: SPA reconstruction</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="../Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Single Particle Reconstruction</h1>
+<p>The reconstruction can then be done from the selected particles.
+Typically, two maps from different halves of the selected particles
+need to be generated to determine resolution. These two maps can be added
+afterwards to give the full map. The program breconstruct has several options
+to do the reconstruction in different ways, depending on the desired outcome
+as well as the capabilities of the computer being used. Here are a few cases:</p>
+<h2>1. Reconstruction options</h2>
+<h3>1.1 A simple reconstruction:</h3>
+<p>The main decision is to what resolution the reconstruction should be calculated:</p>
+<div id="command"><p>breconstruct -v 3 -resol 15 -rescale 0,1 -sym D5 -CTF baseflip -recon
+klh_run1.pif klh_run1_sel.star &gt;&amp; klh_run1_rec.log &amp;</p></div>
+<h3>1.2 Two half set reconstructions and a full set reconstruction:</h3>
+<p>All three maps can be calculated at the same time:</p>
+<div id="command"><p>breconstruct -v 3 -resol 15 -full -half -rescale 0,1 -sym D5 -CTF baseflip -recon
+klh_run1.pif klh_run1_sel.star &gt;&amp; klh_run1_rec.log &amp;</p></div>
+<p>The resultant maps from the half sets have the inserts &quot;_01&quot; and &quot;_02&quot; before
+the extension. These maps can be added to generate a single reconstruction
+that is the same as the full set map:</p>
+<div id="command"><p>bop -v 7 -add 1,0 klh_run1_01.pif klh_run1_02.pif klh_run1.pif</p></div>
+<h3>1.3 Threaded reconstruction:</h3>
+<p>If Bsoft was compiled with Grand Central Dispatch (Mac OSX) or OpenMP and FFTW3 support, the reconstruction can be run with multiple threads:</p>
+<div id="command"><p>breconstruct -v 3 -resol 15 -full -half -threads 8 -rescale 0,1 -sym D5 -CTF baseflip -recon
+klh_run1.pif klh_run1_sel.star &gt;&amp; klh_run1_rec.log &amp;</p></div>
+<p>Be aware that this is very memory-intensive, requiring 20 times the map volume per thread.
+For example, a map of size 500^3 will require about 2.5 Gb per thread.</p>
+<h3>1.4 Selected reconstructions:</h3>
+<p>Reconstructions can also be done from specific selection numbers in
+the parameter file using the &quot;-classes&quot; option:</p>
+<div id="command"><p>breconstruct -v 3 -resol 15 -full -half -classes 1,3-5 -threads 2 -rescale 0,1 -sym D5 -CTF baseflip -recon
+klh_run1.pif klh_run1_sel.star &gt;&amp; klh_run1_rec.log &amp;</p></div>
+<p>In this case the threads are per class, and for calculating halfmaps in each class, the number of threads should be even.
+Because of memory limitations, it is likely better to specify only one class per run.</p>
+<br />
+<h2>2. Resolution determination</h2>
+The two reconstructions are then compared to determine the resolution:<br />
+<br />
+<div id="command"><p>bresolve -v 7 -resol 15 -Post klh_run1_resol.ps -map klh_run1_01.pif
+klh_run1_02.pif</p></div>
+<br />
+The resolution curves for FSC (Fourier shell correlation) and DPR
+(differential phase residual) are written into the postscript file in
+such a way that it can be opened in a graphing program that can
+interpret text files (Kaleidagraph or Excel).<br />
+<br />
+</div>
+<div id="footer">
+  Bernard Heymann  20150121
+</div>
+</body>
+</html>

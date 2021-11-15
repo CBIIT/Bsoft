@@ -1,0 +1,117 @@
+.TH "/Users/bernard/b20/bsoft/include/rwSPIDER.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/rwSPIDER.h \- Header file for reading and writing SPIDER files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBSPIDERhead\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSPIDERSIZE\fP   1024"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBreadSPIDER\fP (\fBBimage\fP *p, int readdata, int img_select)"
+.br
+.RI "Reading a SPIDER image file format\&. "
+.ti -1c
+.RI "int \fBwriteSPIDER\fP (\fBBimage\fP *p)"
+.br
+.RI "Writing a SPIDER image file format\&. A 3D image format used in electron microscopy\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for reading and writing SPIDER files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19990410 
+.PP
+Modified: 20010928 
+.PP
+.nf
+Format: 3D image file format for the SPIDER package
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwSPIDER\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define SPIDERSIZE   1024"
+
+.PP
+Definition at line 13 of file rwSPIDER\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int readSPIDER (\fBBimage\fP * p, int readdata, int img_select)"
+
+.PP
+Reading a SPIDER image file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.br
+\fIreaddata\fP flag to activate reading of image data\&. 
+.br
+\fIimg_select\fP image selection in multi-image file (-1 = all images)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. A 3D multi-image format used in electron microscopy\&. Header size: 1024 bytes (not same as data offset!)\&. Data offset: sizeof(float)*x_size*ceil(1024/x_size) File format extensions: \&.spi The identifier is a 4-byte machine stamp: 1 Big-endian IEEE 17 17 00 00 2 VAX 34 65 00 00 3 Cray - 4 Little-endian IEEE 68 65 00 00 5 Convex 85 17 00 00 6 Fijitsu VP - (Note: not always implemented - so unreliable) Byte order determination: File type and third dimension values must be less than 256*256\&. Data type: only float\&. \fBTransform\fP type: Hermitian The x-dimension contains the x-size of the full transform A multi-image file has a global header followed by a header and data for each sub-image\&. 
+.RE
+.PP
+
+.PP
+Definition at line 82 of file rwSPIDER\&.cpp\&.
+.SS "int writeSPIDER (\fBBimage\fP * p)"
+
+.PP
+Writing a SPIDER image file format\&. A 3D image format used in electron microscopy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 243 of file rwSPIDER\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

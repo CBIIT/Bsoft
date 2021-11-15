@@ -1,0 +1,628 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__multiple_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mg/mg_multiple.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mg/mg_multiple.cpp</primary></indexterm>
+<para>
+
+<para>Selection of single particle parameters from multiple files for classification. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+#include &quot;mg_img_proc.h&quot;
+#include &quot;mg_select.h&quot;
+#include &quot;mg_particle_select.h&quot;
+#include &quot;rwmg.h&quot;
+#include &quot;Matrix.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>long <link linkend="_mg__multiple_8cpp_1a8aefa8700c9fbca58af380f40a1e273f">project_check_same_number_particles</link> (<link linkend="_class_bproject">Bproject</link> *project_list)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bproject">Bproject</link> * <link linkend="_mg__multiple_8cpp_1a3cd0fed33d0c5f67a7031c589c1c8a88">project_multi_merge</link> (<link linkend="_class_bstring">Bstring</link> *<link linkend="_file__util_8cpp_1a3c3411ced4b9632566ecc66ffa64a72a">file_list</link>, int fom_index, int flags)</para>
+
+<para>Merges multiple projects. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__multiple_8cpp_1a248d9e78aefd88b2afcad71bfe69cdc8">project_multi_add</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> *<link linkend="_file__util_8cpp_1a3c3411ced4b9632566ecc66ffa64a72a">file_list</link>, int fom_index)</para>
+
+<para>Merges multiple projects with an existing one. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__multiple_8cpp_1af46b124f8164524c8cad25328e34d787">project_multi_adjust_FOM</link> (<link linkend="_class_bproject">Bproject</link> *project_list, int fom_index)</para>
+
+<para>Adjusts FOM to the avergae of the first project. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__multiple_8cpp_1a04ef27f83d8cfdd7d2e7fd32cda7bbb3">project_multi_select_best_FOM</link> (<link linkend="_class_bproject">Bproject</link> *project_list, double fom_cut, int fom_index, int fom_def_flag)</para>
+
+<para>Selects the best particle orientations from multiple parameter files. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__multiple_8cpp_1a852128726684f4e8209cdea476b0db83">project_multi_selection_stats</link> (<link linkend="_class_bproject">Bproject</link> *project_list)</para>
+
+<para>Counts particle assignment distributions using selection arrays. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__multiple_8cpp_1a698c7ada64a3f4fad01bb5cd32dad7f2">project_multi_select_low_variance</link> (<link linkend="_class_bproject">Bproject</link> *project_list, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double origin_dev, double view_dev, double angle_dev, double mag_dev)</para>
+
+<para>Selects the best particle orientations from multiple parameter files. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__multiple_8cpp_1a97e677381fe2802a0a28ca57b8de03c9">project_multi_select_low_difference</link> (<link linkend="_class_bproject">Bproject</link> *project1, <link linkend="_class_bproject">Bproject</link> *project2, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double origin_err, double view_err, double angle_err, double mag_err)</para>
+
+<para>Selects the best particle orientations from two parameter files. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__multiple_8cpp_1a927b651c79299b29bb0c9ff50c53f609">project_multi_select_low_rmsd</link> (<link linkend="_class_bproject">Bproject</link> *project1, <link linkend="_class_bproject">Bproject</link> *project2, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double origin_rmsd, double view_rmsd, double angle_rmsd, double mag_rmsd, int flag)</para>
+
+<para>Selects the best particle orientations from two parameter files. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__multiple_8cpp_1acf276c3a9e54b67e55a7625101eef298">project_multi_selection_compare</link> (<link linkend="_class_bproject">Bproject</link> *project1, <link linkend="_class_bproject">Bproject</link> *project2)</para>
+
+<para>Calculates the number of selections that are the same. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mg__multiple_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Selection of single particle parameters from multiple files for classification. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010319 </para>
+
+<para>Modified: 20210516 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__multiple_8cpp_1a8aefa8700c9fbca58af380f40a1e273f"/>    <section>
+    <title>project_check_same_number_particles()</title>
+<indexterm><primary>project_check_same_number_particles</primary><secondary>mg_multiple.cpp</secondary></indexterm>
+<indexterm><primary>mg_multiple.cpp</primary><secondary>project_check_same_number_particles</secondary></indexterm>
+<para><computeroutput>long project_check_same_number_particles (<link linkend="_class_bproject">Bproject</link> * project_list)</computeroutput></para><para>
+Definition at line 21 of file mg_multiple.cpp.</para>
+    </section><anchor xml:id="_mg__multiple_8cpp_1a248d9e78aefd88b2afcad71bfe69cdc8"/>    <section>
+    <title>project_multi_add()</title>
+<indexterm><primary>project_multi_add</primary><secondary>mg_multiple.cpp</secondary></indexterm>
+<indexterm><primary>mg_multiple.cpp</primary><secondary>project_multi_add</secondary></indexterm>
+<para><computeroutput>long project_multi_add (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> * file_list, int fom_index)</computeroutput></para><para>
+
+<para>Merges multiple projects with an existing one. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project to add/merge to. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*file_list</entry>
+                                <entry>
+<para>linked list of parameter file names. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>index of FOM to select on. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long selected particles. <literallayout><computeroutput>The selected particles are merged with existing ones.
+Requirement: The project component ID&apos;s must correspond.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 207 of file mg_multiple.cpp.</para>
+    </section><anchor xml:id="_mg__multiple_8cpp_1af46b124f8164524c8cad25328e34d787"/>    <section>
+    <title>project_multi_adjust_FOM()</title>
+<indexterm><primary>project_multi_adjust_FOM</primary><secondary>mg_multiple.cpp</secondary></indexterm>
+<indexterm><primary>mg_multiple.cpp</primary><secondary>project_multi_adjust_FOM</secondary></indexterm>
+<para><computeroutput>long project_multi_adjust_FOM (<link linkend="_class_bproject">Bproject</link> * project_list, int fom_index)</computeroutput></para><para>
+
+<para>Adjusts FOM to the avergae of the first project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project_list</entry>
+                                <entry>
+<para>linked list of project structures with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>index of FOM to select on. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>Requirement: The project structures must be of identical form.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 329 of file mg_multiple.cpp.</para>
+    </section><anchor xml:id="_mg__multiple_8cpp_1a3cd0fed33d0c5f67a7031c589c1c8a88"/>    <section>
+    <title>project_multi_merge()</title>
+<indexterm><primary>project_multi_merge</primary><secondary>mg_multiple.cpp</secondary></indexterm>
+<indexterm><primary>mg_multiple.cpp</primary><secondary>project_multi_merge</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bproject">Bproject</link>* project_multi_merge (<link linkend="_class_bstring">Bstring</link> * file_list, int fom_index, int flags)</computeroutput></para><para>
+
+<para>Merges multiple projects. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*file_list</entry>
+                                <entry>
+<para>linked list of parameter file names. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>index of FOM to select on. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>flags: 1=rec, 2=template, 4=reset. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bproject* merged project. <literallayout><computeroutput>The selected particles are merged.
+Requirement: The project component ID&apos;s must correspond.
+If bit 2 of the flag is set (2), it signifies a template and the FOM&apos;s of the template
+are set to zero.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 68 of file mg_multiple.cpp.</para>
+    </section><anchor xml:id="_mg__multiple_8cpp_1a04ef27f83d8cfdd7d2e7fd32cda7bbb3"/>    <section>
+    <title>project_multi_select_best_FOM()</title>
+<indexterm><primary>project_multi_select_best_FOM</primary><secondary>mg_multiple.cpp</secondary></indexterm>
+<indexterm><primary>mg_multiple.cpp</primary><secondary>project_multi_select_best_FOM</secondary></indexterm>
+<para><computeroutput>long project_multi_select_best_FOM (<link linkend="_class_bproject">Bproject</link> * project_list, double fom_cut, int fom_index, int fom_def_flag)</computeroutput></para><para>
+
+<para>Selects the best particle orientations from multiple parameter files. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project_list</entry>
+                                <entry>
+<para>linked list of project structures with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_cut</entry>
+                                <entry>
+<para>FOM cutoff to eliminate bad particles. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_index</entry>
+                                <entry>
+<para>index of FOM to select on. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fom_def_flag</entry>
+                                <entry>
+<para>flag to adjust the cutoff for defocus. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>The orientation parameters for each particle is selected from
+the file with the highest FOM. The selection flag gets the number 
+of the file from which the particle was selected, with the first
+file getting the number 1. If the best FOM is under the cutoff,
+the selection flag is set to zero. The selected orientation
+parameters are written into the first micrograph parameter
+structure.
+Requirement: The project structures must be of identical form.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 403 of file mg_multiple.cpp.</para>
+    </section><anchor xml:id="_mg__multiple_8cpp_1a97e677381fe2802a0a28ca57b8de03c9"/>    <section>
+    <title>project_multi_select_low_difference()</title>
+<indexterm><primary>project_multi_select_low_difference</primary><secondary>mg_multiple.cpp</secondary></indexterm>
+<indexterm><primary>mg_multiple.cpp</primary><secondary>project_multi_select_low_difference</secondary></indexterm>
+<para><computeroutput>long project_multi_select_low_difference (<link linkend="_class_bproject">Bproject</link> * project1, <link linkend="_class_bproject">Bproject</link> * project2, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double origin_err, double view_err, double angle_err, double mag_err)</computeroutput></para><para>
+
+<para>Selects the best particle orientations from two parameter files. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project1</entry>
+                                <entry>
+<para>first project structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project2</entry>
+                                <entry>
+<para>second project structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>symmetry. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin_err</entry>
+                                <entry>
+<para>cutoff to accept origins (pixels). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view_err</entry>
+                                <entry>
+<para>cutoff to accept views (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>angle_err</entry>
+                                <entry>
+<para>cutoff to accept rotation angles (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mag_err</entry>
+                                <entry>
+<para>cutoff to accept magnifications (fraction). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>The error is calculated between parameters. 
+Requirement: The origin, view and rotation angle (or Euler angle), 
+    and magnification arrays in the micrographs must be defined.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 834 of file mg_multiple.cpp.</para>
+    </section><anchor xml:id="_mg__multiple_8cpp_1a927b651c79299b29bb0c9ff50c53f609"/>    <section>
+    <title>project_multi_select_low_rmsd()</title>
+<indexterm><primary>project_multi_select_low_rmsd</primary><secondary>mg_multiple.cpp</secondary></indexterm>
+<indexterm><primary>mg_multiple.cpp</primary><secondary>project_multi_select_low_rmsd</secondary></indexterm>
+<para><computeroutput>long project_multi_select_low_rmsd (<link linkend="_class_bproject">Bproject</link> * project1, <link linkend="_class_bproject">Bproject</link> * project2, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double origin_rmsd, double view_rmsd, double angle_rmsd, double mag_rmsd, int flag)</computeroutput></para><para>
+
+<para>Selects the best particle orientations from two parameter files. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project1</entry>
+                                <entry>
+<para>first project structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project2</entry>
+                                <entry>
+<para>second project structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>symmetry. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin_rmsd</entry>
+                                <entry>
+<para>cutoff to accept origins (pixels). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view_rmsd</entry>
+                                <entry>
+<para>cutoff to accept views (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>angle_rmsd</entry>
+                                <entry>
+<para>cutoff to accept rotation angles (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mag_rmsd</entry>
+                                <entry>
+<para>cutoff to accept magnifications (fraction). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flag</entry>
+                                <entry>
+<para>0=RMSD, 1=MSD </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>The error is calculated between parameters. 
+Requirement: The origin, view and rotation angle (or Euler angle), 
+    and magnification arrays in the micrographs must be defined.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 985 of file mg_multiple.cpp.</para>
+    </section><anchor xml:id="_mg__multiple_8cpp_1a698c7ada64a3f4fad01bb5cd32dad7f2"/>    <section>
+    <title>project_multi_select_low_variance()</title>
+<indexterm><primary>project_multi_select_low_variance</primary><secondary>mg_multiple.cpp</secondary></indexterm>
+<indexterm><primary>mg_multiple.cpp</primary><secondary>project_multi_select_low_variance</secondary></indexterm>
+<para><computeroutput>long project_multi_select_low_variance (<link linkend="_class_bproject">Bproject</link> * project_list, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double origin_dev, double view_dev, double angle_dev, double mag_dev)</computeroutput></para><para>
+
+<para>Selects the best particle orientations from multiple parameter files. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project_list</entry>
+                                <entry>
+<para>linked list of project structures with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>symmetry. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin_dev</entry>
+                                <entry>
+<para>cutoff to accept origins (pixels). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view_dev</entry>
+                                <entry>
+<para>cutoff to accept views (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>angle_dev</entry>
+                                <entry>
+<para>cutoff to accept rotation angles (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mag_dev</entry>
+                                <entry>
+<para>cutoff to accept magnifications (fraction). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>The standard deviations of particle parameters are calculated as 
+follows:
+    origin_std = sqrt(var(origin_x) + var(origin_y))
+    view_std = sqrt(var(view_x) + var(view_y) + var(view_z))
+    angle_std = sqrt(var(angle))
+    size_std = sqrt(var(magnification))
+Requirement: The origin, view and rotation angle (or Euler angle), 
+    and magnification arrays in the micrographs must be defined.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 663 of file mg_multiple.cpp.</para>
+    </section><anchor xml:id="_mg__multiple_8cpp_1acf276c3a9e54b67e55a7625101eef298"/>    <section>
+    <title>project_multi_selection_compare()</title>
+<indexterm><primary>project_multi_selection_compare</primary><secondary>mg_multiple.cpp</secondary></indexterm>
+<indexterm><primary>mg_multiple.cpp</primary><secondary>project_multi_selection_compare</secondary></indexterm>
+<para><computeroutput>long project_multi_selection_compare (<link linkend="_class_bproject">Bproject</link> * project1, <link linkend="_class_bproject">Bproject</link> * project2)</computeroutput></para><para>
+
+<para>Calculates the number of selections that are the same. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project1</entry>
+                                <entry>
+<para>first project structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project2</entry>
+                                <entry>
+<para>second project structure with all parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selections the same. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1097 of file mg_multiple.cpp.</para>
+    </section><anchor xml:id="_mg__multiple_8cpp_1a852128726684f4e8209cdea476b0db83"/>    <section>
+    <title>project_multi_selection_stats()</title>
+<indexterm><primary>project_multi_selection_stats</primary><secondary>mg_multiple.cpp</secondary></indexterm>
+<indexterm><primary>mg_multiple.cpp</primary><secondary>project_multi_selection_stats</secondary></indexterm>
+<para><computeroutput>long project_multi_selection_stats (<link linkend="_class_bproject">Bproject</link> * project_list)</computeroutput></para><para>
+
+<para>Counts particle assignment distributions using selection arrays. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project_list</entry>
+                                <entry>
+<para>linked list of project structures with all parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. <literallayout><computeroutput>Requirement: The project structures must be of identical form.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 525 of file mg_multiple.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_mg__multiple_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>mg_multiple.cpp</secondary></indexterm>
+<indexterm><primary>mg_multiple.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

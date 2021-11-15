@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: STAR</title>
+<link href="bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+
+<h2>The STAR format</h2>
+<p>The STAR format is a plain text format (i.e., human-readable) that
+      defines tag-value pairs with few rules on the composition of the
+      file:</p>
+<ul type="disc">
+<li><p>The file name must end in one of the extensions: ".star" or
+          ".cif" (case insensitive) (CIF: Crystallographic Information
+          File)</p></li>
+<li><p>Each file must have one or more data blocks. The start of a
+          data block is defined by the keyword "data_"followed by an optional
+          string for identification (e.g., "data_micrograph_145"). For image
+          processing, each set of parameters for a micrograph is mapped to a
+          data block. Precede the keyword by an empty line to avoid problems
+          in parsing.</p></li>
+<li><p>Multiple values associated with one or more tags in a data
+          block can be arranged in a table using the keyword "loop_" followed
+          by the list of tags and columns of values. The values are delimited
+          by whitespace (i.e., blanks, tabs, end-of-lines and carriage
+          returns). The loop must be followed by an empty line to indicate its
+          end.</p></li>
+<li><p>Tag names always starts with an underscore ("_"). Each tag
+          name may only be used once within each data block.</p></li>
+<li><p>Data items or values can be numeric or strings of characters.
+          A string is interpreted as a single item when it doesn't contain
+          spaces or when it follows a tag not in a loop, or when it is
+          enclosed in quotes (single or double), or when it is enclosed
+          between lines with the first character a semicolon in each line. In
+          Bsoft, all values are read as strings. Conversions to numeric values
+          have to be made from the specific program accessing the data.</p></li>
+<li><p>Comments are strings which can occur in three places:</p>
+	<ul type="circle"><li><p>File comments: All text before the first "data_"
+              keyword</p></li>
+	<li><p>Data block comments: Strings on their own lines starting
+              with "#" or with ";" as the first character in the line. The ";"
+              character is used for multiple lines and must be followed by a
+              closing ";" as the first character of a new line.</p></li>
+	<li><p>Item comments: Strings on the same line as and following
+              tag-value items, also indicated by a leading "#".</p></li>
+	</ul>
+</li></ul>
+<p>Hint: Make ample use of empty lines to delimit different parts of
+      a parameter file.</p>
+<p>Many Bsoft programs add processing information to initial comments
+      in a file, to allow the user to track the history of the file.</p>
+<br/>
+
+</div>
+<div id="footer">
+  Bernard Heymann 20150108
+</div>
+</body>
+</html>

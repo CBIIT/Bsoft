@@ -1,0 +1,299 @@
+.TH "/Users/bernard/b20/bsoft/tcltk/tcltk_bmg.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/tcltk/tcltk_bmg.cpp \- A shared object to manage micrograph parameter files in TCL/Tk\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <tk\&.h>\fP
+.br
+\fC#include 'tcltk_bbox\&.h'\fP
+.br
+\fC#include 'tcltk_bfil\&.h'\fP
+.br
+\fC#include 'tcltk_bhelix\&.h'\fP
+.br
+\fC#include 'tcltk_bxtal\&.h'\fP
+.br
+\fC#include 'tcltk_bmarker\&.h'\fP
+.br
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_multiple\&.h'\fP
+.br
+\fC#include 'mg_img_proc\&.h'\fP
+.br
+\fC#include 'mg_select\&.h'\fP
+.br
+\fC#include 'mg_ctf\&.h'\fP
+.br
+\fC#include 'mg_ctf_fit\&.h'\fP
+.br
+\fC#include 'mg_tomography\&.h'\fP
+.br
+\fC#include 'mg_tags\&.h'\fP
+.br
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'rwmodel_param\&.h'\fP
+.br
+\fC#include 'scatter\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "Tcl_Obj * \fBdo_get\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_set\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_rps\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_emfp\fP (int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_material_list\fP ()"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_ctf_fit\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_mg_sort\fP (\fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBproject_processing\fP (Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[])"
+.br
+.RI "Implements the 'Bmg' command in Tcl/Tk to access micrograph parameter files through Bsoft\&. "
+.ti -1c
+.RI "\fBBstring\fP \fBget_all_file_names\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBget_all_file_names\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP imgtype)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBpart_select\fP (\fBBparticle\fP *part, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBpart_fom\fP (\fBBparticle\fP *part, int objc, Tcl_Obj *CONST objv[])"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "\fBBproject\fP * \fBproject\fP"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBimglist\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A shared object to manage micrograph parameter files in TCL/Tk\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20030813 
+.PP
+Modified: 20210311 
+.RE
+.PP
+
+.PP
+Definition in file \fBtcltk_bmg\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "Tcl_Obj * do_ctf_fit (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1761 of file tcltk_bmg\&.cpp\&.
+.SS "Tcl_Obj * do_emfp (int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1689 of file tcltk_bmg\&.cpp\&.
+.SS "Tcl_Obj * do_get (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 613 of file tcltk_bmg\&.cpp\&.
+.SS "Tcl_Obj * do_material_list ()"
+
+.PP
+Definition at line 1744 of file tcltk_bmg\&.cpp\&.
+.SS "Tcl_Obj * do_mg_sort (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1883 of file tcltk_bmg\&.cpp\&.
+.SS "Tcl_Obj * do_rps (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1552 of file tcltk_bmg\&.cpp\&.
+.SS "int do_set (\fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1179 of file tcltk_bmg\&.cpp\&.
+.SS "\fBBstring\fP get_all_file_names (\fBBproject\fP * project)"
+
+.PP
+Definition at line 314 of file tcltk_bmg\&.cpp\&.
+.SS "\fBBstring\fP get_all_file_names (\fBBproject\fP * project, \fBBstring\fP imgtype)"
+
+.PP
+Definition at line 425 of file tcltk_bmg\&.cpp\&.
+.SS "Tcl_Obj* part_fom (\fBBparticle\fP * part, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 589 of file tcltk_bmg\&.cpp\&.
+.SS "Tcl_Obj* part_select (\fBBparticle\fP * part, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 567 of file tcltk_bmg\&.cpp\&.
+.SS "int project_processing (Tcl_Interp * interp, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Implements the 'Bmg' command in Tcl/Tk to access micrograph parameter files through Bsoft\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*interp\fP a Tcl interpreter within Tcl\&. 
+.br
+\fIobjc\fP number of arguments passed (+1)\&. 
+.br
+\fI*objv[]\fP arguments passed as Tcl objects\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int Tcl result\&. 
+.PP
+.nf
+Bmg command syntax:
+    Bmg <action> <arguments>.
+    where:
+        action          "create", "exists", "read", "add", "write", "kill", "get", "set", 
+                        "image_type", "rps", "ctf_fit", "update_matrices",
+                        "unitcell_vectors"  "refine" "box" "filament" "node" "layerline" "spot" "marker"
+        arguments               action-specific arguments:
+            "create"            <number_micrographs> <number_reconstructions>
+            "read"              <filename>
+            "add"               <filename>
+            "write"             <filename>
+            "get"               <property> [arguments]
+            "set"               <property> <value>
+            "rps"
+            "ctf_fit"           <level> <lores> <hires>
+            "sort"              <tag>
+            "update_matrices"
+            "unitcell_vectors"
+            "findaxis"          <axis> <step> <start> <end>
+            "track"             <iterations> <refine_markers>
+            "refine"            <operation>
+            "box"               [arguments]
+            "filament"          [arguments]
+            "node"              [arguments]
+            "layerline"         [arguments]
+            "spot"              [arguments]
+            "marker"            [arguments]
+            where:
+                property    "active <flag>"
+                            "id <string>"
+                            "id_from_index <mg_num>"
+                            "img_num <mg_num>"
+                            "number_of_mg"
+                            "number_of_rec"
+                            "number_of_part"
+                            "field <string>"
+                            "filename <string> <imgtype>"
+                            "select <y/n>"
+                            "fom <mg_num>"
+                            "pixel_size <angstrom>"
+                            "size <x> <y> <z>"
+                            "origin <x> <y> <z> / <mg_num>"
+                            "part_origin <x> <y> <z> / <part_num>"
+                            "scale <x> <y> <z> / <mg_num>"
+                            "dose" <electrons/Å2>
+                            "intensity"
+                            "defocus <angstrom>"
+                            "defocus_deviation <angstrom>"
+                            "astigmatism_angle <radians>"
+                            "volt <volts>"
+                            "Cs <angstrom>"
+                            "amp_fac <fraction>"
+                            "focal_length <angstrom>"
+                            "aperture <angstrom>"
+                            "slit_width <volts>"
+                            "zero <angstrom>"
+                            "baseline <string>"
+                            "envelope <string>"
+                            "view <mg_num>"
+                            "axis [<radians>] <mg_num>"
+                            "tilt [<radians>] <mg_num>"
+                            "level [<radians>] <mg_num>"
+                            "unitcell <ux> <uy> <vx> <vy>"
+                            "helix_axis <radians>"
+                            "helix_rise <angstrom>"
+                            "helix_angle <radians>"
+                            "helix_radius <angstrom>"
+                            "box_size <x> <y> <z>"
+                            "bad_radius <pixels>"
+                            "filament_width <width>"
+                            "filament_node_radius"
+                            "marker_radius <pixels>"
+Return values:
+    Each action may have a return value:
+        "create"    (none)
+        "exists"    0=no, 1=yes
+        "read"      micrograph id
+        "write"     (none)
+        "kill"      (none)
+        "get"       return value based on property
+        "set"       modify micrograph property
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 140 of file tcltk_bmg\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "\fBBimage\fP* imglist\fC [extern]\fP"
+
+.PP
+Definition at line 32 of file bshow\&.cpp\&.
+.SS "\fBBproject\fP* project\fC [extern]\fP"
+
+.PP
+Definition at line 33 of file bshow\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

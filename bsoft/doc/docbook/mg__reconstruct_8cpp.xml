@@ -1,0 +1,1002 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__reconstruct_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mg/mg_reconstruct.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mg/mg_reconstruct.cpp</primary></indexterm>
+<para>
+
+<para>Functions for reconstruction. </para>
+ 
+</para>
+<programlisting>#include &quot;rwimg.h&quot;
+#include &quot;rwmg.h&quot;
+#include &quot;mg_processing.h&quot;
+#include &quot;mg_select.h&quot;
+#include &quot;mg_img_proc.h&quot;
+#include &quot;mg_particle_select.h&quot;
+#include &quot;mg_reconstruct.h&quot;
+#include &quot;mg_ctf.h&quot;
+#include &quot;Complex.h&quot;
+#include &quot;symmetry.h&quot;
+#include &quot;utilities.h&quot;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mg__reconstruct_8cpp_1a81d17eab7781b85c904af0fd99709e73">part_ft_size</link> (int xsize, double scale, int pad_factor)</para>
+
+<para>Sets the Fourier transform size for 2D particle images for reconstruction. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__reconstruct_8cpp_1af3b142feea1c65b20bf97bbdc1a782d0">particle_reconstruct</link> (<link linkend="_class_bparticle">Bparticle</link> *partlist, <link linkend="_struct_bsymmetry">Bsymmetry</link> sym, int sym_mode, double hi_res, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; scale, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, int ft_size, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> plan, int interp_type, int ctf_action, double wiener, int flags, int first)</para>
+
+<para>Reciprocal space reconstruction from 2D particle images. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> * <link linkend="_mg__reconstruct_8cpp_1ae2d5c47f85bb52f181e3bf06e5026852">project_reconstruction_partlist</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int num_select, int bootstrap)</para>
+
+<para>List of particle images for reciprocal space reconstruction. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__reconstruct_8cpp_1a64ccf1eb34bdf5c84e0ab1948c1f65d1">img_reconstruction_sum_weigh</link> (<link linkend="_class_bimage">Bimage</link> **pacc, int imap, int nmaps, int maps_per_class, double hi_res)</para>
+
+<para>Combines and weighs a map from several partial maps and weight sets. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__reconstruct_8cpp_1a1473f6c21ea9b14436952e5fbca48090">part_single_reconstruction</link> (<link linkend="_class_bparticle">Bparticle</link> *part, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_bimage">Bimage</link> *pmask, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double hi_res, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; scale, int ft_size, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> img_plan, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> map_plan, double part_weight, int interp_type, <link linkend="_class_c_t_fparam">CTFparam</link> *<link linkend="_mg__ctf_8cpp_1a217ecae60a6e430b2e864dde5785d21a">mg_ctf</link>, int ctf_action, double wiener, int flags)</para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__reconstruct_8cpp_1aaa2656b1cbf40f2ab7f2490409208ebf">project_single_particle_reconstruction</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;maskfile, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, int num_select, double hi_res, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; scale, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, int pad_factor, int interp_type, int ctf_action, double wiener, int flags)</para>
+
+<para>Reciprocal space reconstruction from the images in a multi-image file. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; long &gt; <link linkend="_mg__reconstruct_8cpp_1ac1cd6f4b22d1206e93e0ed4a511fe0fc">project_set_reconstruction_size</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double scale, int twoD_flag)</para>
+
+<para>Sets the reconstruction size for reconstruction from 2D particle images. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__reconstruct_8cpp_1aa457ee0703b79e2912752f04241dd933">project_configure_for_reconstruction</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> classes, long &amp;nmaps, long &amp;nthreads)</para>
+
+<para>Sets up the particle selection for reconstruction. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__reconstruct_8cpp_1ace2483b99e4a4482591b3f7229d8b122">project_reconstruct_2D</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int transform_output)</para>
+
+<para>Creates a 2D reconstruction from the images in a multi-image file. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> * <link linkend="_mg__reconstruct_8cpp_1a24c0c47b55fd8ac48ce340b4fcea65d3">img_reconstruct_2D</link> (long i, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bimage">Bimage</link> *prec, double hires, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a6ecaa8728bab23c3a7d96fe0cadc75f2">planf</link>, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a9ec8849996c5e210d7b7e8e05b98639d">planb</link>)</para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__reconstruct_8cpp_1abbf4b3ef489379ce0442371259d4f007">img_reconstruct_2D_fspace</link> (long i, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bimage">Bimage</link> *prec, double hires, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a6ecaa8728bab23c3a7d96fe0cadc75f2">planf</link>, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a9ec8849996c5e210d7b7e8e05b98639d">planb</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__reconstruct_8cpp_1a691fed433ec8f1c9c5ac273ad6a57bc8">project_reconstruct_2D_fast</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__reconstruct_8cpp_1a0f5c73f2063041f5a622d8025cc452f2">project_reconstruct_3D</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long selnum, int calcfom, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size)</para>
+
+<para>Transforms 3D maps and calculates an average. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__reconstruct_8cpp_1a3bf254bfd075067efd4f26d217fb456d">project_reconstruct_3D</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long selnum, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, double resolution)</para>
+
+<para>Transforms 3D maps and calculates an average. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__reconstruct_8cpp_1a63db41e67db7d06ff6573ebcbb348255">project_back_projection</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long num_select, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; map_size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sam, double scale, double resolution, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a6ecaa8728bab23c3a7d96fe0cadc75f2">planf</link>, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a9ec8849996c5e210d7b7e8e05b98639d">planb</link>)</para>
+
+<para>Back projects a set of 2D images into a 3D volume. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__reconstruct_8cpp_1ab3bb2f883899cd6aeec4a8f838c97dc0">img_backprojection_accumulate</link> (<link linkend="_class_bimage">Bimage</link> **pacc, int imap, int nmaps, int nthreads)</para>
+
+<para>Accumulates multiple backprojections. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mg__reconstruct_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions for reconstruction. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010403 </para>
+
+<para>Modified: 20200127 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__reconstruct_8cpp_1ab3bb2f883899cd6aeec4a8f838c97dc0"/>    <section>
+    <title>img_backprojection_accumulate()</title>
+<indexterm><primary>img_backprojection_accumulate</primary><secondary>mg_reconstruct.cpp</secondary></indexterm>
+<indexterm><primary>mg_reconstruct.cpp</primary><secondary>img_backprojection_accumulate</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_backprojection_accumulate (<link linkend="_class_bimage">Bimage</link> ** pacc, int imap, int nmaps, int nthreads)</computeroutput></para><para>
+
+<para>Accumulates multiple backprojections. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**pacc</entry>
+                                <entry>
+<para>array of partial maps with linked weight maps. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>imap</entry>
+                                <entry>
+<para>which output map to weigh. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nmaps</entry>
+                                <entry>
+<para>number of output maps (1,2,3). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nthreads</entry>
+                                <entry>
+<para>number of threads per map (= number of partial maps). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1673 of file mg_reconstruct.cpp.</para>
+    </section><anchor xml:id="_mg__reconstruct_8cpp_1a24c0c47b55fd8ac48ce340b4fcea65d3"/>    <section>
+    <title>img_reconstruct_2D()</title>
+<indexterm><primary>img_reconstruct_2D</primary><secondary>mg_reconstruct.cpp</secondary></indexterm>
+<indexterm><primary>mg_reconstruct.cpp</primary><secondary>img_reconstruct_2D</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>* img_reconstruct_2D (long i, <link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bimage">Bimage</link> * prec, double hires, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planf, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planb)</computeroutput></para><para>
+Definition at line 983 of file mg_reconstruct.cpp.</para>
+    </section><anchor xml:id="_mg__reconstruct_8cpp_1abbf4b3ef489379ce0442371259d4f007"/>    <section>
+    <title>img_reconstruct_2D_fspace()</title>
+<indexterm><primary>img_reconstruct_2D_fspace</primary><secondary>mg_reconstruct.cpp</secondary></indexterm>
+<indexterm><primary>mg_reconstruct.cpp</primary><secondary>img_reconstruct_2D_fspace</secondary></indexterm>
+<para><computeroutput>long img_reconstruct_2D_fspace (long i, <link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bimage">Bimage</link> * prec, double hires, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planf, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planb)</computeroutput></para><para>
+Definition at line 1046 of file mg_reconstruct.cpp.</para>
+    </section><anchor xml:id="_mg__reconstruct_8cpp_1a64ccf1eb34bdf5c84e0ab1948c1f65d1"/>    <section>
+    <title>img_reconstruction_sum_weigh()</title>
+<indexterm><primary>img_reconstruction_sum_weigh</primary><secondary>mg_reconstruct.cpp</secondary></indexterm>
+<indexterm><primary>mg_reconstruct.cpp</primary><secondary>img_reconstruction_sum_weigh</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_reconstruction_sum_weigh (<link linkend="_class_bimage">Bimage</link> ** pacc, int imap, int nmaps, int maps_per_class, double hi_res)</computeroutput></para><para>
+
+<para>Combines and weighs a map from several partial maps and weight sets. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**pacc</entry>
+                                <entry>
+<para>array of partial maps with linked weight maps. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>imap</entry>
+                                <entry>
+<para>which output map to weigh. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nmaps</entry>
+                                <entry>
+<para>number of output maps (1,2,3). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>maps_per_class</entry>
+                                <entry>
+<para>number of threads per map (= number of partial maps). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hi_res</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* weighed reconstruction with FOM block. <literallayout><computeroutput>The input is a set of partially integrated complex maps with associated 
+weigths as follows:
+    voxel power sums            FOM block of map.
+    voxel weight sums           linked image.
+    voxel weight squared sums   linked image FOM block.
+The partial sums are completed into corresponding blocks in three possible
+ways based on the value of imap and nmap:
+    nmap    imap    result
+    1       0       one map from all input maps
+    2       0,1     one map from half of the input maps
+    3       0       one map from all input maps
+    3       1,2     one map from half of the input maps
+The total number of maps in the array is nclasses*nmaps.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 331 of file mg_reconstruct.cpp.</para>
+    </section><anchor xml:id="_mg__reconstruct_8cpp_1a81d17eab7781b85c904af0fd99709e73"/>    <section>
+    <title>part_ft_size()</title>
+<indexterm><primary>part_ft_size</primary><secondary>mg_reconstruct.cpp</secondary></indexterm>
+<indexterm><primary>mg_reconstruct.cpp</primary><secondary>part_ft_size</secondary></indexterm>
+<para><computeroutput>int part_ft_size (int xsize, double scale, int pad_factor)</computeroutput></para><para>
+
+<para>Sets the Fourier transform size for 2D particle images for reconstruction. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>xsize</entry>
+                                <entry>
+<para>size of x dimension. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>scale of reconstruction. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pad_factor</entry>
+                                <entry>
+<para>factor that determines image padding. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int transform size. <literallayout><computeroutput>The reconstruction size must be set.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 38 of file mg_reconstruct.cpp.</para>
+    </section><anchor xml:id="_mg__reconstruct_8cpp_1a1473f6c21ea9b14436952e5fbca48090"/>    <section>
+    <title>part_single_reconstruction()</title>
+<indexterm><primary>part_single_reconstruction</primary><secondary>mg_reconstruct.cpp</secondary></indexterm>
+<indexterm><primary>mg_reconstruct.cpp</primary><secondary>part_single_reconstruction</secondary></indexterm>
+<para><computeroutput>double part_single_reconstruction (<link linkend="_class_bparticle">Bparticle</link> * part, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_bimage">Bimage</link> * pmask, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double hi_res, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; scale, int ft_size, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> img_plan, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> map_plan, double part_weight, int interp_type, <link linkend="_class_c_t_fparam">CTFparam</link> * mg_ctf, int ctf_action, double wiener, int flags)</computeroutput></para><para>
+Definition at line 430 of file mg_reconstruct.cpp.</para>
+    </section><anchor xml:id="_mg__reconstruct_8cpp_1af3b142feea1c65b20bf97bbdc1a782d0"/>    <section>
+    <title>particle_reconstruct()</title>
+<indexterm><primary>particle_reconstruct</primary><secondary>mg_reconstruct.cpp</secondary></indexterm>
+<indexterm><primary>mg_reconstruct.cpp</primary><secondary>particle_reconstruct</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* particle_reconstruct (<link linkend="_class_bparticle">Bparticle</link> * partlist, <link linkend="_struct_bsymmetry">Bsymmetry</link> sym, int sym_mode, double hi_res, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; scale, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, int ft_size, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> plan, int interp_type, int ctf_action, double wiener, int flags, int first)</computeroutput></para><para>
+
+<para>Reciprocal space reconstruction from 2D particle images. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*partlist</entry>
+                                <entry>
+<para>a list of 2D particle image parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>point group symmetry. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sym_mode</entry>
+                                <entry>
+<para>0=apply symmetry, 1=C1, 2=random symmetry view </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hi_res</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>scale of reconstruction. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of reconstruction. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ft_size</entry>
+                                <entry>
+<para>Fourier transform size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>plan</entry>
+                                <entry>
+<para>Fourier transform plan. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>interp_type</entry>
+                                <entry>
+<para>interpolation type. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ctf_action</entry>
+                                <entry>
+<para>flag to apply CTF to projections. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wiener</entry>
+                                <entry>
+<para>Wiener factor. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>1=rescale particles, 2=2D reconstruction, 4=bootstrap. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>first</entry>
+                                <entry>
+<para>flag to indicate the first thread. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* 3D reconstructed map. <literallayout><computeroutput>The orientation parameters, view vector, angle of rotation and origin,
+must all be set. Each image is padded to at least two times its size 
+and its Fourier transform packed into 3D reciprocal space.
+The figure-of-merit calculated for each reciprocal space voxel is:
+           sum(w*re)^2 + sum(w*im)^2
+    FOM = ---------------------------
+          sum(w)*sum(w*(re^2 + im^2))
+where
+    re  real part
+    im  imaginary part
+    w   weight (inverse distance of image pixel to closest grid point)
+For voxels with only one data pixel contributing to it, FOM = 0.
+A bootstrap reconstruction uses the particle selection to weigh each
+selected particle.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 99 of file mg_reconstruct.cpp.</para>
+    </section><anchor xml:id="_mg__reconstruct_8cpp_1a63db41e67db7d06ff6573ebcbb348255"/>    <section>
+    <title>project_back_projection()</title>
+<indexterm><primary>project_back_projection</primary><secondary>mg_reconstruct.cpp</secondary></indexterm>
+<indexterm><primary>mg_reconstruct.cpp</primary><secondary>project_back_projection</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* project_back_projection (<link linkend="_class_bproject">Bproject</link> * project, long num_select, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; map_size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sam, double scale, double resolution, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planf, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planb)</computeroutput></para><para>
+
+<para>Back projects a set of 2D images into a 3D volume. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>image processing parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>num_select</entry>
+                                <entry>
+<para>selection number from the selection column. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>map_size</entry>
+                                <entry>
+<para>3-valued vector for the new map size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sam</entry>
+                                <entry>
+<para>3-value vector for the voxel size in angstrom. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>reconstruction scale. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>resolution</entry>
+                                <entry>
+<para>resolution for low-pass filtering. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>planf</entry>
+                                <entry>
+<para>2D forward Fourier transform plan. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>planb</entry>
+                                <entry>
+<para>2D backward Fourier transform plan. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* the new 3D reconstruction map. <literallayout><computeroutput>All the information needed to do a 3D reconstruction is passed in through
+an image processing structure. The new 3D volume is initialized.
+Each sub-image in each particle file is read individually and 
+back-projected within the new volume. The orientation parameters from
+the image processing structure is transferred to the sub-image
+structure in the 2D image before calling the function packing one
+image into the volume. The default origin is the center of the image.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1558 of file mg_reconstruct.cpp.</para>
+    </section><anchor xml:id="_mg__reconstruct_8cpp_1aa457ee0703b79e2912752f04241dd933"/>    <section>
+    <title>project_configure_for_reconstruction()</title>
+<indexterm><primary>project_configure_for_reconstruction</primary><secondary>mg_reconstruct.cpp</secondary></indexterm>
+<indexterm><primary>mg_reconstruct.cpp</primary><secondary>project_configure_for_reconstruction</secondary></indexterm>
+<para><computeroutput>int project_configure_for_reconstruction (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> classes, long &amp; nmaps, long &amp; nthreads)</computeroutput></para><para>
+
+<para>Sets up the particle selection for reconstruction. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>classes</entry>
+                                <entry>
+<para>string specifying classes to use. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nmaps</entry>
+                                <entry>
+<para>number of maps per class (1,2,3). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nthreads</entry>
+                                <entry>
+<para>number of threads per class (must be even if nmaps &gt; 1). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of classes. <literallayout><computeroutput>The classes are specified in a string of comma-separated numbers,
+also allowing hyphened ranges (e.g., &quot;2,5-7,9&quot;).
+The selection numbers for the particles in the project are set to
+calculate partial maps so that there are nthread maps per class.
+Each such partial map will be calculated in its own thread and
+integrated with others from the same class afterwards.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 723 of file mg_reconstruct.cpp.</para>
+    </section><anchor xml:id="_mg__reconstruct_8cpp_1ace2483b99e4a4482591b3f7229d8b122"/>    <section>
+    <title>project_reconstruct_2D()</title>
+<indexterm><primary>project_reconstruct_2D</primary><secondary>mg_reconstruct.cpp</secondary></indexterm>
+<indexterm><primary>mg_reconstruct.cpp</primary><secondary>project_reconstruct_2D</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* project_reconstruct_2D (<link linkend="_class_bproject">Bproject</link> * project, int transform_output)</computeroutput></para><para>
+
+<para>Creates a 2D reconstruction from the images in a multi-image file. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>image processing parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>transform_output</entry>
+                                <entry>
+<para>flag to output transformed images. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* 2D reconstruction image. <literallayout><computeroutput>The angle of rotation and the x,y origins must already have been found 
+and placed in the appropriate arrays within the Bproject structure.
+Each selected image is transformed, and then added to the reconstruction
+image corresponding to the original projection image chosen.
+If the transform_output flag is set, then the transformed images are written
+into a new image with a &quot;_proj.spi&quot; ending.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 850 of file mg_reconstruct.cpp.</para>
+    </section><anchor xml:id="_mg__reconstruct_8cpp_1a691fed433ec8f1c9c5ac273ad6a57bc8"/>    <section>
+    <title>project_reconstruct_2D_fast()</title>
+<indexterm><primary>project_reconstruct_2D_fast</primary><secondary>mg_reconstruct.cpp</secondary></indexterm>
+<indexterm><primary>mg_reconstruct.cpp</primary><secondary>project_reconstruct_2D_fast</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* project_reconstruct_2D_fast (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+Definition at line 1150 of file mg_reconstruct.cpp.</para>
+    </section><anchor xml:id="_mg__reconstruct_8cpp_1a0f5c73f2063041f5a622d8025cc452f2"/>    <section>
+    <title>project_reconstruct_3D()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>project_reconstruct_3D</primary><secondary>mg_reconstruct.cpp</secondary></indexterm>
+<indexterm><primary>mg_reconstruct.cpp</primary><secondary>project_reconstruct_3D</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* project_reconstruct_3D (<link linkend="_class_bproject">Bproject</link> * project, long selnum, int calcfom, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size)</computeroutput></para><para>
+
+<para>Transforms 3D maps and calculates an average. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>selnum</entry>
+                                <entry>
+<para>selection number of reconstructions or particles. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>calcfom</entry>
+                                <entry>
+<para>flag to calculate FOM block (1=var, 2=std). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of particles to extract (only when extraction needed). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* average map with FOM block defined. <literallayout><computeroutput>The orientations of the maps in the project must already be specified.
+Each map is transformed and added to an average map.
+A FOM block is optionally calculated with either the variance or
+standard deviation.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1253 of file mg_reconstruct.cpp.</para>
+    </section><anchor xml:id="_mg__reconstruct_8cpp_1a3bf254bfd075067efd4f26d217fb456d"/>    <section>
+    <title>project_reconstruct_3D()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>project_reconstruct_3D</primary><secondary>mg_reconstruct.cpp</secondary></indexterm>
+<indexterm><primary>mg_reconstruct.cpp</primary><secondary>project_reconstruct_3D</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* project_reconstruct_3D (<link linkend="_class_bproject">Bproject</link> * project, long selnum, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, double resolution)</computeroutput></para><para>
+
+<para>Transforms 3D maps and calculates an average. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>selnum</entry>
+                                <entry>
+<para>selection number of reconstructions or particles. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of particles to extract (only when extraction needed). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>resolution</entry>
+                                <entry>
+<para>maximum reconstruction resolution (in angstrom, default Nyquest). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* average map with FOM block defined. <literallayout><computeroutput>The orientations of the maps in the project must already be specified.
+Each map is transformed and added to an average map.
+A FOM block is optionally calculated with either the variance or
+standard deviation.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1396 of file mg_reconstruct.cpp.</para>
+    </section><anchor xml:id="_mg__reconstruct_8cpp_1ae2d5c47f85bb52f181e3bf06e5026852"/>    <section>
+    <title>project_reconstruction_partlist()</title>
+<indexterm><primary>project_reconstruction_partlist</primary><secondary>mg_reconstruct.cpp</secondary></indexterm>
+<indexterm><primary>mg_reconstruct.cpp</primary><secondary>project_reconstruction_partlist</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>* project_reconstruction_partlist (<link linkend="_class_bproject">Bproject</link> * project, int num_select, int bootstrap)</computeroutput></para><para>
+
+<para>List of particle images for reciprocal space reconstruction. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>image processing parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>num_select</entry>
+                                <entry>
+<para>selection number from the selection column. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bootstrap</entry>
+                                <entry>
+<para>flag to indicate a bootstrap reconstruction. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* 3D reconstructed map. <literallayout><computeroutput>An image is used in the reconstruction if its selection flag has been set.
+If the selection number is less than zero, all particles with selection flags
+greater than zero are used. If the selection number is zero or above, all
+particles with the selection flag set to the same number are used.
+A bootstrap reconstruction uses the particle selection to weigh each
+selected particle.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 246 of file mg_reconstruct.cpp.</para>
+    </section><anchor xml:id="_mg__reconstruct_8cpp_1ac1cd6f4b22d1206e93e0ed4a511fe0fc"/>    <section>
+    <title>project_set_reconstruction_size()</title>
+<indexterm><primary>project_set_reconstruction_size</primary><secondary>mg_reconstruct.cpp</secondary></indexterm>
+<indexterm><primary>mg_reconstruct.cpp</primary><secondary>project_set_reconstruction_size</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;long&gt; project_set_reconstruction_size (<link linkend="_class_bproject">Bproject</link> * project, double scale, int twoD_flag)</computeroutput></para><para>
+
+<para>Sets the reconstruction size for reconstruction from 2D particle images. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>scale of reconstruction. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>twoD_flag</entry>
+                                <entry>
+<para>doing a 2D reconstruction rather than 3D. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;long&gt;</link> reconstruction size. <literallayout><computeroutput>The reconstruction size is set from the first particle image size found.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 658 of file mg_reconstruct.cpp.</para>
+    </section><anchor xml:id="_mg__reconstruct_8cpp_1aaa2656b1cbf40f2ab7f2490409208ebf"/>    <section>
+    <title>project_single_particle_reconstruction()</title>
+<indexterm><primary>project_single_particle_reconstruction</primary><secondary>mg_reconstruct.cpp</secondary></indexterm>
+<indexterm><primary>mg_reconstruct.cpp</primary><secondary>project_single_particle_reconstruction</secondary></indexterm>
+<para><computeroutput>long project_single_particle_reconstruction (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; maskfile, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, int num_select, double hi_res, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; scale, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, int pad_factor, int interp_type, int ctf_action, double wiener, int flags)</computeroutput></para><para>
+
+<para>Reciprocal space reconstruction from the images in a multi-image file. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>image processing parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;maskfile</entry>
+                                <entry>
+<para>mask to determine density statistics. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>point group symmetry. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>num_select</entry>
+                                <entry>
+<para>selection number from the selection column. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hi_res</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>scale of reconstruction. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of reconstruction. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pad_factor</entry>
+                                <entry>
+<para>image padding factor. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>interp_type</entry>
+                                <entry>
+<para>interpolation type (provisional). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ctf_action</entry>
+                                <entry>
+<para>flag to apply CTF to projections. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wiener</entry>
+                                <entry>
+<para>Wiener factor. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>option flags. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long particles processed. <literallayout><computeroutput>The orientation parameters, view vector, angle of rotation and origin,
+must all be set. Each image is padded to at least two times its size 
+and its Fourier transform packed into 3D reciprocal space.
+The figure-of-merit calculated for each reciprocal space voxel is:
+           sum(w*re)^2 + sum(w*im)^2
+    FOM = ---------------------------
+          sum(w)*sum(w*(re^2 + im^2))
+where
+    re  real part
+    im  imaginary part
+    w   weight (inverse distance of image pixel to closest grid point)
+For voxels with only one data pixel contributing to it, FOM = 0.
+An image is used in the reconstruction if its selection flag has been set.
+If the selection number is less than zero, all particles with selection flags
+greater than zero are used. If the selection number is zero or above, all
+particles with the selection flag set to the same number are used.
+A bootstrap reconstruction uses the particle selection to weigh each
+selected particle.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 519 of file mg_reconstruct.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_mg__reconstruct_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>mg_reconstruct.cpp</secondary></indexterm>
+<indexterm><primary>mg_reconstruct.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

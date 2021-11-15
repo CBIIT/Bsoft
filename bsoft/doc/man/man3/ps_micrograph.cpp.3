@@ -1,0 +1,322 @@
+.TH "/Users/bernard/b20/bsoft/src/ps/ps_micrograph.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/ps/ps_micrograph.cpp \- Postscript output for micrographs\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'ps_micrograph\&.h'\fP
+.br
+\fC#include 'ps_plot\&.h'\fP
+.br
+\fC#include 'ps_views\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'symmetry\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBps_origins\fP (ofstream *fps, \fBBstring\fP &title, \fBBproject\fP *\fBproject\fP, int flags)"
+.br
+.ti -1c
+.RI "int \fBps_mg_origins\fP (\fBBstring\fP &filename, \fBBstring\fP &title, \fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Postscript plot of the micrograph origins\&. "
+.ti -1c
+.RI "int \fBps_mg_particle_positions\fP (\fBBstring\fP &filename, \fBBstring\fP &title, \fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Postscript plot of the positions of particles on micrographs\&. "
+.ti -1c
+.RI "int \fBps_particle_views_origins\fP (\fBBstring\fP &filename, \fBBstring\fP &title, \fBBstring\fP &symmetry_string, \fBBproject\fP *\fBproject\fP, int selection)"
+.br
+.RI "Generates asymmetric unit particle view and origin postscript plots\&. "
+.ti -1c
+.RI "int \fBps_particle_phi_theta\fP (\fBBstring\fP &filename, \fBBstring\fP &title, \fBBproject\fP *\fBproject\fP, int selection)"
+.br
+.RI "Generates phi-theta views postscript plots\&. "
+.ti -1c
+.RI "int \fBps_origins\fP (\fBBstring\fP &filename, \fBBstring\fP &title, \fBBproject\fP *\fBproject\fP, int flags)"
+.br
+.RI "Generates postscript plot of origins on a square with the size of the box\&. "
+.ti -1c
+.RI "int \fBps_part_fom_histogram\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Postscript plot of the particle FOM histogram\&. "
+.ti -1c
+.RI "int \fBps_defocus_histogram\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Postscript histogram plot of micrograph defocus parameters\&. "
+.ti -1c
+.RI "int \fBps_astigmatism_plot\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Postscript plot of micrograph astigmatism parameters\&. "
+.ti -1c
+.RI "int \fBps_class_average_fom\fP (ofstream *fps, \fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Postscript histogram plot of class average FOM's\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Postscript output for micrographs\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20011127 
+.PP
+Modified: 20210706 
+.RE
+.PP
+
+.PP
+Definition in file \fBps_micrograph\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int ps_astigmatism_plot (\fBBstring\fP & filename, \fBBproject\fP * project)"
+
+.PP
+Postscript plot of micrograph astigmatism parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP output postscript file name\&. 
+.br
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, error if <0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 777 of file ps_micrograph\&.cpp\&.
+.SS "int ps_class_average_fom (ofstream * fps, \fBBproject\fP * project)"
+
+.PP
+Postscript histogram plot of class average FOM's\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fps\fP output stream\&. 
+.br
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, error if <0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 838 of file ps_micrograph\&.cpp\&.
+.SS "int ps_defocus_histogram (\fBBstring\fP & filename, \fBBproject\fP * project)"
+
+.PP
+Postscript histogram plot of micrograph defocus parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP output postscript file name\&. 
+.br
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, error if <0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 680 of file ps_micrograph\&.cpp\&.
+.SS "int ps_mg_origins (\fBBstring\fP & filename, \fBBstring\fP & title, \fBBproject\fP * project)"
+
+.PP
+Postscript plot of the micrograph origins\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP output postscript file name\&. 
+.br
+\fI&title\fP title\&. 
+.br
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, error if <0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 30 of file ps_micrograph\&.cpp\&.
+.SS "int ps_mg_particle_positions (\fBBstring\fP & filename, \fBBstring\fP & title, \fBBproject\fP * project)"
+
+.PP
+Postscript plot of the positions of particles on micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP output postscript file name\&. 
+.br
+\fI&title\fP title\&. 
+.br
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, error if <0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 123 of file ps_micrograph\&.cpp\&.
+.SS "int ps_origins (\fBBstring\fP & filename, \fBBstring\fP & title, \fBBproject\fP * project, int flags)"
+
+.PP
+Generates postscript plot of origins on a square with the size of the box\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Eduardo Sanz-Garcia and Bernard Heymann 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP output postscript file name\&. 
+.br
+\fI&title\fP title\&. 
+.br
+\fI*project\fP micrograph particle parameter structure\&. 
+.br
+\fIflags\fP flags\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, error if <0\&. 
+.PP
+.nf
+The plotting options are determined by the flags argument:
+    0 = plot origins
+    1 = plot numbered origins
+    2 = plot origins with shading according to occurrence.
+        The gray level indicates the ratio to the maximum occurrence.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 292 of file ps_micrograph\&.cpp\&.
+.SS "int ps_origins (ofstream * fps, \fBBstring\fP & title, \fBBproject\fP * project, int flags)"
+
+.PP
+Definition at line 309 of file ps_micrograph\&.cpp\&.
+.SS "int ps_part_fom_histogram (\fBBstring\fP & filename, \fBBproject\fP * project)"
+
+.PP
+Postscript plot of the particle FOM histogram\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP output postscript file name\&. 
+.br
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, error if <0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 504 of file ps_micrograph\&.cpp\&.
+.SS "int ps_particle_phi_theta (\fBBstring\fP & filename, \fBBstring\fP & title, \fBBproject\fP * project, int selection)"
+
+.PP
+Generates phi-theta views postscript plots\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP output postscript file name\&. 
+.br
+\fI&title\fP title\&. 
+.br
+\fI*project\fP parameter structure\&. 
+.br
+\fIselection\fP selection number (-1 selects positives, 0 selects all)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of view panels\&. 
+.RE
+.PP
+
+.PP
+Definition at line 250 of file ps_micrograph\&.cpp\&.
+.SS "int ps_particle_views_origins (\fBBstring\fP & filename, \fBBstring\fP & title, \fBBstring\fP & symmetry_string, \fBBproject\fP * project, int selection)"
+
+.PP
+Generates asymmetric unit particle view and origin postscript plots\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP output postscript file name\&. 
+.br
+\fI&title\fP title\&. 
+.br
+\fI&symmetry_string\fP symmetry string to print at the top of the page\&. 
+.br
+\fI*project\fP parameter structure\&. 
+.br
+\fIselection\fP selection number (-1 selects positives, 0 selects all)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of view panels\&. 
+.RE
+.PP
+
+.PP
+Definition at line 211 of file ps_micrograph\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

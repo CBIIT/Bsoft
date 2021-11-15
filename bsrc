@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# Script to archive a Bsoft source distribution
+# Bernard Heymann                                  
+# 20171117 - 20210701
+
+here=`pwd`
+version=`sed "s/[^0-9]/_/g" bsoft/BVERSION`
+today=`date +"%Y%m%d"`
+
+sys=`uname -s | cut -f1 -d"-"`
+dst=""
+
+tarfile=${here}'/bsoft'${today}'.tar'
+tgzfile=${here}'/bsoft'${today}'.tgz'
+
+echo Bsoft version:		$version
+
+TAR='tar vrbf 20 '$tarfile
+
+tar vcbf 20 $tarfile bconf dev.rsc bsrc btar
+$TAR bpkg bdist.plist breq.plist
+$TAR bsoft/BVERSION bsoft/bsoft_conf bsoft/benv bsoft/bsetup bsoft/macinstall
+$TAR bsoft/Scripts
+$TAR bsoft/include/*.h bsoft/include/*.inc
+$TAR bsoft/src/*.cpp
+$TAR bsoft/src/*/*.cpp
+$TAR bsoft/eer/*.h bsoft/eer/*.cpp
+$TAR bsoft/radon/*.h bsoft/radon/*.cpp
+$TAR bsoft/tcltk/bshow bsoft/tcltk/bshowX
+$TAR bsoft/tcltk/brun bsoft/tcltk/brunX
+$TAR bsoft/tcltk/*.tcl
+$TAR bsoft/tcltk/*.h bsoft/tcltk/*.cpp
+$TAR bsoft/tcltk/*.gif
+$TAR bsoft/*.app
+$TAR bsoft/parameters
+$TAR bsoft/doc
+
+gzip -c $tarfile > $tgzfile
+
+ls -l $tarfile
+ls -l $tgzfile
+
+cp $tarfile ${here}'/bsoft'${version}'.tar'
+cp $tgzfile ${here}'/bsoft'${version}'.tgz'

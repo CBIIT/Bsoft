@@ -1,0 +1,806 @@
+.TH "/Users/bernard/b20/bsoft/src/model/model_util.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/model/model_util.cpp \- Library routines used for model processing\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'model_util\&.h'\fP
+.br
+\fC#include 'model_transform\&.h'\fP
+.br
+\fC#include 'model_select\&.h'\fP
+.br
+\fC#include 'model_links\&.h'\fP
+.br
+\fC#include 'mol_transform\&.h'\fP
+.br
+\fC#include 'mol_compare\&.h'\fP
+.br
+\fC#include 'mol_util\&.h'\fP
+.br
+\fC#include 'symmetry\&.h'\fP
+.br
+\fC#include 'matrix_linear\&.h'\fP
+.br
+\fC#include 'matrix_util\&.h'\fP
+.br
+\fC#include 'Matrix3\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "long \fBmodels_process\fP (\fBBmodel\fP *\fBmodel\fP, long(modfunc)(\fBBmodel\fP *))"
+.br
+.RI "Process a list of models using the specified function\&. "
+.ti -1c
+.RI "long \fBmodels_process\fP (\fBBmodel\fP *\fBmodel\fP, long i, long(modfunc)(\fBBmodel\fP *, long))"
+.br
+.ti -1c
+.RI "long \fBmodels_process\fP (\fBBmodel\fP *\fBmodel\fP, double d, long(modfunc)(\fBBmodel\fP *, double))"
+.br
+.ti -1c
+.RI "long \fBmodels_process\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP &str, long(modfunc)(\fBBmodel\fP *, \fBBstring\fP &str))"
+.br
+.ti -1c
+.RI "long \fBmodels_process\fP (\fBBmodel\fP *\fBmodel\fP, string &str, long(modfunc)(\fBBmodel\fP *, string &str))"
+.br
+.ti -1c
+.RI "long \fBmodel_list\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Lists models in table form\&. "
+.ti -1c
+.RI "long \fBmodel_list_comp\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Lists models with component counts in table form\&. "
+.ti -1c
+.RI "long \fBmodel_replace_components\fP (\fBBmodel\fP *\fBmodel\fP, \fBBmodel\fP *modref)"
+.br
+.RI "Replaces all components in a model with reference components\&. "
+.ti -1c
+.RI "long \fBmodel_merge\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Merges components from all models into one\&. "
+.ti -1c
+.RI "long \fBmodel_number_ids\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Add a number to each model id\&. "
+.ti -1c
+.RI "long \fBmodel_rename_components\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Rename components\&. "
+.ti -1c
+.RI "double \fBmodel_mass\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates the mass of a model from component masses\&. "
+.ti -1c
+.RI "long \fBmodel_mass_all\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates the masses of all the models in the list\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmodel_center_of_mass\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates the center-of-mass of a model\&. "
+.ti -1c
+.RI "double \fBmodel_distance_sum\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< double > loc)"
+.br
+.RI "Calculates the sum of distances of model components to a location\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmodel_geometric_median_estimate\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< double > pgm)"
+.br
+.RI "Calculates the geometric median estimate of model components\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmodel_geometric_median\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates the geometric median of model components\&. "
+.ti -1c
+.RI "double \fBmodel_gyration_radius\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates the radius of gyration for a model\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmodel_principal_axes\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< double > *eigenvec)"
+.br
+.RI "Calculates the principal axes of a model\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmodel_principal_axes\fP (\fBBmodel\fP *\fBmodel\fP, \fBMatrix\fP &eigenvec)"
+.br
+.ti -1c
+.RI "long \fBmodel_principal_axes\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.ti -1c
+.RI "long \fBmodel_radial_distribution\fP (\fBBmodel\fP *\fBmodel\fP, double interval)"
+.br
+.RI "Calculates the radial distribution function of a model\&. "
+.ti -1c
+.RI "long \fBmolgroup_write_into_grid\fP (\fBBmolgroup\fP *molgroup, \fBVector3\fP< int > size, \fBVector3\fP< double > min, double sampling, int *grid)"
+.br
+.ti -1c
+.RI "\fBBmolgroup\fP * \fBmodel_assemble\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP &paramfile, int separate)"
+.br
+.RI "Concatenates selected molecules into one group\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_generate_com\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Calculates the centers-of-mass of molecule group components and generates a new model\&. "
+.ti -1c
+.RI "long \fBmodel_update_centers_of_mass\fP (\fBBmodel\fP *\fBmodel\fP, \fBBmolgroup\fP *molgroup)"
+.br
+.RI "Updates the centers-of-mass of molecule group components\&. "
+.ti -1c
+.RI "long \fBmodel_average_components\fP (\fBBmodel\fP *\fBmodel\fP, int number)"
+.br
+.RI "Averages sequential components\&. "
+.ti -1c
+.RI "\fBBcomponent\fP ** \fBcomponent_get_array\fP (\fBBmodel\fP *\fBmodel\fP, long &n)"
+.br
+.RI "Generates an array of pointers to component structures\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBcomponent_plane\fP (vector< \fBBcomponent\fP * > &comparray, double &offset)"
+.br
+.RI "Calculates a plane through an array of components\&. "
+.ti -1c
+.RI "vector< vector< \fBBcomponent\fP * > > \fBmodel_component_grid\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< long > &size, \fBVector3\fP< double > &origin, \fBVector3\fP< double > &sampling)"
+.br
+.RI "Generates lists of atoms based on a grid\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines used for model processing\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20060908 
+.PP
+Modified: 20210414 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_util\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBcomponent\fP** component_get_array (\fBBmodel\fP * model, long & n)"
+
+.PP
+Generates an array of pointers to component structures\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fI&n\fP pointer to number of comps found\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bcomponent** array of pointers to components\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1049 of file model_util\&.cpp\&.
+.SS "\fBVector3\fP<double> component_plane (vector< \fBBcomponent\fP * > & comparray, double & offset)"
+
+.PP
+Calculates a plane through an array of components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**comparray\fP array of components\&. 
+.br
+\fI&offset\fP offset from plane\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP plane normal\&. 
+.PP
+.nf
+A plane is fit through the polygon vertices and the normal calculated from:
+    n•p = d
+where n is the normal vector, p is a point in the plane, and d is the offset.
+The polygon planarity is defined as the root-mean-square-deviation from 
+the fitted plane.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1079 of file model_util\&.cpp\&.
+.SS "\fBBmolgroup\fP* model_assemble (\fBBmodel\fP * model, \fBBstring\fP & paramfile, int separate)"
+
+.PP
+Concatenates selected molecules into one group\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fI&paramfile\fP atomic parameter file\&. 
+.br
+\fIseparate\fP flag to generate separate molecule groups\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolgroup* list of molecule groups\&. 
+.PP
+.nf
+Only the first model in the linked list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 828 of file model_util\&.cpp\&.
+.SS "long model_average_components (\fBBmodel\fP * model, int number)"
+
+.PP
+Averages sequential components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure to be modified\&. 
+.br
+\fInumber\fP number of components to average\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of remaining components\&. 
+.PP
+.nf
+Only the first component in each set with modified coordinates is kept.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1012 of file model_util\&.cpp\&.
+.SS "\fBVector3\fP<double> model_center_of_mass (\fBBmodel\fP * model)"
+
+.PP
+Calculates the center-of-mass of a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP center-of-mass\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 497 of file model_util\&.cpp\&.
+.SS "vector<vector<\fBBcomponent\fP*> > model_component_grid (\fBBmodel\fP * model, \fBVector3\fP< long > & size, \fBVector3\fP< double > & origin, \fBVector3\fP< double > & sampling)"
+
+.PP
+Generates lists of atoms based on a grid\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model list\&. 
+.br
+\fIsize\fP size of grid\&. 
+.br
+\fIorigin\fP origin of grid\&. 
+.br
+\fIsampling\fP spacing in each dimension\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<vector<Bcomponent*>> array of component arrays\&. 
+.PP
+.nf
+The goal is to fit all the components within the grid boundaries.
+Components located outside the grid will be added to the edges.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1135 of file model_util\&.cpp\&.
+.SS "double model_distance_sum (\fBBmodel\fP * model, \fBVector3\fP< double > loc)"
+
+.PP
+Calculates the sum of distances of model components to a location\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIloc\fP reference location\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double sum of distances\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 526 of file model_util\&.cpp\&.
+.SS "\fBBmodel\fP* model_generate_com (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Calculates the centers-of-mass of molecule group components and generates a new model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP list of molecule groups\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model\&. 
+.PP
+.nf
+Each molecule is assumed to be a component.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 933 of file model_util\&.cpp\&.
+.SS "\fBVector3\fP<double> model_geometric_median (\fBBmodel\fP * model)"
+
+.PP
+Calculates the geometric median of model components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP geometric median\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+Based on Weiszfeld’s method.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 577 of file model_util\&.cpp\&.
+.SS "\fBVector3\fP<double> model_geometric_median_estimate (\fBBmodel\fP * model, \fBVector3\fP< double > pgm)"
+
+.PP
+Calculates the geometric median estimate of model components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIpgm\fP previous geometric median estimate\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP new geomtric median estimate\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 549 of file model_util\&.cpp\&.
+.SS "double model_gyration_radius (\fBBmodel\fP * model)"
+
+.PP
+Calculates the radius of gyration for a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double radius of gyration\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 613 of file model_util\&.cpp\&.
+.SS "long model_list (\fBBmodel\fP * model)"
+
+.PP
+Lists models in table form\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of models\&. 
+.RE
+.PP
+
+.PP
+Definition at line 151 of file model_util\&.cpp\&.
+.SS "long model_list_comp (\fBBmodel\fP * model)"
+
+.PP
+Lists models with component counts in table form\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of models\&. 
+.RE
+.PP
+
+.PP
+Definition at line 183 of file model_util\&.cpp\&.
+.SS "double model_mass (\fBBmodel\fP * model)"
+
+.PP
+Calculates the mass of a model from component masses\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double model mass\&. 
+.PP
+.nf
+The component type masses must be provided.
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 444 of file model_util\&.cpp\&.
+.SS "long model_mass_all (\fBBmodel\fP * model)"
+
+.PP
+Calculates the masses of all the models in the list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP linked list of model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of selected models\&. 
+.PP
+.nf
+The component type masses must be provided.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 473 of file model_util\&.cpp\&.
+.SS "long model_merge (\fBBmodel\fP * model)"
+
+.PP
+Merges components from all models into one\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components\&. 
+.RE
+.PP
+
+.PP
+Definition at line 323 of file model_util\&.cpp\&.
+.SS "long model_number_ids (\fBBmodel\fP * model)"
+
+.PP
+Add a number to each model id\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of models\&. 
+.PP
+.nf
+The intention is to give unique id's to models.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 380 of file model_util\&.cpp\&.
+.SS "long model_principal_axes (\fBBmodel\fP * model)"
+
+.PP
+Definition at line 713 of file model_util\&.cpp\&.
+.SS "\fBVector3\fP<double> model_principal_axes (\fBBmodel\fP * model, \fBMatrix\fP & eigenvec)"
+
+.PP
+Definition at line 684 of file model_util\&.cpp\&.
+.SS "\fBVector3\fP<double> model_principal_axes (\fBBmodel\fP * model, \fBVector3\fP< double > * eigenvec)"
+
+.PP
+Calculates the principal axes of a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fI*eigenvec\fP eigen vectors (can be NULL)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP 3-valued vector of principal axes\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 644 of file model_util\&.cpp\&.
+.SS "long model_radial_distribution (\fBBmodel\fP * model, double interval)"
+
+.PP
+Calculates the radial distribution function of a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIinterval\fP interval between bins\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long 0\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 745 of file model_util\&.cpp\&.
+.SS "long model_rename_components (\fBBmodel\fP * model)"
+
+.PP
+Rename components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components\&. 
+.PP
+.nf
+The number of links to a component determines its new name.
+Only the first model is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 405 of file model_util\&.cpp\&.
+.SS "long model_replace_components (\fBBmodel\fP * model, \fBBmodel\fP * modref)"
+
+.PP
+Replaces all components in a model with reference components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure to be modified\&. 
+.br
+\fI*modref\fP reference model\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components used in reference\&. 
+.PP
+.nf
+Only the first model in the reference is used.
+All models will have identical sets of components.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 252 of file model_util\&.cpp\&.
+.SS "long model_update_centers_of_mass (\fBBmodel\fP * model, \fBBmolgroup\fP * molgroup)"
+
+.PP
+Updates the centers-of-mass of molecule group components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fI*molgroup\fP list of molecule groups\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of selected components\&. 
+.PP
+.nf
+The identifiers of the molecule groups must correspond to the component identifiers.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 985 of file model_util\&.cpp\&.
+.SS "long models_process (\fBBmodel\fP * model, \fBBstring\fP & str, long(modfunc)(\fBBmodel\fP *, \fBBstring\fP &str))"
+
+.PP
+Definition at line 108 of file model_util\&.cpp\&.
+.SS "long models_process (\fBBmodel\fP * model, double d, long(modfunc)(\fBBmodel\fP *, double))"
+
+.PP
+Definition at line 84 of file model_util\&.cpp\&.
+.SS "long models_process (\fBBmodel\fP * model, long i, long(modfunc)(\fBBmodel\fP *, long))"
+
+.PP
+Definition at line 60 of file model_util\&.cpp\&.
+.SS "long models_process (\fBBmodel\fP * model, long(modfunc)(\fBBmodel\fP *))"
+
+.PP
+Process a list of models using the specified function\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP list of models\&. 
+.br
+\fImodfunc\fP function to be called\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long aggregate number returned by function\&. 
+.PP
+.nf
+The function called process only one model.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 36 of file model_util\&.cpp\&.
+.SS "long models_process (\fBBmodel\fP * model, string & str, long(modfunc)(\fBBmodel\fP *, string &str))"
+
+.PP
+Definition at line 132 of file model_util\&.cpp\&.
+.SS "long molgroup_write_into_grid (\fBBmolgroup\fP * molgroup, \fBVector3\fP< int > size, \fBVector3\fP< double > min, double sampling, int * grid)"
+
+.PP
+Definition at line 784 of file model_util\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

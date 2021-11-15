@@ -1,0 +1,378 @@
+.TH "/Users/bernard/b20/bsoft/src/mg/mg_refine.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mg/mg_refine.cpp \- Reciprocal space refinement of orientation parameters of particle images\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_refine\&.h'\fP
+.br
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'mg_ctf\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'Complex\&.h'\fP
+.br
+\fC#include 'Matrix3\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include <sys/stat\&.h>\fP
+.br
+\fC#include <fcntl\&.h>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "long \fBpart_refine_orientation\fP (\fBBparticle\fP *part, \fBBstring\fP &partfile, \fBBimage\fP *pref, \fBBimage\fP *pmask, \fBBsymmetry\fP sym, int max_iter, double alpha_step, double accuracy, double shift_step, double shift_accuracy, double hi_res, double lo_res, int fom_type, vector< double > weight, double edge_radius, \fBCTFparam\fP *em_ctf, double def_std, double shift_std, double view_std, double max_angle, double max_mag, int flags, \fBFSI_Kernel\fP *\fBkernel\fP, \fBfft_plan\fP \fBplanf\fP)"
+.br
+.RI "Refine the orientation and origin of one particle with respect to a reference map\&. "
+.ti -1c
+.RI "double \fBimg_refine_monte\fP (\fBBimage\fP *p, \fBBimage\fP *pref, double hi_res, double lo_res, int max_iter, int fom_type, vector< double > &weight, \fBCTFparam\fP *em_ctf, double def_std, double shift_std, double view_std, double max_angle, double max_mag, \fBFSI_Kernel\fP *\fBkernel\fP, long &number)"
+.br
+.RI "Refine the orientation and origin of one particle with respect to a reference map\&. "
+.ti -1c
+.RI "double \fBimg_refine_grid\fP (\fBBimage\fP *p, \fBBimage\fP *pref, double hi_res, double lo_res, double alpha_step, double accuracy, double shift_step, double shift_accuracy, double max_mag, int fom_type, vector< double > &weight, \fBCTFparam\fP *em_ctf, double def_std, \fBFSI_Kernel\fP *\fBkernel\fP, long &number)"
+.br
+.RI "Refine the orientation and origin of one particle with respect to a reference map\&. "
+.ti -1c
+.RI "long \fBmg_refine_orientations\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &reffile, \fBBstring\fP &maskfile, \fBBstring\fP &sym_string, int \fBpart_select\fP, int max_iter, double alpha_step, double accuracy, double shift_step, double shift_accuracy, int fom_type, vector< double > weight, double hi_res, double lo_res, int kernel_width, int kernel_power, double edge_radius, double def_std, double shift_std, double view_std, double max_angle, double max_mag, int flags)"
+.br
+.RI "Refine the orientation and origin with respect to a reference map\&. "
+.ti -1c
+.RI "long \fBproject_refine_orientations\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &reffile, \fBBstring\fP &maskfile, \fBBstring\fP &sym_string, int \fBpart_select\fP, int max_iter, double alpha_step, double accuracy, double shift_step, double shift_accuracy, int fom_type, vector< double > weight, double hi_res, double lo_res, int kernel_width, int kernel_power, double edge_radius, double def_std, double shift_std, double view_std, double max_angle, double max_mag, int flags)"
+.br
+.ti -1c
+.RI "double \fBimg_recip_space_fom\fP (\fBBimage\fP *p, \fBBimage\fP *pref, double hi_res, double lo_res, int fom_type, vector< double > &weight, int apply_ctf, \fBCTFparam\fP *em_ctf)"
+.br
+.ti -1c
+.RI "double \fBimg_fit_in_recip_space_monte\fP (\fBBimage\fP *p, \fBBimage\fP *pref, double hi_res, double lo_res, int max_iter, int fom_type, vector< double > &weight, \fBCTFparam\fP *em_ctf, double def_std, double shift_std, \fBFSI_Kernel\fP *\fBkernel\fP, long &number)"
+.br
+.ti -1c
+.RI "double \fBimg_fit_in_recip_space_grid\fP (\fBBimage\fP *p, \fBBimage\fP *pref, double hi_res, double lo_res, double step, double accuracy, int fom_type, vector< double > &weight, \fBCTFparam\fP *em_ctf, double def_std, \fBFSI_Kernel\fP *\fBkernel\fP, long &number)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Reciprocal space refinement of orientation parameters of particle images\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20070115 
+.PP
+Modified: 20200205 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_refine\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double img_fit_in_recip_space_grid (\fBBimage\fP * p, \fBBimage\fP * pref, double hi_res, double lo_res, double step, double accuracy, int fom_type, vector< double > & weight, \fBCTFparam\fP * em_ctf, double def_std, \fBFSI_Kernel\fP * kernel, long & number)"
+
+.PP
+Definition at line 857 of file mg_refine\&.cpp\&.
+.SS "double img_fit_in_recip_space_monte (\fBBimage\fP * p, \fBBimage\fP * pref, double hi_res, double lo_res, int max_iter, int fom_type, vector< double > & weight, \fBCTFparam\fP * em_ctf, double def_std, double shift_std, \fBFSI_Kernel\fP * kernel, long & number)"
+
+.PP
+Definition at line 778 of file mg_refine\&.cpp\&.
+.SS "double img_recip_space_fom (\fBBimage\fP * p, \fBBimage\fP * pref, double hi_res, double lo_res, int fom_type, vector< double > & weight, int apply_ctf, \fBCTFparam\fP * em_ctf)"
+
+.PP
+Definition at line 659 of file mg_refine\&.cpp\&.
+.SS "double img_refine_grid (\fBBimage\fP * p, \fBBimage\fP * pref, double hi_res, double lo_res, double alpha_step, double accuracy, double shift_step, double shift_accuracy, double max_mag, int fom_type, vector< double > & weight, \fBCTFparam\fP * em_ctf, double def_std, \fBFSI_Kernel\fP * kernel, long & number)"
+
+.PP
+Refine the orientation and origin of one particle with respect to a reference map\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP particle image\&. 
+.br
+\fI*pref\fP reference map\&. 
+.br
+\fIhi_res\fP high resolution limit (angstrom)\&. 
+.br
+\fIlo_res\fP low resolution limit (angstrom)\&. 
+.br
+\fIalpha_step\fP grid search angular step size\&. 
+.br
+\fIaccuracy\fP grid search accuracy\&. 
+.br
+\fIshift_step\fP grid shift size\&. 
+.br
+\fIshift_accuracy\fP grid shift accuracy\&. 
+.br
+\fImax_mag\fP maximum magnification adjustment\&. 
+.br
+\fIfom_type\fP type of resolution measure: 0=FRC, 1=DPR 
+.br
+\fIweight\fP 1D reciprocal space weight curve\&. 
+.br
+\fI*em_ctf\fP CTF parameters (if NULL, not used)\&. 
+.br
+\fIdef_std\fP defocus step size\&. 
+.br
+\fI*kernel\fP interpolation kernel\&. 
+.br
+\fI&number\fP number of comparisons\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double best figure-of-merit\&. 
+.PP
+.nf
+The orientation and origin are refined using a grid search
+with selection based on the FSC or DPR.
+The best result is returned in the orientation parameters of the image structure.
+The FOM in the image structure is the first FOM determined, while the best
+FOM is returned.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1079 of file mg_refine\&.cpp\&.
+.SS "double img_refine_monte (\fBBimage\fP * p, \fBBimage\fP * pref, double hi_res, double lo_res, int max_iter, int fom_type, vector< double > & weight, \fBCTFparam\fP * em_ctf, double def_std, double shift_std, double view_std, double max_angle, double max_mag, \fBFSI_Kernel\fP * kernel, long & number)"
+
+.PP
+Refine the orientation and origin of one particle with respect to a reference map\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP particle image\&. 
+.br
+\fI*pref\fP reference map\&. 
+.br
+\fIhi_res\fP high resolution limit (angstrom)\&. 
+.br
+\fIlo_res\fP low resolution limit (angstrom)\&. 
+.br
+\fImax_iter\fP maximum number of refining iterations\&. 
+.br
+\fIfom_type\fP type of resolution measure: 0=FRC, 1=DPR 
+.br
+\fIweight\fP 1D reciprocal space weight curve\&. 
+.br
+\fI*em_ctf\fP CTF parameters (if NULL, not used)\&. 
+.br
+\fIdef_std\fP random defocus standard deviation 
+.br
+\fIshift_std\fP random origin shift standard deviation\&. 
+.br
+\fIview_std\fP random view shift standard deviation\&. 
+.br
+\fImax_angle\fP maximum random rotation angle adjustment\&. 
+.br
+\fImax_mag\fP maximum magnification adjustment\&. 
+.br
+\fI*kernel\fP interpolation kernel\&. 
+.br
+\fI&number\fP number of comparisons\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double best figure-of-merit\&. 
+.PP
+.nf
+The orientation and origin are iteratively modified in small random steps,
+with selection based on the Fourier shell correlation.
+The best result is returned in the orientation parameters of the image structure.
+The FOM in the image structure is the first FOM determined, while the best
+FOM is returned.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 973 of file mg_refine\&.cpp\&.
+.SS "long mg_refine_orientations (\fBBproject\fP * project, \fBBstring\fP & reffile, \fBBstring\fP & maskfile, \fBBstring\fP & sym_string, int part_select, int max_iter, double alpha_step, double accuracy, double shift_step, double shift_accuracy, int fom_type, vector< double > weight, double hi_res, double lo_res, int kernel_width, int kernel_power, double edge_radius, double def_std, double shift_std, double view_std, double max_angle, double max_mag, int flags)"
+
+.PP
+Refine the orientation and origin with respect to a reference map\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP image processing parameter structure\&. 
+.br
+\fI&reffile\fP file containing reference map\&. 
+.br
+\fI&maskfile\fP file containing a real space mask (can be empty)\&. 
+.br
+\fI&sym_string\fP point group symmetry designator\&. 
+.br
+\fIpart_select\fP particle selection for processing\&. 
+.br
+\fImax_iter\fP Monte Carlo maximum number of refining iterations\&. 
+.br
+\fIalpha_step\fP grid search angular step size\&. 
+.br
+\fIaccuracy\fP grid search accuracy\&. 
+.br
+\fIshift_step\fP grid shift size\&. 
+.br
+\fIshift_accuracy\fP grid shift accuracy\&. 
+.br
+\fIfom_type\fP type of resolution measure: 0=FRC, 1=DPR 
+.br
+\fIweight\fP 1D reciprocal space weight curve\&. 
+.br
+\fIhi_res\fP high resolution limit (angstrom)\&. 
+.br
+\fIlo_res\fP low resolution limit (angstrom)\&. 
+.br
+\fIkernel_width\fP interpolation kernel width\&. 
+.br
+\fIkernel_power\fP interpolation kernel power\&. 
+.br
+\fIedge_radius\fP edge radius to mask background using previous origin\&. 
+.br
+\fIdef_std\fP random defocus standard deviation 
+.br
+\fIshift_std\fP random origin shift standard deviation\&. 
+.br
+\fIview_std\fP random view shift standard deviation\&. 
+.br
+\fImax_angle\fP maximum random rotation angle adjustment\&. 
+.br
+\fImax_mag\fP maximum magnification adjustment\&. 
+.br
+\fIflags\fP option flags\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of comparisons, <0 on error\&. 
+.PP
+.nf
+The orientation, origin, magnitude and defocus are refined for each particle.
+The default method uses a grid search around the existing view and origin.
+Specifying the maximum number of iterations switches the algorithm to a
+Monte Carlo search for the best parameters.
+The FOM is either based on the FSC or the DPR.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 77 of file mg_refine\&.cpp\&.
+.SS "long part_refine_orientation (\fBBparticle\fP * part, \fBBstring\fP & partfile, \fBBimage\fP * pref, \fBBimage\fP * pmask, \fBBsymmetry\fP sym, int max_iter, double alpha_step, double accuracy, double shift_step, double shift_accuracy, double hi_res, double lo_res, int fom_type, vector< double > weight, double edge_radius, \fBCTFparam\fP * em_ctf, double def_std, double shift_std, double view_std, double max_angle, double max_mag, int flags, \fBFSI_Kernel\fP * kernel, \fBfft_plan\fP planf)"
+
+.PP
+Refine the orientation and origin of one particle with respect to a reference map\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*part\fP particle\&. 
+.br
+\fI&partfile\fP particle filename\&. 
+.br
+\fI*pref\fP reference map\&. 
+.br
+\fI*pmask\fP mask\&. 
+.br
+\fI*sym\fP symmetry structure\&. 
+.br
+\fImax_iter\fP maximum number of refining iterations\&. 
+.br
+\fIalpha_step\fP grid search angular step size\&. 
+.br
+\fIaccuracy\fP grid search accuracy\&. 
+.br
+\fIshift_step\fP grid shift size\&. 
+.br
+\fIshift_accuracy\fP grid shift accuracy\&. 
+.br
+\fIhi_res\fP high resolution limit (angstrom)\&. 
+.br
+\fIlo_res\fP low resolution limit (angstrom)\&. 
+.br
+\fIfom_type\fP type of resolution measure: 0=FRC, 1=DPR 
+.br
+\fIweight\fP 1D reciprocal space weight curve\&. 
+.br
+\fIedge_radius\fP edge radius to mask background using previous origin\&. 
+.br
+\fI*em_ctf\fP CTF parameters (if NULL, not used)\&. 
+.br
+\fIdef_std\fP random defocus standard deviation 
+.br
+\fIshift_std\fP random origin shift standard deviation\&. 
+.br
+\fIview_std\fP random view shift standard deviation\&. 
+.br
+\fImax_angle\fP maximum random rotation angle adjustment\&. 
+.br
+\fImax_mag\fP maximum magnification adjustment\&. 
+.br
+\fIflags\fP option flags\&. 
+.br
+\fI*kernel\fP interpolation kernel\&. 
+.br
+\fIplanf\fP FFT forward plan for 2D images\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of comparisons\&. 
+.PP
+.nf
+The orientation and origin are iteratively modified in small random steps,
+with selection based on the Fourier shell correlation.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 491 of file mg_refine\&.cpp\&.
+.SS "long project_refine_orientations (\fBBproject\fP * project, \fBBstring\fP & reffile, \fBBstring\fP & maskfile, \fBBstring\fP & sym_string, int part_select, int max_iter, double alpha_step, double accuracy, double shift_step, double shift_accuracy, int fom_type, vector< double > weight, double hi_res, double lo_res, int kernel_width, int kernel_power, double edge_radius, double def_std, double shift_std, double view_std, double max_angle, double max_mag, int flags)"
+
+.PP
+Definition at line 249 of file mg_refine\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,184 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_tcltk__bmg_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/tcltk/tcltk_bmg.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/tcltk/tcltk_bmg.h</primary></indexterm>
+<para>
+
+<para>A shared object to manage boxes in micrograph parameter files in TCL/Tk. </para>
+ 
+</para>
+<programlisting>#include &lt;tk.h&gt;
+#include &quot;mg_processing.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_tcltk__bmg_8h_1a663af2a19fa4dc6330644c152050de39">project_processing</link> (Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[])</para>
+
+<para>Implements the &quot;Bmg&quot; command in Tcl/Tk to access micrograph parameter files through Bsoft. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>A shared object to manage boxes in micrograph parameter files in TCL/Tk. </para>
+
+<para>A shared object to manage micrograph parameter files in TCL/Tk.</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20030813 </para>
+
+<para>Modified: 20130726</para>
+</formalpara>
+<formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20030813 </para>
+
+<para>Modified: 20130924 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_tcltk__bmg_8h_1a663af2a19fa4dc6330644c152050de39"/>    <section>
+    <title>project_processing()</title>
+<indexterm><primary>project_processing</primary><secondary>tcltk_bmg.h</secondary></indexterm>
+<indexterm><primary>tcltk_bmg.h</primary><secondary>project_processing</secondary></indexterm>
+<para><computeroutput>int project_processing (Tcl_Interp * interp, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+
+<para>Implements the &quot;Bmg&quot; command in Tcl/Tk to access micrograph parameter files through Bsoft. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*interp</entry>
+                                <entry>
+<para>a Tcl interpreter within Tcl. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>objc</entry>
+                                <entry>
+<para>number of arguments passed (+1). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*objv[]</entry>
+                                <entry>
+<para>arguments passed as Tcl objects. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int Tcl result. <literallayout><computeroutput>Bmg command syntax:
+    Bmg &lt;action&gt; &lt;arguments&gt;.
+    where:
+        action          &quot;create&quot;, &quot;exists&quot;, &quot;read&quot;, &quot;add&quot;, &quot;write&quot;, &quot;kill&quot;, &quot;get&quot;, &quot;set&quot;, 
+                        &quot;image_type&quot;, &quot;rps&quot;, &quot;ctf_fit&quot;, &quot;update_matrices&quot;,
+                        &quot;unitcell_vectors&quot;  &quot;refine&quot; &quot;box&quot; &quot;filament&quot; &quot;node&quot; &quot;layerline&quot; &quot;spot&quot; &quot;marker&quot;
+        arguments               action-specific arguments:
+            &quot;create&quot;            &lt;number_micrographs&gt; &lt;number_reconstructions&gt;
+            &quot;read&quot;              &lt;filename&gt;
+            &quot;add&quot;               &lt;filename&gt;
+            &quot;write&quot;             &lt;filename&gt;
+            &quot;get&quot;               &lt;property&gt; [arguments]
+            &quot;set&quot;               &lt;property&gt; &lt;value&gt;
+            &quot;rps&quot;
+            &quot;ctf_fit&quot;           &lt;level&gt; &lt;lores&gt; &lt;hires&gt;
+            &quot;sort&quot;              &lt;tag&gt;
+            &quot;update_matrices&quot;
+            &quot;unitcell_vectors&quot;
+            &quot;findaxis&quot;          &lt;axis&gt; &lt;step&gt; &lt;start&gt; &lt;end&gt;
+            &quot;track&quot;             &lt;iterations&gt; &lt;refine_markers&gt;
+            &quot;refine&quot;            &lt;operation&gt;
+            &quot;box&quot;               [arguments]
+            &quot;filament&quot;          [arguments]
+            &quot;node&quot;              [arguments]
+            &quot;layerline&quot;         [arguments]
+            &quot;spot&quot;              [arguments]
+            &quot;marker&quot;            [arguments]
+            where:
+                property    &quot;active &lt;flag&gt;&quot;
+                            &quot;id &lt;string&gt;&quot;
+                            &quot;id_from_index &lt;mg_num&gt;&quot;
+                            &quot;img_num &lt;mg_num&gt;&quot;
+                            &quot;number_of_mg&quot;
+                            &quot;number_of_rec&quot;
+                            &quot;number_of_part&quot;
+                            &quot;field &lt;string&gt;&quot;
+                            &quot;filename &lt;string&gt; &lt;imgtype&gt;&quot;
+                            &quot;select &lt;y/n&gt;&quot;
+                            &quot;fom &lt;mg_num&gt;&quot;
+                            &quot;pixel_size &lt;angstrom&gt;&quot;
+                            &quot;size &lt;x&gt; &lt;y&gt; &lt;z&gt;&quot;
+                            &quot;origin &lt;x&gt; &lt;y&gt; &lt;z&gt; / &lt;mg_num&gt;&quot;
+                            &quot;part_origin &lt;x&gt; &lt;y&gt; &lt;z&gt; / &lt;part_num&gt;&quot;
+                            &quot;scale &lt;x&gt; &lt;y&gt; &lt;z&gt; / &lt;mg_num&gt;&quot;
+                            &quot;dose&quot; &lt;electrons/Å2&gt;
+                            &quot;intensity&quot;
+                            &quot;defocus &lt;angstrom&gt;&quot;
+                            &quot;defocus_deviation &lt;angstrom&gt;&quot;
+                            &quot;astigmatism_angle &lt;radians&gt;&quot;
+                            &quot;volt &lt;volts&gt;&quot;
+                            &quot;Cs &lt;angstrom&gt;&quot;
+                            &quot;amp_fac &lt;fraction&gt;&quot;
+                            &quot;focal_length &lt;angstrom&gt;&quot;
+                            &quot;aperture &lt;angstrom&gt;&quot;
+                            &quot;slit_width &lt;volts&gt;&quot;
+                            &quot;zero &lt;angstrom&gt;&quot;
+                            &quot;baseline &lt;string&gt;&quot;
+                            &quot;envelope &lt;string&gt;&quot;
+                            &quot;view &lt;mg_num&gt;&quot;
+                            &quot;axis [&lt;radians&gt;] &lt;mg_num&gt;&quot;
+                            &quot;tilt [&lt;radians&gt;] &lt;mg_num&gt;&quot;
+                            &quot;level [&lt;radians&gt;] &lt;mg_num&gt;&quot;
+                            &quot;unitcell &lt;ux&gt; &lt;uy&gt; &lt;vx&gt; &lt;vy&gt;&quot;
+                            &quot;helix_axis &lt;radians&gt;&quot;
+                            &quot;helix_rise &lt;angstrom&gt;&quot;
+                            &quot;helix_angle &lt;radians&gt;&quot;
+                            &quot;helix_radius &lt;angstrom&gt;&quot;
+                            &quot;box_size &lt;x&gt; &lt;y&gt; &lt;z&gt;&quot;
+                            &quot;bad_radius &lt;pixels&gt;&quot;
+                            &quot;filament_width &lt;width&gt;&quot;
+                            &quot;filament_node_radius&quot;
+                            &quot;marker_radius &lt;pixels&gt;&quot;
+Return values:
+    Each action may have a return value:
+        &quot;create&quot;    (none)
+        &quot;exists&quot;    0=no, 1=yes
+        &quot;read&quot;      micrograph id
+        &quot;write&quot;     (none)
+        &quot;kill&quot;      (none)
+        &quot;get&quot;       return value based on property
+        &quot;set&quot;       modify micrograph property
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 140 of file tcltk_bmg.cpp.</para>
+</section>
+</section>
+</section>

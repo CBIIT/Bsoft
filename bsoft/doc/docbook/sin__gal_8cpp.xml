@@ -1,0 +1,529 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_sin__gal_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/radon/sin_gal.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/radon/sin_gal.cpp</primary></indexterm>
+<programlisting>#include &quot;sin_gal.h&quot;
+#include &quot;fft_tool.h&quot;
+#include &quot;Bimage.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_sin__gal_8cpp_1a5500ab9a271e5f566dbd043da8bcadf5">copy_sin</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>Copy the second half of a sinogram from the first one. </para>
+</listitem>
+            <listitem><para>int <link linkend="_sin__gal_8cpp_1a731a578a31055731a881bda23b80bed3">expand</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+</listitem>
+            <listitem><para>int <link linkend="_sin__gal_8cpp_1a385ad274d599b37d87bdb55d738bd9cb">merge</link> (<link linkend="_class_bimage">Bimage</link> *p, int padd)</para>
+
+<para>Pads an image and shifts it to the middle. </para>
+</listitem>
+            <listitem><para>int <link linkend="_sin__gal_8cpp_1acef4897fc1c65a52025736c39a7a4d59">cart_pol_Fourier_rad</link> (<link linkend="_class_bimage">Bimage</link> *p, int n_theta, int padd, int range, int pf_x, int pf_y, float *pfr, float *pfi, <link linkend="_structkernel">kernel</link> *ker)</para>
+</listitem>
+            <listitem><para>int <link linkend="_sin__gal_8cpp_1a08634b687197b2a32845c759335a6fce">separate_ri</link> (<link linkend="_class_bimage">Bimage</link> *p, float *pfr, float *pfi, int bordo)</para>
+</listitem>
+            <listitem><para>int <link linkend="_sin__gal_8cpp_1a14462dc4cbb4223777f4fd1adc02ef42">rephase_1D</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+</listitem>
+            <listitem><para>int <link linkend="_sin__gal_8cpp_1a0a322d5a6ea19d8f67e0eca21a5bb65a">map_shift</link> (<link linkend="_class_bimage">Bimage</link> *p, float dx, float dy)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_sin__gal_8cpp_1ab092da00a48a50412f0d6ea62aeb8574">sin_gal</link> (<link linkend="_class_bimage">Bimage</link> *p, int tipo, <link linkend="_class_vector3">Vector3</link>&lt; float &gt; shift, <link linkend="_structkernel">kernel</link> *ker, int padd, int n_theta)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_sin__gal_8cpp_1a70e93b847dc21029cb77f8be52e78c98">copy_I_part_rad</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+</listitem>
+            <listitem><para>int <link linkend="_sin__gal_8cpp_1afab0f07f7cf5bde1a58510c6bfe35056">copy_II_part_rad</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para><formalpara><title>Author</title>
+
+<para>P.L. Bellon, F. Cantele and S. Lanzavecchia Dip. Chimica Strutturale e Stereochimica Inorganica Via Venezian 21, 20133 Milano, Italy</para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 7 04 2003 </para>
+
+<para>Modified: 23 01 2006 (BH) </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_sin__gal_8cpp_1acef4897fc1c65a52025736c39a7a4d59"/>    <section>
+    <title>cart_pol_Fourier_rad()</title>
+<indexterm><primary>cart_pol_Fourier_rad</primary><secondary>sin_gal.cpp</secondary></indexterm>
+<indexterm><primary>sin_gal.cpp</primary><secondary>cart_pol_Fourier_rad</secondary></indexterm>
+<para><computeroutput>int cart_pol_Fourier_rad (<link linkend="_class_bimage">Bimage</link> * p, int n_theta, int padd, int range, int pf_x, int pf_y, float * pfr, float * pfi, <link linkend="_structkernel">kernel</link> * ker)</computeroutput></para>
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n_theta</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>padd</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>range</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pf_x</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pf_y</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pfr</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pfi</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*ker</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 </para>
+</formalpara>
+</para>
+<para>
+Definition at line 314 of file sin_gal.cpp.</para>
+    </section><anchor xml:id="_sin__gal_8cpp_1a70e93b847dc21029cb77f8be52e78c98"/>    <section>
+    <title>copy_I_part_rad()</title>
+<indexterm><primary>copy_I_part_rad</primary><secondary>sin_gal.cpp</secondary></indexterm>
+<indexterm><primary>sin_gal.cpp</primary><secondary>copy_I_part_rad</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* copy_I_part_rad (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para>
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_bimage">Bimage</link> * 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</formalpara>
+</para>
+<para>
+Definition at line 163 of file sin_gal.cpp.</para>
+    </section><anchor xml:id="_sin__gal_8cpp_1afab0f07f7cf5bde1a58510c6bfe35056"/>    <section>
+    <title>copy_II_part_rad()</title>
+<indexterm><primary>copy_II_part_rad</primary><secondary>sin_gal.cpp</secondary></indexterm>
+<indexterm><primary>sin_gal.cpp</primary><secondary>copy_II_part_rad</secondary></indexterm>
+<para><computeroutput>int copy_II_part_rad (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para>
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 </para>
+</formalpara>
+</para>
+<para>
+Definition at line 195 of file sin_gal.cpp.</para>
+    </section><anchor xml:id="_sin__gal_8cpp_1a5500ab9a271e5f566dbd043da8bcadf5"/>    <section>
+    <title>copy_sin()</title>
+<indexterm><primary>copy_sin</primary><secondary>sin_gal.cpp</secondary></indexterm>
+<indexterm><primary>sin_gal.cpp</primary><secondary>copy_sin</secondary></indexterm>
+<para><computeroutput>int copy_sin (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>Copy the second half of a sinogram from the first one. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>sinogram </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 </para>
+</formalpara>
+</para>
+<para>
+Definition at line 179 of file pocs_tool.cpp.</para>
+    </section><anchor xml:id="_sin__gal_8cpp_1a731a578a31055731a881bda23b80bed3"/>    <section>
+    <title>expand()</title>
+<indexterm><primary>expand</primary><secondary>sin_gal.cpp</secondary></indexterm>
+<indexterm><primary>sin_gal.cpp</primary><secondary>expand</secondary></indexterm>
+<para><computeroutput>int expand (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para>
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 </para>
+</formalpara>
+</para>
+<para>
+Definition at line 235 of file sin_gal.cpp.</para>
+    </section><anchor xml:id="_sin__gal_8cpp_1a0a322d5a6ea19d8f67e0eca21a5bb65a"/>    <section>
+    <title>map_shift()</title>
+<indexterm><primary>map_shift</primary><secondary>sin_gal.cpp</secondary></indexterm>
+<indexterm><primary>sin_gal.cpp</primary><secondary>map_shift</secondary></indexterm>
+<para><computeroutput>int map_shift (<link linkend="_class_bimage">Bimage</link> * p, float dx, float dy)</computeroutput></para>
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>dx</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>dy</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 </para>
+</formalpara>
+</para>
+<para>
+Definition at line 564 of file sin_gal.cpp.</para>
+    </section><anchor xml:id="_sin__gal_8cpp_1a385ad274d599b37d87bdb55d738bd9cb"/>    <section>
+    <title>merge()</title>
+<indexterm><primary>merge</primary><secondary>sin_gal.cpp</secondary></indexterm>
+<indexterm><primary>sin_gal.cpp</primary><secondary>merge</secondary></indexterm>
+<para><computeroutput>int merge (<link linkend="_class_bimage">Bimage</link> * p, int padd)</computeroutput></para><para>
+
+<para>Pads an image and shifts it to the middle. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>padd</entry>
+                                <entry>
+<para>0=no padding, 1=padding </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 </para>
+</formalpara>
+</para>
+<para>
+Definition at line 270 of file sin_gal.cpp.</para>
+    </section><anchor xml:id="_sin__gal_8cpp_1a14462dc4cbb4223777f4fd1adc02ef42"/>    <section>
+    <title>rephase_1D()</title>
+<indexterm><primary>rephase_1D</primary><secondary>sin_gal.cpp</secondary></indexterm>
+<indexterm><primary>sin_gal.cpp</primary><secondary>rephase_1D</secondary></indexterm>
+<para><computeroutput>int rephase_1D (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para>
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 </para>
+</formalpara>
+</para>
+<para>
+Definition at line 534 of file sin_gal.cpp.</para>
+    </section><anchor xml:id="_sin__gal_8cpp_1a08634b687197b2a32845c759335a6fce"/>    <section>
+    <title>separate_ri()</title>
+<indexterm><primary>separate_ri</primary><secondary>sin_gal.cpp</secondary></indexterm>
+<indexterm><primary>sin_gal.cpp</primary><secondary>separate_ri</secondary></indexterm>
+<para><computeroutput>int separate_ri (<link linkend="_class_bimage">Bimage</link> * p, float * pfr, float * pfi, int bordo)</computeroutput></para>
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pfr</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pfi</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bordo</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 </para>
+</formalpara>
+</para>
+<para>
+Definition at line 471 of file sin_gal.cpp.</para>
+    </section><anchor xml:id="_sin__gal_8cpp_1ab092da00a48a50412f0d6ea62aeb8574"/>    <section>
+    <title>sin_gal()</title>
+<indexterm><primary>sin_gal</primary><secondary>sin_gal.cpp</secondary></indexterm>
+<indexterm><primary>sin_gal.cpp</primary><secondary>sin_gal</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* sin_gal (<link linkend="_class_bimage">Bimage</link> * p, int tipo, <link linkend="_class_vector3">Vector3</link>&lt; float &gt; shift, <link linkend="_structkernel">kernel</link> * ker, int padd, int n_theta)</computeroutput></para>
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tipo</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*ker</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>padd</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n_theta</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* </para>
+</formalpara>
+</para>
+<para>
+Definition at line 35 of file sin_gal.cpp.</para>
+</section>
+</section>
+</section>

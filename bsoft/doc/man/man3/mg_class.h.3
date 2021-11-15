@@ -1,0 +1,89 @@
+.TH "/Users/bernard/b20/bsoft/include/mg_class.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/mg_class.h \- Header file for classification of raw single particle images with respect to multiple models\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'FSI_Kernel\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "long \fBmg_classify\fP (\fBBproject\fP *\fBproject\fP, double resolution_hi, double resolution_lo, int fom_type, double fom_cut, \fBFSI_Kernel\fP *\fBkernel\fP, int ctf_apply, int img_out)"
+.br
+.RI "Classifies particle images with respect to a series of reference maps\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for classification of raw single particle images with respect to multiple models\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010222 
+.PP
+Modified: 20151008 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_class\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "long mg_classify (\fBBproject\fP * project, double resolution_hi, double resolution_lo, int fom_type, double fom_cut, \fBFSI_Kernel\fP * kernel, int ctf_apply, int img_out)"
+
+.PP
+Classifies particle images with respect to a series of reference maps\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIresolution_hi\fP upper resolution limit\&. 
+.br
+\fIresolution_lo\fP lower resolution limit\&. 
+.br
+\fIfom_type\fP FOM type: 0=CC, 1=R, 2=PD\&. 
+.br
+\fIfom_cut\fP input FOM threshold to classify a particle\&. 
+.br
+\fI*kernel\fP frequency space interpolation kernel\&. 
+.br
+\fIctf_apply\fP apply CTF to projections\&. 
+.br
+\fIimg_out\fP image output options: 0=none, 1=projections, 2=differences, 3=both 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long particles selected\&. 
+.PP
+.nf
+For every particle image, a projection is made from every reference map
+according to the input orientation parameters and compared to the
+particle image. The FOM calculated is a real space correlation coefficient.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 39 of file mg_class\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

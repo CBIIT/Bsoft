@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: AFM</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h2>Calculating a 3D map from topographic surface images</h2>
+<p>The atomic force microscope produces a topographic map of the surface of a specimen convolved with the shape of the tip.</p>
+<p>A 2D image is interpreted as height data defining the edge of an envelope in 3D space. To ensure a smooth appearance when isosurfaced, this edge is generated using a function which approximates the integral of a Gaussian function:</p>
+<p><center><img src="logistical_eq.jpg" alt="AFM 3D eq" width="200" /></center></p>
+<p>where σ is very similar to the Gaussian width parameter sigma, a = 1.618 and h(x,y) is the height value at pixel (x,y) in the topographic image. The expansion of a 2D image to a 3D edge or surface requires at a minimum the specification of the new z dimension (in pixels), the range of surface convolution (in Å), and the sampling (in Å/pixel):</p>
+<p><center><img src="bsurf.gif" alt="Surface expansion" width="250" /></center></p>
+<div id="command"><p>bsurf -v 7 -expand 20 -pos 13,17 -sam 1.5 -resol 3.5 -inv brcy1.tif brcy1.mrc</p></div>
+<p>This command line will generate a volume, 20 voxels thick and with the minimum and maximum of the surface placed at 13 and 17 angstrom, respectively. The resolution option smooths the edge.</p>
+<br/>
+<h2>Bacteriorhodopsin example</h2>
+<p>The required starting files for this example:</p>
+<a href="bacteriorhodopsin_example.tgz">bacteriorhodopsin_example.tgz</a>
+<p>These include the cytoplasmic and extracellular AFM topographs of bacteriorhododopsin crystals:</p>
+<p><center><img src="wt_cyt_ext.jpg" alt="Bacteriorhodopsin AFM topographs"/></center></p>
+</br>
+<p>These topographs were used to generate the two surfaces:</p>
+<div id="command"><p>bsurf -v 7 -expand 80 -pos 67,75 -sam 1 -ori 62,62,40 -resol 3.5 wt_cyt.tiff wt_cyt.mrc</p></div>
+<div id="command"><p>bsurf -v 7 -expand 80 -pos 56,61 -sam 1 -ori 62,62,40 -resol 3.5 wt_ext.tiff wt_ext.mrc</p></div>
+<p>The extracellular surface was then rotated to bring it into the same frame as the cytoplasmic surface:</p>
+<div id="command"><p>bint -verb 7 -rot 0,1,0,180 -fill 0 wt_ext.mrc wt_ext_rot.mrc</p></div>
+<p>These surfaces were then combined into one volume:</p>
+<div id="command"><p>bop -verb 7 -small 1,0 wt_ext_rot.mrc wt_cyt.mrc wt_2surf.mrc</p></div>
+<p>The result is a volume bounded by the two surfaces. The atomic structure of the bacteriorhododopsin trimer (1QHJ) was then position between the surfaces, with the top surface facing the cytoplasm:</p>
+<p><center><img src="br2018.jpg" alt="A bacteriorhodopsin trimer between two surfaces" width="500"/></center></p>
+<br/>
+<br/>
+<br/>
+</div>
+<div id="footer">
+  Bernard Heymann  20180905
+</div>
+</body>
+</html>

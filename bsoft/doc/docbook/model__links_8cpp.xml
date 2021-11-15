@@ -1,0 +1,428 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_model__links_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/model/model_links.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/model/model_links.cpp</primary></indexterm>
+<para>
+
+<para>Library routines used for model links processing. </para>
+ 
+</para>
+<programlisting>#include &quot;model_links.h&quot;
+#include &quot;model_transform.h&quot;
+#include &quot;model_compare.h&quot;
+#include &quot;model_util.h&quot;
+#include &quot;matrix_util.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>long <link linkend="_model__links_8cpp_1a2228c34cdf47b278f9873f0d6d09119d">model_setup_links</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Set up the link list for each component. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__links_8cpp_1a92663a43cae7676cd8c1bad2dcf7ecd8">model_link_list_generate</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double maxlength)</para>
+
+<para>Generates a link list for a model based on vertex separation. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__links_8cpp_1a4208106d50148cc4689247de62d444ca">model_link_list_generate</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double maxlength, <link linkend="_class_bstring">Bstring</link> &amp;type1, <link linkend="_class_bstring">Bstring</link> &amp;type2, int flag)</para>
+
+<para>Generates a link list for a model based on vertex separation between defined componet types. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__links_8cpp_1aba9f320d61b662c9ad8e13efab90be7a">model_set_link_length</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double linklength)</para>
+
+<para>Sets the reference link lengths. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__links_8cpp_1a7273f0fe060ca3d585ed020e5856d686">model_set_link_radius</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double linkrad)</para>
+
+<para>Set the display radius for all links to a specific value. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bcomponent">Bcomponent</link> * <link linkend="_model__links_8cpp_1a926d3e3a20df9364061f66931d7ba859">model_linked_submodel</link> (<link linkend="_class_bcomponent">Bcomponent</link> *comp, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, long &amp;n, <link linkend="_class_vector3">Vector3</link>&lt; float &gt; &amp;avg_loc)</para>
+</listitem>
+            <listitem><para>long <link linkend="_model__links_8cpp_1a5ec55afa7e08d1fc7219134fca4ed774">model_reduce_linked</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bstring">Bstring</link> &amp;submodname, int flags)</para>
+
+<para>Reduces a model to one component per linked set of components. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__links_8cpp_1a224e00ea26553f5d424e0607c4077643">model_links_minimum_valency</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, long valency)</para>
+
+<para>Generates links such that each component has at least the given valency. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_model__links_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines used for model links processing. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20060908 </para>
+
+<para>Modified: 20210830 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_model__links_8cpp_1a92663a43cae7676cd8c1bad2dcf7ecd8"/>    <section>
+    <title>model_link_list_generate()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>model_link_list_generate</primary><secondary>model_links.cpp</secondary></indexterm>
+<indexterm><primary>model_links.cpp</primary><secondary>model_link_list_generate</secondary></indexterm>
+<para><computeroutput>long model_link_list_generate (<link linkend="_class_bmodel">Bmodel</link> * model, double maxlength)</computeroutput></para><para>
+
+<para>Generates a link list for a model based on vertex separation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>maxlength</entry>
+                                <entry>
+<para>maximum link length. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of links. <literallayout><computeroutput>Only the first model is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 75 of file model_links.cpp.</para>
+    </section><anchor xml:id="_model__links_8cpp_1a4208106d50148cc4689247de62d444ca"/>    <section>
+    <title>model_link_list_generate()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>model_link_list_generate</primary><secondary>model_links.cpp</secondary></indexterm>
+<indexterm><primary>model_links.cpp</primary><secondary>model_link_list_generate</secondary></indexterm>
+<para><computeroutput>long model_link_list_generate (<link linkend="_class_bmodel">Bmodel</link> * model, double maxlength, <link linkend="_class_bstring">Bstring</link> &amp; type1, <link linkend="_class_bstring">Bstring</link> &amp; type2, int flag)</computeroutput></para><para>
+
+<para>Generates a link list for a model based on vertex separation between defined componet types. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>maxlength</entry>
+                                <entry>
+<para>maximum link length. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>type1</entry>
+                                <entry>
+<para>first component type. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>type2</entry>
+                                <entry>
+<para>second component type. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flag</entry>
+                                <entry>
+<para>1=closest components. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of links. <literallayout><computeroutput>Only the first model is processed.
+A link is generated for the minimum distance if that is below the maximum length.
+If the flag is set, a link is generated only for the closest second component to the first.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 123 of file model_links.cpp.</para>
+    </section><anchor xml:id="_model__links_8cpp_1a926d3e3a20df9364061f66931d7ba859"/>    <section>
+    <title>model_linked_submodel()</title>
+<indexterm><primary>model_linked_submodel</primary><secondary>model_links.cpp</secondary></indexterm>
+<indexterm><primary>model_links.cpp</primary><secondary>model_linked_submodel</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bcomponent">Bcomponent</link>* model_linked_submodel (<link linkend="_class_bcomponent">Bcomponent</link> * comp, <link linkend="_class_bmodel">Bmodel</link> * model, long &amp; n, <link linkend="_class_vector3">Vector3</link>&lt; float &gt; &amp; avg_loc)</computeroutput></para><para>
+Definition at line 260 of file model_links.cpp.</para>
+    </section><anchor xml:id="_model__links_8cpp_1a224e00ea26553f5d424e0607c4077643"/>    <section>
+    <title>model_links_minimum_valency()</title>
+<indexterm><primary>model_links_minimum_valency</primary><secondary>model_links.cpp</secondary></indexterm>
+<indexterm><primary>model_links.cpp</primary><secondary>model_links_minimum_valency</secondary></indexterm>
+<para><computeroutput>long model_links_minimum_valency (<link linkend="_class_bmodel">Bmodel</link> * model, long valency)</computeroutput></para><para>
+
+<para>Generates links such that each component has at least the given valency. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>valency</entry>
+                                <entry>
+<para>the desired valency. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of links. <literallayout><computeroutput>A distance matrix is calculated and a cutoff determined that ensures
+that each column has at least the given valency number below it.
+The links are then created based on the cutoff.
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 411 of file model_links.cpp.</para>
+    </section><anchor xml:id="_model__links_8cpp_1a5ec55afa7e08d1fc7219134fca4ed774"/>    <section>
+    <title>model_reduce_linked()</title>
+<indexterm><primary>model_reduce_linked</primary><secondary>model_links.cpp</secondary></indexterm>
+<indexterm><primary>model_links.cpp</primary><secondary>model_reduce_linked</secondary></indexterm>
+<para><computeroutput>long model_reduce_linked (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bstring">Bstring</link> &amp; submodname, int flags)</computeroutput></para><para>
+
+<para>Reduces a model to one component per linked set of components. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure to be modified. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;submodname</entry>
+                                <entry>
+<para>sub-model file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>1=generate averaged types. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of new components. <literallayout><computeroutput>A new reduced set of components is generated.
+Each old set of linked components is saved as a sub-model and referenced as a type.
+Optionally, the old sets of components are averaged and the 
+averaged model saved as a type.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 301 of file model_links.cpp.</para>
+    </section><anchor xml:id="_model__links_8cpp_1aba9f320d61b662c9ad8e13efab90be7a"/>    <section>
+    <title>model_set_link_length()</title>
+<indexterm><primary>model_set_link_length</primary><secondary>model_links.cpp</secondary></indexterm>
+<indexterm><primary>model_links.cpp</primary><secondary>model_set_link_length</secondary></indexterm>
+<para><computeroutput>long model_set_link_length (<link linkend="_class_bmodel">Bmodel</link> * model, double linklength)</computeroutput></para><para>
+
+<para>Sets the reference link lengths. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>linklength</entry>
+                                <entry>
+<para>reference link length. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of links. <literallayout><computeroutput>Only the first model is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 218 of file model_links.cpp.</para>
+    </section><anchor xml:id="_model__links_8cpp_1a7273f0fe060ca3d585ed020e5856d686"/>    <section>
+    <title>model_set_link_radius()</title>
+<indexterm><primary>model_set_link_radius</primary><secondary>model_links.cpp</secondary></indexterm>
+<indexterm><primary>model_links.cpp</primary><secondary>model_set_link_radius</secondary></indexterm>
+<para><computeroutput>long model_set_link_radius (<link linkend="_class_bmodel">Bmodel</link> * model, double linkrad)</computeroutput></para><para>
+
+<para>Set the display radius for all links to a specific value. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>linkrad</entry>
+                                <entry>
+<para>link display radius. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components selected. <literallayout><computeroutput>Only the first model is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 245 of file model_links.cpp.</para>
+    </section><anchor xml:id="_model__links_8cpp_1a2228c34cdf47b278f9873f0d6d09119d"/>    <section>
+    <title>model_setup_links()</title>
+<indexterm><primary>model_setup_links</primary><secondary>model_links.cpp</secondary></indexterm>
+<indexterm><primary>model_links.cpp</primary><secondary>model_setup_links</secondary></indexterm>
+<para><computeroutput>long model_setup_links (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Set up the link list for each component. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long total number of links. <literallayout><computeroutput>Only the first model is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 28 of file model_links.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_model__links_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>model_links.cpp</secondary></indexterm>
+<indexterm><primary>model_links.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

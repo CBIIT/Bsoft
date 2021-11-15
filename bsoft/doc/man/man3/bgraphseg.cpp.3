@@ -1,0 +1,106 @@
+.TH "/Users/bernard/b20/bsoft/src/bgraphseg.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/bgraphseg.cpp \- Segment images into density regions using a nondirected graph\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmain\fP (int argc, char *argv[])"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Segment images into density regions using a nondirected graph\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20110318 
+.PP
+Modified: 20210303 
+.RE
+.PP
+
+.PP
+Definition in file \fBbgraphseg\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int main (int argc, char * argv[])"
+
+.PP
+Definition at line 50 of file bgraphseg\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+" ",
+"Usage: bgraphseg [options] input\&.img output\&.img",
+"-----------------------------------------------",
+"Segment images into density regions using a nondirected graph\&.",
+" ",
+"Actions:",
+"-invert                  Invert density in the image before other operations\&.",
+"-rescale -0\&.1,5\&.2        Rescale data to average and standard deviation before other operations\&.",
+"-gaussian 11,2\&.6         Gaussian smoothing filter: kernel size and sigma\&.",
+"-type srm                Type of segmentation (simple, srm)\&.",
+"-minimum 2300            Join segments smaller than this size\&.",
+"-voxel 23,241,193,1      Select the segment containing this voxel with an optional inversion flag\&.",
+"-colorize                Generate random segment colors\&.",
+" ",
+"Parameters:",
+"-verbose 7               Verbose output\&.",
+"-datatype u              Force writing of a new data type\&.",
+"-origin 0\&.8,-10,15\&.7     Set the origin (default from input image)\&.",
+"-connectivity            Flag to use full neighbor connectivity (default 2*dimension)\&.",
+"-complexity 1\&.6          Segmentation complexity: larger value gives more regions (default 1)\&.",
+" ",
+"Input:",
+"-Mask mask\&.tif           Mask to limit segmentation\&.",
+" ",
+"Output:",
+"-mask mask\&.tif           Multi-level mask with segemented regions\&.",
+" ",
+NULL
+}
+.fi
+.PP
+Definition at line 19 of file bgraphseg\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

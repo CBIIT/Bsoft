@@ -1,0 +1,389 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_file__util_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/util/file_util.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/util/file_util.cpp</primary></indexterm>
+<para>
+
+<para>Library functions for file checking. </para>
+ 
+</para>
+<programlisting>#include &quot;file_util.h&quot;
+#include &quot;string_util.h&quot;
+#include &quot;utilities.h&quot;
+#include &lt;fstream&gt;
+#include &lt;dirent.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="_file__util_8cpp_1a9c47011ebcae7be3707c99058920c810">test_access</link> (<link linkend="_class_bstring">Bstring</link> filename)</para>
+</listitem>
+            <listitem><para>string <link linkend="_file__util_8cpp_1adfa2e754e1b315bf6c890195a6a153eb">test_access</link> (string filename)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="_file__util_8cpp_1a9646dc7e8ff0a29e9ef9dce6b3e40d64">find_file</link> (<link linkend="_class_bstring">Bstring</link> filename, <link linkend="_class_bstring">Bstring</link> path, int flag)</para>
+
+<para>Searches for a file within or without the given path. </para>
+</listitem>
+            <listitem><para>string <link linkend="_file__util_8cpp_1aaa02a70a5e3d3a26bdd9c3bca91842f1">find_file</link> (string filename, string path, int flag)</para>
+</listitem>
+            <listitem><para>vector&lt; string &gt; <link linkend="_file__util_8cpp_1ad4d6fa0365303d7ddecf8756c82cb6a8">file_list</link> (string path)</para>
+
+<para>Returns a list of files in the requested directory. </para>
+</listitem>
+            <listitem><para>vector&lt; string &gt; <link linkend="_file__util_8cpp_1a3c3411ced4b9632566ecc66ffa64a72a">file_list</link> (string path, string ext)</para>
+
+<para>Returns a list of files in the requested directory. </para>
+</listitem>
+            <listitem><para><link linkend="_file__util_8h_1a2c794c5c13ab4dd7e65bad031dbe41c3">FileType</link> <link linkend="_file__util_8cpp_1af48eade49d3bc298a72d111bbd87d289">file_type</link> (const char *filename)</para>
+
+<para>Checks the file type using the extension and contents. </para>
+</listitem>
+            <listitem><para><link linkend="_file__util_8h_1a2c794c5c13ab4dd7e65bad031dbe41c3">FileType</link> <link linkend="_file__util_8cpp_1ae0cfddeda7c972b70f4550fb73e1a465">file_type</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+</listitem>
+            <listitem><para>int <link linkend="_file__util_8cpp_1a8b903b30a7413c291e88b5d6ecd98b51">fread_large</link> (unsigned char *aptr, size_t pagesize, size_t offset, ifstream *fimg)</para>
+
+<para>Reads blocks of memeory no larger than 1Gb. </para>
+</listitem>
+            <listitem><para>int <link linkend="_file__util_8cpp_1a8bfbac554bf1f39ee1ea0986f5782388">fread_large</link> (unsigned char *aptr, size_t pagesize, size_t offset, ifstream &amp;fimg)</para>
+</listitem>
+            <listitem><para>int <link linkend="_file__util_8cpp_1a4ba17bb7ea373dddad486b6a30013e2e">detect_and_fix_carriage_return</link> (const char *filename)</para>
+
+<para>Detects carriage returns in text files and converts them to new-lines. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_file__util_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library functions for file checking. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20070101 </para>
+
+<para>Modified: 20210413 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_file__util_8cpp_1a4ba17bb7ea373dddad486b6a30013e2e"/>    <section>
+    <title>detect_and_fix_carriage_return()</title>
+<indexterm><primary>detect_and_fix_carriage_return</primary><secondary>file_util.cpp</secondary></indexterm>
+<indexterm><primary>file_util.cpp</primary><secondary>detect_and_fix_carriage_return</secondary></indexterm>
+<para><computeroutput>int detect_and_fix_carriage_return (const char * filename)</computeroutput></para><para>
+
+<para>Detects carriage returns in text files and converts them to new-lines. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*filename</entry>
+                                <entry>
+<para>file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 if error. <literallayout><computeroutput>The first line is read and if any carriage returns are found, the whole
+file is scanned and carriage returns converted to new-lines.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 469 of file file_util.cpp.</para>
+    </section><anchor xml:id="_file__util_8cpp_1ad4d6fa0365303d7ddecf8756c82cb6a8"/>    <section>
+    <title>file_list()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>file_list</primary><secondary>file_util.cpp</secondary></indexterm>
+<indexterm><primary>file_util.cpp</primary><secondary>file_list</secondary></indexterm>
+<para><computeroutput>vector&lt;string&gt; file_list (string path)</computeroutput></para><para>
+
+<para>Returns a list of files in the requested directory. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;path</entry>
+                                <entry>
+<para>directory path. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;string&gt; list of file names. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 176 of file file_util.cpp.</para>
+    </section><anchor xml:id="_file__util_8cpp_1a3c3411ced4b9632566ecc66ffa64a72a"/>    <section>
+    <title>file_list()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>file_list</primary><secondary>file_util.cpp</secondary></indexterm>
+<indexterm><primary>file_util.cpp</primary><secondary>file_list</secondary></indexterm>
+<para><computeroutput>vector&lt;string&gt; file_list (string path, string ext)</computeroutput></para><para>
+
+<para>Returns a list of files in the requested directory. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;path</entry>
+                                <entry>
+<para>directory path. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;ext</entry>
+                                <entry>
+<para>file name extension. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;string&gt; list of file names. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 211 of file file_util.cpp.</para>
+    </section><anchor xml:id="_file__util_8cpp_1ae0cfddeda7c972b70f4550fb73e1a465"/>    <section>
+    <title>file_type()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>file_type</primary><secondary>file_util.cpp</secondary></indexterm>
+<indexterm><primary>file_util.cpp</primary><secondary>file_type</secondary></indexterm>
+<para><computeroutput><link linkend="_file__util_8h_1a2c794c5c13ab4dd7e65bad031dbe41c3">FileType</link> file_type (<link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+Definition at line 256 of file file_util.cpp.</para>
+    </section><anchor xml:id="_file__util_8cpp_1af48eade49d3bc298a72d111bbd87d289"/>    <section>
+    <title>file_type()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>file_type</primary><secondary>file_util.cpp</secondary></indexterm>
+<indexterm><primary>file_util.cpp</primary><secondary>file_type</secondary></indexterm>
+<para><computeroutput><link linkend="_file__util_8h_1a2c794c5c13ab4dd7e65bad031dbe41c3">FileType</link> file_type (const char * filename)</computeroutput></para><para>
+
+<para>Checks the file type using the extension and contents. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*filename</entry>
+                                <entry>
+<para>file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>FileType enumerated file type. <literallayout><computeroutput>The file extension is the main determinant of the file type.
+File formats with multiple types (such as the STAR and PDB formats)
+are distinguished based on content.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 250 of file file_util.cpp.</para>
+    </section><anchor xml:id="_file__util_8cpp_1a9646dc7e8ff0a29e9ef9dce6b3e40d64"/>    <section>
+    <title>find_file()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>find_file</primary><secondary>file_util.cpp</secondary></indexterm>
+<indexterm><primary>file_util.cpp</primary><secondary>find_file</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> find_file (<link linkend="_class_bstring">Bstring</link> filename, <link linkend="_class_bstring">Bstring</link> path, int flag)</computeroutput></para><para>
+
+<para>Searches for a file within or without the given path. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>filename</entry>
+                                <entry>
+<para>file name to search for. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>path</entry>
+                                <entry>
+<para>path to search in. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flag</entry>
+                                <entry>
+<para>if not found: bit 4 = warn; bit 5 = delete file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_bstring">Bstring</link> found file, empty if not found and delete_flag set. <literallayout><computeroutput>The input filename is first tested for access.
+If not found, the filename without its original path is tested.
+If not found, the filename with the given path is tested.
+If not found, an error is reported and the original filename returned 
+unless the delete flag is set.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 56 of file file_util.cpp.</para>
+    </section><anchor xml:id="_file__util_8cpp_1aaa02a70a5e3d3a26bdd9c3bca91842f1"/>    <section>
+    <title>find_file()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>find_file</primary><secondary>file_util.cpp</secondary></indexterm>
+<indexterm><primary>file_util.cpp</primary><secondary>find_file</secondary></indexterm>
+<para><computeroutput>string find_file (string filename, string path, int flag)</computeroutput></para><para>
+Definition at line 113 of file file_util.cpp.</para>
+    </section><anchor xml:id="_file__util_8cpp_1a8bfbac554bf1f39ee1ea0986f5782388"/>    <section>
+    <title>fread_large()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>fread_large</primary><secondary>file_util.cpp</secondary></indexterm>
+<indexterm><primary>file_util.cpp</primary><secondary>fread_large</secondary></indexterm>
+<para><computeroutput>int fread_large (unsigned char * aptr, size_t pagesize, size_t offset, ifstream &amp; fimg)</computeroutput></para><para>
+Definition at line 439 of file file_util.cpp.</para>
+    </section><anchor xml:id="_file__util_8cpp_1a8b903b30a7413c291e88b5d6ecd98b51"/>    <section>
+    <title>fread_large()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>fread_large</primary><secondary>file_util.cpp</secondary></indexterm>
+<indexterm><primary>file_util.cpp</primary><secondary>fread_large</secondary></indexterm>
+<para><computeroutput>int fread_large (unsigned char * aptr, size_t pagesize, size_t offset, ifstream * fimg)</computeroutput></para><para>
+
+<para>Reads blocks of memeory no larger than 1Gb. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*aptr</entry>
+                                <entry>
+<para>pointer to pre-allocated memory. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pagesize</entry>
+                                <entry>
+<para>size of pre-allocated memory. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>offset</entry>
+                                <entry>
+<para>offset in file. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*fimg</entry>
+                                <entry>
+<para>file pointer. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 if error. <literallayout><computeroutput>Each block is packed in sequence into the pre-allocated memory provided.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 420 of file file_util.cpp.</para>
+    </section><anchor xml:id="_file__util_8cpp_1a9c47011ebcae7be3707c99058920c810"/>    <section>
+    <title>test_access()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>test_access</primary><secondary>file_util.cpp</secondary></indexterm>
+<indexterm><primary>file_util.cpp</primary><secondary>test_access</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> test_access (<link linkend="_class_bstring">Bstring</link> filename)</computeroutput></para><para>
+Definition at line 18 of file file_util.cpp.</para>
+    </section><anchor xml:id="_file__util_8cpp_1adfa2e754e1b315bf6c890195a6a153eb"/>    <section>
+    <title>test_access()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>test_access</primary><secondary>file_util.cpp</secondary></indexterm>
+<indexterm><primary>file_util.cpp</primary><secondary>test_access</secondary></indexterm>
+<para><computeroutput>string test_access (string filename)</computeroutput></para><para>
+Definition at line 30 of file file_util.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_file__util_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>file_util.cpp</secondary></indexterm>
+<indexterm><primary>file_util.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

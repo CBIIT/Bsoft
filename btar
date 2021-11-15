@@ -1,0 +1,69 @@
+#!/bin/bash
+
+# Script to archive a Bsoft distribution
+# Bernard Heymann                                  
+# 20170711 - 20191112
+
+here=`pwd`
+bin_loc=$here
+if [ $# -ge 1 ];then
+	if [[ -d $1 ]]; then bin_loc="$( cd $1 && pwd )"; fi
+fi
+
+version=`sed "s/[^0-9]/_/g" bsoft/BVERSION`
+set today = `date +"%Y%m%d"`
+
+sys=`uname -s | cut -f1 -d"-"`
+dst=""
+
+if [ $sys = "Linux" ]; then
+	source /etc/os-release
+	dst=`echo $NAME | cut -f1 -d" "`
+	if [ $dst = "CentOS" ]; then
+		dst=$dst"_"`cat /etc/centos-release | cut -f4 -d" "`
+	else
+		dst=$dst"_"`echo $VERSION | cut -f1 -d" "`
+	fi
+elif [ $sys = "Darwin" ]; then
+	vrs=`uname -v | cut -f4 -d" " | cut -f1 -d"."`
+	vrs=$(( $vrs - 4 ))
+	dst="OSX_10_"$vrs
+fi
+
+version=${version}_${dst}
+echo $version
+
+tarfile=${here}'/bsoft'${version}'.tar'
+tgzfile=${here}'/bsoft'${version}'.tgz'
+
+echo Bsoft version:		$version
+echo Binary location:	$bin_loc
+
+cd $bin_loc
+
+if [ ! -e bsoft/bin/bshow ]; then
+	cd bsoft/bin
+	ln -s ../tcltk/bshow .
+	ln -s ../tcltk/brun .
+	cd ../..
+fi
+
+
+TAR='tar vrbf 20 '$tarfile
+
+tar vcbf 20 $tarfile bsoft/benv bsoft/bsetup bsoft/bsoft.*rc bsoft/BVERSION 
+$TAR bsoft/bin bsoft/lib bsoft/parameters
+$TAR bsoft/tcltk
+if [ $sys = "Darwin" ]; then
+	$TAR bsoft/macinstall
+	$TAR bsoft/Bshow.app 
+	$TAR bsoft/Brun.app
+fi
+$TAR bsoft/doc
+
+gzip -c $tarfile > $tgzfile
+
+ls -l $tarfile
+ls -l $tgzfile
+
+

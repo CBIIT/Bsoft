@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Compile</title>
+<link href="bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+    <h1>Unix</h1>
+	
+	<p>The preferred way to install Bsoft 2 is through already 
+	compiled binary distributions for Linux or Mac OS X.
+	For other Unix flavors, the source code needs to be compiled.</p>
+    <br/>
+	<p><font color="FF0000">Note: There is a bug on Ubuntu that prevents proper compilation 
+	and launching of shared objects. I would advise compiling Bsoft
+	on Fedora or a related Redhat distribution. It should run under
+	Ubuntu as well.</font></p>
+    <br/>
+	
+	<h2>Platforms supported</h2>
+	<p>Bsoft 2 should compile on any of the following platforms, potentially 
+	with some tweaks in the compiler scripts:</p>
+    <ul>
+      <li>Linux (i386/i686, x86_64, PowerPC, Alpha, Itanium)</li>
+      <li>Darwin or MacOSX (PowerPC, Intel)</li>
+      <li>IRIX64 (SGI)</li>
+      <li>Solaris (Sun)</li>
+      <li>AIX (IBM)</li>
+      <li>OSF1 or Tru64 (Alpha)</li>
+      <li>VMS (Alpha)</li>
+      <li>Cygwin_NT (Windows NT)</li>
+    </ul>
+    <br/>
+    <h2>Requirements</h2>
+    <h3>Mac OS X:</h3>
+    <p>The default installations of Mac OS X don't have the compilers installed.
+	Download Xcode from the Apple developer's web site and install it first:</p>
+    <ul>
+      <a href="https://developer.apple.com/xcode/">https://developer.apple.com/xcode</a>
+    </ul>
+    <p>Note that the Mac OS X Xcode versions should be matched with the different operating systems:</p>
+    <ul>
+      <li>Mac OS X 10.4 (Tiger): Xcode 2.5</li>
+      <li>Mac OS X 10.5 (Leopard): Xcode 3</li>
+      <li>Mac OS X 10.6 (Snow Leopard): Xcode 3</li>
+      <li>Mac OS X 10.7 (Lion): Xcode 4</li>
+      <li>Mac OS X 10.8 (Mountain Lion): Xcode 4</li>
+      <li>Mac OS X 10.9 (Mavericks): Xcode 5</li>
+      <li>Mac OS X 10.10 (Yosemite): Xcode 6</li>
+      <li>Mac OS X 10.11 (El Capitan): Xcode 7</li>
+      <li>Mac OS X 10.12 (Sierra): Xcode 8</li>
+      <li>Mac OS X 10.13 (High Sierra): Xcode 9</li>
+      <li>Mac OS X 10.15 (Catalina): Xcode 12</li>
+    </ul>
+    <br/>
+    <h3>The Z library:</h3>
+    <p>The inclusion of the PNG format in Bsoft requires libz for compression.
+	The required files are:</p>
+    <ul>
+		<li>/usr/include/zlib.h or /usr/local/include/zlib.h</li>
+      	<li>/usr/lib/libz.* (such as libz.a or libz.so)</li>
+    </ul>
+    <br />
+    <h3>Tcl/Tk:</h3>
+    <p>Bsoft is primarily a command-line package, with all the necessary code 
+	included in the package. However, from version 0.9, it includes a Tcl/Tk 
+	interface and a Tcl/Tk script, <strong>bshow</strong>, useful for the 
+	display of images and a few interactive manipulations (not available for VMS). 
+	The Tcl/Tk version must be 8.3 or higher. Bsoft can be compiled without 
+	Tcl/Tk (see below for details).</p>
+  <p>On most Unix boxes, the Tcl/Tk headers and libraries are installed in either
+  /usr or /usr/local (look for /usr/include/tk.h or /usr/local/include/tk.h). 
+  Linux distributions typically have separate packages for the runtime and 
+  developer versions of Tcl/Tk. Both need to be installed to be able to use 
+  <strong>bshow</strong>.</p>
+    <p>The Bsoft compiler script, bmake, tries to find the Tcl/Tk headers 
+	automatically. Make sure the Tcl/Tk version is 8.3 or higher. There may 
+	be a version suitable for installation under VMS, but try at your own 
+	risk. Make sure the commands &quot;tcl&quot; and &quot;wish&quot; are 
+	in your executable path.</p>
+
+	<h4>Fedora:</h4>
+	<pre>
+		sudo yum install tk-devel
+	</pre>
+	<h4>Ubuntu:</h4>
+	<pre>
+		sudo apt-get install tk-dev
+	</pre>
+    <br/>
+    <h3>XML:</h3>
+    <p>The default format for  parameter files is the STAR format. These can 
+	also be written in an XML format, but requires the <strong>libxml2</strong> 
+	library with its header files. The common locations for the header files 
+	are in /usr/include/libxml2 and the library in /usr/lib. The source code
+	for this library is not included in Bsoft due to its sheer size.</p>
+
+	<h4>Fedora:</h4>
+	<pre>
+		sudo yum install libxml2-devel
+	</pre>
+	<h4>Ubuntu:</h4>
+	<pre>
+		sudo apt-get install libxml2-dev
+	</pre>
+	<br/>
+	
+	<h3>Required packages</h3>
+	<p>These packages can be replaced with newer versions. This will require recompiling everything</p>
+	<h4>FFTW3</h4>
+    <p>Web site: <a href="http://www.fftw.org/" target="_blank">FFTW</a></p>
+	<h4>TIFF library</h4>
+	<p>Web site: <a href="http://www.remotesensing.org/libtiff" target="_blank">http://www.remotesensing.org/libtiff</a></p>
+	<h4>JPEG library</h4>
+	<p>Web site: <a href="http://www.ijg.org" target="_blank">http://www.ijg.org</a></p>
+	<h4>PNG library</h4>
+	<p>Web site: <a href="http://www.libpng.org" target="_blank">http://www.libpng.org</a></p>
+	<br/>
+
+	<h2>Download</h2>
+	<p><a href="bsoft2_1_3.tgz">bsoft2_1_3.tgz</a></p>
+	<br/>
+	
+	<h2>Unpack</h2>
+	<pre>
+		tar xzvf bsoft2_1_3.tgz
+	</pre>
+	<br/>
+	
+	<h2>Compile</h2>
+	<pre>
+		bconf -c
+		make
+		make install BINSTALL=/usr/local/bsoft
+	</pre>
+	
+</div>
+<br/>
+<br/>
+<div id="footer">
+  Bernard Heymann  20210720
+</div>
+</body>
+</html>

@@ -1,0 +1,1174 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_utilities_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/util/utilities.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/util/utilities.cpp</primary></indexterm>
+<para>
+
+<para>Library functions useful in all the package. </para>
+ 
+</para>
+<programlisting>#include &lt;errno.h&gt;
+#include &lt;sys/sysctl.h&gt;
+#include &lt;stdio.h&gt;
+#include &quot;utilities.h&quot;
+#include &lt;iostream&gt;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_utilities_8cpp_1a10babcc32333f7b90f616e3269c9c1bb">MAX_GET_LEN</link>   32</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_utilities_8cpp_1a947aa7505be03bd56f899595d109f14a">verbose</link> (0)</para>
+</listitem>
+            <listitem><para>ostream &amp; <link linkend="_utilities_8cpp_1a243b53ba9107e16b3efffbe709b86085">tab</link> (ostream &amp;out)</para>
+</listitem>
+            <listitem><para>int <link linkend="_utilities_8cpp_1ae62313715baf7b0990a14b502f1d6b4e">cmd_line</link> (int argc, char **argv)</para>
+
+<para>Reconstructs the command line as a global string. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="_utilities_8cpp_1aa5de384cb068cdbf98d10d50f9804c2b">command_line</link> ()</para>
+
+<para>Returns the command line. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="_utilities_8cpp_1af1f14352f65e090846fa6cc295788b12">command_line_time</link> ()</para>
+
+<para>Returns the command line and time in a string. </para>
+</listitem>
+            <listitem><para>string <link linkend="_utilities_8cpp_1a52b3ca0c3657a351b6fb3a5360f9f63e">command_line_time2</link> ()</para>
+</listitem>
+            <listitem><para>string <link linkend="_utilities_8cpp_1a2efd376c8a64ca818f2c92f6e2d62375">get_user_name</link> ()</para>
+
+<para>Returns the user name. </para>
+</listitem>
+            <listitem><para>void <link linkend="_utilities_8cpp_1a366b9704328c9f204b3d5897503f8708">usage</link> (const char **<link linkend="_radonrecon_8cpp_1a4de0ad4c7190962494815c0fa7f948df">use</link>, int all)</para>
+
+<para>Prints usage information. </para>
+</listitem>
+            <listitem><para><link linkend="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbb">SysType</link> <link linkend="_utilities_8cpp_1a9ac4942a801cba6db2f907825ef4a696">systype</link> (int <link linkend="_rw_d_m_8cpp_1ae83c07067345faf98c959261a0b7db76">show</link>)</para>
+
+<para>Finds the system type - mostly just for byte order. </para>
+</listitem>
+            <listitem><para>size_t <link linkend="_utilities_8cpp_1a39b498f28c097b80429eb9c361f0a637">system_processors</link> ()</para>
+
+<para>Returns the number of processors. </para>
+</listitem>
+            <listitem><para>long <link linkend="_utilities_8cpp_1a90fbedc21a67ff579833f619bb473995">system_memory</link> ()</para>
+
+<para>Returns system memory size. </para>
+</listitem>
+            <listitem><para>int <link linkend="_utilities_8cpp_1aaf41c334d1cd13e11119ccde7b63a073">memory_check</link> (long mem_required)</para>
+
+<para>Checking if there is enough memory, abort if not. </para>
+</listitem>
+            <listitem><para>int <link linkend="_utilities_8cpp_1ab9a53ea733d8033e6ccad6a0b8095453">bexit</link> (int value)</para>
+
+<para>Exit function for cleanup and debugging. </para>
+</listitem>
+            <listitem><para><link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> <link linkend="_utilities_8cpp_1a0e606782a14674bc9b3338da472a588f">getdatatype</link> (char letter)</para>
+
+<para>Get the data type indicated by a single letter code. </para>
+</listitem>
+            <listitem><para><link linkend="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36">CompoundType</link> <link linkend="_utilities_8cpp_1a577dbbcccf0321901e85aa6b0408f79e">getcompoundtype</link> (int ch, string sct)</para>
+
+<para>Get the compound type indicated by a single letter code. </para>
+</listitem>
+            <listitem><para>int <link linkend="_utilities_8cpp_1a2cb74dc7bef6703101f5ca23dbba59c0">select_numbers</link> (<link linkend="_class_bstring">Bstring</link> &amp;string, int n, int *numsel)</para>
+
+<para>Converts a string with a selection specification into an integer array. </para>
+</listitem>
+            <listitem><para>vector&lt; int &gt; <link linkend="_utilities_8cpp_1a829f8cdab5dbe300108058c49d943c8a">select_numbers</link> (<link linkend="_class_bstring">Bstring</link> &amp;string, int n)</para>
+</listitem>
+            <listitem><para>int <link linkend="_utilities_8cpp_1afc053aac8944e3aa1ea02def8da506ea">findNextPowerOf</link> (int startNumber, int powerOf)</para>
+
+<para>Finds the next greatest number that is a power of a given number. </para>
+</listitem>
+            <listitem><para>int <link linkend="_utilities_8cpp_1a2b98846966eadf25319b2cfd57d4b6ee">get_integer</link> (char *ptr, int len)</para>
+
+<para>Converts a defined length string into an integer. </para>
+</listitem>
+            <listitem><para>float <link linkend="_utilities_8cpp_1a415347fff30989a17d8d299e7a380437">get_float</link> (char *ptr, int len)</para>
+
+<para>Converts a defined length string into a floating point number. </para>
+</listitem>
+            <listitem><para>void <link linkend="_utilities_8cpp_1a7c34c09caa6db2e95277e55583b9533d">swapbytes</link> (unsigned char *v, size_t n)</para>
+
+<para>Swaps bytes. </para>
+</listitem>
+            <listitem><para>void <link linkend="_utilities_8cpp_1af70965545c734c39ab096b9a49614cde">swapbytes</link> (size_t size, unsigned char *v, size_t n)</para>
+
+<para>Swaps bytes. </para>
+</listitem>
+            <listitem><para>void <link linkend="_utilities_8cpp_1aee0a3ad13b1f4046d15263b078080de8">vax2ieee</link> (unsigned char *v, int <link linkend="_rw_d_m_8cpp_1a7f7475c3cffaf702ef2766959df86817">sb</link>)</para>
+
+<para>Converts VAX floating point format to IEEE floating point format. </para>
+</listitem>
+            <listitem><para>double <link linkend="_utilities_8cpp_1a0d4492f03ef8ece5d6bf2160ce56a111">angle_set_negPI_to_PI</link> (double <link linkend="__vector3_8h_1a4d0ad562e2f2e87c018fe778805aa3cf">angle</link>)</para>
+
+<para>Returns an angle between -PI and PI. </para>
+</listitem>
+            <listitem><para>float <link linkend="_utilities_8cpp_1a25bcf9d23423dc2026c422332f201f63">remove_negative_zeros</link> (float value0, float threshold)</para>
+
+<para>Prevent a negative sign from being placed in front of zero value in a text file. </para>
+</listitem>
+            <listitem><para>size_t <link linkend="_utilities_8cpp_1a3a23ba078cc651f239970dda0a79d83d">get_chunk_size</link> (size_t datasize)</para>
+
+<para>Returns the chunk size per thread. </para>
+</listitem>
+            <listitem><para>size_t <link linkend="_utilities_8cpp_1a9bb8465a554840ccd5d9d872d5d414f2">get_chunk_size</link> (size_t datasize, size_t c)</para>
+
+<para>Returns the chunk size per thread. </para>
+</listitem>
+            <listitem><para>int <link linkend="_utilities_8cpp_1a6efa2bceaf99fbf9bd728c980ba23c13">error_show</link> (const char *message, const char *file, int line)</para>
+
+<para>Displays the error with file and line reference. </para>
+</listitem>
+            <listitem><para>int <link linkend="_utilities_8cpp_1aebc2f92a4d3a1bdd0b7cfd48b2f1c64f">error_show</link> (string message, string file, int line)</para>
+
+<para>Displays the error with file and line reference. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>string <link linkend="_utilities_8cpp_1a4c9ef422180cc13bda2c623c7b9d43e5">command</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library functions useful in all the package. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19990722 </para>
+
+<para>Modified: 20200610 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_utilities_8cpp_1a10babcc32333f7b90f616e3269c9c1bb"/>    <section>
+    <title>MAX_GET_LEN</title>
+<indexterm><primary>MAX_GET_LEN</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>MAX_GET_LEN</secondary></indexterm>
+<para><computeroutput>#define MAX_GET_LEN   32</computeroutput></para><para>
+Definition at line 16 of file utilities.cpp.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_utilities_8cpp_1a0d4492f03ef8ece5d6bf2160ce56a111"/>    <section>
+    <title>angle_set_negPI_to_PI()</title>
+<indexterm><primary>angle_set_negPI_to_PI</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>angle_set_negPI_to_PI</secondary></indexterm>
+<para><computeroutput>double angle_set_negPI_to_PI (double angle)</computeroutput></para><para>
+
+<para>Returns an angle between -PI and PI. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>angle</entry>
+                                <entry>
+<para>input angle. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double angle between -PI and PI.</para>
+</formalpara>
+Reference: Derived from CCP4 code </para>
+<para>
+Definition at line 607 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1ab9a53ea733d8033e6ccad6a0b8095453"/>    <section>
+    <title>bexit()</title>
+<indexterm><primary>bexit</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>bexit</secondary></indexterm>
+<para><computeroutput>int bexit (int value)</computeroutput></para><para>
+
+<para>Exit function for cleanup and debugging. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>value</entry>
+                                <entry>
+<para>exit value. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int given value. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 294 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1ae62313715baf7b0990a14b502f1d6b4e"/>    <section>
+    <title>cmd_line()</title>
+<indexterm><primary>cmd_line</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>cmd_line</secondary></indexterm>
+<para><computeroutput>int cmd_line (int argc, char ** argv)</computeroutput></para><para>
+
+<para>Reconstructs the command line as a global string. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>argc</entry>
+                                <entry>
+<para>the number of command line arguments. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>**argv</entry>
+                                <entry>
+<para>the command line arguments. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Concatenates the command line arguments into one string.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 36 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1aa5de384cb068cdbf98d10d50f9804c2b"/>    <section>
+    <title>command_line()</title>
+<indexterm><primary>command_line</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>command_line</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> command_line ( )</computeroutput></para><para>
+
+<para>Returns the command line. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para><link linkend="_class_bstring">Bstring</link> new string. <literallayout><computeroutput>This is designed to pack the command line into a string.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 58 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1af1f14352f65e090846fa6cc295788b12"/>    <section>
+    <title>command_line_time()</title>
+<indexterm><primary>command_line_time</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>command_line_time</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> command_line_time ( )</computeroutput></para><para>
+
+<para>Returns the command line and time in a string. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para><link linkend="_class_bstring">Bstring</link> new string. <literallayout><computeroutput>This is designed to pack the command line into a string followed by
+a second string for the time.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 71 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a52b3ca0c3657a351b6fb3a5360f9f63e"/>    <section>
+    <title>command_line_time2()</title>
+<indexterm><primary>command_line_time2</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>command_line_time2</secondary></indexterm>
+<para><computeroutput>string command_line_time2 ( )</computeroutput></para><para>
+Definition at line 85 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a6efa2bceaf99fbf9bd728c980ba23c13"/>    <section>
+    <title>error_show()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>error_show</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>error_show</secondary></indexterm>
+<para><computeroutput>int error_show (const char * message, const char * file, int line)</computeroutput></para><para>
+
+<para>Displays the error with file and line reference. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*message</entry>
+                                <entry>
+<para>a string to be included. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*file</entry>
+                                <entry>
+<para>the file name (should be <emphasis role="bold">FILE</emphasis>). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>line</entry>
+                                <entry>
+<para>the line number (should be <emphasis role="bold">LINE</emphasis>). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error number. <literallayout><computeroutput>The function uses perror() to display a message containing the source
+file and line number where it originated.
+</computeroutput></literallayout> Reference: Derived from CCP4 code </para>
+</formalpara>
+</para>
+<para>
+Definition at line 729 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1aebc2f92a4d3a1bdd0b7cfd48b2f1c64f"/>    <section>
+    <title>error_show()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>error_show</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>error_show</secondary></indexterm>
+<para><computeroutput>int error_show (string message, string file, int line)</computeroutput></para><para>
+
+<para>Displays the error with file and line reference. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*message</entry>
+                                <entry>
+<para>a string to be included. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*file</entry>
+                                <entry>
+<para>the file name (should be <emphasis role="bold">FILE</emphasis>). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>line</entry>
+                                <entry>
+<para>the line number (should be <emphasis role="bold">LINE</emphasis>). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error number. <literallayout><computeroutput>The function uses perror() to display a message containing the source
+file and line number where it originated.
+</computeroutput></literallayout> Reference: Derived from CCP4 code </para>
+</formalpara>
+</para>
+<para>
+Definition at line 768 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1afc053aac8944e3aa1ea02def8da506ea"/>    <section>
+    <title>findNextPowerOf()</title>
+<indexterm><primary>findNextPowerOf</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>findNextPowerOf</secondary></indexterm>
+<para><computeroutput>int findNextPowerOf (int startNumber, int powerOf)</computeroutput></para><para>
+
+<para>Finds the next greatest number that is a power of a given number. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Dan Krainak </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>startNumber</entry>
+                                <entry>
+<para>number to begin from. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>powerOf</entry>
+                                <entry>
+<para>power of this number is the number returned. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int the next greatest power (i.e. 128) or 0 on error. <literallayout><computeroutput>Loop through the powerOf variable, multiplying it each successive
+iteration until it is greater than the starting number.
+Eg., the next greatest power of 2 starting at 100 is 128.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 446 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a3a23ba078cc651f239970dda0a79d83d"/>    <section>
+    <title>get_chunk_size()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>get_chunk_size</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>get_chunk_size</secondary></indexterm>
+<para><computeroutput>size_t get_chunk_size (size_t datasize)</computeroutput></para><para>
+
+<para>Returns the chunk size per thread. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>datasize</entry>
+                                <entry>
+<para>size of data to be divided into chunks. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long chunk size. <literallayout><computeroutput>If multiple processors are used, the chunk size is set to the data size
+divided by the number of processors.
+Otherwise, the chunk size is equal to the data size.
+</computeroutput></literallayout> Reference: Derived from CCP4 code </para>
+</formalpara>
+</para>
+<para>
+Definition at line 658 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a9bb8465a554840ccd5d9d872d5d414f2"/>    <section>
+    <title>get_chunk_size()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>get_chunk_size</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>get_chunk_size</secondary></indexterm>
+<para><computeroutput>size_t get_chunk_size (size_t datasize, size_t c)</computeroutput></para><para>
+
+<para>Returns the chunk size per thread. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>datasize</entry>
+                                <entry>
+<para>size of data to be divided into chunks. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>c</entry>
+                                <entry>
+<para>channel size to align chunk to. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long chunk size. <literallayout><computeroutput>If multiple processors are used, the chunk size is set to the data size
+divided by the number of processors.
+Otherwise, the chunk size is equal to the data size.
+</computeroutput></literallayout> Reference: Derived from CCP4 code </para>
+</formalpara>
+</para>
+<para>
+Definition at line 692 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a415347fff30989a17d8d299e7a380437"/>    <section>
+    <title>get_float()</title>
+<indexterm><primary>get_float</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>get_float</secondary></indexterm>
+<para><computeroutput>float get_float (char * ptr, int len)</computeroutput></para><para>
+
+<para>Converts a defined length string into a floating point number. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*ptr</entry>
+                                <entry>
+<para>pointer to the string. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>len</entry>
+                                <entry>
+<para>length to be scanned. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>float the floating point number. <literallayout><computeroutput>The string is copied, 0-terminated, and scanned for a floating point number.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 495 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a2b98846966eadf25319b2cfd57d4b6ee"/>    <section>
+    <title>get_integer()</title>
+<indexterm><primary>get_integer</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>get_integer</secondary></indexterm>
+<para><computeroutput>int get_integer (char * ptr, int len)</computeroutput></para><para>
+
+<para>Converts a defined length string into an integer. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*ptr</entry>
+                                <entry>
+<para>pointer to the string. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>len</entry>
+                                <entry>
+<para>length to be scanned. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int the integer. <literallayout><computeroutput>The string is copied, 0-terminated, and scanned for an integer.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 472 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a2efd376c8a64ca818f2c92f6e2d62375"/>    <section>
+    <title>get_user_name()</title>
+<indexterm><primary>get_user_name</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>get_user_name</secondary></indexterm>
+<para><computeroutput>string get_user_name ( )</computeroutput></para><para>
+
+<para>Returns the user name. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para>string user name. <literallayout><computeroutput>It uses getpwuid_r (thread safe) to find the user in the password file.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 106 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a577dbbcccf0321901e85aa6b0408f79e"/>    <section>
+    <title>getcompoundtype()</title>
+<indexterm><primary>getcompoundtype</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>getcompoundtype</secondary></indexterm>
+<para><computeroutput><link linkend="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36">CompoundType</link> getcompoundtype (int ch, string sct)</computeroutput></para><para>
+
+<para>Get the compound type indicated by a single letter code. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>ch</entry>
+                                <entry>
+<para>number of channels. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sct</entry>
+                                <entry>
+<para>string indicating compound type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>CompoundType compound type. <literallayout><computeroutput>This function is used in optional command-line arguments to indicate
+a new compound type for an image.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 345 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a0e606782a14674bc9b3338da472a588f"/>    <section>
+    <title>getdatatype()</title>
+<indexterm><primary>getdatatype</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>getdatatype</secondary></indexterm>
+<para><computeroutput><link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> getdatatype (char letter)</computeroutput></para><para>
+
+<para>Get the data type indicated by a single letter code. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>letter</entry>
+                                <entry>
+<para>letter indicating data type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>DataType data type. <literallayout><computeroutput>This function is used in optional command-line arguments to indicate 
+a new data type for an image.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 309 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1aaf41c334d1cd13e11119ccde7b63a073"/>    <section>
+    <title>memory_check()</title>
+<indexterm><primary>memory_check</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>memory_check</secondary></indexterm>
+<para><computeroutput>int memory_check (long mem_required)</computeroutput></para><para>
+
+<para>Checking if there is enough memory, abort if not. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>mem_required</entry>
+                                <entry>
+<para>memory required. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 1 if enough. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 269 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a25bcf9d23423dc2026c422332f201f63"/>    <section>
+    <title>remove_negative_zeros()</title>
+<indexterm><primary>remove_negative_zeros</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>remove_negative_zeros</secondary></indexterm>
+<para><computeroutput>float remove_negative_zeros (float value0, float threshold)</computeroutput></para><para>
+
+<para>Prevent a negative sign from being placed in front of zero value in a text file. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>David Belnap </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>value0</entry>
+                                <entry>
+<para>input value to be tested </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>threshold</entry>
+                                <entry>
+<para>a small negative number </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>float &quot;Corrected&quot; or input value <literallayout><computeroutput>This function is intended to be used when obvious zero values are set
+to a very small negative number.  Input value is set to zero if
+              value0 &gt; threshold  and  value0 &lt; 0
+If so, the value is reset to zero.  Otherwise, the input value is 
+returned.
+</computeroutput></literallayout> Reference: Derived from CCP4 code </para>
+</formalpara>
+</para>
+<para>
+Definition at line 635 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a829f8cdab5dbe300108058c49d943c8a"/>    <section>
+    <title>select_numbers()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>select_numbers</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>select_numbers</secondary></indexterm>
+<para><computeroutput>vector&lt;int&gt; select_numbers (<link linkend="_class_bstring">Bstring</link> &amp; string, int n)</computeroutput></para><para>
+Definition at line 391 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a2cb74dc7bef6703101f5ca23dbba59c0"/>    <section>
+    <title>select_numbers()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>select_numbers</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>select_numbers</secondary></indexterm>
+<para><computeroutput>int select_numbers (<link linkend="_class_bstring">Bstring</link> &amp; string, int n, int * numsel)</computeroutput></para><para>
+
+<para>Converts a string with a selection specification into an integer array. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;string</entry>
+                                <entry>
+<para>string. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>length of integer array. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*numsel</entry>
+                                <entry>
+<para>pre-allocated integer array. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of levels. <literallayout><computeroutput>The integer array must be allocated to a length that would accommodate
+the highest number in the selection.
+If the string length is zero, all elements are selected.
+Multiple subsets are separated by colons
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 384 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1af70965545c734c39ab096b9a49614cde"/>    <section>
+    <title>swapbytes()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>swapbytes</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>swapbytes</secondary></indexterm>
+<para><computeroutput>void swapbytes (size_t size, unsigned char * v, size_t n)</computeroutput></para><para>
+
+<para>Swaps bytes. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of the block to be swapped. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*v</entry>
+                                <entry>
+<para>a pointer to the bytes. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>number of bytes to swap. <literallayout><computeroutput>Byte swapping is done in place. 
+</computeroutput></literallayout> </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line 538 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a7c34c09caa6db2e95277e55583b9533d"/>    <section>
+    <title>swapbytes()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>swapbytes</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>swapbytes</secondary></indexterm>
+<para><computeroutput>void swapbytes (unsigned char * v, size_t n)</computeroutput></para><para>
+
+<para>Swaps bytes. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*v</entry>
+                                <entry>
+<para>a pointer to the bytes. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>number of bytes to swap. <literallayout><computeroutput>Byte swapping is done in place. 
+</computeroutput></literallayout> </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line 517 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a90fbedc21a67ff579833f619bb473995"/>    <section>
+    <title>system_memory()</title>
+<indexterm><primary>system_memory</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>system_memory</secondary></indexterm>
+<para><computeroutput>long system_memory ( )</computeroutput></para><para>
+
+<para>Returns system memory size. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para>long memory size. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 225 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a39b498f28c097b80429eb9c361f0a637"/>    <section>
+    <title>system_processors()</title>
+<indexterm><primary>system_processors</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>system_processors</secondary></indexterm>
+<para><computeroutput>size_t system_processors ( )</computeroutput></para><para>
+
+<para>Returns the number of processors. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para>long number of processors. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 207 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a9ac4942a801cba6db2f907825ef4a696"/>    <section>
+    <title>systype()</title>
+<indexterm><primary>systype</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>systype</secondary></indexterm>
+<para><computeroutput><link linkend="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbb">SysType</link> systype (int show)</computeroutput></para><para>
+
+<para>Finds the system type - mostly just for byte order. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>show</entry>
+                                <entry>
+<para>a flag to indicate if the result should be shown. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>SysType an enumerated type. <literallayout><computeroutput>Test the byte order of an arbitrary byte sequence by interpreting it as
+an integer or a floating point number.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 165 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a243b53ba9107e16b3efffbe709b86085"/>    <section>
+    <title>tab()</title>
+<indexterm><primary>tab</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>tab</secondary></indexterm>
+<para><computeroutput>ostream&amp; tab (ostream &amp; out)</computeroutput></para><para>
+Definition at line 22 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a366b9704328c9f204b3d5897503f8708"/>    <section>
+    <title>usage()</title>
+<indexterm><primary>usage</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>usage</secondary></indexterm>
+<para><computeroutput>void usage (const char ** use, int all)</computeroutput></para><para>
+
+<para>Prints usage information. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**use</entry>
+                                <entry>
+<para>the string array. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>all</entry>
+                                <entry>
+<para>flag to output all usage information. <literallayout><computeroutput>The usage information must be written into an array of srings, with each
+string a line and following a specific convention for the Bsoft package.
+The first line with non-space characters must start with &quot;Usage:&quot; 
+followed by the command-line syntax. The next lines should describe the
+program. The options are indicated by lines strating with &quot;-&quot;.
+The options are categorized as &quot;Actions&quot;, &quot;Parameters&quot;, &quot;Input&quot;,
+and &quot;Output&quot;. This constitutes the brief form.
+An additional section can be added as &quot;Examples&quot;, that is shown
+only when the &quot;all&quot; argument is set.
+</computeroutput></literallayout> </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line 140 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1aee0a3ad13b1f4046d15263b078080de8"/>    <section>
+    <title>vax2ieee()</title>
+<indexterm><primary>vax2ieee</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>vax2ieee</secondary></indexterm>
+<para><computeroutput>void vax2ieee (unsigned char * v, int sb)</computeroutput></para><para>
+
+<para>Converts VAX floating point format to IEEE floating point format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*v</entry>
+                                <entry>
+<para>four-byte array holding the floating point value </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sb</entry>
+                                <entry>
+<para>flag to swap bytes before conversion <literallayout><computeroutput>Swap bytes prior to conversion if the swap flag is set.
+Handle special cases of zero, infinity, NaN or normalized values
+Otherwise assign the new byte values
+</computeroutput></literallayout> Reference: Derived from CCP4 code </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line 561 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8cpp_1a947aa7505be03bd56f899595d109f14a"/>    <section>
+    <title>verbose()</title>
+<indexterm><primary>verbose</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose (0 )</computeroutput></para></section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_utilities_8cpp_1a4c9ef422180cc13bda2c623c7b9d43e5"/>    <section>
+    <title>command</title>
+<indexterm><primary>command</primary><secondary>utilities.cpp</secondary></indexterm>
+<indexterm><primary>utilities.cpp</primary><secondary>command</secondary></indexterm>
+<para><computeroutput>string command</computeroutput></para><para>
+Definition at line 20 of file utilities.cpp.</para>
+</section>
+</section>
+</section>

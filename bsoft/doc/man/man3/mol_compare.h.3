@@ -1,0 +1,263 @@
+.TH "/Users/bernard/b20/bsoft/include/mol_compare.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/mol_compare.h \- Library routines used to compare sets of atomic coordinates\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Transform\&.h'\fP
+.br
+\fC#include 'Matrix\&.h'\fP
+.br
+\fC#include 'rwmolecule\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "double \fBmolgroup_rotate_and_compare\fP (\fBBmolgroup\fP *molgroup, \fBTransform\fP t)"
+.br
+.RI "Copies and rotates the molecule group and compares it with the original\&. "
+.ti -1c
+.RI "\fBTransform\fP \fBmolgroup_find_transformation\fP (\fBBmolgroup\fP *molgroup1, \fBBmolgroup\fP *molgroup2)"
+.br
+.RI "Determines the transformation between two groups of identical molecules\&. "
+.ti -1c
+.RI "\fBTransform\fP \fBmol_find_transformation\fP (\fBBmolecule\fP *mol1, \fBBmolecule\fP *mol2, int offset)"
+.br
+.RI "Determines the transformation between two identical molecules\&. "
+.ti -1c
+.RI "double \fBmolgroup_calculate_rmsd\fP (\fBBmolgroup\fP *molgroup, \fBBmolgroup\fP *molgroup2)"
+.br
+.RI "Calculates the root-mean-square-deviation between two molecule groups\&. 
+.br
+ "
+.ti -1c
+.RI "double \fBmol_calculate_rmsd\fP (\fBBmolecule\fP *mol1, \fBBmolecule\fP *mol2)"
+.br
+.RI "Calculates the RMSD between two molecules\&. "
+.ti -1c
+.RI "double \fBmolgroup_calc_brute_rmsd\fP (\fBBmolgroup\fP *molgroup1, \fBBmolgroup\fP *molgroup2)"
+.br
+.RI "Calculates the RMSD based on nearest atoms\&. "
+.ti -1c
+.RI "\fBMatrix\fP \fBmol_distance_matrix\fP (\fBBmolecule\fP *m1, \fBBmolecule\fP *m2)"
+.br
+.RI "Calculates the distance matrix between the residues in two molecules\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines used to compare sets of atomic coordinates\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20021020 
+.PP
+Modified: 20200917 
+.RE
+.PP
+
+.PP
+Definition in file \fBmol_compare\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double mol_calculate_rmsd (\fBBmolecule\fP * mol1, \fBBmolecule\fP * mol2)"
+
+.PP
+Calculates the RMSD between two molecules\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol1\fP first molecule\&. 
+.br
+\fI*mol2\fP second molecule\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double RMSD\&. 
+.PP
+.nf
+The root-mean-square-deviation between two sets of corrdinates is given by:
+    R = sqrt(sum(length(coord1-coord2))/number).
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 270 of file mol_compare\&.cpp\&.
+.SS "\fBMatrix\fP mol_distance_matrix (\fBBmolecule\fP * m1, \fBBmolecule\fP * m2)"
+
+.PP
+Calculates the distance matrix between the residues in two molecules\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*m1\fP first molecules structure\&. 
+.br
+\fI*m2\fP second molecules structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBMatrix\fP distance matrix\&. 
+.PP
+.nf
+The matrix is calculated from the pairwise distances between residues. 
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 354 of file mol_compare\&.cpp\&.
+.SS "\fBTransform\fP mol_find_transformation (\fBBmolecule\fP * mol1, \fBBmolecule\fP * mol2, int offset)"
+
+.PP
+Determines the transformation between two identical molecules\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol1\fP first molecule\&. 
+.br
+\fI*mol2\fP second molecule\&. 
+.br
+\fIoffset\fP offset of second sequence with respect to first\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBTransform\fP transform structure\&. 
+.PP
+.nf
+The transformation:
+    coord2 = rot_mat * (coord1 - origin) + origin + shift
+is solved.
+The algorithm is set up in parts, solving first for:
+    coord2 = rot_mat * coord1 + shift_temp
+The last term is given by:
+    shift_temp = shift + origin - rot_mat * origin
+The shift vector must be parallel to the rotation axis, and is
+determined as:
+    shift = axis * |shift_temp| * cos(alpha)
+where alpha is the angle between shift_temp and the rotation axis.
+The origin is then calculated from:
+    origin = (shift_temp - shift) * inverse(id_mat - rot_mat)
+Note that the origin still has one degree of freedom: It can be
+anywhere along the rotation axis.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 139 of file mol_compare\&.cpp\&.
+.SS "double molgroup_calc_brute_rmsd (\fBBmolgroup\fP * molgroup1, \fBBmolgroup\fP * molgroup2)"
+
+.PP
+Calculates the RMSD based on nearest atoms\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup1\fP first molecule group\&. 
+.br
+\fI*molgroup2\fP second molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double RMSD\&. 
+.RE
+.PP
+
+.PP
+Definition at line 314 of file mol_compare\&.cpp\&.
+.SS "double molgroup_calculate_rmsd (\fBBmolgroup\fP * molgroup1, \fBBmolgroup\fP * molgroup2)"
+
+.PP
+Calculates the root-mean-square-deviation between two molecule groups\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup1\fP first molecule group\&. 
+.br
+\fI*molgroup2\fP second molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double root-mean-square-deviation\&. 
+.PP
+.nf
+The two molecule groups must have identical structures.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 213 of file mol_compare\&.cpp\&.
+.SS "\fBTransform\fP molgroup_find_transformation (\fBBmolgroup\fP * molgroup1, \fBBmolgroup\fP * molgroup2)"
+
+.PP
+Determines the transformation between two groups of identical molecules\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup1\fP first molecule group\&. 
+.br
+\fI*molgroup2\fP second molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBTransform\fP transform structure\&. 
+.RE
+.PP
+
+.PP
+Definition at line 51 of file mol_compare\&.cpp\&.
+.SS "double molgroup_rotate_and_compare (\fBBmolgroup\fP * molgroup, \fBTransform\fP t)"
+
+.PP
+Copies and rotates the molecule group and compares it with the original\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fIt\fP rotation operation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double RMSD\&. 
+.RE
+.PP
+
+.PP
+Definition at line 31 of file mol_compare\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

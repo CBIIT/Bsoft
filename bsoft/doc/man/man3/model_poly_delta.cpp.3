@@ -1,0 +1,155 @@
+.TH "/Users/bernard/b20/bsoft/src/model/model_poly_delta.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/model/model_poly_delta.cpp \- Functions to generate deltagraph polyhedra\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel\&.h'\fP
+.br
+\fC#include 'model_poly\&.h'\fP
+.br
+\fC#include 'model_links\&.h'\fP
+.br
+\fC#include 'model_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_delta_create_tube_old\fP (int radius, int height)"
+.br
+.RI "Generates a new tubular deltagraph\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_delta_create_tube\fP (int h, int k, int height)"
+.br
+.RI "Generates a new tubular deltagraph\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_delta_create_cylinder\fP (int type, int radius, int height)"
+.br
+.RI "Generates a new deltagraph based on the type\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to generate deltagraph polyhedra\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20080103 
+.PP
+Modified: 20180327 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_poly_delta\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBmodel\fP* model_delta_create_cylinder (int type, int radius, int height)"
+
+.PP
+Generates a new deltagraph based on the type\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fItype\fP type of cylinder\&. 
+.br
+\fIradius\fP radius in integer units\&. 
+.br
+\fIheight\fP height in integer units\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model\&. 
+.PP
+.nf
+Types supported:
+    1   5-fold ends.
+    2   6-fold ends.
+    4   starting cap.
+    8   ending cap.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 160 of file model_poly_delta\&.cpp\&.
+.SS "\fBBmodel\fP* model_delta_create_tube (int h, int k, int height)"
+
+.PP
+Generates a new tubular deltagraph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIh\fP first lattice parameter, must be 1+\&. 
+.br
+\fIk\fP second lattice parameter, must be 0+\&. 
+.br
+\fIheight\fP height in integer units\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model\&. 
+.PP
+.nf
+The lattice parameters determine the radius.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 81 of file model_poly_delta\&.cpp\&.
+.SS "\fBBmodel\fP* model_delta_create_tube_old (int radius, int height)"
+
+.PP
+Generates a new tubular deltagraph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIradius\fP radius in integer units\&. 
+.br
+\fIheight\fP height in integer units\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model\&. 
+.RE
+.PP
+
+.PP
+Definition at line 24 of file model_poly_delta\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

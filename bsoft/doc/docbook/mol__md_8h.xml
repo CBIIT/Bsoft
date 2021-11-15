@@ -1,0 +1,459 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mol__md_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/mol_md.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/mol_md.h</primary></indexterm>
+<para>
+
+<para>Header for molecular dynamics. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmd.h&quot;
+#include &quot;rwmolecule.h&quot;
+#include &quot;mol_util.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>double <link linkend="_mol__md_8h_1a57f04c177084945af9279729874f0243">md_leapfrog</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_struct_bmd">Bmd</link> *md, int max_iter, double velocitylimit)</para>
+
+<para>Molecular dynamics using the leapfrog integrator. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__md_8h_1a711e368b3ed80addcd7f6b1510d44760">md_zero_forces</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Zero all atomic forces. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__md_8h_1a97e3497ef9aeac29780673c7db3336bd">md_bond_forces</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double Kbond, int wrap)</para>
+
+<para>Calculates the covalent bond length forces and energy. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__md_8h_1a2d1faf5e7d196b0507114f7ef61f7a7b">md_angular_forces</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double Kangle, int wrap)</para>
+
+<para>Calculates the covalent bond angular forces and energy. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__md_8h_1af839292d431e7dd6d9aa0d8d3be47151">md_nonbonded_forces</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_struct_bmd">Bmd</link> *md)</para>
+
+<para>Calculates the non-bonded forces and energy. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__md_8h_1a2a11684a55e2d5695161d8cdc4db0b0c">atom_nonbonded_forces</link> (<link linkend="_struct_batom">Batom</link> *atom1, <link linkend="_struct_batom">Batom</link> *atom2, <link linkend="_struct_bmd">Bmd</link> *md, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; box)</para>
+
+<para>Calculates the non-bonded forces and energy between two atoms. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__md_8h_1a191fb86d97a74414d5b73d6c7c187966">md_point_force</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; point, double Kpoint, double decay)</para>
+
+<para>Calculates the atomic forces and energy resulting from a single point force. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header for molecular dynamics. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010828 </para>
+
+<para>Modified: 20060412 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mol__md_8h_1a2a11684a55e2d5695161d8cdc4db0b0c"/>    <section>
+    <title>atom_nonbonded_forces()</title>
+<indexterm><primary>atom_nonbonded_forces</primary><secondary>mol_md.h</secondary></indexterm>
+<indexterm><primary>mol_md.h</primary><secondary>atom_nonbonded_forces</secondary></indexterm>
+<para><computeroutput>int atom_nonbonded_forces (<link linkend="_struct_batom">Batom</link> * atom, <link linkend="_struct_batom">Batom</link> * atom2, <link linkend="_struct_bmd">Bmd</link> * md, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; box)</computeroutput></para><para>
+
+<para>Calculates the non-bonded forces and energy between two atoms. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*atom</entry>
+                                <entry>
+<para>central atom. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*atom2</entry>
+                                <entry>
+<para>second atom. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*md</entry>
+                                <entry>
+<para>molecular dynamics structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>box</entry>
+                                <entry>
+<para>dynamics box. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double total non-bonded energy. <literallayout><computeroutput>The energy is defined as a Lennard-Jones term for the Van der Waals 
+interactions based on a reference length, ro, and a Coulomb term for 
+electrostatic interactions based on the atomic charges, q1 and q2: 
+    Enb = Kvdw*((1/12)*(|ro|/|r|)^12 - (1/6)*(|ro|/|r|)^6) + Kelec*q1*q2/|r|
+The force is the derivative of the energy:
+    Fnb = -Kvdw*((|ro|/|r|)^12 - (|ro|/|r|)^6)*r/|r| + Kelec*q1*q2*r/|r|^3
+where r is the distance vector, Kvdw is the Van der Waals energy constant
+and Kelec is the electrostatic energy constant.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 368 of file mol_md.cpp.</para>
+    </section><anchor xml:id="_mol__md_8h_1a2d1faf5e7d196b0507114f7ef61f7a7b"/>    <section>
+    <title>md_angular_forces()</title>
+<indexterm><primary>md_angular_forces</primary><secondary>mol_md.h</secondary></indexterm>
+<indexterm><primary>mol_md.h</primary><secondary>md_angular_forces</secondary></indexterm>
+<para><computeroutput>double md_angular_forces (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double Kangle, int wrap)</computeroutput></para><para>
+
+<para>Calculates the covalent bond angular forces and energy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecular structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kangle</entry>
+                                <entry>
+<para>bond angle energy constant. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wrap</entry>
+                                <entry>
+<para>flag to wrap around periodic boundaries. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double total bond angle energy. <literallayout><computeroutput>The energy is defined as a harmonic function around the reference 
+bond angle, a0:
+    Ea = Ka*(cos(a0)-r1*r2/(|r1|*|r2|))^2
+The force is the derivative of the energy on the first and last atoms:
+    Fa1 = 2*Ka*(cos(a0)-r1*r2/(|r1|*|r2|))/(|r1|*|r2|) * ((r1*r2/|r1|)*r1-r2)
+    Fa3 = 2*Ka*(cos(a0)-r1*r2/(|r1|*|r2|))/(|r1|*|r2|) * ((r1*r2/|r2|)*r2-r1)
+where r1 is the vector from atom 2 to atom 1, r2 is the vector from
+atom 2 to atom 3, and Ka is the bond angle energy constant.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 233 of file mol_md.cpp.</para>
+    </section><anchor xml:id="_mol__md_8h_1a97e3497ef9aeac29780673c7db3336bd"/>    <section>
+    <title>md_bond_forces()</title>
+<indexterm><primary>md_bond_forces</primary><secondary>mol_md.h</secondary></indexterm>
+<indexterm><primary>mol_md.h</primary><secondary>md_bond_forces</secondary></indexterm>
+<para><computeroutput>double md_bond_forces (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double Kbond, int wrap)</computeroutput></para><para>
+
+<para>Calculates the covalent bond length forces and energy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecular structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kbond</entry>
+                                <entry>
+<para>bond energy constant. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wrap</entry>
+                                <entry>
+<para>flag to wrap around periodic boundaries. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double total bond length energy. <literallayout><computeroutput>The energy is defined as a harmonic function around the reference 
+bond length, |ro|:
+    Eb = Kb*(|r|-|ro|)^2
+The force is the derivative of the energy:
+    Fb = -2*Kb*(|r|-|ro|)*r/|r|
+where r is the distance vector and Kb is the bond energy constant.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 190 of file mol_md.cpp.</para>
+    </section><anchor xml:id="_mol__md_8h_1a57f04c177084945af9279729874f0243"/>    <section>
+    <title>md_leapfrog()</title>
+<indexterm><primary>md_leapfrog</primary><secondary>mol_md.h</secondary></indexterm>
+<indexterm><primary>mol_md.h</primary><secondary>md_leapfrog</secondary></indexterm>
+<para><computeroutput>double md_leapfrog (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_struct_bmd">Bmd</link> * md, int max_iter, double velocitylimit)</computeroutput></para><para>
+
+<para>Molecular dynamics using the leapfrog integrator. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecular structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*md</entry>
+                                <entry>
+<para>molecular dynamics parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_iter</entry>
+                                <entry>
+<para>maximum number of iterations to run. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>velocitylimit</entry>
+                                <entry>
+<para>limit on velocity per time step. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double energy. <literallayout><computeroutput>Leapfrog integration for any coordinate x, velocity vx and force Fx:
+    x(t+1) = x(t) + vx(t+1) * dt
+    vx(t+1) = (Fx(t) * dt/m + vx(t)) * kf
+    where
+        kf: friction constant (1=no friction)
+        dt: time step
+        m: atomic mass
+The velocity is limited each time step to damp chaotic oscillations.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 38 of file mol_md.cpp.</para>
+    </section><anchor xml:id="_mol__md_8h_1af839292d431e7dd6d9aa0d8d3be47151"/>    <section>
+    <title>md_nonbonded_forces()</title>
+<indexterm><primary>md_nonbonded_forces</primary><secondary>mol_md.h</secondary></indexterm>
+<indexterm><primary>mol_md.h</primary><secondary>md_nonbonded_forces</secondary></indexterm>
+<para><computeroutput>double md_nonbonded_forces (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_struct_bmd">Bmd</link> * md)</computeroutput></para><para>
+
+<para>Calculates the non-bonded forces and energy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecular structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*md</entry>
+                                <entry>
+<para>molecular dynamics structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double total non-bonded energy. <literallayout><computeroutput>The energy is defined as a Lennard-Jones term for the Van der Waals 
+interactions based on a reference length, ro, and a Coulomb term for 
+electrostatic interactions based on the atomic charges, q1 and q2: 
+    Enb = Kvdw*((1/12)*(|ro|/|r|)^12 - (1/6)*(|ro|/|r|)^6) + Kelec*q1*q2/|r|
+The force is the derivative of the energy:
+    Fnb = -Kvdw*((|ro|/|r|)^12 - (|ro|/|r|)^6)*r/|r| + Kelec*q1*q2*r/|r|^3
+where r is the distance vector, Kvdw is the Van der Waals energy constant
+and Kelec is the electrostatic energy constant.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 283 of file mol_md.cpp.</para>
+    </section><anchor xml:id="_mol__md_8h_1a191fb86d97a74414d5b73d6c7c187966"/>    <section>
+    <title>md_point_force()</title>
+<indexterm><primary>md_point_force</primary><secondary>mol_md.h</secondary></indexterm>
+<indexterm><primary>mol_md.h</primary><secondary>md_point_force</secondary></indexterm>
+<para><computeroutput>double md_point_force (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; point, double Kpoint, double decay)</computeroutput></para><para>
+
+<para>Calculates the atomic forces and energy resulting from a single point force. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecular structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>point</entry>
+                                <entry>
+<para>center of point force. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Kpoint</entry>
+                                <entry>
+<para>point force constant. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>decay</entry>
+                                <entry>
+<para>energy decay with distance. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double point force energy. <literallayout><computeroutput>The energy is defined as an exponential decay over distance from the 
+center of the point force:
+    Ep = Kp * exp(-decay*dist)
+The force is the derivative of the energy:
+    Fp = Kp * decay * dir * exp(-decay*dist)
+where Kp is the point force constant, dist is the distance of the atom 
+from the center of the point force, decay is the energy decay with distance
+from the point force center, and dir is the normalized direction vector
+pointing from the point force center to the atom, indicating the direction
+of force.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 428 of file mol_md.cpp.</para>
+    </section><anchor xml:id="_mol__md_8h_1a711e368b3ed80addcd7f6b1510d44760"/>    <section>
+    <title>md_zero_forces()</title>
+<indexterm><primary>md_zero_forces</primary><secondary>mol_md.h</secondary></indexterm>
+<indexterm><primary>mol_md.h</primary><secondary>md_zero_forces</secondary></indexterm>
+<para><computeroutput>int md_zero_forces (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Zero all atomic forces. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecular structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 161 of file mol_md.cpp.</para>
+</section>
+</section>
+</section>

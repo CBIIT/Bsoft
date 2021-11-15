@@ -1,0 +1,156 @@
+.TH "/Users/bernard/b20/bsoft/src/btile.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/btile.cpp \- Program to split an image into overlapping tiles\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'file_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBimg_tile_with_overlap\fP (\fBBimage\fP *p, \fBBstring\fP outputfile, \fBVector3\fP< int > size, \fBVector3\fP< int > overlap, int digits, int first_number, \fBDataType\fP nudatatype)"
+.br
+.RI "Writes overlapping tiles into new images\&. "
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Program to split an image into overlapping tiles\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20040712 
+.PP
+Modified: 20160601 
+.RE
+.PP
+
+.PP
+Definition in file \fBbtile\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int img_tile_with_overlap (\fBBimage\fP * p, \fBBstring\fP outputfile, \fBVector3\fP< int > size, \fBVector3\fP< int > overlap, int digits, int first_number, \fBDataType\fP nudatatype)"
+
+.PP
+Writes overlapping tiles into new images\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image = tile\&. 
+.br
+\fIoutputfile\fP output file name\&. 
+.br
+\fIsize\fP tile size\&. 
+.br
+\fIoverlap\fP tile overlap\&. 
+.br
+\fIdigits\fP number of digits in tile file number\&. 
+.br
+\fIfirst_number\fP first tile file number\&. 
+.br
+\fInudatatype\fP tile datatype\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of tiles\&. 
+.PP
+.nf
+Each tile is copied into a new image and written with a numbered file name.
+The tiles at the ends of the block may not be the same size as the
+other tiles, being truncated at the end of the input data.
+A text file with the extension ".tiles" is written with the positions
+of the tiles, and it is needed to patch the image together again.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 181 of file btile\&.cpp\&.
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 54 of file btile\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+\fBInitial value:\fP
+.PP
+.nf
+= {
+" ",
+"Usage: btile [options] input\&.img/input\&.star output\&.img",
+"------------------------------------------------------",
+"Splits an image into overlapping tiles\&.",
+"During tiling, the original size and tile origins are written into a text",
+"   file with the base of the output file name and the extension \"\&.tiles\"\&.",
+"The program bpatch can reassemble the tiles using this text file\&.",
+" ",
+"Action:",
+"-split                   Split into multiple images\&.",
+" ",
+"Parameters:",
+"-verbose 7               Verbosity of output\&.",
+"-datatype u              Force writing of a new data type\&.",
+"-sampling 1\&.5,1\&.5,1\&.5    Sampling (A/pixel; a single value can be given)\&.",
+"-size 120,150,70         Size of tiles (default 512,512,512)\&.",
+"-overlap 13,15,8         Overlap of tiles (default 0,0,0)\&.",
+"-first 5                 Number given to the first file (default 0)\&.",
+"-digits 3                Number of digits inserted before the last period in the output file name (default 3)\&.",
+" ",
+"Parameters for reconstructions:",
+"-recid rec_1             Reconstruction ID to use\&.",
+" ",
+"Output:",
+"-output output\&.star      Output parameter file\&.",
+" ",
+NULL
+}
+.fi
+.PP
+Definition at line 24 of file btile\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

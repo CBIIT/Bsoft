@@ -1,0 +1,162 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__electron_counted_frames_decompressor_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/eer/ElectronCountedFramesDecompressor.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/eer/ElectronCountedFramesDecompressor.cpp</primary></indexterm>
+<programlisting>#include &lt;cmath&gt;
+#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include &lt;string&gt;
+#include &lt;sstream&gt;
+#include &lt;cassert&gt;
+#include &lt;stdexcept&gt;
+#include &lt;cstring&gt;
+#include &lt;cstdlib&gt;
+#include &quot;stddef.h&quot;
+#include &quot;stdint.h&quot;
+#include &quot;ElectronCountedFramesDecompressor.h&quot;
+</programlisting><simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_structelectron_setter_delta">electronSetterDelta&lt; upBits &gt;</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structelectron_adder_delta">electronAdderDelta&lt; upBits &gt;</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_structelectron_adder_b_spline">electronAdderBSpline&lt; upBits &gt;</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="__electron_counted_frames_decompressor_8cpp_1a39b2972f4b08c94267862b664c54967b">COMPRESSIONMODE</link>   6</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Enumerations    </title>
+        <itemizedlist>
+            <listitem><para>enum <link linkend="__electron_counted_frames_decompressor_8cpp_1a9e36d55524a9931a8f4e67f2604b5364">footerCheckResult</link> { <link linkend="__electron_counted_frames_decompressor_8cpp_1a9e36d55524a9931a8f4e67f2604b5364a9a713233e12c7dbaf1fa66101577fd11">footerOK</link>
+, <link linkend="__electron_counted_frames_decompressor_8cpp_1a9e36d55524a9931a8f4e67f2604b5364ab02934ea957a5cd8f3e74322755e4268">footerError</link>
+, <link linkend="__electron_counted_frames_decompressor_8cpp_1a9e36d55524a9931a8f4e67f2604b5364a6fb45cca0cd41132a45e7a898bd74b79">footerInvalid</link>
+ }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="__electron_counted_frames_decompressor_8cpp_1a9e36d55524a9931a8f4e67f2604b5364">footerCheckResult</link> <link linkend="__electron_counted_frames_decompressor_8cpp_1a1bc73766d37ae854a5a1f2ee2a286b16">CheckFooter</link> (<link linkend="__fei_bit_streamer_8h_1ae5e7b253eb586017e866cd89bbba60e0">BitStreamWordType</link> *data)</para>
+</listitem>
+            <listitem><para>template&lt;typename T &gt; </para><para>void <link linkend="__electron_counted_frames_decompressor_8cpp_1a3a544eb33f0a03c4cb21eb432281a191">GetWeightsSpline3</link> (T w, T weights[])</para>
+</listitem>
+            <listitem><para>void <link linkend="__electron_counted_frames_decompressor_8cpp_1a7be700f658e52d403cacb40d77e9aced">createBSplineLUT</link> ()</para>
+</listitem>
+            <listitem><para>template&lt;class operationFunc , typename ImType &gt; </para><para>unsigned <link linkend="__electron_counted_frames_decompressor_8cpp_1a70dd428d510db2aae37bb1661fe500d0">doDecompressImage</link> (<link linkend="_class_bit_streamer">BitStreamer</link> &amp;myBitStreamer, ImType *p, unsigned w, unsigned h)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>const char * <link linkend="__electron_counted_frames_decompressor_8cpp_1a8908fcfa7da8204d3ae0b191e97a6a9e">headerPrefix</link> =&quot;ThermoFisherECCompr&quot;</para>
+</listitem>
+            <listitem><para>const char <link linkend="__electron_counted_frames_decompressor_8cpp_1a84a64e454d86e5871f3da0f545873219">HWfooterStringOK</link> [] = &quot;ThermoFisherECComprOK000&quot;</para>
+</listitem>
+            <listitem><para>const char <link linkend="__electron_counted_frames_decompressor_8cpp_1ae688bc98757b3cff1960bf9148aa8858">HWfooterStringErr</link> [] = &quot;ThermoFisherECComprERR00&quot;</para>
+</listitem>
+            <listitem><para>const unsigned int <link linkend="__electron_counted_frames_decompressor_8cpp_1a345705f18e2ecd8ce335292a7490bf66">HWfooterLength</link> = 24</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="__electron_counted_frames_decompressor_8cpp_1a39b2972f4b08c94267862b664c54967b"/>    <section>
+    <title>COMPRESSIONMODE</title>
+<indexterm><primary>COMPRESSIONMODE</primary><secondary>ElectronCountedFramesDecompressor.cpp</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.cpp</primary><secondary>COMPRESSIONMODE</secondary></indexterm>
+<para><computeroutput>#define COMPRESSIONMODE   6</computeroutput></para><para>
+Definition at line 27 of file ElectronCountedFramesDecompressor.cpp.</para>
+</section>
+</section>
+<section>
+<title>Enumeration Type Documentation</title>
+<anchor xml:id="__electron_counted_frames_decompressor_8cpp_1a9e36d55524a9931a8f4e67f2604b5364"/>    <section>
+    <title>footerCheckResult</title>
+<indexterm><primary>footerCheckResult</primary><secondary>ElectronCountedFramesDecompressor.cpp</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.cpp</primary><secondary>footerCheckResult</secondary></indexterm>
+<para><computeroutput>enum <link linkend="__electron_counted_frames_decompressor_8cpp_1a9e36d55524a9931a8f4e67f2604b5364">footerCheckResult</link></computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>footerOK</primary><secondary>ElectronCountedFramesDecompressor.cpp</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.cpp</primary><secondary>footerOK</secondary></indexterm>
+<anchor xml:id="__electron_counted_frames_decompressor_8cpp_1a9e36d55524a9931a8f4e67f2604b5364a9a713233e12c7dbaf1fa66101577fd11"/>footerOK</entry><entry></entry></row><row><entry><indexterm><primary>footerError</primary><secondary>ElectronCountedFramesDecompressor.cpp</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.cpp</primary><secondary>footerError</secondary></indexterm>
+<anchor xml:id="__electron_counted_frames_decompressor_8cpp_1a9e36d55524a9931a8f4e67f2604b5364ab02934ea957a5cd8f3e74322755e4268"/>footerError</entry><entry></entry></row><row><entry><indexterm><primary>footerInvalid</primary><secondary>ElectronCountedFramesDecompressor.cpp</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.cpp</primary><secondary>footerInvalid</secondary></indexterm>
+<anchor xml:id="__electron_counted_frames_decompressor_8cpp_1a9e36d55524a9931a8f4e67f2604b5364a6fb45cca0cd41132a45e7a898bd74b79"/>footerInvalid</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 38 of file ElectronCountedFramesDecompressor.cpp.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="__electron_counted_frames_decompressor_8cpp_1a1bc73766d37ae854a5a1f2ee2a286b16"/>    <section>
+    <title>CheckFooter()</title>
+<indexterm><primary>CheckFooter</primary><secondary>ElectronCountedFramesDecompressor.cpp</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.cpp</primary><secondary>CheckFooter</secondary></indexterm>
+<para><computeroutput><link linkend="__electron_counted_frames_decompressor_8cpp_1a9e36d55524a9931a8f4e67f2604b5364">footerCheckResult</link> CheckFooter (<link linkend="__fei_bit_streamer_8h_1ae5e7b253eb586017e866cd89bbba60e0">BitStreamWordType</link> * data)</computeroutput></para><para>
+Definition at line 41 of file ElectronCountedFramesDecompressor.cpp.</para>
+    </section><anchor xml:id="__electron_counted_frames_decompressor_8cpp_1a7be700f658e52d403cacb40d77e9aced"/>    <section>
+    <title>createBSplineLUT()</title>
+<indexterm><primary>createBSplineLUT</primary><secondary>ElectronCountedFramesDecompressor.cpp</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.cpp</primary><secondary>createBSplineLUT</secondary></indexterm>
+<para><computeroutput>void createBSplineLUT ( )</computeroutput></para><para>
+Definition at line 115 of file ElectronCountedFramesDecompressor.cpp.</para>
+    </section><anchor xml:id="__electron_counted_frames_decompressor_8cpp_1a70dd428d510db2aae37bb1661fe500d0"/>    <section>
+    <title>doDecompressImage()</title>
+<indexterm><primary>doDecompressImage</primary><secondary>ElectronCountedFramesDecompressor.cpp</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.cpp</primary><secondary>doDecompressImage</secondary></indexterm>
+<computeroutput>template&lt;class operationFunc , typename ImType &gt; </computeroutput><para><computeroutput>unsigned doDecompressImage (<link linkend="_class_bit_streamer">BitStreamer</link> &amp; myBitStreamer, ImType * p, unsigned w, unsigned h)</computeroutput></para><para>
+Definition at line 168 of file ElectronCountedFramesDecompressor.cpp.</para>
+    </section><anchor xml:id="__electron_counted_frames_decompressor_8cpp_1a3a544eb33f0a03c4cb21eb432281a191"/>    <section>
+    <title>GetWeightsSpline3()</title>
+<indexterm><primary>GetWeightsSpline3</primary><secondary>ElectronCountedFramesDecompressor.cpp</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.cpp</primary><secondary>GetWeightsSpline3</secondary></indexterm>
+<computeroutput>template&lt;typename T &gt; </computeroutput><para><computeroutput>void GetWeightsSpline3 (T w, T weights[])<computeroutput>[inline]</computeroutput></computeroutput></para><para>
+Definition at line 102 of file ElectronCountedFramesDecompressor.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="__electron_counted_frames_decompressor_8cpp_1a8908fcfa7da8204d3ae0b191e97a6a9e"/>    <section>
+    <title>headerPrefix</title>
+<indexterm><primary>headerPrefix</primary><secondary>ElectronCountedFramesDecompressor.cpp</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.cpp</primary><secondary>headerPrefix</secondary></indexterm>
+<para><computeroutput>const char* headerPrefix =&quot;ThermoFisherECCompr&quot;</computeroutput></para><para>
+Definition at line 30 of file ElectronCountedFramesDecompressor.cpp.</para>
+    </section><anchor xml:id="__electron_counted_frames_decompressor_8cpp_1a345705f18e2ecd8ce335292a7490bf66"/>    <section>
+    <title>HWfooterLength</title>
+<indexterm><primary>HWfooterLength</primary><secondary>ElectronCountedFramesDecompressor.cpp</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.cpp</primary><secondary>HWfooterLength</secondary></indexterm>
+<para><computeroutput>const unsigned int HWfooterLength = 24</computeroutput></para><para>
+Definition at line 36 of file ElectronCountedFramesDecompressor.cpp.</para>
+    </section><anchor xml:id="__electron_counted_frames_decompressor_8cpp_1ae688bc98757b3cff1960bf9148aa8858"/>    <section>
+    <title>HWfooterStringErr</title>
+<indexterm><primary>HWfooterStringErr</primary><secondary>ElectronCountedFramesDecompressor.cpp</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.cpp</primary><secondary>HWfooterStringErr</secondary></indexterm>
+<para><computeroutput>const char HWfooterStringErr[] = &quot;ThermoFisherECComprERR00&quot;</computeroutput></para><para>
+Definition at line 35 of file ElectronCountedFramesDecompressor.cpp.</para>
+    </section><anchor xml:id="__electron_counted_frames_decompressor_8cpp_1a84a64e454d86e5871f3da0f545873219"/>    <section>
+    <title>HWfooterStringOK</title>
+<indexterm><primary>HWfooterStringOK</primary><secondary>ElectronCountedFramesDecompressor.cpp</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.cpp</primary><secondary>HWfooterStringOK</secondary></indexterm>
+<para><computeroutput>const char HWfooterStringOK[] = &quot;ThermoFisherECComprOK000&quot;</computeroutput></para><para>
+Definition at line 34 of file ElectronCountedFramesDecompressor.cpp.</para>
+</section>
+</section>
+</section>

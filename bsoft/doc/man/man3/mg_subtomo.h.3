@@ -1,0 +1,417 @@
+.TH "/Users/bernard/b20/bsoft/include/mg_subtomo.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/mg_subtomo.h \- Header file for functions finding particles (subtomograms) in a tomogram\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'View\&.h'\fP
+.br
+\fC#include 'symmetry\&.h'\fP
+.br
+\fC#include 'mg_processing\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBSphere\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "long \fBreconstruction_search_subtomo\fP (\fBBreconstruction\fP *rec, \fBBimage\fP *p, \fBBimage\fP *ptemp, \fBBimage\fP *pmask, \fBBimage\fP *pmask2, double alpha_step, double theta_step, double phi_step, double alpha_limit, double thetaphi_limit, double hires, double lores, double shiftlimit, double mindist, double threshold, int maxhits, \fBVector3\fP< long > bin, \fBBsymmetry\fP &sym, int refinepeaks, \fBBstring\fP ccmax_file)"
+.br
+.ti -1c
+.RI "long \fBreconstruction_refine_subtomo\fP (\fBBreconstruction\fP *rec, \fBBimage\fP *p, \fBBimage\fP *ptemp, \fBBimage\fP *pmask, \fBBimage\fP *pmask2, double alpha_step, double theta_step, double phi_step, double alpha_limit, double thetaphi_limit, double hires, double lores, double shiftlimit, double shiftlimitz, double shiftlimitxy, double mindist, \fBVector3\fP< long > bin, \fBBsymmetry\fP &sym, int iters, int refinepeaks, \fBBstring\fP ccmax_file)"
+.br
+.RI "Refines the view vectors for particles already in the project\&. "
+.ti -1c
+.RI "\fBBparticle\fP * \fBimg_find_refine_peaks\fP (\fBBimage\fP *pcc, \fBView\fP view, double shift_limit, double shift_along, double shift_orthogonal, double mindist, double threshold, int maxhits, int refinepeaks)"
+.br
+.RI "Finds peaks in an image to the nearest voxel iteratively\&. "
+.ti -1c
+.RI "double \fBimg_find_peak_subtomo\fP (\fBBimage\fP *p, \fBView\fP view, double shift, double shift_along, double shift_orthogonal)"
+.br
+.RI "Finds the peak in an image to the nearest voxel\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBclosest_point_line\fP (\fBVector3\fP< double > point, \fBVector3\fP< double > endpoint1, \fBVector3\fP< double > endpoint2)"
+.br
+.RI "Calculates the closest point on a line segment from a given point\&. "
+.ti -1c
+.RI "double \fBclosest_point_line_distance2\fP (\fBVector3\fP< double > point, \fBVector3\fP< double > endpoint1, \fBVector3\fP< double > endpoint2)"
+.br
+.RI "Calculates the squared distance to the closest point on a line segment from a given point\&. "
+.ti -1c
+.RI "double \fBclosest_point_disc_distance2\fP (\fBVector3\fP< double > point, \fBVector3\fP< double > point2, \fBView\fP view, double radius)"
+.br
+.RI "Calculates the squared distance to the closest point on a disc from a given point\&. "
+.ti -1c
+.RI "\fBSphere\fP \fBlocations_fit_sphere\fP (\fBBparticle\fP *part, int N, double Nstop)"
+.br
+.RI "Least squares fit a sphere to 3D data (particle locations) "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for functions finding particles (subtomograms) in a tomogram\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Juha Huiskonen 
+.PP
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20071010 
+.PP
+Modified: 20120124 (BH) 
+.PP
+Modified: 20150108 (BH) - incorporated into Bsoft 
+.PP
+Modified: 20150720 (BH) 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_subtomo\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double closest_point_disc_distance2 (\fBVector3\fP< double > p, \fBVector3\fP< double > q, \fBView\fP view, double radius)"
+
+.PP
+Calculates the squared distance to the closest point on a disc from a given point\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Juha Huiskonen 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIp\fP point 
+.br
+\fIq\fP centre point of the disc 
+.br
+\fIview\fP 
+.br
+\fIradius\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double squared distance to closest point 
+.PP
+.nf
+Checks whether projection of the point (p') falls on the disc. If yes, this is the closest point
+Otherwise point on the circumference of the disc is the closest point.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 835 of file mg_subtomo\&.cpp\&.
+.SS "\fBVector3\fP<double> closest_point_line (\fBVector3\fP< double > p, \fBVector3\fP< double > v, \fBVector3\fP< double > w)"
+
+.PP
+Calculates the closest point on a line segment from a given point\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Juha Huiskonen 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIp\fP point 
+.br
+\fIv\fP endpoint 1 
+.br
+\fIw\fP endpoint 2 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP closest point 
+.PP
+.nf
+Checks whether one of the end points is the closest point
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 755 of file mg_subtomo\&.cpp\&.
+.SS "double closest_point_line_distance2 (\fBVector3\fP< double > p, \fBVector3\fP< double > v, \fBVector3\fP< double > w)"
+
+.PP
+Calculates the squared distance to the closest point on a line segment from a given point\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Juha Huiskonen 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIp\fP point 
+.br
+\fIv\fP endpoint 1 
+.br
+\fIw\fP endpoint 2 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double squared distance to the closest point 
+.PP
+.nf
+Checks wether the closet point falls within the line segment. If not, one of the endpoints
+is the closest point.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 794 of file mg_subtomo\&.cpp\&.
+.SS "double img_find_peak_subtomo (\fBBimage\fP * p, \fBView\fP view, double shift, double shift_along, double shift_orthogonal)"
+
+.PP
+Finds the peak in an image to the nearest voxel\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Juha Huiskonen 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image (not altered)\&. 
+.br
+\fIview\fP view of the particle to be refined 
+.br
+\fIshift\fP radius of spherical or cylindrical search space (if < 0, default 1e30)\&. 
+.br
+\fIshift_along\fP additional shift allowed in the direction of the view vector\&. 
+.br
+\fIshift_orthogonal\fP additional shift allowed orthogonal to the view vector\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double peak maximum\&. 
+.PP
+.nf
+An image is searched for the global maximum (typically used to find the shift vector in a cross-correlation map).
+The peak vector is returned in the image origin in actual pixel coordinates (no wrapping).
+The maximum is returned in the image FOM.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 668 of file mg_subtomo\&.cpp\&.
+.SS "\fBBparticle\fP* img_find_refine_peaks (\fBBimage\fP * pcc, \fBView\fP view, double shift_limit, double shift_along, double shift_orthogonal, double mindist, double threshold, int maxhits, int refinepeaks)"
+
+.PP
+Finds peaks in an image to the nearest voxel iteratively\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Juha Huiskonen 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*pcc\fP cross correlation map (not altered)\&. 
+.br
+\fIview\fP view of the particle to be refined 
+.br
+\fIshift_limit\fP radius of spherical or cylindrical search space (if < 0, default 1e30)\&. 
+.br
+\fIshift_along\fP additional shift allowed in the direction of the view vector\&. 
+.br
+\fIshift_orthogonal\fP additional shift allowed orthogonal to the view vector\&. 
+.br
+\fImindist\fP 2 * template radius: used for a spherical mask 
+.br
+\fIthreshold\fP threshold\&. if value is <0, only the global maximum is returned 
+.br
+\fImaxhits\fP 
+.br
+\fIrefinepeaks\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bparticle* list of peaks as particles\&. 
+.PP
+.nf
+After a maximum value is found, it is masked with a spherical mask and the next largest value
+is found, until all the values are below the threshold .
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 601 of file mg_subtomo\&.cpp\&.
+.SS "\fBSphere\fP locations_fit_sphere (\fBBparticle\fP * part, int N, double Nstop)"
+
+.PP
+Least squares fit a sphere to 3D data (particle locations) 
+.PP
+\fBAuthor\fP
+.RS 4
+Juha Huiskonen 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*part\fP particle 
+.br
+\fIN\fP iterations 
+.br
+\fINstop\fP stopping condition: tolerance in change of sphere center 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBSphere\fP fitted sphere struct 
+.PP
+.nf
+Algorithm by ImaginaryZ
+From http://imaginaryz.blogspot.co.uk/2011/04/least-squares-fit-sphere-to-3d-data.html
+
+All you have to do is define:
+
+Error = Sum( |Position[n] - Center|^2 - Radius^2 )
+
+Then define the squared error:
+
+Squared Error = Sum( ( |Position[n] - Center|^2 - Radius^2 )^2 )
+
+And solve the summation using a iterative method (like newtons, below) after pulling out the summation terms.
+For example, if you do: Sum( (P.x[n] - Cx)^2 ) You get (after Expand):
+Sum( P.x[n]^2 - 2*P.x[n]*Cx + Cx^2 )
+And you can then split up the sum:
+Sum( P.x[n]^2 ) + Sum( P.x[n] ) * -2*Cx + Cx * Nelements
+Note you HAVE to ultimately divide the sums by Nelements
+
+Note that "Center" is A,B,C (3D) and I use Rsq as Radius^2.
+
+This method is not fast, but it converges, and the way the code is written it is independent of dataset size,
+but you do have to compute a number of sums and products before running the algorithm.
+
+Note this method is used to generate the equations used to compute linear and quadratic fits instantly, given you compute some sums first.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 907 of file mg_subtomo\&.cpp\&.
+.SS "long reconstruction_refine_subtomo (\fBBreconstruction\fP * rec, \fBBimage\fP * p, \fBBimage\fP * ptemp, \fBBimage\fP * pmask, \fBBimage\fP * pmask2, double alpha_step_orig, double theta_step_orig, double phi_step_orig, double alpha_limit_orig, double thetaphi_limit_orig, double hires, double lores, double shiftlimit_orig, double shiftlimitz_orig, double shiftlimitxy_orig, double mindist, \fBVector3\fP< long > bin, \fBBsymmetry\fP & sym, int iters, int refinepeaks, \fBBstring\fP ccmax_file)"
+
+.PP
+Refines the view vectors for particles already in the project\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Juha Huiskonen 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*rec\fP reconstruction parameters\&. 
+.br
+\fI*p\fP the image\&. 
+.br
+\fI*ptemp\fP the template to be searched for\&. 
+.br
+\fI*pmask\fP reciprocal space mask for cross-correlation (ignored if NULL)\&. 
+.br
+\fI*pmask2\fP real space mask for cross-correlation (ignored if NULL)\&. 
+.br
+\fIalpha_step_orig\fP angular step size around view vector (radians)\&. 
+.br
+\fItheta_step_orig\fP angular step size around view vector (radians)\&. 
+.br
+\fIphi_step_orig\fP angular step size around view vector (radians)\&. 
+.br
+\fIalpha_limit_orig\fP angular limit for refinement in alpha (radians)\&. 
+.br
+\fIthetaphi_limit_orig\fP angular limit for refinement in theta & phi (radians)\&. 
+.br
+\fIhires\fP high resolution limit\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fIshiftlimit_orig\fP maximum shift from the original position (binned units)\&. 
+.br
+\fIshiftlimitz_orig\fP maximum z-shift from the original position (binned units)\&. 
+.br
+\fIshiftlimitxy_orig\fP maximum xy-shift from the original position (binned units)\&. 
+.br
+\fImindist\fP minimun distance for cc peaks (binned units)\&. 
+.br
+\fIbin\fP binning for map, template and mask 
+.br
+\fI*sym\fP symmetry to generate a list of views for search mode 
+.br
+\fIiters\fP number of iterations in refine 
+.br
+\fIrefinepeaks\fP flag to run several iterations in refine 
+.br
+\fIccmax_file\fP file for cross-correlation map (max ccc for each position and rotation of the template) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double the best correlation coefficient\&. 
+.PP
+.nf
+The template is rotated and cross-correlated to find fits above the
+    threshold.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 334 of file mg_subtomo\&.cpp\&.
+.SS "long reconstruction_search_subtomo (\fBBreconstruction\fP * rec, \fBBimage\fP * p, \fBBimage\fP * ptemp, \fBBimage\fP * pmask, \fBBimage\fP * pmask2, double alpha_step, double theta_step, double phi_step, double alpha_limit, double thetaphi_limit, double hires, double lores, double shiftlimit, double mindist, double threshold, int maxhits, \fBVector3\fP< long > bin, \fBBsymmetry\fP & sym, int refinepeaks, \fBBstring\fP ccmax_file)"
+
+.PP
+Definition at line 141 of file mg_subtomo\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

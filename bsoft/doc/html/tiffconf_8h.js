@@ -1,0 +1,27 @@
+var tiffconf_8h =
+[
+    [ "CCITT_SUPPORT", "tiffconf_8h.html#ad07a1cfcdc7dfd4707d3619a4fb89570", null ],
+    [ "CHECK_JPEG_YCBCR_SUBSAMPLING", "tiffconf_8h.html#ab165cc13d17780c521856c901525a9f0", null ],
+    [ "CMYK_SUPPORT", "tiffconf_8h.html#a1ea9ae5e3951552eff1ccc5d21a2ea28", null ],
+    [ "COLORIMETRY_SUPPORT", "tiffconf_8h.html#a50b3b5d5f1a6c572ce31b17c5aa457d8", null ],
+    [ "DEFAULT_EXTRASAMPLE_AS_ALPHA", "tiffconf_8h.html#a9bf9601f578e5e213829dd3f14164895", null ],
+    [ "HAVE_IEEEFP", "tiffconf_8h.html#a84e054bac0848e9fcb43d26cc2dee795", null ],
+    [ "HOST_BIGENDIAN", "tiffconf_8h.html#a03fd667d3b02de1ec900c92cbcf7ac36", null ],
+    [ "HOST_FILLORDER", "tiffconf_8h.html#abfd82395c236e9e3a00851a49ebdb40d", null ],
+    [ "ICC_SUPPORT", "tiffconf_8h.html#aff774498a292fbf344adb9e0d6112717", null ],
+    [ "IPTC_SUPPORT", "tiffconf_8h.html#ae421e105a9c59c8b5f7f02ff6247286c", null ],
+    [ "LOGLUV_SUPPORT", "tiffconf_8h.html#a847179e9a045c88d18f3592025f6f073", null ],
+    [ "LZW_SUPPORT", "tiffconf_8h.html#a633cc8078f66b991d0480739e48d0653", null ],
+    [ "MDI_SUPPORT", "tiffconf_8h.html#ad105b6d2952a2eace0d0042b76718e46", null ],
+    [ "NEXT_SUPPORT", "tiffconf_8h.html#a837a579a76fe8656e23944504c7a26ed", null ],
+    [ "PACKBITS_SUPPORT", "tiffconf_8h.html#a2eb3ad2ea94094bd2ffb5e79168d8881", null ],
+    [ "PHOTOSHOP_SUPPORT", "tiffconf_8h.html#ad7db0aeb16d23ed7d4e872efb0ff6bd4", null ],
+    [ "PIXARLOG_SUPPORT", "tiffconf_8h.html#abf7516d003eb068c429a1e99230f63c3", null ],
+    [ "SIZEOF_INT", "tiffconf_8h.html#a44184cf844a916eee78598ab35fc966b", null ],
+    [ "SIZEOF_LONG", "tiffconf_8h.html#a22aece5d034fd9040a3d01c3797fdfe7", null ],
+    [ "STRIPCHOP_DEFAULT", "tiffconf_8h.html#a8c0d5fddb57040f907640b0ea93e54a8", null ],
+    [ "SUBIFD_SUPPORT", "tiffconf_8h.html#a71f8443e4f3df38623e8a618b36d4868", null ],
+    [ "THUNDER_SUPPORT", "tiffconf_8h.html#ac65c1cecb35e1fe53e2c11681e34e450", null ],
+    [ "YCBCR_SUPPORT", "tiffconf_8h.html#ace03d36ed16ac4c52ca2c50754042003", null ],
+    [ "ZIP_SUPPORT", "tiffconf_8h.html#a6b58f10fb91b06a2ab0071478ceb6d78", null ]
+];

@@ -1,0 +1,1470 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__img__proc_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mg/mg_img_proc.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mg/mg_img_proc.cpp</primary></indexterm>
+<para>
+
+<para>Functions for image processing from micrograph structures. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_img_proc.h&quot;
+#include &quot;mg_processing.h&quot;
+#include &quot;mg_select.h&quot;
+#include &quot;mg_ctf.h&quot;
+#include &quot;img_combine.h&quot;
+#include &quot;qsort_functions.h&quot;
+#include &quot;rwimg.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;math_util.h&quot;
+#include &quot;random_numbers.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bmicrograph">Bmicrograph</link> * <link linkend="_mg__img__proc_8cpp_1aa31913debb6448ef9f70af3fb50b83b9">micrograph_create_from_image</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bstring">Bstring</link> type)</para>
+</listitem>
+            <listitem><para><link linkend="_class_breconstruction">Breconstruction</link> * <link linkend="_mg__img__proc_8cpp_1ad4acd1782792ae569dbe6a4842415855">reconstruction_create_from_image</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bstring">Bstring</link> type)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="_mg__img__proc_8cpp_1aaf984127c3768cf710538898f7f6db7c">image_type</link> (<link linkend="_class_bstring">Bstring</link> type)</para>
+
+<para>Converts an image type string to a standard form. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bproject">Bproject</link> * <link linkend="_mg__img__proc_8cpp_1a8f88be47b233970ef3322e2e908b99fd">project_create_from_image_old</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bstring">Bstring</link> type)</para>
+
+<para>Creates a project structure using image file names. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bproject">Bproject</link> * <link linkend="_mg__img__proc_8cpp_1a99ae7b4f343730d979d9e83fafe014a4">project_create_from_images_old</link> (<link linkend="_class_bstring">Bstring</link> *<link linkend="_file__util_8cpp_1a3c3411ced4b9632566ecc66ffa64a72a">file_list</link>, <link linkend="_class_bstring">Bstring</link> type)</para>
+
+<para>Creates a project structure using image file names. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bproject">Bproject</link> * <link linkend="_mg__img__proc_8cpp_1a3334ddcae1645515835608949b7d4486">project_create_from_image</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bstring">Bstring</link> type)</para>
+
+<para>Creates a project structure using image file names. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bproject">Bproject</link> * <link linkend="_mg__img__proc_8cpp_1af67d569727ba51946cb92ebaa8509186">project_create_from_images</link> (<link linkend="_class_bstring">Bstring</link> *<link linkend="_file__util_8cpp_1a3c3411ced4b9632566ecc66ffa64a72a">file_list</link>, <link linkend="_class_bstring">Bstring</link> type)</para>
+
+<para>Creates a project structure using image file names. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> * <link linkend="_mg__img__proc_8cpp_1a943dff38f958aaaa245a61c2e5aa6f8c">particles_from_image</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bfilament">Bfilament</link> * <link linkend="_mg__img__proc_8cpp_1ac6fd0997ae63e05fb43e138febab5001">filaments_from_image</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; fildir, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; start, long finc)</para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__img__proc_8cpp_1a82c8b1f4860a75de389c3ae73705218e">micrograph_intensity</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_bimage">Bimage</link> *p, int flag)</para>
+
+<para>Gets the average of a micrograph and sets the dose. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__img__proc_8cpp_1a4c9be1225cf4e6dcd9475b4c33c6599f">micrograph_intensity</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, int flag)</para>
+
+<para>Gets the average of a micrograph and sets the dose. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__img__proc_8cpp_1a52325f1c28e6f442209fdf20f01e48b6">project_mg_avg_intensities</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Retrieves the average micrograph intensities. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__img__proc_8cpp_1a91ed0ec1ecbff75517d91aa92c528e0e">project_catenate_micrographs</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Concatenates all micrograph image files into one file. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__img__proc_8cpp_1a0bf67806246c6c864363331192960219">particle_read_img</link> (<link linkend="_class_bparticle">Bparticle</link> *part, int readflag)</para>
+
+<para>Reads a particle image file. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__img__proc_8cpp_1a182b8e49140872851764e7061ba62545">particle_write_img</link> (<link linkend="_class_bparticle">Bparticle</link> *part, <link linkend="_class_bimage">Bimage</link> *p, int compression)</para>
+
+<para>Writes a particle image file. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__img__proc_8cpp_1a1f0dcaabdce461f8599cdfb536158a3e">project_check_particles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Checks particle numbers and box sizes. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; long &gt; <link linkend="_mg__img__proc_8cpp_1a5d3b816aaa324dc234518d9d16ed50ad">micrograph_get_size</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg)</para>
+
+<para>Gets the size of a micrograph. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_mg__img__proc_8cpp_1a303368b2d16ff6380fdd557cf1317d8c">micrograph_get_nominal_origin</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg)</para>
+
+<para>Gets the nominal origin for a micrograph. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__img__proc_8cpp_1ad3709c6ae967cb1d3f8721d557d6a7da">project_set_nominal_mg_origins</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Sets micrograph origins to the centers of the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__img__proc_8cpp_1a51a085c5fa359ef1e4c9cf5a1fcb6905">project_reset_origins</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Resets particle origins to nominal values. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__img__proc_8cpp_1a090b6608835449f77809a7b694c8150b">project_set_part_img_origins</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Writes particle origins into particle image files. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__img__proc_8cpp_1a14ba0beb8073093a2600e1537e5cdd76">project_delesect_edge_particles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Deselects particles that are too close to the image edges. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__img__proc_8cpp_1ad2e84d026209e18520a59aec3c79eded">project_get_part_box_size</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Gets the box size from particle image files. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; long &gt; <link linkend="_mg__img__proc_8cpp_1a93ce60cd8ff1499afd2f0e59a012744e">particle_get_box_size</link> (<link linkend="_class_bparticle">Bparticle</link> *part)</para>
+
+<para>Gets the box size from particle image file. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__img__proc_8cpp_1a11fb181e998930a411733e03416c3866">project_write_particle_classes</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Writes particles to different stacks based on class. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__img__proc_8cpp_1a94f78f098bfc8ef4c45743900fbb26a5">project_trim_class_averages</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;list)</para>
+
+<para>Deletes selected class averages from the project.. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__img__proc_8cpp_1ad9a45604fc4f495a1fb7ce20f8f41dd1">project_flip_particle_coordinates</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int flip)</para>
+
+<para>Reverses one or more particle coordinates. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__img__proc_8cpp_1adbf17ea8d7fde115f7dc6266b9c13bb1">project_set_views_from_images</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Gets views from particle images. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__img__proc_8cpp_1ab68edbb6b3fff3f9491e73d6b0326f11">project_set_views_in_images</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Sets views in particle images from the project parameter structure. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="_mg__img__proc_8cpp_1aec48ab30c6c51206f377ab14813bcc7d">mg_img_scale</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bstring">Bstring</link> &amp;path, <link linkend="_class_bstring">Bstring</link> &amp;<link linkend="_string__util_8cpp_1ac592a99e03a236027e68dbdc6a3261ee">insert</link>, double scale, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; pixel_size)</para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__img__proc_8cpp_1a8d994b0d39d04c629b11eb17be627710">project_scale_box</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double scale, <link linkend="_class_bstring">Bstring</link> mgpath, <link linkend="_class_bstring">Bstring</link> partpath, <link linkend="_class_bstring">Bstring</link> <link linkend="_string__util_8cpp_1ac592a99e03a236027e68dbdc6a3261ee">insert</link>)</para>
+
+<para>Changes all the micrograph fields linked to the box size and write new particle files. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__img__proc_8cpp_1a7503069cd2a0096bf5ef3fb548c02fb6">project_bin_micrographs</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int bin, <link linkend="_class_bstring">Bstring</link> mgpath, <link linkend="_class_bstring">Bstring</link> partpath)</para>
+
+<para>Bins all micrographs a project. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__img__proc_8cpp_1a77526560e9e8d14cb1d86aa38e663b2f">project_change_pixel_size</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; new_pixel_size, <link linkend="_class_bstring">Bstring</link> mgpath, <link linkend="_class_bstring">Bstring</link> partpath)</para>
+
+<para>Changes all the micrograph fields linked to the pixel size. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mg__img__proc_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions for image processing from micrograph structures. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010206 </para>
+
+<para>Modified: 20210806 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__img__proc_8cpp_1ac6fd0997ae63e05fb43e138febab5001"/>    <section>
+    <title>filaments_from_image()</title>
+<indexterm><primary>filaments_from_image</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>filaments_from_image</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bfilament">Bfilament</link>* filaments_from_image (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; fildir, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; start, long finc)</computeroutput></para><para>
+Definition at line 658 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1aaf984127c3768cf710538898f7f6db7c"/>    <section>
+    <title>image_type()</title>
+<indexterm><primary>image_type</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>image_type</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> image_type (<link linkend="_class_bstring">Bstring</link> type)</computeroutput></para><para>
+
+<para>Converts an image type string to a standard form. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>type</entry>
+                                <entry>
+<para>a string with a type definition. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_bstring">Bstring</link> standard type definition. <literallayout><computeroutput>The input string is converted to the following strings:
+mg      micrograph
+frame   micrograph frames
+rec     reconstruction
+part    particle
+fil     filament
+ps      power spectrum
+ft      Fourier transform
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 42 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1aec48ab30c6c51206f377ab14813bcc7d"/>    <section>
+    <title>mg_img_scale()</title>
+<indexterm><primary>mg_img_scale</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>mg_img_scale</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> mg_img_scale (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bstring">Bstring</link> &amp; path, <link linkend="_class_bstring">Bstring</link> &amp; insert, double scale, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; pixel_size)</computeroutput></para><para>
+Definition at line 1668 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1aa31913debb6448ef9f70af3fb50b83b9"/>    <section>
+    <title>micrograph_create_from_image()</title>
+<indexterm><primary>micrograph_create_from_image</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>micrograph_create_from_image</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmicrograph">Bmicrograph</link> * micrograph_create_from_image (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bstring">Bstring</link> type)</computeroutput></para><para>
+Definition at line 679 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a303368b2d16ff6380fdd557cf1317d8c"/>    <section>
+    <title>micrograph_get_nominal_origin()</title>
+<indexterm><primary>micrograph_get_nominal_origin</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>micrograph_get_nominal_origin</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; micrograph_get_nominal_origin (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg)</computeroutput></para><para>
+
+<para>Gets the nominal origin for a micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> nominal origin. <literallayout><computeroutput>The nominal origin is defined as the center of the micrograph.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1169 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a5d3b816aaa324dc234518d9d16ed50ad"/>    <section>
+    <title>micrograph_get_size()</title>
+<indexterm><primary>micrograph_get_size</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>micrograph_get_size</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;long&gt; micrograph_get_size (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg)</computeroutput></para><para>
+
+<para>Gets the size of a micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;long&gt;</link> size. <literallayout><computeroutput>The micrograph image header is read.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1140 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a82c8b1f4860a75de389c3ae73705218e"/>    <section>
+    <title>micrograph_intensity()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>micrograph_intensity</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>micrograph_intensity</secondary></indexterm>
+<para><computeroutput>double micrograph_intensity (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_bimage">Bimage</link> * p, int flag)</computeroutput></para><para>
+
+<para>Gets the average of a micrograph and sets the dose. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flag</entry>
+                                <entry>
+<para>flag to force calculation of statistics of not available. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double intensity. <literallayout><computeroutput>The micrograph image header is read.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 862 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a4c9be1225cf4e6dcd9475b4c33c6599f"/>    <section>
+    <title>micrograph_intensity()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>micrograph_intensity</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>micrograph_intensity</secondary></indexterm>
+<para><computeroutput>double micrograph_intensity (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, int flag)</computeroutput></para><para>
+
+<para>Gets the average of a micrograph and sets the dose. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flag</entry>
+                                <entry>
+<para>flag to force calculation of statistics of not available. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double intensity. <literallayout><computeroutput>The micrograph image header is read.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 899 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a93ce60cd8ff1499afd2f0e59a012744e"/>    <section>
+    <title>particle_get_box_size()</title>
+<indexterm><primary>particle_get_box_size</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>particle_get_box_size</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;long&gt; particle_get_box_size (<link linkend="_class_bparticle">Bparticle</link> * part)</computeroutput></para><para>
+
+<para>Gets the box size from particle image file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*part</entry>
+                                <entry>
+<para>particle. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;long&gt;</link> box size (0 if image does not exist). <literallayout><computeroutput>Reads the particle file header and returns the box size.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1365 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a0bf67806246c6c864363331192960219"/>    <section>
+    <title>particle_read_img()</title>
+<indexterm><primary>particle_read_img</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>particle_read_img</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* particle_read_img (<link linkend="_class_bparticle">Bparticle</link> * part, int readflag)</computeroutput></para><para>
+
+<para>Reads a particle image file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*part</entry>
+                                <entry>
+<para>particle. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>readflag</entry>
+                                <entry>
+<para>flag to indicate reading the data. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* image (NULL means failure). <literallayout><computeroutput>The file name is taken from the particle record by preference,
+otherwise from the micrograph record.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1000 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a182b8e49140872851764e7061ba62545"/>    <section>
+    <title>particle_write_img()</title>
+<indexterm><primary>particle_write_img</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>particle_write_img</secondary></indexterm>
+<para><computeroutput>int particle_write_img (<link linkend="_class_bparticle">Bparticle</link> * part, <link linkend="_class_bimage">Bimage</link> * p, int compression)</computeroutput></para><para>
+
+<para>Writes a particle image file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*part</entry>
+                                <entry>
+<para>particle. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image to be written. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>compression</entry>
+                                <entry>
+<para>flag to indicate compression. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int images written. <literallayout><computeroutput>The file name is taken from the particle record by preference,
+otherwise from the micrograph record.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1046 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a943dff38f958aaaa245a61c2e5aa6f8c"/>    <section>
+    <title>particles_from_image()</title>
+<indexterm><primary>particles_from_image</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>particles_from_image</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>* particles_from_image (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+Definition at line 638 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a7503069cd2a0096bf5ef3fb548c02fb6"/>    <section>
+    <title>project_bin_micrographs()</title>
+<indexterm><primary>project_bin_micrographs</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_bin_micrographs</secondary></indexterm>
+<para><computeroutput>int project_bin_micrographs (<link linkend="_class_bproject">Bproject</link> * project, int bin, <link linkend="_class_bstring">Bstring</link> mgpath, <link linkend="_class_bstring">Bstring</link> partpath)</computeroutput></para><para>
+
+<para>Bins all micrographs a project. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>binning value. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mgpath</entry>
+                                <entry>
+<para>binned micrograph path (must be allocated). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>partpath</entry>
+                                <entry>
+<para>binned particle path (must be allocated). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>All micrographs in a project are binned by the indicated value.
+New micrograph file names are generated with a &quot;_b&lt;n&gt;&quot; insert,
+where the n indicates the bin value.
+The path to the binned micrograph can be specified.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1923 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a91ed0ec1ecbff75517d91aa92c528e0e"/>    <section>
+    <title>project_catenate_micrographs()</title>
+<indexterm><primary>project_catenate_micrographs</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_catenate_micrographs</secondary></indexterm>
+<para><computeroutput>int project_catenate_micrographs (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Concatenates all micrograph image files into one file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The new file name is the common part of the original
+micrograph file names.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 953 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a77526560e9e8d14cb1d86aa38e663b2f"/>    <section>
+    <title>project_change_pixel_size()</title>
+<indexterm><primary>project_change_pixel_size</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_change_pixel_size</secondary></indexterm>
+<para><computeroutput>int project_change_pixel_size (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; new_pixel_size, <link linkend="_class_bstring">Bstring</link> mgpath, <link linkend="_class_bstring">Bstring</link> partpath)</computeroutput></para><para>
+
+<para>Changes all the micrograph fields linked to the pixel size. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>new_pixel_size</entry>
+                                <entry>
+<para>new pixel size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mgpath</entry>
+                                <entry>
+<para>binned micrograph path (must be allocated). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>partpath</entry>
+                                <entry>
+<para>binned particle path (must be allocated). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The fields linked to pixel size are:
+    pixel_size
+    shift
+    box, bad and marker radii
+    particle origins and locations
+    bad area and marker locations
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1954 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a1f0dcaabdce461f8599cdfb536158a3e"/>    <section>
+    <title>project_check_particles()</title>
+<indexterm><primary>project_check_particles</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_check_particles</secondary></indexterm>
+<para><computeroutput>int project_check_particles (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Checks particle numbers and box sizes. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). <literallayout><computeroutput>Reads each particle file header, checks the number of particles
+and sets the box size for the micrograph.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1085 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a3334ddcae1645515835608949b7d4486"/>    <section>
+    <title>project_create_from_image()</title>
+<indexterm><primary>project_create_from_image</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_create_from_image</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bproject">Bproject</link>* project_create_from_image (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bstring">Bstring</link> type)</computeroutput></para><para>
+
+<para>Creates a project structure using image file names. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>type</entry>
+                                <entry>
+<para>type of images: mg, frame, rec, part, fil. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bproject* new project parameter structure. <literallayout><computeroutput>The function sets up the project hierarchy from one image base on the type.
+If the type is not specified, it is guessed based on the following rules:
+    #sub-images = 1
+        z=1 =&gt; micrograph
+        z&gt;1 =&gt; reconstruction
+    #sub-images &gt; 1
+        z=1 =&gt; frames
+        z&gt;1
+            x=y =&gt; particles
+            x≠y =&gt; filaments
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 495 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a8f88be47b233970ef3322e2e908b99fd"/>    <section>
+    <title>project_create_from_image_old()</title>
+<indexterm><primary>project_create_from_image_old</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_create_from_image_old</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bproject">Bproject</link>* project_create_from_image_old (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bstring">Bstring</link> type)</computeroutput></para><para>
+
+<para>Creates a project structure using image file names. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>list of images. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>type</entry>
+                                <entry>
+<para>type of images: mg, frame, rec, part, fil. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bproject* new project parameter structure. <literallayout><computeroutput>The function sets up the project hierarchy from a list of file names.
+Each file may represent a micrograph or a picked particle file.
+If the image is equal or larger than 1024x1024, it is assumed to be
+a micrograph, its name will be assigned as a micrograph
+file name, and no particle tags will be added.
+If the image is smaller than 1024x1024 or the make_part flag is set,
+it is taken to be picked particles and the file name will 
+be assigned as a particle file name.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 73 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1af67d569727ba51946cb92ebaa8509186"/>    <section>
+    <title>project_create_from_images()</title>
+<indexterm><primary>project_create_from_images</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_create_from_images</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bproject">Bproject</link>* project_create_from_images (<link linkend="_class_bstring">Bstring</link> * file_list, <link linkend="_class_bstring">Bstring</link> type)</computeroutput></para><para>
+
+<para>Creates a project structure using image file names. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*file_list</entry>
+                                <entry>
+<para>list of file names. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>type</entry>
+                                <entry>
+<para>type of images: mg, frame, rec, part, fil. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bproject* new project parameter structure. <literallayout><computeroutput>The function sets up the project hierarchy from a list of file names.
+Each file may represent a micrograph or a picked particle file.
+If the image is equal or larger than 1024x1024, it is assumed to be
+a micrograph, its name will be assigned as a micrograph
+file name, and no particle tags will be added.
+If the image is smaller than 1024x1024 or the make_part flag is set,
+it is taken to be picked particles and the file name will
+be assigned as a particle file name.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 562 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a99ae7b4f343730d979d9e83fafe014a4"/>    <section>
+    <title>project_create_from_images_old()</title>
+<indexterm><primary>project_create_from_images_old</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_create_from_images_old</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bproject">Bproject</link>* project_create_from_images_old (<link linkend="_class_bstring">Bstring</link> * file_list, <link linkend="_class_bstring">Bstring</link> type)</computeroutput></para><para>
+
+<para>Creates a project structure using image file names. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*file_list</entry>
+                                <entry>
+<para>list of file names. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>type</entry>
+                                <entry>
+<para>type of images: mg, frame, rec, part, fil. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bproject* new project parameter structure. <literallayout><computeroutput>The function sets up the project hierarchy from a list of file names.
+Each file may represent a micrograph or a picked particle file.
+If the image is equal or larger than 1024x1024, it is assumed to be
+a micrograph, its name will be assigned as a micrograph
+file name, and no particle tags will be added.
+If the image is smaller than 1024x1024 or the make_part flag is set,
+it is taken to be picked particles and the file name will 
+be assigned as a particle file name.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 238 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a14ba0beb8073093a2600e1537e5cdd76"/>    <section>
+    <title>project_delesect_edge_particles()</title>
+<indexterm><primary>project_delesect_edge_particles</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_delesect_edge_particles</secondary></indexterm>
+<para><computeroutput>long project_delesect_edge_particles (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Deselects particles that are too close to the image edges. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1295 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1ad9a45604fc4f495a1fb7ce20f8f41dd1"/>    <section>
+    <title>project_flip_particle_coordinates()</title>
+<indexterm><primary>project_flip_particle_coordinates</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_flip_particle_coordinates</secondary></indexterm>
+<para><computeroutput>int project_flip_particle_coordinates (<link linkend="_class_bproject">Bproject</link> * project, int flip)</computeroutput></para><para>
+
+<para>Reverses one or more particle coordinates. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flip</entry>
+                                <entry>
+<para>axes to flip. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The specification of axes to flip is embedded in the flip number:
+    first bit  - x
+    second bit - y
+    third bit  - z
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1509 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1ad2e84d026209e18520a59aec3c79eded"/>    <section>
+    <title>project_get_part_box_size()</title>
+<indexterm><primary>project_get_part_box_size</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_get_part_box_size</secondary></indexterm>
+<para><computeroutput>int project_get_part_box_size (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Gets the box size from particle image files. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). <literallayout><computeroutput>Reads each particle file header and sets the box size for the micrograph. 
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1332 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a52325f1c28e6f442209fdf20f01e48b6"/>    <section>
+    <title>project_mg_avg_intensities()</title>
+<indexterm><primary>project_mg_avg_intensities</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_mg_avg_intensities</secondary></indexterm>
+<para><computeroutput>int project_mg_avg_intensities (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Retrieves the average micrograph intensities. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>For each micrograph the FOM is set to the micrograph average.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 929 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a51a085c5fa359ef1e4c9cf5a1fcb6905"/>    <section>
+    <title>project_reset_origins()</title>
+<indexterm><primary>project_reset_origins</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_reset_origins</secondary></indexterm>
+<para><computeroutput>int project_reset_origins (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Resets particle origins to nominal values. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>For each micrograph a particle image header is read and the origin
+is set to to the middle of the image.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1228 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a8d994b0d39d04c629b11eb17be627710"/>    <section>
+    <title>project_scale_box()</title>
+<indexterm><primary>project_scale_box</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_scale_box</secondary></indexterm>
+<para><computeroutput>int project_scale_box (<link linkend="_class_bproject">Bproject</link> * project, double scale, <link linkend="_class_bstring">Bstring</link> mgpath, <link linkend="_class_bstring">Bstring</link> partpath, <link linkend="_class_bstring">Bstring</link> insert)</computeroutput></para><para>
+
+<para>Changes all the micrograph fields linked to the box size and write new particle files. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>scaling factor. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mgpath</entry>
+                                <entry>
+<para>scaled micrograph path. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>partpath</entry>
+                                <entry>
+<para>scaled particle path. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>insert</entry>
+                                <entry>
+<para>string to insert into new file names. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The fields linked to pixel size are:
+    pixel_size
+    shift
+    box, bad and marker radii
+    particle origins and locations
+    bad area and marker locations
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1727 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1ad3709c6ae967cb1d3f8721d557d6a7da"/>    <section>
+    <title>project_set_nominal_mg_origins()</title>
+<indexterm><primary>project_set_nominal_mg_origins</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_set_nominal_mg_origins</secondary></indexterm>
+<para><computeroutput>int project_set_nominal_mg_origins (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Sets micrograph origins to the centers of the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>For each micrograph the micrograph origin is set to the center.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1198 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a090b6608835449f77809a7b694c8150b"/>    <section>
+    <title>project_set_part_img_origins()</title>
+<indexterm><primary>project_set_part_img_origins</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_set_part_img_origins</secondary></indexterm>
+<para><computeroutput>int project_set_part_img_origins (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Writes particle origins into particle image files. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>D. Belnap </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). <literallayout><computeroutput>Sets the origins (offsets from the first voxel) in an image header to
+values set within a project.  Rewrites image to file. 
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1267 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1adbf17ea8d7fde115f7dc6266b9c13bb1"/>    <section>
+    <title>project_set_views_from_images()</title>
+<indexterm><primary>project_set_views_from_images</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_set_views_from_images</secondary></indexterm>
+<para><computeroutput>int project_set_views_from_images (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Gets views from particle images. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1572 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1ab68edbb6b3fff3f9491e73d6b0326f11"/>    <section>
+    <title>project_set_views_in_images()</title>
+<indexterm><primary>project_set_views_in_images</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_set_views_in_images</secondary></indexterm>
+<para><computeroutput>int project_set_views_in_images (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Sets views in particle images from the project parameter structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1621 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a94f78f098bfc8ef4c45743900fbb26a5"/>    <section>
+    <title>project_trim_class_averages()</title>
+<indexterm><primary>project_trim_class_averages</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_trim_class_averages</secondary></indexterm>
+<para><computeroutput>int project_trim_class_averages (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; list)</computeroutput></para><para>
+
+<para>Deletes selected class averages from the project.. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;list</entry>
+                                <entry>
+<para>selection list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The new class average file name has an insert of &quot;_del&quot;.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1457 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1a11fb181e998930a411733e03416c3866"/>    <section>
+    <title>project_write_particle_classes()</title>
+<indexterm><primary>project_write_particle_classes</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>project_write_particle_classes</secondary></indexterm>
+<para><computeroutput>int project_write_particle_classes (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Writes particles to different stacks based on class. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). <literallayout><computeroutput>Writes new particle image files, numbered by the selection number. 
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1387 of file mg_img_proc.cpp.</para>
+    </section><anchor xml:id="_mg__img__proc_8cpp_1ad4acd1782792ae569dbe6a4842415855"/>    <section>
+    <title>reconstruction_create_from_image()</title>
+<indexterm><primary>reconstruction_create_from_image</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>reconstruction_create_from_image</secondary></indexterm>
+<para><computeroutput><link linkend="_class_breconstruction">Breconstruction</link> * reconstruction_create_from_image (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bstring">Bstring</link> type)</computeroutput></para><para>
+Definition at line 792 of file mg_img_proc.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_mg__img__proc_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>mg_img_proc.cpp</secondary></indexterm>
+<indexterm><primary>mg_img_proc.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

@@ -1,0 +1,284 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_model__multifit_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/model/model_multifit.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/model/model_multifit.cpp</primary></indexterm>
+<para>
+
+<para>Searching for a template in a map and returning multiple hits in a model. </para>
+ 
+</para>
+<programlisting>#include &quot;rwimg.h&quot;
+#include &quot;rwmodel.h&quot;
+#include &quot;model_multifit.h&quot;
+#include &quot;symmetry.h&quot;
+#include &quot;Matrix.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__multifit_8cpp_1a836dfa799ada08b9dc94c51e239b1e06">model_from_densities</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bimage">Bimage</link> *ptemp, <link linkend="_class_view">View</link> *view, double alpha, double alpha_step, double hires, double lores, <link linkend="_class_bimage">Bimage</link> *pmask, double threshold)</para>
+
+<para>Searches a 2D/3D density map for a template. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__multifit_8cpp_1a4b065a9ca38b0336b5dbc6232187793e">model_from_densities_for_view</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bimage">Bimage</link> *ptemp, <link linkend="_class_view">View</link> view, double hires, double lores, <link linkend="_class_bimage">Bimage</link> *pmask, double threshold)</para>
+
+<para>Searches a 2D/3D density map for a template using a specific view. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__multifit_8cpp_1a08ee94829c621b7cdaf01b88822902fc">model_from_peaks</link> (<link linkend="_class_bimage">Bimage</link> *p, double threshold, int wrap)</para>
+
+<para>Generates a model from peaks in a map. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_model__multifit_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Searching for a template in a map and returning multiple hits in a model. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20021027 </para>
+
+<para>Modified: 20151127 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_model__multifit_8cpp_1a836dfa799ada08b9dc94c51e239b1e06"/>    <section>
+    <title>model_from_densities()</title>
+<indexterm><primary>model_from_densities</primary><secondary>model_multifit.cpp</secondary></indexterm>
+<indexterm><primary>model_multifit.cpp</primary><secondary>model_from_densities</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_from_densities (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bimage">Bimage</link> * ptemp, <link linkend="_class_view">View</link> * view, double alpha, double alpha_step, double hires, double lores, <link linkend="_class_bimage">Bimage</link> * pmask, double threshold)</computeroutput></para><para>
+
+<para>Searches a 2D/3D density map for a template. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*ptemp</entry>
+                                <entry>
+<para>the template to be searched for. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*view</entry>
+                                <entry>
+<para>views. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>alpha</entry>
+                                <entry>
+<para>rotation around view vector, &lt;0 = use 2*PI (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>alpha_step</entry>
+                                <entry>
+<para>angular step size around view vector (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask</entry>
+                                <entry>
+<para>mask for cross-correlation (ignored if NULL). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>threshold</entry>
+                                <entry>
+<para>threshold value, if 0, threshold = FOMmax/2. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* list of solutions. <literallayout><computeroutput>The template is rotated and cross-correlated to find the best fit.
+The views must be calculated externally to allow for custom sets.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 38 of file model_multifit.cpp.</para>
+    </section><anchor xml:id="_model__multifit_8cpp_1a4b065a9ca38b0336b5dbc6232187793e"/>    <section>
+    <title>model_from_densities_for_view()</title>
+<indexterm><primary>model_from_densities_for_view</primary><secondary>model_multifit.cpp</secondary></indexterm>
+<indexterm><primary>model_multifit.cpp</primary><secondary>model_from_densities_for_view</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_from_densities_for_view (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bimage">Bimage</link> * ptemp, <link linkend="_class_view">View</link> view, double hires, double lores, <link linkend="_class_bimage">Bimage</link> * pmask, double threshold)</computeroutput></para><para>
+
+<para>Searches a 2D/3D density map for a template using a specific view. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*ptemp</entry>
+                                <entry>
+<para>the template to be searched for. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view</entry>
+                                <entry>
+<para>view. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask</entry>
+                                <entry>
+<para>mask for cross-correlation (ignored if NULL). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>threshold</entry>
+                                <entry>
+<para>threshold value, if 0, threshold = FOMmax/2. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* list of solutions. <literallayout><computeroutput>The template is rotated to the view and cross-correlated to find
+a set of high-scoring fits.
+The views must be calculated externally to allow for custom sets.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 170 of file model_multifit.cpp.</para>
+    </section><anchor xml:id="_model__multifit_8cpp_1a08ee94829c621b7cdaf01b88822902fc"/>    <section>
+    <title>model_from_peaks()</title>
+<indexterm><primary>model_from_peaks</primary><secondary>model_multifit.cpp</secondary></indexterm>
+<indexterm><primary>model_multifit.cpp</primary><secondary>model_from_peaks</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_from_peaks (<link linkend="_class_bimage">Bimage</link> * p, double threshold, int wrap)</computeroutput></para><para>
+
+<para>Generates a model from peaks in a map. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>cross-correlation map. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>threshold</entry>
+                                <entry>
+<para>threshold value, if 0, threshold = FOMmax/2. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wrap</entry>
+                                <entry>
+<para>flag to wrap around image boundaries. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* list of peaks. <literallayout><computeroutput>Peaks found in the map are returned in the FOM block.
+A component is generated from each peak with a FOM above the threshold.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 208 of file model_multifit.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_model__multifit_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>model_multifit.cpp</secondary></indexterm>
+<indexterm><primary>model_multifit.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

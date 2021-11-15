@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: SPA</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Processing of Helical Filaments</h1>
+<center><img src="filament_workflow.png" alt="Filament workflow" width="546" height="701" /></center>
+  <p>There is large overlap with generic single particle analysis (<a href="bsoft_spa.html">SPA</a>) and some aspects are not covered in detail here (E.g., focal pair handling and CTF correction).</p>
+<br />
+<h2>1. Preparation and initial processing</h2>
+<p>Helical processing occurs largely by single particle methods, and the typical directory organization is similar to that for <a href="/workflows/bsoft_spa.html">SPA</a>. The micrographs are set up and CTF determined in the same way as for SPA.</p>
+      <br />
+<h2>2. Filament picking<br />
+</h2>
+<h3>2.1. Picking filaments in bshow</h3>
+Filaments can be picked in bshow using the <a href="/bshow/bshow_fil.html">filament tool</a>. The filaments can be extracted for further inspection.<br />
+<h3>2.2 Converting filaments to particles</h3>
+<p>Filaments can be converted to overlapping particles, simply specifying parameters in bshow or with bfil. As with SPA, the user needs to decide on the size of particle box, considering that some sizes will process faster. The size must include a significant length of the filament, while not having too much bending across the box. In addition, the overlap between boxes along a filament must be chosen. The typical overlap  ranges from 50 - 90% of the box size.</p>
+<p>&nbsp;</p>
+<center><img src="../bshow/bshow_filament_dialog.png" alt="Filament dialog" width="262" height="358" align="middle" /></center>
+<p>Prior to selecting the &quot;Filament/Generate particles&quot; menu option, the following parameters should be considered:</p>
+<ul>
+  <li>Boxing interval: This determines the frequency of boxes along the filament and their overlap.</li>
+  <li>Helix rise and angle per unit: The initial rough view for the particle is set based on the filament orientation and helical parameters. This can be used to reconstruct an initial map.</li>
+  </ul>
+<p>Once these parameters are set, the &quot;Filament/Generate particles&quot; menu option creates a set of boxes defining particles for extraction (see the <a href="../bshow/bshow_part.html">particle picking tool</a>).<br />
+  <br />
+</p>
+<h3>2.3. Finding filament and particle locations in the closer-to-focus micrographs</h3>
+Once all the
+filaments and particles have been picked in the further-from-focus micrographs, the
+closer-to-focus micrographs can be aligned to the
+further-from-focus micrographs as described for SPA (<a href="bsoft_spa.html">SPA mg alignment</a>).<br />
+<br />
+<br />
+<h3>2.4. Particle extraction</h3>
+<p>Once all the particle coordinates are specified in the parameter files,
+  the
+  particle images can be extracted (change to the part directory first):</p>
+<div id="command"><p>bfil -v 7 -box 100,50 -power -helix 15,55 -path ../part -exten pif -out ../part/hel_part.star ../mg/hel_ctf.star</p></div>
+<p>The -powerspectrum option generates an aligned power spectrum from all the selected particles. This can be used to inspect the layer lines and deduce helical parameters.<br />
+  <br />
+  All the particle image files should be written to the part directory.</p>
+<p><br />
+  <br />
+</p>
+<h2>3. Initial reference</h2>
+<p>Specification of the helical parameters during particle generation or extraction presents the opportunity to reconstruct initial reference maps. To calculate one map per filament, use the -filaments option in breconstruct:</p>
+<div id="command"><p>breconstruct -v 3 -resol 15 -filaments -rescale 0,1 -recon
+  hel_ref.pif hel_part.star &gt;&amp; hel_ref.log &amp;</p></div>
+<p>Each reconstruction can be examined for the best and used as a reference to determine orientations.</p>
+<p>The key is to select approximately correct helical parameters, which means this approach will not work without a reasonable knowledge of these parameters.</p>
+<p>The alternative is to synthesize a <a href="bsoft_helixmap.html">helical reference map</a>, where the helical parmaeters should also be known to a reasonable extent.</p>
+<br />
+<h2>4. Determining particle orientations</h2>
+<p>The filament particle orientations can be determined with borient or refined with brefine, using a suitable reference map. For each run of orientation-finding, create one directory such as run1,
+  run2, etc.</p>
+<h3>4.1. Global orientation search</h3>
+<p>A grid search can be performed, taking into account that a filament lies approximately perpendicular to the electron beam, excluding a large part of the view unit sphere. The same program is used as for SPA, with the difference being specification of helical symmetry and the maximum angular deviation from a perfect side view (-side option):</p>
+<div id="command"><p>borient -v 1 -sym H -ang 4 -side 10 -resol 30,200 -ann 5,80 -mode ccc -ref helix.pif -out hel_run1.star hel_part.star &gt;&amp; hel_run1.log &amp;</p></div>
+<h3>4.2. Orientation refinement</h3>
+<p>Given already reasonable orientations for the particles, these parameters can be refined using a local search around the input views. There are two ways to do this. The first is using a Monte Carlo approach (i.e., adjusting parameters by small random amounts):</p>
+<div id="command"><p>brefine -verb 1 -monte 1000 -resol 20 -shift 1.5 -view 1.4 -angle 2 -ref hel_rec.pif -out hel_run2.star hel_run1.star &gt;&amp; hel_run2.log &amp;</p></div>
+<p>The second method does a 3x3x3 grid search around the input view starting at a given angular increment. If the maximum correlation coefficient is on an edge of the grid, a new grid is placed with this view in the middle and analyzed. If the maximum is in the center of the grid, the grid is contracted around it and analyzed. The grid is contracted until its angular increment falls below that of the second parameter, the accuracy:</p>
+<div id="command"><p>brefine -verb 1 -grid 3,0.5 -resol 20 -ref hel_rec.pif -out hel_run2.star hel_run1.star &gt;&amp; hel_run2.log &amp;</p></div>
+<br />
+<h2>5. Particle selection</h2>
+<p>The selection of particles for reconstruction is done as for <a href="bsoft_spa.html">SPA</a>. In addition, the particles associated with one filament may not be all in a consistent direction. To fix the direction for each filament, use the -filament option in bpartsel during selection:</p>
+<div id="command"><p>bpartsel -verb 7 -all -fom 0.32 -fil -out hel_run2s.star hel_run2.star</p></div>
+      <br />
+</p>
+<h2>6. Reconstruction</h2>
+<p>The reconstruction can then be done from the selected particles.
+  Typically, two reconstructions are generated from two different
+  particle sets (option -multiple):<br />
+  <br />
+  <div id="command"><p>breconstruct -v 3 -resol 15 -mult 2 -rescale 0,1 -recon
+  hel_run2.pif hel_run2s.star &gt;&amp; hel_run2_rec.log &amp;</p></div>
+  <br />
+  The resultant reconstructions have the inserts &quot;_01&quot; and &quot;_02&quot; before
+  the extension and is used for resolution estimation (see next section). These maps can be added to generate a single
+  reconstruction:<br />
+  <div id="command"><p>bop -v 7 -add 1,0 hel_run2_01.pif hel_run2_02.pif hel_run2.pif</p></div>
+  <br />
+  Reconstructions can also be done from a specific selection number in
+  the parameter file using the &quot;-select&quot; option.</p>
+  <br />
+<h2>7. Resolution determination</h2>
+<p>The resolution determination is done as for <a href="bsoft_spa.html">SPA</a>.</p>
+      <br />
+<h2>8. Determination of helical parameters</h2>
+<p>The helical parameters for the reconstruction can be refined by a search for the angular rotation that gives a maximum cross-correlation. This can be done in real space or reciprocal space, each with its own nuances that may make it work better than the other. The reciprocal space search only requires starting, ending and incremental values for the rotation angle:</p>
+<div id="command"><p>bhelix -v 1 -findcc 50,70,0.5 -rad 50 -resol 40,200 hel_run2.pif</p></div>
+<p>This iterates through the angles from 50° to 70° in 0.5° increments and cross-correlates the original map with the map rotated around the z-axis and within the resolution limits. The helical rise is inferred from the offset of the cross-correlation peak and its absolute value should increase with increasing angle. This only works if the reconstruction already has the correct helical character.<br />
+</p>
+<p>The real space search is done on a grid of helical rise and rotation angle and requires starting, ending and incremental values for both the rise and rotation angle:</p>
+<div id="command"><p>bhelix -v 1 -findrs 25,35,1,50,70,0.5 -rad 50 hel_run2.pif</p></div>
+<p>The map is rotated and shifted according to the helical parameters and the real space correlation with respect to the original map calculated within the radius specified.</p>
+<h2>9. Helical symmetrization</h2>
+<p>Once the parameters are known, helical symmetry can be imposed on the map:</p>
+  <div id="command"><p>bhelix -v 7 -helix 15,55 -norm -back -radius 40 -zlim 50,150 hel_run2.pif hel_run2h.pif</p></div>
+  <p>This map is then used as a reference for subsequent particle orientation determinations.</p>
+      <br />
+</div>
+<div id="footer">
+  Bernard Heymann  20121210
+</div>
+</body>
+</html>

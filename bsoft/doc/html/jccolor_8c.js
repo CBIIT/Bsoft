@@ -1,0 +1,28 @@
+var jccolor_8c =
+[
+    [ "my_color_converter", "structmy__color__converter.html", "structmy__color__converter" ],
+    [ "B_CB_OFF", "jccolor_8c.html#a228b164e0da74f7600743e7f644155f5", null ],
+    [ "B_CR_OFF", "jccolor_8c.html#ad619eb70a29691643bba7cb947522f83", null ],
+    [ "B_Y_OFF", "jccolor_8c.html#ad67993d1a8073b128fcc003df9808377", null ],
+    [ "CBCR_OFFSET", "jccolor_8c.html#a6d068520c3e2956e085d142b3c86a951", null ],
+    [ "FIX", "jccolor_8c.html#a740431a9a1d25e39e670cd5f48454ce4", null ],
+    [ "G_CB_OFF", "jccolor_8c.html#a4778bec91ebc1872f0608d59a1bb2e2a", null ],
+    [ "G_CR_OFF", "jccolor_8c.html#a4a5474e40e9b957cbfa28bb49b69c873", null ],
+    [ "G_Y_OFF", "jccolor_8c.html#a646e8035b3ff387bc70de7e610d21da1", null ],
+    [ "JPEG_INTERNALS", "jccolor_8c.html#ad5c3cdfae3019b8223973041a2a1304b", null ],
+    [ "ONE_HALF", "jccolor_8c.html#ab912dc6f2915fe1226a30465776e2015", null ],
+    [ "R_CB_OFF", "jccolor_8c.html#a434afb89a3c75c7a55d5d53cd03007aa", null ],
+    [ "R_CR_OFF", "jccolor_8c.html#a59935a68ff56641c3d0946d63f707cbf", null ],
+    [ "R_Y_OFF", "jccolor_8c.html#ab64f3c53a2f6aa67e2bd8cca753b2b23", null ],
+    [ "SCALEBITS", "jccolor_8c.html#a61bda43ef3f3e965ecbb37f7cb34edb4", null ],
+    [ "TABLE_SIZE", "jccolor_8c.html#a032503e76d6f69bc67e99e909c8125da", null ],
+    [ "my_cconvert_ptr", "jccolor_8c.html#ae1a52cc3b15b415bcb92925b6658b1bc", null ],
+    [ "cmyk_ycck_convert", "jccolor_8c.html#a07e9f4291a8c8cd2aa78fdd1e04f0599", null ],
+    [ "grayscale_convert", "jccolor_8c.html#a05363c93af8fe7bbd461ceadff2e662c", null ],
+    [ "jinit_color_converter", "jccolor_8c.html#a3c3f43d8034fa9e59f2a0dfd1912b334", null ],
+    [ "null_convert", "jccolor_8c.html#a3bc254942cca696f1604636abe897d59", null ],
+    [ "null_method", "jccolor_8c.html#ab019c7b1b84016eba778b6882bb3cf40", null ],
+    [ "rgb_gray_convert", "jccolor_8c.html#aacb9fa25753b50726a6b7b085d366260", null ],
+    [ "rgb_ycc_convert", "jccolor_8c.html#af5c5cd65e5b5f7c8e10c00d82ed47af3", null ],
+    [ "rgb_ycc_start", "jccolor_8c.html#a00e6170e937fe4dc7d743a699bbcd04e", null ]
+];

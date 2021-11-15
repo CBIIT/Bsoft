@@ -1,0 +1,227 @@
+.TH "/Users/bernard/b20/bsoft/src/ps/ps_ctf_plot.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/ps/ps_ctf_plot.cpp \- Postscript output functions for calculating CTF parameters\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'ps_plot\&.h'\fP
+.br
+\fC#include 'ps_ctf_plot\&.h'\fP
+.br
+\fC#include 'moving_average\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBps_show_ctf_param\fP (\fBBplot\fP *plot, \fBCTFparam\fP &em_ctf)"
+.br
+.ti -1c
+.RI "int \fBps_show_ctf_fit\fP (\fBBplot\fP *plot, \fBCTFparam\fP &em_ctf)"
+.br
+.ti -1c
+.RI "int \fBps_ctf_plot\fP (\fBBstring\fP &filename, \fBCTFparam\fP &em_ctf, size_t n, double freq_step)"
+.br
+.RI "Generates a postscript plot from CTF parameters for defocus and the envelope\&. "
+.ti -1c
+.RI "int \fBps_ctf_plot\fP (long n, double *rps, double interval, \fBCTFparam\fP *em_ctf, \fBBstring\fP &filename)"
+.br
+.RI "Generates a postscript plot of a contrast transfer function\&. "
+.ti -1c
+.RI "int \fBps_ctf_defocus_zeroes\fP (\fBBstring\fP &filename, double volts, double Cs, double amp_shift)"
+.br
+.RI "Generates a postscript plot of defocus versus zeroes\&. "
+.ti -1c
+.RI "int \fBpoint_spread\fP (size_t n, vector< double > &a, double step)"
+.br
+.ti -1c
+.RI "int \fBps_point_spread\fP (\fBBstring\fP &filename, \fBCTFparam\fP &em_ctf, size_t n, double freq_step)"
+.br
+.RI "Generates a point spread plot from CTF envelope parameters\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Postscript output functions for calculating CTF parameters\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010515 
+.PP
+Modified: 20210531 
+.RE
+.PP
+
+.PP
+Definition in file \fBps_ctf_plot\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int point_spread (size_t n, vector< double > & a, double step)"
+
+.PP
+Definition at line 304 of file ps_ctf_plot\&.cpp\&.
+.SS "int ps_ctf_defocus_zeroes (\fBBstring\fP & filename, double volts, double Cs, double amp_shift)"
+
+.PP
+Generates a postscript plot of defocus versus zeroes\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP postscript output file name\&. 
+.br
+\fIvolts\fP accelerating voltage (in volts)\&. 
+.br
+\fICs\fP spherical aberration (in angstrom)\&. 
+.br
+\fIamp_shift\fP amplitude contribution phase shift (radians)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+A postscript plot is generated from microscope and defocus parameters
+to show the corresponding defocus and zero values.
+Defocus is given in um.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 233 of file ps_ctf_plot\&.cpp\&.
+.SS "int ps_ctf_plot (\fBBstring\fP & filename, \fBCTFparam\fP & em_ctf, size_t n, double freq_step)"
+
+.PP
+Generates a postscript plot from CTF parameters for defocus and the envelope\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP postscript file name\&. 
+.br
+\fI&em_ctf\fP CTF parameter structure\&. 
+.br
+\fIn\fP number of reciprocal space steps\&. 
+.br
+\fIfreq_step\fP spatial frequency increment per step\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Postscript output is generated from microscope and defocus
+parameters.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 71 of file ps_ctf_plot\&.cpp\&.
+.SS "int ps_ctf_plot (long n, double * rps, double interval, \fBCTFparam\fP * em_ctf, \fBBstring\fP & filename)"
+
+.PP
+Generates a postscript plot of a contrast transfer function\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP number of elements in the radial power spectrum\&. 
+.br
+\fI*rps\fP radial power spectrum\&. 
+.br
+\fIinterval\fP spatial frequency step size\&. 
+.br
+\fI*em_ctf\fP CTF parameter structure\&. 
+.br
+\fI&filename\fP postscript file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Postscript output is generated from fitted defocus, envelope and background
+parameters and compared to the radial average of the power spectrum image.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 150 of file ps_ctf_plot\&.cpp\&.
+.SS "int ps_point_spread (\fBBstring\fP & filename, \fBCTFparam\fP & em_ctf, size_t n, double freq_step)"
+
+.PP
+Generates a point spread plot from CTF envelope parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP postscript file name\&. 
+.br
+\fI&em_ctf\fP CTF parameter structure\&. 
+.br
+\fIn\fP number of reciprocal space steps\&. 
+.br
+\fIfreq_step\fP spatial frequency increment per step\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Postscript output is generated from microscope and defocus
+parameters.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 337 of file ps_ctf_plot\&.cpp\&.
+.SS "int ps_show_ctf_fit (\fBBplot\fP * plot, \fBCTFparam\fP & em_ctf)"
+
+.PP
+Definition at line 36 of file ps_ctf_plot\&.cpp\&.
+.SS "int ps_show_ctf_param (\fBBplot\fP * plot, \fBCTFparam\fP & em_ctf)"
+
+.PP
+Definition at line 17 of file ps_ctf_plot\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

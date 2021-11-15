@@ -1,0 +1,299 @@
+.TH "/Users/bernard/b20/bsoft/radon/sin_gal.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/radon/sin_gal.cpp
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'sin_gal\&.h'\fP
+.br
+\fC#include 'fft_tool\&.h'\fP
+.br
+\fC#include 'Bimage\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBcopy_sin\fP (\fBBimage\fP *p)"
+.br
+.RI "Copy the second half of a sinogram from the first one\&. "
+.ti -1c
+.RI "int \fBexpand\fP (\fBBimage\fP *p)"
+.br
+.ti -1c
+.RI "int \fBmerge\fP (\fBBimage\fP *p, int padd)"
+.br
+.RI "Pads an image and shifts it to the middle\&. "
+.ti -1c
+.RI "int \fBcart_pol_Fourier_rad\fP (\fBBimage\fP *p, int n_theta, int padd, int range, int pf_x, int pf_y, float *pfr, float *pfi, \fBkernel\fP *ker)"
+.br
+.ti -1c
+.RI "int \fBseparate_ri\fP (\fBBimage\fP *p, float *pfr, float *pfi, int bordo)"
+.br
+.ti -1c
+.RI "int \fBrephase_1D\fP (\fBBimage\fP *p)"
+.br
+.ti -1c
+.RI "int \fBmap_shift\fP (\fBBimage\fP *p, float dx, float dy)"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBsin_gal\fP (\fBBimage\fP *p, int tipo, \fBVector3\fP< float > shift, \fBkernel\fP *ker, int padd, int n_theta)"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBcopy_I_part_rad\fP (\fBBimage\fP *p)"
+.br
+.ti -1c
+.RI "int \fBcopy_II_part_rad\fP (\fBBimage\fP *p)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+\fBAuthor\fP
+.RS 4
+P\&.L\&. Bellon, F\&. Cantele and S\&. Lanzavecchia Dip\&. Chimica Strutturale e Stereochimica Inorganica Via Venezian 21, 20133 Milano, Italy
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 7 04 2003 
+.PP
+Modified: 23 01 2006 (BH) 
+.RE
+.PP
+
+.PP
+Definition in file \fBsin_gal\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int cart_pol_Fourier_rad (\fBBimage\fP * p, int n_theta, int padd, int range, int pf_x, int pf_y, float * pfr, float * pfi, \fBkernel\fP * ker)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 
+.br
+ 
+.br
+\fIn_theta\fP 
+.br
+\fIpadd\fP 
+.br
+\fIrange\fP 
+.br
+\fIpf_x\fP 
+.br
+\fIpf_y\fP 
+.br
+\fI*pfr\fP 
+.br
+\fI*pfi\fP 
+.br
+\fI*ker\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 314 of file sin_gal\&.cpp\&.
+.SS "\fBBimage\fP* copy_I_part_rad (\fBBimage\fP * p)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 
+.br
+ 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBBimage\fP * 
+.br
+ 
+.RE
+.PP
+
+.PP
+Definition at line 163 of file sin_gal\&.cpp\&.
+.SS "int copy_II_part_rad (\fBBimage\fP * p)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 
+.br
+ 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 195 of file sin_gal\&.cpp\&.
+.SS "int copy_sin (\fBBimage\fP * p)"
+
+.PP
+Copy the second half of a sinogram from the first one\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP sinogram 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 179 of file pocs_tool\&.cpp\&.
+.SS "int expand (\fBBimage\fP * p)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 
+.br
+ 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 235 of file sin_gal\&.cpp\&.
+.SS "int map_shift (\fBBimage\fP * p, float dx, float dy)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 
+.br
+ 
+.br
+\fIdx\fP 
+.br
+\fIdy\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 564 of file sin_gal\&.cpp\&.
+.SS "int merge (\fBBimage\fP * p, int padd)"
+
+.PP
+Pads an image and shifts it to the middle\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 
+.br
+ 
+.br
+\fIpadd\fP 0=no padding, 1=padding 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 270 of file sin_gal\&.cpp\&.
+.SS "int rephase_1D (\fBBimage\fP * p)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 
+.br
+ 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 534 of file sin_gal\&.cpp\&.
+.SS "int separate_ri (\fBBimage\fP * p, float * pfr, float * pfi, int bordo)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 
+.br
+ 
+.br
+\fI*pfr\fP 
+.br
+\fI*pfi\fP 
+.br
+\fIbordo\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 471 of file sin_gal\&.cpp\&.
+.SS "\fBBimage\fP* sin_gal (\fBBimage\fP * p, int tipo, \fBVector3\fP< float > shift, \fBkernel\fP * ker, int padd, int n_theta)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 
+.br
+ 
+.br
+\fItipo\fP 
+.br
+\fIshift\fP 
+.br
+\fI*ker\fP 
+.br
+\fIpadd\fP 
+.br
+\fIn_theta\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* 
+.RE
+.PP
+
+.PP
+Definition at line 35 of file sin_gal\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,158 @@
+.TH "/Users/bernard/b20/bsoft/src/bproject.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/bproject.cpp \- Projecting a 3D map and calculating comparison statistics of the projections\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'matrix_util\&.h'\fP
+.br
+\fC#include 'symmetry\&.h'\fP
+.br
+\fC#include 'ps_views\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBMatrix\fP \fBimg_compare_projections\fP (\fBBimage\fP *p, double SNR, double hires, double lores, double shift_limit)"
+.br
+.RI "Compares a set of projections from a 3D density map\&. "
+.ti -1c
+.RI "int \fBimg_compare_projections_lowpass\fP (\fBBimage\fP *p, double SNR, double shift_limit)"
+.br
+.RI "Compares a set of projections from a 3D density map\&. "
+.ti -1c
+.RI "\fBJSvalue\fP \fBjs_views\fP (\fBView\fP *views)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.ti -1c
+.RI "double \fBimg_compare_one_projection\fP (\fBBimage\fP *p, \fBBimage\fP *pref, long i, double hires, double lores, double radius, double sigma, \fBMatrix\fP *cc, \fBfft_plan\fP \fBplanf\fP, \fBfft_plan\fP \fBplanb\fP)"
+.br
+.ti -1c
+.RI "\fBMatrix\fP * \fBimg_compare_projections_driver\fP (\fBBimage\fP *p, double SNR, double hires, double lores, double shift_limit)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Projecting a 3D map and calculating comparison statistics of the projections\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010420 
+.PP
+Modified: 20200318 
+.RE
+.PP
+
+.PP
+Definition in file \fBbproject\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double img_compare_one_projection (\fBBimage\fP * p, \fBBimage\fP * pref, long i, double hires, double lores, double radius, double sigma, \fBMatrix\fP * cc, \fBfft_plan\fP planf, \fBfft_plan\fP planb)"
+
+.PP
+Definition at line 353 of file bproject\&.cpp\&.
+.SS "\fBMatrix\fP img_compare_projections (\fBBimage\fP * p, double SNR, double hires, double lores, double shift_limit)"
+
+.PP
+Compares a set of projections from a 3D density map\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the 2D projections\&. 
+.br
+\fISNR\fP SNR to impose on test projections\&. 
+.br
+\fIhires\fP high resolution limit\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fIshift_limit\fP limit on cross-correlation shift\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBMatrix\fP matrix with projection comparisons\&. 
+.RE
+.PP
+
+.PP
+Definition at line 428 of file bproject\&.cpp\&.
+.SS "\fBMatrix\fP* img_compare_projections_driver (\fBBimage\fP * p, double SNR, double hires, double lores, double shift_limit)"
+
+.PP
+Definition at line 377 of file bproject\&.cpp\&.
+.SS "int img_compare_projections_lowpass (\fBBimage\fP * p, double SNR, double shift_limit)"
+
+.PP
+Compares a set of projections from a 3D density map\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the 2D projections\&. 
+.br
+\fISNR\fP SNR to impose on test projections\&. 
+.br
+\fIshift_limit\fP limit on cross-correlation shift\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 491 of file bproject\&.cpp\&.
+.SS "\fBJSvalue\fP js_views (\fBView\fP * views)"
+
+.PP
+Definition at line 541 of file bproject\&.cpp\&.
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 70 of file bproject\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+
+.PP
+Definition at line 27 of file bproject\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

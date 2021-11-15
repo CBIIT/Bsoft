@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rwmg_serial_e_m_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/rwmgSerialEM.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/rwmgSerialEM.h</primary></indexterm>
+<para>
+
+<para>Converts between SerialEM MDOC files and a micrograph parameter file. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rwmg_serial_e_m_8h_1a508e3a0aafb9e3edf1be4b2961b42c22">read_project_serialem</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int flag)</para>
+
+<para>Creates a project structure using SerialEM MDOC parameters. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_serial_e_m_8h_1aa04587e605a6197eb9f80d841dd74571">write_project_serialem</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Creates SerialEM MDOC files from a project structure. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Converts between SerialEM MDOC files and a micrograph parameter file. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20190109 </para>
+
+<para>Modified: 20190109 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rwmg_serial_e_m_8h_1a508e3a0aafb9e3edf1be4b2961b42c22"/>    <section>
+    <title>read_project_serialem()</title>
+<indexterm><primary>read_project_serialem</primary><secondary>rwmgSerialEM.h</secondary></indexterm>
+<indexterm><primary>rwmgSerialEM.h</primary><secondary>read_project_serialem</secondary></indexterm>
+<para><computeroutput>int read_project_serialem (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bproject">Bproject</link> * project, int flag)</computeroutput></para><para>
+
+<para>Creates a project structure using SerialEM MDOC parameters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>filename</entry>
+                                <entry>
+<para>SerialEM MDOC file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>initialized project structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flag</entry>
+                                <entry>
+<para>flag to indicate conversion of the image file. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). <literallayout><computeroutput>Requirements:
+    Tilt series micrograph image (if 3D then converted to multi-2D)
+    2D transform file (.xf)
+    Tilt angle file (.tlt)
+Calculations:
+    Tilt angle: from tilt angle file
+    Tilt axis: ta = (atan2(-A11, A12) + atan2(-A22, -A21))/2
+    Mg origin: o = on - Ad
+where
+    A:  2x2 transformation matrix
+    ta: tilt axis angle
+    on: nominal micrograph origin (center of mg)
+    o:  aligned micrograph origin
+    d:  shift for micrograph
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 44 of file rwmgSerialEM.cpp.</para>
+    </section><anchor xml:id="_rwmg_serial_e_m_8h_1aa04587e605a6197eb9f80d841dd74571"/>    <section>
+    <title>write_project_serialem()</title>
+<indexterm><primary>write_project_serialem</primary><secondary>rwmgSerialEM.h</secondary></indexterm>
+<indexterm><primary>rwmgSerialEM.h</primary><secondary>write_project_serialem</secondary></indexterm>
+<para><computeroutput>int write_project_serialem (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Creates SerialEM MDOC files from a project structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>filename</entry>
+                                <entry>
+<para>SerialEM MDOC file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>project</entry>
+                                <entry>
+<para>project structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 195 of file rwmgSerialEM.cpp.</para>
+</section>
+</section>
+</section>

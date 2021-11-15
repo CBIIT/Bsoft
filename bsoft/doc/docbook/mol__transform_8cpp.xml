@@ -1,0 +1,977 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mol__transform_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mol/mol_transform.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mol/mol_transform.cpp</primary></indexterm>
+<para>
+
+<para>Library routines used for atomic coordinate transformations. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmolecule.h&quot;
+#include &quot;mol_transform.h&quot;
+#include &quot;mol_util.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_struct_bmolgroup">Bmolgroup</link> * <link linkend="_mol__transform_8cpp_1a1442bc1132377e536c527a5e8f5f8fe8">molgroup_rotate</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_matrix3">Matrix3</link> mat, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; trans)</para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolecule">Bmolecule</link> * <link linkend="_mol__transform_8cpp_1a724794d812c6c85c937a28508cf46139">mol_rotate</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol, <link linkend="_class_matrix3">Matrix3</link> mat, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; trans)</para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__transform_8cpp_1a91fd497f0cc071034416515714da92dc">molgroup_coor_shift</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; shift)</para>
+
+<para>Translates a molecule group. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__transform_8cpp_1ad07e5ad7550178c31c758603c902dfad">mol_coor_shift</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; shift)</para>
+
+<para>Translates a molecule. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__transform_8cpp_1aec20d4605c772d663b49a298065deffb">molgroup_coor_rotate</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_transform">Transform</link> t)</para>
+
+<para>Rotates and translates a molecule group. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__transform_8cpp_1aab372b6b70e2a5512679bdb6de43bf41">mol_coor_rotate</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol, <link linkend="_class_transform">Transform</link> t)</para>
+
+<para>Rotates and translates a molecule. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolgroup">Bmolgroup</link> * <link linkend="_mol__transform_8cpp_1a23594aa95d09279b14e3ec55f1f1e31e">molgroup_rotate_to_view</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_view">View</link> view, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; trans)</para>
+
+<para>Rotates a molecule group to a specified view and translates it afterwards. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolgroup">Bmolgroup</link> * <link linkend="_mol__transform_8cpp_1a89041692099534f3ba6744c0400cd12d">molgroup_rotate_from_view</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_view">View</link> view, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; trans)</para>
+
+<para>Rotates a molecule group from a specified view and translates it afterwards. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolecule">Bmolecule</link> * <link linkend="_mol__transform_8cpp_1a462078e766017433d25e5f8f3f95843e">mol_rotate_to_view</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol, <link linkend="_class_view">View</link> view, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; trans)</para>
+
+<para>Rotates a molecule to a specified view and translates it afterwards. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolecule">Bmolecule</link> * <link linkend="_mol__transform_8cpp_1a487e33323267bff073e1873f4c4aa737">mol_rotate_from_view</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol, <link linkend="_class_view">View</link> view, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; trans)</para>
+
+<para>Rotates a molecule from a specified view and translates it afterwards. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__transform_8cpp_1a6dec1ed13129fb68dd14d944f0392f83">molgroup_coor_transform</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_transform">Transform</link> t)</para>
+
+<para>Rotates and translates a molecule group. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__transform_8cpp_1a41e21d41f6b67133eda5930d6b80db04">mol_coor_transform</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol, <link linkend="_class_transform">Transform</link> t)</para>
+
+<para>Rotates and translates a molecule. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__transform_8cpp_1a1a290c799205cbd444942e0f98756c37">molgroup_coor_invert</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; point)</para>
+
+<para>Inverts the coordinates of a molecule through a given point. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__transform_8cpp_1ac1b38cd84e20ec579079eae1c32e6d9e">molgroup_resolve_pbc</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Recombines coordinates split across periodic box boundaries. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__transform_8cpp_1afbf1204fbffaab0ea4c45834b8c26731">molgroup_pack_in_periodic_box</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Distributes coordinates across periodic box boundaries. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__transform_8cpp_1ae077366a436c4ef5aef2db434eff4eb0">molgroup_coor_shift_PBC</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; shift)</para>
+
+<para>Translates a molecule within a periodic box. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__transform_8cpp_1a707d507153c36dcc01e25a73457b58f8">molgroup_coor_shift_rotate_PBC</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_matrix3">Matrix3</link> mat, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; shift)</para>
+
+<para>Translates and rotates a molecule within a periodic box. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__transform_8cpp_1a506c6c1e60a2e4684ab1f63f5152a3de">molgroup_shift_to_center_of_mass</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Translates a set of coordinates to the center of mass. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__transform_8cpp_1a1a1b9c67228b22776271e8f0fc5fb492">mol_shift_to_center_of_mass</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol)</para>
+
+<para>Translates a set of coordinates to the center of mass. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__transform_8cpp_1a094b8da5eef01414cb311f401bbe99d9">molgroup_place_at_coordinates</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; location)</para>
+
+<para>Translates a set of coordinates to a defined center-of-mass. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mol__transform_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines used for atomic coordinate transformations. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19980214 </para>
+
+<para>Modified: 20070614 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mol__transform_8cpp_1aab372b6b70e2a5512679bdb6de43bf41"/>    <section>
+    <title>mol_coor_rotate()</title>
+<indexterm><primary>mol_coor_rotate</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>mol_coor_rotate</secondary></indexterm>
+<para><computeroutput>int mol_coor_rotate (<link linkend="_struct_bmolecule">Bmolecule</link> * mol, <link linkend="_class_transform">Transform</link> t)</computeroutput></para><para>
+
+<para>Rotates and translates a molecule. </para>
+</para>
+
+<para><literallayout><computeroutput>The new coordinates are:
+    coord_new = (coord - origin)*rot_mat + origin + shift.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mol</entry>
+                                <entry>
+<para>molecule structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>t</entry>
+                                <entry>
+<para>transform structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 131 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1ad07e5ad7550178c31c758603c902dfad"/>    <section>
+    <title>mol_coor_shift()</title>
+<indexterm><primary>mol_coor_shift</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>mol_coor_shift</secondary></indexterm>
+<para><computeroutput>int mol_coor_shift (<link linkend="_struct_bmolecule">Bmolecule</link> * mol, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; shift)</computeroutput></para><para>
+
+<para>Translates a molecule. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mol</entry>
+                                <entry>
+<para>molecule structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift</entry>
+                                <entry>
+<para>three-valued translation vector. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 56 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1a41e21d41f6b67133eda5930d6b80db04"/>    <section>
+    <title>mol_coor_transform()</title>
+<indexterm><primary>mol_coor_transform</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>mol_coor_transform</secondary></indexterm>
+<para><computeroutput>int mol_coor_transform (<link linkend="_struct_bmolecule">Bmolecule</link> * mol, <link linkend="_class_transform">Transform</link> t)</computeroutput></para><para>
+
+<para>Rotates and translates a molecule. </para>
+</para>
+
+<para><literallayout><computeroutput>The new coordinates are:
+    coord_new = (coord - origin)*rot_mat + origin + shift.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mol</entry>
+                                <entry>
+<para>molecule structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>t</entry>
+                                <entry>
+<para>transform structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 378 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1a724794d812c6c85c937a28508cf46139"/>    <section>
+    <title>mol_rotate()</title>
+<indexterm><primary>mol_rotate</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>mol_rotate</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolecule">Bmolecule</link> * mol_rotate (<link linkend="_struct_bmolecule">Bmolecule</link> * mol, <link linkend="_class_matrix3">Matrix3</link> mat, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; trans)</computeroutput></para><para>
+Definition at line 294 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1a487e33323267bff073e1873f4c4aa737"/>    <section>
+    <title>mol_rotate_from_view()</title>
+<indexterm><primary>mol_rotate_from_view</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>mol_rotate_from_view</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolecule">Bmolecule</link>* mol_rotate_from_view (<link linkend="_struct_bmolecule">Bmolecule</link> * mol, <link linkend="_class_view">View</link> view, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; trans)</computeroutput></para><para>
+
+<para>Rotates a molecule from a specified view and translates it afterwards. </para>
+</para>
+
+<para><literallayout><computeroutput>A new rotated and translated molecule is generated.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mol</entry>
+                                <entry>
+<para>molecule structure (unmodified). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view</entry>
+                                <entry>
+<para>view to rotate from. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>origin of rotation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>trans</entry>
+                                <entry>
+<para>3-valued translation vector. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolecule* new molecule group. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 281 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1a462078e766017433d25e5f8f3f95843e"/>    <section>
+    <title>mol_rotate_to_view()</title>
+<indexterm><primary>mol_rotate_to_view</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>mol_rotate_to_view</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolecule">Bmolecule</link>* mol_rotate_to_view (<link linkend="_struct_bmolecule">Bmolecule</link> * mol, <link linkend="_class_view">View</link> view, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; trans)</computeroutput></para><para>
+
+<para>Rotates a molecule to a specified view and translates it afterwards. </para>
+</para>
+
+<para><literallayout><computeroutput>A new rotated and translated molecule is generated.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mol</entry>
+                                <entry>
+<para>molecule structure (unmodified). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view</entry>
+                                <entry>
+<para>view to rotate to. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>origin of rotation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>trans</entry>
+                                <entry>
+<para>3-valued translation vector. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolecule* new molecule group. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 258 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1a1a1b9c67228b22776271e8f0fc5fb492"/>    <section>
+    <title>mol_shift_to_center_of_mass()</title>
+<indexterm><primary>mol_shift_to_center_of_mass</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>mol_shift_to_center_of_mass</secondary></indexterm>
+<para><computeroutput>int mol_shift_to_center_of_mass (<link linkend="_struct_bmolecule">Bmolecule</link> * mol)</computeroutput></para><para>
+
+<para>Translates a set of coordinates to the center of mass. </para>
+</para>
+
+<para><literallayout><computeroutput>The function mol_center_of_mass is used to calculate the center of mass.
+The function mol_coor_shift is used to shift the coordinates.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mol</entry>
+                                <entry>
+<para>molecule structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 645 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1a1a290c799205cbd444942e0f98756c37"/>    <section>
+    <title>molgroup_coor_invert()</title>
+<indexterm><primary>molgroup_coor_invert</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>molgroup_coor_invert</secondary></indexterm>
+<para><computeroutput>int molgroup_coor_invert (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; point)</computeroutput></para><para>
+
+<para>Inverts the coordinates of a molecule through a given point. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>point</entry>
+                                <entry>
+<para>3-valued inversion point. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 419 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1aec20d4605c772d663b49a298065deffb"/>    <section>
+    <title>molgroup_coor_rotate()</title>
+<indexterm><primary>molgroup_coor_rotate</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>molgroup_coor_rotate</secondary></indexterm>
+<para><computeroutput>int molgroup_coor_rotate (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_transform">Transform</link> t)</computeroutput></para><para>
+
+<para>Rotates and translates a molecule group. </para>
+</para>
+
+<para><literallayout><computeroutput>The new coordinates are:
+    coord_new = (coord - origin)*rot_mat + origin + shift.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>t</entry>
+                                <entry>
+<para>transform structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 87 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1a91fd497f0cc071034416515714da92dc"/>    <section>
+    <title>molgroup_coor_shift()</title>
+<indexterm><primary>molgroup_coor_shift</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>molgroup_coor_shift</secondary></indexterm>
+<para><computeroutput>int molgroup_coor_shift (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; shift)</computeroutput></para><para>
+
+<para>Translates a molecule group. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift</entry>
+                                <entry>
+<para>three-valued translation vector. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 28 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1ae077366a436c4ef5aef2db434eff4eb0"/>    <section>
+    <title>molgroup_coor_shift_PBC()</title>
+<indexterm><primary>molgroup_coor_shift_PBC</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>molgroup_coor_shift_PBC</secondary></indexterm>
+<para><computeroutput>int molgroup_coor_shift_PBC (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; shift)</computeroutput></para><para>
+
+<para>Translates a molecule within a periodic box. </para>
+</para>
+
+<para><literallayout><computeroutput>The periodic box is defined in the molecule group structure.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift</entry>
+                                <entry>
+<para>three-valued translation vector. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 544 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1a707d507153c36dcc01e25a73457b58f8"/>    <section>
+    <title>molgroup_coor_shift_rotate_PBC()</title>
+<indexterm><primary>molgroup_coor_shift_rotate_PBC</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>molgroup_coor_shift_rotate_PBC</secondary></indexterm>
+<para><computeroutput>int molgroup_coor_shift_rotate_PBC (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_matrix3">Matrix3</link> mat, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; shift)</computeroutput></para><para>
+
+<para>Translates and rotates a molecule within a periodic box. </para>
+</para>
+
+<para><literallayout><computeroutput>The molecule group is first rotated around the origin and then shifted.
+The periodic box is defined in the molecule group structure.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>3-valued origin for rotation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mat</entry>
+                                <entry>
+<para>3x3 rotation matrix. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift</entry>
+                                <entry>
+<para>3-valued translation vector. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 581 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1a6dec1ed13129fb68dd14d944f0392f83"/>    <section>
+    <title>molgroup_coor_transform()</title>
+<indexterm><primary>molgroup_coor_transform</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>molgroup_coor_transform</secondary></indexterm>
+<para><computeroutput>int molgroup_coor_transform (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_transform">Transform</link> t)</computeroutput></para><para>
+
+<para>Rotates and translates a molecule group. </para>
+</para>
+
+<para><literallayout><computeroutput>The new coordinates are:
+    coord_new = (coord - origin)*rot_mat + origin + shift.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>t</entry>
+                                <entry>
+<para>transform structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 332 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1afbf1204fbffaab0ea4c45834b8c26731"/>    <section>
+    <title>molgroup_pack_in_periodic_box()</title>
+<indexterm><primary>molgroup_pack_in_periodic_box</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>molgroup_pack_in_periodic_box</secondary></indexterm>
+<para><computeroutput>int molgroup_pack_in_periodic_box (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Distributes coordinates across periodic box boundaries. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 513 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1a094b8da5eef01414cb311f401bbe99d9"/>    <section>
+    <title>molgroup_place_at_coordinates()</title>
+<indexterm><primary>molgroup_place_at_coordinates</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>molgroup_place_at_coordinates</secondary></indexterm>
+<para><computeroutput>int molgroup_place_at_coordinates (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; location)</computeroutput></para><para>
+
+<para>Translates a set of coordinates to a defined center-of-mass. </para>
+</para>
+
+<para><literallayout><computeroutput>The function molgroup_center_of_mass is used to calculate the center of mass.
+The function molgroup_coor_shift is used to shift the coordinates.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>location</entry>
+                                <entry>
+<para>desired center-of-mass coordinates. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 666 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1ac1b38cd84e20ec579079eae1c32e6d9e"/>    <section>
+    <title>molgroup_resolve_pbc()</title>
+<indexterm><primary>molgroup_resolve_pbc</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>molgroup_resolve_pbc</secondary></indexterm>
+<para><computeroutput>int molgroup_resolve_pbc (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Recombines coordinates split across periodic box boundaries. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The center of mass of each molecule is calculated to determine the
+shift needed to be applied to get the center of mass within the box.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 450 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1a1442bc1132377e536c527a5e8f5f8fe8"/>    <section>
+    <title>molgroup_rotate()</title>
+<indexterm><primary>molgroup_rotate</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>molgroup_rotate</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup_rotate (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_matrix3">Matrix3</link> mat, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; trans)</computeroutput></para><para>
+Definition at line 216 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1a89041692099534f3ba6744c0400cd12d"/>    <section>
+    <title>molgroup_rotate_from_view()</title>
+<indexterm><primary>molgroup_rotate_from_view</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>molgroup_rotate_from_view</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolgroup">Bmolgroup</link>* molgroup_rotate_from_view (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_view">View</link> view, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; trans)</computeroutput></para><para>
+
+<para>Rotates a molecule group from a specified view and translates it afterwards. </para>
+</para>
+
+<para><literallayout><computeroutput>A new rotated and translated molecule group is generated.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure (unmodified). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view</entry>
+                                <entry>
+<para>view to rotate from. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>origin of rotation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>trans</entry>
+                                <entry>
+<para>3-valued translation vector. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolgroup* new molecule group. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 203 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1a23594aa95d09279b14e3ec55f1f1e31e"/>    <section>
+    <title>molgroup_rotate_to_view()</title>
+<indexterm><primary>molgroup_rotate_to_view</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>molgroup_rotate_to_view</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolgroup">Bmolgroup</link>* molgroup_rotate_to_view (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_view">View</link> view, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; trans)</computeroutput></para><para>
+
+<para>Rotates a molecule group to a specified view and translates it afterwards. </para>
+</para>
+
+<para><literallayout><computeroutput>A new rotated and translated molecule group is generated.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure (unmodified). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view</entry>
+                                <entry>
+<para>view to rotate to. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>origin of rotation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>trans</entry>
+                                <entry>
+<para>3-valued translation vector. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolgroup* new molecule group. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 180 of file mol_transform.cpp.</para>
+    </section><anchor xml:id="_mol__transform_8cpp_1a506c6c1e60a2e4684ab1f63f5152a3de"/>    <section>
+    <title>molgroup_shift_to_center_of_mass()</title>
+<indexterm><primary>molgroup_shift_to_center_of_mass</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>molgroup_shift_to_center_of_mass</secondary></indexterm>
+<para><computeroutput>int molgroup_shift_to_center_of_mass (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Translates a set of coordinates to the center of mass. </para>
+</para>
+
+<para><literallayout><computeroutput>The function molgroup_center_of_mass is used to calculate the center of mass.
+The function molgroup_coor_shift is used to shift the coordinates.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 625 of file mol_transform.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_mol__transform_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>mol_transform.cpp</secondary></indexterm>
+<indexterm><primary>mol_transform.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

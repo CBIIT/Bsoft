@@ -1,0 +1,119 @@
+.TH "/Users/bernard/b20/bsoft/src/rwimg/rwIMAGIC.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/rwimg/rwIMAGIC.cpp \- Functions for reading and writing Image Science's Imagic files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwIMAGIC\&.h'\fP
+.br
+\fC#include 'file_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBView\fP \fBview_from_imagic_euler\fP (\fBIMAGIChead\fP *header)"
+.br
+.ti -1c
+.RI "int \fBimagic_euler_from_view\fP (\fBIMAGIChead\fP *header, \fBView\fP view)"
+.br
+.ti -1c
+.RI "int \fBreadIMAGIC\fP (\fBBimage\fP *p, int readdata, int img_select)"
+.br
+.RI "Reading an IMAGIC image format\&. A 2D file format for the IMAGIC package\&. The header is stored in a separate file with extension '\&.hed' and a fixed size of 1024 bytes per image\&. The image data is stored in a single block in a file with the extension '\&.img'\&. Machine stamp (4 bytes or integer): VAX/VMS 1 0 0 0 (16777216) Little endian 2 2 2 2 (33686018) Big endian 4 4 4 4 (67372036) Byte order determination: Year and hour values must be less than 256*256\&. Data types: PACK = byte, INTG = short, REAL = float, RECO,COMP = complex float\&. \fBTransform\fP type: Centered (COMP data type) RECO is not a transform Note that the x and y dimensions are interchanged (actually a display issue)\&. "
+.ti -1c
+.RI "int \fBwriteIMAGIC\fP (\fBBimage\fP *p)"
+.br
+.RI "Writing an IMAGIC image format\&. A file format for the IMAGIC package\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for reading and writing Image Science's Imagic files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19990424 
+.PP
+Modified: 20180329 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwIMAGIC\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int imagic_euler_from_view (\fBIMAGIChead\fP * header, \fBView\fP view)"
+
+.PP
+Definition at line 31 of file rwIMAGIC\&.cpp\&.
+.SS "int readIMAGIC (\fBBimage\fP * p, int readdata, int img_select)"
+
+.PP
+Reading an IMAGIC image format\&. A 2D file format for the IMAGIC package\&. The header is stored in a separate file with extension '\&.hed' and a fixed size of 1024 bytes per image\&. The image data is stored in a single block in a file with the extension '\&.img'\&. Machine stamp (4 bytes or integer): VAX/VMS 1 0 0 0 (16777216) Little endian 2 2 2 2 (33686018) Big endian 4 4 4 4 (67372036) Byte order determination: Year and hour values must be less than 256*256\&. Data types: PACK = byte, INTG = short, REAL = float, RECO,COMP = complex float\&. \fBTransform\fP type: Centered (COMP data type) RECO is not a transform Note that the x and y dimensions are interchanged (actually a display issue)\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.br
+\fIreaddata\fP flag to activate reading of image data\&. 
+.br
+\fIimg_select\fP image selection in multi-image file (-1 = all images)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 65 of file rwIMAGIC\&.cpp\&.
+.SS "\fBView\fP view_from_imagic_euler (\fBIMAGIChead\fP * header)"
+
+.PP
+Definition at line 16 of file rwIMAGIC\&.cpp\&.
+.SS "int writeIMAGIC (\fBBimage\fP * p)"
+
+.PP
+Writing an IMAGIC image format\&. A file format for the IMAGIC package\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 246 of file rwIMAGIC\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

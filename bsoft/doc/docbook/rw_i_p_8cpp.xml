@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rw_i_p_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/rwimg/rwIP.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/rwimg/rwIP.cpp</primary></indexterm>
+<para>
+
+<para>Functions for reading and writing image plate reader files. </para>
+ 
+</para>
+<programlisting>#include &quot;rwIP.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_i_p_8cpp_1a757e0648ae930630c984ff445acf8c7c">readIP</link> (<link linkend="_class_bimage">Bimage</link> *p, int readdata)</para>
+
+<para>Reading an image plate reader file format. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_i_p_8cpp_1a84dc8886a8ef3f620412c49e6cced4a1">writeIP</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>Writing an image plate reader file format. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_i_p_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions for reading and writing image plate reader files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20041110 </para>
+
+<para>Modified: 20111217 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rw_i_p_8cpp_1a757e0648ae930630c984ff445acf8c7c"/>    <section>
+    <title>readIP()</title>
+<indexterm><primary>readIP</primary><secondary>rwIP.cpp</secondary></indexterm>
+<indexterm><primary>rwIP.cpp</primary><secondary>readIP</secondary></indexterm>
+<para><computeroutput>int readIP (<link linkend="_class_bimage">Bimage</link> * p, int readdata)</computeroutput></para><para>
+
+<para>Reading an image plate reader file format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>readdata</entry>
+                                <entry>
+<para>flag to activate reading of image data. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). An image format used in the Ditabis image plate reader. The header is text with tag-value pairs. Required tags: CREATED = time and date string HEADER = length of header, typically 2048 XPIXEL = x size YPIXEL = y size BYTE PER PIXEL = 2,3,4 XRESOLUTION = x pixel size in um YRESOLUTION = y pixel size in um THUMB-NAIL-ZOOM = zoom factor for preview, typically 10 Additional tags: MAGNIFICATION = microscope magnification OFFSET = zero dose value OFFSET CORRECTION = flag to indicate correction GAIN = gain setting LASER = laser setting PARAMS = settings file FORMAT = format file CHANNEL = data channel MICRON-MARK = position, length and text of micron mark overlay Final tag: COMMENT = comment, always last, terminated by NULL. File format extensions: .IPL, .IPH, .IPR, .IPC Byte order: Always little endian because the IP software runs on Intel machines and there is no way to detect byte order from the text header. Data type: short. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 50 of file rwIP.cpp.</para>
+    </section><anchor xml:id="_rw_i_p_8cpp_1a84dc8886a8ef3f620412c49e6cced4a1"/>    <section>
+    <title>writeIP()</title>
+<indexterm><primary>writeIP</primary><secondary>rwIP.cpp</secondary></indexterm>
+<indexterm><primary>rwIP.cpp</primary><secondary>writeIP</secondary></indexterm>
+<para><computeroutput>int writeIP (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>Writing an image plate reader file format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). A 2D image format used with the image plate reader. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 116 of file rwIP.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_rw_i_p_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>rwIP.cpp</secondary></indexterm>
+<indexterm><primary>rwIP.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

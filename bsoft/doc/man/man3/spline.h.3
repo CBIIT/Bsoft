@@ -1,0 +1,80 @@
+.TH "/Users/bernard/b20/bsoft/include/spline.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/spline.h \- Header file for spline interpolation\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Vector3\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBVector3\fP< double > * \fBvector3_catmull_rom_spline\fP (long ncoord, \fBVector3\fP< double > *coords, long &nspline)"
+.br
+.RI "Calculates a 2D/3D spline curve using the Catmull-Rom algorithm\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for spline interpolation\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20020808 
+.PP
+Modified: 20151023 
+.RE
+.PP
+
+.PP
+Definition in file \fBspline\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBVector3\fP<double>* vector3_catmull_rom_spline (long ncoord, \fBVector3\fP< double > * coords, long & nspline)"
+
+.PP
+Calculates a 2D/3D spline curve using the Catmull-Rom algorithm\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIncoord\fP number of coordinates\&. 
+.br
+\fI*coords\fP node or point coordinates\&. 
+.br
+\fI&nspline\fP pointer to number of values in spline curve\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP* spline curve\&. 
+.PP
+.nf
+A Catmull-Rom spline curve is defined for 4 points {p0,p1,p2,p3} by:
+    spline = 0.5*(-t*(1-t)^2)*p0 + (2-5*t^2+3*t^3)*p1 +
+             t*(1+4*t-3*t^2)*p2 - t^2*(1-t)*p3
+where 0 <= t <= 1 is the fractional distance between points p1 and p2.
+Each dimension is interpolated separately.
+The end segments of the spline are defined as straight lines.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 48 of file spline\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

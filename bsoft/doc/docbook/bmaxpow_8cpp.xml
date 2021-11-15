@@ -1,0 +1,354 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_bmaxpow_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/bmaxpow.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/bmaxpow.cpp</primary></indexterm>
+<para>
+
+<para>Determining orientations by maximum power of 3D reconstruction from single particle images. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmg.h&quot;
+#include &quot;mg_processing.h&quot;
+#include &quot;mg_particles.h&quot;
+#include &quot;mg_particle_select.h&quot;
+#include &quot;mg_ctf.h&quot;
+#include &quot;rwimg.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+#include &quot;options.h&quot;
+#include &quot;timer.h&quot;
+#include &lt;sys/stat.h&gt;
+#include &lt;fcntl.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_bmaxpow_8cpp_1ae827d8664b1b5a88168372ebbe7b4047">project_maximum_power</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double theta_step, double phi_step, double alpha_step, int <link linkend="_tcltk__bmg_8cpp_1a66823305785303716aa59f76b0e3359d">part_select</link>, double hi_res, double lo_res, double scale, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_bimage">Bimage</link> *pmask, int pad_factor, int ctf_action, double wiener, int flags)</para>
+
+<para>Determines the orientation of each particle from the maximum power of its reconstruction. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para>int <link linkend="_bmaxpow_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+            <listitem><para>double <link linkend="_bmaxpow_8cpp_1aadb7ca2b54f42b7641f97a41609661c6">img_reconstruct_one</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, <link linkend="_class_view">View</link> view, double hi_res, double lo_res, double scale)</para>
+</listitem>
+            <listitem><para>double <link linkend="_bmaxpow_8cpp_1a83ba2dc80d489ca09473ab194565d330">img_reconstruct_one_v3</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, <link linkend="_class_view">View</link> view, double hi_res, double lo_res, double scale)</para>
+</listitem>
+            <listitem><para>double <link linkend="_bmaxpow_8cpp_1a1a097095219d2a48a241f839a85b9ccb">img_reconstruct_one_v2</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, <link linkend="_class_view">View</link> view, double hi_res, double lo_res, double scale)</para>
+</listitem>
+            <listitem><para>double <link linkend="_bmaxpow_8cpp_1a77ca55884025ce6f06c9bb7b03514c48">img_reconstruct_one_v1</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, <link linkend="_class_view">View</link> view, double hi_res, double lo_res, double scale)</para>
+</listitem>
+            <listitem><para>double <link linkend="_bmaxpow_8cpp_1aabe40980f315aa3e6132b0430745f002">img_find_maximum_power</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double theta_step, double phi_step, double alpha_step, double hi_res, double lo_res, double scale, int pad_factor)</para>
+
+<para>Determines the orientation of a particle image by maximum power. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para>double <link linkend="_bmaxpow_8cpp_1ad94de8056456b78873c4d48bfe21a0bb">part_find_maximum_power</link> (<link linkend="_class_bparticle">Bparticle</link> *part, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_bimage">Bimage</link> *pmask, long ft_size, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double theta_step, double phi_step, double alpha_step, double hi_res, double lo_res, double scale, int pad_factor, int ctf_action, double wiener, int flags)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_bmaxpow_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>const char * <link linkend="_bmaxpow_8cpp_1a4de0ad4c7190962494815c0fa7f948df">use</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Determining orientations by maximum power of 3D reconstruction from single particle images. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20080424 </para>
+
+<para>Modified: 20190516 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_bmaxpow_8cpp_1aabe40980f315aa3e6132b0430745f002"/>    <section>
+    <title>img_find_maximum_power()</title>
+<indexterm><primary>img_find_maximum_power</primary><secondary>bmaxpow.cpp</secondary></indexterm>
+<indexterm><primary>bmaxpow.cpp</primary><secondary>img_find_maximum_power</secondary></indexterm>
+<para><computeroutput>double img_find_maximum_power (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double theta_step, double phi_step, double alpha_step, double hi_res, double lo_res, double scale, int pad_factor)</computeroutput></para><para>
+
+<para>Determines the orientation of a particle image by maximum power. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>particle image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>reconstruction size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>point group symmetry. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>theta_step</entry>
+                                <entry>
+<para>theta angular step size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>phi_step</entry>
+                                <entry>
+<para>phi angular step size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>alpha_step</entry>
+                                <entry>
+<para>alpha angular step size (in-plane). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hi_res</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lo_res</entry>
+                                <entry>
+<para>low resolution limit (infinite if 0). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>scale of reconstruction and particle magnification. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pad_factor</entry>
+                                <entry>
+<para>factor that determines image padding. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double best FOM. <literallayout><computeroutput>For each view, a reconstruction is generated using the given symmetry.
+The reconstruction with the maximum power is selected and the
+corresponding view assigned to the particle.
+    P = sum(|F|^2)
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 355 of file bmaxpow.cpp.</para>
+    </section><anchor xml:id="_bmaxpow_8cpp_1aadb7ca2b54f42b7641f97a41609661c6"/>    <section>
+    <title>img_reconstruct_one()</title>
+<indexterm><primary>img_reconstruct_one</primary><secondary>bmaxpow.cpp</secondary></indexterm>
+<indexterm><primary>bmaxpow.cpp</primary><secondary>img_reconstruct_one</secondary></indexterm>
+<para><computeroutput>double img_reconstruct_one (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, <link linkend="_class_view">View</link> view, double hi_res, double lo_res, double scale)</computeroutput></para><para>
+Definition at line 197 of file bmaxpow.cpp.</para>
+    </section><anchor xml:id="_bmaxpow_8cpp_1a77ca55884025ce6f06c9bb7b03514c48"/>    <section>
+    <title>img_reconstruct_one_v1()</title>
+<indexterm><primary>img_reconstruct_one_v1</primary><secondary>bmaxpow.cpp</secondary></indexterm>
+<indexterm><primary>bmaxpow.cpp</primary><secondary>img_reconstruct_one_v1</secondary></indexterm>
+<para><computeroutput>double img_reconstruct_one_v1 (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, <link linkend="_class_view">View</link> view, double hi_res, double lo_res, double scale)</computeroutput></para><para>
+Definition at line 298 of file bmaxpow.cpp.</para>
+    </section><anchor xml:id="_bmaxpow_8cpp_1a1a097095219d2a48a241f839a85b9ccb"/>    <section>
+    <title>img_reconstruct_one_v2()</title>
+<indexterm><primary>img_reconstruct_one_v2</primary><secondary>bmaxpow.cpp</secondary></indexterm>
+<indexterm><primary>bmaxpow.cpp</primary><secondary>img_reconstruct_one_v2</secondary></indexterm>
+<para><computeroutput>double img_reconstruct_one_v2 (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, <link linkend="_class_view">View</link> view, double hi_res, double lo_res, double scale)</computeroutput></para><para>
+Definition at line 261 of file bmaxpow.cpp.</para>
+    </section><anchor xml:id="_bmaxpow_8cpp_1a83ba2dc80d489ca09473ab194565d330"/>    <section>
+    <title>img_reconstruct_one_v3()</title>
+<indexterm><primary>img_reconstruct_one_v3</primary><secondary>bmaxpow.cpp</secondary></indexterm>
+<indexterm><primary>bmaxpow.cpp</primary><secondary>img_reconstruct_one_v3</secondary></indexterm>
+<para><computeroutput>double img_reconstruct_one_v3 (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, <link linkend="_class_view">View</link> view, double hi_res, double lo_res, double scale)</computeroutput></para><para>
+Definition at line 228 of file bmaxpow.cpp.</para>
+    </section><anchor xml:id="_bmaxpow_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>bmaxpow.cpp</secondary></indexterm>
+<indexterm><primary>bmaxpow.cpp</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 67 of file bmaxpow.cpp.</para>
+    </section><anchor xml:id="_bmaxpow_8cpp_1ad94de8056456b78873c4d48bfe21a0bb"/>    <section>
+    <title>part_find_maximum_power()</title>
+<indexterm><primary>part_find_maximum_power</primary><secondary>bmaxpow.cpp</secondary></indexterm>
+<indexterm><primary>bmaxpow.cpp</primary><secondary>part_find_maximum_power</secondary></indexterm>
+<para><computeroutput>double part_find_maximum_power (<link linkend="_class_bparticle">Bparticle</link> * part, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_bimage">Bimage</link> * pmask, long ft_size, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double theta_step, double phi_step, double alpha_step, double hi_res, double lo_res, double scale, int pad_factor, int ctf_action, double wiener, int flags)</computeroutput></para><para>
+Definition at line 420 of file bmaxpow.cpp.</para>
+    </section><anchor xml:id="_bmaxpow_8cpp_1ae827d8664b1b5a88168372ebbe7b4047"/>    <section>
+    <title>project_maximum_power()</title>
+<indexterm><primary>project_maximum_power</primary><secondary>bmaxpow.cpp</secondary></indexterm>
+<indexterm><primary>bmaxpow.cpp</primary><secondary>project_maximum_power</secondary></indexterm>
+<para><computeroutput>int project_maximum_power (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double theta_step, double phi_step, double alpha_step, int part_select, double hi_res, double lo_res, double scale, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_bimage">Bimage</link> * pmask, int pad_factor, int ctf_action, double wiener, int flags)</computeroutput></para><para>
+
+<para>Determines the orientation of each particle from the maximum power of its reconstruction. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>image processing parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>point group symmetry. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>theta_step</entry>
+                                <entry>
+<para>theta angular step size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>phi_step</entry>
+                                <entry>
+<para>phi angular step size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>alpha_step</entry>
+                                <entry>
+<para>alpha angular step size (in-plane). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>part_select</entry>
+                                <entry>
+<para>selection number from the selection column. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hi_res</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lo_res</entry>
+                                <entry>
+<para>low resolution limit (infinite if 0). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>scale of reconstruction. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of reconstruction. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask</entry>
+                                <entry>
+<para>mask to eliminate unwanted parts (can be NULL). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pad_factor</entry>
+                                <entry>
+<para>factor that determines image padding. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ctf_action</entry>
+                                <entry>
+<para>type of CTF calculated (1-8). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wiener</entry>
+                                <entry>
+<para>Wiener factor (fraction). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>option flags. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Each particle is transformed to a view on a grid and a reconstruction
+generated. The view associated with the reconstruction with the highest
+power is accepted.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 519 of file bmaxpow.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_bmaxpow_8cpp_1a4de0ad4c7190962494815c0fa7f948df"/>    <section>
+    <title>use</title>
+<indexterm><primary>use</primary><secondary>bmaxpow.cpp</secondary></indexterm>
+<indexterm><primary>bmaxpow.cpp</primary><secondary>use</secondary></indexterm>
+<para><computeroutput>const char* use[]</computeroutput></para><para>
+Definition at line 34 of file bmaxpow.cpp.</para>
+    </section><anchor xml:id="_bmaxpow_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>bmaxpow.cpp</secondary></indexterm>
+<indexterm><primary>bmaxpow.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

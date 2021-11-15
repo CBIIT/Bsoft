@@ -1,0 +1,361 @@
+.TH "/Users/bernard/b20/bsoft/src/mol/seq_analysis.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mol/seq_analysis.cpp \- Analysis of protein sequences\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'seq_analysis\&.h'\fP
+.br
+\fC#include 'seq_util\&.h'\fP
+.br
+\fC#include 'ps_sequence\&.h'\fP
+.br
+\fC#include 'moving_average\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "double \fBlog_2\fP (double a)"
+.br
+.ti -1c
+.RI "long \fBseq_limit\fP (\fBBmolgroup\fP *molgroup, \fBBstring\fP &refseq)"
+.br
+.RI "Limits the selection to the reference sequence in an aligned set\&. "
+.ti -1c
+.RI "\fBMatrix\fP \fBseq_aligned_identity\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Calculates the pairwise identities between aligned sequences\&. "
+.ti -1c
+.RI "\fBMatrix\fP \fBseq_aligned_similarity\fP (\fBBmolgroup\fP *molgroup, double threshold, \fBBresidue_matrix\fP *simat)"
+.br
+.RI "Calculates the pairwise similarities between aligned sequences\&. "
+.ti -1c
+.RI "long \fBseq_select\fP (\fBBmolgroup\fP *molgroup, long minlen, long maxlen)"
+.br
+.RI "Selects sequences within a range of lengths\&. "
+.ti -1c
+.RI "long \fBseq_select\fP (\fBBmolgroup\fP *molgroup, \fBMatrix\fP mat, long ref, double cutoff)"
+.br
+.RI "Selects sequences based on a comparison matrix of aligned sequences\&. "
+.ti -1c
+.RI "long \fBseq_delete\fP (\fBBmolgroup\fP *molgroup, \fBMatrix\fP mat)"
+.br
+.RI "Deletes non-selected sequences and corresponding elelments of a comparison matrix\&. "
+.ti -1c
+.RI "string \fBseq_aligned_profile\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Generates a PROSITE format profile from an aligned set of sequences\&. "
+.ti -1c
+.RI "int \fBseq_aligned_information\fP (\fBBmolgroup\fP *molgroup, int window, \fBBstring\fP &psfile)"
+.br
+.RI "Calculates the sequence logo representation for an alignment\&. "
+.ti -1c
+.RI "int \fBseq_aligned_hydrophobicity\fP (\fBBmolgroup\fP *molgroup, int window, double threshold, \fBBstring\fP &hphobfile, \fBBstring\fP &psfile)"
+.br
+.RI "Calculates the average hydrophobicity at every position in an alignment\&. "
+.ti -1c
+.RI "vector< \fBComplex\fP< float > > \fBseq_frequency_analysis\fP (long win, long start, long end, vector< double > &data)"
+.br
+.RI "Fourier transforms a vector for frequency analysis\&. "
+.ti -1c
+.RI "vector< double > \fBseq_aligned_weight\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.ti -1c
+.RI "\fBMatrix\fP \fBseq_correlated_mutation\fP (\fBBmolgroup\fP *molgroup, \fBBstring\fP &refseqid, double cutoff, \fBBstring\fP &simfile)"
+.br
+.RI "Correlated mutation analysis of an alignment\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Analysis of protein sequences\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19990123 
+.PP
+Modified: 20210426 
+.RE
+.PP
+
+.PP
+Definition in file \fBseq_analysis\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double log_2 (double a)"
+
+.PP
+Definition at line 20 of file seq_analysis\&.cpp\&.
+.SS "int seq_aligned_hydrophobicity (\fBBmolgroup\fP * molgroup, int window, double threshold, \fBBstring\fP & hphobfile, \fBBstring\fP & psfile)"
+
+.PP
+Calculates the average hydrophobicity at every position in an alignment\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the set of sequences\&. 
+.br
+\fIwindow\fP moving average window\&. 
+.br
+\fIthreshold\fP fraction of sequences with a residue in a position\&. 
+.br
+\fI&hphobfile\fP parameter file\&. 
+.br
+\fI&psfile\fP postscript output file\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&.
+.RE
+.PP
+The default hydrophobicity scale is the GES scale\&. 
+.PP
+Definition at line 642 of file seq_analysis\&.cpp\&.
+.SS "\fBMatrix\fP seq_aligned_identity (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Calculates the pairwise identities between aligned sequences\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the set of sequences\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBMatrix\fP the matrix of identities\&.
+.RE
+.PP
+The identity between two sequences is defined as: number of identical residues identity = ---------------------------- overlap where the overlap is the number of positions with residues in both sequences\&. 
+.PP
+Definition at line 70 of file seq_analysis\&.cpp\&.
+.SS "int seq_aligned_information (\fBBmolgroup\fP * molgroup, int window, \fBBstring\fP & psfile)"
+
+.PP
+Calculates the sequence logo representation for an alignment\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the set of sequences\&. 
+.br
+\fIwindow\fP window for calculating the moving average\&. 
+.br
+\fI&psfile\fP the postscript file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&.
+.RE
+.PP
+The information content of each position in an alignment is calculated as: information = log_2(n) - sum(pi * log_2(pi) ) fi pi = ------- sum(fi) fi = frequency of residue type i at this position n = sum(fi) if sum(fi) < 20, otherwise n = 20 A moving average of the information is calculated over a given window to smooth the resultant data\&. The sequence logo representation for the occurrence of every residue type at every position is generated and written into a postscript file\&. 
+.PP
+Definition at line 502 of file seq_analysis\&.cpp\&.
+.SS "string seq_aligned_profile (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Generates a PROSITE format profile from an aligned set of sequences\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the set of sequences\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+string profile in PROSITE format\&.
+.RE
+.PP
+At each position in the alignment, the number of distinct residue types are counted\&. If there are more than 3 residue types represented at a position, or there is a gap, it is designated as variable by an 'x'\&. The profile finally contains 1-3 residue type possibilities for highly conserved positions interspersed by variable length gaps\&. 
+.PP
+Definition at line 419 of file seq_analysis\&.cpp\&.
+.SS "\fBMatrix\fP seq_aligned_similarity (\fBBmolgroup\fP * molgroup, double threshold, \fBBresidue_matrix\fP * simat)"
+
+.PP
+Calculates the pairwise similarities between aligned sequences\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the set of sequences\&. 
+.br
+\fIthreshold\fP threshold to accept residues as similar\&. 
+.br
+\fI*simat\fP residue similarity matrix\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBMatrix\fP the matrix of similarities\&.
+.RE
+.PP
+The similarity between two sequences is defined as: sum(residue similarity) similarity = ----------------------- overlap number of residues with similarity > threshold fraction similarity = ---------------------------------------------- overlap where the overlap is the number of positions with residues in both sequences\&. The residue similarity is taken from a residue substitution matrix\&. The default substitution matrix is BLOSUM62\&. 
+.PP
+Definition at line 149 of file seq_analysis\&.cpp\&.
+.SS "vector<double> seq_aligned_weight (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Definition at line 819 of file seq_analysis\&.cpp\&.
+.SS "\fBMatrix\fP seq_correlated_mutation (\fBBmolgroup\fP * molgroup, \fBBstring\fP & refseqid, double cutoff, \fBBstring\fP & simfile)"
+
+.PP
+Correlated mutation analysis of an alignment\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the set of aligned sequences\&. 
+.br
+\fIrefseqid\fP reference sequence to report on\&. 
+.br
+\fIcutoff\fP cutoff for reporting correlated mutations\&. 
+.br
+\fI&simfile\fP similarity matrix file\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBMatrix\fP the analysis result matrix\&.
+.RE
+.PP
+Reference: Gobel, Sander & Schneider (1994) Proteins 18, 309-317\&. Mutation (residue variation) correlation is defined as: 1 r(i,j) = ------------- sum(w(k,l)*(s(i,k,l) - <s(i)>)*(s(j,k,l) - <s(j)>)) m^2*o(i)*o(j) where: m: number of sequences o(i): standard deviation of similarities at alignment position i w(k,l): weight for sequences k and l (1 - fractional identity: see function seq_aligned_identity) s(i,k,l): similarity for alignment position i between sequences k and l <s(i)>: average similarity at alignment position i Individual high-scoring correlations (using the given cutoff value) are reported as follows: Res1 Num1 Res2 Num2 Total Corr T 9 I 17 210 0\&.631 TAIIIVVVIVVVIVIIIIIII IILLLLLLLLLLLLLLLLLLL The first 4 values gives the type and alignment position of the correlating residues\&. The total is the number of comparisons made: maximally m*(m-1)/2 The last number is the correlation coefficient\&. The following two lines gives the corresponding residues at the two alignment positions for all the sequences, allowing the user to see on what basis this is a high correlation\&. 
+.PP
+Definition at line 884 of file seq_analysis\&.cpp\&.
+.SS "long seq_delete (\fBBmolgroup\fP * molgroup, \fBMatrix\fP mat)"
+
+.PP
+Deletes non-selected sequences and corresponding elelments of a comparison matrix\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the set of sequences\&. 
+.br
+\fImat\fP comparison matrix\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of sequences retained\&. 
+.RE
+.PP
+
+.PP
+Definition at line 359 of file seq_analysis\&.cpp\&.
+.SS "vector<\fBComplex\fP<float> > seq_frequency_analysis (long win, long start, long end, vector< double > & data)"
+
+.PP
+Fourier transforms a vector for frequency analysis\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIwin\fP window size\&. 
+.br
+\fIstart\fP start within window\&. 
+.br
+\fIend\fP end within window\&. 
+.br
+\fI*data\fP sequence\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&.
+.RE
+.PP
+A brute force Fourier transform is done\&. 
+.PP
+Definition at line 772 of file seq_analysis\&.cpp\&.
+.SS "long seq_limit (\fBBmolgroup\fP * molgroup, \fBBstring\fP & refseq)"
+
+.PP
+Limits the selection to the reference sequence in an aligned set\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the set of sequences\&. 
+.br
+\fI&refseq\fP reference sequence identifier\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of selected residues\&. 
+.RE
+.PP
+
+.PP
+Definition at line 33 of file seq_analysis\&.cpp\&.
+.SS "long seq_select (\fBBmolgroup\fP * molgroup, long minlen, long maxlen)"
+
+.PP
+Selects sequences within a range of lengths\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the set of sequences\&. 
+.br
+\fIminlen\fP minimum length\&. 
+.br
+\fImaxlen\fP maximum length\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of sequences retained\&. 
+.RE
+.PP
+
+.PP
+Definition at line 230 of file seq_analysis\&.cpp\&.
+.SS "long seq_select (\fBBmolgroup\fP * molgroup, \fBMatrix\fP mat, long ref, double cutoff)"
+
+.PP
+Selects sequences based on a comparison matrix of aligned sequences\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the set of sequences\&. 
+.br
+\fImat\fP comparison matrix\&. 
+.br
+\fIref\fP reference sequence number (starting at 1)\&. 
+.br
+\fIcutoff\fP threshold for selecting sequences\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of sequences retained\&. 
+.RE
+.PP
+
+.PP
+Definition at line 263 of file seq_analysis\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

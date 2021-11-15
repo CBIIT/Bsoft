@@ -1,0 +1,197 @@
+.TH "/Users/bernard/b20/bsoft/src/rwparam/rwmd.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/rwparam/rwmd.cpp \- Library routines to read and write molecular dynamics parameters in STAR format\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmd\&.h'\fP
+.br
+\fC#include 'rwstar\&.h'\fP
+.br
+\fC#include 'mol_tags\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBmd\fP * \fBmd_init\fP ()"
+.br
+.RI "Initializes a molecular dynamics structure\&. "
+.ti -1c
+.RI "\fBBmd\fP * \fBmd_init_with_types\fP ()"
+.br
+.RI "Initializes a molecular dynamics structure\&. "
+.ti -1c
+.RI "\fBBmd\fP * \fBread_md_parameters\fP (\fBBstring\fP &filename)"
+.br
+.RI "Reading molecular dynamics parameters from STAR files\&. "
+.ti -1c
+.RI "int \fBwrite_md_parameters\fP (\fBBstring\fP &filename, \fBBmd\fP *md)"
+.br
+.RI "Writing molecular dynamics parameters to a STAR file\&. "
+.ti -1c
+.RI "\fBBbondtype\fP * \fBbond_type_add\fP (\fBBbondtype\fP **bond, char *symbol1, char *symbol2, float covlength, float vdwdist)"
+.br
+.ti -1c
+.RI "int \fBmd_kill\fP (\fBBmd\fP *md)"
+.br
+.RI "Deallocates a molecular dynamics structure\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines to read and write molecular dynamics parameters in STAR format\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20030919 
+.PP
+Modified: 20080924 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwmd\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBbondtype\fP* bond_type_add (\fBBbondtype\fP ** bond, char * symbol1, char * symbol2, float covlength, float vdwdist)"
+
+.PP
+Definition at line 350 of file rwmd\&.cpp\&.
+.SS "\fBBmd\fP* md_init ()"
+
+.PP
+Initializes a molecular dynamics structure\&. 
+.PP
+\fBReturns\fP
+.RS 4
+Bmd* molecular dynamics structure\&. 
+.PP
+.nf
+The coefficients for the Lennard-Jones Van der Waals interaction are
+defined as:
+    VdWcoeff1 = 1/12
+    VdWcoeff2 = 1/6
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 28 of file rwmd\&.cpp\&.
+.SS "\fBBmd\fP* md_init_with_types ()"
+
+.PP
+Initializes a molecular dynamics structure\&. 
+.PP
+\fBReturns\fP
+.RS 4
+Bmd* molecular dynamics structure\&. 
+.PP
+.nf
+The coefficients for the Lennard-Jones Van der Waals interaction are
+defined as:
+    VdWcoeff1 = 1/12
+    VdWcoeff2 = 1/6
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 51 of file rwmd\&.cpp\&.
+.SS "int md_kill (\fBBmd\fP * md)"
+
+.PP
+Deallocates a molecular dynamics structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*md\fP molecular dynamics structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+All linked lists within the structure is also deallocated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 420 of file rwmd\&.cpp\&.
+.SS "\fBBmd\fP* read_md_parameters (\fBBstring\fP & filename)"
+
+.PP
+Reading molecular dynamics parameters from STAR files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name (or comma-delimited list)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmd* molecular dynamics structure\&. 
+.RE
+.PP
+
+.PP
+Definition at line 83 of file rwmd\&.cpp\&.
+.SS "int write_md_parameters (\fBBstring\fP & filename, \fBBmd\fP * md)"
+
+.PP
+Writing molecular dynamics parameters to a STAR file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name (or comma-delimited list)\&. 
+.br
+\fI*md\fP molecular dynamics parameters structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 240 of file rwmd\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

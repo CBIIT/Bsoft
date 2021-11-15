@@ -1,0 +1,556 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_ps__plot_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/ps/ps_plot.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/ps/ps_plot.cpp</primary></indexterm>
+<para>
+
+<para>Postscript output functions. </para>
+ 
+</para>
+<programlisting>#include &quot;ps_plot.h&quot;
+#include &quot;utilities.h&quot;
+#include &lt;iostream&gt;
+#include &lt;time.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>ofstream * <link linkend="_ps__plot_8cpp_1aeb4406212e36144608f6dc5962f83bd4">ps_open_and_init</link> (<link linkend="_class_bstring">Bstring</link> filename, <link linkend="_class_bstring">Bstring</link> title, int npages, int width, int height)</para>
+
+<para>Opens and initializes a postscript file. </para>
+</listitem>
+            <listitem><para>ofstream * <link linkend="_ps__plot_8cpp_1a5991d5ffac897ae6be59a79940a24cf8">ps_open_and_init</link> (<link linkend="_class_bstring">Bstring</link> filename, <link linkend="_class_bplot">Bplot</link> *plot)</para>
+
+<para>Opens and initializes a postscript file. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__plot_8cpp_1a54250ad5842908b0943ddd8e02bb704d">ps_close</link> (ofstream *fps)</para>
+
+<para>Closes a postscript file. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__plot_8cpp_1aefea73d98b8cb33707a7ed4092ba05d4">ps_plot</link> (<link linkend="_class_bstring">Bstring</link> filename, <link linkend="_class_bplot">Bplot</link> *plot)</para>
+
+<para>Generates postscript graphs. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bplot">Bplot</link> * <link linkend="_ps__plot_8cpp_1ad9a2151e73c42bd74f61b462fd9e7662">ps_read</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+
+<para>Reads a postscript file with a data table. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__plot_8cpp_1ad1f87aec244ed82f4f8a52055325131d">ps_graph</link> (ofstream *fps, <link linkend="_class_bplot">Bplot</link> *plot, int page_number)</para>
+
+<para>Generates postscript graphs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__plot_8cpp_1a0b308d184ed6db82f06e384af709294e">ps_scale</link> (ofstream *fps, double x1, double y1, double x2, double y2, double min, double max, double increment, double tick_length, double tick_angle, int digits, int fontsize, int inverse)</para>
+
+<para>Generates a scale for a postscript graph. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bplot">Bplot</link> * <link linkend="_ps__plot_8cpp_1a353aa8fb78ab5b9a28f5d90113918d24">plot_curve</link> (long nrow, double *c0, double *c1, double *c2, double *c3)</para>
+
+<para>Generates 1-3 line plot. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__plot_8cpp_1a69fd9462ab6828f8b5370647f8e1a9e5">ps_define_arrowline</link> (ofstream *fps)</para>
+
+<para>Generates an arrow and line. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_ps__plot_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>string <link linkend="_ps__plot_8cpp_1a4c9ef422180cc13bda2c623c7b9d43e5">command</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Postscript output functions. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010515 </para>
+
+<para>Modified: 20200312 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_ps__plot_8cpp_1a353aa8fb78ab5b9a28f5d90113918d24"/>    <section>
+    <title>plot_curve()</title>
+<indexterm><primary>plot_curve</primary><secondary>ps_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_plot.cpp</primary><secondary>plot_curve</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bplot">Bplot</link>* plot_curve (long nrow, double * c0, double * c1, double * c2, double * c3)</computeroutput></para><para>
+
+<para>Generates 1-3 line plot. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>nrow</entry>
+                                <entry>
+<para>number of points. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*c0</entry>
+                                <entry>
+<para>independent variable. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*c1</entry>
+                                <entry>
+<para>curve 1. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*c2</entry>
+                                <entry>
+<para>curve 2. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*c3</entry>
+                                <entry>
+<para>curve 3. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bplot* plot structure. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 563 of file ps_plot.cpp.</para>
+    </section><anchor xml:id="_ps__plot_8cpp_1a54250ad5842908b0943ddd8e02bb704d"/>    <section>
+    <title>ps_close()</title>
+<indexterm><primary>ps_close</primary><secondary>ps_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_plot.cpp</primary><secondary>ps_close</secondary></indexterm>
+<para><computeroutput>int ps_close (ofstream * fps)</computeroutput></para><para>
+
+<para>Closes a postscript file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*fps</entry>
+                                <entry>
+<para>file handle. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Closes a file and writes the postscript trailer line.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 106 of file ps_plot.cpp.</para>
+    </section><anchor xml:id="_ps__plot_8cpp_1a69fd9462ab6828f8b5370647f8e1a9e5"/>    <section>
+    <title>ps_define_arrowline()</title>
+<indexterm><primary>ps_define_arrowline</primary><secondary>ps_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_plot.cpp</primary><secondary>ps_define_arrowline</secondary></indexterm>
+<para><computeroutput>int ps_define_arrowline (ofstream * fps)</computeroutput></para><para>
+
+<para>Generates an arrow and line. </para>
+</para>
+<para>
+Definition at line 604 of file ps_plot.cpp.</para>
+    </section><anchor xml:id="_ps__plot_8cpp_1ad1f87aec244ed82f4f8a52055325131d"/>    <section>
+    <title>ps_graph()</title>
+<indexterm><primary>ps_graph</primary><secondary>ps_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_plot.cpp</primary><secondary>ps_graph</secondary></indexterm>
+<para><computeroutput>int ps_graph (ofstream * fps, <link linkend="_class_bplot">Bplot</link> * plot, int page_number)</computeroutput></para><para>
+
+<para>Generates postscript graphs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*fps</entry>
+                                <entry>
+<para>output postscript file descriptor. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*plot</entry>
+                                <entry>
+<para>plot information. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>page_number</entry>
+                                <entry>
+<para>page number (starts at 1). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>Any number of functions of a single independant variable (x) can be plot.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 248 of file ps_plot.cpp.</para>
+    </section><anchor xml:id="_ps__plot_8cpp_1a5991d5ffac897ae6be59a79940a24cf8"/>    <section>
+    <title>ps_open_and_init()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>ps_open_and_init</primary><secondary>ps_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_plot.cpp</primary><secondary>ps_open_and_init</secondary></indexterm>
+<para><computeroutput>ofstream* ps_open_and_init (<link linkend="_class_bstring">Bstring</link> filename, <link linkend="_class_bplot">Bplot</link> * plot)</computeroutput></para><para>
+
+<para>Opens and initializes a postscript file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>output postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*plot</entry>
+                                <entry>
+<para>plot information. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>ofstream* postscript file stream. <literallayout><computeroutput>Opens a file and writes the postscript header line, the creator and 
+creation date lines, and a document data specifier.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 71 of file ps_plot.cpp.</para>
+    </section><anchor xml:id="_ps__plot_8cpp_1aeb4406212e36144608f6dc5962f83bd4"/>    <section>
+    <title>ps_open_and_init()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>ps_open_and_init</primary><secondary>ps_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_plot.cpp</primary><secondary>ps_open_and_init</secondary></indexterm>
+<para><computeroutput>ofstream* ps_open_and_init (<link linkend="_class_bstring">Bstring</link> filename, <link linkend="_class_bstring">Bstring</link> title, int npages, int width, int height)</computeroutput></para><para>
+
+<para>Opens and initializes a postscript file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>output postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;title</entry>
+                                <entry>
+<para>title. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>npages</entry>
+                                <entry>
+<para>number of pages. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>width</entry>
+                                <entry>
+<para>page width. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>height</entry>
+                                <entry>
+<para>page height. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>ofstream* postscript file descriptor. <literallayout><computeroutput>Opens a stream and writes the postscript header line, the creator and
+creation date lines, and a document data specifier.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 33 of file ps_plot.cpp.</para>
+    </section><anchor xml:id="_ps__plot_8cpp_1aefea73d98b8cb33707a7ed4092ba05d4"/>    <section>
+    <title>ps_plot()</title>
+<indexterm><primary>ps_plot</primary><secondary>ps_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_plot.cpp</primary><secondary>ps_plot</secondary></indexterm>
+<para><computeroutput>int ps_plot (<link linkend="_class_bstring">Bstring</link> filename, <link linkend="_class_bplot">Bplot</link> * plot)</computeroutput></para><para>
+
+<para>Generates postscript graphs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>output postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*plot</entry>
+                                <entry>
+<para>plot information. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>Any number of functions of a single independant variable (x) can be plot.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 130 of file ps_plot.cpp.</para>
+    </section><anchor xml:id="_ps__plot_8cpp_1ad9a2151e73c42bd74f61b462fd9e7662"/>    <section>
+    <title>ps_read()</title>
+<indexterm><primary>ps_read</primary><secondary>ps_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_plot.cpp</primary><secondary>ps_read</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bplot">Bplot</link>* ps_read (<link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+
+<para>Reads a postscript file with a data table. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>input postscript file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bplot* new plot. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 150 of file ps_plot.cpp.</para>
+    </section><anchor xml:id="_ps__plot_8cpp_1a0b308d184ed6db82f06e384af709294e"/>    <section>
+    <title>ps_scale()</title>
+<indexterm><primary>ps_scale</primary><secondary>ps_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_plot.cpp</primary><secondary>ps_scale</secondary></indexterm>
+<para><computeroutput>int ps_scale (ofstream * fps, double x1, double y1, double x2, double y2, double min, double max, double increment, double tick_length, double tick_angle, int digits, int fontsize, int inverse)</computeroutput></para><para>
+
+<para>Generates a scale for a postscript graph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*fps</entry>
+                                <entry>
+<para>postscript file descriptor. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>x1</entry>
+                                <entry>
+<para>starting x coordinate. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>y1</entry>
+                                <entry>
+<para>starting y coordinate. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>x2</entry>
+                                <entry>
+<para>ending x coordinate. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>y2</entry>
+                                <entry>
+<para>ending y coordinate. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>min</entry>
+                                <entry>
+<para>minimum value. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max</entry>
+                                <entry>
+<para>maximum value. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>increment</entry>
+                                <entry>
+<para>value increment. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tick_length</entry>
+                                <entry>
+<para>length of ticks. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tick_angle</entry>
+                                <entry>
+<para>angle of ticks relative to horizontal axis. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>digits</entry>
+                                <entry>
+<para>number of decimal digits for labels. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fontsize</entry>
+                                <entry>
+<para>font size for labels. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>inverse</entry>
+                                <entry>
+<para>flag for inverse values. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 489 of file ps_plot.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_ps__plot_8cpp_1a4c9ef422180cc13bda2c623c7b9d43e5"/>    <section>
+    <title>command</title>
+<indexterm><primary>command</primary><secondary>ps_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_plot.cpp</primary><secondary>command</secondary></indexterm>
+<para><computeroutput>string command<computeroutput>[extern]</computeroutput></computeroutput></para><para>
+Definition at line 20 of file utilities.cpp.</para>
+    </section><anchor xml:id="_ps__plot_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>ps_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_plot.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

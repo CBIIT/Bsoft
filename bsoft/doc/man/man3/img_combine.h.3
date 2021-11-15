@@ -1,0 +1,205 @@
+.TH "/Users/bernard/b20/bsoft/include/img_combine.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/img_combine.h \- Header file for combining two images in various ways\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_add\fP (\fBBstring\fP *\fBfile_list\fP, int flags)"
+.br
+.RI "Adds multiple images together with optional variance or standard deviation\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_setup_combined\fP (\fBBstring\fP *\fBfile_list\fP, long &nimg, int cat=0)"
+.br
+.RI "Sets up a list of images for concatenation or summation\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_catenate\fP (\fBBstring\fP *\fBfile_list\fP, \fBBstring\fP &rawstring, \fBDataType\fP newdatatype, \fBVector3\fP< long > nusize, int setZslices=0, int fill_type=0, double fill=0, double newavg=0, double newstd=0)"
+.br
+.RI "Catenates a list of images into a multi-image structure\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_add_weighed\fP (\fBBstring\fP *\fBfile_list\fP, vector< double > weight, double newavg=0, double newstd=0, int flags=0)"
+.br
+.RI "Adds multiple images together with given weights\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for combining two images in various ways\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20000430 
+.PP
+Modified: 20190208 
+.RE
+.PP
+
+.PP
+Definition in file \fBimg_combine\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBimage\fP* img_add (\fBBstring\fP * file_list, int flags)"
+
+.PP
+Adds multiple images together with optional variance or standard deviation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*file_list\fP list of file names\&. 
+.br
+\fIflags\fP flags to modify summation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* resultant image (floating point)\&. 
+.PP
+.nf
+Images are read from a number files and added.
+All the images must be the same size, but could have different numbers of sub-images.
+The flags that can set are:
+    1   calculate the average in stead of the sum.
+    2   calculate the variance as FOM
+    4   calculate the standard deviation as FOM (supercedes the variance)
+All images are converted to floating point.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 32 of file img_combine\&.cpp\&.
+.SS "\fBBimage\fP* img_add_weighed (\fBBstring\fP * file_list, vector< double > weight, double newavg, double newstd, int flags)"
+
+.PP
+Adds multiple images together with given weights\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*file_list\fP list of file names\&. 
+.br
+\fIweight\fP list of weights (can be NULL)\&. 
+.br
+\fInewavg\fP new average for rescaling\&. 
+.br
+\fInewstd\fP new standard deviation for rescaling\&. 
+.br
+\fIflags\fP flags to modify summation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* resultant image (floating point)\&. 
+.PP
+.nf
+Images are read from a number files and added to each other, using
+the given weights to determine each contribution.
+The images are rescaled to a new average and standard deviation before 
+weighted addition. If the given standard deviation is zero or less,
+this step is omitted.
+The weighed average is calculated and returned as a new image.
+The flags that can set are:
+    1   calculate the average in stead of the sum.
+    2   calculate the variance as FOM
+    4   calculate the standard deviation as FOM (supercedes the variance)
+    8   center each image before summation
+All images are converted to floating point.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 291 of file img_combine\&.cpp\&.
+.SS "\fBBimage\fP* img_catenate (\fBBstring\fP * file_list, \fBBstring\fP & rawstring, \fBDataType\fP nudatatype, \fBVector3\fP< long > nusize, int setZslices, int fill_type, double fill, double newavg, double newstd)"
+
+.PP
+Catenates a list of images into a multi-image structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*file_list\fP list of file names\&. 
+.br
+\fI&rawstring\fP format for re-interpretation of file\&. 
+.br
+\fInudatatype\fP new data type (default from first image)\&. 
+.br
+\fInusize\fP new size (default from images)\&. 
+.br
+\fIsetZslices\fP flag to create 2D images from slices\&. 
+.br
+\fIfill_type\fP fill type for expanding images\&. 
+.br
+\fIfill\fP fill value for expanding images\&. 
+.br
+\fInewavg\fP new average to set each individual image\&. 
+.br
+\fInewstd\fP new standard deviation to set each individual image\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* catenated image\&. 
+.PP
+.nf
+The images can have different numbers of sub-images, sizes and data types.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 163 of file img_combine\&.cpp\&.
+.SS "\fBBimage\fP* img_setup_combined (\fBBstring\fP * file_list, long & nimg, int cat)"
+
+.PP
+Sets up a list of images for concatenation or summation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*file_list\fP list of file names\&. 
+.br
+\fI&nimg\fP number of concatenated images\&. 
+.br
+\fIcat\fP flag to indicate concatenation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* new image into which to write data\&. 
+.PP
+.nf
+The images can have different numbers of sub-images, sizes and data types.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 107 of file img_combine\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

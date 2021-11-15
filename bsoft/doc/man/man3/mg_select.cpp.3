@@ -1,0 +1,1393 @@
+.TH "/Users/bernard/b20/bsoft/src/mg/mg_select.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mg/mg_select.cpp \- Functions for micrograph processing\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_select\&.h'\fP
+.br
+\fC#include 'mg_tags\&.h'\fP
+.br
+\fC#include 'qsort_functions\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'math_util\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include <fstream>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBfield\fP * \fBfield_find_id\fP (\fBBfield\fP *field, \fBBstring\fP &field_id)"
+.br
+.RI "Finds a field-of-view based on its identifier\&. "
+.ti -1c
+.RI "\fBBmicrograph\fP * \fBfield_find_micrograph\fP (\fBBfield\fP *field, int mg_select, int mg_index, double mg_ang)"
+.br
+.RI "Returns a pointer to a specific micrograph in a field-of-view structure based on a unique characteristic of that micrograph\&. "
+.ti -1c
+.RI "\fBBmicrograph\fP * \fBfield_find_micrograph_n\fP (\fBBfield\fP *field, int n)"
+.br
+.RI "Returns a pointer to the nth micrograph in a field-of-view structure\&. "
+.ti -1c
+.RI "\fBBmicrograph\fP * \fBfield_find_micrograph_by_focus\fP (\fBBfield\fP *field, int focus_opt, int iselect)"
+.br
+.RI "Returns a pointer to the micrograph in a field-of-view structure based on the focus level and iteration index\&. "
+.ti -1c
+.RI "\fBBmicrograph\fP * \fBfield_find_micrograph_by_rotang\fP (\fBBfield\fP *field, double rotang)"
+.br
+.RI "Returns a pointer to the micrograph in a field-of-view structure with the specified in-plane rotational angle\&. "
+.ti -1c
+.RI "\fBBmicrograph\fP * \fBfield_find_micrograph_by_tiltang\fP (\fBBfield\fP *field, double tiltang)"
+.br
+.RI "Returns a pointer to the micrograph in a field-of-view structure with the specified tilt angle\&. "
+.ti -1c
+.RI "\fBBmicrograph\fP * \fBfield_find_zero_tilt_mg\fP (\fBBfield\fP *field)"
+.br
+.RI "Finds the micrograph closest to a zero degree tilt in a series\&. "
+.ti -1c
+.RI "\fBBmicrograph\fP * \fBfield_find_low_tilt_mg_with_markers\fP (\fBBfield\fP *field)"
+.br
+.RI "Finds the micrograph closest to a zero degree tilt in a series with markers\&. "
+.ti -1c
+.RI "long \fBproject_count_fields\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Counts all the fields in the project structure\&. "
+.ti -1c
+.RI "long \fBproject_count_micrographs\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Counts all the micrographs in the project structure\&. "
+.ti -1c
+.RI "long \fBproject_count_mg_selected\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Counts all the selected micrographs in the project structure\&. "
+.ti -1c
+.RI "long \fBproject_count_reconstructions\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Counts all the reconstructions in the project structure\&. "
+.ti -1c
+.RI "long \fBproject_count_rec_selected\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Counts all the selected reconstructions in the project structure\&. "
+.ti -1c
+.RI "long \fBproject_count_mg_particles\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Counts all the particles in the project structure\&. "
+.ti -1c
+.RI "long \fBproject_count_mg_part_selected\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Counts the number of particles in a project\&. "
+.ti -1c
+.RI "long \fBproject_count_mg_part_selected\fP (\fBBproject\fP *\fBproject\fP, int num_select)"
+.br
+.RI "Counts the number of particles in a project\&. "
+.ti -1c
+.RI "long \fBproject_count_mg_groups\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Counts the number of groups of particles in the project structure\&. "
+.ti -1c
+.RI "long \fBproject_count_mg_groups_selected\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Counts the number of groups of particles in the project structure\&. "
+.ti -1c
+.RI "long \fBproject_count_rec_particles\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Counts all the particles in the project structure\&. "
+.ti -1c
+.RI "long \fBproject_count_rec_part_selected\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Counts all the particles in the project structure\&. "
+.ti -1c
+.RI "long \fBproject_count_rec_groups\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Counts all the particles in the project structure\&. "
+.ti -1c
+.RI "long \fBproject_count_mg_filaments\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Counts the number of filaments in a project\&. "
+.ti -1c
+.RI "long \fBproject_count_mg_filament_nodes\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Counts the number of filament nodes in a project\&. "
+.ti -1c
+.RI "long \fBproject_count_rec_filaments\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Counts the number of filaments in a project\&. "
+.ti -1c
+.RI "long \fBproject_count_rec_filament_nodes\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Counts the number of filaments in a project\&. "
+.ti -1c
+.RI "long \fBfield_count\fP (\fBBfield\fP *field)"
+.br
+.RI "Counts the number of fields-of-view in a linked list\&. "
+.ti -1c
+.RI "long \fBfield_count_micrographs\fP (\fBBfield\fP *field)"
+.br
+.RI "Counts all the micrographs in the field-of-view structure\&. "
+.ti -1c
+.RI "long \fBfield_count_mg_selected\fP (\fBBfield\fP *field)"
+.br
+.RI "Counts all the micrographs in the field-of-view structure\&. "
+.ti -1c
+.RI "long \fBfield_count_particles\fP (\fBBfield\fP *field)"
+.br
+.RI "Counts all the particles in the field-of-view structure\&. "
+.ti -1c
+.RI "long \fBmicrograph_count\fP (\fBBmicrograph\fP *mg)"
+.br
+.RI "Counts the number of micrographs in a linked list\&. "
+.ti -1c
+.RI "long \fBmicrograph_count_particles\fP (\fBBmicrograph\fP *mg)"
+.br
+.RI "Counts all the particles in the micrograph structure\&. "
+.ti -1c
+.RI "long \fBparticle_count\fP (\fBBparticle\fP *part)"
+.br
+.RI "Counts the number of particles in a linked list\&. "
+.ti -1c
+.RI "long \fBparticle_count_selected\fP (\fBBparticle\fP *part)"
+.br
+.RI "Counts the number of particles in a linked list\&. "
+.ti -1c
+.RI "long \fBfilament_count\fP (\fBBfilament\fP *fil)"
+.br
+.RI "Counts the number of filaments in a linked list of filaments\&. "
+.ti -1c
+.RI "long \fBfilament_node_count\fP (\fBBfilament\fP *fil)"
+.br
+.RI "Counts the number of filament nodes in a linked list of filaments\&. "
+.ti -1c
+.RI "long \fBproject_maximum_selection\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Finds the maximum selection number for a project\&. "
+.ti -1c
+.RI "long \fBproject_show_selection_numbers\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Shows the selection numbers for the particles in a project\&. "
+.ti -1c
+.RI "long \fBproject_show_selected\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Shows the selected particles in a project\&. "
+.ti -1c
+.RI "long \fBproject_show_selected_parameters\fP (\fBBproject\fP *\fBproject\fP, int \fBshow\fP)"
+.br
+.RI "Shows the selected particle parameters in a project\&. "
+.ti -1c
+.RI "int \fBmg_show_parameter\fP (\fBBmicrograph\fP *mg, \fBBstring\fP &tag)"
+.br
+.ti -1c
+.RI "int \fBpart_show_parameter\fP (\fBBparticle\fP *part, \fBBstring\fP &tag)"
+.br
+.ti -1c
+.RI "long \fBproject_show_mg_parameter\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &tag)"
+.br
+.RI "Shows the micrograph parameter indicated by the tag in a project\&. "
+.ti -1c
+.RI "long \fBproject_show_part_parameter\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &tag)"
+.br
+.RI "Shows the particle parameter indicated by the tag in a project\&. "
+.ti -1c
+.RI "long \fBproject_show_fom_histogram\fP (\fBBproject\fP *\fBproject\fP, long bins, double min, double max)"
+.br
+.RI "Shows a histogram of the FOM values\&. "
+.ti -1c
+.RI "long \fBproject_show_mag_histogram\fP (\fBBproject\fP *\fBproject\fP, long bins, double increment)"
+.br
+.RI "Shows the histogram for magnification values for selected particles\&. "
+.ti -1c
+.RI "int \fBproject_select_field\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &field_id)"
+.br
+.RI "Selects a field from the project and deletes the rest\&. "
+.ti -1c
+.RI "int \fBproject_select_micrograph\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &mg_id)"
+.br
+.RI "Selects a micrograph from the project and deletes the rest\&. "
+.ti -1c
+.RI "long \fBproject_select_with_particles\fP (\fBBproject\fP *\fBproject\fP, long part_sel)"
+.br
+.RI "Selects micrographs with particles\&. "
+.ti -1c
+.RI "int \fBfield_sort_by_tilt\fP (\fBBfield\fP *field)"
+.br
+.RI "Sorts the micrographs in a field by tilt angle\&. "
+.ti -1c
+.RI "int \fBproject_sort_by_tilt\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Sorts the micrographs in each field by tilt angle\&. "
+.ti -1c
+.RI "vector< pair< \fBBmicrograph\fP *, double > > \fBproject_mg_sort\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP tag)"
+.br
+.RI "Sorts the micrographs by a selected parameter\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for micrograph processing\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010206 
+.PP
+Modified: 20210515 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_select\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "long field_count (\fBBfield\fP * field)"
+
+.PP
+Counts the number of fields-of-view in a linked list\&. 
+.PP
+.nf
+The function counts fields-of-view in the list from the given pointer,
+and does not count fields-of-view prior to this one.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*field\fP pointer to any field-of-view in the list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of fields-of-view\&. 
+.RE
+.PP
+
+.PP
+Definition at line 679 of file mg_select\&.cpp\&.
+.SS "long field_count_mg_selected (\fBBfield\fP * field)"
+
+.PP
+Counts all the micrographs in the field-of-view structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*field\fP field-of-view parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of micrographs of field\&. 
+.RE
+.PP
+
+.PP
+Definition at line 708 of file mg_select\&.cpp\&.
+.SS "long field_count_micrographs (\fBBfield\fP * field)"
+
+.PP
+Counts all the micrographs in the field-of-view structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*field\fP field-of-view parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of micrographs of field\&. 
+.RE
+.PP
+
+.PP
+Definition at line 693 of file mg_select\&.cpp\&.
+.SS "long field_count_particles (\fBBfield\fP * field)"
+
+.PP
+Counts all the particles in the field-of-view structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*field\fP field-of-view parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles in field\&. 
+.RE
+.PP
+
+.PP
+Definition at line 723 of file mg_select\&.cpp\&.
+.SS "\fBBfield\fP* field_find_id (\fBBfield\fP * field, \fBBstring\fP & field_id)"
+
+.PP
+Finds a field-of-view based on its identifier\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*field\fP pointer to first field-of-view in the list\&. 
+.br
+\fI&field_id\fP field-of-view identifier\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bfield* field-of-view or NULL if not found\&. 
+.PP
+.nf
+The function searches a linked list for the field-of-view
+identifier and returns a pointer to that structure or NULL if
+it cannot find it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 33 of file mg_select\&.cpp\&.
+.SS "\fBBmicrograph\fP* field_find_low_tilt_mg_with_markers (\fBBfield\fP * field)"
+
+.PP
+Finds the micrograph closest to a zero degree tilt in a series with markers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*field\fP field-of-view\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmicrograph* micrograph closest to zero degrees tilt with markers\&. 
+.PP
+.nf
+The first micrograph with the smallest deviation from zero degree
+tilt with defined markers is returned.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 312 of file mg_select\&.cpp\&.
+.SS "\fBBmicrograph\fP* field_find_micrograph (\fBBfield\fP * field, int mg_select, int mg_index, double mg_ang)"
+
+.PP
+Returns a pointer to a specific micrograph in a field-of-view structure based on a unique characteristic of that micrograph\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+David Belnap 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*field\fP field-of-view\&. 
+.br
+\fImg_select\fP selection criterion\&. 
+.br
+\fImg_index\fP Reference by its index in field (for mg_ref_select=0|1|2)\&. 
+.br
+\fImg_ang\fP Reference by micrograph rotation or tilt angle (for mg_ref_select=3|4)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmicrograph* Pointer to the selected micrograph 
+.PP
+.nf
+Calls functions that find a micrograph by index number within the
+field, by focus level, in-plane rotational angle, tilt angle, or
+tilt angle plus focus level or index number:
+
+criterion                        mg_select   mg_index  mg_ang
+--------------------------------------------------------------
+nth closest-to-focus                 0           n        -
+nth farthest-from-focus              1           n        -
+index number in series (1...n)       2         index      -
+in-plane rotation angle              3           -      angle
+tilt angle                           4           -      angle
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 64 of file mg_select\&.cpp\&.
+.SS "\fBBmicrograph\fP* field_find_micrograph_by_focus (\fBBfield\fP * field, int focus_opt, int iselect)"
+
+.PP
+Returns a pointer to the micrograph in a field-of-view structure based on the focus level and iteration index\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+David Belnap and Bernard Heymann 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*field\fP a field-of-view structure 
+.br
+\fIfocus_opt\fP 0=closest-to-focus, 1=farthest-from-focus 
+.br
+\fIiselect\fP 0,1,\&.\&.\&.,n; select (index+1)th-closest or (index+1)th-farthest focus 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmicrograph* mg Micrograph at specified focus level Loops through micrographs in the field-of-view\&. Orders focus values in an array from smallest to largest\&. Selects the (index+1)th closest-to-focus or farthest-from-focus value\&. (focus_opt determines whether the closest or farthest value is selected\&.) Loops through micrographs again to find the micrograph with the selected value\&. Tests if there are zero or multiple micrographs with the same focus value and exits program if so\&. Otherwise, the pointer to the micrograph with the specified focus level is returned\&. An example, if index=1 and focus_opt=0, a pointer to the 2nd closest-to-focus micrograph will be returned\&. To get the closest-to-focus or farthest-from-focus value, the index must be zero\&. 
+.RE
+.PP
+
+.PP
+Definition at line 142 of file mg_select\&.cpp\&.
+.SS "\fBBmicrograph\fP* field_find_micrograph_by_rotang (\fBBfield\fP * field, double rotang)"
+
+.PP
+Returns a pointer to the micrograph in a field-of-view structure with the specified in-plane rotational angle\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+David Belnap and Bernard Heymann 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*field\fP a field-of-view 
+.br
+\fIrotang\fP in-plane rotational angle of micrograph (in radians) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmicrograph* mg Pointer to micrograph with rotang 
+.PP
+.nf
+Loop through all micrographs in the field-of-view to find
+micrograph with the specified angle.  Test if there are zero or
+multiple micrographs with the same rotational angle, halt program 
+if true.  If not true, then return pointer to the micrograph with 
+the specified angle.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 199 of file mg_select\&.cpp\&.
+.SS "\fBBmicrograph\fP* field_find_micrograph_by_tiltang (\fBBfield\fP * field, double tiltang)"
+
+.PP
+Returns a pointer to the micrograph in a field-of-view structure with the specified tilt angle\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+David Belnap 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*field\fP a field-of-view 
+.br
+\fItiltang\fP tilt angle of micrograph (in radians) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmicrograph* micrograph with rotang 
+.PP
+.nf
+Loop through all micrographs in the field-of-view to find
+micrograph with the specified tilt angle.  Test if there are zero
+or multiple micrographs with the same angle, halt program if true.
+If not true, then return pointer to the micrograph with the 
+specified angle.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 243 of file mg_select\&.cpp\&.
+.SS "\fBBmicrograph\fP* field_find_micrograph_n (\fBBfield\fP * field, int n)"
+
+.PP
+Returns a pointer to the nth micrograph in a field-of-view structure\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+David Belnap and Bernard Heymann 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*field\fP a field-of-view 
+.br
+\fIn\fP nth micrograph index (first index number = 1) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmicrograph* Pointer to the nth micrograph 
+.PP
+.nf
+Loop through micrographs in the field-of-view until the nth 
+micrograph is reached.  Return pointer to that micrograph.
+Tests whether n is within the appropriate range.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 104 of file mg_select\&.cpp\&.
+.SS "\fBBmicrograph\fP* field_find_zero_tilt_mg (\fBBfield\fP * field)"
+
+.PP
+Finds the micrograph closest to a zero degree tilt in a series\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*field\fP field-of-view\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmicrograph* micrograph closest to zero degrees tilt\&. 
+.PP
+.nf
+The first micrograph with the smallest deviation from zero degree
+tilt is returned.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 281 of file mg_select\&.cpp\&.
+.SS "int field_sort_by_tilt (\fBBfield\fP * field)"
+
+.PP
+Sorts the micrographs in a field by tilt angle\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*field\fP field parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1594 of file mg_select\&.cpp\&.
+.SS "long filament_count (\fBBfilament\fP * fil)"
+
+.PP
+Counts the number of filaments in a linked list of filaments\&. 
+.PP
+.nf
+The function counts filaments in the list from the given pointer,
+and does not count filaments prior to this one.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fil\fP pointer to any filament in the list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of filaments\&. 
+.RE
+.PP
+
+.PP
+Definition at line 813 of file mg_select\&.cpp\&.
+.SS "long filament_node_count (\fBBfilament\fP * fil)"
+
+.PP
+Counts the number of filament nodes in a linked list of filaments\&. 
+.PP
+.nf
+The function counts filament nodes in the list from the given pointer,
+and does not count filaments prior to this one.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fil\fP pointer to any filament in the list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of filament nodes\&. 
+.RE
+.PP
+
+.PP
+Definition at line 831 of file mg_select\&.cpp\&.
+.SS "int mg_show_parameter (\fBBmicrograph\fP * mg, \fBBstring\fP & tag)"
+
+.PP
+Definition at line 1179 of file mg_select\&.cpp\&.
+.SS "long micrograph_count (\fBBmicrograph\fP * mg)"
+
+.PP
+Counts the number of micrographs in a linked list\&. 
+.PP
+.nf
+The function counts micrographs in the list from the given pointer,
+and does not count micrographs prior to this one.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP pointer to any micrograph in the list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of micrographs\&. 
+.RE
+.PP
+
+.PP
+Definition at line 744 of file mg_select\&.cpp\&.
+.SS "long micrograph_count_particles (\fBBmicrograph\fP * mg)"
+
+.PP
+Counts all the particles in the micrograph structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles in micrograph\&. 
+.RE
+.PP
+
+.PP
+Definition at line 758 of file mg_select\&.cpp\&.
+.SS "int part_show_parameter (\fBBparticle\fP * part, \fBBstring\fP & tag)"
+
+.PP
+Definition at line 1209 of file mg_select\&.cpp\&.
+.SS "long particle_count (\fBBparticle\fP * part)"
+
+.PP
+Counts the number of particles in a linked list\&. 
+.PP
+.nf
+The function counts particles in the list from the given pointer,
+and does not count particles prior to this one.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*part\fP pointer to any particle in the list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles\&. 
+.RE
+.PP
+
+.PP
+Definition at line 777 of file mg_select\&.cpp\&.
+.SS "long particle_count_selected (\fBBparticle\fP * part)"
+
+.PP
+Counts the number of particles in a linked list\&. 
+.PP
+.nf
+The function counts particles in the list from the given pointer,
+and does not count particles prior to this one.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*part\fP pointer to any particle in the list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 795 of file mg_select\&.cpp\&.
+.SS "long project_count_fields (\fBBproject\fP * project)"
+
+.PP
+Counts all the fields in the project structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of fields in project\&. 
+.RE
+.PP
+
+.PP
+Definition at line 335 of file mg_select\&.cpp\&.
+.SS "long project_count_mg_filament_nodes (\fBBproject\fP * project)"
+
+.PP
+Counts the number of filament nodes in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of filament nodes\&. 
+.PP
+.nf
+The function counts all the filament nodes in a project.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 609 of file mg_select\&.cpp\&.
+.SS "long project_count_mg_filaments (\fBBproject\fP * project)"
+
+.PP
+Counts the number of filaments in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of filaments\&. 
+.PP
+.nf
+The function counts all the filaments in a project.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 586 of file mg_select\&.cpp\&.
+.SS "long project_count_mg_groups (\fBBproject\fP * project)"
+
+.PP
+Counts the number of groups of particles in the project structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of groups in project\&. 
+.RE
+.PP
+
+.PP
+Definition at line 483 of file mg_select\&.cpp\&.
+.SS "long project_count_mg_groups_selected (\fBBproject\fP * project)"
+
+.PP
+Counts the number of groups of particles in the project structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of groups selected in project\&. 
+.RE
+.PP
+
+.PP
+Definition at line 505 of file mg_select\&.cpp\&.
+.SS "long project_count_mg_part_selected (\fBBproject\fP * project)"
+
+.PP
+Counts the number of particles in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+The function counts all the selected particles in a project.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 437 of file mg_select\&.cpp\&.
+.SS "long project_count_mg_part_selected (\fBBproject\fP * project, int num_select)"
+
+.PP
+Counts the number of particles in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project\&. 
+.br
+\fInum_select\fP selection number\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+The function counts all the selected particles in a project.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 461 of file mg_select\&.cpp\&.
+.SS "long project_count_mg_particles (\fBBproject\fP * project)"
+
+.PP
+Counts all the particles in the project structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles in project\&. 
+.RE
+.PP
+
+.PP
+Definition at line 415 of file mg_select\&.cpp\&.
+.SS "long project_count_mg_selected (\fBBproject\fP * project)"
+
+.PP
+Counts all the selected micrographs in the project structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of micrographs selected in project\&. 
+.RE
+.PP
+
+.PP
+Definition at line 367 of file mg_select\&.cpp\&.
+.SS "long project_count_micrographs (\fBBproject\fP * project)"
+
+.PP
+Counts all the micrographs in the project structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of micrographs in project\&. 
+.RE
+.PP
+
+.PP
+Definition at line 350 of file mg_select\&.cpp\&.
+.SS "long project_count_rec_filament_nodes (\fBBproject\fP * project)"
+
+.PP
+Counts the number of filaments in a project\&. 
+.PP
+.nf
+The function counts all the filaments in a project.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of filaments\&. 
+.RE
+.PP
+
+.PP
+Definition at line 655 of file mg_select\&.cpp\&.
+.SS "long project_count_rec_filaments (\fBBproject\fP * project)"
+
+.PP
+Counts the number of filaments in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of filaments\&. 
+.PP
+.nf
+The function counts all the filaments in a project.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 634 of file mg_select\&.cpp\&.
+.SS "long project_count_rec_groups (\fBBproject\fP * project)"
+
+.PP
+Counts all the particles in the project structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles in project\&. 
+.RE
+.PP
+
+.PP
+Definition at line 563 of file mg_select\&.cpp\&.
+.SS "long project_count_rec_part_selected (\fBBproject\fP * project)"
+
+.PP
+Counts all the particles in the project structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles in project\&. 
+.RE
+.PP
+
+.PP
+Definition at line 545 of file mg_select\&.cpp\&.
+.SS "long project_count_rec_particles (\fBBproject\fP * project)"
+
+.PP
+Counts all the particles in the project structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles in project\&. 
+.RE
+.PP
+
+.PP
+Definition at line 528 of file mg_select\&.cpp\&.
+.SS "long project_count_rec_selected (\fBBproject\fP * project)"
+
+.PP
+Counts all the selected reconstructions in the project structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of reconstructions selected in project\&. 
+.RE
+.PP
+
+.PP
+Definition at line 399 of file mg_select\&.cpp\&.
+.SS "long project_count_reconstructions (\fBBproject\fP * project)"
+
+.PP
+Counts all the reconstructions in the project structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of reconstructions in project\&. 
+.RE
+.PP
+
+.PP
+Definition at line 384 of file mg_select\&.cpp\&.
+.SS "long project_maximum_selection (\fBBproject\fP * project)"
+
+.PP
+Finds the maximum selection number for a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long maximum selection number\&. 
+.RE
+.PP
+
+.PP
+Definition at line 847 of file mg_select\&.cpp\&.
+.SS "vector<pair<\fBBmicrograph\fP*,double> > project_mg_sort (\fBBproject\fP * project, \fBBstring\fP tag)"
+
+.PP
+Sorts the micrographs by a selected parameter\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fItag\fP parameter tag\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<pair<Bmicrograph*,double>> array of micrograph links and values\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1653 of file mg_select\&.cpp\&.
+.SS "int project_select_field (\fBBproject\fP * project, \fBBstring\fP & field_id)"
+
+.PP
+Selects a field from the project and deletes the rest\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&field_id\fP field to select\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1490 of file mg_select\&.cpp\&.
+.SS "int project_select_micrograph (\fBBproject\fP * project, \fBBstring\fP & mg_id)"
+
+.PP
+Selects a micrograph from the project and deletes the rest\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&mg_id\fP micrograph to select\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1522 of file mg_select\&.cpp\&.
+.SS "long project_select_with_particles (\fBBproject\fP * project, long part_sel)"
+
+.PP
+Selects micrographs with particles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIpart_sel\fP flag to select only with this selection number 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1563 of file mg_select\&.cpp\&.
+.SS "long project_show_fom_histogram (\fBBproject\fP * project, long bins, double min, double max)"
+
+.PP
+Shows a histogram of the FOM values\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIbins\fP number of bins, if 0, set to 100\&. 
+.br
+\fImin\fP FOM for the first bin\&. 
+.br
+\fImax\fP FOM for the last bin\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1341 of file mg_select\&.cpp\&.
+.SS "long project_show_mag_histogram (\fBBproject\fP * project, long bins, double increment)"
+
+.PP
+Shows the histogram for magnification values for selected particles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIbins\fP number of bins\&. 
+.br
+\fIincrement\fP increment between bins\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1444 of file mg_select\&.cpp\&.
+.SS "long project_show_mg_parameter (\fBBproject\fP * project, \fBBstring\fP & tag)"
+
+.PP
+Shows the micrograph parameter indicated by the tag in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&tag\fP parameter tag\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of micrographs selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1262 of file mg_select\&.cpp\&.
+.SS "long project_show_part_parameter (\fBBproject\fP * project, \fBBstring\fP & tag)"
+
+.PP
+Shows the particle parameter indicated by the tag in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&tag\fP parameter tag\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1290 of file mg_select\&.cpp\&.
+.SS "long project_show_selected (\fBBproject\fP * project)"
+
+.PP
+Shows the selected particles in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 929 of file mg_select\&.cpp\&.
+.SS "long project_show_selected_parameters (\fBBproject\fP * project, int show)"
+
+.PP
+Shows the selected particle parameters in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIshow\fP selection number to show\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1120 of file mg_select\&.cpp\&.
+.SS "long project_show_selection_numbers (\fBBproject\fP * project)"
+
+.PP
+Shows the selection numbers for the particles in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 874 of file mg_select\&.cpp\&.
+.SS "int project_sort_by_tilt (\fBBproject\fP * project)"
+
+.PP
+Sorts the micrographs in each field by tilt angle\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1635 of file mg_select\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

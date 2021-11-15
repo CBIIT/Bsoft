@@ -1,0 +1,861 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mol__monte_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mol/mol_monte.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mol/mol_monte.cpp</primary></indexterm>
+<para>
+
+<para>Functions for a monte carlo metroplis algorithm to energy minimize molecular positions. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmolecule.h&quot;
+#include &quot;rwimg.h&quot;
+#include &quot;rwmd.h&quot;
+#include &quot;mol_md.h&quot;
+#include &quot;mol_monte.h&quot;
+#include &quot;mol_bonds.h&quot;
+#include &quot;mol_map_energy.h&quot;
+#include &quot;mol_compare.h&quot;
+#include &quot;mol_transform.h&quot;
+#include &quot;mol_util.h&quot;
+#include &quot;Matrix.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;random_numbers.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mol__monte_8cpp_1a1fa0e1d27532d040bb83617edece86e6">display_energy_headers</link> (<link linkend="_struct_bmd">Bmd</link> *md)</para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__monte_8cpp_1a5994f330fcbd5ce7a1f3577e38b26a2d">display_energy</link> (long iter, <link linkend="_struct_bmd">Bmd</link> *md, double dE)</para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolgroup">Bmolgroup</link> * <link linkend="_mol__monte_8cpp_1a9eb0b16aeb76c521370621921d691bb0">monte_carlo_metropolis</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_struct_bmd">Bmd</link> *md, <link linkend="_class_bimage">Bimage</link> *map, double <link linkend="_ctf_8cpp_1a58af9b95ad67fce3014a21a4248db61b">beta</link>, double max_angle, double max_shift, long max_iter, int rigid, double(Efunc)(<link linkend="_struct_bmolgroup">Bmolgroup</link> *, <link linkend="_class_bimage">Bimage</link> *, <link linkend="_struct_bmd">Bmd</link> *), int(Tfunc)(<link linkend="_struct_bmolgroup">Bmolgroup</link> *, double, double))</para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolgroup">Bmolgroup</link> * <link linkend="_mol__monte_8cpp_1a5165d96e18794972e14ffd2ea8561b9e">molgroup_generate_masked_grid_list</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bimage">Bimage</link> *pmask, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; grid_sampling, <link linkend="_class_bstring">Bstring</link> filename)</para>
+
+<para>Generates multiple versions of a molecule at different locations. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_mol__monte_8cpp_1a97fef08f4e851a599f97eef808d6a0cc">molgroup_generate_masked_grid_list</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; grid_sampling, <link linkend="_class_bimage">Bimage</link> *pmask)</para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolgroup">Bmolgroup</link> * <link linkend="_mol__monte_8cpp_1ab90fad419d3f4cc5d426a631773e1c71">molgroup_generate_orientation_list</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double angle_step, <link linkend="_class_bstring">Bstring</link> filename, int whole)</para>
+
+<para>Generates multiple versions of a molecule at different locations. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_mol__monte_8cpp_1a4e239a5f1ebb34f82761edfcac67a66c">molgroup_generate_orientation_list</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double angle_step)</para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__monte_8cpp_1a9aa092b968c6ab13f21d182388362b06">mcm_molecule_list</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_struct_bmd">Bmd</link> *md, <link linkend="_class_bimage">Bimage</link> *map, double <link linkend="_ctf_8cpp_1a58af9b95ad67fce3014a21a4248db61b">beta</link>, double max_angle, double max_shift, long max_iter, int rigid)</para>
+
+<para>Monte Carlo fit of a molecule to a list of locations and orientations. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__monte_8cpp_1a98b0d7174ff9ef48e695e597563c54f3">mcm_molecule_groups</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_struct_bmd">Bmd</link> *md, <link linkend="_class_bimage">Bimage</link> *map, double <link linkend="_ctf_8cpp_1a58af9b95ad67fce3014a21a4248db61b">beta</link>, double max_angle, double max_shift, long max_iter, int rigid)</para>
+
+<para>Monte Carlo fit of a set of molecule groups. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__monte_8cpp_1a6c4bc3872e0c842b2106f5fdfe7ec33d">molgroup_set_box_to_map_boundaries</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bimage">Bimage</link> *map)</para>
+
+<para>Sets the box in a molgroup to that defined by the map boundaries. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para>long <link linkend="_mol__monte_8cpp_1aa3bcb80040f8e92050aea61dadaf9daf">molgroup_test_if_within_box</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; min, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; max)</para>
+
+<para>Tests if a molecule overlaps with a defined box. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__monte_8cpp_1a6bf35d11dd1e96be923bfe269d5f76fb">monte_rigid_body_fit_energy</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bimage">Bimage</link> *map, <link linkend="_struct_bmd">Bmd</link> *md)</para>
+
+<para>Calculates the potential energy for rigid body fitting. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__monte_8cpp_1a8453d679157329d610be72baf16370ad">monte_atom_fit_energy</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bimage">Bimage</link> *map, <link linkend="_struct_bmd">Bmd</link> *md)</para>
+
+<para>Calculates the potential energy for fitting atoms to a map. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__monte_8cpp_1a9d6982e80371cfa37305f77c589d1828">monte_bond_fit_energy</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bimage">Bimage</link> *map, <link linkend="_struct_bmd">Bmd</link> *md)</para>
+
+<para>Calculates the potential energy for fitting bonds to a map. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__monte_8cpp_1ad6b0295903b13c93f3daeb778af88306">molgroup_atom_overlap</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_struct_bmd">Bmd</link> *md)</para>
+
+<para>Calculates an energy term based on atom overlap. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__monte_8cpp_1a3aedc423fdaaa395f6b431bc98f610be">molgroup_rigid_body_transform</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double max_angle, double shift_std)</para>
+
+<para>Randomly transforms a molecule or molecule group. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__monte_8cpp_1a225462c77f816d6ef49e874e8251913c">molgroup_move_atoms_down_energy</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double max_angle, double max_shift)</para>
+
+<para>Move atoms random distances down the energy gradient. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mol__monte_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions for a monte carlo metroplis algorithm to energy minimize molecular positions. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20041230 </para>
+
+<para>Modified: 20180226 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mol__monte_8cpp_1a5994f330fcbd5ce7a1f3577e38b26a2d"/>    <section>
+    <title>display_energy()</title>
+<indexterm><primary>display_energy</primary><secondary>mol_monte.cpp</secondary></indexterm>
+<indexterm><primary>mol_monte.cpp</primary><secondary>display_energy</secondary></indexterm>
+<para><computeroutput>int display_energy (long iter, <link linkend="_struct_bmd">Bmd</link> * md, double dE)</computeroutput></para><para>
+Definition at line 42 of file mol_monte.cpp.</para>
+    </section><anchor xml:id="_mol__monte_8cpp_1a1fa0e1d27532d040bb83617edece86e6"/>    <section>
+    <title>display_energy_headers()</title>
+<indexterm><primary>display_energy_headers</primary><secondary>mol_monte.cpp</secondary></indexterm>
+<indexterm><primary>mol_monte.cpp</primary><secondary>display_energy_headers</secondary></indexterm>
+<para><computeroutput>int display_energy_headers (<link linkend="_struct_bmd">Bmd</link> * md)</computeroutput></para><para>
+Definition at line 27 of file mol_monte.cpp.</para>
+    </section><anchor xml:id="_mol__monte_8cpp_1a98b0d7174ff9ef48e695e597563c54f3"/>    <section>
+    <title>mcm_molecule_groups()</title>
+<indexterm><primary>mcm_molecule_groups</primary><secondary>mol_monte.cpp</secondary></indexterm>
+<indexterm><primary>mol_monte.cpp</primary><secondary>mcm_molecule_groups</secondary></indexterm>
+<para><computeroutput>int mcm_molecule_groups (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_struct_bmd">Bmd</link> * md, <link linkend="_class_bimage">Bimage</link> * map, double beta, double max_angle, double max_shift, long max_iter, int rigid)</computeroutput></para><para>
+
+<para>Monte Carlo fit of a set of molecule groups. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters (modified). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*md</entry>
+                                <entry>
+<para>molecular dynamics structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*map</entry>
+                                <entry>
+<para>map. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>beta</entry>
+                                <entry>
+<para>equivalent of 1/kT. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_angle</entry>
+                                <entry>
+<para>maximum allowed angular step size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_shift</entry>
+                                <entry>
+<para>maximum allowed shift. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_iter</entry>
+                                <entry>
+<para>maximum number of iterations. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rigid</entry>
+                                <entry>
+<para>selection of mode. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolgroup* new molecule group list. <literallayout><computeroutput>For each model, the molecule group is first transformed to the model 
+location and orientation. The whole ensemble is then refined with the 
+Monte Carlo Metropolis algorithm and the model parameters updated.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 548 of file mol_monte.cpp.</para>
+    </section><anchor xml:id="_mol__monte_8cpp_1a9aa092b968c6ab13f21d182388362b06"/>    <section>
+    <title>mcm_molecule_list()</title>
+<indexterm><primary>mcm_molecule_list</primary><secondary>mol_monte.cpp</secondary></indexterm>
+<indexterm><primary>mol_monte.cpp</primary><secondary>mcm_molecule_list</secondary></indexterm>
+<para><computeroutput>int mcm_molecule_list (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_struct_bmd">Bmd</link> * md, <link linkend="_class_bimage">Bimage</link> * map, double beta, double max_angle, double max_shift, long max_iter, int rigid)</computeroutput></para><para>
+
+<para>Monte Carlo fit of a molecule to a list of locations and orientations. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters (modified). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*md</entry>
+                                <entry>
+<para>molecular dynamics structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*map</entry>
+                                <entry>
+<para>map. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>beta</entry>
+                                <entry>
+<para>equivalent of 1/kT. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_angle</entry>
+                                <entry>
+<para>maximum allowed angular step size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_shift</entry>
+                                <entry>
+<para>maximum allowed shift. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_iter</entry>
+                                <entry>
+<para>maximum number of iterations. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rigid</entry>
+                                <entry>
+<para>selection of mode. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolgroup* new molecule group list. <literallayout><computeroutput>For each model, the molecule group is first transformed to the model 
+location and orientation. This is then refined with the Monte Carlo
+Metropolis algorithm and the model parameters updated.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 491 of file mol_monte.cpp.</para>
+    </section><anchor xml:id="_mol__monte_8cpp_1ad6b0295903b13c93f3daeb778af88306"/>    <section>
+    <title>molgroup_atom_overlap()</title>
+<indexterm><primary>molgroup_atom_overlap</primary><secondary>mol_monte.cpp</secondary></indexterm>
+<indexterm><primary>mol_monte.cpp</primary><secondary>molgroup_atom_overlap</secondary></indexterm>
+<para><computeroutput>double molgroup_atom_overlap (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_struct_bmd">Bmd</link> * md)</computeroutput></para><para>
+
+<para>Calculates an energy term based on atom overlap. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecular structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*md</entry>
+                                <entry>
+<para>molecular dynamics structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double total overlap energy. <literallayout><computeroutput>The energy is defined as linear decay to the reference separation distance
+and zero beyond:
+    Esep = Ksep * (1 - d/dsep)  for  d &lt; dsep, zero otherwise
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 763 of file mol_monte.cpp.</para>
+    </section><anchor xml:id="_mol__monte_8cpp_1a5165d96e18794972e14ffd2ea8561b9e"/>    <section>
+    <title>molgroup_generate_masked_grid_list()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>molgroup_generate_masked_grid_list</primary><secondary>mol_monte.cpp</secondary></indexterm>
+<indexterm><primary>mol_monte.cpp</primary><secondary>molgroup_generate_masked_grid_list</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolgroup">Bmolgroup</link>* molgroup_generate_masked_grid_list (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bimage">Bimage</link> * pmask, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; grid_sampling, <link linkend="_class_bstring">Bstring</link> filename)</computeroutput></para><para>
+
+<para>Generates multiple versions of a molecule at different locations. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask</entry>
+                                <entry>
+<para>mask to get limit grid positions. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>grid_sampling</entry>
+                                <entry>
+<para>sampling for grid search. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>filename</entry>
+                                <entry>
+<para>output base file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolgroup* linked list of molecule groups. <literallayout><computeroutput>The locations of the molecules are defined on the intersection of a 
+grid and a user-defined mask.
+The numbered output filename is also set.
+Note: the molecule group minima and maxima should be set to the 
+volume to be searched before calling this function.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 260 of file mol_monte.cpp.</para>
+    </section><anchor xml:id="_mol__monte_8cpp_1a97fef08f4e851a599f97eef808d6a0cc"/>    <section>
+    <title>molgroup_generate_masked_grid_list()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>molgroup_generate_masked_grid_list</primary><secondary>mol_monte.cpp</secondary></indexterm>
+<indexterm><primary>mol_monte.cpp</primary><secondary>molgroup_generate_masked_grid_list</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* molgroup_generate_masked_grid_list (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; grid_sampling, <link linkend="_class_bimage">Bimage</link> * pmask)</computeroutput></para><para>
+Definition at line 319 of file mol_monte.cpp.</para>
+    </section><anchor xml:id="_mol__monte_8cpp_1a4e239a5f1ebb34f82761edfcac67a66c"/>    <section>
+    <title>molgroup_generate_orientation_list()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>molgroup_generate_orientation_list</primary><secondary>mol_monte.cpp</secondary></indexterm>
+<indexterm><primary>mol_monte.cpp</primary><secondary>molgroup_generate_orientation_list</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* molgroup_generate_orientation_list (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double angle_step)</computeroutput></para><para>
+Definition at line 438 of file mol_monte.cpp.</para>
+    </section><anchor xml:id="_mol__monte_8cpp_1ab90fad419d3f4cc5d426a631773e1c71"/>    <section>
+    <title>molgroup_generate_orientation_list()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>molgroup_generate_orientation_list</primary><secondary>mol_monte.cpp</secondary></indexterm>
+<indexterm><primary>mol_monte.cpp</primary><secondary>molgroup_generate_orientation_list</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolgroup">Bmolgroup</link>* molgroup_generate_orientation_list (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double angle_step, <link linkend="_class_bstring">Bstring</link> filename, int whole)</computeroutput></para><para>
+
+<para>Generates multiple versions of a molecule at different locations. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>angle_step</entry>
+                                <entry>
+<para>angular step size in radians. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>filename</entry>
+                                <entry>
+<para>output base file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>whole</entry>
+                                <entry>
+<para>treat the whole ensemble as a rigid body. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolgroup* linked list of molecule groups. <literallayout><computeroutput>The molecule group is rotated in place to give all orientations
+with a given angle step size between the views.
+The numbered output filename is also set.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 389 of file mol_monte.cpp.</para>
+    </section><anchor xml:id="_mol__monte_8cpp_1a225462c77f816d6ef49e874e8251913c"/>    <section>
+    <title>molgroup_move_atoms_down_energy()</title>
+<indexterm><primary>molgroup_move_atoms_down_energy</primary><secondary>mol_monte.cpp</secondary></indexterm>
+<indexterm><primary>mol_monte.cpp</primary><secondary>molgroup_move_atoms_down_energy</secondary></indexterm>
+<para><computeroutput>int molgroup_move_atoms_down_energy (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double max_angle, double max_shift)</computeroutput></para><para>
+
+<para>Move atoms random distances down the energy gradient. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecular structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_angle</entry>
+                                <entry>
+<para>(not used). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_shift</entry>
+                                <entry>
+<para>maximum shift for each atom. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double 0. <literallayout><computeroutput>The distance of movement is limited to the maximum shift.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 895 of file mol_monte.cpp.</para>
+    </section><anchor xml:id="_mol__monte_8cpp_1a3aedc423fdaaa395f6b431bc98f610be"/>    <section>
+    <title>molgroup_rigid_body_transform()</title>
+<indexterm><primary>molgroup_rigid_body_transform</primary><secondary>mol_monte.cpp</secondary></indexterm>
+<indexterm><primary>mol_monte.cpp</primary><secondary>molgroup_rigid_body_transform</secondary></indexterm>
+<para><computeroutput>int molgroup_rigid_body_transform (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double max_angle, double shift_std)</computeroutput></para><para>
+
+<para>Randomly transforms a molecule or molecule group. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecular structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max_angle</entry>
+                                <entry>
+<para>maximum rotation angle. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_std</entry>
+                                <entry>
+<para>gaussian length for shift vector. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The transformation is calculted as a random angular rotation and a
+random shift. The shift is sampled from a random vector with a
+gaussian length distribution.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 851 of file mol_monte.cpp.</para>
+    </section><anchor xml:id="_mol__monte_8cpp_1a6c4bc3872e0c842b2106f5fdfe7ec33d"/>    <section>
+    <title>molgroup_set_box_to_map_boundaries()</title>
+<indexterm><primary>molgroup_set_box_to_map_boundaries</primary><secondary>mol_monte.cpp</secondary></indexterm>
+<indexterm><primary>mol_monte.cpp</primary><secondary>molgroup_set_box_to_map_boundaries</secondary></indexterm>
+<para><computeroutput>int molgroup_set_box_to_map_boundaries (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bimage">Bimage</link> * map)</computeroutput></para><para>
+
+<para>Sets the box in a molgroup to that defined by the map boundaries. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*map</entry>
+                                <entry>
+<para>map to get boundaries from. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 608 of file mol_monte.cpp.</para>
+    </section><anchor xml:id="_mol__monte_8cpp_1aa3bcb80040f8e92050aea61dadaf9daf"/>    <section>
+    <title>molgroup_test_if_within_box()</title>
+<indexterm><primary>molgroup_test_if_within_box</primary><secondary>mol_monte.cpp</secondary></indexterm>
+<indexterm><primary>mol_monte.cpp</primary><secondary>molgroup_test_if_within_box</secondary></indexterm>
+<para><computeroutput>long molgroup_test_if_within_box (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; min, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; max)</computeroutput></para><para>
+
+<para>Tests if a molecule overlaps with a defined box. 
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>min</entry>
+                                <entry>
+<para>start of box. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>max</entry>
+                                <entry>
+<para>end of box. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 630 of file mol_monte.cpp.</para>
+    </section><anchor xml:id="_mol__monte_8cpp_1a8453d679157329d610be72baf16370ad"/>    <section>
+    <title>monte_atom_fit_energy()</title>
+<indexterm><primary>monte_atom_fit_energy</primary><secondary>mol_monte.cpp</secondary></indexterm>
+<indexterm><primary>mol_monte.cpp</primary><secondary>monte_atom_fit_energy</secondary></indexterm>
+<para><computeroutput>double monte_atom_fit_energy (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bimage">Bimage</link> * map, <link linkend="_struct_bmd">Bmd</link> * md)</computeroutput></para><para>
+
+<para>Calculates the potential energy for fitting atoms to a map. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecular structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*map</entry>
+                                <entry>
+<para>density map. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*md</entry>
+                                <entry>
+<para>molecular dynamics structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double potential energy. <literallayout><computeroutput>The energy is the sum of the bond, angle, and map energies.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 697 of file mol_monte.cpp.</para>
+    </section><anchor xml:id="_mol__monte_8cpp_1a9d6982e80371cfa37305f77c589d1828"/>    <section>
+    <title>monte_bond_fit_energy()</title>
+<indexterm><primary>monte_bond_fit_energy</primary><secondary>mol_monte.cpp</secondary></indexterm>
+<indexterm><primary>mol_monte.cpp</primary><secondary>monte_bond_fit_energy</secondary></indexterm>
+<para><computeroutput>double monte_bond_fit_energy (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bimage">Bimage</link> * map, <link linkend="_struct_bmd">Bmd</link> * md)</computeroutput></para><para>
+
+<para>Calculates the potential energy for fitting bonds to a map. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecular structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*map</entry>
+                                <entry>
+<para>density map. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*md</entry>
+                                <entry>
+<para>molecular dynamics structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double potential energy. <literallayout><computeroutput>The energy is the sum of the bond, angle, and map energies.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 729 of file mol_monte.cpp.</para>
+    </section><anchor xml:id="_mol__monte_8cpp_1a9eb0b16aeb76c521370621921d691bb0"/>    <section>
+    <title>monte_carlo_metropolis()</title>
+<indexterm><primary>monte_carlo_metropolis</primary><secondary>mol_monte.cpp</secondary></indexterm>
+<indexterm><primary>mol_monte.cpp</primary><secondary>monte_carlo_metropolis</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolgroup">Bmolgroup</link>* monte_carlo_metropolis (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_struct_bmd">Bmd</link> * md, <link linkend="_class_bimage">Bimage</link> * map, double beta, double max_angle, double max_shift, long max_iter, int rigid, double(Efunc)(<link linkend="_struct_bmolgroup">Bmolgroup</link> *, <link linkend="_class_bimage">Bimage</link> *, <link linkend="_struct_bmd">Bmd</link> *) , int(Tfunc)(<link linkend="_struct_bmolgroup">Bmolgroup</link> *, double, double) )</computeroutput></para><para>
+Definition at line 71 of file mol_monte.cpp.</para>
+    </section><anchor xml:id="_mol__monte_8cpp_1a6bf35d11dd1e96be923bfe269d5f76fb"/>    <section>
+    <title>monte_rigid_body_fit_energy()</title>
+<indexterm><primary>monte_rigid_body_fit_energy</primary><secondary>mol_monte.cpp</secondary></indexterm>
+<indexterm><primary>mol_monte.cpp</primary><secondary>monte_rigid_body_fit_energy</secondary></indexterm>
+<para><computeroutput>double monte_rigid_body_fit_energy (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bimage">Bimage</link> * map, <link linkend="_struct_bmd">Bmd</link> * md)</computeroutput></para><para>
+
+<para>Calculates the potential energy for rigid body fitting. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecular structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*map</entry>
+                                <entry>
+<para>density map. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*md</entry>
+                                <entry>
+<para>molecular dynamics structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double potential energy. <literallayout><computeroutput>The energy is the sum of the overlap, map, and point force energies.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 665 of file mol_monte.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_mol__monte_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>mol_monte.cpp</secondary></indexterm>
+<indexterm><primary>mol_monte.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

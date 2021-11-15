@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Sequence Analysis</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Preparing for sequence analysis</h1>
+<p>The sequence analysis programs in the Bsoft package require aligned sequences.
+Bsoft has a very rudimentary sequence alignment capability, and this
+should better be done with another program such as clustalw (see <a
+ href="http://www.clustal.org" target="_blank">http://www.clustal.org </a>).</p>
+<p>The sequence formats the Bsoft programs support are EMBL, FASTA, Genbank,
+PIR and Phylip. The recognition of the format is based on the file name extension.</p>
+<p>An example aligned sequence file is provided:</p>
+<center><a href="vp23.pir">vp23.pir</a></center>
+<br/>
+
+<h1>Sequence identity</h1>
+<p>The &quot;overlap&quot; between two aligned sequences is defined as those
+positions in the alignment where both sequences have residues.
+The &quot;identity&quot; is defined as the number
+of identical residues divided by the overlap, and is thus a fraction.</p>
+
+<h3>Example:</h3>
+<div id="command"><p>bseq -verbose 7 -identity vp23.pir</p></div>
+<p><u>Part of the output:</u></p>
+<p><tt>Aligned identity analysis:</tt>      </p>
+<p><tt>Seq1 Seq2 Identity nID Overlap Name1 Name2</tt>
+<tt>&nbsp;&nbsp; <br />
+        2&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;
+0.921&nbsp;&nbsp;
+293&nbsp;&nbsp; 318 vp23_hsv2h VP23_HSV11</tt>
+<tt>&nbsp;&nbsp; <br />
+        3&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;
+0.427&nbsp;&nbsp;
+134&nbsp;&nbsp; 314 VP23_VZVD VP23_HSV11</tt>
+<tt>&nbsp;&nbsp; <br />
+        3&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;
+0.417&nbsp;&nbsp;
+131&nbsp;&nbsp; 314 VP23_VZVD vp23_hsv2h</tt>
+<tt>&nbsp;&nbsp; <br />
+        4&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;
+0.438&nbsp;&nbsp;
+137&nbsp;&nbsp; 313 VP23_HSVEB VP23_HSV11</tt>
+<tt>&nbsp;&nbsp; <br />
+        4&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;
+0.435&nbsp;&nbsp;
+136&nbsp;&nbsp; 313 VP23_HSVEB vp23_hsv2h</tt>
+<tt>&nbsp;&nbsp; <br />
+        4&nbsp;&nbsp;&nbsp; 3&nbsp;&nbsp;&nbsp;
+0.527&nbsp;&nbsp;
+164&nbsp;&nbsp; 311 VP23_HSVEB VP23_VZVD</tt>
+<tt>&nbsp;&nbsp; <br />
+        5&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;
+0.431&nbsp;&nbsp;
+135&nbsp;&nbsp; 313 vp23_ehv4 VP23_HSV11</tt>
+<tt>&nbsp;&nbsp; <br />
+        5&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;
+0.428&nbsp;&nbsp;
+134&nbsp;&nbsp; 313 vp23_ehv4 vp23_hsv2h</tt>
+<tt>&nbsp;&nbsp; <br />
+        5&nbsp;&nbsp;&nbsp; 3&nbsp;&nbsp;&nbsp;
+0.527&nbsp;&nbsp;
+164&nbsp;&nbsp; 311 vp23_ehv4 VP23_VZVD</tt>
+<tt>&nbsp;&nbsp; <br />
+        5&nbsp;&nbsp;&nbsp; 4&nbsp;&nbsp;&nbsp;
+0.946&nbsp;&nbsp;
+297&nbsp;&nbsp; 314 vp23_ehv4 VP23_HSVEB</tt>
+<tt>&nbsp;&nbsp; <br />
+        6&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;
+0.463&nbsp;&nbsp;
+146&nbsp;&nbsp; 315 vp23_bhv1 VP23_HSV11</tt>
+<tt>&nbsp;&nbsp; <br />
+        6&nbsp;&nbsp;&nbsp; 2&nbsp;&nbsp;&nbsp;
+0.460&nbsp;&nbsp;
+145&nbsp;&nbsp; 315 vp23_bhv1 vp23_hsv2h</tt>
+<tt>...</tt>      </p>
+<p><tt>Average identical residues:&nbsp; 81.4238 (54.6525)</tt>
+<tt>Average overlap:&nbsp;&nbsp; 297.99 (7.73172)</tt>
+</p>
+<p>The last two lines give the averages and standard deviations of the
+number of identical residues and overlap in all pairwise comparisons.</p>
+<br/>
+<h1>Sequence similarity</h1>
+<p>The &quot;similarity&quot; between two aligned sequences is defined as the
+sum of residue similarities divided by the overlap. The similarity between
+two residues is taken from a residue substitution matrix. The default substitution
+matrix in Bsoft is BLOSUM62. The fraction similarity is defined as the number of residues above
+a given threshold divided by the overlap, and is thus a fraction comparable
+to the identity defined above.</p>
+<h3>Example:</h3>
+<div id="command"><p>bseq -verbose 7 -similarity 2 vp23.pir</p></div>
+<p><u>Part of the output:</u></p>
+<p><tt>Aligned similarity analysis:</tt>      </p>
+<p><tt>Similar residue threshold:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2</tt>      </p>
+<p><tt>Seq1 Seq2 Sim fracSim Overlap Name1 Name2</tt>
+<tt>&nbsp;&nbsp;&nbsp; <br />
+        2&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;
+4.701&nbsp; 0.934&nbsp;&nbsp;
+318 vp23_hsv2h VP23_HSV11</tt>
+<tt>&nbsp;&nbsp;&nbsp; <br />
+        3&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;
+2.140&nbsp; 0.535&nbsp;&nbsp;
+314 VP23_VZVD VP23_HSV11</tt>
+<tt>&nbsp;&nbsp;&nbsp; <br />
+        3&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;
+2.099&nbsp; 0.525&nbsp;&nbsp;
+314 VP23_VZVD vp23_hsv2h</tt>
+<tt>&nbsp;&nbsp;&nbsp; <br />
+        4&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;
+2.326&nbsp; 0.556&nbsp;&nbsp;
+313 VP23_HSVEB VP23_HSV11</tt>
+<tt>&nbsp;&nbsp;&nbsp; <br />
+        4&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;
+2.300&nbsp; 0.550&nbsp;&nbsp;
+313 VP23_HSVEB vp23_hsv2h</tt>
+<tt>&nbsp;&nbsp;&nbsp;<br />
+        4&nbsp;&nbsp;&nbsp;&nbsp; 3&nbsp;
+2.859&nbsp; 0.650&nbsp;&nbsp;
+311 VP23_HSVEB VP23_VZVD</tt>
+<tt>&nbsp;&nbsp;&nbsp; <br />
+        5&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;
+2.275&nbsp; 0.550&nbsp;&nbsp;
+313 vp23_ehv4 VP23_HSV11</tt>
+<tt>&nbsp;&nbsp;&nbsp; <br />
+        5&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;
+2.243&nbsp; 0.543&nbsp;&nbsp;
+313 vp23_ehv4 vp23_hsv2h</tt>
+<tt>&nbsp;&nbsp;&nbsp; <br />
+        5&nbsp;&nbsp;&nbsp;&nbsp; 3&nbsp;
+2.836&nbsp; 0.640&nbsp;&nbsp;
+311 vp23_ehv4 VP23_VZVD</tt>
+<tt>&nbsp;&nbsp;&nbsp; <br />
+        5&nbsp;&nbsp;&nbsp;&nbsp; 4&nbsp;
+4.783&nbsp; 0.955&nbsp;&nbsp;
+314 vp23_ehv4 VP23_HSVEB</tt>
+<tt>&nbsp;&nbsp;&nbsp; <br />
+        6&nbsp;&nbsp;&nbsp;&nbsp; 1&nbsp;
+2.248&nbsp; 0.546&nbsp;&nbsp;
+315 vp23_bhv1 VP23_HSV11</tt>
+<tt>&nbsp;&nbsp;&nbsp; <br />
+        6&nbsp;&nbsp;&nbsp;&nbsp; 2&nbsp;
+2.232&nbsp; 0.537&nbsp;&nbsp;
+315 vp23_bhv1 vp23_hsv2h</tt>
+<tt>&nbsp;&nbsp;&nbsp; <br />
+        6&nbsp;&nbsp;&nbsp;&nbsp; 3&nbsp;
+2.700&nbsp; 0.629&nbsp;&nbsp;
+313 vp23_bhv1 VP23_VZVD</tt>
+<tt>...</tt>
+</p>
+<br/>
+
+<h1>Hydrophobicity analysis</h1>
+<p>The average hydrophobicity is calculated at each position in the
+alignment, and a periodicity analysis done with a frequency of 4 to detect helical
+regions. The default hydrophobicity scale is the GES scale.</p>
+<p>A typical command line is:      </p>
+<div id="command"><p>bseq -verbose 7 -hydrophobicity 0.5 -Postscript
+          vp23_hp.ps vp23.pir</p></div>
+<p>The &quot;-Postscript&quot; option outputs three plots to a postscript
+file.</p>
+<br/>
+
+<h1>Information content analysis</h1>
+<p>The information content of each position in an alignment is calculated as:</p>
+<p><tt>information = log<sub>2</sub>n - sum(p<sub>i</sub> *
+      log<sub>2</sub>p<sub>i</sub>)</tt>
+<br />
+<tt>p<sub>i</sub> = f<sub>i</sub> / sum(f<sub>i</sub>)</tt>
+<tt>&nbsp;</tt>        </p>
+<p>where f<sub>i</sub> is the frequency of residue i at this alignment
+position, and n =&nbsp; sum(f<sub>i</sub>) if sum(f<sub>i</sub>) &lt; 20,
+otherwise n = 20. A moving average of the information is calculated over
+a given window to smooth the resultant data. </p>
+<p>A typical command line is:      </p>
+<div id="command"><p>bseq -verbose 7 -info -Postscript vp23_info.ps vp23.pir</p></div>
+<p>The &quot;-Postscript&quot; option outputs three plots and a sequence logo
+representation to a postscript file. The sequence logo displays the
+occurrence of every residue type at every position in the alignment,
+where the combined height at each position is the information content,
+a measure of conservation. Here are the output file in both postscript
+and pdf (converted with ps2pdf from the postscript file):</p>
+<center><a href="vp23_info.ps">vp23_info.ps</a>&nbsp;&nbsp;
+<a href="vp23_info.pdf">vp23_info.pdf</a></center>
+</div>
+<div id="footer">
+	Bernard Heymann  20141226
+</div>
+</body>
+</html>

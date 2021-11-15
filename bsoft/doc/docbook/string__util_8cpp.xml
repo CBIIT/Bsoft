@@ -1,0 +1,395 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_string__util_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/util/string_util.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/util/string_util.cpp</primary></indexterm>
+<programlisting>#include &quot;string_util.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>string <link linkend="_string__util_8cpp_1a6eef8ea11c68c89651c36ccfdc3cee50">command_line</link> (int argc, char **argv)</para>
+</listitem>
+            <listitem><para>string <link linkend="_string__util_8cpp_1ae1cd0165442272bf85dc2d9461080a30">base</link> (string &amp;filename)</para>
+</listitem>
+            <listitem><para>string <link linkend="_string__util_8cpp_1ab30020fd87c6f8c8103f47511efdefee">extension</link> (string filename)</para>
+</listitem>
+            <listitem><para>string <link linkend="_string__util_8cpp_1a162dcecbdeb304e4033aa0e5b315921b">replace_extension</link> (string &amp;filename, string ext)</para>
+</listitem>
+            <listitem><para>string <link linkend="_string__util_8cpp_1aa2a74928dfc358c70ae6791fa53b6be9">insert</link> (string &amp;filename, string ins)</para>
+</listitem>
+            <listitem><para>string <link linkend="_string__util_8cpp_1ac592a99e03a236027e68dbdc6a3261ee">insert</link> (string &amp;filename, int i, int n)</para>
+</listitem>
+            <listitem><para>void <link linkend="_string__util_8cpp_1a31836a545b06f4c9b8a1e895e3a74602">remove_spaces</link> (string &amp;s)</para>
+</listitem>
+            <listitem><para>string <link linkend="_string__util_8cpp_1af2ab77a0e5514c282dfe7ccbc1a32ccd">parameter_file_path</link> (string &amp;filename)</para>
+
+<para>Finds the parameter file path. </para>
+</listitem>
+            <listitem><para>string <link linkend="_string__util_8cpp_1ad92baafa6ae75fb50b129d418f06afef">quote_or_not</link> (const string &amp;s)</para>
+</listitem>
+            <listitem><para>vector&lt; string &gt; <link linkend="_string__util_8cpp_1a21228818f6b97bdd706d7980b74a2966">split</link> (const string &amp;s)</para>
+
+<para>Splits a string on whitespace. </para>
+</listitem>
+            <listitem><para>vector&lt; string &gt; <link linkend="_string__util_8cpp_1a8412a5bc0b25703af0fd7454965d190d">splitn</link> (const string &amp;s, long n)</para>
+
+<para>Splits a string on whitespace. </para>
+</listitem>
+            <listitem><para>vector&lt; string &gt; <link linkend="_string__util_8cpp_1add313f0fe82466f4c1c4622307d928bc">split</link> (const string &amp;s, char delim)</para>
+
+<para>Splits a string using a given delimiter. </para>
+</listitem>
+            <listitem><para>string <link linkend="_string__util_8cpp_1a97b8db5a0c07dbf4981670de76a7c2bc">concatenate</link> (const vector&lt; string &gt; &amp;vs)</para>
+
+<para>Concatenates a vector of strings. </para>
+</listitem>
+            <listitem><para>vector&lt; long &gt; <link linkend="_string__util_8cpp_1a9d5eff7133a0b8a4d33c069b8d4439c4">parse_integer_vector</link> (string vecstr)</para>
+</listitem>
+            <listitem><para>vector&lt; double &gt; <link linkend="_string__util_8cpp_1a7ec44f35aa4a83ba7a41d9b65a518c09">parse_real_vector</link> (string vecstr)</para>
+</listitem>
+            <listitem><para>string <link linkend="_string__util_8cpp_1adc3fd57a35218372099d601d143a1919">local_time</link> ()</para>
+</listitem>
+            <listitem><para>string <link linkend="_string__util_8cpp_1ad7379603bd2bbbe2c9613e1670e4020b">get_clean_line</link> (ifstream &amp;fstar)</para>
+</listitem>
+            <listitem><para>long <link linkend="_string__util_8cpp_1a1ba848df9b70579a01c2a5c7c3d03901">to_integer</link> (string s)</para>
+</listitem>
+            <listitem><para>double <link linkend="_string__util_8cpp_1a569f377ec2e32888effb7fabfda6cc69">to_real</link> (string s)</para>
+</listitem>
+            <listitem><para>bool <link linkend="_string__util_8cpp_1ac59098ce9e87a5129f42bcab10f6e3b6">check_for_number</link> (string &amp;s)</para>
+</listitem>
+            <listitem><para>int <link linkend="_string__util_8cpp_1a8de6bdd73b008fe2c8220f1f840d4bb4">check_for_type</link> (string &amp;s)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_string__util_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>20160911 - 20210306 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_string__util_8cpp_1ae1cd0165442272bf85dc2d9461080a30"/>    <section>
+    <title>base()</title>
+<indexterm><primary>base</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>base</secondary></indexterm>
+<para><computeroutput>string base (string &amp; filename)</computeroutput></para><para>
+Definition at line 28 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1ac59098ce9e87a5129f42bcab10f6e3b6"/>    <section>
+    <title>check_for_number()</title>
+<indexterm><primary>check_for_number</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>check_for_number</secondary></indexterm>
+<para><computeroutput>bool check_for_number (string &amp; s)</computeroutput></para><para>
+Definition at line 294 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1a8de6bdd73b008fe2c8220f1f840d4bb4"/>    <section>
+    <title>check_for_type()</title>
+<indexterm><primary>check_for_type</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>check_for_type</secondary></indexterm>
+<para><computeroutput>int check_for_type (string &amp; s)</computeroutput></para><para>
+Definition at line 306 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1a6eef8ea11c68c89651c36ccfdc3cee50"/>    <section>
+    <title>command_line()</title>
+<indexterm><primary>command_line</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>command_line</secondary></indexterm>
+<para><computeroutput>string command_line (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 16 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1a97b8db5a0c07dbf4981670de76a7c2bc"/>    <section>
+    <title>concatenate()</title>
+<indexterm><primary>concatenate</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>concatenate</secondary></indexterm>
+<para><computeroutput>string concatenate (const vector&lt; string &gt; &amp; vs)</computeroutput></para><para>
+
+<para>Concatenates a vector of strings. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;vs</entry>
+                                <entry>
+<para>vector of strings. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>string concatenated strings. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 191 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1ab30020fd87c6f8c8103f47511efdefee"/>    <section>
+    <title>extension()</title>
+<indexterm><primary>extension</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>extension</secondary></indexterm>
+<para><computeroutput>string extension (string filename)</computeroutput></para><para>
+Definition at line 32 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1ad7379603bd2bbbe2c9613e1670e4020b"/>    <section>
+    <title>get_clean_line()</title>
+<indexterm><primary>get_clean_line</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>get_clean_line</secondary></indexterm>
+<para><computeroutput>string get_clean_line (ifstream &amp; fstar)</computeroutput></para><para>
+Definition at line 246 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1ac592a99e03a236027e68dbdc6a3261ee"/>    <section>
+    <title>insert()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>insert</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>insert</secondary></indexterm>
+<para><computeroutput>string insert (string &amp; filename, int i, int n)</computeroutput></para><para>
+Definition at line 58 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1aa2a74928dfc358c70ae6791fa53b6be9"/>    <section>
+    <title>insert()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>insert</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>insert</secondary></indexterm>
+<para><computeroutput>string insert (string &amp; filename, string ins)</computeroutput></para><para>
+Definition at line 48 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1adc3fd57a35218372099d601d143a1919"/>    <section>
+    <title>local_time()</title>
+<indexterm><primary>local_time</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>local_time</secondary></indexterm>
+<para><computeroutput>string local_time ( )</computeroutput></para><para>
+Definition at line 231 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1af2ab77a0e5514c282dfe7ccbc1a32ccd"/>    <section>
+    <title>parameter_file_path()</title>
+<indexterm><primary>parameter_file_path</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>parameter_file_path</secondary></indexterm>
+<para><computeroutput>string parameter_file_path (string &amp; filename)</computeroutput></para><para>
+
+<para>Finds the parameter file path. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>the parameter filename. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_bstring">Bstring</link> the full path and file name. <literallayout><computeroutput>The parameter file path should primarily be defined in the environmental
+variable &quot;BPARAM&quot;.
+Otherwise a default is used which may or may not be valid.
+The string returned has a length containing the path plus one byte.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 87 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1a9d5eff7133a0b8a4d33c069b8d4439c4"/>    <section>
+    <title>parse_integer_vector()</title>
+<indexterm><primary>parse_integer_vector</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>parse_integer_vector</secondary></indexterm>
+<para><computeroutput>vector&lt;long&gt; parse_integer_vector (string vecstr)</computeroutput></para><para>
+Definition at line 207 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1a7ec44f35aa4a83ba7a41d9b65a518c09"/>    <section>
+    <title>parse_real_vector()</title>
+<indexterm><primary>parse_real_vector</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>parse_real_vector</secondary></indexterm>
+<para><computeroutput>vector&lt;double&gt; parse_real_vector (string vecstr)</computeroutput></para><para>
+Definition at line 219 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1ad92baafa6ae75fb50b129d418f06afef"/>    <section>
+    <title>quote_or_not()</title>
+<indexterm><primary>quote_or_not</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>quote_or_not</secondary></indexterm>
+<para><computeroutput>string quote_or_not (const string &amp; s)</computeroutput></para><para>
+Definition at line 105 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1a31836a545b06f4c9b8a1e895e3a74602"/>    <section>
+    <title>remove_spaces()</title>
+<indexterm><primary>remove_spaces</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>remove_spaces</secondary></indexterm>
+<para><computeroutput>void remove_spaces (string &amp; s)</computeroutput></para><para>
+Definition at line 71 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1a162dcecbdeb304e4033aa0e5b315921b"/>    <section>
+    <title>replace_extension()</title>
+<indexterm><primary>replace_extension</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>replace_extension</secondary></indexterm>
+<para><computeroutput>string replace_extension (string &amp; filename, string ext)</computeroutput></para><para>
+Definition at line 41 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1a21228818f6b97bdd706d7980b74a2966"/>    <section>
+    <title>split()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>split</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>split</secondary></indexterm>
+<para><computeroutput>vector&lt;string&gt; split (const string &amp; s)</computeroutput></para><para>
+
+<para>Splits a string on whitespace. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;s</entry>
+                                <entry>
+<para>string to be split. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;string&gt; vector of strings. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 128 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1add313f0fe82466f4c1c4622307d928bc"/>    <section>
+    <title>split()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>split</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>split</secondary></indexterm>
+<para><computeroutput>vector&lt;string&gt; split (const string &amp; s, char delim)</computeroutput></para><para>
+
+<para>Splits a string using a given delimiter. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;s</entry>
+                                <entry>
+<para>string to be split. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>delim</entry>
+                                <entry>
+<para>delimiter. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;string&gt; vector of strings. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 173 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1a8412a5bc0b25703af0fd7454965d190d"/>    <section>
+    <title>splitn()</title>
+<indexterm><primary>splitn</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>splitn</secondary></indexterm>
+<para><computeroutput>vector&lt;string&gt; splitn (const string &amp; s, long n)</computeroutput></para><para>
+
+<para>Splits a string on whitespace. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;s</entry>
+                                <entry>
+<para>string to be split. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>number of strings to expect. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;string&gt; vector of strings. <literallayout><computeroutput>Keeps whitespace within quoted strings intact.
+Excess beyond n strings is discarded.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 146 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1a1ba848df9b70579a01c2a5c7c3d03901"/>    <section>
+    <title>to_integer()</title>
+<indexterm><primary>to_integer</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>to_integer</secondary></indexterm>
+<para><computeroutput>long to_integer (string s)</computeroutput></para><para>
+Definition at line 278 of file string_util.cpp.</para>
+    </section><anchor xml:id="_string__util_8cpp_1a569f377ec2e32888effb7fabfda6cc69"/>    <section>
+    <title>to_real()</title>
+<indexterm><primary>to_real</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>to_real</secondary></indexterm>
+<para><computeroutput>double to_real (string s)</computeroutput></para><para>
+Definition at line 285 of file string_util.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_string__util_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>string_util.cpp</secondary></indexterm>
+<indexterm><primary>string_util.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

@@ -1,0 +1,975 @@
+.TH "/Users/bernard/b20/bsoft/include/model_mechanics.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/model_mechanics.h \- Functions to do molecular mechanics\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel\&.h'\fP
+.br
+\fC#include 'rwmodel_param\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "double \fBmodel_mechanics\fP (\fBBmodel\fP *\fBmodel\fP, \fBBmodparam\fP &md, int mm_type, int max_iter, double max_shift, double velocitylimit)"
+.br
+.RI "Minimizes the energy of a model\&. "
+.ti -1c
+.RI "int \fBmodel_minimize\fP (\fBBmodel\fP *\fBmodel\fP, double max_shift)"
+.br
+.RI "Move components random distances down the energy gradient\&. "
+.ti -1c
+.RI "double \fBmodel_verlet\fP (\fBBmodel\fP *\fBmodel\fP, double timestep, double Kfriction, double velocitylimit)"
+.br
+.RI "Model dynamics using the velocity verlet integrator\&. "
+.ti -1c
+.RI "double \fBmodel_electrostatic_energy\fP (\fBBmodel\fP *\fBmodel\fP, \fBBmodparam\fP &md)"
+.br
+.RI "Calculates the electrostatic potentials between components\&. "
+.ti -1c
+.RI "double \fBmodel_distance_energy\fP (\fBBmodel\fP *\fBmodel\fP, \fBBmodparam\fP &md)"
+.br
+.RI "Calculates the distance-related potentials between components\&. "
+.ti -1c
+.RI "double \fBmodel_grid_distance_energy\fP (\fBBmodel\fP *\fBmodel\fP, \fBBmodparam\fP &md)"
+.br
+.RI "Calculates the non-bonded forces and energy\&. "
+.ti -1c
+.RI "double \fBmodel_neighbor_distance_energy\fP (\fBBmodel\fP *\fBmodel\fP, \fBBmodparam\fP &md)"
+.br
+.RI "Calculates the distance-related potentials between components and their neighbors\&. "
+.ti -1c
+.RI "double \fBmodel_soft_sphere_energy\fP (\fBBmodel\fP *\fBmodel\fP, double Kdistance, double dist_ref)"
+.br
+.RI "Calculates the soft sphere potential between components\&. "
+.ti -1c
+.RI "double \fBmodel_lennard_jones_energy\fP (\fBBmodel\fP *\fBmodel\fP, double Kdistance, double \fBdistance\fP)"
+.br
+.RI "Calculates the Lennard-Jones potential between components\&. "
+.ti -1c
+.RI "double \fBmodel_morse_energy\fP (\fBBmodel\fP *\fBmodel\fP, double Kdistance, double \fBdistance\fP)"
+.br
+.RI "Calculates the Morse potential between components\&. "
+.ti -1c
+.RI "double \fBmodel_link_energy\fP (\fBBmodel\fP *\fBmodel\fP, \fBBmodparam\fP &md)"
+.br
+.RI "Calculates the model link energy\&. "
+.ti -1c
+.RI "double \fBmodel_link_energy\fP (\fBBmodel\fP *\fBmodel\fP, double Klink)"
+.br
+.RI "Calculates the model link energy\&. "
+.ti -1c
+.RI "double \fBmodel_angle_energy\fP (\fBBmodel\fP *\fBmodel\fP, \fBBmodparam\fP &md)"
+.br
+.RI "Calculates the model angular energy\&. "
+.ti -1c
+.RI "double \fBmodel_polygon_angle_energy\fP (\fBBmodel\fP *\fBmodel\fP, double Kangle)"
+.br
+.RI "Calculates the link angular forces and energy\&. "
+.ti -1c
+.RI "double \fBmodel_polygon_energy\fP (\fBBmodel\fP *\fBmodel\fP, double Kpoly)"
+.br
+.RI "Calculates the polygon regularity energy and forces\&. "
+.ti -1c
+.RI "double \fBmodel_polygon_plane_energy\fP (\fBBmodel\fP *\fBmodel\fP, double Kpolyplane)"
+.br
+.RI "Calculates the polygon planarity energy and forces\&. "
+.ti -1c
+.RI "double \fBmodel_neighbor_plane_energy\fP (\fBBmodel\fP *\fBmodel\fP, double Kplane)"
+.br
+.RI "Calculates the planarity energy and forces with respect to neighbors\&. "
+.ti -1c
+.RI "double \fBmodel_point_force\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< double > point, double Kpoint, double decay)"
+.br
+.RI "Calculates the forces and energy resulting from a single point force\&. "
+.ti -1c
+.RI "double \fBmodel_radial_energy\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< double > point, double d0, double Kd)"
+.br
+.RI "Calculates the potential between a components and a point\&. "
+.ti -1c
+.RI "double \fBmodel_guide_energy\fP (\fBBmodel\fP *\fBmodel\fP, \fBBmodparam\fP &md)"
+.br
+.RI "Calculates the potential with respect to a guide model\&. "
+.ti -1c
+.RI "double \fBmodel_polyhedron_guide_energy\fP (\fBBmodel\fP *\fBmodel\fP, \fBBmodel\fP *gmod, double Kguide)"
+.br
+.RI "Calculates the potential with respect to a guide polyhedron\&. "
+.ti -1c
+.RI "double \fBmodel_map_energy\fP (\fBBmodel\fP *\fBmodel\fP, \fBBimage\fP *map, double Kmap)"
+.br
+.RI "Energy calculation of a model into a map\&. 
+.br
+ "
+.ti -1c
+.RI "double \fBmodel_map_energy\fP (\fBBmodel\fP *\fBmodel\fP, \fBBimage\fP *map, double Kmap, double sigma)"
+.br
+.ti -1c
+.RI "int \fBmodel_zero_forces\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Zeroes the component forces\&. "
+.ti -1c
+.RI "int \fBmodel_calculate_deviations\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates the deviations from regularity in a polyhedral model\&. "
+.ti -1c
+.RI "int \fBmodel_calculate_deviations\fP (\fBBmodel\fP *\fBmodel\fP, \fBBmodparam\fP &md)"
+.br
+.ti -1c
+.RI "int \fBmodel_regularize\fP (\fBBmodel\fP *\fBmodel\fP, int reg_iter, double \fBdistance\fP, double Kdistance, double Klink, double Kangle, double Kpoly, double Kpolyplane, double Kpoint, double decay)"
+.br
+.RI "Regularizes a model\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to do molecular mechanics\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010828 
+.PP
+Modified: 20210324 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_mechanics\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double model_angle_energy (\fBBmodel\fP * model, \fBBmodparam\fP & md)"
+
+.PP
+Calculates the model angular energy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fI&md\fP model parameters with reference angle specifications\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double angular energy\&. 
+.PP
+.nf
+The angular potential is a harmonic function:
+    E = Ka*(a - a0)^2
+The force is zero when a = reference angle (a0).
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 937 of file model_mechanics\&.cpp\&.
+.SS "int model_calculate_deviations (\fBBmodel\fP * model)"
+
+.PP
+Calculates the deviations from regularity in a polyhedral model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Link deviation:
+    d = sqrt(sum((l - l0)^2)/n)
+where l is the length and l0 is the reference length.
+Angle deviation:
+    d = sqrt(sum((a - a0)^2)/n)
+where a is the angle between two links and a0 is the reference angle:
+    a0 = PI*(1 - 2/v)
+where v is the number of vertices in the associated polygon.
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1521 of file model_mechanics\&.cpp\&.
+.SS "int model_calculate_deviations (\fBBmodel\fP * model, \fBBmodparam\fP & md)"
+
+.PP
+Definition at line 1572 of file model_mechanics\&.cpp\&.
+.SS "double model_distance_energy (\fBBmodel\fP * model, \fBBmodparam\fP & md)"
+
+.PP
+Calculates the distance-related potentials between components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fI&md\fP model parameters with distance interactions specifications\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double distance energy\&. 
+.PP
+.nf
+Distance potential types:
+    0   none
+    1   harmonic - only for explicit links
+    2   soft
+    3   Lennard-Jones
+    4   Morse
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 595 of file model_mechanics\&.cpp\&.
+.SS "double model_electrostatic_energy (\fBBmodel\fP * model, \fBBmodparam\fP & md)"
+
+.PP
+Calculates the electrostatic potentials between components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fI&md\fP model parameters with distance interactions specifications\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double electrostatic energy\&. 
+.PP
+.nf
+Electrostaic potential:
+    E = Ke*q1*q2/d
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 556 of file model_mechanics\&.cpp\&.
+.SS "double model_grid_distance_energy (\fBBmodel\fP * model, \fBBmodparam\fP & md)"
+
+.PP
+Calculates the non-bonded forces and energy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fI&md\fP model parameters with distance interactions specifications\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double distance energy\&.
+.RE
+.PP
+.PP
+.nf
+Distance potential types:
+    0   none
+    1   harmonic - only for explicit links
+    2   soft
+    3   Lennard-Jones
+    4   Morse
+.fi
+.PP
+ 
+.PP
+Definition at line 656 of file model_mechanics\&.cpp\&.
+.SS "double model_guide_energy (\fBBmodel\fP * model, \fBBmodparam\fP & md)"
+
+.PP
+Calculates the potential with respect to a guide model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fI&md\fP model aparameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double energy\&. 
+.PP
+.nf
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1231 of file model_mechanics\&.cpp\&.
+.SS "double model_lennard_jones_energy (\fBBmodel\fP * model, double Kd, double d0)"
+
+.PP
+Calculates the Lennard-Jones potential between components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIKd\fP distance force constant (Kd)\&. 
+.br
+\fId0\fP reference distance between components (d0)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double distance energy\&. 
+.PP
+.nf
+The Lennard-Jones potential is given by:
+    E = Kd*((d0/d)^12 - 2*(d0/d)^6)
+The force is zero when d = d0.
+The potential is set to zero for d > 3*d0;
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 825 of file model_mechanics\&.cpp\&.
+.SS "double model_link_energy (\fBBmodel\fP * model, \fBBmodparam\fP & md)"
+
+.PP
+Calculates the model link energy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fI&md\fP model parameters with distance interactions specifications\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double distance energy\&. 
+.PP
+.nf
+The link potential is a harmonic function:
+    E = Kl*(d - l0)^2
+The force is zero when d = reference link length (l0).
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 880 of file model_mechanics\&.cpp\&.
+.SS "double model_link_energy (\fBBmodel\fP * model, double Klink)"
+
+.PP
+Calculates the model link energy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIKlink\fP link force constant (Kl)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double link energy\&. 
+.PP
+.nf
+The link potential is a harmonic function:
+    E = Kl*(d - l0)^2
+The force is zero when d = reference link length (l0).
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 913 of file model_mechanics\&.cpp\&.
+.SS "double model_map_energy (\fBBmodel\fP * model, \fBBimage\fP * map, double Kmap)"
+
+.PP
+Energy calculation of a model into a map\&. 
+.br
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fI*map\fP map\&. 
+.br
+\fIKmap\fP map force constant\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double energy\&. 
+.PP
+.nf
+The map must be possitive density.
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1317 of file model_mechanics\&.cpp\&.
+.SS "double model_map_energy (\fBBmodel\fP * model, \fBBimage\fP * map, double Kmap, double sigma)"
+
+.PP
+Definition at line 1403 of file model_mechanics\&.cpp\&.
+.SS "double model_mechanics (\fBBmodel\fP * model, \fBBmodparam\fP & md, int mm_type, int max_iter, double max_shift, double velocitylimit)"
+
+.PP
+Minimizes the energy of a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fI&md\fP model parameters\&. 
+.br
+\fImm_type\fP type of mechanics: 0=minimization, 1=dynamics 
+.br
+\fImax_iter\fP number of minimization iterations\&. 
+.br
+\fImax_shift\fP maximum shift per iteration\&. 
+.br
+\fIvelocitylimit\fP limit on velocity per time step\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double final energy\&. 
+.PP
+.nf
+The inclusion of energy terms is based on positive K-constants in the 
+model parameter structure.
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 40 of file model_mechanics\&.cpp\&.
+.SS "int model_minimize (\fBBmodel\fP * model, double max_shift)"
+
+.PP
+Move components random distances down the energy gradient\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fImax_shift\fP maximum shift for each component\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of components\&. 
+.PP
+.nf
+The distance of movement is limited to the maximum shift.
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 222 of file model_mechanics\&.cpp\&.
+.SS "double model_morse_energy (\fBBmodel\fP * model, double Kd, double d0)"
+
+.PP
+Calculates the Morse potential between components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIKd\fP distance force constant (Kd)\&. 
+.br
+\fId0\fP reference distance between components (d0)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double distance energy\&. 
+.PP
+.nf
+The Morse potential is given by:
+    E = Kd*((1-exp((a/d0)*(d0-d)))^2 - 1)
+The width of the energy well is given by a, set here to 6.
+The force is zero when d = d0.
+The potential is set to zero for d > 3*d0;
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 854 of file model_mechanics\&.cpp\&.
+.SS "double model_neighbor_distance_energy (\fBBmodel\fP * model, \fBBmodparam\fP & md)"
+
+.PP
+Calculates the distance-related potentials between components and their neighbors\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fI&md\fP model parameters with distance interactions specifications\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double distance energy\&. 
+.PP
+.nf
+Distance potential types:
+    0   none
+    1   harmonic - only for explicit links
+    2   soft
+    3   Lennard-Jones
+    4   Morse
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 728 of file model_mechanics\&.cpp\&.
+.SS "double model_neighbor_plane_energy (\fBBmodel\fP * model, double Kplane)"
+
+.PP
+Calculates the planarity energy and forces with respect to neighbors\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIKplane\fP neighbor planarity constant\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double neighbor planar energy\&. 
+.PP
+.nf
+A plane is fit through the neigbor locations and the normal calculated from:
+    n•p = d
+where n is the normal vector, p is a point in the plane, and d is the offset.
+The deviation of a component location from the neighbor plane is calculated
+and converted to a harmonic energy and force.
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1128 of file model_mechanics\&.cpp\&.
+.SS "double model_point_force (\fBBmodel\fP * model, \fBVector3\fP< double > point, double Kpoint, double decay)"
+
+.PP
+Calculates the forces and energy resulting from a single point force\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIpoint\fP center of point force\&. 
+.br
+\fIKpoint\fP point force constant\&. 
+.br
+\fIdecay\fP energy decay with distance\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double point force energy\&. 
+.PP
+.nf
+The energy is defined as an exponential decay over distance from the 
+center of the point force:
+    Ep = Kp * exp(-decay*dist)
+The force is the derivative of the energy:
+    Fp = Kp * decay * dir * exp(-decay*dist)
+where Kp is the point force constant, dist is the distance of the component 
+from the center of the point force, decay is the energy decay with distance
+from the point force center, and dir is the normalized direction vector
+pointing from the point force center to the component, indicating the direction
+of force.
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1175 of file model_mechanics\&.cpp\&.
+.SS "double model_polygon_angle_energy (\fBBmodel\fP * model, double Kpolyangle)"
+
+.PP
+Calculates the link angular forces and energy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIKpolyangle\fP angle force constant (Ka)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double total link angle energy\&. 
+.PP
+.nf
+The energy is defined as a harmonic function around the reference 
+link angle, a0:
+    Ea = Ka*(cos(a0)-r1*r2/(|r1|*|r2|))^2
+    Ea = Ka*(a0 - a)^2
+The force is the derivative of the energy on the first and last atoms:
+    Fa1 = 2*Ka*(cos(a0)-r1*r2/(|r1|*|r2|))/(|r1|*|r2|) * ((r1*r2/|r1|)*r1-r2)
+    Fa3 = 2*Ka*(cos(a0)-r1*r2/(|r1|*|r2|))/(|r1|*|r2|) * ((r1*r2/|r2|)*r2-r1)
+where r1 is the vector from atom 2 to atom 1, r2 is the vector from
+atom 2 to atom 3, and Ka is the link angle force constant.
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 985 of file model_mechanics\&.cpp\&.
+.SS "double model_polygon_energy (\fBBmodel\fP * model, double Kpoly)"
+
+.PP
+Calculates the polygon regularity energy and forces\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIKpoly\fP polygon regularity constant (Kp)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double polygon energy\&. 
+.PP
+.nf
+Given the distances of all the vertices from the polygon center, the
+polygon regularity is defined as the deviation of these distances
+from the average distance:
+    E = Kp*(d - d0)
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1073 of file model_mechanics\&.cpp\&.
+.SS "double model_polygon_plane_energy (\fBBmodel\fP * model, double Kpolyplane)"
+
+.PP
+Calculates the polygon planarity energy and forces\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIKpolyplane\fP polygon planarity constant\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double polygon planar energy\&. 
+.PP
+.nf
+A plane is fit through the polygon vertices and the normal calculated from:
+    n•p = d
+where n is the normal vector, p is a point in the plane, and d is the offset.
+The polygon plane energy is calculated as a harmonic deviation from 
+the fitted plane.
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1091 of file model_mechanics\&.cpp\&.
+.SS "double model_polyhedron_guide_energy (\fBBmodel\fP * model, \fBBmodel\fP * gmod, double Kguide)"
+
+.PP
+Calculates the potential with respect to a guide polyhedron\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fI*gmod\fP guide polyhedron model\&. 
+.br
+\fIKguide\fP guide polyhedron force constant\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double energy\&. 
+.PP
+.nf
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1267 of file model_mechanics\&.cpp\&.
+.SS "double model_radial_energy (\fBBmodel\fP * model, \fBVector3\fP< double > point, double d0, double Kradial)"
+
+.PP
+Calculates the potential between a components and a point\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIpoint\fP reference point = radial center\&. 
+.br
+\fId0\fP reference distance between component and point\&. 
+.br
+\fIKradial\fP radial force constant\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double energy\&. 
+.PP
+.nf
+The radial potential is given by:
+    E = Kd*(d - d0)^2
+The force is zero when d = d0.
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1210 of file model_mechanics\&.cpp\&.
+.SS "int model_regularize (\fBBmodel\fP * model, int max_iter, double distance, double Kdistance, double Klink, double Kpolyangle, double Kpolygon, double Kpolyplane, double Kpoint, double decay)"
+
+.PP
+Regularizes a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fImax_iter\fP maximum number of iterations\&. 
+.br
+\fIdistance\fP reference distance\&. 
+.br
+\fIKdistance\fP distance strength constant\&. 
+.br
+\fIKlink\fP link strength constant\&. 
+.br
+\fIKpolyangle\fP angle strength constant\&. 
+.br
+\fIKpolygon\fP polygon regularity constant\&. 
+.br
+\fIKpolyplane\fP polygon planarity constant\&. 
+.br
+\fIKpoint\fP force away from the center-of-mass\&. 
+.br
+\fIdecay\fP point force decay constant\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1696 of file model_mechanics\&.cpp\&.
+.SS "double model_soft_sphere_energy (\fBBmodel\fP * model, double Kd, double d0)"
+
+.PP
+Calculates the soft sphere potential between components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIKd\fP distance force constant\&. 
+.br
+\fId0\fP reference distance between components\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double distance energy\&. 
+.PP
+.nf
+The soft sphere potential is given by:
+    E = Kd*(d0/d)^12
+The potential is set to zero for d > 3*d0;
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 797 of file model_mechanics\&.cpp\&.
+.SS "double model_verlet (\fBBmodel\fP * model, double timestep, double Kfriction, double velocitylimit)"
+
+.PP
+Model dynamics using the velocity verlet integrator\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fItimestep\fP dynamics time step\&. 
+.br
+\fIKfriction\fP friction coefficient\&. 
+.br
+\fIvelocitylimit\fP limit on velocity per time step\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double kinetic energy\&. 
+.PP
+.nf
+Leapfrog integration for any coordinate x, velocity vx and force Fx:
+    x(t+1) = x(t) + vx(t+1) * dt
+    vx(t+1) = (Fx(t) * dt/m + vx(t)) * kf
+    where
+        kf: friction constant (1=no friction)
+        dt: time step
+        m: atomic mass
+The velocity is limited each time step to damp chaotic oscillations.
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 261 of file model_mechanics\&.cpp\&.
+.SS "int model_zero_forces (\fBBmodel\fP * model)"
+
+.PP
+Zeroes the component forces\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of components\&. 
+.PP
+.nf
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1495 of file model_mechanics\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

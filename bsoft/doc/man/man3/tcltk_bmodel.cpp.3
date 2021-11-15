@@ -1,0 +1,462 @@
+.TH "/Users/bernard/b20/bsoft/tcltk/tcltk_bmodel.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/tcltk/tcltk_bmodel.cpp \- A shared object to load Bsoft model files in TCL/Tk\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <tk\&.h>\fP
+.br
+\fC#include 'tcltk_bmodel\&.h'\fP
+.br
+\fC#include 'rwmodel\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'model_create\&.h'\fP
+.br
+\fC#include 'model_map\&.h'\fP
+.br
+\fC#include 'model_select\&.h'\fP
+.br
+\fC#include 'model_mask\&.h'\fP
+.br
+\fC#include 'model_color\&.h'\fP
+.br
+\fC#include 'model_views\&.h'\fP
+.br
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'Vector3\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'Color\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "Tcl_Obj * \fBdo_find\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_get\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_set\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_delete\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_delete_non_selected\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_components_to_particles\fP (\fBBmodel\fP *\fBmodel\fP, \fBBproject\fP *\fBproject\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_extract_segments\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_create_shell\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_component_type\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_component\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_link\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomptype_count\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomptype_count_selected\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomptype_ids\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomptype_list\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomptype_create_update\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomptype_select\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomptype_deselect\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomptype_first_selected\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomponent_count\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomponent_count_selected\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomponent_ids\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomponent_location\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomponent_distance\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomponent_img_coords\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomponent_fom\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomponent_radius\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomponent_select\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomponent_move\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomponent_create\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomponent_delete\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBcomponent_color\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBlink_count\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBlink_count_selected\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBlink_ids\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBlink_img_coords\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBlink_select\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBlink_create\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBlink_delete\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBmodel_processing\fP (Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[])"
+.br
+.RI "Implements the 'Bmodel' command in Tcl/Tk to access model parameter files through Bsoft\&. "
+.ti -1c
+.RI "int \fBset_component_radius\fP (\fBBmodel\fP *\fBmodel\fP, float radius)"
+.br
+.ti -1c
+.RI "int \fBset_link_radius\fP (\fBBmodel\fP *\fBmodel\fP, float radius)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdraw_components\fP (\fBBmodel\fP *\fBmodel\fP, int objc, Tcl_Obj *CONST objv[])"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBimglist\fP"
+.br
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel\fP"
+.br
+.ti -1c
+.RI "\fBBproject\fP * \fBproject\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A shared object to load Bsoft model files in TCL/Tk\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20071002 
+.PP
+Modified: 20191010 
+.RE
+.PP
+
+.PP
+Definition in file \fBtcltk_bmodel\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "Tcl_Obj * component_color (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1295 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * component_count (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 918 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * component_count_selected (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 931 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * component_create (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1229 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * component_delete (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1270 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * component_distance (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 992 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * component_fom (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1073 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * component_ids (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 948 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * component_img_coords (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1020 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * component_location (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 969 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * component_move (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1203 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * component_radius (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1102 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * component_select (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1134 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * comptype_count (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 666 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * comptype_count_selected (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 677 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * comptype_create_update (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 727 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * comptype_deselect (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 777 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * comptype_first_selected (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 802 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * comptype_ids (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 692 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * comptype_list (\fBBmodel\fP * model)"
+
+.PP
+Definition at line 708 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * comptype_select (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 752 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * do_component (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 855 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * do_component_type (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 616 of file tcltk_bmodel\&.cpp\&.
+.SS "int do_components_to_particles (\fBBmodel\fP * model, \fBBproject\fP * project, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 422 of file tcltk_bmodel\&.cpp\&.
+.SS "int do_create_shell (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 509 of file tcltk_bmodel\&.cpp\&.
+.SS "int do_delete (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 402 of file tcltk_bmodel\&.cpp\&.
+.SS "int do_delete_non_selected (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 415 of file tcltk_bmodel\&.cpp\&.
+.SS "int do_extract_segments (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 475 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * do_find (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 210 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * do_get (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 236 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * do_link (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1368 of file tcltk_bmodel\&.cpp\&.
+.SS "int do_set (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 327 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj* draw_components (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 545 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * link_count (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1415 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * link_count_selected (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1432 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * link_create (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1575 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * link_delete (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1603 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * link_ids (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1449 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * link_img_coords (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1471 of file tcltk_bmodel\&.cpp\&.
+.SS "Tcl_Obj * link_select (\fBBmodel\fP * model, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1534 of file tcltk_bmodel\&.cpp\&.
+.SS "int model_processing (Tcl_Interp * interp, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Implements the 'Bmodel' command in Tcl/Tk to access model parameter files through Bsoft\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*interp\fP a Tcl interpreter within Tcl\&. 
+.br
+\fIobjc\fP number of arguments passed (+1)\&. 
+.br
+\fI*objv[]\fP arguments passed as Tcl objects\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int Tcl result\&. 
+.PP
+.nf
+Bmodel command syntax:
+    Bmodel <action> <arguments>.
+    where:
+        action          "create", "exists", "read", "write", "kill", "get", "set", "delete"
+                        "delete_non_selected", "components_to_particles", "extract_segments",
+                        "comptype", "component", "link"
+        arguments           action-specific arguments:
+            "create"        <id>
+            "read"          <filename>
+            "write"         <filename>
+            "get"           <property> [arguments]
+            "set"           <property> <value>
+            "delete"        <property>
+            "delete_non_selected"   <property> <selection>
+            "components_to_particles"
+            "extract_segments"  <filename> [multilevel]
+            "comptype"      [arguments]
+            "component"     [arguments]
+            "link"          [arguments]
+            where:
+                property    "id <string>"
+                            "map <string> <value>"
+                            "number <value>"
+                            "radius <value>"
+                            "linkradius <value>"
+Return values:
+    Each action may have a return value:
+        "create"    (none)
+        "exists"    0=no, 1=yes
+        "read"      model id
+        "write"     (none)
+        "kill"      (none)
+        "get"       return value based on property
+        "set"       modify model property
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 120 of file tcltk_bmodel\&.cpp\&.
+.SS "int set_component_radius (\fBBmodel\fP * model, float radius)"
+
+.PP
+Definition at line 297 of file tcltk_bmodel\&.cpp\&.
+.SS "int set_link_radius (\fBBmodel\fP * model, float radius)"
+
+.PP
+Definition at line 312 of file tcltk_bmodel\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "\fBBimage\fP* imglist\fC [extern]\fP"
+
+.PP
+Definition at line 32 of file bshow\&.cpp\&.
+.SS "\fBBmodel\fP* model\fC [extern]\fP"
+
+.PP
+Definition at line 34 of file bshow\&.cpp\&.
+.SS "\fBBproject\fP* project\fC [extern]\fP"
+
+.PP
+Definition at line 33 of file bshow\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

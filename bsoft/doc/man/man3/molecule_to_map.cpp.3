@@ -1,0 +1,268 @@
+.TH "/Users/bernard/b20/bsoft/src/mol/molecule_to_map.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mol/molecule_to_map.cpp \- Functions to calculate a 3D map from atomic coordinates\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'molecule_to_map\&.h'\fP
+.br
+\fC#include 'scatter\&.h'\fP
+.br
+\fC#include 'Complex\&.h'\fP
+.br
+\fC#include 'UnitCell\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include <fstream>\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMAXSID\fP   1024"
+.br
+.ti -1c
+.RI "#define \fBMAXSCAT\fP   100"
+.br
+.ti -1c
+.RI "#define \fBMAXRAD\fP   100"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmol_to_image\fP (\fBBmolgroup\fP *molgroup, \fBBimage\fP *p, \fBBatomtype\fP *atompar, double resolution, double Bfactor, int wrap, int gextype)"
+.br
+.ti -1c
+.RI "int \fBmol_to_structure_factors\fP (\fBBmolgroup\fP *molgroup, \fBBimage\fP *p, \fBBatomtype\fP *atompar, double resolution, int wrap, double Bfactor)"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_from_molecule\fP (\fBBmolgroup\fP *molgroup, \fBVector3\fP< double > origin, \fBVector3\fP< long > size, \fBVector3\fP< double > sampling, double resolution, double Bfactor, int wrap, int gextype, int spacegroup, \fBUnitCell\fP unit_cell)"
+.br
+.RI "Calculates a 3D density map from a set of atomic coordinates\&. "
+.ti -1c
+.RI "int \fBcompare_mol_map\fP (\fBBmolgroup\fP *molgroup, \fBBimage\fP *pcalc, \fBBimage\fP *p)"
+.br
+.RI "Compares reference and calculated maps and calculates an occupancy for every atom in the molecule set\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_sf_from_molecule\fP (\fBBmolgroup\fP *molgroup, \fBVector3\fP< double > origin, \fBVector3\fP< long > size, \fBVector3\fP< double > sampling, double resolution, int spacegroup, \fBUnitCell\fP unit_cell, int wrap, double Bfactor, \fBBstring\fP &paramfile)"
+.br
+.RI "Calculates a 3D set of structure factors from a set of atomic coordinates\&. "
+.ti -1c
+.RI "double \fBone_sf\fP (\fBBmolgroup\fP *molgroup, \fBBimage\fP *p, long i, double s, double scale, double *scat)"
+.br
+.ti -1c
+.RI "double * \fBget_potential_curves\fP (\fBBatomtype\fP *atompar, double interval)"
+.br
+.ti -1c
+.RI "double * \fBget_scattering_curves\fP (\fBBatomtype\fP *atompar, double Bfactor, double recip_interval, long &nscat)"
+.br
+.ti -1c
+.RI "map< string, vector< double > > \fBget_scattering_curves\fP (map< string, \fBBcomptype\fP > &types, double Bfactor, double recip_interval)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to calculate a 3D map from atomic coordinates\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19970914 
+.PP
+Modified: 20210216 
+.RE
+.PP
+
+.PP
+Definition in file \fBmolecule_to_map\&.cpp\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define MAXRAD   100"
+
+.PP
+Definition at line 23 of file molecule_to_map\&.cpp\&.
+.SS "#define MAXSCAT   100"
+
+.PP
+Definition at line 22 of file molecule_to_map\&.cpp\&.
+.SS "#define MAXSID   1024"
+
+.PP
+Definition at line 21 of file molecule_to_map\&.cpp\&.
+.SH "Function Documentation"
+.PP 
+.SS "int compare_mol_map (\fBBmolgroup\fP * molgroup, \fBBimage\fP * pcalc, \fBBimage\fP * p)"
+
+.PP
+Compares reference and calculated maps and calculates an occupancy for every atom in the molecule set\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP set of molecules with atomic coordinates\&. 
+.br
+\fI*pcalc\fP map calculated from the set of molecules\&. 
+.br
+\fI*p\fP reference map\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 280 of file molecule_to_map\&.cpp\&.
+.SS "double* get_potential_curves (\fBBatomtype\fP * atompar, double interval)"
+
+.PP
+Definition at line 664 of file molecule_to_map\&.cpp\&.
+.SS "double* get_scattering_curves (\fBBatomtype\fP * atompar, double Bfactor, double recip_interval, long & nscat)"
+
+.PP
+Definition at line 726 of file molecule_to_map\&.cpp\&.
+.SS "map<string, vector<double> > get_scattering_curves (map< string, \fBBcomptype\fP > & types, double Bfactor, double recip_interval)"
+
+.PP
+Definition at line 799 of file molecule_to_map\&.cpp\&.
+.SS "\fBBimage\fP* img_from_molecule (\fBBmolgroup\fP * molgroup, \fBVector3\fP< double > origin, \fBVector3\fP< long > size, \fBVector3\fP< double > sampling, double resolution, double Bfactor, int wrap, int gextype, int spacegroup, \fBUnitCell\fP unit_cell)"
+
+.PP
+Calculates a 3D density map from a set of atomic coordinates\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP set of molecules with atomic coordinates\&. 
+.br
+\fIorigin\fP 3-valued origin vector (angstrom)\&. 
+.br
+\fIsize\fP 3-valued size vector (voxels)\&. 
+.br
+\fIsampling\fP sampling/voxel size (angstrom/voxel)\&. 
+.br
+\fIresolution\fP resolution (angstrom)\&. 
+.br
+\fIBfactor\fP global B-factor to use, if 0, use individual atom B-factors 
+.br
+\fIwrap\fP wrapping flag\&. 
+.br
+\fIgextype\fP type of gaussian used: 0 = single, 1 = atomic potential 
+.br
+\fIspacegroup\fP crystal space group\&. 
+.br
+\fIunit_cell\fP 6-valued vector of unit cell parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* the new map\&. 
+.PP
+.nf
+A 3D map is calculated from atomic coordinates by placing a gaussian
+sphere at each set of atomic coordinates. The resolution is set as
+twice the sigma coefficient of the gaussian function. The amplitude
+of the gaussian function is set so that the total density calculated
+equals the atomic mass. The resultant map therefore has the density
+units of Dalton/voxel.
+The statistics of the new image is calculated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 54 of file molecule_to_map\&.cpp\&.
+.SS "\fBBimage\fP* img_sf_from_molecule (\fBBmolgroup\fP * molgroup, \fBVector3\fP< double > origin, \fBVector3\fP< long > size, \fBVector3\fP< double > sampling, double resolution, int spacegroup, \fBUnitCell\fP unit_cell, int wrap, double Bfactor, \fBBstring\fP & paramfile)"
+
+.PP
+Calculates a 3D set of structure factors from a set of atomic coordinates\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP set of molecules with atomic coordinates\&. 
+.br
+\fIorigin\fP 3-valued origin vector (voxels)\&. 
+.br
+\fIsize\fP 3-valued size vector (voxels)\&. 
+.br
+\fIsampling\fP sampling/voxel size (angstrom/voxel)\&. 
+.br
+\fIresolution\fP resolution (angstrom)\&. 
+.br
+\fIspacegroup\fP crystal space group\&. 
+.br
+\fIunit_cell\fP 6-valued vector of unit cell parameters\&. 
+.br
+\fIwrap\fP 0=cut atoms outside box, 1=wrap coordinates within unit cell\&. 
+.br
+\fIBfactor\fP constant for decay curve\&. 
+.br
+\fI&paramfile\fP parameter file with scattering coefficients\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* the new structure factors\&. 
+.PP
+.nf
+All structure factors within a given resolution are calculated from
+all the selected atomic coordinates. The coordinates are fractionalized
+to fit into the given size box. If the size of the box is not given,
+it defaults to:
+    x_size = (max(x_coor) - min(x_coor)) / x_sampling
+The atomic scattering profiles are read from the STAR database as the
+amplitudes and B-factors of reciprocal space gaussians. For each profile,
+a lookup table is calculated to speed up further calculations.
+The statistics of the new image is calculated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 360 of file molecule_to_map\&.cpp\&.
+.SS "int mol_to_image (\fBBmolgroup\fP * molgroup, \fBBimage\fP * p, \fBBatomtype\fP * atompar, double resolution, double Bfactor, int wrap, int gextype)"
+
+.PP
+Definition at line 130 of file molecule_to_map\&.cpp\&.
+.SS "int mol_to_structure_factors (\fBBmolgroup\fP * molgroup, \fBBimage\fP * p, \fBBatomtype\fP * atompar, double resolution, int wrap, double Bfactor)"
+
+.PP
+Definition at line 478 of file molecule_to_map\&.cpp\&.
+.SS "double one_sf (\fBBmolgroup\fP * molgroup, \fBBimage\fP * p, long i, double s, double scale, double * scat)"
+
+.PP
+Definition at line 413 of file molecule_to_map\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

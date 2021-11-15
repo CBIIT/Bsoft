@@ -1,0 +1,567 @@
+.TH "/Users/bernard/b20/bsoft/include/symmetry.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/symmetry.h \- Header file for general symmetry functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'View\&.h'\fP
+.br
+\fC#include 'Bstring\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBBsymop\fP"
+.br
+.ti -1c
+.RI "struct \fBBsymmetry\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fB_Bsymmetry_\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "string \fBsymmetry_helical_label\fP (double helix_rise, double helix_angle, int dyad_axis, int cyclic, double seam_shift)"
+.br
+.RI "Returns the label for helical symmetry\&. "
+.ti -1c
+.RI "\fBView\fP \fBview_symmetry_reference\fP (\fBBsymmetry\fP &sym)"
+.br
+.RI "Returns an asymmetric unit reference point\&. "
+.ti -1c
+.RI "\fBMatrix3\fP \fBsymmetry_rotate_to_axis\fP (\fBBsymmetry\fP &sym, long axis, long axis_flag)"
+.br
+.RI "Rotation matrix to orient a symmetry axis on the z axis\&. "
+.ti -1c
+.RI "vector< \fBVector3\fP< double > > \fBsymmetry_get_axes\fP (\fBBsymmetry\fP &sym)"
+.br
+.RI "Get all symmetry axes\&. "
+.ti -1c
+.RI "\fBView\fP * \fBsymmetry_get_all_views\fP (\fBBsymmetry\fP &sym, \fBView\fP asu_view)"
+.br
+.RI "Get all symmetry-related views of one given view\&. "
+.ti -1c
+.RI "\fBView\fP * \fBsymmetry_get_all_views\fP (\fBBsymmetry\fP &sym, \fBView\fP *views)"
+.br
+.ti -1c
+.RI "vector< \fBMatrix3\fP > \fBsymmetry_get_all_matrices\fP (\fBBsymmetry\fP &sym)"
+.br
+.RI "Get all symmetry-related views of one given view\&. "
+.ti -1c
+.RI "\fBView\fP * \fBasymmetric_unit_views\fP (\fBBsymmetry\fP &sym, double theta_step, double phi_step, int flag)"
+.br
+.RI "Initializes a well-distributed set of views in an asymmetric unit\&. "
+.ti -1c
+.RI "\fBView\fP * \fBasymmetric_unit_views\fP (\fBBsymmetry\fP &sym, double theta_step, double phi_step, double alpha_step, int flag)"
+.br
+.ti -1c
+.RI "\fBView\fP * \fBside_views\fP (\fBBsymmetry\fP &sym, double side_ang, double theta_step, double phi_step)"
+.br
+.RI "Initializes a set of views around the z-axis for helical projection\&. "
+.ti -1c
+.RI "\fBView\fP * \fBside_views\fP (\fBBsymmetry\fP &sym, double side_ang, double theta_step, double phi_step, double alpha_step)"
+.br
+.ti -1c
+.RI "int \fBchange_views_to_asymmetric_unit\fP (\fBBsymmetry\fP &sym, \fBView\fP *view)"
+.br
+.RI "Change the views to those in the asymmetric unit\&. "
+.ti -1c
+.RI "\fBView\fP \fBfind_asymmetric_unit_view\fP (\fBBsymmetry\fP &sym, \fBView\fP theview)"
+.br
+.RI "Finds the corresponding view in the asymmetric unit\&. "
+.ti -1c
+.RI "\fBView\fP \fBfind_closest_symmetric_view\fP (\fBBsymmetry\fP &sym, \fBView\fP view_ref, \fBView\fP view)"
+.br
+.RI "Finds the closest symmetric match between two views\&. "
+.ti -1c
+.RI "\fBView\fP * \fBreference_asymmetric_unit_views\fP (\fBBsymmetry\fP &sym)"
+.br
+.RI "Returns a reference view for each asymmetric unit\&. "
+.ti -1c
+.RI "\fBView\fP \fBrandom_symmetric_view\fP (\fBView\fP &asu_view, \fBBsymmetry\fP &sym)"
+.br
+.RI "Returns a randomly picked symmetry view\&. "
+.ti -1c
+.RI "int \fBtest_asymmetric_unit_view\fP (\fBView\fP theview, \fBBsymmetry\fP &sym)"
+.br
+.RI "Returns an asymmetric unit index number\&. "
+.ti -1c
+.RI "int \fBsym_show_matrices\fP (\fBBsymmetry\fP &sym)"
+.br
+.RI "Show symmetry matrices\&. "
+.ti -1c
+.RI "int \fBsym_show_operational_matrices\fP (\fBBsymmetry\fP &sym)"
+.br
+.RI "Show symmetry matrices associated with each symmetry operator\&. "
+.ti -1c
+.RI "int \fBsym_show_pdb_matrices\fP (\fBBsymmetry\fP &sym)"
+.br
+.RI "Show PDB format symmetry matrices associated with each symmetry operator\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for general symmetry functions\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010420 
+.PP
+Modified: 20210116 
+.RE
+.PP
+
+.PP
+Definition in file \fBsymmetry\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _Bsymmetry_"
+
+.PP
+Definition at line 131 of file symmetry\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBView\fP* asymmetric_unit_views (\fBBsymmetry\fP & sym, double theta_step, double phi_step, double alpha_step, int flag)"
+
+.PP
+Definition at line 548 of file symmetry\&.cpp\&.
+.SS "\fBView\fP* asymmetric_unit_views (\fBBsymmetry\fP & sym, double theta_step, double phi_step, int flag)"
+
+.PP
+Initializes a well-distributed set of views in an asymmetric unit\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&sym\fP symmetry structure\&. 
+.br
+\fItheta_step\fP angular step size from primary symmetry axis (radians)\&. 
+.br
+\fIphi_step\fP angular step size around primary symmetry axis (radians)\&. 
+.br
+\fIflag\fP flag for generating a full asymmetric unit (default 0=half)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+View* a linked list of views\&. 
+.PP
+.nf
+A set of views is calculated with tesselation within each asymmetric
+unit such that the views are well-distributed.
+If the full flag is set, both halves of the asymmetric unit are covered.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 380 of file symmetry\&.cpp\&.
+.SS "int change_views_to_asymmetric_unit (\fBBsymmetry\fP & sym, \fBView\fP * view)"
+
+.PP
+Change the views to those in the asymmetric unit\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&sym\fP symmetry structure\&. 
+.br
+\fI*view\fP list of views (replaced)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The view is replaced with the one in the standard asymmetric unit.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 636 of file symmetry\&.cpp\&.
+.SS "\fBView\fP find_asymmetric_unit_view (\fBBsymmetry\fP & sym, \fBView\fP theview)"
+
+.PP
+Finds the corresponding view in the asymmetric unit\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&sym\fP symmetry structure\&. 
+.br
+\fItheview\fP view\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBView\fP the asymmetric unit view\&. 
+.PP
+.nf
+The asymmetric unit view is found and the the new view with the 
+link from the old view is returned.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 658 of file symmetry\&.cpp\&.
+.SS "\fBView\fP find_closest_symmetric_view (\fBBsymmetry\fP & sym, \fBView\fP view_ref, \fBView\fP view)"
+
+.PP
+Finds the closest symmetric match between two views\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&sym\fP symmetry structure\&. 
+.br
+\fIview_ref\fP reference view\&. 
+.br
+\fIview\fP test view\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBView\fP matched symmetric version of test view\&. 
+.PP
+.nf
+A list of symmetry-related views of the test view is searched
+for the closest to the reference view.
+The matched view is returned.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 741 of file symmetry\&.cpp\&.
+.SS "\fBView\fP random_symmetric_view (\fBView\fP & asu_view, \fBBsymmetry\fP & sym)"
+
+.PP
+Returns a randomly picked symmetry view\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&asu_view\fP asymmetric unit view\&. 
+.br
+\fI&sym\fP symmetry structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBView\fP picked view\&. 
+.RE
+.PP
+
+.PP
+Definition at line 813 of file symmetry\&.cpp\&.
+.SS "\fBView\fP* reference_asymmetric_unit_views (\fBBsymmetry\fP & sym)"
+
+.PP
+Returns a reference view for each asymmetric unit\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&sym\fP symmetry structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+View* reference views\&. 
+.RE
+.PP
+
+.PP
+Definition at line 774 of file symmetry\&.cpp\&.
+.SS "\fBView\fP* side_views (\fBBsymmetry\fP & sym, double side_ang, double theta_step, double phi_step)"
+
+.PP
+Initializes a set of views around the z-axis for helical projection\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&sym\fP symmetry structure\&. 
+.br
+\fIside_ang\fP starting angle (radians)\&. 
+.br
+\fItheta_step\fP angular step size perpendicular to equator (radians)\&. 
+.br
+\fIphi_step\fP angular step size around equator (radians)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+View* a set of 4-value views\&. 
+.PP
+.nf
+A set of views is calculated corresponding to views around the z-axis
+including some tilting to account for oblique views.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 571 of file symmetry\&.cpp\&.
+.SS "\fBView\fP* side_views (\fBBsymmetry\fP & sym, double side_ang, double theta_step, double phi_step, double alpha_step)"
+
+.PP
+Definition at line 616 of file symmetry\&.cpp\&.
+.SS "int sym_show_matrices (\fBBsymmetry\fP & sym)"
+
+.PP
+Show symmetry matrices\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&sym\fP symmetry structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of symmetry matrices\&. 
+.RE
+.PP
+
+.PP
+Definition at line 863 of file symmetry\&.cpp\&.
+.SS "int sym_show_operational_matrices (\fBBsymmetry\fP & sym)"
+
+.PP
+Show symmetry matrices associated with each symmetry operator\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&sym\fP symmetry structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of symmetry matrices\&. 
+.RE
+.PP
+
+.PP
+Definition at line 883 of file symmetry\&.cpp\&.
+.SS "int sym_show_pdb_matrices (\fBBsymmetry\fP & sym)"
+
+.PP
+Show PDB format symmetry matrices associated with each symmetry operator\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&sym\fP symmetry structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of symmetry matrices\&. 
+.RE
+.PP
+
+.PP
+Definition at line 902 of file symmetry\&.cpp\&.
+.SS "vector<\fBMatrix3\fP> symmetry_get_all_matrices (\fBBsymmetry\fP & sym)"
+
+.PP
+Get all symmetry-related views of one given view\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&sym\fP symmetry structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<Matrix3> array of matrices\&. 
+.PP
+.nf
+The number of views generated for a point group symmetry is
+calculated as the product of the order fields in the symmetry
+structure.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 348 of file symmetry\&.cpp\&.
+.SS "\fBView\fP* symmetry_get_all_views (\fBBsymmetry\fP & sym, \fBView\fP * views)"
+
+.PP
+Definition at line 321 of file symmetry\&.cpp\&.
+.SS "\fBView\fP* symmetry_get_all_views (\fBBsymmetry\fP & sym, \fBView\fP asu_view)"
+
+.PP
+Get all symmetry-related views of one given view\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&sym\fP symmetry structure\&. 
+.br
+\fIasu_view\fP asymmetric unit vector and rotation angle\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+View* linked list of views\&. 
+.PP
+.nf
+The number of views generated for a point group symmetry is
+calculated as the product of the order fields in the symmetry
+structure.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 277 of file symmetry\&.cpp\&.
+.SS "vector<\fBVector3\fP<double> > symmetry_get_axes (\fBBsymmetry\fP & sym)"
+
+.PP
+Get all symmetry axes\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&sym\fP symmetry structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<\fBVector3<double>\fP> array of axes\&. 
+.RE
+.PP
+
+.PP
+Definition at line 213 of file symmetry\&.cpp\&.
+.SS "string symmetry_helical_label (double helix_rise, double helix_angle, int dyad_axis, int cyclic, double seam_shift)"
+
+.PP
+Returns the label for helical symmetry\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIhelix_rise\fP helical rise (angstroms)\&. 
+.br
+\fIhelix_angle\fP helical rotation angle (radians)\&. 
+.br
+\fIdyad_axis\fP presence of dyad axis (1/2)\&. 
+.br
+\fIcyclic\fP cyclic symmetry\&. 
+.br
+\fIseam_shift\fP fractional shift for seamed helices\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+string label\&. 
+.PP
+.nf
+Thge symmetry order is defined as the product of all the individual
+orders of the symmetry operations, or alternatively, the number of views.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 133 of file symmetry\&.cpp\&.
+.SS "\fBMatrix3\fP symmetry_rotate_to_axis (\fBBsymmetry\fP & sym, long axis, long axis_flag)"
+
+.PP
+Rotation matrix to orient a symmetry axis on the z axis\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&sym\fP symmetry structure\&. 
+.br
+\fIaxis\fP desired symmetry axis order\&. 
+.br
+\fIaxis_flag\fP view modifier\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBMatrix3\fP new rotation matrix\&. 
+.RE
+.PP
+
+.PP
+Definition at line 182 of file symmetry\&.cpp\&.
+.SS "int test_asymmetric_unit_view (\fBView\fP theview, \fBBsymmetry\fP & sym)"
+
+.PP
+Returns an asymmetric unit index number\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fItheview\fP view to test\&. 
+.br
+\fI&sym\fP symmetry structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int view number\&. 
+.RE
+.PP
+
+.PP
+Definition at line 837 of file symmetry\&.cpp\&.
+.SS "\fBView\fP view_symmetry_reference (\fBBsymmetry\fP & sym)"
+
+.PP
+Returns an asymmetric unit reference point\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&sym\fP symmetry structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBView\fP reference view\&. 
+.RE
+.PP
+
+.PP
+Definition at line 150 of file symmetry\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

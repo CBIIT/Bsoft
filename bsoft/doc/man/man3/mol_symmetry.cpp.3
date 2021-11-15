@@ -1,0 +1,393 @@
+.TH "/Users/bernard/b20/bsoft/src/mol/mol_symmetry.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mol/mol_symmetry.cpp \- Library routines used for symmetry operations on atomic coordinates\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmolecule\&.h'\fP
+.br
+\fC#include 'rwatomprop\&.h'\fP
+.br
+\fC#include 'rwresprop\&.h'\fP
+.br
+\fC#include 'mol_compare\&.h'\fP
+.br
+\fC#include 'mol_symmetry\&.h'\fP
+.br
+\fC#include 'mol_transform\&.h'\fP
+.br
+\fC#include 'mol_util\&.h'\fP
+.br
+\fC#include 'seq_align\&.h'\fP
+.br
+\fC#include 'Matrix3\&.h'\fP
+.br
+\fC#include 'matrix_linear\&.h'\fP
+.br
+\fC#include 'symmetry\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include <fstream>\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBMassCOM\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmolgroup_apply_point_group\fP (\fBBmolgroup\fP *molgroup, \fBBsymmetry\fP &sym, \fBView\fP ref_view)"
+.br
+.RI "Generates all symmetry-related coordinates\&. "
+.ti -1c
+.RI "int \fBmolgroup_generate_helix\fP (\fBBmolgroup\fP *molgroup, \fBView\fP ref_view, double helix_rise, double helix_angle, int gen_down, int gen_up)"
+.br
+.RI "Generates a helix from the given parameters\&. "
+.ti -1c
+.RI "int \fBmolgroup_apply_symmetry_from_pdb\fP (\fBBmolgroup\fP *molgroup, \fBBstring\fP &filename)"
+.br
+.RI "Generates all symmetry-related coordinates using PDB file matrices\&. "
+.ti -1c
+.RI "int \fBmolgroup_apply_matrices_from_pdb\fP (\fBBmolgroup\fP *molgroup, \fBBstring\fP &filename)"
+.br
+.RI "Generates all symmetry-related coordinates using PDB file matrices\&. "
+.ti -1c
+.RI "int \fBmolgroup_find_standard_view\fP (\fBBmolgroup\fP *molgroup, \fBBsymmetry\fP &sym, \fBView\fP ref_view)"
+.br
+.RI "Searches for the standard view based on point group symmetry\&. "
+.ti -1c
+.RI "int \fBmolgroup_orient_to_standard_view\fP (\fBBmolgroup\fP *molgroup, \fBBsymmetry\fP &sym, \fBView\fP ref_view, \fBBresidue_matrix\fP *simat)"
+.br
+.RI "Searches for the standard view based on point group symmetry\&. "
+.ti -1c
+.RI "double \fBmolgroup_symmetry_RMSD\fP (\fBBmolgroup\fP *molgroup, \fBBsymmetry\fP &sym)"
+.br
+.RI "Calculates the RMSD for symmetry in the standard orientation\&. "
+.ti -1c
+.RI "double \fBmolgroup_symmetry_B\fP (\fBBmolgroup\fP *molgroup, \fBBsymmetry\fP &sym)"
+.br
+.RI "Calculates the B factors from symmetry-related molecules\&. "
+.ti -1c
+.RI "int \fBmolgroup_generate_crystal\fP (\fBBmolgroup\fP *molgroup, \fBUnitCell\fP uc, \fBVector3\fP< int > number)"
+.br
+.RI "Generates unit cells from a set of coordinates\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines used for symmetry operations on atomic coordinates\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20021020 
+.PP
+Modified: 20180226 
+.RE
+.PP
+
+.PP
+Definition in file \fBmol_symmetry\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int molgroup_apply_matrices_from_pdb (\fBBmolgroup\fP * molgroup, \fBBstring\fP & filename)"
+
+.PP
+Generates all symmetry-related coordinates using PDB file matrices\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fI&filename\fP PDB file with matrices\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Uses the BIOMT records.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 269 of file mol_symmetry\&.cpp\&.
+.SS "int molgroup_apply_point_group (\fBBmolgroup\fP * molgroup, \fBBsymmetry\fP & sym, \fBView\fP ref_view)"
+
+.PP
+Generates all symmetry-related coordinates\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fI*sym\fP symmetry structure\&. 
+.br
+\fIref_view\fP reference view\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 34 of file mol_symmetry\&.cpp\&.
+.SS "int molgroup_apply_symmetry_from_pdb (\fBBmolgroup\fP * molgroup, \fBBstring\fP & filename)"
+
+.PP
+Generates all symmetry-related coordinates using PDB file matrices\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fI&filename\fP PDB file with matrices\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Uses the SMTRY records.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 199 of file mol_symmetry\&.cpp\&.
+.SS "int molgroup_find_standard_view (\fBBmolgroup\fP * molgroup, \fBBsymmetry\fP & sym, \fBView\fP ref_view)"
+
+.PP
+Searches for the standard view based on point group symmetry\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fI*sym\fP point group symmetry\&. 
+.br
+\fIref_view\fP reference view\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The molecule group is first analyzed to identify the different
+chains and calculate their centers-of-mass and weights.
+The overall center-of-mass defines a point on at least the
+major symmetry axis (cyclic symmetries), or the likely intersection
+of symmetry axes.
+Note: This function does a reasonable job of orienting the molecule
+group, but it may be off by up to an angstrom!!!
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 365 of file mol_symmetry\&.cpp\&.
+.SS "int molgroup_generate_crystal (\fBBmolgroup\fP * molgroup, \fBUnitCell\fP uc, \fBVector3\fP< int > number)"
+
+.PP
+Generates unit cells from a set of coordinates\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fIuc\fP unit cell dimensions\&. 
+.br
+\fInumber\fP number of unit cells in each lattice direction\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 if error\&. 
+.PP
+.nf
+The input molecule group is duplicated to generate the requested number
+of copies in each lattice direction.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 959 of file mol_symmetry\&.cpp\&.
+.SS "int molgroup_generate_helix (\fBBmolgroup\fP * molgroup, \fBView\fP ref_view, double helix_rise, double helix_angle, int gen_down, int gen_up)"
+
+.PP
+Generates a helix from the given parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIref_view\fP reference view\&. 
+.br
+\fIhelix_rise\fP helical rise\&. 
+.br
+\fIhelix_angle\fP helical rotation angle\&. 
+.br
+\fIgen_down\fP number of asymmetric units generated upwards\&. 
+.br
+\fIgen_up\fP number of asymmetric units generated downwards\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 134 of file mol_symmetry\&.cpp\&.
+.SS "int molgroup_orient_to_standard_view (\fBBmolgroup\fP * molgroup, \fBBsymmetry\fP & sym, \fBView\fP ref_view, \fBBresidue_matrix\fP * simat)"
+
+.PP
+Searches for the standard view based on point group symmetry\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fI*sym\fP point group symmetry\&. 
+.br
+\fIref_view\fP reference view (default should be 0,0,1,0)\&. 
+.br
+\fI*simat\fP residue similarity matrix\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Each pair of chains in the molecule groupis tested for sequence
+identity to find symmetry-related molecules. For each pair of matched
+molecules, the transformation to superimpose the one onto the other
+is determined and the symmetry axis and translation calculated.
+The collection of symmetry axes are clustered with a k-means 
+algorithm and the predominant class assigned to the major 
+symmetry axis. For dihedral point groups, a minor axis is also
+assigned (randomly at this time). The molecule group is then
+transformed to orient it with the major axis on {0,0,1} and
+the minor axis on {1,0,0}, and the symmetry center at {0,0,0}.
+Note: This function has not been extensively tested with all
+point groups!!!
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 606 of file mol_symmetry\&.cpp\&.
+.SS "double molgroup_symmetry_B (\fBBmolgroup\fP * molgroup, \fBBsymmetry\fP & sym)"
+
+.PP
+Calculates the B factors from symmetry-related molecules\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fI*sym\fP point group symmetry\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double RMSD\&. 
+.PP
+.nf
+The centers-of-mass for all the molecules are calculated as a reduced
+representation of the molecule group. All symmetry operations are 
+imposed on the centers, with the RMSD defined as minimum distance
+between an original cneter and a transformed center.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 877 of file mol_symmetry\&.cpp\&.
+.SS "double molgroup_symmetry_RMSD (\fBBmolgroup\fP * molgroup, \fBBsymmetry\fP & sym)"
+
+.PP
+Calculates the RMSD for symmetry in the standard orientation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fI*sym\fP point group symmetry\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double RMSD\&. 
+.PP
+.nf
+The centers-of-mass for all the molecules are calculated as a reduced
+representation of the molecule group. All symmetry operations are 
+imposed on the centers, with the RMSD defined as minimum distance
+between an original cneter and a transformed center.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 824 of file mol_symmetry\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,191 @@
+.TH "/Users/bernard/b20/bsoft/src/rwparam/rwatomprop.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/rwparam/rwatomprop.cpp \- Library routines to read and write atom properties\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwatomprop\&.h'\fP
+.br
+\fC#include 'star\&.h'\fP
+.br
+\fC#include 'mol_tags\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBatom_type\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBatomtype\fP * \fBread_atom_prop_star\fP (\fBBstring\fP &filename)"
+.br
+.ti -1c
+.RI "int \fBwrite_atom_prop_star\fP (\fBBstring\fP &filename, \fBBatomtype\fP *at_first)"
+.br
+.ti -1c
+.RI "\fBBatomtype\fP * \fBget_atom_properties\fP (\fBBstring\fP &filename)"
+.br
+.RI "Reading atomic properties from parameter files\&. "
+.ti -1c
+.RI "int \fBwrite_atom_properties\fP (\fBBstring\fP &filename, \fBBatomtype\fP *at)"
+.br
+.RI "Writing atomic properties from parameter files\&. "
+.ti -1c
+.RI "\fBBatomtype\fP * \fBatom_type_add\fP (\fBBatomtype\fP **atype, const char *aname)"
+.br
+.RI "Adds an atom type structure to a linked list\&. "
+.ti -1c
+.RI "int \fBatom_type_kill\fP (\fBBatomtype\fP *atype)"
+.br
+.RI "Destroys an atom type\&. "
+.ti -1c
+.RI "map< string, int > \fBatom_type_tags\fP ()"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines to read and write atom properties\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19991114 
+.PP
+Modified: 20210214 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwatomprop\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBatomtype\fP* atom_type_add (\fBBatomtype\fP ** atype, const char * aname)"
+
+.PP
+Adds an atom type structure to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**atype\fP pointer to any atom type in the list\&. 
+.br
+\fI*aname\fP atom type name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Batomtype* new atom type\&. 
+.PP
+.nf
+The function allocates memory for a new atom type structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 143 of file rwatomprop\&.cpp\&.
+.SS "int atom_type_kill (\fBBatomtype\fP * atype)"
+
+.PP
+Destroys an atom type\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIatype\fP the atom type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 176 of file rwatomprop\&.cpp\&.
+.SS "map<string, int> atom_type_tags ()"
+
+.PP
+Definition at line 248 of file rwatomprop\&.cpp\&.
+.SS "\fBBatomtype\fP* get_atom_properties (\fBBstring\fP & filename)"
+
+.PP
+Reading atomic properties from parameter files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name (if empty, use a default file)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Batomtype* atom property structure, NULL on failure\&. 
+.RE
+.PP
+
+.PP
+Definition at line 46 of file rwatomprop\&.cpp\&.
+.SS "\fBBatomtype\fP * read_atom_prop_star (\fBBstring\fP & filename)"
+
+.PP
+Definition at line 192 of file rwatomprop\&.cpp\&.
+.SS "int write_atom_prop_star (\fBBstring\fP & filename, \fBBatomtype\fP * at_first)"
+
+.PP
+Definition at line 272 of file rwatomprop\&.cpp\&.
+.SS "int write_atom_properties (\fBBstring\fP & filename, \fBBatomtype\fP * at)"
+
+.PP
+Writing atomic properties from parameter files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name\&. 
+.br
+\fI*at\fP the atom property structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 112 of file rwatomprop\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

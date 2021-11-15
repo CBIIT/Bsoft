@@ -1,0 +1,401 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_gal__rico_i_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/radon/gal_ricoI.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/radon/gal_ricoI.cpp</primary></indexterm>
+<programlisting>#include &quot;gal_ricoI.h&quot;
+#include &quot;fft_tool.h&quot;
+#include &quot;Bimage.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_gal__rico_i_8cpp_1a835cb3ee27afd4274e582c3f05edddaf">polcar_f</link> (<link linkend="_class_bimage">Bimage</link> *p, float *pfr, float *pfi, int bordo, int n_radii, int n_theta, <link linkend="_structkernel">kernel</link> *ker, int padd)</para>
+</listitem>
+            <listitem><para>int <link linkend="_gal__rico_i_8cpp_1a10338cd46c94c069909ef6b42cb3cf67">polcart_fourier</link> (float *pfri, float r, float phi, float *val, int bordo, int n_radii, int n_theta, <link linkend="_structkernel">kernel</link> *ker)</para>
+</listitem>
+            <listitem><para>int <link linkend="_gal__rico_i_8cpp_1ad5a3611be8651038896effdda1b61d2f">padding</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bimage">Bimage</link> *ppiano, int z)</para>
+
+<para>Padds an image. </para>
+</listitem>
+            <listitem><para>int <link linkend="_gal__rico_i_8cpp_1a73ffa02fcf35cd3656f8f44e00180d01">copy180</link> (<link linkend="_class_bimage">Bimage</link> *p, float *pfr, float *pfi, int bordo)</para>
+</listitem>
+            <listitem><para>int <link linkend="_gal__rico_i_8cpp_1a7614776036cd3b3bf12f529f5aeac607">shift_phase</link> (<link linkend="_class_bimage">Bimage</link> *p, float npix)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_gal__rico_i_8cpp_1ad00ab6809c1eedcee7339d2788b48df8">gal_ricoI</link> (<link linkend="_class_bimage">Bimage</link> *p, int tipo, <link linkend="_structkernel">kernel</link> *ker, int padd)</para>
+
+<para>Reconstruct an image from a sinogram. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para><formalpara><title>Author</title>
+
+<para>P.L. Bellon, F. Cantele and S. Lanzavecchia Dip. Chimica Strutturale e Stereochimica Inorganica Via Venezian 21, 20133 Milano, Italy </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 7 04 2003 </para>
+
+<para>Modified: 11 08 2011 (BH) </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_gal__rico_i_8cpp_1a73ffa02fcf35cd3656f8f44e00180d01"/>    <section>
+    <title>copy180()</title>
+<indexterm><primary>copy180</primary><secondary>gal_ricoI.cpp</secondary></indexterm>
+<indexterm><primary>gal_ricoI.cpp</primary><secondary>copy180</secondary></indexterm>
+<para><computeroutput>int copy180 (<link linkend="_class_bimage">Bimage</link> * p, float * pfr, float * pfi, int bordo)</computeroutput></para>
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pfr</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pfi</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bordo</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 </para>
+</formalpara>
+</para>
+<para>
+Definition at line 339 of file gal_ricoI.cpp.</para>
+    </section><anchor xml:id="_gal__rico_i_8cpp_1ad00ab6809c1eedcee7339d2788b48df8"/>    <section>
+    <title>gal_ricoI()</title>
+<indexterm><primary>gal_ricoI</primary><secondary>gal_ricoI.cpp</secondary></indexterm>
+<indexterm><primary>gal_ricoI.cpp</primary><secondary>gal_ricoI</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* gal_ricoI (<link linkend="_class_bimage">Bimage</link> * p, int tipo, <link linkend="_structkernel">kernel</link> * ker, int padd)</computeroutput></para><para>
+
+<para>Reconstruct an image from a sinogram. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>parameters of the image </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tipo</entry>
+                                <entry>
+<para>type of reconstruction (can be 1/2/3/4) </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*ker</entry>
+                                <entry>
+<para>table of coefficients for interpolation </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>padd</entry>
+                                <entry>
+<para>use of padding (0/1) </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 <literallayout><computeroutput>float *psource  = sinogram
+float *pdest    = reconstructed image
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 36 of file gal_ricoI.cpp.</para>
+    </section><anchor xml:id="_gal__rico_i_8cpp_1ad5a3611be8651038896effdda1b61d2f"/>    <section>
+    <title>padding()</title>
+<indexterm><primary>padding</primary><secondary>gal_ricoI.cpp</secondary></indexterm>
+<indexterm><primary>gal_ricoI.cpp</primary><secondary>padding</secondary></indexterm>
+<para><computeroutput>int padding (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bimage">Bimage</link> * ppiano, int z)</computeroutput></para><para>
+
+<para>Padds an image. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>starting image parameters </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*ppiano</entry>
+                                <entry>
+<para>padded image </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>z</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 </para>
+</formalpara>
+</para>
+<para>
+Definition at line 307 of file gal_ricoI.cpp.</para>
+    </section><anchor xml:id="_gal__rico_i_8cpp_1a835cb3ee27afd4274e582c3f05edddaf"/>    <section>
+    <title>polcar_f()</title>
+<indexterm><primary>polcar_f</primary><secondary>gal_ricoI.cpp</secondary></indexterm>
+<indexterm><primary>gal_ricoI.cpp</primary><secondary>polcar_f</secondary></indexterm>
+<para><computeroutput>int polcar_f (<link linkend="_class_bimage">Bimage</link> * p, float * pfr, float * pfi, int bordo, int n_radii, int n_theta, <link linkend="_structkernel">kernel</link> * ker, int padd)</computeroutput></para>
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pfr</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pfi</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bordo</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n_radii</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n_theta</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*ker</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>padd</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 </para>
+</formalpara>
+</para>
+<para>
+Definition at line 148 of file gal_ricoI.cpp.</para>
+    </section><anchor xml:id="_gal__rico_i_8cpp_1a10338cd46c94c069909ef6b42cb3cf67"/>    <section>
+    <title>polcart_fourier()</title>
+<indexterm><primary>polcart_fourier</primary><secondary>gal_ricoI.cpp</secondary></indexterm>
+<indexterm><primary>gal_ricoI.cpp</primary><secondary>polcart_fourier</secondary></indexterm>
+<para><computeroutput>int polcart_fourier (float * pfri, float r, float phi, float * val, int bordo, int n_radii, int n_theta, <link linkend="_structkernel">kernel</link> * ker)</computeroutput></para>
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*pfri</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>r</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>phi</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*val</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bordo</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n_radii</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n_theta</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*ker</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 </para>
+</formalpara>
+</para>
+<para>
+Definition at line 227 of file gal_ricoI.cpp.</para>
+    </section><anchor xml:id="_gal__rico_i_8cpp_1a7614776036cd3b3bf12f529f5aeac607"/>    <section>
+    <title>shift_phase()</title>
+<indexterm><primary>shift_phase</primary><secondary>gal_ricoI.cpp</secondary></indexterm>
+<indexterm><primary>gal_ricoI.cpp</primary><secondary>shift_phase</secondary></indexterm>
+<para><computeroutput>int shift_phase (<link linkend="_class_bimage">Bimage</link> * p, float npix)</computeroutput></para>
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>
+<literallayout>&#160;&#xa;</literallayout>
+ </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>npix</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0 </para>
+</formalpara>
+</para>
+<para>
+Definition at line 450 of file gal_ricoI.cpp.</para>
+</section>
+</section>
+</section>

@@ -1,0 +1,1575 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_utilities_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/utilities.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/utilities.h</primary></indexterm>
+<para>
+
+<para>Header file for general utilities. </para>
+ 
+</para>
+<programlisting>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;ctype.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;pwd.h&gt;
+#include &lt;math.h&gt;
+#include &lt;climits&gt;
+#include &lt;cfloat&gt;
+#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+#include &lt;vector&gt;
+#include &lt;map&gt;
+#include &lt;list&gt;
+#include &lt;tuple&gt;
+#include &lt;regex&gt;
+#include &lt;ctime&gt;
+#include &quot;Bstring.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_utilities_8h_1a13ffa6bb97c5ff625e545e3d857dea54">BVERSION</link>   &quot;2.1.2-20210901&quot;</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a624dbcb8b6ccc24c9bf891c174f60b6d">MAXLINELEN</link>   1024</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a94db60a8c6b329c43f817a719955506d">SMALLFLOAT</link>   1e-30</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a293097e02ca4aa345a5caa230e43b7b6">MIN_SIZE_FOR_THREADING</link>   100000</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a26aa63a7d2161cbdc28b534bea848682">TRIGPRECISION</link>   1e-30</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1abbf43217eff86526797a20fbcfc928d2">PLANCK</link>   6.626070E-34</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a2d5f31d124b93521f06b9aa59478e51b">ECHARGE</link>   1.602177E-19</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1afdc69024e9eb87600e91c9b73580ced9">EMASS</link>   9.109384E-31</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1adb62b9aad32043fd8f39af9289dbb1c3">LIGHTSPEED</link>   299792458</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a29763ca81b8e5a8c64dac560ade56b66">AVOGADRO</link>   6.02214076e23</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1ae71449b1cc6e6250b91f539153a7a0d3">M_PI</link>   3.14159265358979323846264338327950288</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a958e4508ed28ee5cc04249144312c15f">M_PI_2</link>   1.57079632679489661923132169163975144</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1aeb24420b096a677f3a2dc5a72b36bf22">M_PI_4</link>   0.785398163397448309615660845819875721</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a4912c64aec0c943b7985db6cb61ff83a">TWOPI</link>   6.28318530717958647692528676655900576</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a09f536d176198e15b1ac79cf0d3497f6">MIN2PI</link>   -6.28318530717958647692528676655900576</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1abf4911a8ffb4bc4d26e0b5bbd37dfb4a">GOLDEN</link>   1.61803398874989484820458683436563811772</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a3bf4402b9e2ae88e4462c3689f5d22b8">RHO</link>   0.81</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1aef4858460a89a7c1858275da34a562e4">VERB_NONE</link>   0</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1adfa4d2d92f64f6a3447062034986eb04">VERB_RESULT</link>   1</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a0472bdfea57c833b4eaba94f1ee0b781">VERB_LABEL</link>   2</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a3ec4c8077243973556b13ff308e3b93e">VERB_PROCESS</link>   4</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a0cc807e742c0bae57df8f27192e31071">VERB_STATS</link>   8</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a7a792b864363d93aa719ee663b140f16">VERB_FULL</link>   16</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a644d95c7a1fa60cc647179a390196c9b">VERB_TIME</link>   32</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a2a5a361c4d8c811b0d1122ff2704d019">VERB_MEMORY</link>   64</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a65f0019f3f7f7b04cd45d68f60afe385">VERB_DEBUG</link>   128</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a832aeed4c9f53f2fd2e041d8de9d4e77">VERB_DEBUG_STAR</link>   256</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a1a38f5236ab050a23b204287c35acfd1">VERB_DEBUG_XML</link>   512</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a54121dc499147faee7a6aea6da0ab389">VERB_DEBUG_DM</link>   1024</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a1f878beda70c7b35cc6127de2e961034">VERB_DEBUG_ND2</link>   2048</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a445b307864720d8de35700bce7269d2c">VERB_DEBUG_EER</link>   4096</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a4feef126b496a550a29cebd57a4ccd6d">_systype_</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a3ff494b0a094d2e931afe746dab06519">_datatype_</link></para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1ae8a4ca63176786d1254d05591419ba9c">FILL_USER</link>   0</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1aac4d97846d9b1dce850d8ce219db5cdc">FILL_AVERAGE</link>   1</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a6b301ccaed341f95b57a16b6f97d8ffa">FILL_BACKGROUND</link>   2</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a32405a6749f31603e7bd9b89d42dcca4">FILL_MIN</link>   3</para>
+</listitem>
+            <listitem><para>#define <link linkend="_utilities_8h_1a6872709e1a4dbf58b844c3fcd5c2f6ee">FILL_MAX</link>   4</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Enumerations    </title>
+        <itemizedlist>
+            <listitem><para>enum <link linkend="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbb">SysType</link> { 
+<link linkend="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbba69b49402c0f7a2bf381cd32f33f80db9">Unknown_System</link> = 0
+, <link linkend="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbba7410b128e2677be4b0d19daa7da5f52f">BigIEEE</link> = 1
+, <link linkend="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbbadca8f5fadc1419f7a78ccb8060d389c4">BigOther</link> = 5
+, <link linkend="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbba41d23f7bdb58dee49639b7f424954d1a">LittleIEEE</link> = 6
+, 
+<link linkend="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbbae79995bbd727bc73f36fb3b5201c2273">LittleAlpha</link> = 7
+, <link linkend="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbba54fd1e68b37aec846800c7d3e132b336">LittleVAX</link> = 8
+, <link linkend="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbbab293da8a4ce8acc6f37b568a9aa6039c">LittleOther</link> = 10
+ }</para>
+</listitem>
+            <listitem><para>enum <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> { 
+<link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6a5b7cef32fac76f796039ed7eeec0cdcc">Unknown_Type</link> = 0
+, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6ab02f2a968aa23e50bbc4ca39abc454f0">Bit</link> = 1
+, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6a5e92d32301c87c8da2699f0845956b29">UCharacter</link> = 2
+, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6a3d19d5aa639923b8655491f48b29ba1d">SCharacter</link> = 3
+, 
+<link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6ac43fe1561fc9b1fe7b68f3dbe423cd64">UShort</link> = 4
+, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6af5a4874501b800b316e5817874430c98">Short</link> = 5
+, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6a55f132e1d9cb3e377a1ff69568fd6db7">UInteger</link> = 6
+, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6a1e2f89e867cd91c3de2ea9fbd2ef96a3">Integer</link> = 7
+, 
+<link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6a66b5421ed5aba83dff3a07738df7e595">ULong</link> = 8
+, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6afbe5087b942deaaa3202c7ca87dbc327">Long</link> = 9
+, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6ad67b0ee7230dcecb610254e4e5e589cd">Float</link> = 10
+, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6afb7825ebed9ad96348ee8588d84db633">Double</link> = 11
+ }</para>
+
+<para>Base data type specifier. </para>
+</listitem>
+            <listitem><para>enum <link linkend="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36">CompoundType</link> { 
+<link linkend="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36ad83a0f556634bd31d3357be2a64aac4c">TSimple</link> = 0
+, <link linkend="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36a5698f6783737000ae6f3a20769f59749">TComplex</link> = 1
+, <link linkend="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36a38dc2d7a94e3f45c2f1f19e4336fc95e">TVector2</link> = 2
+, <link linkend="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36a9d1539b7c3e3ba1c8af42e768e61024d">TVector3</link> = 3
+, 
+<link linkend="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36a277e462a5c31ac284cdaf903b1427b89">TView</link> = 4
+, <link linkend="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36a8a7a8c855ddcb08760dab8196cd15794">TRGB</link> = 10
+, <link linkend="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36a498e7653bc584ade150493c37b6e5e1e">TRGBA</link> = 11
+, <link linkend="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36acba56a013b1b32be509f46e5cbeeb3b0">TCMYK</link> = 12
+, 
+<link linkend="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36a0d5cbbb1c86409469d249a4ab16c9445">TMulti</link> = 99
+ }</para>
+
+<para>Compound data type specifier. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>ostream &amp; <link linkend="_utilities_8h_1a243b53ba9107e16b3efffbe709b86085">tab</link> (ostream &amp;out)</para>
+</listitem>
+            <listitem><para>int <link linkend="_utilities_8h_1ae62313715baf7b0990a14b502f1d6b4e">cmd_line</link> (int argc, char **argv)</para>
+
+<para>Reconstructs the command line as a global string. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="_utilities_8h_1aa5de384cb068cdbf98d10d50f9804c2b">command_line</link> ()</para>
+
+<para>Returns the command line. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="_utilities_8h_1af1f14352f65e090846fa6cc295788b12">command_line_time</link> ()</para>
+
+<para>Returns the command line and time in a string. </para>
+</listitem>
+            <listitem><para>string <link linkend="_utilities_8h_1a52b3ca0c3657a351b6fb3a5360f9f63e">command_line_time2</link> ()</para>
+</listitem>
+            <listitem><para>string <link linkend="_utilities_8h_1a2efd376c8a64ca818f2c92f6e2d62375">get_user_name</link> ()</para>
+
+<para>Returns the user name. </para>
+</listitem>
+            <listitem><para>void <link linkend="_utilities_8h_1a366b9704328c9f204b3d5897503f8708">usage</link> (const char **<link linkend="_radonrecon_8cpp_1a4de0ad4c7190962494815c0fa7f948df">use</link>, int all)</para>
+
+<para>Prints usage information. </para>
+</listitem>
+            <listitem><para><link linkend="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbb">SysType</link> <link linkend="_utilities_8h_1a9ac4942a801cba6db2f907825ef4a696">systype</link> (int <link linkend="_rw_d_m_8cpp_1ae83c07067345faf98c959261a0b7db76">show</link>)</para>
+
+<para>Finds the system type - mostly just for byte order. </para>
+</listitem>
+            <listitem><para>size_t <link linkend="_utilities_8h_1a39b498f28c097b80429eb9c361f0a637">system_processors</link> ()</para>
+
+<para>Returns the number of processors. </para>
+</listitem>
+            <listitem><para>long <link linkend="_utilities_8h_1a90fbedc21a67ff579833f619bb473995">system_memory</link> ()</para>
+
+<para>Returns system memory size. </para>
+</listitem>
+            <listitem><para>int <link linkend="_utilities_8h_1aaf41c334d1cd13e11119ccde7b63a073">memory_check</link> (long mem_required)</para>
+
+<para>Checking if there is enough memory, abort if not. </para>
+</listitem>
+            <listitem><para>int <link linkend="_utilities_8h_1ab9a53ea733d8033e6ccad6a0b8095453">bexit</link> (int value)</para>
+
+<para>Exit function for cleanup and debugging. </para>
+</listitem>
+            <listitem><para><link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> <link linkend="_utilities_8h_1a0e606782a14674bc9b3338da472a588f">getdatatype</link> (char letter)</para>
+
+<para>Get the data type indicated by a single letter code. </para>
+</listitem>
+            <listitem><para><link linkend="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36">CompoundType</link> <link linkend="_utilities_8h_1a577dbbcccf0321901e85aa6b0408f79e">getcompoundtype</link> (int ch, string sct)</para>
+
+<para>Get the compound type indicated by a single letter code. </para>
+</listitem>
+            <listitem><para>int <link linkend="_utilities_8h_1a2cb74dc7bef6703101f5ca23dbba59c0">select_numbers</link> (<link linkend="_class_bstring">Bstring</link> &amp;string, int n, int *numsel)</para>
+
+<para>Converts a string with a selection specification into an integer array. </para>
+</listitem>
+            <listitem><para>vector&lt; int &gt; <link linkend="_utilities_8h_1a829f8cdab5dbe300108058c49d943c8a">select_numbers</link> (<link linkend="_class_bstring">Bstring</link> &amp;string, int n)</para>
+</listitem>
+            <listitem><para>int <link linkend="_utilities_8h_1afc053aac8944e3aa1ea02def8da506ea">findNextPowerOf</link> (int startNumber, int powerOf)</para>
+
+<para>Finds the next greatest number that is a power of a given number. </para>
+</listitem>
+            <listitem><para>int <link linkend="_utilities_8h_1a2b98846966eadf25319b2cfd57d4b6ee">get_integer</link> (char *ptr, int len)</para>
+
+<para>Converts a defined length string into an integer. </para>
+</listitem>
+            <listitem><para>float <link linkend="_utilities_8h_1a415347fff30989a17d8d299e7a380437">get_float</link> (char *ptr, int len)</para>
+
+<para>Converts a defined length string into a floating point number. </para>
+</listitem>
+            <listitem><para>void <link linkend="_utilities_8h_1a7c34c09caa6db2e95277e55583b9533d">swapbytes</link> (unsigned char *v, size_t n)</para>
+
+<para>Swaps bytes. </para>
+</listitem>
+            <listitem><para>void <link linkend="_utilities_8h_1af70965545c734c39ab096b9a49614cde">swapbytes</link> (size_t size, unsigned char *v, size_t n)</para>
+
+<para>Swaps bytes. </para>
+</listitem>
+            <listitem><para>void <link linkend="_utilities_8h_1aee0a3ad13b1f4046d15263b078080de8">vax2ieee</link> (unsigned char *v, int <link linkend="_rw_d_m_8cpp_1a7f7475c3cffaf702ef2766959df86817">sb</link>)</para>
+
+<para>Converts VAX floating point format to IEEE floating point format. </para>
+</listitem>
+            <listitem><para>double <link linkend="_utilities_8h_1a0d4492f03ef8ece5d6bf2160ce56a111">angle_set_negPI_to_PI</link> (double <link linkend="__vector3_8h_1a4d0ad562e2f2e87c018fe778805aa3cf">angle</link>)</para>
+
+<para>Returns an angle between -PI and PI. </para>
+</listitem>
+            <listitem><para>float <link linkend="_utilities_8h_1a25bcf9d23423dc2026c422332f201f63">remove_negative_zeros</link> (float value0, float threshold)</para>
+
+<para>Prevent a negative sign from being placed in front of zero value in a text file. </para>
+</listitem>
+            <listitem><para>size_t <link linkend="_utilities_8h_1a3a23ba078cc651f239970dda0a79d83d">get_chunk_size</link> (size_t datasize)</para>
+
+<para>Returns the chunk size per thread. </para>
+</listitem>
+            <listitem><para>size_t <link linkend="_utilities_8h_1a9bb8465a554840ccd5d9d872d5d414f2">get_chunk_size</link> (size_t datasize, size_t c)</para>
+
+<para>Returns the chunk size per thread. </para>
+</listitem>
+            <listitem><para>int <link linkend="_utilities_8h_1aebc2f92a4d3a1bdd0b7cfd48b2f1c64f">error_show</link> (string message, string file, int line)</para>
+
+<para>Displays the error with file and line reference. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for general utilities. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19990722 </para>
+
+<para>Modified: 20210721 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_utilities_8h_1a3ff494b0a094d2e931afe746dab06519"/>    <section>
+    <title>_datatype_</title>
+<indexterm><primary>_datatype_</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>_datatype_</secondary></indexterm>
+<para><computeroutput>#define _datatype_</computeroutput></para><para>
+Definition at line 188 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a4feef126b496a550a29cebd57a4ccd6d"/>    <section>
+    <title>_systype_</title>
+<indexterm><primary>_systype_</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>_systype_</secondary></indexterm>
+<para><computeroutput>#define _systype_</computeroutput></para><para>
+Definition at line 145 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a29763ca81b8e5a8c64dac560ade56b66"/>    <section>
+    <title>AVOGADRO</title>
+<indexterm><primary>AVOGADRO</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>AVOGADRO</secondary></indexterm>
+<para><computeroutput>#define AVOGADRO   6.02214076e23</computeroutput></para><para>
+Definition at line 58 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a13ffa6bb97c5ff625e545e3d857dea54"/>    <section>
+    <title>BVERSION</title>
+<indexterm><primary>BVERSION</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>BVERSION</secondary></indexterm>
+<para><computeroutput>#define BVERSION   &quot;2.1.2-20210901&quot;</computeroutput></para><para>
+Definition at line 9 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a2d5f31d124b93521f06b9aa59478e51b"/>    <section>
+    <title>ECHARGE</title>
+<indexterm><primary>ECHARGE</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>ECHARGE</secondary></indexterm>
+<para><computeroutput>#define ECHARGE   1.602177E-19</computeroutput></para><para>
+Definition at line 55 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1afdc69024e9eb87600e91c9b73580ced9"/>    <section>
+    <title>EMASS</title>
+<indexterm><primary>EMASS</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>EMASS</secondary></indexterm>
+<para><computeroutput>#define EMASS   9.109384E-31</computeroutput></para><para>
+Definition at line 56 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1aac4d97846d9b1dce850d8ce219db5cdc"/>    <section>
+    <title>FILL_AVERAGE</title>
+<indexterm><primary>FILL_AVERAGE</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>FILL_AVERAGE</secondary></indexterm>
+<para><computeroutput>#define FILL_AVERAGE   1</computeroutput></para><para>
+Definition at line 201 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a6b301ccaed341f95b57a16b6f97d8ffa"/>    <section>
+    <title>FILL_BACKGROUND</title>
+<indexterm><primary>FILL_BACKGROUND</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>FILL_BACKGROUND</secondary></indexterm>
+<para><computeroutput>#define FILL_BACKGROUND   2</computeroutput></para><para>
+Definition at line 202 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a6872709e1a4dbf58b844c3fcd5c2f6ee"/>    <section>
+    <title>FILL_MAX</title>
+<indexterm><primary>FILL_MAX</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>FILL_MAX</secondary></indexterm>
+<para><computeroutput>#define FILL_MAX   4</computeroutput></para><para>
+Definition at line 204 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a32405a6749f31603e7bd9b89d42dcca4"/>    <section>
+    <title>FILL_MIN</title>
+<indexterm><primary>FILL_MIN</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>FILL_MIN</secondary></indexterm>
+<para><computeroutput>#define FILL_MIN   3</computeroutput></para><para>
+Definition at line 203 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1ae8a4ca63176786d1254d05591419ba9c"/>    <section>
+    <title>FILL_USER</title>
+<indexterm><primary>FILL_USER</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>FILL_USER</secondary></indexterm>
+<para><computeroutput>#define FILL_USER   0</computeroutput></para><para>
+Definition at line 200 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1abf4911a8ffb4bc4d26e0b5bbd37dfb4a"/>    <section>
+    <title>GOLDEN</title>
+<indexterm><primary>GOLDEN</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>GOLDEN</secondary></indexterm>
+<para><computeroutput>#define GOLDEN   1.61803398874989484820458683436563811772</computeroutput></para><para>
+Definition at line 88 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1adb62b9aad32043fd8f39af9289dbb1c3"/>    <section>
+    <title>LIGHTSPEED</title>
+<indexterm><primary>LIGHTSPEED</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>LIGHTSPEED</secondary></indexterm>
+<para><computeroutput>#define LIGHTSPEED   299792458</computeroutput></para><para>
+Definition at line 57 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1ae71449b1cc6e6250b91f539153a7a0d3"/>    <section>
+    <title>M_PI</title>
+<indexterm><primary>M_PI</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>M_PI</secondary></indexterm>
+<para><computeroutput>#define M_PI   3.14159265358979323846264338327950288</computeroutput></para><para>
+Definition at line 66 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a958e4508ed28ee5cc04249144312c15f"/>    <section>
+    <title>M_PI_2</title>
+<indexterm><primary>M_PI_2</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>M_PI_2</secondary></indexterm>
+<para><computeroutput>#define M_PI_2   1.57079632679489661923132169163975144</computeroutput></para><para>
+Definition at line 69 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1aeb24420b096a677f3a2dc5a72b36bf22"/>    <section>
+    <title>M_PI_4</title>
+<indexterm><primary>M_PI_4</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>M_PI_4</secondary></indexterm>
+<para><computeroutput>#define M_PI_4   0.785398163397448309615660845819875721</computeroutput></para><para>
+Definition at line 72 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a624dbcb8b6ccc24c9bf891c174f60b6d"/>    <section>
+    <title>MAXLINELEN</title>
+<indexterm><primary>MAXLINELEN</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>MAXLINELEN</secondary></indexterm>
+<para><computeroutput>#define MAXLINELEN   1024</computeroutput></para><para>
+Definition at line 48 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a09f536d176198e15b1ac79cf0d3497f6"/>    <section>
+    <title>MIN2PI</title>
+<indexterm><primary>MIN2PI</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>MIN2PI</secondary></indexterm>
+<para><computeroutput>#define MIN2PI   -6.28318530717958647692528676655900576</computeroutput></para><para>
+Definition at line 78 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a293097e02ca4aa345a5caa230e43b7b6"/>    <section>
+    <title>MIN_SIZE_FOR_THREADING</title>
+<indexterm><primary>MIN_SIZE_FOR_THREADING</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>MIN_SIZE_FOR_THREADING</secondary></indexterm>
+<para><computeroutput>#define MIN_SIZE_FOR_THREADING   100000</computeroutput></para><para>
+Definition at line 50 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1abbf43217eff86526797a20fbcfc928d2"/>    <section>
+    <title>PLANCK</title>
+<indexterm><primary>PLANCK</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>PLANCK</secondary></indexterm>
+<para><computeroutput>#define PLANCK   6.626070E-34</computeroutput></para><para>
+Definition at line 54 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a3bf4402b9e2ae88e4462c3689f5d22b8"/>    <section>
+    <title>RHO</title>
+<indexterm><primary>RHO</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>RHO</secondary></indexterm>
+<para><computeroutput>#define RHO   0.81</computeroutput></para><para>
+Definition at line 98 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a94db60a8c6b329c43f817a719955506d"/>    <section>
+    <title>SMALLFLOAT</title>
+<indexterm><primary>SMALLFLOAT</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>SMALLFLOAT</secondary></indexterm>
+<para><computeroutput>#define SMALLFLOAT   1e-30</computeroutput></para><para>
+Definition at line 49 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a26aa63a7d2161cbdc28b534bea848682"/>    <section>
+    <title>TRIGPRECISION</title>
+<indexterm><primary>TRIGPRECISION</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>TRIGPRECISION</secondary></indexterm>
+<para><computeroutput>#define TRIGPRECISION   1e-30</computeroutput></para><para>
+Definition at line 51 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a4912c64aec0c943b7985db6cb61ff83a"/>    <section>
+    <title>TWOPI</title>
+<indexterm><primary>TWOPI</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>TWOPI</secondary></indexterm>
+<para><computeroutput>#define TWOPI   6.28318530717958647692528676655900576</computeroutput></para><para>
+Definition at line 75 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a65f0019f3f7f7b04cd45d68f60afe385"/>    <section>
+    <title>VERB_DEBUG</title>
+<indexterm><primary>VERB_DEBUG</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>VERB_DEBUG</secondary></indexterm>
+<para><computeroutput>#define VERB_DEBUG   128</computeroutput></para><para>
+Definition at line 119 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a54121dc499147faee7a6aea6da0ab389"/>    <section>
+    <title>VERB_DEBUG_DM</title>
+<indexterm><primary>VERB_DEBUG_DM</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>VERB_DEBUG_DM</secondary></indexterm>
+<para><computeroutput>#define VERB_DEBUG_DM   1024</computeroutput></para><para>
+Definition at line 122 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a445b307864720d8de35700bce7269d2c"/>    <section>
+    <title>VERB_DEBUG_EER</title>
+<indexterm><primary>VERB_DEBUG_EER</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>VERB_DEBUG_EER</secondary></indexterm>
+<para><computeroutput>#define VERB_DEBUG_EER   4096</computeroutput></para><para>
+Definition at line 124 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a1f878beda70c7b35cc6127de2e961034"/>    <section>
+    <title>VERB_DEBUG_ND2</title>
+<indexterm><primary>VERB_DEBUG_ND2</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>VERB_DEBUG_ND2</secondary></indexterm>
+<para><computeroutput>#define VERB_DEBUG_ND2   2048</computeroutput></para><para>
+Definition at line 123 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a832aeed4c9f53f2fd2e041d8de9d4e77"/>    <section>
+    <title>VERB_DEBUG_STAR</title>
+<indexterm><primary>VERB_DEBUG_STAR</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>VERB_DEBUG_STAR</secondary></indexterm>
+<para><computeroutput>#define VERB_DEBUG_STAR   256</computeroutput></para><para>
+Definition at line 120 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a1a38f5236ab050a23b204287c35acfd1"/>    <section>
+    <title>VERB_DEBUG_XML</title>
+<indexterm><primary>VERB_DEBUG_XML</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>VERB_DEBUG_XML</secondary></indexterm>
+<para><computeroutput>#define VERB_DEBUG_XML   512</computeroutput></para><para>
+Definition at line 121 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a7a792b864363d93aa719ee663b140f16"/>    <section>
+    <title>VERB_FULL</title>
+<indexterm><primary>VERB_FULL</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>VERB_FULL</secondary></indexterm>
+<para><computeroutput>#define VERB_FULL   16</computeroutput></para><para>
+Definition at line 116 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a0472bdfea57c833b4eaba94f1ee0b781"/>    <section>
+    <title>VERB_LABEL</title>
+<indexterm><primary>VERB_LABEL</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>VERB_LABEL</secondary></indexterm>
+<para><computeroutput>#define VERB_LABEL   2</computeroutput></para><para>
+Definition at line 113 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a2a5a361c4d8c811b0d1122ff2704d019"/>    <section>
+    <title>VERB_MEMORY</title>
+<indexterm><primary>VERB_MEMORY</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>VERB_MEMORY</secondary></indexterm>
+<para><computeroutput>#define VERB_MEMORY   64</computeroutput></para><para>
+Definition at line 118 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1aef4858460a89a7c1858275da34a562e4"/>    <section>
+    <title>VERB_NONE</title>
+<indexterm><primary>VERB_NONE</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>VERB_NONE</secondary></indexterm>
+<para><computeroutput>#define VERB_NONE   0</computeroutput></para><para>
+Definition at line 111 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a3ec4c8077243973556b13ff308e3b93e"/>    <section>
+    <title>VERB_PROCESS</title>
+<indexterm><primary>VERB_PROCESS</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>VERB_PROCESS</secondary></indexterm>
+<para><computeroutput>#define VERB_PROCESS   4</computeroutput></para><para>
+Definition at line 114 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1adfa4d2d92f64f6a3447062034986eb04"/>    <section>
+    <title>VERB_RESULT</title>
+<indexterm><primary>VERB_RESULT</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>VERB_RESULT</secondary></indexterm>
+<para><computeroutput>#define VERB_RESULT   1</computeroutput></para><para>
+Definition at line 112 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a0cc807e742c0bae57df8f27192e31071"/>    <section>
+    <title>VERB_STATS</title>
+<indexterm><primary>VERB_STATS</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>VERB_STATS</secondary></indexterm>
+<para><computeroutput>#define VERB_STATS   8</computeroutput></para><para>
+Definition at line 115 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a644d95c7a1fa60cc647179a390196c9b"/>    <section>
+    <title>VERB_TIME</title>
+<indexterm><primary>VERB_TIME</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>VERB_TIME</secondary></indexterm>
+<para><computeroutput>#define VERB_TIME   32</computeroutput></para><para>
+Definition at line 117 of file utilities.h.</para>
+</section>
+</section>
+<section>
+<title>Enumeration Type Documentation</title>
+<anchor xml:id="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36"/>    <section>
+    <title>CompoundType</title>
+<indexterm><primary>CompoundType</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>CompoundType</secondary></indexterm>
+<para><computeroutput>enum <link linkend="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36">CompoundType</link></computeroutput></para><para>
+
+<para>Compound data type specifier. </para>
+</para>
+
+<para><literallayout><computeroutput>This determines what compound data type is used in an image.
+</computeroutput></literallayout> </para>
+<informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>TSimple</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>TSimple</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36ad83a0f556634bd31d3357be2a64aac4c"/>TSimple</entry><entry></entry></row><row><entry><indexterm><primary>TComplex</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>TComplex</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36a5698f6783737000ae6f3a20769f59749"/>TComplex</entry><entry></entry></row><row><entry><indexterm><primary>TVector2</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>TVector2</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36a38dc2d7a94e3f45c2f1f19e4336fc95e"/>TVector2</entry><entry></entry></row><row><entry><indexterm><primary>TVector3</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>TVector3</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36a9d1539b7c3e3ba1c8af42e768e61024d"/>TVector3</entry><entry></entry></row><row><entry><indexterm><primary>TView</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>TView</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36a277e462a5c31ac284cdaf903b1427b89"/>TView</entry><entry></entry></row><row><entry><indexterm><primary>TRGB</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>TRGB</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36a8a7a8c855ddcb08760dab8196cd15794"/>TRGB</entry><entry></entry></row><row><entry><indexterm><primary>TRGBA</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>TRGBA</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36a498e7653bc584ade150493c37b6e5e1e"/>TRGBA</entry><entry></entry></row><row><entry><indexterm><primary>TCMYK</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>TCMYK</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36acba56a013b1b32be509f46e5cbeeb3b0"/>TCMYK</entry><entry></entry></row><row><entry><indexterm><primary>TMulti</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>TMulti</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36a0d5cbbb1c86409469d249a4ab16c9445"/>TMulti</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 176 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6"/>    <section>
+    <title>DataType</title>
+<indexterm><primary>DataType</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>DataType</secondary></indexterm>
+<para><computeroutput>enum <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link></computeroutput></para><para>
+
+<para>Base data type specifier. </para>
+</para>
+
+<para><literallayout><computeroutput>This determines what simple data type is used in an image.
+</computeroutput></literallayout> </para>
+<informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>Unknown_Type</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>Unknown_Type</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6a5b7cef32fac76f796039ed7eeec0cdcc"/>Unknown_Type</entry><entry></entry></row><row><entry><indexterm><primary>Bit</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>Bit</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6ab02f2a968aa23e50bbc4ca39abc454f0"/>Bit</entry><entry></entry></row><row><entry><indexterm><primary>UCharacter</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>UCharacter</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6a5e92d32301c87c8da2699f0845956b29"/>UCharacter</entry><entry></entry></row><row><entry><indexterm><primary>SCharacter</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>SCharacter</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6a3d19d5aa639923b8655491f48b29ba1d"/>SCharacter</entry><entry></entry></row><row><entry><indexterm><primary>UShort</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>UShort</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6ac43fe1561fc9b1fe7b68f3dbe423cd64"/>UShort</entry><entry></entry></row><row><entry><indexterm><primary>Short</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>Short</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6af5a4874501b800b316e5817874430c98"/>Short</entry><entry></entry></row><row><entry><indexterm><primary>UInteger</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>UInteger</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6a55f132e1d9cb3e377a1ff69568fd6db7"/>UInteger</entry><entry></entry></row><row><entry><indexterm><primary>Integer</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>Integer</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6a1e2f89e867cd91c3de2ea9fbd2ef96a3"/>Integer</entry><entry></entry></row><row><entry><indexterm><primary>ULong</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>ULong</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6a66b5421ed5aba83dff3a07738df7e595"/>ULong</entry><entry></entry></row><row><entry><indexterm><primary>Long</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>Long</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6afbe5087b942deaaa3202c7ca87dbc327"/>Long</entry><entry></entry></row><row><entry><indexterm><primary>Float</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>Float</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6ad67b0ee7230dcecb610254e4e5e589cd"/>Float</entry><entry></entry></row><row><entry><indexterm><primary>Double</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>Double</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6afb7825ebed9ad96348ee8588d84db633"/>Double</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 155 of file utilities.h.</para>
+    </section><anchor xml:id="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbb"/>    <section>
+    <title>SysType</title>
+<indexterm><primary>SysType</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>SysType</secondary></indexterm>
+<para><computeroutput>enum <link linkend="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbb">SysType</link></computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>Unknown_System</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>Unknown_System</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbba69b49402c0f7a2bf381cd32f33f80db9"/>Unknown_System</entry><entry></entry></row><row><entry><indexterm><primary>BigIEEE</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>BigIEEE</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbba7410b128e2677be4b0d19daa7da5f52f"/>BigIEEE</entry><entry></entry></row><row><entry><indexterm><primary>BigOther</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>BigOther</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbbadca8f5fadc1419f7a78ccb8060d389c4"/>BigOther</entry><entry></entry></row><row><entry><indexterm><primary>LittleIEEE</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>LittleIEEE</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbba41d23f7bdb58dee49639b7f424954d1a"/>LittleIEEE</entry><entry></entry></row><row><entry><indexterm><primary>LittleAlpha</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>LittleAlpha</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbbae79995bbd727bc73f36fb3b5201c2273"/>LittleAlpha</entry><entry></entry></row><row><entry><indexterm><primary>LittleVAX</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>LittleVAX</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbba54fd1e68b37aec846800c7d3e132b336"/>LittleVAX</entry><entry></entry></row><row><entry><indexterm><primary>LittleOther</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>LittleOther</secondary></indexterm>
+<anchor xml:id="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbbab293da8a4ce8acc6f37b568a9aa6039c"/>LittleOther</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 136 of file utilities.h.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_utilities_8h_1a0d4492f03ef8ece5d6bf2160ce56a111"/>    <section>
+    <title>angle_set_negPI_to_PI()</title>
+<indexterm><primary>angle_set_negPI_to_PI</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>angle_set_negPI_to_PI</secondary></indexterm>
+<para><computeroutput>double angle_set_negPI_to_PI (double angle)</computeroutput></para><para>
+
+<para>Returns an angle between -PI and PI. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>angle</entry>
+                                <entry>
+<para>input angle. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double angle between -PI and PI.</para>
+</formalpara>
+Reference: Derived from CCP4 code </para>
+<para>
+Definition at line 607 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1ab9a53ea733d8033e6ccad6a0b8095453"/>    <section>
+    <title>bexit()</title>
+<indexterm><primary>bexit</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>bexit</secondary></indexterm>
+<para><computeroutput>int bexit (int value)</computeroutput></para><para>
+
+<para>Exit function for cleanup and debugging. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>value</entry>
+                                <entry>
+<para>exit value. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int given value. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 294 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1ae62313715baf7b0990a14b502f1d6b4e"/>    <section>
+    <title>cmd_line()</title>
+<indexterm><primary>cmd_line</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>cmd_line</secondary></indexterm>
+<para><computeroutput>int cmd_line (int argc, char ** argv)</computeroutput></para><para>
+
+<para>Reconstructs the command line as a global string. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>argc</entry>
+                                <entry>
+<para>the number of command line arguments. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>**argv</entry>
+                                <entry>
+<para>the command line arguments. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Concatenates the command line arguments into one string.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 36 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1aa5de384cb068cdbf98d10d50f9804c2b"/>    <section>
+    <title>command_line()</title>
+<indexterm><primary>command_line</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>command_line</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> command_line ( )</computeroutput></para><para>
+
+<para>Returns the command line. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para><link linkend="_class_bstring">Bstring</link> new string. <literallayout><computeroutput>This is designed to pack the command line into a string.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 58 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1af1f14352f65e090846fa6cc295788b12"/>    <section>
+    <title>command_line_time()</title>
+<indexterm><primary>command_line_time</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>command_line_time</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> command_line_time ( )</computeroutput></para><para>
+
+<para>Returns the command line and time in a string. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para><link linkend="_class_bstring">Bstring</link> new string. <literallayout><computeroutput>This is designed to pack the command line into a string followed by
+a second string for the time.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 71 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1a52b3ca0c3657a351b6fb3a5360f9f63e"/>    <section>
+    <title>command_line_time2()</title>
+<indexterm><primary>command_line_time2</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>command_line_time2</secondary></indexterm>
+<para><computeroutput>string command_line_time2 ( )</computeroutput></para><para>
+Definition at line 85 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1aebc2f92a4d3a1bdd0b7cfd48b2f1c64f"/>    <section>
+    <title>error_show()</title>
+<indexterm><primary>error_show</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>error_show</secondary></indexterm>
+<para><computeroutput>int error_show (string message, string file, int line)</computeroutput></para><para>
+
+<para>Displays the error with file and line reference. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*message</entry>
+                                <entry>
+<para>a string to be included. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*file</entry>
+                                <entry>
+<para>the file name (should be <emphasis role="bold">FILE</emphasis>). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>line</entry>
+                                <entry>
+<para>the line number (should be <emphasis role="bold">LINE</emphasis>). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error number. <literallayout><computeroutput>The function uses perror() to display a message containing the source
+file and line number where it originated.
+</computeroutput></literallayout> Reference: Derived from CCP4 code </para>
+</formalpara>
+</para>
+<para>
+Definition at line 768 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1afc053aac8944e3aa1ea02def8da506ea"/>    <section>
+    <title>findNextPowerOf()</title>
+<indexterm><primary>findNextPowerOf</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>findNextPowerOf</secondary></indexterm>
+<para><computeroutput>int findNextPowerOf (int startNumber, int powerOf)</computeroutput></para><para>
+
+<para>Finds the next greatest number that is a power of a given number. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Dan Krainak </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>startNumber</entry>
+                                <entry>
+<para>number to begin from. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>powerOf</entry>
+                                <entry>
+<para>power of this number is the number returned. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int the next greatest power (i.e. 128) or 0 on error. <literallayout><computeroutput>Loop through the powerOf variable, multiplying it each successive
+iteration until it is greater than the starting number.
+Eg., the next greatest power of 2 starting at 100 is 128.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 446 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1a3a23ba078cc651f239970dda0a79d83d"/>    <section>
+    <title>get_chunk_size()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>get_chunk_size</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>get_chunk_size</secondary></indexterm>
+<para><computeroutput>size_t get_chunk_size (size_t datasize)</computeroutput></para><para>
+
+<para>Returns the chunk size per thread. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>datasize</entry>
+                                <entry>
+<para>size of data to be divided into chunks. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long chunk size. <literallayout><computeroutput>If multiple processors are used, the chunk size is set to the data size
+divided by the number of processors.
+Otherwise, the chunk size is equal to the data size.
+</computeroutput></literallayout> Reference: Derived from CCP4 code </para>
+</formalpara>
+</para>
+<para>
+Definition at line 658 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1a9bb8465a554840ccd5d9d872d5d414f2"/>    <section>
+    <title>get_chunk_size()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>get_chunk_size</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>get_chunk_size</secondary></indexterm>
+<para><computeroutput>size_t get_chunk_size (size_t datasize, size_t c)</computeroutput></para><para>
+
+<para>Returns the chunk size per thread. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>datasize</entry>
+                                <entry>
+<para>size of data to be divided into chunks. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>c</entry>
+                                <entry>
+<para>channel size to align chunk to. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long chunk size. <literallayout><computeroutput>If multiple processors are used, the chunk size is set to the data size
+divided by the number of processors.
+Otherwise, the chunk size is equal to the data size.
+</computeroutput></literallayout> Reference: Derived from CCP4 code </para>
+</formalpara>
+</para>
+<para>
+Definition at line 692 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1a415347fff30989a17d8d299e7a380437"/>    <section>
+    <title>get_float()</title>
+<indexterm><primary>get_float</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>get_float</secondary></indexterm>
+<para><computeroutput>float get_float (char * ptr, int len)</computeroutput></para><para>
+
+<para>Converts a defined length string into a floating point number. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*ptr</entry>
+                                <entry>
+<para>pointer to the string. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>len</entry>
+                                <entry>
+<para>length to be scanned. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>float the floating point number. <literallayout><computeroutput>The string is copied, 0-terminated, and scanned for a floating point number.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 495 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1a2b98846966eadf25319b2cfd57d4b6ee"/>    <section>
+    <title>get_integer()</title>
+<indexterm><primary>get_integer</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>get_integer</secondary></indexterm>
+<para><computeroutput>int get_integer (char * ptr, int len)</computeroutput></para><para>
+
+<para>Converts a defined length string into an integer. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*ptr</entry>
+                                <entry>
+<para>pointer to the string. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>len</entry>
+                                <entry>
+<para>length to be scanned. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int the integer. <literallayout><computeroutput>The string is copied, 0-terminated, and scanned for an integer.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 472 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1a2efd376c8a64ca818f2c92f6e2d62375"/>    <section>
+    <title>get_user_name()</title>
+<indexterm><primary>get_user_name</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>get_user_name</secondary></indexterm>
+<para><computeroutput>string get_user_name ( )</computeroutput></para><para>
+
+<para>Returns the user name. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para>string user name. <literallayout><computeroutput>It uses getpwuid_r (thread safe) to find the user in the password file.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 106 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1a577dbbcccf0321901e85aa6b0408f79e"/>    <section>
+    <title>getcompoundtype()</title>
+<indexterm><primary>getcompoundtype</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>getcompoundtype</secondary></indexterm>
+<para><computeroutput><link linkend="_utilities_8h_1a768a6f0a6fd7e9087ff7971abbcc3f36">CompoundType</link> getcompoundtype (int ch, string sct)</computeroutput></para><para>
+
+<para>Get the compound type indicated by a single letter code. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>ch</entry>
+                                <entry>
+<para>number of channels. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sct</entry>
+                                <entry>
+<para>string indicating compound type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>CompoundType compound type. <literallayout><computeroutput>This function is used in optional command-line arguments to indicate
+a new compound type for an image.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 345 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1a0e606782a14674bc9b3338da472a588f"/>    <section>
+    <title>getdatatype()</title>
+<indexterm><primary>getdatatype</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>getdatatype</secondary></indexterm>
+<para><computeroutput><link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> getdatatype (char letter)</computeroutput></para><para>
+
+<para>Get the data type indicated by a single letter code. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>letter</entry>
+                                <entry>
+<para>letter indicating data type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>DataType data type. <literallayout><computeroutput>This function is used in optional command-line arguments to indicate 
+a new data type for an image.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 309 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1aaf41c334d1cd13e11119ccde7b63a073"/>    <section>
+    <title>memory_check()</title>
+<indexterm><primary>memory_check</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>memory_check</secondary></indexterm>
+<para><computeroutput>int memory_check (long mem_required)</computeroutput></para><para>
+
+<para>Checking if there is enough memory, abort if not. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>mem_required</entry>
+                                <entry>
+<para>memory required. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 1 if enough. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 269 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1a25bcf9d23423dc2026c422332f201f63"/>    <section>
+    <title>remove_negative_zeros()</title>
+<indexterm><primary>remove_negative_zeros</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>remove_negative_zeros</secondary></indexterm>
+<para><computeroutput>float remove_negative_zeros (float value0, float threshold)</computeroutput></para><para>
+
+<para>Prevent a negative sign from being placed in front of zero value in a text file. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>David Belnap </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>value0</entry>
+                                <entry>
+<para>input value to be tested </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>threshold</entry>
+                                <entry>
+<para>a small negative number </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>float &quot;Corrected&quot; or input value <literallayout><computeroutput>This function is intended to be used when obvious zero values are set
+to a very small negative number.  Input value is set to zero if
+              value0 &gt; threshold  and  value0 &lt; 0
+If so, the value is reset to zero.  Otherwise, the input value is 
+returned.
+</computeroutput></literallayout> Reference: Derived from CCP4 code </para>
+</formalpara>
+</para>
+<para>
+Definition at line 635 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1a829f8cdab5dbe300108058c49d943c8a"/>    <section>
+    <title>select_numbers()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>select_numbers</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>select_numbers</secondary></indexterm>
+<para><computeroutput>vector&lt;int&gt; select_numbers (<link linkend="_class_bstring">Bstring</link> &amp; string, int n)</computeroutput></para><para>
+Definition at line 391 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1a2cb74dc7bef6703101f5ca23dbba59c0"/>    <section>
+    <title>select_numbers()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>select_numbers</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>select_numbers</secondary></indexterm>
+<para><computeroutput>int select_numbers (<link linkend="_class_bstring">Bstring</link> &amp; string, int n, int * numsel)</computeroutput></para><para>
+
+<para>Converts a string with a selection specification into an integer array. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;string</entry>
+                                <entry>
+<para>string. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>length of integer array. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*numsel</entry>
+                                <entry>
+<para>pre-allocated integer array. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of levels. <literallayout><computeroutput>The integer array must be allocated to a length that would accommodate
+the highest number in the selection.
+If the string length is zero, all elements are selected.
+Multiple subsets are separated by colons
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 384 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1af70965545c734c39ab096b9a49614cde"/>    <section>
+    <title>swapbytes()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>swapbytes</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>swapbytes</secondary></indexterm>
+<para><computeroutput>void swapbytes (size_t size, unsigned char * v, size_t n)</computeroutput></para><para>
+
+<para>Swaps bytes. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of the block to be swapped. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*v</entry>
+                                <entry>
+<para>a pointer to the bytes. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>number of bytes to swap. <literallayout><computeroutput>Byte swapping is done in place. 
+</computeroutput></literallayout> </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line 538 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1a7c34c09caa6db2e95277e55583b9533d"/>    <section>
+    <title>swapbytes()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>swapbytes</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>swapbytes</secondary></indexterm>
+<para><computeroutput>void swapbytes (unsigned char * v, size_t n)</computeroutput></para><para>
+
+<para>Swaps bytes. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*v</entry>
+                                <entry>
+<para>a pointer to the bytes. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>number of bytes to swap. <literallayout><computeroutput>Byte swapping is done in place. 
+</computeroutput></literallayout> </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line 517 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1a90fbedc21a67ff579833f619bb473995"/>    <section>
+    <title>system_memory()</title>
+<indexterm><primary>system_memory</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>system_memory</secondary></indexterm>
+<para><computeroutput>long system_memory ( )</computeroutput></para><para>
+
+<para>Returns system memory size. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para>long memory size. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 225 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1a39b498f28c097b80429eb9c361f0a637"/>    <section>
+    <title>system_processors()</title>
+<indexterm><primary>system_processors</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>system_processors</secondary></indexterm>
+<para><computeroutput>size_t system_processors ( )</computeroutput></para><para>
+
+<para>Returns the number of processors. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para>long number of processors. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 207 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1a9ac4942a801cba6db2f907825ef4a696"/>    <section>
+    <title>systype()</title>
+<indexterm><primary>systype</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>systype</secondary></indexterm>
+<para><computeroutput><link linkend="_utilities_8h_1a52efce6fcab4e9924d8ceba1e9d95cbb">SysType</link> systype (int show)</computeroutput></para><para>
+
+<para>Finds the system type - mostly just for byte order. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>show</entry>
+                                <entry>
+<para>a flag to indicate if the result should be shown. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>SysType an enumerated type. <literallayout><computeroutput>Test the byte order of an arbitrary byte sequence by interpreting it as
+an integer or a floating point number.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 165 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1a243b53ba9107e16b3efffbe709b86085"/>    <section>
+    <title>tab()</title>
+<indexterm><primary>tab</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>tab</secondary></indexterm>
+<para><computeroutput>ostream&amp; tab (ostream &amp; out)</computeroutput></para><para>
+Definition at line 22 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1a366b9704328c9f204b3d5897503f8708"/>    <section>
+    <title>usage()</title>
+<indexterm><primary>usage</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>usage</secondary></indexterm>
+<para><computeroutput>void usage (const char ** use, int all)</computeroutput></para><para>
+
+<para>Prints usage information. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**use</entry>
+                                <entry>
+<para>the string array. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>all</entry>
+                                <entry>
+<para>flag to output all usage information. <literallayout><computeroutput>The usage information must be written into an array of srings, with each
+string a line and following a specific convention for the Bsoft package.
+The first line with non-space characters must start with &quot;Usage:&quot; 
+followed by the command-line syntax. The next lines should describe the
+program. The options are indicated by lines strating with &quot;-&quot;.
+The options are categorized as &quot;Actions&quot;, &quot;Parameters&quot;, &quot;Input&quot;,
+and &quot;Output&quot;. This constitutes the brief form.
+An additional section can be added as &quot;Examples&quot;, that is shown
+only when the &quot;all&quot; argument is set.
+</computeroutput></literallayout> </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line 140 of file utilities.cpp.</para>
+    </section><anchor xml:id="_utilities_8h_1aee0a3ad13b1f4046d15263b078080de8"/>    <section>
+    <title>vax2ieee()</title>
+<indexterm><primary>vax2ieee</primary><secondary>utilities.h</secondary></indexterm>
+<indexterm><primary>utilities.h</primary><secondary>vax2ieee</secondary></indexterm>
+<para><computeroutput>void vax2ieee (unsigned char * v, int sb)</computeroutput></para><para>
+
+<para>Converts VAX floating point format to IEEE floating point format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*v</entry>
+                                <entry>
+<para>four-byte array holding the floating point value </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sb</entry>
+                                <entry>
+<para>flag to swap bytes before conversion <literallayout><computeroutput>Swap bytes prior to conversion if the swap flag is set.
+Handle special cases of zero, infinity, NaN or normalized values
+Otherwise assign the new byte values
+</computeroutput></literallayout> Reference: Derived from CCP4 code </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line 561 of file utilities.cpp.</para>
+</section>
+</section>
+</section>

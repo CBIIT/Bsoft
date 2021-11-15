@@ -1,0 +1,1264 @@
+.TH "/Users/bernard/b20/bsoft/include/rwmolecule.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/rwmolecule.h \- Header file for reading reflection files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'UnitCell\&.h'\fP
+.br
+\fC#include 'Vector3\&.h'\fP
+.br
+\fC#include 'Bstring\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBBatom\fP"
+.br
+.ti -1c
+.RI "struct \fBBresidue\fP"
+.br
+.ti -1c
+.RI "struct \fBBsecondary\fP"
+.br
+.ti -1c
+.RI "struct \fBBmolecule\fP"
+.br
+.ti -1c
+.RI "struct \fBBbond\fP"
+.br
+.ti -1c
+.RI "struct \fBBangle\fP"
+.br
+.ti -1c
+.RI "struct \fBBmolgroup\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMAXSEQLEN\fP   1000000"
+.br
+.ti -1c
+.RI "#define \fB_Bmolecule_\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBSecondaryType\fP { \fBRightHandedAlpha\fP = 1, \fBRightHandedOmega\fP = 2, \fBRightHandedPi\fP = 3, \fBRightHandedGamma\fP = 4, \fBRightHanded310\fP = 5, \fBLeftHandedAlpha\fP = 6, \fBLeftHandedOmega\fP = 7, \fBLeftHandedGamma\fP = 8, \fBTwoSevenRibbon\fP = 9, \fBPolyproline\fP = 10, \fBStrand\fP = 11, \fBTurn\fP = 12 }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBmolgroup\fP * \fBmolgroup_init\fP ()"
+.br
+.RI "Initializes and allocates a new molecule group\&. "
+.ti -1c
+.RI "\fBBmolecule\fP * \fBmolecule_add\fP (\fBBmolecule\fP **mol, char *name)"
+.br
+.RI "Adds a molecule to a linked list\&. "
+.ti -1c
+.RI "\fBBmolecule\fP * \fBmolecule_add\fP (\fBBmolecule\fP **mol, \fBBstring\fP &name)"
+.br
+.ti -1c
+.RI "\fBBresidue\fP * \fBresidue_add\fP (\fBBresidue\fP **res, const char *type)"
+.br
+.RI "Adds a residue to a linked list\&. "
+.ti -1c
+.RI "\fBBresidue\fP * \fBresidue_add\fP (\fBBresidue\fP **res, \fBBstring\fP &type)"
+.br
+.ti -1c
+.RI "\fBBatom\fP * \fBatom_add\fP (\fBBatom\fP **atom, const char *type)"
+.br
+.RI "Adds an atom to a linked list\&. "
+.ti -1c
+.RI "\fBBatom\fP * \fBatom_add\fP (\fBBatom\fP **atom, \fBBstring\fP &type)"
+.br
+.ti -1c
+.RI "long \fBresidue_count\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Counts the number of residues in a molecule group\&. "
+.ti -1c
+.RI "long \fBatom_count\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Counts the number of atoms in a molecule group\&. "
+.ti -1c
+.RI "int \fBatom_clean_type\fP (\fBBatom\fP *atom, const char *type)"
+.br
+.RI "Cleans up the type string and assigns an element code to an atom\&. "
+.ti -1c
+.RI "\fBBbond\fP * \fBbond_add\fP (\fBBbond\fP **bond, \fBBatom\fP *atom1, \fBBatom\fP *atom2, double l, double k)"
+.br
+.RI "Adds a bond to a linked list\&. "
+.ti -1c
+.RI "\fBBangle\fP * \fBangle_add\fP (\fBBangle\fP **\fBangle\fP, \fBBatom\fP *atom1, \fBBatom\fP *atom2, \fBBatom\fP *atom3, double a, double k)"
+.br
+.RI "Adds an angle to a linked list\&. "
+.ti -1c
+.RI "int \fBmolgroup_list_kill\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Destroys a molecule group linked list\&. "
+.ti -1c
+.RI "int \fBmolgroup_kill\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Destroys a molecule group\&. "
+.ti -1c
+.RI "int \fBmolecule_kill\fP (\fBBmolecule\fP *mol)"
+.br
+.RI "Destroys a molecule\&. "
+.ti -1c
+.RI "int \fBresidue_kill\fP (\fBBresidue\fP *res)"
+.br
+.RI "Destroys a residue\&. "
+.ti -1c
+.RI "int \fBbond_kill\fP (\fBBbond\fP *bond)"
+.br
+.RI "Dealocates a list of bonds\&. "
+.ti -1c
+.RI "int \fBangle_kill\fP (\fBBangle\fP *\fBangle\fP)"
+.br
+.RI "Dealocates a list of angles\&. "
+.ti -1c
+.RI "\fBBmolgroup\fP * \fBmolgroup_list_copy\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Copies a molecule group list\&. "
+.ti -1c
+.RI "\fBBmolgroup\fP * \fBmolgroup_copy\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Copies a molecule group\&. "
+.ti -1c
+.RI "\fBBmolecule\fP * \fBmolecule_copy\fP (\fBBmolecule\fP *mol)"
+.br
+.RI "Copies a molecule\&. "
+.ti -1c
+.RI "\fBBmolecule\fP * \fBmol_copy_and_add_to_molgroup\fP (\fBBmolgroup\fP *molgroup, \fBBmolecule\fP *mol)"
+.br
+.RI "Copies a molecule and assign to a new pointer in the molgroup\&. "
+.ti -1c
+.RI "\fBBbond\fP * \fBmolgroup_bond_list_copy\fP (\fBBmolgroup\fP *molgroup, \fBBmolgroup\fP *molgroupcopy)"
+.br
+.RI "Copies a bond list\&. "
+.ti -1c
+.RI "int \fBmolgroup_from_molgroup_list\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Converts a molecule group list to a single molecule group\&. "
+.ti -1c
+.RI "\fBBmolgroup\fP * \fBread_molecule\fP (const char *filename, const char *select, const char *paramfile)"
+.br
+.RI "The generalized function for reading molecular files\&. "
+.ti -1c
+.RI "\fBBmolgroup\fP * \fBread_molecule\fP (\fBBstring\fP &filename, \fBBstring\fP &atom_select, \fBBstring\fP &paramfile)"
+.br
+.ti -1c
+.RI "\fBBmolgroup\fP * \fBread_molecule\fP (\fBBstring\fP *\fBfile_list\fP, int set_pbc, \fBVector3\fP< double > box, \fBBstring\fP atom_select, \fBBstring\fP paramfile)"
+.br
+.RI "Reads and catenates multiple molecule files\&. "
+.ti -1c
+.RI "int \fBwrite_molecule\fP (char *filename, \fBBmolgroup\fP *molgroup)"
+.br
+.RI "Writes a molecule group\&. "
+.ti -1c
+.RI "int \fBwrite_molecule\fP (\fBBstring\fP &filename, \fBBmolgroup\fP *molgroup)"
+.br
+.ti -1c
+.RI "int \fBmolgroup_list_write\fP (\fBBstring\fP &filename, \fBBmolgroup\fP *molgroup)"
+.br
+.RI "Writes a molecule group list\&. "
+.ti -1c
+.RI "long \fBmolgroup_count_molecules\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Counts the total number of molecules in a molecule group\&. "
+.ti -1c
+.RI "long \fBmolgroup_count_residues\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Counts the total number of residues in a molecule group\&. "
+.ti -1c
+.RI "long \fBmol_count_residues\fP (\fBBmolecule\fP *mol)"
+.br
+.RI "Counts the total number of residues in a molecule\&. "
+.ti -1c
+.RI "long \fBmolgroup_count_atoms\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Counts the total number of atoms in a molecule group\&. "
+.ti -1c
+.RI "long \fBmol_count_atoms\fP (\fBBmolecule\fP *mol)"
+.br
+.RI "Counts the total number of atoms in a molecule\&. "
+.ti -1c
+.RI "int \fBmolgroup_consolidate_gaps\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Removes redundant gaps from an alignment\&. "
+.ti -1c
+.RI "long \fBmolgroup_stats\fP (\fBBmolgroup\fP *molgroup, int \fBshow\fP)"
+.br
+.RI "Calculates the statistics of a molecule group\&. "
+.ti -1c
+.RI "long \fBmolgroup_stats\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.ti -1c
+.RI "long \fBmol_stats\fP (\fBBmolecule\fP *mol, int \fBshow\fP)"
+.br
+.RI "Calculates the statistics of a molecule\&. "
+.ti -1c
+.RI "long \fBmol_stats\fP (\fBBmolecule\fP *mol)"
+.br
+.ti -1c
+.RI "int \fBmolecule_update_comment\fP (\fBBmolgroup\fP *molgroup, int n, char **strings)"
+.br
+.RI "Puts a set of strings and time in the main comment of a molecule group\&. "
+.ti -1c
+.RI "int \fBmolecule_get_masses\fP (\fBBmolgroup\fP *molgroup, \fBBstring\fP &paramfile)"
+.br
+.RI "Gets atomic masses from a parameter file\&. "
+.ti -1c
+.RI "\fBBbond\fP * \fBmolgroup_bond_list_generate\fP (\fBBmolgroup\fP *molgroup, double maxlength, int wrap)"
+.br
+.RI "Generates a bond list based on atom separation\&. "
+.ti -1c
+.RI "\fBBbond\fP * \fBmol_bond_list_generate\fP (\fBBmolgroup\fP *molgroup, double bondlength, int wrap)"
+.br
+.RI "Generates an intramolecular distance-based bond list\&. "
+.ti -1c
+.RI "int \fBmolecules_to_molgroups\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Converts molecules in a molecule group to individual molecule groups\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for reading reflection files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19980822 
+.PP
+Modified: 20170509 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwmolecule\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _Bmolecule_"
+
+.PP
+Definition at line 193 of file rwmolecule\&.h\&.
+.SS "#define MAXSEQLEN   1000000"
+
+.PP
+Definition at line 14 of file rwmolecule\&.h\&.
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBSecondaryType\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIRightHandedAlpha \fP\fP
+.TP
+\fB\fIRightHandedOmega \fP\fP
+.TP
+\fB\fIRightHandedPi \fP\fP
+.TP
+\fB\fIRightHandedGamma \fP\fP
+.TP
+\fB\fIRightHanded310 \fP\fP
+.TP
+\fB\fILeftHandedAlpha \fP\fP
+.TP
+\fB\fILeftHandedOmega \fP\fP
+.TP
+\fB\fILeftHandedGamma \fP\fP
+.TP
+\fB\fITwoSevenRibbon \fP\fP
+.TP
+\fB\fIPolyproline \fP\fP
+.TP
+\fB\fIStrand \fP\fP
+.TP
+\fB\fITurn \fP\fP
+.PP
+Definition at line 64 of file rwmolecule\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBangle\fP* angle_add (\fBBangle\fP ** angle, \fBBatom\fP * atom1, \fBBatom\fP * atom2, \fBBatom\fP * atom3, double a, double k)"
+
+.PP
+Adds an angle to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**angle\fP pointer to any angle in the list\&. 
+.br
+\fI*atom1\fP atom1 of angle\&. 
+.br
+\fI*atom2\fP atom2 of angle (central atom)\&. 
+.br
+\fI*atom3\fP atom3 of angle\&. 
+.br
+\fIa\fP reference angle\&. 
+.br
+\fIk\fP angle strength\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bangle* new angle\&. 
+.PP
+.nf
+The function allocates memory for a new angle structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 316 of file rwmolecule\&.cpp\&.
+.SS "int angle_kill (\fBBangle\fP * angle)"
+
+.PP
+Dealocates a list of angles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*angle\fP first angle in the list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+All angles downstream are deallocated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 505 of file rwmolecule\&.cpp\&.
+.SS "\fBBatom\fP* atom_add (\fBBatom\fP ** atom, \fBBstring\fP & type)"
+
+.PP
+Definition at line 158 of file rwmolecule\&.cpp\&.
+.SS "\fBBatom\fP* atom_add (\fBBatom\fP ** atom, const char * type)"
+
+.PP
+Adds an atom to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**atom\fP pointer to any atom in the list\&. 
+.br
+\fI*type\fP atom type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Batom* new atom\&. 
+.PP
+.nf
+The function allocates memory for a new atom structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 152 of file rwmolecule\&.cpp\&.
+.SS "int atom_clean_type (\fBBatom\fP * atom, const char * type)"
+
+.PP
+Cleans up the type string and assigns an element code to an atom\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*atom\fP atom\&. 
+.br
+\fI*type\fP atom type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The first two alphanumeric characters of the type string is used to
+determine the element.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 229 of file rwmolecule\&.cpp\&.
+.SS "long atom_count (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Counts the number of atoms in a molecule group\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of atoms\&. 
+.RE
+.PP
+
+.PP
+Definition at line 205 of file rwmolecule\&.cpp\&.
+.SS "\fBBbond\fP* bond_add (\fBBbond\fP ** bond, \fBBatom\fP * atom1, \fBBatom\fP * atom2, double l, double k)"
+
+.PP
+Adds a bond to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**bond\fP pointer to any bond in the list\&. 
+.br
+\fI*atom1\fP atom1 of bond\&. 
+.br
+\fI*atom2\fP atom2 of bond\&. 
+.br
+\fIl\fP reference bond length\&. 
+.br
+\fIk\fP bond strength\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bbond* new bond\&. 
+.PP
+.nf
+The function allocates memory for a new bond structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 273 of file rwmolecule\&.cpp\&.
+.SS "int bond_kill (\fBBbond\fP * bond)"
+
+.PP
+Dealocates a list of bonds\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*bond\fP first bond in the list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+All bonds downstream are deallocated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 484 of file rwmolecule\&.cpp\&.
+.SS "\fBBbond\fP* mol_bond_list_generate (\fBBmolgroup\fP * molgroup, double bondlength, int wrap)"
+
+.PP
+Generates an intramolecular distance-based bond list\&. 
+.PP
+.nf
+This function defines bonds on distance and within molecules.
+If the molecule group already has a bond list, no new bonds are generated. 
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIbondlength\fP maximum bond length\&. 
+.br
+\fIwrap\fP wrap around periodic boundaries if !=0\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bbond* new bond list\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1684 of file rwmolecule\&.cpp\&.
+.SS "\fBBmolecule\fP* mol_copy_and_add_to_molgroup (\fBBmolgroup\fP * molgroup, \fBBmolecule\fP * mol)"
+
+.PP
+Copies a molecule and assign to a new pointer in the molgroup\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.br
+\fI*mol\fP the molecule to be copied\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolecule* the new molecule, NULL if copy failed\&. 
+.PP
+.nf
+Adds a new molecule to the molecule group identical to the given
+molecule and returns a pointer to the new molecule.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 668 of file rwmolecule\&.cpp\&.
+.SS "long mol_count_atoms (\fBBmolecule\fP * mol)"
+
+.PP
+Counts the total number of atoms in a molecule\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol\fP the molecule\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of atoms\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1144 of file rwmolecule\&.cpp\&.
+.SS "long mol_count_residues (\fBBmolecule\fP * mol)"
+
+.PP
+Counts the total number of residues in a molecule\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol\fP the molecule\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of residues\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1110 of file rwmolecule\&.cpp\&.
+.SS "long mol_stats (\fBBmolecule\fP * mol)"
+
+.PP
+Definition at line 1453 of file rwmolecule\&.cpp\&.
+.SS "long mol_stats (\fBBmolecule\fP * mol, int show)"
+
+.PP
+Calculates the statistics of a molecule\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol\fP the molecule\&. 
+.br
+\fIshow\fP flag to show statistics\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of atoms (<0 if writing failed)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1366 of file rwmolecule\&.cpp\&.
+.SS "\fBBmolecule\fP* molecule_add (\fBBmolecule\fP ** mol, \fBBstring\fP & name)"
+
+.PP
+Definition at line 82 of file rwmolecule\&.cpp\&.
+.SS "\fBBmolecule\fP* molecule_add (\fBBmolecule\fP ** mol, char * name)"
+
+.PP
+Adds a molecule to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**mol\fP pointer to any molecule in the list\&. 
+.br
+\fI*name\fP molecule name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolecule* new molecule\&. 
+.PP
+.nf
+The function allocates memory for a new molecule structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 76 of file rwmolecule\&.cpp\&.
+.SS "\fBBmolecule\fP* molecule_copy (\fBBmolecule\fP * mol)"
+
+.PP
+Copies a molecule\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol\fP the molecule to be copied\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolecule* the new molecule, NULL if copy failed\&. 
+.PP
+.nf
+Generates a new molecule with the same structure as the given molecule.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 603 of file rwmolecule\&.cpp\&.
+.SS "int molecule_get_masses (\fBBmolgroup\fP * molgroup, \fBBstring\fP & paramfile)"
+
+.PP
+Gets atomic masses from a parameter file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.br
+\fI&paramfile\fP parameter file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1495 of file rwmolecule\&.cpp\&.
+.SS "int molecule_kill (\fBBmolecule\fP * mol)"
+
+.PP
+Destroys a molecule\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol\fP the molecule\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 421 of file rwmolecule\&.cpp\&.
+.SS "int molecule_update_comment (\fBBmolgroup\fP * molgroup, int n, char ** strings)"
+
+.PP
+Puts a set of strings and time in the main comment of a molecule group\&. 
+.PP
+.nf
+This is designed to pack the command line into a string followed by
+a second string for the time.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.br
+\fIn\fP the number of strings\&. 
+.br
+\fI**strings\fP an array of strings\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int string length of the new comment\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1471 of file rwmolecule\&.cpp\&.
+.SS "int molecules_to_molgroups (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Converts molecules in a molecule group to individual molecule groups\&. 
+.PP
+.nf
+A new linked list of molecule groups is created and the links to the
+individual molecules set. 
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure (modified)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1748 of file rwmolecule\&.cpp\&.
+.SS "\fBBbond\fP* molgroup_bond_list_copy (\fBBmolgroup\fP * molgroup, \fBBmolgroup\fP * molgroupcopy)"
+
+.PP
+Copies a bond list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fI*molgroupcopy\fP molecule group structure to copy bonds to\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bbond* new bond list\&. 
+.PP
+.nf
+A copy of the molecule group bond list is generated and returned. 
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 710 of file rwmolecule\&.cpp\&.
+.SS "\fBBbond\fP* molgroup_bond_list_generate (\fBBmolgroup\fP * molgroup, double maxlength, int wrap)"
+
+.PP
+Generates a bond list based on atom separation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.br
+\fImaxlength\fP maximum bond length\&. 
+.br
+\fIwrap\fP wrap around periodic boundaries if !=0\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bbond* new bond list\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1564 of file rwmolecule\&.cpp\&.
+.SS "int molgroup_consolidate_gaps (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Removes redundant gaps from an alignment\&. 
+.PP
+.nf
+All positions in an alignment with only gaps are removed.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1253 of file rwmolecule\&.cpp\&.
+.SS "\fBBmolgroup\fP* molgroup_copy (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Copies a molecule group\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolgroup* new molecule group\&. 
+.PP
+.nf
+All parts of a molecule group are copied to a completely new structure
+hierarchy, except sequence flag array.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 551 of file rwmolecule\&.cpp\&.
+.SS "long molgroup_count_atoms (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Counts the total number of atoms in a molecule group\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of atoms\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1128 of file rwmolecule\&.cpp\&.
+.SS "long molgroup_count_molecules (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Counts the total number of molecules in a molecule group\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of molecules\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1079 of file rwmolecule\&.cpp\&.
+.SS "long molgroup_count_residues (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Counts the total number of residues in a molecule group\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of residues\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1094 of file rwmolecule\&.cpp\&.
+.SS "int molgroup_from_molgroup_list (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Converts a molecule group list to a single molecule group\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The input molecule group list is replace by a single molecule group. 
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 764 of file rwmolecule\&.cpp\&.
+.SS "\fBBmolgroup\fP* molgroup_init ()"
+
+.PP
+Initializes and allocates a new molecule group\&. 
+.PP
+\fBReturns\fP
+.RS 4
+Bmolgroup* the new molecule group, NULL if initialization failed\&. 
+.PP
+.nf
+The selection string is set to "all".
+The spacegroup is set to 1, the space group string to "P 1".
+The point group is set to "C1".
+The unit cell is set to 1,1,1,90,90,90.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 45 of file rwmolecule\&.cpp\&.
+.SS "int molgroup_kill (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Destroys a molecule group\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 378 of file rwmolecule\&.cpp\&.
+.SS "\fBBmolgroup\fP* molgroup_list_copy (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Copies a molecule group list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolgroup* new molecule group list\&. 
+.PP
+.nf
+All molecule groups are copied to a completely new list.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 526 of file rwmolecule\&.cpp\&.
+.SS "int molgroup_list_kill (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Destroys a molecule group linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group linked list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 351 of file rwmolecule\&.cpp\&.
+.SS "int molgroup_list_write (\fBBstring\fP & filename, \fBBmolgroup\fP * molgroup)"
+
+.PP
+Writes a molecule group list\&. 
+.PP
+.nf
+The output files are numbered if the list constains more than one molecule group.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*filename\fP the file name\&. 
+.br
+\fI*molgroup\fP the molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of molecules written (<0 if writing failed)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1057 of file rwmolecule\&.cpp\&.
+.SS "long molgroup_stats (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Definition at line 1353 of file rwmolecule\&.cpp\&.
+.SS "long molgroup_stats (\fBBmolgroup\fP * molgroup, int show)"
+
+.PP
+Calculates the statistics of a molecule group\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fIshow\fP flag to show statistics\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of molecules (<0 if writing failed)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1300 of file rwmolecule\&.cpp\&.
+.SS "\fBBmolgroup\fP* read_molecule (\fBBstring\fP & filename, \fBBstring\fP & atom_select, \fBBstring\fP & paramfile)"
+
+.PP
+Definition at line 830 of file rwmolecule\&.cpp\&.
+.SS "\fBBmolgroup\fP* read_molecule (\fBBstring\fP * file_list, int set_pbc, \fBVector3\fP< double > box, \fBBstring\fP atom_select, \fBBstring\fP paramfile)"
+
+.PP
+Reads and catenates multiple molecule files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIfile_list\fP list of file names\&. 
+.br
+\fIset_pbc\fP flag to fit within periodic boundaries\&. 
+.br
+\fIbox\fP periodic boundary box\&. 
+.br
+\fIatom_select\fP atomic selection\&. 
+.br
+\fIparamfile\fP atomic parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolgroup* new molecule group\&. 
+.RE
+.PP
+
+.PP
+Definition at line 920 of file rwmolecule\&.cpp\&.
+.SS "\fBBmolgroup\fP* read_molecule (const char * filename, const char * atom_select, const char * paramfile)"
+
+.PP
+The generalized function for reading molecular files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*filename\fP the file name\&. 
+.br
+\fI*atom_select\fP a selection string\&. 
+.br
+\fI*paramfile\fP parameter file name\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolgroup* new molecule group, NULL if reading failed\&. 
+.PP
+.nf
+All sequence and atomic coordinate information is read from a file into
+an internal hierarchy of structures in linked lists:
+    Bmolgroup   molecule group or collection of molecules
+    Bmolecule   linked list of molecules in the group
+    Bresidue    linked list of residues in a molecule
+    Batom       linked list of atoms in a residue
+    Bbond       linked list of bonds in the molecule group
+The selection string is used to select for specific atom types:
+    CA          C-alpha atoms only
+The parameter file is used to load atomic properties, such as mass
+    and charge. The default file is bsoft/parameters/atom_prop.star.
+The input format is based on the file name extension.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 822 of file rwmolecule\&.cpp\&.
+.SS "\fBBresidue\fP* residue_add (\fBBresidue\fP ** res, \fBBstring\fP & type)"
+
+.PP
+Definition at line 119 of file rwmolecule\&.cpp\&.
+.SS "\fBBresidue\fP* residue_add (\fBBresidue\fP ** res, const char * type)"
+
+.PP
+Adds a residue to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**res\fP pointer to any residue in the list\&. 
+.br
+\fI*type\fP residue type\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bresidue* new residue\&. 
+.PP
+.nf
+The function allocates memory for a new residue structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 113 of file rwmolecule\&.cpp\&.
+.SS "long residue_count (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Counts the number of residues in a molecule group\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of residues\&. 
+.RE
+.PP
+
+.PP
+Definition at line 188 of file rwmolecule\&.cpp\&.
+.SS "int residue_kill (\fBBresidue\fP * res)"
+
+.PP
+Destroys a residue\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*res\fP the residue\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 457 of file rwmolecule\&.cpp\&.
+.SS "int write_molecule (\fBBstring\fP & filename, \fBBmolgroup\fP * molgroup)"
+
+.PP
+Definition at line 985 of file rwmolecule\&.cpp\&.
+.SS "int write_molecule (char * filename, \fBBmolgroup\fP * molgroup)"
+
+.PP
+Writes a molecule group\&. 
+.PP
+.nf
+The output format is based on the file name extension.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*filename\fP the file name\&. 
+.br
+\fI*molgroup\fP the molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of molecules written (<0 if writing failed)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 979 of file rwmolecule\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/bsoft.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: 3D Picking</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>3D Single Particle Analysis</h1>
+      <center><img src="3DSPA_flowchart.png" alt="3DSPA" width="495" height="550" /></center>
+      <h2>1. Picking 3D volumes from an image<br />
+      </h2>
+      <p>Go <a href="../bshow/bshow_part.html">here</a> for  picking particles in bshow. The output is a set of particle images and a parameter file with the particle file names and parameters.<br />
+        <br />
+    </p>
+    <h2>2. Preparing for alignment<br />
+      </h2>
+    <p>Alignment requires some information, such as symmetry or a template/reference.</p>
+    <p>Prerequisites:</p>
+    <ul>
+      <li>Template or reference</li>
+      <li>Mask (optional)</li>
+    </ul>
+    <h3> Template</h3>
+    <p> Templates are
+      generally derived from atomic coordinates or other 3D reconstruction
+      techniques (such as traditional SPA). Here it is important to get the
+      sampling correct and consistently encode it into the image headers. The
+      first task is to prepare the reference to the same pixel size and image
+      size as the particles in the extracted volumes, and to orient it
+      correctly according to its symmetry. This is a topic for another
+      tutorial and I'll assume this has already been done with the reference.<br />
+    </p>
+    <h3>Reciprocal space mask</h3>
+    <p>The program <b>bfind</b> uses a brute-force cross-correlation search through
+      the asymmetric unit of the reference to find the orientation of an
+      extracted particle. The cross-correlation can be used with a reciprocal
+      space mask, to eliminate the contribution of missing data, such as the
+      missing wedge in the case of tomography. To create such a mask with a
+      size of {70,70,70}, a wedge defined by the tilt axis rotated by 45 degrees from the x-axis, tilt angles {-60,60}, and
+      wrapped around for reciprocal space, use the following:<br />
+    </p>
+    <div id="command"><p>bmissing -v 7 -create 70,70,70 -wedge 45,-60,65 -wrap mask.pif</p></div>
+      <p>Note that the origin of this mask must be {0,0,0}, the default for Fourier transforms.</p>
+    <h2>3. Orientation determination</h2>
+      <p>The orientation of each particle is determined individually because it requires long processing times, depending on the angular step sizes used. This requires the specification of a selected particle in the parameter file referencing the particle image files. A particle can be selected by its reconstruction ID (-recid) and particle number (-image), or by a number in the selection column. The latter is the easiest to do, and all the selected particles in the parameter file can be numbered sequentially:</p>
+      <div id="command"><p>bpartsel -v 1 -sets 1 -output part_selection.star tomo_particles.star</p></div>
+      <p>The orientation of each particle is then determined individually:<br />
+      </p>
+        <div id="command"><p>bfind -v 1  -select 9 -global 2 -mode refine -symmetry D5 -angle 3
+          -resolution 40,200 -Template ref.map -Mask mask.pif -output p10.star tomo_particles.star</p></div>
+      <p>The -global option specifies a global search within the asymmetric unit with a binning kernel of size 2. This is followed by a refinement around the best view without binning. The -angle
+        option gives the angular step size for all 3 Euler angles for the global search only, where alpha is the rotation angle step around the view vector, and phi and
+        theta are calculated to cover the asymmetric unit evenly. The resolution
+        limits (units in angstroms) are imposed to avoid high resolution noise
+      and low resolution features from dominating the cross-correlation. All images must be the same size (template, mask and particles). The output parameter contains the particle orientation and FOM.</p>
+      <p>Additional output options can be used:</p>
+      <p>-particle &lt;file&gt;: this outputs the transformed particle to a new file. The orientation in the parameter file is now set to {0,0,1,0} to indicate it is in the same frame of reference as the template.</p>
+      <p>-newtemplate &lt;file&gt;: this outputs the transformed template to a new file.</p>
+      <p>One set of parameters is obtained for each particle, and the all the parameter files need to be merged into a single parameter file:</p>
+      <div id="command"><p>bpartmulti -v 7 -merge -out tomo_part_aln.star p*.star</p></div>
+      <p>(bfind can also be run specifying the particle image directly, but then care must be taken to provide the correct parameters for the output parameter file)</p>
+    <h2>4. 3D averaging</h2>
+      <p>The program <b>brecadd</b> uses the orientations specified in the parameter file, transforms the particle images, and adds them into an average:</p>
+      <div id="command"><p>brecadd -v 7 -symmetry D5 -out tomo_part_avg.star -average tomo_part_avg.map -fom tomo_part_var.map tomo_part_aln.star</p></div>
+      <p><br />
+      </p>
+</div>
+<div id="footer">
+  Bernard Heymann  20120126
+</div>
+</body>
+</html>

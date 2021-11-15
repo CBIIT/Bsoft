@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__electron_counted_frames_decompressor_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/eer/ElectronCountedFramesDecompressor.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/eer/ElectronCountedFramesDecompressor.h</primary></indexterm>
+<programlisting>#include &lt;fstream&gt;
+#include &lt;vector&gt;
+#include &quot;FeiBitStreamer.h&quot;
+#include &quot;EerFile.h&quot;
+</programlisting><simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_struct_electron_pos">ElectronPos</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_class_electron_counted_frames_decompressor">ElectronCountedFramesDecompressor</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>const unsigned <link linkend="__electron_counted_frames_decompressor_8h_1aaae6da9724b3e034947313043e7dcb3f">nBitsRLE</link> = 7</para>
+</listitem>
+            <listitem><para>const unsigned <link linkend="__electron_counted_frames_decompressor_8h_1a6e566e687534cd464a0182f70c071bf3">nSubPixBits</link> = 2</para>
+</listitem>
+            <listitem><para>const bool <link linkend="__electron_counted_frames_decompressor_8h_1a8c72636a73900e7a660ce469458dbded">no_bit_waste_on_overflow_code</link> = true</para>
+</listitem>
+            <listitem><para>const unsigned <link linkend="__electron_counted_frames_decompressor_8h_1a927f127e8b6b77bb4e5f45c83c09e88f">nBitsPerCode</link> = <link linkend="__electron_counted_frames_decompressor_8h_1aaae6da9724b3e034947313043e7dcb3f">nBitsRLE</link> + 2*<link linkend="__electron_counted_frames_decompressor_8h_1a6e566e687534cd464a0182f70c071bf3">nSubPixBits</link></para>
+</listitem>
+            <listitem><para>const unsigned <link linkend="__electron_counted_frames_decompressor_8h_1a22b4a37f148ddce304a3775a6c64df58">cameraSize</link> = 4096</para>
+</listitem>
+            <listitem><para>const unsigned <link linkend="__electron_counted_frames_decompressor_8h_1a9057ee84c95c321f58b383502c7ad902">superResolutionFactor</link> = (1&lt;&lt;<link linkend="__electron_counted_frames_decompressor_8h_1a6e566e687534cd464a0182f70c071bf3">nSubPixBits</link>)</para>
+</listitem>
+            <listitem><para>const unsigned <link linkend="__electron_counted_frames_decompressor_8h_1ab4fb97659732078d37d3f6c704188f0e">totalSuperResolutionImSize</link> = <link linkend="__electron_counted_frames_decompressor_8h_1a9057ee84c95c321f58b383502c7ad902">superResolutionFactor</link> * <link linkend="__electron_counted_frames_decompressor_8h_1a22b4a37f148ddce304a3775a6c64df58">cameraSize</link></para>
+</listitem>
+            <listitem><para>const unsigned <link linkend="__electron_counted_frames_decompressor_8h_1a380ed223d38e24dbefd5b4c737c6a01c">gainImageSize</link> = 4096</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="__electron_counted_frames_decompressor_8h_1a22b4a37f148ddce304a3775a6c64df58"/>    <section>
+    <title>cameraSize</title>
+<indexterm><primary>cameraSize</primary><secondary>ElectronCountedFramesDecompressor.h</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.h</primary><secondary>cameraSize</secondary></indexterm>
+<para><computeroutput>const unsigned cameraSize = 4096</computeroutput></para><para>
+Definition at line 19 of file ElectronCountedFramesDecompressor.h.</para>
+    </section><anchor xml:id="__electron_counted_frames_decompressor_8h_1a380ed223d38e24dbefd5b4c737c6a01c"/>    <section>
+    <title>gainImageSize</title>
+<indexterm><primary>gainImageSize</primary><secondary>ElectronCountedFramesDecompressor.h</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.h</primary><secondary>gainImageSize</secondary></indexterm>
+<para><computeroutput>const unsigned gainImageSize = 4096</computeroutput></para><para>
+Definition at line 24 of file ElectronCountedFramesDecompressor.h.</para>
+    </section><anchor xml:id="__electron_counted_frames_decompressor_8h_1a927f127e8b6b77bb4e5f45c83c09e88f"/>    <section>
+    <title>nBitsPerCode</title>
+<indexterm><primary>nBitsPerCode</primary><secondary>ElectronCountedFramesDecompressor.h</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.h</primary><secondary>nBitsPerCode</secondary></indexterm>
+<para><computeroutput>const unsigned nBitsPerCode = <link linkend="__electron_counted_frames_decompressor_8h_1aaae6da9724b3e034947313043e7dcb3f">nBitsRLE</link> + 2*<link linkend="__electron_counted_frames_decompressor_8h_1a6e566e687534cd464a0182f70c071bf3">nSubPixBits</link></computeroutput></para><para>
+Definition at line 16 of file ElectronCountedFramesDecompressor.h.</para>
+    </section><anchor xml:id="__electron_counted_frames_decompressor_8h_1aaae6da9724b3e034947313043e7dcb3f"/>    <section>
+    <title>nBitsRLE</title>
+<indexterm><primary>nBitsRLE</primary><secondary>ElectronCountedFramesDecompressor.h</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.h</primary><secondary>nBitsRLE</secondary></indexterm>
+<para><computeroutput>const unsigned nBitsRLE = 7</computeroutput></para><para>
+Definition at line 12 of file ElectronCountedFramesDecompressor.h.</para>
+    </section><anchor xml:id="__electron_counted_frames_decompressor_8h_1a8c72636a73900e7a660ce469458dbded"/>    <section>
+    <title>no_bit_waste_on_overflow_code</title>
+<indexterm><primary>no_bit_waste_on_overflow_code</primary><secondary>ElectronCountedFramesDecompressor.h</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.h</primary><secondary>no_bit_waste_on_overflow_code</secondary></indexterm>
+<para><computeroutput>const bool no_bit_waste_on_overflow_code = true</computeroutput></para><para>
+Definition at line 14 of file ElectronCountedFramesDecompressor.h.</para>
+    </section><anchor xml:id="__electron_counted_frames_decompressor_8h_1a6e566e687534cd464a0182f70c071bf3"/>    <section>
+    <title>nSubPixBits</title>
+<indexterm><primary>nSubPixBits</primary><secondary>ElectronCountedFramesDecompressor.h</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.h</primary><secondary>nSubPixBits</secondary></indexterm>
+<para><computeroutput>const unsigned nSubPixBits = 2</computeroutput></para><para>
+Definition at line 13 of file ElectronCountedFramesDecompressor.h.</para>
+    </section><anchor xml:id="__electron_counted_frames_decompressor_8h_1a9057ee84c95c321f58b383502c7ad902"/>    <section>
+    <title>superResolutionFactor</title>
+<indexterm><primary>superResolutionFactor</primary><secondary>ElectronCountedFramesDecompressor.h</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.h</primary><secondary>superResolutionFactor</secondary></indexterm>
+<para><computeroutput>const unsigned superResolutionFactor = (1&lt;&lt;<link linkend="__electron_counted_frames_decompressor_8h_1a6e566e687534cd464a0182f70c071bf3">nSubPixBits</link>)</computeroutput></para><para>
+Definition at line 20 of file ElectronCountedFramesDecompressor.h.</para>
+    </section><anchor xml:id="__electron_counted_frames_decompressor_8h_1ab4fb97659732078d37d3f6c704188f0e"/>    <section>
+    <title>totalSuperResolutionImSize</title>
+<indexterm><primary>totalSuperResolutionImSize</primary><secondary>ElectronCountedFramesDecompressor.h</secondary></indexterm>
+<indexterm><primary>ElectronCountedFramesDecompressor.h</primary><secondary>totalSuperResolutionImSize</secondary></indexterm>
+<para><computeroutput>const unsigned totalSuperResolutionImSize = <link linkend="__electron_counted_frames_decompressor_8h_1a9057ee84c95c321f58b383502c7ad902">superResolutionFactor</link> * <link linkend="__electron_counted_frames_decompressor_8h_1a22b4a37f148ddce304a3775a6c64df58">cameraSize</link></computeroutput></para><para>
+Definition at line 22 of file ElectronCountedFramesDecompressor.h.</para>
+</section>
+</section>
+</section>

@@ -1,0 +1,263 @@
+#! /bin/bash
+
+# Bsoft top configure script
+# Bernard Heymann
+# 20131205 - 20210716
+
+# --------------------------------------------------------------------------
+# Main directories that can be changed
+# --------------------------------------------------------------------------
+BDIR=`pwd`
+BINSTALL=../../b20install
+BSOFT=$BDIR/bsoft
+LIBFFTW=""
+LIBTIFF=""
+LIBJPEG=""
+LIBPNG=""
+# Example directories for dependencies in other places
+#LIBFFTW=$BDIR/fftw-3.3.5
+#LIBTIFF=$BDIR/tiff-4.0.6
+#LIBJPEG=$BDIR/jpeg-9b
+#LIBPNG=$BDIR/libpng-1.6.24
+# Note that the script looks for the following:
+# $LIBFFTW/api/fftw3.h
+# $LIBTIFF/libtiff/tiff.h
+# $LIBPNG/png.h
+# $LIBJPEG/jpeglib.h
+# --------------------------------------------------------------------------
+
+export PATH=./:$PATH
+
+source dev.rsc
+
+usage()
+{
+    echo "Usage: $0 [arguments]"
+    echo ""
+    echo "Arguments:"
+    echo "\t-h --help"
+    echo "\t--prefix=$BINSTALL"
+    echo "\t--fftw=$LIBFFTW"
+    echo "\t--tiff=$LIBTIFF"
+    echo "\t--jpeg=$LIBJPEG"
+    echo "\t--png=$LIBPNG"
+    echo "\t-c --configure"
+    echo "\tCC"
+   	echo "\tCXX"
+  	echo ""
+}
+
+CONF=0
+
+version=`sed "s/[^0-9]/_/g" bsoft/BVERSION`
+
+echo "bconf: Bsoft $version"
+
+developer_resources
+
+while [ "$1" != "" ]; do
+    PARAM=`echo $1 | awk -F= '{print $1}'`
+    VALUE=`echo $1 | awk -F= '{print $2}'`
+#	echo "param=$PARAM"
+    case $PARAM in
+        -h | --help)
+            usage
+            exit
+            ;;
+        --prefix)
+            BINSTALL=$VALUE
+            ;;
+        --fftw)
+            LIBFFTW=$VALUE
+            ;;
+        --tiff)
+            LIBTIFF=$VALUE
+            ;;
+        --jpeg)
+            LIBJPEG=$VALUE
+            ;;
+        --png)
+            LIBPNG=$VALUE
+            ;;
+        -c | --configure)
+            CONF=1
+            ;;
+        CC)
+            CC=$VALUE
+            ;;
+        CXX)
+            CXX=$VALUE
+            ;;
+        *)
+            echo "ERROR: unknown parameter \"$PARAM\""
+            usage
+            exit 1
+            ;;
+    esac
+    shift
+done
+
+check_dependencies
+
+show_configuration
+
+detect_parallelization
+
+#echo "HAVE_TIFF = $HAVE_TIFF"
+
+#exit
+
+opts=""
+if [ $HAVE_TIFF = 1 ]; then opts="$opts tiff"; fi
+if [ $HAVE_PNG = 1 ]; then opts="$opts png"; fi
+if [ $HAVE_JPEG = 1 ]; then opts="$opts jpeg"; fi
+
+tarfile=bsoft${version}.tar
+tgzfile=bsoft${version}.tgz
+#tarfile=bsoft${today}.tar
+#tgzfile=bsoft${today}.tgz
+
+if [ $CONF = 1 ]; then
+
+	echo "--------------------------------------------------------------------------"
+	echo "Configuring fftw3 in $LIBFFTW"
+	echo "--------------------------------------------------------------------------"
+
+	cd $LIBFFTW
+	if [[ $PAR =~ GCD ]]; then
+		./configure CC=$CC CXX=$CXX --prefix=$LIBFFTW --includedir=$LIBFFTW/include --libdir=$LIBFFTW/lib --enable-float --enable-threads --enable-shared --disable-fortran --with-pic
+	elif [[ $PAR =~ OMP ]]; then
+		./configure CC=$CC CXX=$CXX --prefix=$LIBFFTW --includedir=$LIBFFTW/include --libdir=$LIBFFTW/lib --enable-float --enable-openmp --enable-shared --disable-fortran --with-pic
+	else
+		echo No FFTW3 package found!
+		exit
+	fi
+
+	if [ $HAVE_TIFF = 1 ]; then
+		echo "--------------------------------------------------------------------------"
+		echo "Configuring libtiff in $LIBTIFF"
+		echo "--------------------------------------------------------------------------"
+
+		cd $LIBTIFF
+		./configure CC=$CC CXX=$CXX --prefix=$LIBTIFF --libdir=$LIBTIFF/lib --with-pic=yes --enable-rpath
+	fi
+
+	if [ $HAVE_PNG = 1 ]; then
+		echo "--------------------------------------------------------------------------"
+		echo "Configuring libpng in $LIBPNG"
+		echo "--------------------------------------------------------------------------"
+
+		cd $LIBPNG
+		./configure CC=$CC CXX=$CXX --prefix=$LIBPNG --libdir=$LIBPNG/lib --with-pic=yes
+	fi
+	
+	if [ $HAVE_JPEG = 1 ]; then
+		echo "--------------------------------------------------------------------------"
+		echo "Configuring libjpeg in $LIBJPEG"
+		echo "--------------------------------------------------------------------------"
+
+		cd $LIBJPEG
+		./configure CC=$CC CXX=$CXX --prefix=$LIBJPEG --libdir=$LIBJPEG/lib --with-pic=yes
+	fi
+	
+	echo "--------------------------------------------------------------------------"
+	echo "Configuring Bsoft in $BDIR/bsoft"
+	echo "--------------------------------------------------------------------------"
+
+fi
+
+cd $BSOFT
+./bsoft_conf CC=$CC CXX=$CXX --prefix=$BINSTALL --fftw=$LIBFFTW --tiff=$LIBTIFF --png=$LIBPNG --jpeg=$LIBJPEG
+
+cd $BDIR
+
+#echo "HAVE_TIFF = $HAVE_TIFF"
+
+#exit
+
+
+
+echo "--------------------------------------------------------------------------"
+echo "Composing the top level Makefile"
+echo "--------------------------------------------------------------------------"
+
+mk=Makefile
+
+echo "# Makefile for Bsoft" > $mk
+echo "# "`date` >> $mk
+echo >> $mk
+echo "# Bsoft directory: $BDIR" >> $mk
+echo "# System: $SYS" >> $mk
+echo >> $mk
+
+echo "SHELL = /bin/sh -x" >> $mk
+echo "MAKE = make" >> $mk
+echo >> $mk
+
+echo "# Dependencies" >> $mk
+echo "LIBFFTW=$LIBFFTW" >> $mk
+echo "LIBTIFF=$LIBTIFF" >> $mk
+echo "LIBJPEG=$LIBJPEG" >> $mk
+echo "LIBPNG=$LIBPNG" >> $mk
+echo >> $mk
+
+echo "# Bsoft" >> $mk
+echo "BSOFT=$BSOFT" >> $mk
+echo >> $mk
+
+echo "TARFILE=$tarfile" >> $mk
+echo "TGZFILE=$tgzfile" >> $mk
+echo >> $mk
+
+echo "all: fftw $opts bsoft" >> $mk
+echo >> $mk
+
+echo 'fftw:' >> $mk
+echo '	cd $(LIBFFTW) && $(MAKE) && $(MAKE) install' >>  $mk
+echo >> $mk
+
+echo 'tiff:' >> $mk
+echo '	cd $(LIBTIFF) && $(MAKE) && $(MAKE) install' >>  $mk
+echo >> $mk
+
+echo 'png:' >> $mk
+echo '	cd $(LIBPNG) && $(MAKE) && $(MAKE) install' >>  $mk
+echo >> $mk
+
+echo 'jpeg:' >> $mk
+echo '	cd $(LIBJPEG) && $(MAKE) && $(MAKE) install' >>  $mk
+echo >> $mk
+
+echo 'bsoft:' >> $mk
+echo '	cd $(BSOFT) && $(MAKE)' >>  $mk
+echo >> $mk
+
+echo ".PHONY : fftw $opts bsoft configure install clean tar" >> $mk
+echo >> $mk
+
+echo 'install:' >> $mk
+echo '	cd $(BSOFT) && $(MAKE) install' >>  $mk
+echo >> $mk
+
+echo 'clean:' >> $mk
+echo '	cd $(LIBFFTW) && $(MAKE) clean' >>  $mk
+echo '	cd $(LIBTIFF) && $(MAKE) clean' >>  $mk
+echo '	cd $(LIBPNG) && $(MAKE) clean' >>  $mk
+echo '	cd $(LIBJPEG) && $(MAKE) clean' >>  $mk
+echo '	cd $(BSOFT) && $(MAKE) clean' >>  $mk
+echo >> $mk
+
+echo 'cleanbsoft:' >> $mk
+echo '	cd $(BSOFT) && $(MAKE) clean' >>  $mk
+echo >> $mk
+
+echo 'tar:' >> $mk
+echo '	tar cfv $(TARFILE) bconf bdist.plist bpkg breq.plist btar dev.rsc' >> $mk
+echo '	tar rfv $(TARFILE) bsoft/BVERSION bsoft/bsoft_conf bsoft/benv bsoft/bsetup' >> $mk
+echo '	tar rfv $(TARFILE) bsoft/include/*.h bsoft/src/*.cpp bsoft/src/*/*.cpp' >> $mk
+echo '	tar rfv $(TARFILE) bsoft/tcltk/*.h bsoft/tcltk/*.cpp' >> $mk
+echo '	tar rfv $(TARFILE) bsoft/Brun.app bsoft/Bshow.app bsoft/Scripts' >> $mk
+echo '	tar rfv $(TARFILE) bsoft/parameters bsoft/doc' >> $mk
+echo '	gzip -c $(TARFILE) > $(TGZFILE)' >> $mk
+echo >> $mk
+

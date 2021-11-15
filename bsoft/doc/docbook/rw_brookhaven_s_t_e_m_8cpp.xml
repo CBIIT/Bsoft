@@ -1,0 +1,167 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rw_brookhaven_s_t_e_m_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/rwimg/rwBrookhavenSTEM.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/rwimg/rwBrookhavenSTEM.cpp</primary></indexterm>
+<para>
+
+<para>Functions for reading and writing Brookhaven STEM files. </para>
+ 
+</para>
+<programlisting>#include &quot;rwBrookhavenSTEM.h&quot;
+#include &quot;file_util.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_rw_brookhaven_s_t_e_m_8cpp_1ab731f1fa56c41f29a6e7d9ca1c89f491">LUTSIZE</link>   256</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_brookhaven_s_t_e_m_8cpp_1a4e4ad37224c128ab5ba301bb01434648">img_stem_lut_apply</link> (<link linkend="_class_bimage">Bimage</link> *p, int neg_stain_flag)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_brookhaven_s_t_e_m_8cpp_1a5bdc7beb7d0d87f8702a1412591da02a">readBrookhavenSTEM</link> (<link linkend="_class_bimage">Bimage</link> *p, int readdata)</para>
+
+<para>Reading a BrookhavenSTEM image file format. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_brookhaven_s_t_e_m_8cpp_1a25a225528507424bd187a1045e897acc">writeBrookhavenSTEM</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>Writing a BrookhavenSTEM image file format. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_brookhaven_s_t_e_m_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions for reading and writing Brookhaven STEM files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20050729 </para>
+
+<para>Modified: 20130307 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_rw_brookhaven_s_t_e_m_8cpp_1ab731f1fa56c41f29a6e7d9ca1c89f491"/>    <section>
+    <title>LUTSIZE</title>
+<indexterm><primary>LUTSIZE</primary><secondary>rwBrookhavenSTEM.cpp</secondary></indexterm>
+<indexterm><primary>rwBrookhavenSTEM.cpp</primary><secondary>LUTSIZE</secondary></indexterm>
+<para><computeroutput>#define LUTSIZE   256</computeroutput></para><para>
+Definition at line 16 of file rwBrookhavenSTEM.cpp.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rw_brookhaven_s_t_e_m_8cpp_1a4e4ad37224c128ab5ba301bb01434648"/>    <section>
+    <title>img_stem_lut_apply()</title>
+<indexterm><primary>img_stem_lut_apply</primary><secondary>rwBrookhavenSTEM.cpp</secondary></indexterm>
+<indexterm><primary>rwBrookhavenSTEM.cpp</primary><secondary>img_stem_lut_apply</secondary></indexterm>
+<para><computeroutput>int img_stem_lut_apply (<link linkend="_class_bimage">Bimage</link> * p, int neg_stain_flag)</computeroutput></para><para>
+Definition at line 18 of file rwBrookhavenSTEM.cpp.</para>
+    </section><anchor xml:id="_rw_brookhaven_s_t_e_m_8cpp_1a5bdc7beb7d0d87f8702a1412591da02a"/>    <section>
+    <title>readBrookhavenSTEM()</title>
+<indexterm><primary>readBrookhavenSTEM</primary><secondary>rwBrookhavenSTEM.cpp</secondary></indexterm>
+<indexterm><primary>rwBrookhavenSTEM.cpp</primary><secondary>readBrookhavenSTEM</secondary></indexterm>
+<para><computeroutput>int readBrookhavenSTEM (<link linkend="_class_bimage">Bimage</link> * p, int readdata)</computeroutput></para><para>
+
+<para>Reading a BrookhavenSTEM image file format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>readdata</entry>
+                                <entry>
+<para>flag to activate reading of image data. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). A 2D image format used for the Brookhaven STEM. It has a text header of 4096 bytes (fixed size). The default size is 512x512. File format extension: .dat. Data type: unsigned char. The header specifies the following keywords: SCAN: pixel size in internal units The data is packed into two interleaved channels which are unpacked into two separate images in this function. The first image contains the signal from the LA (large area) detector and the second image contains the signal from either the SA (small area) detector, or the BF (bright field) detector. The data is corrected for signal non-linearity on the fly when read in. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 101 of file rwBrookhavenSTEM.cpp.</para>
+    </section><anchor xml:id="_rw_brookhaven_s_t_e_m_8cpp_1a25a225528507424bd187a1045e897acc"/>    <section>
+    <title>writeBrookhavenSTEM()</title>
+<indexterm><primary>writeBrookhavenSTEM</primary><secondary>rwBrookhavenSTEM.cpp</secondary></indexterm>
+<indexterm><primary>rwBrookhavenSTEM.cpp</primary><secondary>writeBrookhavenSTEM</secondary></indexterm>
+<para><computeroutput>int writeBrookhavenSTEM (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>Writing a BrookhavenSTEM image file format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). A 2D image format used for the Brookhaven STEM. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 188 of file rwBrookhavenSTEM.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_rw_brookhaven_s_t_e_m_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>rwBrookhavenSTEM.cpp</secondary></indexterm>
+<indexterm><primary>rwBrookhavenSTEM.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

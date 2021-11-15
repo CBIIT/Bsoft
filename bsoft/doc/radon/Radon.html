@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Radon transform package</title>
+  <meta name="GENERATOR" content="OpenOffice.org 1.0.1  (Linux)" />
+  <meta name="AUTHOR" content="Bernard Heymann" />
+  <meta name="CREATED" content="20031103;14151300" />
+  <meta name="CHANGED" content="20180109;15382000" />
+</head>
+<body link="#3366ff" vlink="#ff9900" style="color: rgb(255, 255, 255); background-color: rgb(0, 0, 0);"
+ lang="en-US" xml:lang="en-US">
+<h1 align="center"><font color="#ffff00"><i>Radon</i></font></h1>
+<h1 align="center"><img src="ico.rad_part.jpg"
+ alt="Radon slices" name="Immagine1" width="512" height="128" border="0" align="bottom" id="Immagine1" /></h1>
+<p style="margin-bottom: 0cm;" align="center">Salvatore Lanzavecchia,
+Francesca Cantele and Pier Luigi Bellon</p>
+<p style="margin-bottom: 0cm;" align="center">(Dip. Chimica Strutturale
+e Stereochimica Inorganica, Via Venezian 21, 20133 Milano, Italy)</p>
+<p style="margin-bottom: 0cm;" align="center">(email:
+<a href="mailto:Francesca%20Cantele?subject=Radon%20package">francesca.cantele@unimi.it</a>)</p>
+<p style="margin-bottom: 0cm;" align="center">Bernard Heymann</p>
+<p style="margin-bottom: 0cm;" align="center">(Rm 1515, 50 South Dr.,
+NIH, Bethesda, MD, 20892, USA)</p>
+<p style="margin-bottom: 0cm;" align="center">(email: <a href="mailto:bernard_heymann@nih.gov">bernard_heymann@nih.gov</a>)</p>
+<p style="margin-bottom: 0cm;" align="center"><br />
+</p>
+<p style="margin-bottom: 0cm;" align="center">2018-01-09</p>
+<font size="5" color="red"><p><i><b>The Radon package is now fully incorporated into the Bsoft package</b></i></p></font>
+<p><br />
+The Radon package provides the following two programs:<br />
+1)&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <b>radon</b>: Forward and backward Radon
+transformation, and POCS filtering of a Radon transform.<br />
+2)&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; <b>radonrecon</b>: Reconstruction of a Radon
+transform from 2D projection images.</p>
+<br/>
+<h2 style="color: rgb(255, 255, 0);">Usage:</h2>
+<p>Typing the program name only produces a list of options. There are
+defaults for most of the options.<br />
+<br />
+<p>All images must be square
+for 2D and cubic for 3D, with the edges powers of 2. If the image
+size is not a power of 2, it will be resized to the next power of 2.
+A Radon transform is an array of size radii * angles * angles, where
+the radial size (NCOL) is the same as the edge of the image, and the
+number of angles (NTHETA) covers the range 0 - 2*PI. Because half of
+this angular range is redundant, a smaller transform is calculated
+with the number of angles covering 0 - PI equal to the image edge
+size (NTHETA/2 = NCOL).The POCS filter imposes consistency on a Radon
+transform and can be used to fill in missing points.</p>
+<br />
+<h3 style="color: rgb(255, 255, 0);">1) radon</h3>
+<pre>
+	<b>radon</b> [options] input.img output.img
+</pre>
+<p>There are three
+actions defined to do the forward and backward transformations, and
+the POCS filtering. One or more of these actions must be used to get
+output:</p>
+<ol>
+<li>To compute a Radon transform:<br />
+&nbsp;&nbsp;&nbsp;
+radon -v 7 -forward 4 -kernel 11,2 ico.map ico.rad.map<br />
+</li>
+<li>To compute a backward Radon transform:<br />
+&nbsp;&nbsp;&nbsp; radon -v
+7 -backward 4 -kernel 15,4 ico.rad.map ico.img.map<br />
+</li>
+<li>To filter a Radon transform:<br />
+&nbsp;&nbsp;&nbsp; radon -v 7 -pocs
+5,7 -mask ico.mask.map ico.rad.map ico.radf.map<br />
+</li>
+<li>To do all three operations with one command line:<br />
+&nbsp;&nbsp;&nbsp;
+radon -v 7 -for 4 -pocs 10,1 -back 4 -ker 11,2 ico.map
+ico.img.map<br />
+</li>
+</ol>
+<h3 style="color: rgb(255, 255, 0);">2) radonrecon</h3>
+<pre>
+	<b>radonrecon</b> [options] input.star [input.star]
+</pre>
+<p>All the required parameters are
+obtained from the STAR file, including the projection image files
+(with paths). The origins and orientations of the projection images
+must be specified correctly in the STAR file, following the
+conventions in Bsoft. The STAR file also incorporates a mechanism to
+indicate selected projection images, which can be manipulated using
+several Bsoft programs. Symmetry-related views are calculated for
+each projection image when it is incorporated into the
+reconstruction.</p>
+<br />
+<pre>
+	radonrecon -v 7 -origin 32,32,32 -mask ico.mask.map -out out.star -rec ico.rec.map -sym I90 ico.star
+</pre>
+<br />
+<p>A mask image is calculated for the angular coverage
+of orientation space and used to weigh the reconstruction. This image
+can be used with the POCS filter to fill in missing points in the
+reconstruction.</p>
+</p>
+<p>The real space map is then calculated (shown below):</p>
+<pre>
+	radon -v 7 -backward 4 -kernel 15,4 ico.rec.map ico.real.map
+</pre>
+<div style="text-align: center;"><img alt="Reconstruction" src="map.jpg"
+ style="width: 300px; height: 300px;" /><br />
+</div>
+<p><br />
+</p>
+<h2 style="color: rgb(255, 255, 0);">Conventions:</h2>
+<p style="margin-bottom: 0cm;">The conventions in the Radon package
+follow those of the Bsoft package.</p>
+<br />
+<p>Euler angles are defined
+with respect to the view vector {x,y,z} and the rotation angle {a}
+around this vector:</p>
+&nbsp;&nbsp;&nbsp; phi = atan(y, x)<br />
+&nbsp;&nbsp;&nbsp;
+theta = acos(z)<br />
+&nbsp;&nbsp;&nbsp; psi = a - phi<br />
+<br />
+<p>The origin for 2D and 3D images is defined as its offset (in pixels) from
+the first pixel (voxel) in the image array and typically coincides
+with symmetry origin for symmetric objects. Shifts are calculated as
+the difference between the projection image origin and the
+reconstruction origin.</p>
+<br />
+Symmetry notation:</p>
+<table border="1" cellpadding="2" cellspacing="2" width="100%">
+  <tbody>
+    <tr>
+      <td>
+      <p><b>Symmetry </b> </p>      </td>
+      <td>
+      <p><b>Notation </b> </p>      </td>
+      <td>
+      <p><b>Examples</b></p>      </td>
+    </tr>
+    <tr>
+      <td>
+      <p>Cyclic </p>      </td>
+      <td>
+      <p>C&lt;n&gt; </p>      </td>
+      <td>
+      <p>C2, C3, C4 ... </p>      </td>
+    </tr>
+    <tr>
+      <td>
+      <p>Dihedral </p>      </td>
+      <td>
+      <p>D&lt;n&gt; </p>      </td>
+      <td>
+      <p>D2, D3, D4 ... </p>      </td>
+    </tr>
+    <tr>
+      <td>
+      <p>Tetrahedral </p>      </td>
+      <td>
+      <p>T </p>      </td>
+      <td>
+      <p>T</p>      </td>
+    </tr>
+    <tr>
+      <td>
+      <p>Octahedral </p>      </td>
+      <td>
+      <p>O </p>      </td>
+      <td>
+      <p>O</p>      </td>
+    </tr>
+    <tr>
+      <td>
+      <p>Icosahedral </p>      </td>
+      <td>
+      <p>I </p>      </td>
+      <td>
+      <p>I</p>      </td>
+    </tr>
+    <tr>
+      <td>
+      <p>(alternative) </p>      </td>
+      <td>
+      <p>I90</p>      </td>
+      <td valign="top">
+      <p><br />
+      </p>      </td>
+    </tr>
+  </tbody>
+</table>
+<p>The alternative I90 notation for icosahedral objects indicates a
+90 degree rotation of the standard icosahedral view and is adopted by
+some electron microscopy packages.</p>
+<h2 style="color: rgb(255, 255, 0);">References:</h2>
+<p>Lanzavecchia S., Bellon P.L. and Radermacher M. &quot;Fast and
+accurate three dimensional reconstruction from projections with
+random orientations via Radon transforms.&quot; J. Struct. Biol. 128,
+152-164, 1999.</p>
+<p>Lanzavecchia S., Cantele F., Radermacher M. and Bellon P.L.
+&quot;Symmetry embedding in the reconstruction of macromolecular
+assemblies via the discrete Radon transform.&quot; J. Struct. Biol.,
+137, 259-272, 2002.</p>
+<br/>
+<div id="footer">
+  Bernard Heymann 20180109
+</div>
+</body>
+</html>

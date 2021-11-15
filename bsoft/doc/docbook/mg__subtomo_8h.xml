@@ -1,0 +1,658 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__subtomo_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/mg_subtomo.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/mg_subtomo.h</primary></indexterm>
+<para>
+
+<para>Header file for functions finding particles (subtomograms) in a tomogram. </para>
+ 
+</para>
+<programlisting>#include &quot;rwimg.h&quot;
+#include &quot;View.h&quot;
+#include &quot;symmetry.h&quot;
+#include &quot;mg_processing.h&quot;
+</programlisting><simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_struct_sphere">Sphere</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>long <link linkend="_mg__subtomo_8h_1a166ec7a4246c114763304fbc7a9aaa8f">reconstruction_search_subtomo</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bimage">Bimage</link> *ptemp, <link linkend="_class_bimage">Bimage</link> *pmask, <link linkend="_class_bimage">Bimage</link> *pmask2, double alpha_step, double theta_step, double phi_step, double alpha_limit, double thetaphi_limit, double hires, double lores, double shiftlimit, double mindist, double threshold, int maxhits, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; bin, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, int refinepeaks, <link linkend="_class_bstring">Bstring</link> ccmax_file)</para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__subtomo_8h_1aed94993d70e9438aae0febe97e12cd57">reconstruction_refine_subtomo</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bimage">Bimage</link> *ptemp, <link linkend="_class_bimage">Bimage</link> *pmask, <link linkend="_class_bimage">Bimage</link> *pmask2, double alpha_step, double theta_step, double phi_step, double alpha_limit, double thetaphi_limit, double hires, double lores, double shiftlimit, double shiftlimitz, double shiftlimitxy, double mindist, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; bin, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, int iters, int refinepeaks, <link linkend="_class_bstring">Bstring</link> ccmax_file)</para>
+
+<para>Refines the view vectors for particles already in the project. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> * <link linkend="_mg__subtomo_8h_1a695546e14ec860f300edf10b9de34731">img_find_refine_peaks</link> (<link linkend="_class_bimage">Bimage</link> *pcc, <link linkend="_class_view">View</link> view, double shift_limit, double shift_along, double shift_orthogonal, double mindist, double threshold, int maxhits, int refinepeaks)</para>
+
+<para>Finds peaks in an image to the nearest voxel iteratively. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__subtomo_8h_1a30c445b08d271edce06ae0917341c1cb">img_find_peak_subtomo</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_view">View</link> view, double shift, double shift_along, double shift_orthogonal)</para>
+
+<para>Finds the peak in an image to the nearest voxel. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="_mg__subtomo_8h_1a853e159acb95441c115aedf0851234a4">closest_point_line</link> (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; point, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; endpoint1, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; endpoint2)</para>
+
+<para>Calculates the closest point on a line segment from a given point. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__subtomo_8h_1a9d2c59fdce157c283a626b59776a09d8">closest_point_line_distance2</link> (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; point, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; endpoint1, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; endpoint2)</para>
+
+<para>Calculates the squared distance to the closest point on a line segment from a given point. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__subtomo_8h_1a54d09d9aec17bfdb98dbd5649fae0902">closest_point_disc_distance2</link> (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; point, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; point2, <link linkend="_class_view">View</link> view, double radius)</para>
+
+<para>Calculates the squared distance to the closest point on a disc from a given point. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_sphere">Sphere</link> <link linkend="_mg__subtomo_8h_1a5f6e1dc4bc4c5883e48f83aa5d65ee44">locations_fit_sphere</link> (<link linkend="_class_bparticle">Bparticle</link> *part, int N, double Nstop)</para>
+
+<para>Least squares fit a sphere to 3D data (particle locations) </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for functions finding particles (subtomograms) in a tomogram. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Juha Huiskonen </para>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20071010 </para>
+
+<para>Modified: 20120124 (BH) </para>
+
+<para>Modified: 20150108 (BH) - incorporated into Bsoft </para>
+
+<para>Modified: 20150720 (BH) </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__subtomo_8h_1a54d09d9aec17bfdb98dbd5649fae0902"/>    <section>
+    <title>closest_point_disc_distance2()</title>
+<indexterm><primary>closest_point_disc_distance2</primary><secondary>mg_subtomo.h</secondary></indexterm>
+<indexterm><primary>mg_subtomo.h</primary><secondary>closest_point_disc_distance2</secondary></indexterm>
+<para><computeroutput>double closest_point_disc_distance2 (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; p, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; q, <link linkend="_class_view">View</link> view, double radius)</computeroutput></para><para>
+
+<para>Calculates the squared distance to the closest point on a disc from a given point. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Juha Huiskonen </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>p</entry>
+                                <entry>
+<para>point </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>q</entry>
+                                <entry>
+<para>centre point of the disc </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>radius</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double squared distance to closest point <literallayout><computeroutput>Checks whether projection of the point (p&apos;) falls on the disc. If yes, this is the closest point
+Otherwise point on the circumference of the disc is the closest point.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 835 of file mg_subtomo.cpp.</para>
+    </section><anchor xml:id="_mg__subtomo_8h_1a853e159acb95441c115aedf0851234a4"/>    <section>
+    <title>closest_point_line()</title>
+<indexterm><primary>closest_point_line</primary><secondary>mg_subtomo.h</secondary></indexterm>
+<indexterm><primary>mg_subtomo.h</primary><secondary>closest_point_line</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; closest_point_line (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; p, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; v, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; w)</computeroutput></para><para>
+
+<para>Calculates the closest point on a line segment from a given point. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Juha Huiskonen </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>p</entry>
+                                <entry>
+<para>point </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>v</entry>
+                                <entry>
+<para>endpoint 1 </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>w</entry>
+                                <entry>
+<para>endpoint 2 </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> closest point <literallayout><computeroutput>Checks whether one of the end points is the closest point
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 755 of file mg_subtomo.cpp.</para>
+    </section><anchor xml:id="_mg__subtomo_8h_1a9d2c59fdce157c283a626b59776a09d8"/>    <section>
+    <title>closest_point_line_distance2()</title>
+<indexterm><primary>closest_point_line_distance2</primary><secondary>mg_subtomo.h</secondary></indexterm>
+<indexterm><primary>mg_subtomo.h</primary><secondary>closest_point_line_distance2</secondary></indexterm>
+<para><computeroutput>double closest_point_line_distance2 (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; p, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; v, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; w)</computeroutput></para><para>
+
+<para>Calculates the squared distance to the closest point on a line segment from a given point. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Juha Huiskonen </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>p</entry>
+                                <entry>
+<para>point </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>v</entry>
+                                <entry>
+<para>endpoint 1 </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>w</entry>
+                                <entry>
+<para>endpoint 2 </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double squared distance to the closest point <literallayout><computeroutput>Checks wether the closet point falls within the line segment. If not, one of the endpoints
+is the closest point.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 794 of file mg_subtomo.cpp.</para>
+    </section><anchor xml:id="_mg__subtomo_8h_1a30c445b08d271edce06ae0917341c1cb"/>    <section>
+    <title>img_find_peak_subtomo()</title>
+<indexterm><primary>img_find_peak_subtomo</primary><secondary>mg_subtomo.h</secondary></indexterm>
+<indexterm><primary>mg_subtomo.h</primary><secondary>img_find_peak_subtomo</secondary></indexterm>
+<para><computeroutput>double img_find_peak_subtomo (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_view">View</link> view, double shift, double shift_along, double shift_orthogonal)</computeroutput></para><para>
+
+<para>Finds the peak in an image to the nearest voxel. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Juha Huiskonen </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image (not altered). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view</entry>
+                                <entry>
+<para>view of the particle to be refined </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift</entry>
+                                <entry>
+<para>radius of spherical or cylindrical search space (if &lt; 0, default 1e30). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_along</entry>
+                                <entry>
+<para>additional shift allowed in the direction of the view vector. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_orthogonal</entry>
+                                <entry>
+<para>additional shift allowed orthogonal to the view vector. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double peak maximum. <literallayout><computeroutput>An image is searched for the global maximum (typically used to find the shift vector in a cross-correlation map).
+The peak vector is returned in the image origin in actual pixel coordinates (no wrapping).
+The maximum is returned in the image FOM.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 668 of file mg_subtomo.cpp.</para>
+    </section><anchor xml:id="_mg__subtomo_8h_1a695546e14ec860f300edf10b9de34731"/>    <section>
+    <title>img_find_refine_peaks()</title>
+<indexterm><primary>img_find_refine_peaks</primary><secondary>mg_subtomo.h</secondary></indexterm>
+<indexterm><primary>mg_subtomo.h</primary><secondary>img_find_refine_peaks</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>* img_find_refine_peaks (<link linkend="_class_bimage">Bimage</link> * pcc, <link linkend="_class_view">View</link> view, double shift_limit, double shift_along, double shift_orthogonal, double mindist, double threshold, int maxhits, int refinepeaks)</computeroutput></para><para>
+
+<para>Finds peaks in an image to the nearest voxel iteratively. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Juha Huiskonen </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*pcc</entry>
+                                <entry>
+<para>cross correlation map (not altered). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view</entry>
+                                <entry>
+<para>view of the particle to be refined </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_limit</entry>
+                                <entry>
+<para>radius of spherical or cylindrical search space (if &lt; 0, default 1e30). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_along</entry>
+                                <entry>
+<para>additional shift allowed in the direction of the view vector. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift_orthogonal</entry>
+                                <entry>
+<para>additional shift allowed orthogonal to the view vector. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mindist</entry>
+                                <entry>
+<para>2 * template radius: used for a spherical mask </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>threshold</entry>
+                                <entry>
+<para>threshold. if value is &lt;0, only the global maximum is returned </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>maxhits</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>refinepeaks</entry>
+                                <entry>
+<para></para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bparticle* list of peaks as particles. <literallayout><computeroutput>After a maximum value is found, it is masked with a spherical mask and the next largest value
+is found, until all the values are below the threshold .
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 601 of file mg_subtomo.cpp.</para>
+    </section><anchor xml:id="_mg__subtomo_8h_1a5f6e1dc4bc4c5883e48f83aa5d65ee44"/>    <section>
+    <title>locations_fit_sphere()</title>
+<indexterm><primary>locations_fit_sphere</primary><secondary>mg_subtomo.h</secondary></indexterm>
+<indexterm><primary>mg_subtomo.h</primary><secondary>locations_fit_sphere</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_sphere">Sphere</link> locations_fit_sphere (<link linkend="_class_bparticle">Bparticle</link> * part, int N, double Nstop)</computeroutput></para><para>
+
+<para>Least squares fit a sphere to 3D data (particle locations) </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Juha Huiskonen </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*part</entry>
+                                <entry>
+<para>particle </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>N</entry>
+                                <entry>
+<para>iterations </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Nstop</entry>
+                                <entry>
+<para>stopping condition: tolerance in change of sphere center </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_struct_sphere">Sphere</link> fitted sphere struct <literallayout><computeroutput>Algorithm by ImaginaryZ
+From http://imaginaryz.blogspot.co.uk/2011/04/least-squares-fit-sphere-to-3d-data.html
+
+All you have to do is define:
+
+Error = Sum( |Position[n] - Center|^2 - Radius^2 )
+
+Then define the squared error:
+
+Squared Error = Sum( ( |Position[n] - Center|^2 - Radius^2 )^2 )
+
+And solve the summation using a iterative method (like newtons, below) after pulling out the summation terms.
+For example, if you do: Sum( (P.x[n] - Cx)^2 ) You get (after Expand):
+Sum( P.x[n]^2 - 2*P.x[n]*Cx + Cx^2 )
+And you can then split up the sum:
+Sum( P.x[n]^2 ) + Sum( P.x[n] ) * -2*Cx + Cx * Nelements
+Note you HAVE to ultimately divide the sums by Nelements
+
+Note that &quot;Center&quot; is A,B,C (3D) and I use Rsq as Radius^2.
+
+This method is not fast, but it converges, and the way the code is written it is independent of dataset size,
+but you do have to compute a number of sums and products before running the algorithm.
+
+Note this method is used to generate the equations used to compute linear and quadratic fits instantly, given you compute some sums first.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 907 of file mg_subtomo.cpp.</para>
+    </section><anchor xml:id="_mg__subtomo_8h_1aed94993d70e9438aae0febe97e12cd57"/>    <section>
+    <title>reconstruction_refine_subtomo()</title>
+<indexterm><primary>reconstruction_refine_subtomo</primary><secondary>mg_subtomo.h</secondary></indexterm>
+<indexterm><primary>mg_subtomo.h</primary><secondary>reconstruction_refine_subtomo</secondary></indexterm>
+<para><computeroutput>long reconstruction_refine_subtomo (<link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bimage">Bimage</link> * ptemp, <link linkend="_class_bimage">Bimage</link> * pmask, <link linkend="_class_bimage">Bimage</link> * pmask2, double alpha_step_orig, double theta_step_orig, double phi_step_orig, double alpha_limit_orig, double thetaphi_limit_orig, double hires, double lores, double shiftlimit_orig, double shiftlimitz_orig, double shiftlimitxy_orig, double mindist, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; bin, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, int iters, int refinepeaks, <link linkend="_class_bstring">Bstring</link> ccmax_file)</computeroutput></para><para>
+
+<para>Refines the view vectors for particles already in the project. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Juha Huiskonen </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*rec</entry>
+                                <entry>
+<para>reconstruction parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*ptemp</entry>
+                                <entry>
+<para>the template to be searched for. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask</entry>
+                                <entry>
+<para>reciprocal space mask for cross-correlation (ignored if NULL). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask2</entry>
+                                <entry>
+<para>real space mask for cross-correlation (ignored if NULL). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>alpha_step_orig</entry>
+                                <entry>
+<para>angular step size around view vector (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>theta_step_orig</entry>
+                                <entry>
+<para>angular step size around view vector (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>phi_step_orig</entry>
+                                <entry>
+<para>angular step size around view vector (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>alpha_limit_orig</entry>
+                                <entry>
+<para>angular limit for refinement in alpha (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>thetaphi_limit_orig</entry>
+                                <entry>
+<para>angular limit for refinement in theta &amp; phi (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shiftlimit_orig</entry>
+                                <entry>
+<para>maximum shift from the original position (binned units). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shiftlimitz_orig</entry>
+                                <entry>
+<para>maximum z-shift from the original position (binned units). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shiftlimitxy_orig</entry>
+                                <entry>
+<para>maximum xy-shift from the original position (binned units). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mindist</entry>
+                                <entry>
+<para>minimun distance for cc peaks (binned units). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>binning for map, template and mask </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>symmetry to generate a list of views for search mode </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>iters</entry>
+                                <entry>
+<para>number of iterations in refine </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>refinepeaks</entry>
+                                <entry>
+<para>flag to run several iterations in refine </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ccmax_file</entry>
+                                <entry>
+<para>file for cross-correlation map (max ccc for each position and rotation of the template) </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double the best correlation coefficient. <literallayout><computeroutput>The template is rotated and cross-correlated to find fits above the
+    threshold.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 334 of file mg_subtomo.cpp.</para>
+    </section><anchor xml:id="_mg__subtomo_8h_1a166ec7a4246c114763304fbc7a9aaa8f"/>    <section>
+    <title>reconstruction_search_subtomo()</title>
+<indexterm><primary>reconstruction_search_subtomo</primary><secondary>mg_subtomo.h</secondary></indexterm>
+<indexterm><primary>mg_subtomo.h</primary><secondary>reconstruction_search_subtomo</secondary></indexterm>
+<para><computeroutput>long reconstruction_search_subtomo (<link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bimage">Bimage</link> * ptemp, <link linkend="_class_bimage">Bimage</link> * pmask, <link linkend="_class_bimage">Bimage</link> * pmask2, double alpha_step, double theta_step, double phi_step, double alpha_limit, double thetaphi_limit, double hires, double lores, double shiftlimit, double mindist, double threshold, int maxhits, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; bin, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, int refinepeaks, <link linkend="_class_bstring">Bstring</link> ccmax_file)</computeroutput></para><para>
+Definition at line 141 of file mg_subtomo.cpp.</para>
+</section>
+</section>
+</section>

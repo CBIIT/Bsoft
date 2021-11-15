@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_bampweigh_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/bampweigh.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/bampweigh.cpp</primary></indexterm>
+<para>
+
+<para>Program to filter images. </para>
+ 
+</para>
+<programlisting>#include &quot;rwimg.h&quot;
+#include &quot;rwFSC_XML.h&quot;
+#include &quot;utilities.h&quot;
+#include &quot;options.h&quot;
+#include &quot;timer.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bplot">Bplot</link> * <link linkend="_bampweigh_8cpp_1a910425eff26c3f24ed3fce2c390562dd">read_rps</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+</listitem>
+            <listitem><para>int <link linkend="_bampweigh_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_bampweigh_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>const char * <link linkend="_bampweigh_8cpp_1a4de0ad4c7190962494815c0fa7f948df">use</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Program to filter images. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20040714 </para>
+
+<para>Modified: 20191125 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_bampweigh_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>bampweigh.cpp</secondary></indexterm>
+<indexterm><primary>bampweigh.cpp</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 106 of file bampweigh.cpp.</para>
+    </section><anchor xml:id="_bampweigh_8cpp_1a910425eff26c3f24ed3fce2c390562dd"/>    <section>
+    <title>read_rps()</title>
+<indexterm><primary>read_rps</primary><secondary>bampweigh.cpp</secondary></indexterm>
+<indexterm><primary>bampweigh.cpp</primary><secondary>read_rps</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bplot">Bplot</link>* read_rps (<link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+Definition at line 49 of file bampweigh.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_bampweigh_8cpp_1a4de0ad4c7190962494815c0fa7f948df"/>    <section>
+    <title>use</title>
+<indexterm><primary>use</primary><secondary>bampweigh.cpp</secondary></indexterm>
+<indexterm><primary>bampweigh.cpp</primary><secondary>use</secondary></indexterm>
+<para><computeroutput>const char* use[]</computeroutput></para><emphasis role="strong">Initial value:</emphasis><programlisting>=&#32;{
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Usage:&#32;bampweigh&#32;[options]&#32;input.img&#32;output.img&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-----------------------------------------------&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Weighs&#32;the&#32;amplitudes&#32;of&#32;a&#32;map&#32;using&#32;a&#32;reference&#32;map&apos;s&#32;amplitudes.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Actions:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-invert&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Invert&#32;density&#32;in&#32;the&#32;image.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-rescale&#32;-0.1,5.2&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Rescale&#32;data&#32;to&#32;average&#32;and&#32;standard&#32;deviation&#32;after&#32;filtering.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-dose&#32;2.5&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Weigh&#32;the&#32;amplitudes&#32;by&#32;accumulated&#32;dose&#32;using&#32;the&#32;given&#32;dose/frame&#32;(e/Å2).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-normalize&#32;2&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Normalize&#32;amplitudes&#32;(1:amplitude;&#32;2:power).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-root&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Weigh&#32;by&#32;the&#32;square&#32;root&#32;of&#32;the&#32;amplitudes.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-square&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Weigh&#32;by&#32;the&#32;squares&#32;of&#32;the&#32;amplitudes.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Parameters:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-verbose&#32;7&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Verbosity&#32;of&#32;output.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-datatype&#32;u&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Force&#32;writing&#32;of&#32;a&#32;new&#32;data&#32;type.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-sampling&#32;1.5,1.5,1.5&#32;&#32;&#32;&#32;Sampling&#32;(A/pixel;&#32;default&#32;from&#32;input&#32;file;&#32;a&#32;single&#32;value&#32;can&#32;be&#32;given).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-resolution&#32;15&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Resolution&#32;limit&#32;(angstrom)&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Input:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-RPS&#32;file.txt&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Radial&#32;power&#32;spectrum.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-FSC&#32;file.xml&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;FSC&#32;curve.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-Reference&#32;file.map&#32;&#32;&#32;&#32;&#32;&#32;Reference&#32;map.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-Mask&#32;mask.tif&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Mask&#32;file&#32;to&#32;exclude&#32;regions&#32;in&#32;reciprocal&#32;space.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-mask&#32;mask.mrc&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Real&#32;space&#32;mask&#32;to&#32;apply&#32;before&#32;weighing.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+NULL
+}
+</programlisting><para>
+Definition at line 19 of file bampweigh.cpp.</para>
+    </section><anchor xml:id="_bampweigh_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>bampweigh.cpp</secondary></indexterm>
+<indexterm><primary>bampweigh.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

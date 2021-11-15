@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_struct_bsymmetry" xml:lang="en-US">
+<title>Bsymmetry Struct Reference</title>
+<indexterm><primary>Bsymmetry</primary></indexterm>
+<para>
+<computeroutput>#include &lt;symmetry.h&gt;</computeroutput>
+</para>
+<simplesect>
+    <title>Public Member Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_struct_bsymmetry_1a297884399971d4418faf8c8c703e4ee8">Bsymmetry</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_struct_bsymmetry_1a55bd95aefbf943abb1ef90639124697c">Bsymmetry</link> (<link linkend="_class_bstring">Bstring</link> sym)</para>
+
+<para>Symmetry constructor from a symmetry identifier. </para>
+</listitem>
+            <listitem><para>void <link linkend="_struct_bsymmetry_1a2828c2c896a6805e63fcfe2862e701b1">point</link> (int i)</para>
+</listitem>
+            <listitem><para>int <link linkend="_struct_bsymmetry_1a3c01d2d11ffe1910017aa790036ad0ba">point</link> ()</para>
+</listitem>
+            <listitem><para>int <link linkend="_struct_bsymmetry_1ae2b66e9d55d72c59df78a61525e18b38">point</link> () const</para>
+</listitem>
+            <listitem><para>void <link linkend="_struct_bsymmetry_1a30a8f7afcf600ca4b20df85675073caa">space</link> (int i)</para>
+</listitem>
+            <listitem><para>int <link linkend="_struct_bsymmetry_1afa6f72f374f648c34fd0fa876db2b17e">space</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_struct_bsymmetry_1a74fabb4b372ebf222adafa4a1942c05c">label</link> (<link linkend="_class_bstring">Bstring</link> &amp;s)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> &amp; <link linkend="_struct_bsymmetry_1a40406a5e475f03b3a75780c1814b6635">label</link> ()</para>
+</listitem>
+            <listitem><para>int <link linkend="_struct_bsymmetry_1a8bb77d960ee1d3260a9616467cf92712">order</link> ()</para>
+</listitem>
+            <listitem><para>int <link linkend="_struct_bsymmetry_1a49cd3fb3b4f1e96ac29e53065112ce91">operations</link> ()</para>
+</listitem>
+            <listitem><para><link linkend="_class_bsymop">Bsymop</link> &amp; <link linkend="_struct_bsymmetry_1aba52c14c96f6fc9c1bef021f2c7d81b8">operator[]</link> (int i)</para>
+</listitem>
+            <listitem><para>vector&lt; <link linkend="_class_matrix3">Matrix3</link> &gt; <link linkend="_struct_bsymmetry_1a8faa8c3f6a2398dfee6b9203cbf117a4">matrices</link> ()</para>
+</listitem>
+            <listitem><para>void <link linkend="_struct_bsymmetry_1ae46160fe676dce9801dce265e5020688">transform</link> (<link linkend="_class_matrix3">Matrix3</link> &amp;mat)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+<para>
+Definition at line 61 of file symmetry.h.</para>
+</section>
+<section>
+<title>Constructor &amp; Destructor Documentation</title>
+<anchor xml:id="_struct_bsymmetry_1a297884399971d4418faf8c8c703e4ee8"/>    <section>
+    <title>Bsymmetry()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>Bsymmetry</primary><secondary>Bsymmetry</secondary></indexterm>
+<indexterm><primary>Bsymmetry</primary><secondary>Bsymmetry</secondary></indexterm>
+<para><computeroutput>Bsymmetry::Bsymmetry ( )<computeroutput>[inline]</computeroutput></computeroutput></para><para>
+Definition at line 101 of file symmetry.h.</para>
+    </section><anchor xml:id="_struct_bsymmetry_1a55bd95aefbf943abb1ef90639124697c"/>    <section>
+    <title>Bsymmetry()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>Bsymmetry</primary><secondary>Bsymmetry</secondary></indexterm>
+<indexterm><primary>Bsymmetry</primary><secondary>Bsymmetry</secondary></indexterm>
+<para><computeroutput>Bsymmetry::Bsymmetry (<link linkend="_class_bstring">Bstring</link> sym)</computeroutput></para><para>
+
+<para>Symmetry constructor from a symmetry identifier. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>sym</entry>
+                                <entry>
+<para>string containing point group identifier. <literallayout><computeroutput>The point group symmetries are identified by the following strings:
+    C&lt;n&gt;        cyclic point group of order n.
+    D&lt;n&gt;            dihedral point group of order n.
+    T           tetrahedral point group.
+    O           octahedral/cubic point group.
+    I           icosahedral/dodecahedral point group.
+    H&lt;r&gt;,&lt;a&gt;,&lt;d&gt;    helical symmetry with rise r, rise angle a and dyad d (1/2).
+For the higher symmetries the following adjustments are available:
+    T-3         no three-fold operator.
+    O-2         no two-fold operator.
+    O-3         no three-fold operator.
+    O-4         no four-fold operator.
+    I-2         no two-fold operator.
+    I-3         no three-fold operator.
+    I-5         no five-fold operator.
+    I90         90 degrees rotated around z-axis.
+    I90-3           90 degrees rotated around z-axis and no three-fold operator.
+If the point group string is empty, the default is C1 (asymmetric).
+</computeroutput></literallayout> </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                </para>
+<para>
+Definition at line 42 of file symmetry.cpp.</para>
+</section>
+</section>
+<section>
+<title>Member Function Documentation</title>
+<anchor xml:id="_struct_bsymmetry_1a40406a5e475f03b3a75780c1814b6635"/>    <section>
+    <title>label()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>label</primary><secondary>Bsymmetry</secondary></indexterm>
+<indexterm><primary>Bsymmetry</primary><secondary>label</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link>&amp; Bsymmetry::label ( )<computeroutput>[inline]</computeroutput></computeroutput></para><para>
+Definition at line 110 of file symmetry.h.</para>
+    </section><anchor xml:id="_struct_bsymmetry_1a74fabb4b372ebf222adafa4a1942c05c"/>    <section>
+    <title>label()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>label</primary><secondary>Bsymmetry</secondary></indexterm>
+<indexterm><primary>Bsymmetry</primary><secondary>label</secondary></indexterm>
+<para><computeroutput>void Bsymmetry::label (<link linkend="_class_bstring">Bstring</link> &amp; s)<computeroutput>[inline]</computeroutput></computeroutput></para><para>
+Definition at line 109 of file symmetry.h.</para>
+    </section><anchor xml:id="_struct_bsymmetry_1a8faa8c3f6a2398dfee6b9203cbf117a4"/>    <section>
+    <title>matrices()</title>
+<indexterm><primary>matrices</primary><secondary>Bsymmetry</secondary></indexterm>
+<indexterm><primary>Bsymmetry</primary><secondary>matrices</secondary></indexterm>
+<para><computeroutput>vector&lt;<link linkend="_class_matrix3">Matrix3</link>&gt; Bsymmetry::matrices ( )<computeroutput>[inline]</computeroutput></computeroutput></para><para>
+Definition at line 118 of file symmetry.h.</para>
+    </section><anchor xml:id="_struct_bsymmetry_1a49cd3fb3b4f1e96ac29e53065112ce91"/>    <section>
+    <title>operations()</title>
+<indexterm><primary>operations</primary><secondary>Bsymmetry</secondary></indexterm>
+<indexterm><primary>Bsymmetry</primary><secondary>operations</secondary></indexterm>
+<para><computeroutput>int Bsymmetry::operations ( )<computeroutput>[inline]</computeroutput></computeroutput></para><para>
+Definition at line 116 of file symmetry.h.</para>
+    </section><anchor xml:id="_struct_bsymmetry_1aba52c14c96f6fc9c1bef021f2c7d81b8"/>    <section>
+    <title>operator[]()</title>
+<indexterm><primary>operator[]</primary><secondary>Bsymmetry</secondary></indexterm>
+<indexterm><primary>Bsymmetry</primary><secondary>operator[]</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bsymop">Bsymop</link>&amp; Bsymmetry::operator[] (int i)<computeroutput>[inline]</computeroutput></computeroutput></para><para>
+Definition at line 117 of file symmetry.h.</para>
+    </section><anchor xml:id="_struct_bsymmetry_1a8bb77d960ee1d3260a9616467cf92712"/>    <section>
+    <title>order()</title>
+<indexterm><primary>order</primary><secondary>Bsymmetry</secondary></indexterm>
+<indexterm><primary>Bsymmetry</primary><secondary>order</secondary></indexterm>
+<para><computeroutput>int Bsymmetry::order ( )<computeroutput>[inline]</computeroutput></computeroutput></para><para>
+Definition at line 111 of file symmetry.h.</para>
+    </section><anchor xml:id="_struct_bsymmetry_1a3c01d2d11ffe1910017aa790036ad0ba"/>    <section>
+    <title>point()<computeroutput>[1/3]</computeroutput></title>
+<indexterm><primary>point</primary><secondary>Bsymmetry</secondary></indexterm>
+<indexterm><primary>Bsymmetry</primary><secondary>point</secondary></indexterm>
+<para><computeroutput>int Bsymmetry::point ( )<computeroutput>[inline]</computeroutput></computeroutput></para><para>
+Definition at line 105 of file symmetry.h.</para>
+    </section><anchor xml:id="_struct_bsymmetry_1ae2b66e9d55d72c59df78a61525e18b38"/>    <section>
+    <title>point()<computeroutput>[2/3]</computeroutput></title>
+<indexterm><primary>point</primary><secondary>Bsymmetry</secondary></indexterm>
+<indexterm><primary>Bsymmetry</primary><secondary>point</secondary></indexterm>
+<para><computeroutput>int Bsymmetry::point ( ) const<computeroutput>[inline]</computeroutput></computeroutput></para><para>
+Definition at line 106 of file symmetry.h.</para>
+    </section><anchor xml:id="_struct_bsymmetry_1a2828c2c896a6805e63fcfe2862e701b1"/>    <section>
+    <title>point()<computeroutput>[3/3]</computeroutput></title>
+<indexterm><primary>point</primary><secondary>Bsymmetry</secondary></indexterm>
+<indexterm><primary>Bsymmetry</primary><secondary>point</secondary></indexterm>
+<para><computeroutput>void Bsymmetry::point (int i)<computeroutput>[inline]</computeroutput></computeroutput></para><para>
+Definition at line 104 of file symmetry.h.</para>
+    </section><anchor xml:id="_struct_bsymmetry_1afa6f72f374f648c34fd0fa876db2b17e"/>    <section>
+    <title>space()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>space</primary><secondary>Bsymmetry</secondary></indexterm>
+<indexterm><primary>Bsymmetry</primary><secondary>space</secondary></indexterm>
+<para><computeroutput>int Bsymmetry::space ( )<computeroutput>[inline]</computeroutput></computeroutput></para><para>
+Definition at line 108 of file symmetry.h.</para>
+    </section><anchor xml:id="_struct_bsymmetry_1a30a8f7afcf600ca4b20df85675073caa"/>    <section>
+    <title>space()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>space</primary><secondary>Bsymmetry</secondary></indexterm>
+<indexterm><primary>Bsymmetry</primary><secondary>space</secondary></indexterm>
+<para><computeroutput>void Bsymmetry::space (int i)<computeroutput>[inline]</computeroutput></computeroutput></para><para>
+Definition at line 107 of file symmetry.h.</para>
+    </section><anchor xml:id="_struct_bsymmetry_1ae46160fe676dce9801dce265e5020688"/>    <section>
+    <title>transform()</title>
+<indexterm><primary>transform</primary><secondary>Bsymmetry</secondary></indexterm>
+<indexterm><primary>Bsymmetry</primary><secondary>transform</secondary></indexterm>
+<para><computeroutput>void Bsymmetry::transform (<link linkend="_class_matrix3">Matrix3</link> &amp; mat)<computeroutput>[inline]</computeroutput></computeroutput></para><para>
+Definition at line 126 of file symmetry.h.</para>
+</section>
+<para>
+The documentation for this struct was generated from the following files:</para>
+/Users/bernard/b20/bsoft/include/<link linkend="_symmetry_8h">symmetry.h</link>/Users/bernard/b20/bsoft/src/util/<link linkend="_symmetry_8cpp">symmetry.cpp</link></section>
+</section>

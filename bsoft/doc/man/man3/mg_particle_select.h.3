@@ -1,0 +1,1572 @@
+.TH "/Users/bernard/b20/bsoft/include/mg_particle_select.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/mg_particle_select.h \- Select particles\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'symmetry\&.h'\fP
+.br
+\fC#include 'qsort_functions\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBint_float\fP * \fBproject_fom_order\fP (\fBBproject\fP *\fBproject\fP, long &npart, int fom_index, int defocus_fit)"
+.br
+.ti -1c
+.RI "\fBint_float\fP * \fBpart_fom_order\fP (\fBBparticle\fP *partlist, long &npart, int fom_index)"
+.br
+.ti -1c
+.RI "long \fBpart_reset_selection\fP (\fBBproject\fP *\fBproject\fP, int flag=0)"
+.br
+.RI "Resets selection to all particles\&. "
+.ti -1c
+.RI "long \fBpart_unset_selection\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Unsets selection to no particles\&. "
+.ti -1c
+.RI "long \fBpart_invert_selection\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Inverts the selection\&. "
+.ti -1c
+.RI "long \fBpart_select_micrograph\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &mgselect)"
+.br
+.RI "Sets selection to the micrographs indicated\&. "
+.ti -1c
+.RI "long \fBpart_consolidate_selection\fP (\fBBproject\fP *\fBproject\fP, int number)"
+.br
+.RI "Consolidates selected particles under one selection number\&. "
+.ti -1c
+.RI "long \fBpart_set_selection\fP (\fBBproject\fP *\fBproject\fP, int number)"
+.br
+.RI "Selects one selection number and sets all others to zero\&. "
+.ti -1c
+.RI "long \fBpart_set_sequential\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Selects one selection number and sets all others to zero\&. "
+.ti -1c
+.RI "long \fBpart_set_FOM\fP (\fBBproject\fP *\fBproject\fP, int fom_index, double fom)"
+.br
+.RI "Sets the FOM for all particles\&. "
+.ti -1c
+.RI "long \fBpart_deselect_from_list\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP list)"
+.br
+.RI "Deselects particles with selection numbers from a list\&. "
+.ti -1c
+.RI "long \fBpart_deselect\fP (\fBBproject\fP *\fBproject\fP, int fom_index, double fommin, double fommax=1e30)"
+.br
+.RI "Deselects particles below a given FOM cutoff\&. "
+.ti -1c
+.RI "long \fBpart_deselect_redundant\fP (\fBBparticle\fP *partlist, double excl_dist, int \fBpart_select\fP, int fom_index)"
+.br
+.RI "Deselects particles overlapping with better ones\&. "
+.ti -1c
+.RI "long \fBpart_deselect_redundant\fP (\fBBproject\fP *\fBproject\fP, double excl_dist, int \fBpart_select\fP, int fom_index)"
+.br
+.RI "Deselects particles overlapping with better ones\&. "
+.ti -1c
+.RI "long \fBpart_set_multi_maps\fP (\fBBproject\fP *\fBproject\fP, int \fBpart_select\fP, int nmaps)"
+.br
+.RI "Sets selection for generating multiple maps\&. "
+.ti -1c
+.RI "long \fBpart_set_filament_maps\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Generates a selection number from the group number for each filament\&. "
+.ti -1c
+.RI "long \fBpart_reselect\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &tag, double reselect_min, double reselect_max)"
+.br
+.RI "Reselects particles identified by an input STAR tag and between a minimum and maximum\&. "
+.ti -1c
+.RI "double \fBpart_series_comparison\fP (\fBBproject\fP *\fBproject\fP, \fBBsymmetry\fP &sym, double angle_cutoff)"
+.br
+.RI "A function to select particles based on comparison of the orientations within a series\&. "
+.ti -1c
+.RI "long \fBpart_select_FOM_groups\fP (\fBBproject\fP *\fBproject\fP, int ngroups, int fom_index, int defocus_fit)"
+.br
+.RI "Selects groups of particles based on the FOM\&. "
+.ti -1c
+.RI "long \fBpart_select_percentage\fP (\fBBproject\fP *\fBproject\fP, double percentage, int fom_index, int defocus_fit)"
+.br
+.RI "Selects a percentage of particles based on the FOM\&. "
+.ti -1c
+.RI "long \fBpart_select_best\fP (\fBBproject\fP *\fBproject\fP, long number, int fom_index, int defocus_fit)"
+.br
+.RI "Selects the best particles based on the FOM\&. "
+.ti -1c
+.RI "long \fBpart_select_FOM_avg_std\fP (\fBBproject\fP *\fBproject\fP, double factor, int fom_index)"
+.br
+.RI "Selects particles based on FOM average and standard deviation\&. "
+.ti -1c
+.RI "long \fBpart_select_random\fP (\fBBproject\fP *\fBproject\fP, long number)"
+.br
+.RI "Selects a specific number of particles randomly\&. "
+.ti -1c
+.RI "long \fBpart_select_random_fraction\fP (\fBBproject\fP *\fBproject\fP, double fraction)"
+.br
+.RI "Selects particles randomly based on a fraction of the total\&. "
+.ti -1c
+.RI "long \fBpart_select_random_group\fP (\fBBproject\fP *\fBproject\fP, long number)"
+.br
+.RI "Selects groups randomly to give at least a number of particles\&. "
+.ti -1c
+.RI "long \fBpart_select_random_filaments\fP (\fBBproject\fP *\fBproject\fP, int nmaps)"
+.br
+.RI "Generates a selection number from the group number for each filament\&. "
+.ti -1c
+.RI "long \fBpart_select_bootstrap\fP (\fBBproject\fP *\fBproject\fP, int number)"
+.br
+.RI "Selects a given number of particles randomly with replacement\&. "
+.ti -1c
+.RI "long \fBpart_select_random_within_view\fP (\fBBproject\fP *\fBproject\fP, \fBBsymmetry\fP &sym, double theta_step, double phi_step, int number)"
+.br
+.RI "Selects a given number of particles within each view\&. "
+.ti -1c
+.RI "long \fBpart_select_maxsmooth\fP (\fBBproject\fP *\fBproject\fP, \fBBsymmetry\fP &sym, double theta_step, double phi_step, double threshfrac, double sigma, int fom_index)"
+.br
+.RI "Selects particles based on a smoothed maximum surface\&. "
+.ti -1c
+.RI "long \fBpart_select_best_within_view\fP (\fBBproject\fP *\fBproject\fP, \fBBsymmetry\fP &sym, double theta_step, double phi_step, int number, int fom_index)"
+.br
+.RI "Selects the best number of particles within each view\&. "
+.ti -1c
+.RI "long \fBpart_select_to_group\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Transfer selection numbers to the group identifiers\&. "
+.ti -1c
+.RI "long \fBpart_select_group\fP (\fBBproject\fP *\fBproject\fP, int group)"
+.br
+.RI "Selects particles with a given group identifier\&. "
+.ti -1c
+.RI "long \fBpart_select_sets\fP (\fBBproject\fP *\fBproject\fP, int size, int flag)"
+.br
+.RI "Selects sets of particles, each set with the same size\&. "
+.ti -1c
+.RI "long \fBpart_select_frames\fP (\fBBproject\fP *\fBproject\fP, int frame_start, int frame_end)"
+.br
+.RI "Select particles from frames in a series\&. "
+.ti -1c
+.RI "long \fBpart_filament_direction\fP (\fBBproject\fP *\fBproject\fP, double minpct)"
+.br
+.RI "Checks the direction of particles associated with filaments\&. "
+.ti -1c
+.RI "long \fBpart_filament_direction\fP (\fBBproject\fP *\fBproject\fP, \fBBproject\fP *project2, double minpct)"
+.br
+.RI "Checks the direction of particles associated with filaments and compares with opposite filament direction\&. "
+.ti -1c
+.RI "long \fBpart_view_select\fP (\fBBproject\fP *\fBproject\fP, \fBView\fP view, double \fBangle\fP)"
+.br
+.RI "Selects particles based on a distance from a reference view\&. "
+.ti -1c
+.RI "long \fBpart_side_view_select\fP (\fBBproject\fP *\fBproject\fP, double \fBangle\fP)"
+.br
+.RI "Selects particles based on a distance from a side view\&. "
+.ti -1c
+.RI "long \fBpart_euler_angle_select\fP (\fBBproject\fP *\fBproject\fP, double *euler6)"
+.br
+.RI "Selects particles based on \fBEuler\fP angle limits\&. "
+.ti -1c
+.RI "long \fBpart_origin_select\fP (\fBBproject\fP *\fBproject\fP, \fBVector3\fP< double > origin, double \fBdistance\fP)"
+.br
+.RI "Selects particles based on the distance from the nominal origin\&. "
+.ti -1c
+.RI "long \fBpart_set_first_view_in_series\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Sets all orientation parameters for a particle to the first in the set\&. "
+.ti -1c
+.RI "long \fBpart_set_best_view_in_series\fP (\fBBproject\fP *\fBproject\fP, int fom_index)"
+.br
+.RI "Sets all orientation parameters for a particle to the best in the set\&. "
+.ti -1c
+.RI "long \fBpart_select_series\fP (\fBBproject\fP *\fBproject\fP, int size, int flag)"
+.br
+.RI "Select series where all are already selected\&. "
+.ti -1c
+.RI "long \fBpart_series_from_seed\fP (\fBBproject\fP *\fBproject\fP, int flags)"
+.br
+.RI "Calculates the locations of particles in a series from a seed\&. "
+.ti -1c
+.RI "double \fBpart_fom_defocus_fit\fP (\fBBproject\fP *\fBproject\fP, int fom_index, double &intercept, double &slope)"
+.br
+.RI "Fits the particle FOMs as a function of the defocus\&. "
+.ti -1c
+.RI "double \fBpart_fom_defocus_fit_deselect\fP (\fBBproject\fP *\fBproject\fP, int fom_index, double cutoff)"
+.br
+.RI "Deselects particles below a given FOM cutoff, adjusted for the defocus\&. "
+.ti -1c
+.RI "long \fBpart_select_closest_to_focus\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Deselects all particles except those from micrographs closest to focus\&. "
+.ti -1c
+.RI "long \fBpart_select_furthest_from_focus\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Deselects all particles except those from micrographs furthest from focus\&. "
+.ti -1c
+.RI "long \fBpart_delete_deselected\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Deletes deselected particles and renumber the remaining\&. "
+.ti -1c
+.RI "long \fBpart_delete_deselected\fP (\fBBparticle\fP **partlist)"
+.br
+.RI "Deletes deselected particles and renumber the remaining\&. "
+.ti -1c
+.RI "long \fBpart_fix_defocus\fP (\fBBproject\fP *\fBproject\fP, double max_dev)"
+.br
+.RI "Resets defocus values for particles thata are too far off\&. "
+.ti -1c
+.RI "vector< pair< \fBBparticle\fP *, double > > \fBproject_part_sort\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP tag)"
+.br
+.RI "Sorts the Particles by a selected parameter\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Select particles\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20000426 
+.PP
+Modified: 20200517 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_particle_select\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "long part_consolidate_selection (\fBBproject\fP * project, int number)"
+
+.PP
+Consolidates selected particles under one selection number\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure with all parameters\&. 
+.br
+\fInumber\fP new selection number (1 if < 1)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles\&. 
+.RE
+.PP
+
+.PP
+Definition at line 283 of file mg_particle_select\&.cpp\&.
+.SS "long part_delete_deselected (\fBBparticle\fP ** partlist)"
+
+.PP
+Deletes deselected particles and renumber the remaining\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**partlist\fP particle parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles remaining\&. 
+.PP
+.nf
+The old list is deallocated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 3118 of file mg_particle_select\&.cpp\&.
+.SS "long part_delete_deselected (\fBBproject\fP * project)"
+
+.PP
+Deletes deselected particles and renumber the remaining\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles remaining\&. 
+.RE
+.PP
+
+.PP
+Definition at line 3068 of file mg_particle_select\&.cpp\&.
+.SS "long part_deselect (\fBBproject\fP * project, int fom_index, double fommin, double fommax)"
+
+.PP
+Deselects particles below a given FOM cutoff\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fIfom_index\fP index of FOM value to test for\&. 
+.br
+\fIfommin\fP minimum threshold for deselection\&. 
+.br
+\fIfommax\fP maximum threshold for deselection\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 468 of file mg_particle_select\&.cpp\&.
+.SS "long part_deselect_from_list (\fBBproject\fP * project, \fBBstring\fP list)"
+
+.PP
+Deselects particles with selection numbers from a list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fIlist\fP comma-separated list of selection numbers\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 412 of file mg_particle_select\&.cpp\&.
+.SS "long part_deselect_redundant (\fBBparticle\fP * partlist, double excl_dist, int part_select, int fom_index)"
+
+.PP
+Deselects particles overlapping with better ones\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*partlist\fP particle linked list\&. 
+.br
+\fIexcl_dist\fP minimum distance between particles\&. 
+.br
+\fIpart_select\fP initial selection number (-1 means all >0)\&. 
+.br
+\fIfom_index\fP index of FOM value to test for\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 520 of file mg_particle_select\&.cpp\&.
+.SS "long part_deselect_redundant (\fBBproject\fP * project, double excl_dist, int part_select, int fom_index)"
+
+.PP
+Deselects particles overlapping with better ones\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fIexcl_dist\fP minimum distance between particles\&. 
+.br
+\fIpart_select\fP initial selection number (-1 means all >0)\&. 
+.br
+\fIfom_index\fP index of FOM value to test for\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 552 of file mg_particle_select\&.cpp\&.
+.SS "long part_euler_angle_select (\fBBproject\fP * project, double * euler6)"
+
+.PP
+Selects particles based on \fBEuler\fP angle limits\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project structure with all parameters\&. 
+.br
+\fI*euler6\fP 6-value vector of \fBEuler\fP angle limits\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+Only particles already selected are subject to the test.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2568 of file mg_particle_select\&.cpp\&.
+.SS "long part_filament_direction (\fBBproject\fP * project, \fBBproject\fP * project2, double minpct)"
+
+.PP
+Checks the direction of particles associated with filaments and compares with opposite filament direction\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project structure with all parameters\&. 
+.br
+\fI*project2\fP second project structure with opposite filamant directions\&. 
+.br
+\fIminpct\fP minimum percentage\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles with clear direction\&. 
+.PP
+.nf
+The selected particles associated with a filament is checked for their
+in-plane direction. If the percentage of particles exceed the
+minimum desired, the particles with the corresponding direction
+are selected, and the rest deselected.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2411 of file mg_particle_select\&.cpp\&.
+.SS "long part_filament_direction (\fBBproject\fP * project, double minpct)"
+
+.PP
+Checks the direction of particles associated with filaments\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project structure with all parameters\&. 
+.br
+\fIminpct\fP minimum percentage\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles with clear direction\&. 
+.PP
+.nf
+The selected particles associated with a filament is checked for their
+in-plane direction. If the percentage of particles exceed the
+minimum desired, the particles with the corresponding direction
+are selected, and the rest deselected.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2350 of file mg_particle_select\&.cpp\&.
+.SS "long part_fix_defocus (\fBBproject\fP * project, double max_dev)"
+
+.PP
+Resets defocus values for particles thata are too far off\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fImax_dev\fP maximum defocus difference allowed\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of defocus values reset\&. 
+.RE
+.PP
+
+.PP
+Definition at line 3143 of file mg_particle_select\&.cpp\&.
+.SS "double part_fom_defocus_fit (\fBBproject\fP * project, int fom_index, double & intercept, double & slope)"
+
+.PP
+Fits the particle FOMs as a function of the defocus\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fIfom_index\fP index of FOM value to test for\&. 
+.br
+\fI&intercept\fP fit intercept\&. 
+.br
+\fI&slope\fP fit slope\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double correlation index of fit\&. 
+.PP
+.nf
+The FOM is fit as a linear function of the defocus average.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2923 of file mg_particle_select\&.cpp\&.
+.SS "double part_fom_defocus_fit_deselect (\fBBproject\fP * project, int fom_index, double cutoff)"
+
+.PP
+Deselects particles below a given FOM cutoff, adjusted for the defocus\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fIfom_index\fP index of FOM value to test for\&. 
+.br
+\fIcutoff\fP threshold for deselection\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double correlation index of fit\&. 
+.PP
+.nf
+The FOM is fit as a linear function of the defocus average.
+Particles are deselected based on the adjusted FOM cutoff:
+    adj_cut = slope * defocus + cut
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2983 of file mg_particle_select\&.cpp\&.
+.SS "\fBint_float\fP* part_fom_order (\fBBparticle\fP * partlist, long & npart, int fom_index)"
+
+.PP
+Definition at line 90 of file mg_particle_select\&.cpp\&.
+.SS "long part_invert_selection (\fBBproject\fP * project)"
+
+.PP
+Inverts the selection\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure with all parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles\&. 
+.RE
+.PP
+
+.PP
+Definition at line 204 of file mg_particle_select\&.cpp\&.
+.SS "long part_origin_select (\fBBproject\fP * project, \fBVector3\fP< double > origin, double distance)"
+
+.PP
+Selects particles based on the distance from the nominal origin\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project structure with all parameters\&. 
+.br
+\fIorigin\fP nominal origin\&. 
+.br
+\fIdistance\fP maximum distance to accept\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+Only particles already selected are subject to the test.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2630 of file mg_particle_select\&.cpp\&.
+.SS "long part_reselect (\fBBproject\fP * project, \fBBstring\fP & tag, double reselect_min, double reselect_max)"
+
+.PP
+Reselects particles identified by an input STAR tag and between a minimum and maximum\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fI&tag\fP tag indicating which data to select on\&. 
+.br
+\fIreselect_min\fP minimum value\&. 
+.br
+\fIreselect_max\fP maximum value\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+Only particles already selected are subject to reselection.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 750 of file mg_particle_select\&.cpp\&.
+.SS "long part_reset_selection (\fBBproject\fP * project, int flag)"
+
+.PP
+Resets selection to all particles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure with all parameters\&. 
+.br
+\fIflag\fP flag to limit resetting: 1=all, 2=part\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles\&. 
+.RE
+.PP
+
+.PP
+Definition at line 133 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_best (\fBBproject\fP * project, long number, int fom_index, int defocus_fit)"
+
+.PP
+Selects the best particles based on the FOM\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fInumber\fP number of particles\&. 
+.br
+\fIfom_index\fP which FOM value to select on\&. 
+.br
+\fIdefocus_fit\fP flag to compensate for defocus\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+Particles are ranked according to the figure-of-merit and the
+desired percentage selected.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1052 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_best_within_view (\fBBproject\fP * project, \fBBsymmetry\fP & sym, double theta_step, double phi_step, int number, int fom_index)"
+
+.PP
+Selects the best number of particles within each view\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fI*sym\fP symmetry structure\&. 
+.br
+\fItheta_step\fP angular step size from primary symmetry axis (radians)\&. 
+.br
+\fIphi_step\fP angular step size around primary symmetry axis (radians)\&. 
+.br
+\fInumber\fP number within view to select\&. 
+.br
+\fIfom_index\fP which FOM value to select on\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+The best particles within each view is selected.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1729 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_bootstrap (\fBBproject\fP * project, int number)"
+
+.PP
+Selects a given number of particles randomly with replacement\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fInumber\fP number to select\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+A random number between 1 and the number of selected particles is 
+generated the given number of times. The selection value for the
+selected particle is incremented each time. A particle may therefore
+be selected more than once.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1453 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_closest_to_focus (\fBBproject\fP * project)"
+
+.PP
+Deselects all particles except those from micrographs closest to focus\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 3008 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_FOM_avg_std (\fBBproject\fP * project, double factor, int fom_index)"
+
+.PP
+Selects particles based on FOM average and standard deviation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fIfactor\fP factor to multiply standard deviation with\&. 
+.br
+\fIfom_index\fP which FOM value to select on\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+Particles are selected using the average and standard deviation,
+with the level set as a function of difference from the average:
+    selected > average + factor*std_dev
+Note the multiplying factor can be negative.
+Only particles already selected are subject to the test.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1108 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_FOM_groups (\fBBproject\fP * project, int ngroups, int fom_index, int defocus_fit)"
+
+.PP
+Selects groups of particles based on the FOM\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fIngroups\fP number of groups of particles\&. 
+.br
+\fIfom_index\fP index of FOM value to select on\&. 
+.br
+\fIdefocus_fit\fP flag to compensate for defocus\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected in the first group\&. 
+.PP
+.nf
+Particles are ranked according to the figure-of-merit and equal 
+numbers are distributed to the requested number of particle groups.
+The particle group selections are then written into a selection 
+array in the STAR data base, with the group with the best FOM's first.
+Only particles already selected are subject to the test.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 945 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_frames (\fBBproject\fP * project, int frame_start, int frame_end)"
+
+.PP
+Select particles from frames in a series\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fIframe_start\fP first frame (starts at 1)\&. 
+.br
+\fIframe_end\fP last frame\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+Particles in frames from a series in the same field-of-view are 
+selected. Only particles that are already selected are considered.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1994 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_furthest_from_focus (\fBBproject\fP * project)"
+
+.PP
+Deselects all particles except those from micrographs furthest from focus\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 3038 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_group (\fBBproject\fP * project, int group)"
+
+.PP
+Selects particles with a given group identifier\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fIgroup\fP group identifier\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1862 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_maxsmooth (\fBBproject\fP * project, \fBBsymmetry\fP & sym, double theta_step, double phi_step, double threshfrac, double sigma, int fom_index)"
+
+.PP
+Selects particles based on a smoothed maximum surface\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fI*sym\fP symmetry structure\&. 
+.br
+\fItheta_step\fP angular step size from primary symmetry axis (radians)\&. 
+.br
+\fIphi_step\fP angular step size around primary symmetry axis (radians)\&. 
+.br
+\fIthreshfrac\fP fraction of maximum threshold\&. 
+.br
+\fIsigma\fP smoothing parameter: gaussian sigma\&. 
+.br
+\fIfom_index\fP which FOM value to select on\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+The best particles within each view is selected.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1616 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_micrograph (\fBBproject\fP * project, \fBBstring\fP & mgselect)"
+
+.PP
+Sets selection to the micrographs indicated\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure with all parameters\&. 
+.br
+\fI&mgselect\fP string with selection\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles\&. 
+.PP
+.nf
+Only the micrograph selection fields are modified.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 247 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_percentage (\fBBproject\fP * project, double percentage, int fom_index, int defocus_fit)"
+
+.PP
+Selects a percentage of particles based on the FOM\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+David Belnap & Bernard Heymann 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fIpercentage\fP percentage of particles (0 - 100)\&. 
+.br
+\fIfom_index\fP which FOM value to select on\&. 
+.br
+\fIdefocus_fit\fP flag to compensate for defocus\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+Particles are ranked according to the figure-of-merit and the
+desired percentage selected.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 995 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_random (\fBBproject\fP * project, long number)"
+
+.PP
+Selects a specific number of particles randomly\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fInumber\fP number to select\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+An array is set up for all selected particles. The given number of random
+elements is selected in the array and transfered as particle selections.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1163 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_random_filaments (\fBBproject\fP * project, int nmaps)"
+
+.PP
+Generates a selection number from the group number for each filament\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fInmaps\fP number of maps to select for\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1379 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_random_fraction (\fBBproject\fP * project, double fraction)"
+
+.PP
+Selects particles randomly based on a fraction of the total\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fIfraction\fP fraction of total to select\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+A random number between 0 and 1 is generated for each particle and if 
+it is smaller than the given fraction, the particle is selected.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1243 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_random_group (\fBBproject\fP * project, long number)"
+
+.PP
+Selects groups randomly to give at least a number of particles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fInumber\fP number to select\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+A random number between 0 and 1 is generated for each particle and if 
+it is smaller than the given fraction, the particle is selected.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1292 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_random_within_view (\fBBproject\fP * project, \fBBsymmetry\fP & sym, double theta_step, double phi_step, int number)"
+
+.PP
+Selects a given number of particles within each view\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fI*sym\fP symmetry structure\&. 
+.br
+\fItheta_step\fP angular step size from primary symmetry axis (radians)\&. 
+.br
+\fIphi_step\fP angular step size around primary symmetry axis (radians)\&. 
+.br
+\fInumber\fP number within view to select\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+A random number between 1 and the number of selected particles is 
+generated the given number of times. The selection value for the
+selected particle is incremented each time. A particle may therefore
+be selected more than once.
+This selection is meant to be used with the bootstrap reconstruction.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1512 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_series (\fBBproject\fP * project, int size, int flag)"
+
+.PP
+Select series where all are already selected\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fIsize\fP number of particles in each set\&. 
+.br
+\fIflag\fP flag to not count across mg or rec boundaries\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+This function selects those series where all the particles
+are already selected, and deselects the rest. Sets are selected
+with each series part of the same set.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2760 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_sets (\fBBproject\fP * project, int size, int flag)"
+
+.PP
+Selects sets of particles, each set with the same size\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fIsize\fP number of particles in each set\&. 
+.br
+\fIflag\fP flag to not count across mg or rec boundaries\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+Sets up sets of particles, each set identified as a number in the
+selection array.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1911 of file mg_particle_select\&.cpp\&.
+.SS "long part_select_to_group (\fBBproject\fP * project)"
+
+.PP
+Transfer selection numbers to the group identifiers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1818 of file mg_particle_select\&.cpp\&.
+.SS "double part_series_comparison (\fBBproject\fP * project, \fBBsymmetry\fP & sym, double angle_cutoff)"
+
+.PP
+A function to select particles based on comparison of the orientations within a series\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fI*sym\fP symmetry\&. 
+.br
+\fIangle_cutoff\fP angle cutoff value (radians)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double average angular deviation\&. 
+.PP
+.nf
+Only particles already selected are subject to the test.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 829 of file mg_particle_select\&.cpp\&.
+.SS "long part_series_from_seed (\fBBproject\fP * project, int flags)"
+
+.PP
+Calculates the locations of particles in a series from a seed\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph project\&. 
+.br
+\fIflags\fP bit 1=invert z, bit 2=use original particle view\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles created\&. 
+.PP
+.nf
+The seed particle locations is either in the zero-degree tilt 2D micrograph,
+or a 3D reconstruction. The latter also gives the z-coordinate, resulting
+in a better definition of the particle location.
+The project selection flag indicates micrograph or reconstruction.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2819 of file mg_particle_select\&.cpp\&.
+.SS "long part_set_best_view_in_series (\fBBproject\fP * project, int fom_index)"
+
+.PP
+Sets all orientation parameters for a particle to the best in the set\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fIfom_index\fP index of FOM value to select on\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+This function uses the FOM to select the best orientation parameters
+for a particle in a set (typically a focal series) and sets all
+orientation parameters to the same values.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2716 of file mg_particle_select\&.cpp\&.
+.SS "long part_set_filament_maps (\fBBproject\fP * project)"
+
+.PP
+Generates a selection number from the group number for each filament\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of maps selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 645 of file mg_particle_select\&.cpp\&.
+.SS "long part_set_first_view_in_series (\fBBproject\fP * project)"
+
+.PP
+Sets all orientation parameters for a particle to the first in the set\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+This function sets the views of all the particles in the field-of-view to 
+the views for the first micrograph.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2682 of file mg_particle_select\&.cpp\&.
+.SS "long part_set_FOM (\fBBproject\fP * project, int fom_index, double fom)"
+
+.PP
+Sets the FOM for all particles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure with all parameters\&. 
+.br
+\fIfom_index\fP index of FOM value to set\&. 
+.br
+\fIfom\fP new FOM\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles\&. 
+.RE
+.PP
+
+.PP
+Definition at line 382 of file mg_particle_select\&.cpp\&.
+.SS "long part_set_multi_maps (\fBBproject\fP * project, int part_select, int nmaps)"
+
+.PP
+Sets selection for generating multiple maps\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP parameter structure with all parameters\&. 
+.br
+\fIpart_select\fP initial selection number (-1 means all >0)\&. 
+.br
+\fInmaps\fP desired number of maps\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+Selected particles are sequentially assigned increasing integers
+up to desired number of maps (nmaps).
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 590 of file mg_particle_select\&.cpp\&.
+.SS "long part_set_selection (\fBBproject\fP * project, int number)"
+
+.PP
+Selects one selection number and sets all others to zero\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure with all parameters\&. 
+.br
+\fInumber\fP selection number to keep\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 317 of file mg_particle_select\&.cpp\&.
+.SS "long part_set_sequential (\fBBproject\fP * project)"
+
+.PP
+Selects one selection number and sets all others to zero\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure with all parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 352 of file mg_particle_select\&.cpp\&.
+.SS "long part_side_view_select (\fBBproject\fP * project, double angle)"
+
+.PP
+Selects particles based on a distance from a side view\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project structure with all parameters\&. 
+.br
+\fIangle\fP angular distance from the side view\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+Only particles already selected are subject to the test.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2520 of file mg_particle_select\&.cpp\&.
+.SS "long part_unset_selection (\fBBproject\fP * project)"
+
+.PP
+Unsets selection to no particles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure with all parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles\&. 
+.RE
+.PP
+
+.PP
+Definition at line 168 of file mg_particle_select\&.cpp\&.
+.SS "long part_view_select (\fBBproject\fP * project, \fBView\fP view, double angle)"
+
+.PP
+Selects particles based on a distance from a reference view\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project structure with all parameters\&. 
+.br
+\fIview\fP central view to search for\&. 
+.br
+\fIangle\fP angular distance from the view\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.PP
+.nf
+Only particles already selected are subject to the test.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 2469 of file mg_particle_select\&.cpp\&.
+.SS "\fBint_float\fP* project_fom_order (\fBBproject\fP * project, long & npart, int fom_index, int defocus_fit)"
+
+.PP
+Definition at line 24 of file mg_particle_select\&.cpp\&.
+.SS "vector<pair<\fBBparticle\fP*,double> > project_part_sort (\fBBproject\fP * project, \fBBstring\fP tag)"
+
+.PP
+Sorts the Particles by a selected parameter\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fItag\fP parameter tag\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<pair<Bparticle*,double>> array of particle links and values\&. 
+.RE
+.PP
+
+.PP
+Definition at line 3181 of file mg_particle_select\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

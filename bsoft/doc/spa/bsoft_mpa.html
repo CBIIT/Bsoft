@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: MPA</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="../Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Multiple particle analysis or 3D classification</h1>
+    <p>Multiple particle analysis (MPA) is typically used to classify particles with different components or different conformations. It can also be used to test different starting reference maps to make sure that a consistent reconstruction is produced.</p>
+    <p>MPA follow the same steps as single particle analysis, with some modifications to deal with multiple reference maps. Steps 1-5 for SPA are identical, as described <a href="bsoft_spa.html">here</a>.</p>
+	<center><img src="MPA_flowchart.png" alt="MPA flow chart" width="536" height="395" /></center>
+      <br />
+<h2>1. Multiple reference maps</h2>
+<p>MPA requires multiple reference maps, which can be obtained in many different ways. Ideally, all the reference maps should have the same quality, such as the same resolution, the same signal-to-noise ratio, etc. However, real reference maps typically have significant differences, not just in structure but also quality. To level the playing field to the best extent, all reference maps should be handled the same way. This may involve low-pass filtering to the same resolution, typically to the match the resolution of the worst map. Also, masking out as much of the background is desirable, and such masking should be doe in the same way for all maps.<br />
+</p>
+<h3>1.1. Synthetic reference maps:</h3>
+In the case of a project with no prior information on the structure of the particle, one starting point is to generate one or more synthetic reference maps. Multiple different synthetic maps can be used to make sure that the same structure is eventually obtained in all cases.<br />
+<br />
+<h3>1.2. Reference maps from atomic structures:</h3>
+Multiple atomic structures can be generated in various software packages suitable for molecular manipulation. These structures can be converted into density maps and used as references.<br />
+<br />
+<h3>1.3. Reconstructing multiple maps using particles with orientations:</h3>
+Given a SPA project where the particle orientations have already been determined, multiple maps can be calculated in various ways. Different selection schemes are available using the program bpartsel and one of the following options:<br />
+<ul>
+  <li><strong>-rank 4,1</strong>                Select a number of groups from FOM ranking and flag to adjust for defocus.</li>
+  <li><strong>-random 23.6</strong>             Select: random selection to get the given fraction or percentage.</li>
+  <li><strong>-bootstrap 527</strong>           Select: random selection with replacement up to the given number.</li>
+</ul>
+<p>Multiple maps are then reconstructed based on the selection in the parameter file:</p>
+<div id="command"><p>breconstruct -v 3 -resol 15 -select 5 -rescale 0,1 -sym I -recon phi6_ref_05.map -out phi6_ref_05.star phi6_run1.star</p></div>
+</p>
+<p>For the -bootstrap option in bpartsel, use the corresponding -bootstrap option in breconstruct.<br />
+</p>
+<h2>2. Multiple orientations for each particle<br />
+</h2>
+
+For each reference map, a full orientation-finding run is done with all the particles. It is important that all parameters used (such as resolution limits and annulli) should be the same for the different runs to ensure that the FOM's are comparable. This generates a parameter file for each reference map with the corresponding origins, orientations and FOM's.<br />
+<br />
+<br />
+<h2>3. Merging and selecting particles<br />
+</h2>
+<p>The multiple output files resulting from orientation-finding runs must be merged and a selection of orientation parameters done for each particle:<br />
+  <br />
+  <div id="command"><p>bpartmulti -v 7 -all -select fom -fom 0.4 -out phi6_selected.star phi6_*_out.star</p></div>
+  <br />
+</p>
+<h2>4. Multiple map reconstruction</h2>
+<p>In the parameter file generated during merging and selection, the selection column contains the assignment of the particle to a reference map. The corresponding new reconstruction is calculated using this selection:</p>
+<div id="command"><p>breconstruct -v 3 -resol 12 -select 3 -rescale 0,1 -sym I -recon phi6_recon_03.map -out phi6_recon_03.star phi6_selected.star</p></div>
+  <br />
+  <br />
+</p>
+<h2>5. Selecting maps for merging and rejection</h2>
+<p>Classes with small numbers of particles (e.g., &lt; 5%) are typically rejected and not further considered.</p>
+<p>The reconstructions from the remaining classes are then compared pair-wise to estimate the similarities and differences:</p>
+<div id="command"><p>bmapdist -v 1 -cut 0.3,70 -resol 10 -out phi6_mapdist.star -matrix phi6_mapdist.dat phi6_recon*.pif</p></div>
+<p>This outputs several tables:</p>
+<ul>
+  <li>Correlation coefficients: Real space correlation</li>
+  <li>-log(Correlation coefficients): Correlation converted to a distance form</li>
+  <li>R factors: Difference between maps</li>
+  <li>Resolution based on Fourier shell correlation:</li>
+  <li>Resolution based on differential phase residuals:</li>
+ </ul>
+   <p>The last two tables give an indication to what resolution each pair of maps are similar.</p>
+   <p>The matrix of similarities generated can be further used for cluster analysis and to generate an image showing the matrix:</p>
+   <div id="command"><p>bmatrix -verb 7 -pref 0.5 -out phi6_mapdist.png phi6_mapdist.dat<</p></div>
+   <div id="command"><p>bcolour -v 7 -color 0,255 phi6_mapdist.png phi6_mapdist_col.png</p></div>
+   <p></p>
+   <p>Maps that are considered to be very similar can be added to each other.</p>
+   <p>To generate a larger number of new reference maps for the next round of orientation-finding, intermediary maps can be produced by merging pairs of maps.</p>
+   <p><br />
+   </p>
+   <h2>6. Convergence</h2>
+   <p>Convergence of the iterative refinement of particle orientations and classification is achieved when:</p>
+   <ul>
+     <li>The number of particles in each class remains approximately constant</li>
+     <li>The pair-wise comparisons of the maps remain about the same.<br />
+        <br />
+        <br />
+                </li>
+   </ul>
+</div>
+<div id="footer">
+  Bernard Heymann  20120126
+</div>
+</body>
+</html>

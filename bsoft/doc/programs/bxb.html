@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+	<meta name="Author" content="Bernard Heymann">
+	<TITLE>Bsoft: bxb </TITLE>
+	<link type="image/png" href="Bsoft_16x16.png" rel="icon">
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+<h2><i><font color="#000099">Bsoft program</font></i></h2>
+<center><h1><font color="#FF0000">bxb</font></h1></center>  <h3>Usage: bxb [options] in1.star [in2.star ...]</h3>
+Extracting a part of a density map and building a new map based on a model. <br>
+Component orientational and positional refinement can be done as: 	1. random modifications over the specified iterations, 	2. a contracting grid search when the steps and accuracy are specified.   <h3>Actions:</h3>
+<table><tbody>
+<tr><td>-setviews local</td><td>Calculate views for components. Modes: origin: current origin,</td></tr>
+<tr><td></td><td>                         com: center-of-mass origin, map: map origin, local: neigbor plane.</td></tr>
+<tr><td>-invert</td><td>Invert views for selected components.</td></tr>
+<tr><td>-linklength 58.4</td><td>Reference link length to generate links (angstrom, default 1).</td></tr>
+<tr><td>-type component</td><td>Type of element: component (default) or link.</td></tr>
+<tr><td>-extract 80,50,30</td><td>Extract a part of the density with the given size.</td></tr>
+<tr><td>-build 200,250,150</td><td>Build a new map of the given size.</td></tr>
+<tr><td>-refine template.map</td><td>Refine the positions by cross-correlation.</td></tr>
+<tr><td>-average 2</td><td>Average extracted densities: averages per type (use with -extract).</td></tr>
+<tr><td>-componenttype A,Ver</td><td>Names to assign to component types in the template file.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Selections:</h3>
+<table><tbody>
+<tr><td>-all</td><td>Reset selection to all models and components before other selections.</td></tr>
+<tr><td>-select #Mod1@14</td><td>Select models and components.</td></tr>
+<tr><td>-linkselect 2</td><td>Link selection for building a new map (first = 1, default all).</td></tr>
+<tr><td>-fom 0.25</td><td>Select: FOM cutoff.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Parameters:</h3>
+<table><tbody>
+<tr><td>-verbose 7</td><td>Verbose output.</td></tr>
+<tr><td>-datatype u</td><td>Force writing of a new data type.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Parameters for building:</h3>
+<table><tbody>
+<tr><td>-sampling 1.5,1.5,1.5</td><td>Sampling (A/pixel; a single value can be given).</td></tr>
+<tr><td>-origin 0.8,-10,15.7</td><td>Set the origin for extracted or built map</td></tr>
+<tr><td></td><td>                         (origins for extract and build cannot be used together).</td></tr>
+<tr><td>-weigh</td><td>Weigh by contributions when building a new map (default not).</td></tr>
+<tr><td>-separate</td><td>Separate maps for each component type (default one map).</td></tr>
+<tr><td></td><td> </td></tr>
+<tr><td></td><td>Common refinement parameters:</td></tr>
+<tr><td>-resolution 4.5,130</td><td>Resolution range for cross-correlation (default 0 - 1e6 angstrom).</td></tr>
+<tr><td>-shift 2.3</td><td>Maximum shift allowed per iteration (angstrom, default 10% map width).</td></tr>
+<tr><td>-viewangle 1.4</td><td>Maximum rotation angle of view vector allowed per iteration (default 0 degrees).</td></tr>
+<tr><td>-rotationangle 3.5</td><td>Maximum rotation angle around view vector allowed per iteration (default 0 degrees).</td></tr>
+<tr><td>-normal</td><td>Flag to shift only along the component view vector.</td></tr>
+<tr><td>-lateral</td><td>Flag to shift only perpendicular to the component view vector.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Parameters for random refinement:</h3>
+<table><tbody>
+<tr><td>-iterations 80</td><td>Maximum number of refining iterations (default 0 - only positional refinement).</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Parameters for grid refinement:</h3>
+<table><tbody>
+<tr><td>-viewstep 2.5</td><td>Angular steps in 2 view directions (default 0 degrees).</td></tr>
+<tr><td>-rotationstep 1.3</td><td>Angular step around view (default 0 degrees).</td></tr>
+<tr><td>-accuracy 0.7</td><td>Angular refinement accuracy (default 0.5 degrees).</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Output image parameters:</h3>
+<table><tbody>
+<tr><td>-rescale -0.1,5.2</td><td>Rescale data to average and standard deviation.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Input:</h3>
+<table><tbody>
+<tr><td>-parameters param.star</td><td>Input parameter file.</td></tr>
+<tr><td>-map file.map</td><td>Input map file.</td></tr>
+<tr><td>-mask mask.mrc</td><td>Real space mask to be applied to template and subvolumes.</td></tr>
+<tr><td>-Mask mask.mrc</td><td>Mask for cross-correlation during refinement.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Output:</h3>
+<table><tbody>
+<tr><td>-output file.star</td><td>Output model parameter file.</td></tr>
+<tr><td>-construct file.pif</td><td>Constructed map file.</td></tr>
+<tr><td>-std file.pif</td><td>Standard deviation map file.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table>
+<br>Bsoft version 2.0.7-20200917 (64 bit)<br>
+<HR WIDTH="100%"><BR>
+Generated by bdoc.pl on Mon Oct 26 08:20:12 2020 <BR>
+<HR WIDTH="100%"><BR>
+<center><a href="bsoft.html">Back to the Bsoft home</a></center>
+<HR WIDTH="100%"><BR>
+</BODY>
+</HTML>

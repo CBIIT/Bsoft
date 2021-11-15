@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__defect_masking_e_e_r_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/eer/DefectMaskingEER.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/eer/DefectMaskingEER.cpp</primary></indexterm>
+<programlisting>#include &quot;DefectMaskingEER.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>void <link linkend="__defect_masking_e_e_r_8cpp_1aa58b7132e530ef9546c77cba01e8a7e4">_addDefectNeighborInfo</link> (<link linkend="_struct_camera_defect_neighbor_information">CameraDefectNeighborInformation</link> &amp;camDefectNeighborInfo, uint32_t idx, <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> spec)</para>
+</listitem>
+            <listitem><para>void <link linkend="__defect_masking_e_e_r_8cpp_1a70d1bf1e245643fccc7e69dd57148575">CreateDefectNeighborInfoMap</link> (const <link linkend="_struct_camera_defects">CameraDefects</link> &amp;def, const float *gainImage, <link linkend="_struct_camera_defect_neighbor_information">CameraDefectNeighborInformation</link> &amp;camDefectNeighborInfo)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> <link linkend="__defect_masking_e_e_r_8cpp_1a62a006e7f9f78c033554df53facb1e18">bitMask_DefectNeighborTypeMask</link> = 0xC0</para>
+</listitem>
+            <listitem><para>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> <link linkend="__defect_masking_e_e_r_8cpp_1a0e904173733f055e0cd4bd4f88b7ed0f">bitMask_Defect1DInterpol</link> = 0x40</para>
+</listitem>
+            <listitem><para>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> <link linkend="__defect_masking_e_e_r_8cpp_1aa29f595a7c9ea1bcc63b9c87e1bd402a">bitMask_Defect2DInterpol</link> = 0x80</para>
+</listitem>
+            <listitem><para>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> <link linkend="__defect_masking_e_e_r_8cpp_1adb06ad3b218ea1d9f3903aed6ecc1228">bitMask_DefectCorner</link> = 0xC0</para>
+</listitem>
+            <listitem><para>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> <link linkend="__defect_masking_e_e_r_8cpp_1a3d3774139d25b2be0cbc7181ea2d0a78">bitMask_DefectUpDown</link> = 0x20</para>
+</listitem>
+            <listitem><para>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> <link linkend="__defect_masking_e_e_r_8cpp_1a9ca5cd2a50b554daf0fbf2047ca373e4">bitMask_DefectBack</link> = 0x10</para>
+</listitem>
+            <listitem><para>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> <link linkend="__defect_masking_e_e_r_8cpp_1a908db63f01d97ee0299bb504f9bf54bb">bitMask_DefectRight</link> = 0x00</para>
+</listitem>
+            <listitem><para>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> <link linkend="__defect_masking_e_e_r_8cpp_1ab70b8e181c13136af77a6e4f432fc5fe">bitMask_DefectLeft</link> = <link linkend="__defect_masking_e_e_r_8cpp_1a9ca5cd2a50b554daf0fbf2047ca373e4">bitMask_DefectBack</link></para>
+</listitem>
+            <listitem><para>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> <link linkend="__defect_masking_e_e_r_8cpp_1a65f29efa3f599ebfc34b0622bef1149c">bitMask_DefectDown</link> = <link linkend="__defect_masking_e_e_r_8cpp_1a3d3774139d25b2be0cbc7181ea2d0a78">bitMask_DefectUpDown</link></para>
+</listitem>
+            <listitem><para>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> <link linkend="__defect_masking_e_e_r_8cpp_1a45e30fbad823f857111abc7bf0f51450">bitMask_DefectUp</link> = <link linkend="__defect_masking_e_e_r_8cpp_1a9ca5cd2a50b554daf0fbf2047ca373e4">bitMask_DefectBack</link> | <link linkend="__defect_masking_e_e_r_8cpp_1a3d3774139d25b2be0cbc7181ea2d0a78">bitMask_DefectUpDown</link></para>
+</listitem>
+            <listitem><para>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> <link linkend="__defect_masking_e_e_r_8cpp_1acbb4d12e028b115da4d2df6ef734dbdf">bitMask_Distance</link> = 0x0F</para>
+</listitem>
+            <listitem><para>const unsigned <link linkend="__defect_masking_e_e_r_8cpp_1aae649662add03d880d94073a28f75fa7">gainImageSizeFactor</link> = <link linkend="__electron_counted_frames_decompressor_8h_1ab4fb97659732078d37d3f6c704188f0e">totalSuperResolutionImSize</link>/<link linkend="__electron_counted_frames_decompressor_8h_1a380ed223d38e24dbefd5b4c737c6a01c">gainImageSize</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="__defect_masking_e_e_r_8cpp_1aa58b7132e530ef9546c77cba01e8a7e4"/>    <section>
+    <title>_addDefectNeighborInfo()</title>
+<indexterm><primary>_addDefectNeighborInfo</primary><secondary>DefectMaskingEER.cpp</secondary></indexterm>
+<indexterm><primary>DefectMaskingEER.cpp</primary><secondary>_addDefectNeighborInfo</secondary></indexterm>
+<para><computeroutput>void _addDefectNeighborInfo (<link linkend="_struct_camera_defect_neighbor_information">CameraDefectNeighborInformation</link> &amp; camDefectNeighborInfo, uint32_t idx, <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> spec)<computeroutput>[inline]</computeroutput></computeroutput></para><para>
+Definition at line 30 of file DefectMaskingEER.cpp.</para>
+    </section><anchor xml:id="__defect_masking_e_e_r_8cpp_1a70d1bf1e245643fccc7e69dd57148575"/>    <section>
+    <title>CreateDefectNeighborInfoMap()</title>
+<indexterm><primary>CreateDefectNeighborInfoMap</primary><secondary>DefectMaskingEER.cpp</secondary></indexterm>
+<indexterm><primary>DefectMaskingEER.cpp</primary><secondary>CreateDefectNeighborInfoMap</secondary></indexterm>
+<para><computeroutput>void CreateDefectNeighborInfoMap (const <link linkend="_struct_camera_defects">CameraDefects</link> &amp; def, const float * gainImage, <link linkend="_struct_camera_defect_neighbor_information">CameraDefectNeighborInformation</link> &amp; camDefectNeighborInfo)</computeroutput></para><para>
+Definition at line 36 of file DefectMaskingEER.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="__defect_masking_e_e_r_8cpp_1a0e904173733f055e0cd4bd4f88b7ed0f"/>    <section>
+    <title>bitMask_Defect1DInterpol</title>
+<indexterm><primary>bitMask_Defect1DInterpol</primary><secondary>DefectMaskingEER.cpp</secondary></indexterm>
+<indexterm><primary>DefectMaskingEER.cpp</primary><secondary>bitMask_Defect1DInterpol</secondary></indexterm>
+<para><computeroutput>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> bitMask_Defect1DInterpol = 0x40</computeroutput></para><para>
+Definition at line 9 of file DefectMaskingEER.cpp.</para>
+    </section><anchor xml:id="__defect_masking_e_e_r_8cpp_1aa29f595a7c9ea1bcc63b9c87e1bd402a"/>    <section>
+    <title>bitMask_Defect2DInterpol</title>
+<indexterm><primary>bitMask_Defect2DInterpol</primary><secondary>DefectMaskingEER.cpp</secondary></indexterm>
+<indexterm><primary>DefectMaskingEER.cpp</primary><secondary>bitMask_Defect2DInterpol</secondary></indexterm>
+<para><computeroutput>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> bitMask_Defect2DInterpol = 0x80</computeroutput></para><para>
+Definition at line 10 of file DefectMaskingEER.cpp.</para>
+    </section><anchor xml:id="__defect_masking_e_e_r_8cpp_1a9ca5cd2a50b554daf0fbf2047ca373e4"/>    <section>
+    <title>bitMask_DefectBack</title>
+<indexterm><primary>bitMask_DefectBack</primary><secondary>DefectMaskingEER.cpp</secondary></indexterm>
+<indexterm><primary>DefectMaskingEER.cpp</primary><secondary>bitMask_DefectBack</secondary></indexterm>
+<para><computeroutput>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> bitMask_DefectBack = 0x10</computeroutput></para><para>
+Definition at line 14 of file DefectMaskingEER.cpp.</para>
+    </section><anchor xml:id="__defect_masking_e_e_r_8cpp_1adb06ad3b218ea1d9f3903aed6ecc1228"/>    <section>
+    <title>bitMask_DefectCorner</title>
+<indexterm><primary>bitMask_DefectCorner</primary><secondary>DefectMaskingEER.cpp</secondary></indexterm>
+<indexterm><primary>DefectMaskingEER.cpp</primary><secondary>bitMask_DefectCorner</secondary></indexterm>
+<para><computeroutput>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> bitMask_DefectCorner = 0xC0</computeroutput></para><para>
+Definition at line 11 of file DefectMaskingEER.cpp.</para>
+    </section><anchor xml:id="__defect_masking_e_e_r_8cpp_1a65f29efa3f599ebfc34b0622bef1149c"/>    <section>
+    <title>bitMask_DefectDown</title>
+<indexterm><primary>bitMask_DefectDown</primary><secondary>DefectMaskingEER.cpp</secondary></indexterm>
+<indexterm><primary>DefectMaskingEER.cpp</primary><secondary>bitMask_DefectDown</secondary></indexterm>
+<para><computeroutput>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> bitMask_DefectDown = <link linkend="__defect_masking_e_e_r_8cpp_1a3d3774139d25b2be0cbc7181ea2d0a78">bitMask_DefectUpDown</link></computeroutput></para><para>
+Definition at line 17 of file DefectMaskingEER.cpp.</para>
+    </section><anchor xml:id="__defect_masking_e_e_r_8cpp_1ab70b8e181c13136af77a6e4f432fc5fe"/>    <section>
+    <title>bitMask_DefectLeft</title>
+<indexterm><primary>bitMask_DefectLeft</primary><secondary>DefectMaskingEER.cpp</secondary></indexterm>
+<indexterm><primary>DefectMaskingEER.cpp</primary><secondary>bitMask_DefectLeft</secondary></indexterm>
+<para><computeroutput>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> bitMask_DefectLeft = <link linkend="__defect_masking_e_e_r_8cpp_1a9ca5cd2a50b554daf0fbf2047ca373e4">bitMask_DefectBack</link></computeroutput></para><para>
+Definition at line 16 of file DefectMaskingEER.cpp.</para>
+    </section><anchor xml:id="__defect_masking_e_e_r_8cpp_1a62a006e7f9f78c033554df53facb1e18"/>    <section>
+    <title>bitMask_DefectNeighborTypeMask</title>
+<indexterm><primary>bitMask_DefectNeighborTypeMask</primary><secondary>DefectMaskingEER.cpp</secondary></indexterm>
+<indexterm><primary>DefectMaskingEER.cpp</primary><secondary>bitMask_DefectNeighborTypeMask</secondary></indexterm>
+<para><computeroutput>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> bitMask_DefectNeighborTypeMask = 0xC0</computeroutput></para><para>
+Definition at line 8 of file DefectMaskingEER.cpp.</para>
+    </section><anchor xml:id="__defect_masking_e_e_r_8cpp_1a908db63f01d97ee0299bb504f9bf54bb"/>    <section>
+    <title>bitMask_DefectRight</title>
+<indexterm><primary>bitMask_DefectRight</primary><secondary>DefectMaskingEER.cpp</secondary></indexterm>
+<indexterm><primary>DefectMaskingEER.cpp</primary><secondary>bitMask_DefectRight</secondary></indexterm>
+<para><computeroutput>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> bitMask_DefectRight = 0x00</computeroutput></para><para>
+Definition at line 15 of file DefectMaskingEER.cpp.</para>
+    </section><anchor xml:id="__defect_masking_e_e_r_8cpp_1a45e30fbad823f857111abc7bf0f51450"/>    <section>
+    <title>bitMask_DefectUp</title>
+<indexterm><primary>bitMask_DefectUp</primary><secondary>DefectMaskingEER.cpp</secondary></indexterm>
+<indexterm><primary>DefectMaskingEER.cpp</primary><secondary>bitMask_DefectUp</secondary></indexterm>
+<para><computeroutput>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> bitMask_DefectUp = <link linkend="__defect_masking_e_e_r_8cpp_1a9ca5cd2a50b554daf0fbf2047ca373e4">bitMask_DefectBack</link> | <link linkend="__defect_masking_e_e_r_8cpp_1a3d3774139d25b2be0cbc7181ea2d0a78">bitMask_DefectUpDown</link></computeroutput></para><para>
+Definition at line 18 of file DefectMaskingEER.cpp.</para>
+    </section><anchor xml:id="__defect_masking_e_e_r_8cpp_1a3d3774139d25b2be0cbc7181ea2d0a78"/>    <section>
+    <title>bitMask_DefectUpDown</title>
+<indexterm><primary>bitMask_DefectUpDown</primary><secondary>DefectMaskingEER.cpp</secondary></indexterm>
+<indexterm><primary>DefectMaskingEER.cpp</primary><secondary>bitMask_DefectUpDown</secondary></indexterm>
+<para><computeroutput>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> bitMask_DefectUpDown = 0x20</computeroutput></para><para>
+Definition at line 13 of file DefectMaskingEER.cpp.</para>
+    </section><anchor xml:id="__defect_masking_e_e_r_8cpp_1acbb4d12e028b115da4d2df6ef734dbdf"/>    <section>
+    <title>bitMask_Distance</title>
+<indexterm><primary>bitMask_Distance</primary><secondary>DefectMaskingEER.cpp</secondary></indexterm>
+<indexterm><primary>DefectMaskingEER.cpp</primary><secondary>bitMask_Distance</secondary></indexterm>
+<para><computeroutput>const <link linkend="__defect_masking_e_e_r_8h_1a098a00c17d72c303856d1139e0033d14">defectNeighborInfo_t</link> bitMask_Distance = 0x0F</computeroutput></para><para>
+Definition at line 21 of file DefectMaskingEER.cpp.</para>
+    </section><anchor xml:id="__defect_masking_e_e_r_8cpp_1aae649662add03d880d94073a28f75fa7"/>    <section>
+    <title>gainImageSizeFactor</title>
+<indexterm><primary>gainImageSizeFactor</primary><secondary>DefectMaskingEER.cpp</secondary></indexterm>
+<indexterm><primary>DefectMaskingEER.cpp</primary><secondary>gainImageSizeFactor</secondary></indexterm>
+<para><computeroutput>const unsigned gainImageSizeFactor = <link linkend="__electron_counted_frames_decompressor_8h_1ab4fb97659732078d37d3f6c704188f0e">totalSuperResolutionImSize</link>/<link linkend="__electron_counted_frames_decompressor_8h_1a380ed223d38e24dbefd5b4c737c6a01c">gainImageSize</link></computeroutput></para><para>
+Definition at line 25 of file DefectMaskingEER.cpp.</para>
+</section>
+</section>
+</section>

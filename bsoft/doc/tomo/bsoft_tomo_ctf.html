@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- Author: Bernard Heymann -->
+<title>Bsoft: CTF correction for tomography</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<script language="JavaScript" type="text/javascript" src="../bsoft.js"></script>
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h2>Determining the CTF</h2>
+<p>For a general introduction to the contrast transfer function (CTF) see this
+<a href="../spa/bsoft_ctf.html">link</a>.
+</p>
+<p>A prerequisite is that the tilt axis and tilt angles are known to a reasonable
+	accuracy. The nominal axis and tilt angles should be sufficient to get
+	good power spectra for CTF fitting. The more accurate angles determined
+	from alignment is then used during reconstruction.</p>
+<p>As with micrographs processed for SPA, the image is tiled, each tile transformed,
+and the resulting power spectra averaged to give a relatively noise-suppressed spectrum.
+The complication is to adjust for the specimen tilt that causes a defocus gradient
+across the image. The tilt angles and tilt axis must therefore be specified in the
+parameter file to calculate the correct defocus for each tile. The best workflow
+is to align the tilt series first to get accurate tilt and axis angles. In addition,
+an approximate defocus for the whole tilt series need to be given. The CTF parameters
+are then determined for each micrograph in the tilt series. If the nominal defocus
+provided in the beginning is too far off the determined values, the whole process
+can be repeated with the defocus values in the parameter file.</p>
+<p>The following command line will set up the initial CTF parameters, prepare the
+average power spectra, and determine CTF parameters:</p>
+<div id="command"><p>bctf -verb 1 -act prepfit -tile 256,256,1 -Volt 300 -Defocus 2.6 -Amp 0.07 -resol 10,50 -out tomo_ctfit.star tomo.star</p></div>
+<p>The tile size should be chosen to give reasonable Thon rings in the power spectra.
+	The tile edge size should be:</p>
+<center><img
+ style="width: 150px;" alt="Tile size equation"
+ src="ps_tile_size.png" /><br />
+</center>
+	
+<p>As always with CTF fitting, the quality of the fits should be checked in bshow.</p>
+
+<h2>Correcting for the CTF</h2>
+<p>The CTF of the micrographs can be corrected before or during
+	<a href="bsoft_tomo_rec.html">reconstruction</a>.
+	The same types of CTF correction are available in both cases.</p>
+<p>The CTF can be corrected in several ways, from the conservative flipping phase
+to the most aggressive correction algorithms. A good choice (at least to start with)
+ is to flip the phases where the CTF curve is negative:</p>
+<div id="command"><p>bctf -verb 1 -act flip -tile 128,128,1 -mic -out tomo_flip.star tomo_ctfit2.star</p></div>
+<p>The tile size for CTF correction should be relatively small, but not too small
+to avoid poor spectral sampling. It may be necessary to find a good size for a
+particular case or a particular tomographic setup.</p>
+</div>
+
+<div id="footer">
+  Bernard Heymann  20200325
+</div>
+</body>
+
+</html>

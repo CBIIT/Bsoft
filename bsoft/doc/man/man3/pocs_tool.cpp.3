@@ -1,0 +1,221 @@
+.TH "/Users/bernard/b20/bsoft/radon/pocs_tool.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/radon/pocs_tool.cpp
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'pocs_tool\&.h'\fP
+.br
+\fC#include 'fft_tool\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBfilter_sin_mask\fP (\fBBimage\fP *p, int n_cicli, float r_max, \fBBimage\fP *pmask, int piano, int tipo, int first)"
+.br
+.ti -1c
+.RI "int \fBrestore_with_mask\fP (\fBBimage\fP *p, \fBBimage\fP *pcopia, \fBBimage\fP *pmask, int linea, int tipo)"
+.br
+.ti -1c
+.RI "int \fBcopy_sin\fP (\fBBimage\fP *p)"
+.br
+.RI "Copy the second half of a sinogram from the first one\&. "
+.ti -1c
+.RI "int \fBcopy_phi\fP (\fBBimage\fP *pelab, \fBBimage\fP *p, int i)"
+.br
+.ti -1c
+.RI "int \fBfilter_bessel\fP (\fBBimage\fP *p, int r, int first)"
+.br
+.ti -1c
+.RI "int \fBfilter_X_mask\fP (\fBBimage\fP *p, \fBBimage\fP *pmask, int n_cicli, float r_maxx, int passata)"
+.br
+.ti -1c
+.RI "int \fBsupport_f\fP (\fBBimage\fP *p, float rmax)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+\fBAuthor\fP
+.RS 4
+P\&.L\&. Bellon, F\&. Cantele and S\&. Lanzavecchia Dip\&. Chimica Strutturale e Stereochimica Inorganica Via Venezian 21, 20133 Milano, Italy
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 7 04 2003 
+.PP
+Modified: 07 07 2005 
+.RE
+.PP
+
+.PP
+Definition in file \fBpocs_tool\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int copy_phi (\fBBimage\fP * pelab, \fBBimage\fP * p, int i)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*pelab\fP 
+.br
+\fI*p\fP 
+.br
+ 
+.br
+\fIi\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 211 of file pocs_tool\&.cpp\&.
+.SS "int copy_sin (\fBBimage\fP * p)"
+
+.PP
+Copy the second half of a sinogram from the first one\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP sinogram 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 179 of file pocs_tool\&.cpp\&.
+.SS "int filter_bessel (\fBBimage\fP * p, int r, int first)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 
+.br
+ 
+.br
+\fIr\fP 
+.br
+\fIfirst\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 236 of file pocs_tool\&.cpp\&.
+.SS "int filter_sin_mask (\fBBimage\fP * p, int n_cicli, float r_max, \fBBimage\fP * pmask, int piano, int tipo, int first)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP Radon transform 
+.br
+\fIn_cicli\fP number of cicles to do 
+.br
+\fIr_max\fP maximun ray of the object 
+.br
+\fI*pmask\fP mask 
+.br
+\fIpiano\fP number of plane processed 
+.br
+\fItipo\fP can be 0 or 1 
+.br
+\fIfirst\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 33 of file pocs_tool\&.cpp\&.
+.SS "int filter_X_mask (\fBBimage\fP * p, \fBBimage\fP * pmask, int n_cicli, float r_maxx, int passata)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP Radon transform 
+.br
+\fI*pmask\fP mask 
+.br
+\fIn_cicli\fP number of cicles to do 
+.br
+\fIr_maxx\fP maximun ray of the object 
+.br
+\fIpassata\fP can be 0 or 1 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 67 of file pocs_tool\&.cpp\&.
+.SS "int restore_with_mask (\fBBimage\fP * p, \fBBimage\fP * pcopia, \fBBimage\fP * pmask, int linea, int tipo)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP Radon transform 
+.br
+\fI*pcopia\fP temporary array 
+.br
+\fI*pmask\fP mask 
+.br
+\fIlinea\fP 
+.br
+\fItipo\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 116 of file pocs_tool\&.cpp\&.
+.SS "int support_f (\fBBimage\fP * p, float rmax)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 
+.br
+ 
+.br
+\fIrmax\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 290 of file pocs_tool\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

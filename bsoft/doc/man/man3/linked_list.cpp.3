@@ -1,0 +1,327 @@
+.TH "/Users/bernard/b20/bsoft/src/util/linked_list.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/util/linked_list.cpp \- Generalized linked list functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "char * \fBadd_item\fP (char **list, unsigned long size)"
+.br
+.RI "Adds an item to a linked list\&. "
+.ti -1c
+.RI "char * \fBappend_item\fP (char **list, char *item)"
+.br
+.RI "Appends an item to a linked list\&. "
+.ti -1c
+.RI "char * \fBcopy_item\fP (char *toitem, char *fromitem, unsigned long size)"
+.br
+.RI "Copies an item to an existing item without changing the link\&. "
+.ti -1c
+.RI "char * \fBremove_item\fP (char **list, char *item, unsigned long size)"
+.br
+.RI "Finds the given item and deletes it from the linked list\&. "
+.ti -1c
+.RI "char * \fBreplace_item\fP (char **list, char *item, char *new_item)"
+.br
+.RI "Finds the given item and replaces it with the new item\&. "
+.ti -1c
+.RI "char * \fBcopy_list\fP (char *list, unsigned long size)"
+.br
+.RI "Generates a complete copy of a linked list\&. "
+.ti -1c
+.RI "long \fBkill_list\fP (char *list, unsigned long size)"
+.br
+.RI "Frees all the items in a linked list\&. "
+.ti -1c
+.RI "long \fBcount_list\fP (char *list)"
+.br
+.RI "Counts the number of items in a linked list\&. "
+.ti -1c
+.RI "long \fBreverse_list\fP (char **list)"
+.br
+.RI "Reverse the order of items in a linked list\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Generalized linked list functions\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20031203 
+.PP
+Modified: 20150206 
+.RE
+.PP
+
+.PP
+Definition in file \fBlinked_list\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "char* add_item (char ** list, unsigned long size)"
+
+.PP
+Adds an item to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**list\fP pointer to first item in the list\&. 
+.br
+\fIsize\fP size of item\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char* new item\&. 
+.PP
+.nf
+If the list is not defined, the new item becomes the first in the list.
+Otherwise, the list is traversed to find the end and the new item appended.
+Any structure with a pointer to itself as a first element can be used in a
+linked list. However, a linked list can only consist of one type of structure.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 26 of file linked_list\&.cpp\&.
+.SS "char* append_item (char ** list, char * item)"
+
+.PP
+Appends an item to a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**list\fP pointer to first item in the list\&. 
+.br
+\fI*item\fP item to append\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char* item\&. 
+.PP
+.nf
+If the list is not defined, the new item becomes the first in the list.
+Otherwise, the list is traversed to find the end and the new item appended.
+Any structure with a pointer to itself as a first element can be used in a
+linked list. However, a linked list can only consist of one type of structure.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 59 of file linked_list\&.cpp\&.
+.SS "char* copy_item (char * toitem, char * fromitem, unsigned long size)"
+
+.PP
+Copies an item to an existing item without changing the link\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*toitem\fP item to copy to\&. 
+.br
+\fI*fromitem\fP item to copy from\&. 
+.br
+\fIsize\fP size of item\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char* the resultant item\&. 
+.PP
+.nf
+The items must be the same type.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 87 of file linked_list\&.cpp\&.
+.SS "char* copy_list (char * list, unsigned long size)"
+
+.PP
+Generates a complete copy of a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*list\fP linked list\&. 
+.br
+\fIsize\fP size of list item\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char* new list\&. 
+.RE
+.PP
+
+.PP
+Definition at line 185 of file linked_list\&.cpp\&.
+.SS "long count_list (char * list)"
+
+.PP
+Counts the number of items in a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*list\fP first item in the linked list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of items in the list\&. 
+.RE
+.PP
+
+.PP
+Definition at line 235 of file linked_list\&.cpp\&.
+.SS "long kill_list (char * list, unsigned long size)"
+
+.PP
+Frees all the items in a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*list\fP first item in the linked list\&. 
+.br
+\fIsize\fP size of item\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of items deallocated\&. 
+.PP
+.nf
+The list is traversed, setting a pointer to the next item before
+deallocating the current item.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 214 of file linked_list\&.cpp\&.
+.SS "char* remove_item (char ** list, char * item, unsigned long size)"
+
+.PP
+Finds the given item and deletes it from the linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**list\fP pointer to first item in the linked list\&. 
+.br
+\fI*item\fP item to be deleted\&. 
+.br
+\fIsize\fP size of item\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char* item after the one removed\&. 
+.PP
+.nf
+If the item is the first in the list, the list pointer is set to point
+to the next item.
+Otherwise, the list is traversed to find the item, the previous item's
+pointer is set to the next item, and the current item deallocated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 114 of file linked_list\&.cpp\&.
+.SS "char* replace_item (char ** list, char * item, char * new_item)"
+
+.PP
+Finds the given item and replaces it with the new item\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**list\fP pointer to first item in the linked list\&. 
+.br
+\fI*item\fP item to be replaced\&. 
+.br
+\fI*new_item\fP new item\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+char* new item\&. 
+.PP
+.nf
+If the item is the first in the list, the list pointer is set to point
+to the new item.
+Otherwise, the list is traversed to find the item, the previous item's
+pointer is set to the new item, the new item's pointer is set to that
+of the old item, and the old item is deallocated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 152 of file linked_list\&.cpp\&.
+.SS "long reverse_list (char ** list)"
+
+.PP
+Reverse the order of items in a linked list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*list\fP first item in the linked list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of items in the list\&. 
+.RE
+.PP
+
+.PP
+Definition at line 252 of file linked_list\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

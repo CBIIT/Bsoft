@@ -1,0 +1,194 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_tcltk__bhelix_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/tcltk/tcltk_bhelix.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/tcltk/tcltk_bhelix.cpp</primary></indexterm>
+<para>
+
+<para>A shared object to manage micrograph parameter files in TCL/Tk. </para>
+ 
+</para>
+<programlisting>#include &lt;tk.h&gt;
+#include &quot;tcltk_bhelix.h&quot;
+#include &quot;mg_helix.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;timer.h&quot;
+#include &quot;utilities.h&quot;
+#include &lt;sys/stat.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bhelix_8cpp_1ad3a8dc2cf9033d17c0e8e3cfcb452356">layerline_count</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bhelix_8cpp_1a34c014b6c282988c113df8060ab02169">layerline_ids</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bhelix_8cpp_1aeadf52820ae3926fde261601d44809ea">layerline_renumber</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bhelix_8cpp_1ada8d28d2a8cfd9c21c7195a26e4cf94c">layerline_distance</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bhelix_8cpp_1a8b3fb22ec4873c8d750f56d0ad884eb8">layerline_fom</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bhelix_8cpp_1a44be927934295963259b29c12818b89e">layerline_select</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_bimage">Bimage</link> *p, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bhelix_8cpp_1acfb6b4dc5a0d56de088734a81830f03e">layerline_move</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bhelix_8cpp_1a4c7b480442a54b689eefab3c885a2215">layerline_create</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_bimage">Bimage</link> *p, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bhelix_8cpp_1aec57e55a44947d2cbb1b0c637aa56ef0">layerline_delete</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bhelix_8cpp_1ab84568bfac662447fe1f351f8a5e8b4d">layerline_delete</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bhelix_8cpp_1af2fac994fe8437e6213c098fe05416c4">layerline_order</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bhelix_8cpp_1a3ed42e31ec8b6a446dba5c71b88cb8de">layerline_generate</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bhelix_8cpp_1a9690298576b90221cafaf33f53aafebc">layerline_mask</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_bimage">Bimage</link> *p, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bhelix_8cpp_1a8b7a0e4e428d9379dc47eec2a710c240">layerline_plot</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_bimage">Bimage</link> *p, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bhelix_8cpp_1a7aff6988d17bd831446574c3a1d95f51">layerline_bessel_function</link> (double realsizeX, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bhelix_8cpp_1a5b1c9be73b56a6aab165b2d166973f02">do_layerline</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_tcltk__bhelix_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_tcltk__bhelix_8cpp_1a3628124083d8f4fbc4ffd16e5b6202bf">imglist</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>A shared object to manage micrograph parameter files in TCL/Tk. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20030813 </para>
+
+<para>Modified: 20130726 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_tcltk__bhelix_8cpp_1a5b1c9be73b56a6aab165b2d166973f02"/>    <section>
+    <title>do_layerline()</title>
+<indexterm><primary>do_layerline</primary><secondary>tcltk_bhelix.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bhelix.cpp</primary><secondary>do_layerline</secondary></indexterm>
+<para><computeroutput>Tcl_Obj* do_layerline (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 71 of file tcltk_bhelix.cpp.</para>
+    </section><anchor xml:id="_tcltk__bhelix_8cpp_1a7aff6988d17bd831446574c3a1d95f51"/>    <section>
+    <title>layerline_bessel_function()</title>
+<indexterm><primary>layerline_bessel_function</primary><secondary>tcltk_bhelix.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bhelix.cpp</primary><secondary>layerline_bessel_function</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * layerline_bessel_function (double realsizeX, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 546 of file tcltk_bhelix.cpp.</para>
+    </section><anchor xml:id="_tcltk__bhelix_8cpp_1ad3a8dc2cf9033d17c0e8e3cfcb452356"/>    <section>
+    <title>layerline_count()</title>
+<indexterm><primary>layerline_count</primary><secondary>tcltk_bhelix.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bhelix.cpp</primary><secondary>layerline_count</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * layerline_count (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg)</computeroutput></para><para>
+Definition at line 171 of file tcltk_bhelix.cpp.</para>
+    </section><anchor xml:id="_tcltk__bhelix_8cpp_1a4c7b480442a54b689eefab3c885a2215"/>    <section>
+    <title>layerline_create()</title>
+<indexterm><primary>layerline_create</primary><secondary>tcltk_bhelix.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bhelix.cpp</primary><secondary>layerline_create</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * layerline_create (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_bimage">Bimage</link> * p, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 332 of file tcltk_bhelix.cpp.</para>
+    </section><anchor xml:id="_tcltk__bhelix_8cpp_1ab84568bfac662447fe1f351f8a5e8b4d"/>    <section>
+    <title>layerline_delete()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>layerline_delete</primary><secondary>tcltk_bhelix.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bhelix.cpp</primary><secondary>layerline_delete</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * layerline_delete (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 428 of file tcltk_bhelix.cpp.</para>
+    </section><anchor xml:id="_tcltk__bhelix_8cpp_1aec57e55a44947d2cbb1b0c637aa56ef0"/>    <section>
+    <title>layerline_delete()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>layerline_delete</primary><secondary>tcltk_bhelix.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bhelix.cpp</primary><secondary>layerline_delete</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * layerline_delete (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 363 of file tcltk_bhelix.cpp.</para>
+    </section><anchor xml:id="_tcltk__bhelix_8cpp_1ada8d28d2a8cfd9c21c7195a26e4cf94c"/>    <section>
+    <title>layerline_distance()</title>
+<indexterm><primary>layerline_distance</primary><secondary>tcltk_bhelix.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bhelix.cpp</primary><secondary>layerline_distance</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * layerline_distance (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 232 of file tcltk_bhelix.cpp.</para>
+    </section><anchor xml:id="_tcltk__bhelix_8cpp_1a8b3fb22ec4873c8d750f56d0ad884eb8"/>    <section>
+    <title>layerline_fom()</title>
+<indexterm><primary>layerline_fom</primary><secondary>tcltk_bhelix.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bhelix.cpp</primary><secondary>layerline_fom</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * layerline_fom (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 252 of file tcltk_bhelix.cpp.</para>
+    </section><anchor xml:id="_tcltk__bhelix_8cpp_1a3ed42e31ec8b6a446dba5c71b88cb8de"/>    <section>
+    <title>layerline_generate()</title>
+<indexterm><primary>layerline_generate</primary><secondary>tcltk_bhelix.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bhelix.cpp</primary><secondary>layerline_generate</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * layerline_generate (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 484 of file tcltk_bhelix.cpp.</para>
+    </section><anchor xml:id="_tcltk__bhelix_8cpp_1a34c014b6c282988c113df8060ab02169"/>    <section>
+    <title>layerline_ids()</title>
+<indexterm><primary>layerline_ids</primary><secondary>tcltk_bhelix.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bhelix.cpp</primary><secondary>layerline_ids</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * layerline_ids (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 186 of file tcltk_bhelix.cpp.</para>
+    </section><anchor xml:id="_tcltk__bhelix_8cpp_1a9690298576b90221cafaf33f53aafebc"/>    <section>
+    <title>layerline_mask()</title>
+<indexterm><primary>layerline_mask</primary><secondary>tcltk_bhelix.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bhelix.cpp</primary><secondary>layerline_mask</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * layerline_mask (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_bimage">Bimage</link> * p, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 500 of file tcltk_bhelix.cpp.</para>
+    </section><anchor xml:id="_tcltk__bhelix_8cpp_1acfb6b4dc5a0d56de088734a81830f03e"/>    <section>
+    <title>layerline_move()</title>
+<indexterm><primary>layerline_move</primary><secondary>tcltk_bhelix.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bhelix.cpp</primary><secondary>layerline_move</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * layerline_move (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 306 of file tcltk_bhelix.cpp.</para>
+    </section><anchor xml:id="_tcltk__bhelix_8cpp_1af2fac994fe8437e6213c098fe05416c4"/>    <section>
+    <title>layerline_order()</title>
+<indexterm><primary>layerline_order</primary><secondary>tcltk_bhelix.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bhelix.cpp</primary><secondary>layerline_order</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * layerline_order (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 457 of file tcltk_bhelix.cpp.</para>
+    </section><anchor xml:id="_tcltk__bhelix_8cpp_1a8b7a0e4e428d9379dc47eec2a710c240"/>    <section>
+    <title>layerline_plot()</title>
+<indexterm><primary>layerline_plot</primary><secondary>tcltk_bhelix.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bhelix.cpp</primary><secondary>layerline_plot</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * layerline_plot (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_bimage">Bimage</link> * p, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 517 of file tcltk_bhelix.cpp.</para>
+    </section><anchor xml:id="_tcltk__bhelix_8cpp_1aeadf52820ae3926fde261601d44809ea"/>    <section>
+    <title>layerline_renumber()</title>
+<indexterm><primary>layerline_renumber</primary><secondary>tcltk_bhelix.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bhelix.cpp</primary><secondary>layerline_renumber</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * layerline_renumber (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 206 of file tcltk_bhelix.cpp.</para>
+    </section><anchor xml:id="_tcltk__bhelix_8cpp_1a44be927934295963259b29c12818b89e"/>    <section>
+    <title>layerline_select()</title>
+<indexterm><primary>layerline_select</primary><secondary>tcltk_bhelix.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bhelix.cpp</primary><secondary>layerline_select</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * layerline_select (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_bimage">Bimage</link> * p, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 272 of file tcltk_bhelix.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_tcltk__bhelix_8cpp_1a3628124083d8f4fbc4ffd16e5b6202bf"/>    <section>
+    <title>imglist</title>
+<indexterm><primary>imglist</primary><secondary>tcltk_bhelix.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bhelix.cpp</primary><secondary>imglist</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* imglist<computeroutput>[extern]</computeroutput></computeroutput></para><para>
+Definition at line 32 of file bshow.cpp.</para>
+    </section><anchor xml:id="_tcltk__bhelix_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>tcltk_bhelix.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bhelix.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

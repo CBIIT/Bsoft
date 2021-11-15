@@ -1,0 +1,628 @@
+.TH "/Users/bernard/b20/bsoft/src/model/model_transform.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/model/model_transform.cpp \- Library routines used for model transformation\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'model_transform\&.h'\fP
+.br
+\fC#include 'model_compare\&.h'\fP
+.br
+\fC#include 'model_util\&.h'\fP
+.br
+\fC#include 'Transform\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "long \fBmodel_center\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Shifts one models to its center of mass\&. "
+.ti -1c
+.RI "long \fBmodel_shift\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< double > shift)"
+.br
+.RI "Shifts a model\&. "
+.ti -1c
+.RI "long \fBmodels_shift\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< double > shift)"
+.br
+.RI "Shifts all models\&. "
+.ti -1c
+.RI "long \fBmodel_scale\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< double > scale, \fBVector3\fP< double > origin)"
+.br
+.RI "Scales a model\&. "
+.ti -1c
+.RI "long \fBmodels_scale\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< double > scale, \fBVector3\fP< double > origin)"
+.br
+.RI "Scales a model\&. "
+.ti -1c
+.RI "long \fBmodel_reflect\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< double > normal, \fBVector3\fP< double > origin)"
+.br
+.RI "Reflects the model through a mirror plane\&. "
+.ti -1c
+.RI "long \fBmodels_reflect\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< double > normal, \fBVector3\fP< double > origin)"
+.br
+.RI "Reflects the model through a mirror plane\&. "
+.ti -1c
+.RI "double \fBmodel_reflect_and_compare\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< double > normal, \fBVector3\fP< double > origin)"
+.br
+.RI "Copies and reflects the model and compares it with the original\&. "
+.ti -1c
+.RI "long \fBmodel_rotate\fP (\fBBmodel\fP *\fBmodel\fP, \fBMatrix3\fP mat)"
+.br
+.RI "Rotates the model\&. "
+.ti -1c
+.RI "long \fBmodel_rotate\fP (\fBBmodel\fP *\fBmodel\fP, \fBMatrix3\fP mat, \fBVector3\fP< double > origin)"
+.br
+.RI "Rotates the model\&. "
+.ti -1c
+.RI "long \fBmodel_rotate\fP (\fBBmodel\fP *\fBmodel\fP, \fBMatrix3\fP mat, \fBVector3\fP< double > origin, \fBVector3\fP< double > shift)"
+.br
+.RI "Rotates the model\&. "
+.ti -1c
+.RI "long \fBmodel_rotate\fP (\fBBmodel\fP *\fBmodel\fP, \fBView2\fP< float > view)"
+.br
+.RI "Rotates the model\&. "
+.ti -1c
+.RI "long \fBmodel_rotate\fP (\fBBmodel\fP *\fBmodel\fP, \fBView2\fP< float > view, \fBVector3\fP< double > origin, \fBVector3\fP< double > shift)"
+.br
+.RI "Rotates the model\&. "
+.ti -1c
+.RI "long \fBmodel_rotate\fP (\fBBmodel\fP *\fBmodel\fP, \fBTransform\fP t)"
+.br
+.RI "Rotates the model\&. "
+.ti -1c
+.RI "double \fBmodel_rotate_and_compare\fP (\fBBmodel\fP *\fBmodel\fP, \fBTransform\fP t)"
+.br
+.RI "Copies and rotates the model and compares it with the original\&. "
+.ti -1c
+.RI "long \fBmodel_adjust_for_binning\fP (\fBBmodel\fP *\fBmodel\fP, \fBVector3\fP< long > bin)"
+.br
+.RI "A binned model list is converted back to the unbinned version\&. "
+.ti -1c
+.RI "long \fBmodel_align_to_guide\fP (\fBBmodel\fP *\fBmodel\fP, \fBBmodel\fP *guide)"
+.br
+.RI "A model is oriented to coincide with a guide model\&. "
+.ti -1c
+.RI "\fBTransform\fP \fBmodel_find_transform\fP (\fBBmodel\fP *\fBmodel\fP, \fBBmodel\fP *refmod)"
+.br
+.RI "A model is fitted to a reference model\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines used for model transformation\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20060908 
+.PP
+Modified: 20150209 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_transform\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "long model_adjust_for_binning (\fBBmodel\fP * model, \fBVector3\fP< long > bin)"
+
+.PP
+A binned model list is converted back to the unbinned version\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP the model list\&. 
+.br
+\fIbin\fP 3-value bin vector\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components processed\&. 
+.PP
+.nf
+All component coordinates are converted back to the unbinned values.
+Only the first model is adjusted.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 417 of file model_transform\&.cpp\&.
+.SS "long model_align_to_guide (\fBBmodel\fP * model, \fBBmodel\fP * guide)"
+
+.PP
+A model is oriented to coincide with a guide model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model (rotated)\&. 
+.br
+\fI*guide\fP guide model\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components processed\&. 
+.PP
+.nf
+The principal axes of the guide model is calculated and the model rotated.
+Only the first model is aligned.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 444 of file model_transform\&.cpp\&.
+.SS "long model_center (\fBBmodel\fP * model)"
+
+.PP
+Shifts one models to its center of mass\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components processed\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 27 of file model_transform\&.cpp\&.
+.SS "\fBTransform\fP model_find_transform (\fBBmodel\fP * model, \fBBmodel\fP * refmod)"
+
+.PP
+A model is fitted to a reference model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fI*refmod\fP template model\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBTransform\fP transform\&. 
+.PP
+.nf
+The components in the model and the reference must match exactly.
+Only the first model and template in the lists are processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 471 of file model_transform\&.cpp\&.
+.SS "long model_reflect (\fBBmodel\fP * model, \fBVector3\fP< double > normal, \fBVector3\fP< double > origin)"
+
+.PP
+Reflects the model through a mirror plane\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fInormal\fP plane normal\&. 
+.br
+\fIorigin\fP model origin\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components processed\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 144 of file model_transform\&.cpp\&.
+.SS "double model_reflect_and_compare (\fBBmodel\fP * model, \fBVector3\fP< double > normal, \fBVector3\fP< double > origin)"
+
+.PP
+Copies and reflects the model and compares it with the original\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fInormal\fP plane normal\&. 
+.br
+\fIorigin\fP model origin\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double RMSD\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 193 of file model_transform\&.cpp\&.
+.SS "long model_rotate (\fBBmodel\fP * model, \fBMatrix3\fP mat)"
+
+.PP
+Rotates the model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fImat\fP rotation matrix\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components processed\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 239 of file model_transform\&.cpp\&.
+.SS "long model_rotate (\fBBmodel\fP * model, \fBMatrix3\fP mat, \fBVector3\fP< double > origin)"
+
+.PP
+Rotates the model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fImat\fP rotation matrix\&. 
+.br
+\fIorigin\fP rotation origin\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components processed\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 255 of file model_transform\&.cpp\&.
+.SS "long model_rotate (\fBBmodel\fP * model, \fBMatrix3\fP mat, \fBVector3\fP< double > origin, \fBVector3\fP< double > shift)"
+
+.PP
+Rotates the model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fImat\fP rotation matrix\&. 
+.br
+\fIorigin\fP rotation origin\&. 
+.br
+\fIshift\fP translation after rotation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components processed\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 272 of file model_transform\&.cpp\&.
+.SS "long model_rotate (\fBBmodel\fP * model, \fBTransform\fP t)"
+
+.PP
+Rotates the model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIt\fP rotation operation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components processed\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 343 of file model_transform\&.cpp\&.
+.SS "long model_rotate (\fBBmodel\fP * model, \fBView2\fP< float > view)"
+
+.PP
+Rotates the model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIview\fP view to rotate to\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components processed\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 310 of file model_transform\&.cpp\&.
+.SS "long model_rotate (\fBBmodel\fP * model, \fBView2\fP< float > view, \fBVector3\fP< double > origin, \fBVector3\fP< double > shift)"
+
+.PP
+Rotates the model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIview\fP view to rotate to\&. 
+.br
+\fIorigin\fP rotation origin\&. 
+.br
+\fIshift\fP translation after rotation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components processed\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 328 of file model_transform\&.cpp\&.
+.SS "double model_rotate_and_compare (\fBBmodel\fP * model, \fBTransform\fP t)"
+
+.PP
+Copies and rotates the model and compares it with the original\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIt\fP rotation operation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double RMSD\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 370 of file model_transform\&.cpp\&.
+.SS "long model_scale (\fBBmodel\fP * model, \fBVector3\fP< double > scale, \fBVector3\fP< double > origin)"
+
+.PP
+Scales a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIscale\fP scale\&. 
+.br
+\fIorigin\fP model origin\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components processed\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 88 of file model_transform\&.cpp\&.
+.SS "long model_shift (\fBBmodel\fP * model, \fBVector3\fP< double > shift)"
+
+.PP
+Shifts a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIshift\fP translation vector\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components processed\&. 
+.PP
+.nf
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 43 of file model_transform\&.cpp\&.
+.SS "long models_reflect (\fBBmodel\fP * model, \fBVector3\fP< double > normal, \fBVector3\fP< double > origin)"
+
+.PP
+Reflects the model through a mirror plane\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fInormal\fP plane normal\&. 
+.br
+\fIorigin\fP model origin\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components processed\&. 
+.RE
+.PP
+
+.PP
+Definition at line 172 of file model_transform\&.cpp\&.
+.SS "long models_scale (\fBBmodel\fP * model, \fBVector3\fP< double > scale, \fBVector3\fP< double > origin)"
+
+.PP
+Scales a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIscale\fP scale\&. 
+.br
+\fIorigin\fP model origin\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components processed\&. 
+.RE
+.PP
+
+.PP
+Definition at line 118 of file model_transform\&.cpp\&.
+.SS "long models_shift (\fBBmodel\fP * model, \fBVector3\fP< double > shift)"
+
+.PP
+Shifts all models\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIshift\fP translation vector\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components processed\&. 
+.PP
+.nf
+All models in the list are processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 66 of file model_transform\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

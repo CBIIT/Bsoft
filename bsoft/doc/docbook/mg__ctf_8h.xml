@@ -1,0 +1,1745 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__ctf_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/mg_ctf.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/mg_ctf.h</primary></indexterm>
+<para>
+
+<para>Functions for CTF (contrast transfer function) processing. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+#include &quot;rwimg.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__ctf_8h_1a0d9fe08963e73cca3ca4bc9e3c1af0de">img_ctf_calculate</link> (<link linkend="_class_c_t_fparam">CTFparam</link> cp, int action, double wiener, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sam, double lores=0, double hires=0)</para>
+
+<para>Calculates a CTF complex image. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__ctf_8h_1a5533d617a9dc34d8b86876c55cff90b5">img_wave_aberration</link> (<link linkend="_class_c_t_fparam">CTFparam</link> cp, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sam)</para>
+
+<para>Calculates a wave aberration function. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1ae8054dc6431a9285dac2d315c6ccc4b2">img_ctf_apply</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_c_t_fparam">CTFparam</link> em_ctf, int action, double wiener, double lores, double hires)</para>
+
+<para>Applies or corrects for the contrast transfer function (CTF). </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1a8e764f6ac4df73f32a57ff7b714e1bb1">img_ctf_apply</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_c_t_fparam">CTFparam</link> em_ctf, int action, double wiener, double lores, double hires, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planf_2D, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planb_2D)</para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1ab33c3b16dab3ec9a86a8e9be3ae32497">img_ttf_apply</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_c_t_fparam">CTFparam</link> ctf, int action, double wiener, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; tile_size, double tilt, double axis, double res_lo, double res_hi)</para>
+
+<para>Applies or corrects for the tilted contrast transfer function (TTF). </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1a5c34a56741d43e466cde569cb5f8cef1">img_ctf_apply_to_proj</link> (<link linkend="_class_bimage">Bimage</link> *proj, <link linkend="_class_c_t_fparam">CTFparam</link> em_ctf, double defocus, double res_lo, double res_hi, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planf_2D, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planb_2D)</para>
+
+<para>Applies a CTF to a projection image. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1aef8f30cf89d04cd42564ef64d1209d8c">project_ctf_prepare</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int action, double lores, double hires, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; tile_size, double def_start, double def_end, double def_inc, <link linkend="_class_bstring">Bstring</link> &amp;path, <link linkend="_class_bstring">Bstring</link> &amp;newname, int flags)</para>
+
+<para>Calculates power spectra and optionally fits CTF curves. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1ab72fd200bca5b1f9cf57171aa7164a4f">project_ctf</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int action, double lores, double hires, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; tile_size, double wiener, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> datatype, <link linkend="_class_bstring">Bstring</link> &amp;partpath, <link linkend="_class_bstring">Bstring</link> &amp;newname, int flags)</para>
+
+<para>Calculates or fits CTF curves to multiple power spectra. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1ae20ae6a6a35497a8b141b89342592e92">project_powerspectrum_isotropy</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double lores, double hires)</para>
+
+<para>Calculates the isotropy at the CTF maxima. </para>
+</listitem>
+            <listitem><para><link linkend="_class_j_svalue">JSvalue</link> <link linkend="_mg__ctf_8h_1aa815154454e98a2250d91b413e69ab8d">project_defocus_range</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Determines the minimum and maximum defocus values. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1adb97cadb661679ded7e401efe8b5fe6e">project_ctf_average</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;psname)</para>
+
+<para>Calculates or fits CTF curves to multiple power spectra. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__ctf_8h_1a3b88d856e88074c378ffd13d85332363">project_powerspectrum_average</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double deftarget)</para>
+
+<para>Averages multiple power spectra based on defocus estimates. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1a8e1855e66a70e7381714abca5d2236c1">project_merge_CTF_parameters</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bproject">Bproject</link> *ctfproject)</para>
+
+<para>Puts CTF parameters from one project into another. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1ab2c4f7265fc17481536b449b46f7e5ca">project_CTF_to_part</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Transfers CTF parameters from micrographs to particles. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1a41dcf9502bd58cf1fdea129f476a4e14">project_set_defocus</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double def_avg, double def_dev, double ast_angle)</para>
+
+<para>Sets the defocus values of all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1abe34ea9665edf8f2f3673fa7ea987f7b">project_set_astigmatism</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double def_dev, double ast_angle)</para>
+
+<para>Sets the defocus deviation and astigmatism angle of all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1abc63ac649a39c2ca7b29464754dede30">project_update_ctf</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_j_svalue">JSvalue</link> &amp;jsctf)</para>
+
+<para>Sets the acceleration voltage of all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1a9f684bb2662661c1aee725ee5b1029bc">project_set_volts</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double volts)</para>
+
+<para>Sets the acceleration voltage of all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1a5cb16c1b2ba158547152676392fec5b7">project_set_Cs</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double Cs)</para>
+
+<para>Sets the spherical aberation constant of all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1a7da78ca0c97736c711e9831cce35acfa">project_set_amp_shift</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double amp_shift)</para>
+
+<para>Sets the amplitude contribution of all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1a199af385e8c690fb69aff4cab17a9944">project_set_focal_length</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double focal_length)</para>
+
+<para>Sets the focal length of all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1ad613bc46bcfacfc157af26aba31a492f">project_set_aperture</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double aperture)</para>
+
+<para>Sets the objective aperture of all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1a37d96b8ff655ac7eb7805c9476a887a9">project_set_slit_width</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double slit)</para>
+
+<para>Sets the energy filter slit width of all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1a0afd648acab0ee872ffda010cc53f3c2">project_set_alpha</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double alpha)</para>
+
+<para>Sets the beam source size/divergence angle of all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1a2b1a47bf30c5a0a08f25f6d3ef5f5929">project_set_envelope_type</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int type)</para>
+
+<para>Sets the envelope type of all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1aa1780103ac60648c71ce9fd2261d84bd">project_set_envelope</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int type, double *coeff)</para>
+
+<para>Sets the envelope equations of all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1a8c7288bbdf1da15b311f73b54f3a1944">project_set_coherence_envelope</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Replaces envelope equations with those based on partial coherence in all micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1a6441b7e86bd4b9a3fa0f2039e9ba7a53">project_set_baseline_type</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int type)</para>
+
+<para>Sets the baseline type of all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1adba11e8294a3e6a6a231936b7a44b94f">project_set_baseline</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int type, double *coeff)</para>
+
+<para>Sets the baseline equations of all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1acf76abafe36bbe715e37cf69ca82a872">project_update_first_zero</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Updates the first zero from the defocus average for all the micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__ctf_8h_1ab35ef46db35e34fdcd0194f1a2d87f72">project_plot_ctf</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+
+<para>Plots the CTF curves. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions for CTF (contrast transfer function) processing. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19970715 </para>
+
+<para>Modified: 20210817 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__ctf_8h_1ae8054dc6431a9285dac2d315c6ccc4b2"/>    <section>
+    <title>img_ctf_apply()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>img_ctf_apply</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>img_ctf_apply</secondary></indexterm>
+<para><computeroutput>int img_ctf_apply (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_c_t_fparam">CTFparam</link> em_ctf, int action, double wiener, double lores, double hires)</computeroutput></para><para>
+
+<para>Applies or corrects for the contrast transfer function (CTF). </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image (modified). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*em_ctf</entry>
+                                <entry>
+<para>CTF parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>action</entry>
+                                <entry>
+<para>action to be taken. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wiener</entry>
+                                <entry>
+<para>Wiener factor (fraction). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>The actions for this funtion are:
+1   flip phase (multiply by the sign of the CTF)
+2   apply a CTF (multiply with the CTF)
+3   correct for the CTF: ctf/(ctf^2 + wiener_factor)
+4   correct for the CTF: env*ctf/((env*ctf)^2 + noise^2)
+5   correct for the CTF with baseline: ctf/(ctf^2*noise^2 + wiener_factor)
+6   correct for the CTF with baseline: 1/(ctf*noise + sign*wiener_factor)
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 249 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1a8e764f6ac4df73f32a57ff7b714e1bb1"/>    <section>
+    <title>img_ctf_apply()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>img_ctf_apply</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>img_ctf_apply</secondary></indexterm>
+<para><computeroutput>int img_ctf_apply (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_c_t_fparam">CTFparam</link> em_ctf, int action, double wiener, double lores, double hires, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planf_2D, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planb_2D)</computeroutput></para><para>
+Definition at line 288 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1a5c34a56741d43e466cde569cb5f8cef1"/>    <section>
+    <title>img_ctf_apply_to_proj()</title>
+<indexterm><primary>img_ctf_apply_to_proj</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>img_ctf_apply_to_proj</secondary></indexterm>
+<para><computeroutput>int img_ctf_apply_to_proj (<link linkend="_class_bimage">Bimage</link> * proj, <link linkend="_class_c_t_fparam">CTFparam</link> em_ctf, double defocus, double res_lo, double res_hi, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planf_2D, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planb_2D)</computeroutput></para><para>
+
+<para>Applies a CTF to a projection image. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*proj</entry>
+                                <entry>
+<para>projection image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>em_ctf</entry>
+                                <entry>
+<para>CTF parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>defocus</entry>
+                                <entry>
+<para>defocus. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_lo</entry>
+                                <entry>
+<para>low resolution limit (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_hi</entry>
+                                <entry>
+<para>high resolution limit (angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>planf_2D</entry>
+                                <entry>
+<para>2D forward fourier transform plan. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>planb_2D</entry>
+                                <entry>
+<para>2D backward fourier transform plan. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 366 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1a0d9fe08963e73cca3ca4bc9e3c1af0de"/>    <section>
+    <title>img_ctf_calculate()</title>
+<indexterm><primary>img_ctf_calculate</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>img_ctf_calculate</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_ctf_calculate (<link linkend="_class_c_t_fparam">CTFparam</link> cp, int action, double wiener, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sam, double lores, double hires)</computeroutput></para><para>
+
+<para>Calculates a CTF complex image. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>cp</entry>
+                                <entry>
+<para>CTF parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>action</entry>
+                                <entry>
+<para>type of CTF calculated (1-8). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wiener</entry>
+                                <entry>
+<para>Wiener factor (fraction). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>new image size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sam</entry>
+                                <entry>
+<para>new image pixel size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* new CTF function image. <literallayout><computeroutput>Functions:
+    angle = atan(y/x)
+    s2 = x*x + y*y
+    defocus_average = (defocus_max + defocus_min)/2
+    defocus_deviation = (defocus_max - defocus_min)/2
+    defocus = defocus_average + defocus_deviation*cos(2*(angle - astigmatism_angle))
+    phase = 0.5*PI*lambda*lambda*lambda*Cs*s2*s2 - PI*lambda*defocus*s2 - amp_shift;
+    CTF = sin(phase)
+Note: Defocus is positive for underfocus and negative for overfocus.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 46 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1ab33c3b16dab3ec9a86a8e9be3ae32497"/>    <section>
+    <title>img_ttf_apply()</title>
+<indexterm><primary>img_ttf_apply</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>img_ttf_apply</secondary></indexterm>
+<para><computeroutput>int img_ttf_apply (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_c_t_fparam">CTFparam</link> ctf, int action, double wiener, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; tile_size, double tilt, double axis, double res_lo, double res_hi)</computeroutput></para><para>
+
+<para>Applies or corrects for the tilted contrast transfer function (TTF). </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image (modified). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ctf</entry>
+                                <entry>
+<para>CTF parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>action</entry>
+                                <entry>
+<para>action to be taken. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wiener</entry>
+                                <entry>
+<para>Wiener factor (fraction). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tile_size</entry>
+                                <entry>
+<para>tile size for tilted CTF operations. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tilt</entry>
+                                <entry>
+<para>tilt angle (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>axis</entry>
+                                <entry>
+<para>tilt axis angle (radians). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_lo</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>res_hi</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>The actions for this funtion are:
+1   flip phase (multiply by the sign of the CTF)
+2   apply a CTF (multiply with the CTF)
+3   correct for the CTF: ctf/(ctf^2 + wiener_factor)
+4   correct for the CTF: env*ctf/((env*ctf)^2 + noise^2)
+5   correct for the CTF with baseline: ctf/(ctf^2*noise^2 + wiener_factor)
+6   correct for the CTF with baseline: 1/(ctf*noise + sign*wiener_factor)
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 400 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1a5533d617a9dc34d8b86876c55cff90b5"/>    <section>
+    <title>img_wave_aberration()</title>
+<indexterm><primary>img_wave_aberration</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>img_wave_aberration</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_wave_aberration (<link linkend="_class_c_t_fparam">CTFparam</link> cp, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sam)</computeroutput></para><para>
+
+<para>Calculates a wave aberration function. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>cp</entry>
+                                <entry>
+<para>CTF parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>new image size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sam</entry>
+                                <entry>
+<para>new image pixel size. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* new wave aberration function image. <literallayout><computeroutput>Functions:
+    angle = atan(y/x)
+    s2 = x*x + y*y
+    defocus_average = (defocus_max + defocus_min)/2
+    defocus_deviation = (defocus_max - defocus_min)/2
+    defocus = defocus_average + defocus_deviation*cos(2*(angle - astigmatism_angle))
+    phase = 0.5*PI*lambda*lambda*lambda*Cs*s2*s2 - PI*lambda*defocus*s2;
+Note: Defocus is positive for underfocus and negative for overfocus.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 186 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1ab72fd200bca5b1f9cf57171aa7164a4f"/>    <section>
+    <title>project_ctf()</title>
+<indexterm><primary>project_ctf</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_ctf</secondary></indexterm>
+<para><computeroutput>int project_ctf (<link linkend="_class_bproject">Bproject</link> * project, int action, double lores, double hires, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; tile_size, double wiener, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> datatype, <link linkend="_class_bstring">Bstring</link> &amp; partpath, <link linkend="_class_bstring">Bstring</link> &amp; newname, int flags)</computeroutput></para><para>
+
+<para>Calculates or fits CTF curves to multiple power spectra. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>action</entry>
+                                <entry>
+<para>CTF processing action. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit for CTF operations. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit for CTF operations. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tile_size</entry>
+                                <entry>
+<para>tile size for tilted CTF operations. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wiener</entry>
+                                <entry>
+<para>Wiener factor. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>datatype</entry>
+                                <entry>
+<para>corrected particle file data type. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;partpath</entry>
+                                <entry>
+<para>corrected particle file path. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;newname</entry>
+                                <entry>
+<para>new file name for output. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>1=use mg or rec, 2=filter, 4=background, 8=astigmatism, 16=use frmaes </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>The default is to use the particle file. If the particle file is not
+specified, the micrograph is used. The selection can also be done with
+the use_mg flag.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1134 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1adb97cadb661679ded7e401efe8b5fe6e"/>    <section>
+    <title>project_ctf_average()</title>
+<indexterm><primary>project_ctf_average</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_ctf_average</secondary></indexterm>
+<para><computeroutput>int project_ctf_average (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; psname)</computeroutput></para><para>
+
+<para>Calculates or fits CTF curves to multiple power spectra. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;psname</entry>
+                                <entry>
+<para>postscript file name for output. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>The default is to use the particle file. If the particle file is not
+specified, the micrograph is used. The selection can also be done with
+the use_mg flag.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1473 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1aef8f30cf89d04cd42564ef64d1209d8c"/>    <section>
+    <title>project_ctf_prepare()</title>
+<indexterm><primary>project_ctf_prepare</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_ctf_prepare</secondary></indexterm>
+<para><computeroutput>int project_ctf_prepare (<link linkend="_class_bproject">Bproject</link> * project, int action, double lores, double hires, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; tile_size, double def_start, double def_end, double def_inc, <link linkend="_class_bstring">Bstring</link> &amp; path, <link linkend="_class_bstring">Bstring</link> &amp; newname, int flags)</computeroutput></para><para>
+
+<para>Calculates power spectra and optionally fits CTF curves. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>action</entry>
+                                <entry>
+<para>CTF processing action. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit for CTF operations. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit for CTF operations. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tile_size</entry>
+                                <entry>
+<para>tile size for power spectrum generation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_start</entry>
+                                <entry>
+<para>defocus search start (default 1e3). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_end</entry>
+                                <entry>
+<para>defocus search end (default 2e5). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_inc</entry>
+                                <entry>
+<para>defocus search increment (default 1e3). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;path</entry>
+                                <entry>
+<para>new power spectrum directory for output. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;newname</entry>
+                                <entry>
+<para>new file name for output. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>1=use mg or rec, 2=filter, 4=background, 8=astigmatism, 16=frames </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>The default is to use the particle file. If the particle file is not
+specified, the micrograph is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 731 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1ab2c4f7265fc17481536b449b46f7e5ca"/>    <section>
+    <title>project_CTF_to_part()</title>
+<indexterm><primary>project_CTF_to_part</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_CTF_to_part</secondary></indexterm>
+<para><computeroutput>int project_CTF_to_part (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Transfers CTF parameters from micrographs to particles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1636 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1aa815154454e98a2250d91b413e69ab8d"/>    <section>
+    <title>project_defocus_range()</title>
+<indexterm><primary>project_defocus_range</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_defocus_range</secondary></indexterm>
+<para><computeroutput><link linkend="_class_j_svalue">JSvalue</link> project_defocus_range (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Determines the minimum and maximum defocus values. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_j_svalue">JSvalue</link> JSON object with the minimum and maximum values. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1417 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1a8e1855e66a70e7381714abca5d2236c1"/>    <section>
+    <title>project_merge_CTF_parameters()</title>
+<indexterm><primary>project_merge_CTF_parameters</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_merge_CTF_parameters</secondary></indexterm>
+<para><computeroutput>int project_merge_CTF_parameters (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bproject">Bproject</link> * ctfproject)</computeroutput></para><para>
+
+<para>Puts CTF parameters from one project into another. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*ctfproject</entry>
+                                <entry>
+<para>project parameter structure with CTF parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1597 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1ab35ef46db35e34fdcd0194f1a2d87f72"/>    <section>
+    <title>project_plot_ctf()</title>
+<indexterm><primary>project_plot_ctf</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_plot_ctf</secondary></indexterm>
+<para><computeroutput>int project_plot_ctf (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+
+<para>Plots the CTF curves. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>Postscript file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2183 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1a3b88d856e88074c378ffd13d85332363"/>    <section>
+    <title>project_powerspectrum_average()</title>
+<indexterm><primary>project_powerspectrum_average</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_powerspectrum_average</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* project_powerspectrum_average (<link linkend="_class_bproject">Bproject</link> * project, double deftarget)</computeroutput></para><para>
+
+<para>Averages multiple power spectra based on defocus estimates. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>deftarget</entry>
+                                <entry>
+<para>target defocus (angstrom). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* average power spectrum. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1546 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1ae20ae6a6a35497a8b141b89342592e92"/>    <section>
+    <title>project_powerspectrum_isotropy()</title>
+<indexterm><primary>project_powerspectrum_isotropy</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_powerspectrum_isotropy</secondary></indexterm>
+<para><computeroutput>int project_powerspectrum_isotropy (<link linkend="_class_bproject">Bproject</link> * project, double lores, double hires)</computeroutput></para><para>
+
+<para>Calculates the isotropy at the CTF maxima. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1369 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1a0afd648acab0ee872ffda010cc53f3c2"/>    <section>
+    <title>project_set_alpha()</title>
+<indexterm><primary>project_set_alpha</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_set_alpha</secondary></indexterm>
+<para><computeroutput>int project_set_alpha (<link linkend="_class_bproject">Bproject</link> * project, double alpha)</computeroutput></para><para>
+
+<para>Sets the beam source size/divergence angle of all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>alpha</entry>
+                                <entry>
+<para>beam source size/divergence angle (radians). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1968 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1a7da78ca0c97736c711e9831cce35acfa"/>    <section>
+    <title>project_set_amp_shift()</title>
+<indexterm><primary>project_set_amp_shift</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_set_amp_shift</secondary></indexterm>
+<para><computeroutput>int project_set_amp_shift (<link linkend="_class_bproject">Bproject</link> * project, double amp_shift)</computeroutput></para><para>
+
+<para>Sets the amplitude contribution of all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>amp_shift</entry>
+                                <entry>
+<para>amplitude contribution phase shift. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1854 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1ad613bc46bcfacfc157af26aba31a492f"/>    <section>
+    <title>project_set_aperture()</title>
+<indexterm><primary>project_set_aperture</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_set_aperture</secondary></indexterm>
+<para><computeroutput>int project_set_aperture (<link linkend="_class_bproject">Bproject</link> * project, double aperture)</computeroutput></para><para>
+
+<para>Sets the objective aperture of all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>aperture</entry>
+                                <entry>
+<para>objective aperture in angstrom. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1911 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1abe34ea9665edf8f2f3673fa7ea987f7b"/>    <section>
+    <title>project_set_astigmatism()</title>
+<indexterm><primary>project_set_astigmatism</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_set_astigmatism</secondary></indexterm>
+<para><computeroutput>int project_set_astigmatism (<link linkend="_class_bproject">Bproject</link> * project, double def_dev, double ast_angle)</computeroutput></para><para>
+
+<para>Sets the defocus deviation and astigmatism angle of all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_dev</entry>
+                                <entry>
+<para>defocus deviation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ast_angle</entry>
+                                <entry>
+<para>astigmatism angle. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1728 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1adba11e8294a3e6a6a231936b7a44b94f"/>    <section>
+    <title>project_set_baseline()</title>
+<indexterm><primary>project_set_baseline</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_set_baseline</secondary></indexterm>
+<para><computeroutput>int project_set_baseline (<link linkend="_class_bproject">Bproject</link> * project, int type, double * coeff)</computeroutput></para><para>
+
+<para>Sets the baseline equations of all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>type</entry>
+                                <entry>
+<para>baseline type. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*coeff</entry>
+                                <entry>
+<para>5 baseline coefficients. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2118 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1a6441b7e86bd4b9a3fa0f2039e9ba7a53"/>    <section>
+    <title>project_set_baseline_type()</title>
+<indexterm><primary>project_set_baseline_type</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_set_baseline_type</secondary></indexterm>
+<para><computeroutput>int project_set_baseline_type (<link linkend="_class_bproject">Bproject</link> * project, int type)</computeroutput></para><para>
+
+<para>Sets the baseline type of all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>type</entry>
+                                <entry>
+<para>baseline type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2088 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1a8c7288bbdf1da15b311f73b54f3a1944"/>    <section>
+    <title>project_set_coherence_envelope()</title>
+<indexterm><primary>project_set_coherence_envelope</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_set_coherence_envelope</secondary></indexterm>
+<para><computeroutput>int project_set_coherence_envelope (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Replaces envelope equations with those based on partial coherence in all micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Partial coherence envelope:
+    env = amp*exp(-(pi*alpha*defocus*s)^2)
+The amplitude, defocus and alpha values are taken from the fields 
+in each micrograph. The defocus must already be determined.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2060 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1a5cb16c1b2ba158547152676392fec5b7"/>    <section>
+    <title>project_set_Cs()</title>
+<indexterm><primary>project_set_Cs</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_set_Cs</secondary></indexterm>
+<para><computeroutput>int project_set_Cs (<link linkend="_class_bproject">Bproject</link> * project, double Cs)</computeroutput></para><para>
+
+<para>Sets the spherical aberation constant of all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Cs</entry>
+                                <entry>
+<para>spherical aberation constant in angstrom. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1825 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1a41dcf9502bd58cf1fdea129f476a4e14"/>    <section>
+    <title>project_set_defocus()</title>
+<indexterm><primary>project_set_defocus</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_set_defocus</secondary></indexterm>
+<para><computeroutput>int project_set_defocus (<link linkend="_class_bproject">Bproject</link> * project, double def_avg, double def_dev, double ast_angle)</computeroutput></para><para>
+
+<para>Sets the defocus values of all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_avg</entry>
+                                <entry>
+<para>defocus average. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>def_dev</entry>
+                                <entry>
+<para>defocus deviation. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ast_angle</entry>
+                                <entry>
+<para>astigmatism angle. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1677 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1aa1780103ac60648c71ce9fd2261d84bd"/>    <section>
+    <title>project_set_envelope()</title>
+<indexterm><primary>project_set_envelope</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_set_envelope</secondary></indexterm>
+<para><computeroutput>int project_set_envelope (<link linkend="_class_bproject">Bproject</link> * project, int type, double * coeff)</computeroutput></para><para>
+
+<para>Sets the envelope equations of all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>type</entry>
+                                <entry>
+<para>envelope type. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*coeff</entry>
+                                <entry>
+<para>5 envelope coefficients. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2025 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1a2b1a47bf30c5a0a08f25f6d3ef5f5929"/>    <section>
+    <title>project_set_envelope_type()</title>
+<indexterm><primary>project_set_envelope_type</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_set_envelope_type</secondary></indexterm>
+<para><computeroutput>int project_set_envelope_type (<link linkend="_class_bproject">Bproject</link> * project, int type)</computeroutput></para><para>
+
+<para>Sets the envelope type of all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>type</entry>
+                                <entry>
+<para>envelope type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1996 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1a199af385e8c690fb69aff4cab17a9944"/>    <section>
+    <title>project_set_focal_length()</title>
+<indexterm><primary>project_set_focal_length</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_set_focal_length</secondary></indexterm>
+<para><computeroutput>int project_set_focal_length (<link linkend="_class_bproject">Bproject</link> * project, double focal_length)</computeroutput></para><para>
+
+<para>Sets the focal length of all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>focal_length</entry>
+                                <entry>
+<para>focal length in angstrom. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1882 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1a37d96b8ff655ac7eb7805c9476a887a9"/>    <section>
+    <title>project_set_slit_width()</title>
+<indexterm><primary>project_set_slit_width</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_set_slit_width</secondary></indexterm>
+<para><computeroutput>int project_set_slit_width (<link linkend="_class_bproject">Bproject</link> * project, double slit)</computeroutput></para><para>
+
+<para>Sets the energy filter slit width of all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>slit</entry>
+                                <entry>
+<para>slit width in eV. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1940 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1a9f684bb2662661c1aee725ee5b1029bc"/>    <section>
+    <title>project_set_volts()</title>
+<indexterm><primary>project_set_volts</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_set_volts</secondary></indexterm>
+<para><computeroutput>int project_set_volts (<link linkend="_class_bproject">Bproject</link> * project, double volts)</computeroutput></para><para>
+
+<para>Sets the acceleration voltage of all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>volts</entry>
+                                <entry>
+<para>acceleration voltage. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1795 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1abc63ac649a39c2ca7b29464754dede30"/>    <section>
+    <title>project_update_ctf()</title>
+<indexterm><primary>project_update_ctf</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_update_ctf</secondary></indexterm>
+<para><computeroutput>int project_update_ctf (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_j_svalue">JSvalue</link> &amp; jsctf)</computeroutput></para><para>
+
+<para>Sets the acceleration voltage of all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>jsctf</entry>
+                                <entry>
+<para>JSON parameters to be updated. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1762 of file mg_ctf.cpp.</para>
+    </section><anchor xml:id="_mg__ctf_8h_1acf76abafe36bbe715e37cf69ca82a872"/>    <section>
+    <title>project_update_first_zero()</title>
+<indexterm><primary>project_update_first_zero</primary><secondary>mg_ctf.h</secondary></indexterm>
+<indexterm><primary>mg_ctf.h</primary><secondary>project_update_first_zero</secondary></indexterm>
+<para><computeroutput>int project_update_first_zero (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Updates the first zero from the defocus average for all the micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 2148 of file mg_ctf.cpp.</para>
+</section>
+</section>
+</section>

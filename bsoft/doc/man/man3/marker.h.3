@@ -1,0 +1,752 @@
+.TH "/Users/bernard/b20/bsoft/include/marker.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/marker.h \- Header file for image parameter functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel\&.h'\fP
+.br
+\fC#include 'Transform\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBBmarker\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fB_MarkerLinker_\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "long \fBmarker_stats\fP (\fBBmarker\fP *markers)"
+.br
+.RI "Calculating marker statistics\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmarker_minimum\fP (\fBBmarker\fP *markers)"
+.br
+.RI "Calculating the minimum marker location\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmarker_maximum\fP (\fBBmarker\fP *markers)"
+.br
+.RI "Calculating the maximum marker location\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmarker_range\fP (\fBBmarker\fP *markers)"
+.br
+.RI "Calculating the marker location range\&. "
+.ti -1c
+.RI "\fBBmarker\fP * \fBmarkers_copy\fP (\fBBmarker\fP *mark)"
+.br
+.RI "Copies a set of markers\&. "
+.ti -1c
+.RI "\fBBmarker\fP * \fBmarkers_copy_selected\fP (\fBBmarker\fP *mark)"
+.br
+.RI "Copies a set of markers based on selection\&. "
+.ti -1c
+.RI "long \fBmarkers_add\fP (\fBBmarker\fP **mark, \fBBmarker\fP *mark2, double mindist, int sel)"
+.br
+.RI "Adds a set of markers to another\&. "
+.ti -1c
+.RI "long \fBmarkers_delete_non_selected\fP (\fBBmarker\fP **mark)"
+.br
+.RI "Deletes markers not selected\&. "
+.ti -1c
+.RI "int \fBmarker_shift\fP (\fBBmarker\fP *markers, \fBVector3\fP< double > shift)"
+.br
+.RI "Shifting markers\&. "
+.ti -1c
+.RI "int \fBmarker_scale\fP (\fBBmarker\fP *markers, \fBVector3\fP< double > scale)"
+.br
+.RI "Scaling markers\&. "
+.ti -1c
+.RI "int \fBmarker_transform\fP (\fBBmarker\fP *markers, \fBTransform\fP t)"
+.br
+.RI "Transforming markers\&. "
+.ti -1c
+.RI "double \fBmarker_compare\fP (\fBBmarker\fP *mark1, \fBBmarker\fP *mark2)"
+.br
+.RI "Compare marker sets and calculates the root-mean-square deviation\&. "
+.ti -1c
+.RI "\fBMatrix3\fP \fBmarker_find_matrix\fP (\fBBmarker\fP *markers1, \fBBmarker\fP *markers2, \fBVector3\fP< double > origin1, \fBVector3\fP< double > origin2)"
+.br
+.RI "Determines the rotation matrix between two sets of markers\&. "
+.ti -1c
+.RI "\fBTransform\fP \fBmarker_find_transform\fP (\fBBmarker\fP *markers1, \fBBmarker\fP *markers2, \fBVector3\fP< double > origin)"
+.br
+.RI "Determines the rotation matrix between two sets of markers\&. "
+.ti -1c
+.RI "\fBTransform\fP \fBmarkers_find_rottrans\fP (\fBBmarker\fP *set1, \fBBmarker\fP *set2, double tolerance)"
+.br
+.RI "Finds the rotation and shift between two sets of vectors\&. "
+.ti -1c
+.RI "\fBTransform\fP * \fBmarkers_map_and_find_transform\fP (\fBBmarker\fP **set, int nseries, int refset, \fBVector3\fP< long > size)"
+.br
+.RI "This function finds the transform parameters between sets of coordinates\&. These sets are expected to have a large intersection, but do not have to be 1 to 1\&. "
+.ti -1c
+.RI "long \fBmarkers_limit\fP (int target_num, int sign, \fBBmarker\fP **set)"
+.br
+.RI "This method constricts a marker set to target_num points\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_from_markers\fP (\fBBmarker\fP *markers, \fBVector3\fP< double > origin, \fBVector3\fP< double > sam)"
+.br
+.RI "Convert markers to a model\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmarker_plane\fP (\fBBmarker\fP *markers, \fBVector3\fP< double > origin)"
+.br
+.RI "Fits a plane to a set of markers\&. "
+.ti -1c
+.RI "\fBBmarker\fP * \fBmarkers_sort_by_id\fP (\fBBmarker\fP **mark)"
+.br
+.RI "Sorts a set of markers by ID number\&. "
+.ti -1c
+.RI "long \fBmarkers_renumber\fP (\fBBmarker\fP *mark)"
+.br
+.RI "Renumbers a set of markers\&. "
+.ti -1c
+.RI "long \fBmarkers_center\fP (\fBBmarker\fP *mark, \fBVector3\fP< double > center)"
+.br
+.RI "Centers a set of markers\&. "
+.ti -1c
+.RI "\fBBmarker\fP * \fBmarker_set_at_radius\fP (double rad, double ainc)"
+.br
+.RI "Generates a marker set at a given radius with z=0\&. "
+.ti -1c
+.RI "int \fBmarker_sets_to_bild\fP (\fBBstring\fP &filename, \fBBmarker\fP *mark1, \fBBmarker\fP *mark2)"
+.br
+.RI "Generates a bild file with the two marker sets\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for image parameter functions\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20051226 
+.PP
+Modified: 20210112 
+.RE
+.PP
+
+.PP
+Definition in file \fBmarker\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define _MarkerLinker_"
+
+.PP
+Definition at line 13 of file marker\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "double marker_compare (\fBBmarker\fP * mark1, \fBBmarker\fP * mark2)"
+
+.PP
+Compare marker sets and calculates the root-mean-square deviation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mark1\fP linked list of markers\&. 
+.br
+\fI*mark2\fP linked list of markers\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double RMSD\&. 
+.RE
+.PP
+
+.PP
+Definition at line 298 of file marker\&.cpp\&.
+.SS "\fBMatrix3\fP marker_find_matrix (\fBBmarker\fP * markers1, \fBBmarker\fP * markers2, \fBVector3\fP< double > origin1, \fBVector3\fP< double > origin2)"
+
+.PP
+Determines the rotation matrix between two sets of markers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*markers1\fP linked list of markers\&. 
+.br
+\fI*markers2\fP linked list of markers\&. 
+.br
+\fIorigin1\fP origin of first set\&. 
+.br
+\fIorigin2\fP origin of second set\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBMatrix3\fP rotation matrix\&. 
+.PP
+.nf
+The function calculates the rotation matrix required to superimposed 
+the first set onto the second set.
+Requirement: The two marker sets must share a significant number of markers.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 329 of file marker\&.cpp\&.
+.SS "\fBTransform\fP marker_find_transform (\fBBmarker\fP * markers1, \fBBmarker\fP * markers2, \fBVector3\fP< double > origin)"
+
+.PP
+Determines the rotation matrix between two sets of markers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*markers1\fP linked list of markers\&. 
+.br
+\fI*markers2\fP linked list of markers\&. 
+.br
+\fIorigin\fP origin of rotation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBTransform\fP transform structure\&. 
+.PP
+.nf
+The function calculates the rotation matrix required to superimposed 
+the first set onto the second set.
+Requirement: The two marker sets must share a significant number of markers.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 396 of file marker\&.cpp\&.
+.SS "\fBVector3\fP<double> marker_maximum (\fBBmarker\fP * markers)"
+
+.PP
+Calculating the maximum marker location\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*markers\fP list of markers\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP location maximum\&. 
+.RE
+.PP
+
+.PP
+Definition at line 83 of file marker\&.cpp\&.
+.SS "\fBVector3\fP<double> marker_minimum (\fBBmarker\fP * markers)"
+
+.PP
+Calculating the minimum marker location\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*markers\fP list of markers\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP location minimum\&. 
+.RE
+.PP
+
+.PP
+Definition at line 66 of file marker\&.cpp\&.
+.SS "\fBVector3\fP<double> marker_plane (\fBBmarker\fP * markers, \fBVector3\fP< double > origin)"
+
+.PP
+Fits a plane to a set of markers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*markers\fP linked list of markers\&. 
+.br
+\fIorigin\fP marker origin\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP normal to the plane\&. 
+.PP
+.nf
+The plane is given by:
+    a*x + b*y + c*z = d
+The fit is assessed by calculating the distance of each marker to
+the plane:
+    R = sqrt(sum(|a*x + b*y + c*z - d|^2)/n)
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1096 of file marker\&.cpp\&.
+.SS "\fBVector3\fP<double> marker_range (\fBBmarker\fP * markers)"
+
+.PP
+Calculating the marker location range\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*markers\fP list of markers\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP location range\&. 
+.RE
+.PP
+
+.PP
+Definition at line 100 of file marker\&.cpp\&.
+.SS "int marker_scale (\fBBmarker\fP * markers, \fBVector3\fP< double > scale)"
+
+.PP
+Scaling markers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*markers\fP linked list of markers\&. 
+.br
+\fIscale\fP scale vector\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 258 of file marker\&.cpp\&.
+.SS "\fBBmarker\fP* marker_set_at_radius (double rad, double ainc)"
+
+.PP
+Generates a marker set at a given radius with z=0\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIrad\fP radius\&. 
+.br
+\fIainc\fP angular increment\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+Markers are generated at the given radius and angular increments.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1259 of file marker\&.cpp\&.
+.SS "int marker_sets_to_bild (\fBBstring\fP & filename, \fBBmarker\fP * mark1, \fBBmarker\fP * mark2)"
+
+.PP
+Generates a bild file with the two marker sets\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP bild format file name\&. 
+.br
+\fI*mark1\fP marker list 1\&. 
+.br
+\fI*mark2\fP marker list 2\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, <0 on error\&. 
+.PP
+.nf
+A sphere is drawn for every marker.
+The first set is red and the second set is blue.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1288 of file marker\&.cpp\&.
+.SS "int marker_shift (\fBBmarker\fP * markers, \fBVector3\fP< double > shift)"
+
+.PP
+Shifting markers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*markers\fP linked list of markers\&. 
+.br
+\fIshift\fP shift vector\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 242 of file marker\&.cpp\&.
+.SS "long marker_stats (\fBBmarker\fP * markers)"
+
+.PP
+Calculating marker statistics\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*markers\fP list of markers\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of markers (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 34 of file marker\&.cpp\&.
+.SS "int marker_transform (\fBBmarker\fP * markers, \fBTransform\fP t)"
+
+.PP
+Transforming markers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*markers\fP linked list of markers\&. 
+.br
+\fIt\fP transform structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of markers\&. 
+.RE
+.PP
+
+.PP
+Definition at line 276 of file marker\&.cpp\&.
+.SS "long markers_add (\fBBmarker\fP ** mark, \fBBmarker\fP * mark2, double mindist, int sel)"
+
+.PP
+Adds a set of markers to another\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**mark\fP marker list\&. 
+.br
+\fI*mark2\fP marker list to add\&. 
+.br
+\fImindist\fP minimum distance between markers\&. 
+.br
+\fIsel\fP selection flag to set for second list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmarker* new marker list\&. 
+.PP
+.nf
+The second list of markers are checked to eliminate those close to
+markers in the first set. The remaining markers are then added and 
+their selection flags set if the variable sel is greater than zero.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 170 of file marker\&.cpp\&.
+.SS "long markers_center (\fBBmarker\fP * mark, \fBVector3\fP< double > center)"
+
+.PP
+Centers a set of markers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**mark\fP pointer to marker list\&. 
+.br
+\fIcenter\fP center to shift to\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of markers\&. 
+.PP
+.nf
+The marker center is calculated and the all markers shifted by the
+difference with the target center.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1227 of file marker\&.cpp\&.
+.SS "\fBBmarker\fP* markers_copy (\fBBmarker\fP * mark)"
+
+.PP
+Copies a set of markers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mark\fP marker list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmarker* new marker list\&. 
+.RE
+.PP
+
+.PP
+Definition at line 142 of file marker\&.cpp\&.
+.SS "\fBBmarker\fP* markers_copy_selected (\fBBmarker\fP * mark)"
+
+.PP
+Copies a set of markers based on selection\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mark\fP marker list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmarker* new marker list\&. 
+.RE
+.PP
+
+.PP
+Definition at line 152 of file marker\&.cpp\&.
+.SS "long markers_delete_non_selected (\fBBmarker\fP ** mark)"
+
+.PP
+Deletes markers not selected\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**mark\fP pointer to marker list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of remaining markers\&. 
+.RE
+.PP
+
+.PP
+Definition at line 209 of file marker\&.cpp\&.
+.SS "\fBTransform\fP markers_find_rottrans (\fBBmarker\fP * set1, \fBBmarker\fP * set2, double tolerance)"
+
+.PP
+Finds the rotation and shift between two sets of vectors\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*set1\fP first coordinate set\&. 
+.br
+\fI*set2\fP second coordinate set\&. 
+.br
+\fItolerance\fP acceptable deviation for fit\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBTransform\fP structure with shift, scale, rotation angle, and R factor\&. 
+.PP
+.nf
+A large number of angles is tested and the shift calculated at each angle.
+The best angle is selected based on the sum of the standard deviations of
+the x, y and z shifts.
+Outliers are iteratively removed until the shift standard deviations drop
+below a tolerance value.
+The angle returned is the rotation applied to the first set to obtain
+an estimate of the second set.
+Requirement: The two sets must have the same number of points.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 466 of file marker\&.cpp\&.
+.SS "long markers_limit (int target_num, int sign, \fBBmarker\fP ** set)"
+
+.PP
+This method constricts a marker set to target_num points\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Samuel Payne 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fItarget_num\fP number of points desired in set\&. 
+.br
+\fIsign\fP sign to direct sorting\&. 
+.br
+\fI**set\fP pointer to set containing all the points\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of points selected\&. 
+.PP
+.nf
+This finds the target_num darkest points in the set.  The extreme 
+grey scale value associated with each point is held in value field
+of the Point structure.  This is copied into an array and sorted. The 
+cutoff value is the target_num index in the array.  A new array of 
+points is created containing points below the cutoff and then returned.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 959 of file marker\&.cpp\&.
+.SS "\fBTransform\fP* markers_map_and_find_transform (\fBBmarker\fP ** set, int nseries, int refset, \fBVector3\fP< long > size)"
+
+.PP
+This function finds the transform parameters between sets of coordinates\&. These sets are expected to have a large intersection, but do not have to be 1 to 1\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Samuel Payne 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI**set\fP set of coordinates from images to be aligned\&. 
+.br
+\fInseries\fP number of images in the set\&. 
+.br
+\fIrefset\fP reference set number\&. 
+.br
+\fIsize\fP size of images/frames of sets\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Transform* list with shift, scale, rotation angle, and R factor\&. 
+.PP
+.nf
+Gets a one to one mapping of the two coordinate sets using
+markers_find_rottrans to compare pairs of sets. 
+A postscript file is made to graphically show the deviations of each 
+point from its calculated position. 
+Assumptions: This assumes each set has been sorted according to
+distance from the center of the set.    
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 635 of file marker\&.cpp\&.
+.SS "long markers_renumber (\fBBmarker\fP * mark)"
+
+.PP
+Renumbers a set of markers\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**mark\fP pointer to marker list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of markers\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1201 of file marker\&.cpp\&.
+.SS "\fBBmarker\fP* markers_sort_by_id (\fBBmarker\fP ** mark)"
+
+.PP
+Sorts a set of markers by ID number\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI**mark\fP pointer to marker list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmarker* new pointer to marker list\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1155 of file marker\&.cpp\&.
+.SS "\fBBmodel\fP* model_from_markers (\fBBmarker\fP * markers, \fBVector3\fP< double > origin, \fBVector3\fP< double > sam)"
+
+.PP
+Convert markers to a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*markers\fP linked list of markers\&. 
+.br
+\fIorigin\fP marker origin\&. 
+.br
+\fIsam\fP scaling marker coordinates\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1052 of file marker\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

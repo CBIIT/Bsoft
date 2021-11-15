@@ -1,0 +1,25 @@
+var jcphuff_8c =
+[
+    [ "phuff_entropy_encoder", "structphuff__entropy__encoder.html", "structphuff__entropy__encoder" ],
+    [ "emit_byte", "jcphuff_8c.html#a0b98ab18003c8c3749dd106884392d70", null ],
+    [ "IRIGHT_SHIFT", "jcphuff_8c.html#a7f291127ecba34f0b64be39e09411e8b", null ],
+    [ "ISHIFT_TEMPS", "jcphuff_8c.html#a1782895810a7c6dd95d870de9366b948", null ],
+    [ "JPEG_INTERNALS", "jcphuff_8c.html#ad5c3cdfae3019b8223973041a2a1304b", null ],
+    [ "MAX_CORR_BITS", "jcphuff_8c.html#ad1fe6569ffbe4b0fe1496d3b3f97136c", null ],
+    [ "phuff_entropy_ptr", "jcphuff_8c.html#a7e9448e2c297381f95f4aa5ac1f0f3b9", null ],
+    [ "dump_buffer", "jcphuff_8c.html#ac180bbc731297d5fbd122cbc2c85bf66", null ],
+    [ "emit_bits", "jcphuff_8c.html#a8cb9f2dce25e380409ec413a11ad0458", null ],
+    [ "emit_buffered_bits", "jcphuff_8c.html#a19dc148fdc21e0fca41390a72e8aec21", null ],
+    [ "emit_eobrun", "jcphuff_8c.html#ae7ba9e2e1506306e6cff5eb0aeba5b06", null ],
+    [ "emit_restart", "jcphuff_8c.html#a0b052c1a1a2fa1d8ab81efd8c203d35c", null ],
+    [ "emit_symbol", "jcphuff_8c.html#a98557e27e9cdb81e92c05afaa7704068", null ],
+    [ "encode_mcu_AC_first", "jcphuff_8c.html#a16f93bf9ad174d1e43f92a6844ba56f5", null ],
+    [ "encode_mcu_AC_refine", "jcphuff_8c.html#af22cdbc60163714d02c04ed18d0fcc75", null ],
+    [ "encode_mcu_DC_first", "jcphuff_8c.html#a2303fadff5a0fb6bdaa06eb03131d87e", null ],
+    [ "encode_mcu_DC_refine", "jcphuff_8c.html#a668250087105455338e97ba0f612c700", null ],
+    [ "finish_pass_gather_phuff", "jcphuff_8c.html#a5931f1b95ddf48e9beb89b50c9f07570", null ],
+    [ "finish_pass_phuff", "jcphuff_8c.html#ab0c4389fa9ed922b9f778f39bad74000", null ],
+    [ "flush_bits", "jcphuff_8c.html#a358078e37365759f4c53ee9f7f61b2a3", null ],
+    [ "jinit_phuff_encoder", "jcphuff_8c.html#abf5eb09d95afb41b0257aaef084d8004", null ],
+    [ "METHODDEF", "jcphuff_8c.html#a1a64d09a8eaa504dd788c52dfb3cf6d6", null ]
+];

@@ -1,0 +1,223 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_fft_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/util/fft.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/util/fft.cpp</primary></indexterm>
+<para>
+
+<para>General FFT for n-dimensional data. </para>
+ 
+</para>
+<programlisting>#include &quot;fft.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_fft_8cpp_1a6b778a165191d4ffd1bc43d5e819314b">fft_setup_plan</link> (long x, long y, long z, <link linkend="_fft_8h_1a61cf819a81d9f5c3c4d82f5907e3fe67">fft_direction</link> dir, int opt)</para>
+
+<para>Sets up a plan for fast Fourier transforms. </para>
+</listitem>
+            <listitem><para><link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_fft_8cpp_1ace08091634163d8e3a95f4f236df955d">fft_setup_plan</link> (<link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_fft_8h_1a61cf819a81d9f5c3c4d82f5907e3fe67">fft_direction</link> dir, int opt)</para>
+</listitem>
+            <listitem><para>int <link linkend="_fft_8cpp_1a2415a06af5593ebe3349f43ef9d830ca">fft_destroy_plan</link> (<link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> plan)</para>
+
+<para>Deallocates a plan for fast Fourier transforms. </para>
+</listitem>
+            <listitem><para>int <link linkend="_fft_8cpp_1afac48160029c0fcf1b10771c2fc881c6">fftw</link> (<link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> plan, <link linkend="_class_complex">Complex</link>&lt; float &gt; *a)</para>
+
+<para>Fast Fourier transforms a data array. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_fft_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>General FFT for n-dimensional data. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19980805 </para>
+
+<para>Modified: 20151002 <literallayout><computeroutput>    Implementing the FFTW library
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_fft_8cpp_1a2415a06af5593ebe3349f43ef9d830ca"/>    <section>
+    <title>fft_destroy_plan()</title>
+<indexterm><primary>fft_destroy_plan</primary><secondary>fft.cpp</secondary></indexterm>
+<indexterm><primary>fft.cpp</primary><secondary>fft_destroy_plan</secondary></indexterm>
+<para><computeroutput>int fft_destroy_plan (<link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> plan)</computeroutput></para><para>
+
+<para>Deallocates a plan for fast Fourier transforms. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>plan</entry>
+                                <entry>
+<para>FFTW plan. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>FFTW library (www.fftw.org).
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 87 of file fft.cpp.</para>
+    </section><anchor xml:id="_fft_8cpp_1a6b778a165191d4ffd1bc43d5e819314b"/>    <section>
+    <title>fft_setup_plan()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>fft_setup_plan</primary><secondary>fft.cpp</secondary></indexterm>
+<indexterm><primary>fft.cpp</primary><secondary>fft_setup_plan</secondary></indexterm>
+<para><computeroutput><link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> fft_setup_plan (long x, long y, long z, <link linkend="_fft_8h_1a61cf819a81d9f5c3c4d82f5907e3fe67">fft_direction</link> dir, int opt)</computeroutput></para><para>
+
+<para>Sets up a plan for fast Fourier transforms. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>x</entry>
+                                <entry>
+<para>x dimension. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>y</entry>
+                                <entry>
+<para>y dimension. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>z</entry>
+                                <entry>
+<para>z dimension. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>dir</entry>
+                                <entry>
+<para>direction of transformation (FFTW_FORWARD or FFTW_BACKWARD) </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>opt</entry>
+                                <entry>
+<para>optimization (0=FFTW_ESTIMATE, 1=FFTW_MEASURE, 2=FFTW_PATIENT, 3=FFTW_EXHAUSTIVE). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>fft_plan FFTW plan. <literallayout><computeroutput>FFTW library (www.fftw.org).
+The size and direction determines the plan.
+Both FFTW versions 2 and 3 are supported.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 31 of file fft.cpp.</para>
+    </section><anchor xml:id="_fft_8cpp_1ace08091634163d8e3a95f4f236df955d"/>    <section>
+    <title>fft_setup_plan()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>fft_setup_plan</primary><secondary>fft.cpp</secondary></indexterm>
+<indexterm><primary>fft.cpp</primary><secondary>fft_setup_plan</secondary></indexterm>
+<para><computeroutput><link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> fft_setup_plan (<link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_fft_8h_1a61cf819a81d9f5c3c4d82f5907e3fe67">fft_direction</link> dir, int opt)</computeroutput></para><para>
+Definition at line 74 of file fft.cpp.</para>
+    </section><anchor xml:id="_fft_8cpp_1afac48160029c0fcf1b10771c2fc881c6"/>    <section>
+    <title>fftw()</title>
+<indexterm><primary>fftw</primary><secondary>fft.cpp</secondary></indexterm>
+<indexterm><primary>fft.cpp</primary><secondary>fftw</secondary></indexterm>
+<para><computeroutput>int fftw (<link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> plan, <link linkend="_class_complex">Complex</link>&lt; float &gt; * a)</computeroutput></para><para>
+
+<para>Fast Fourier transforms a data array. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>plan</entry>
+                                <entry>
+<para>Fourier transform plan. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*a</entry>
+                                <entry>
+<para>data array. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code. <literallayout><computeroutput>FFTW library (www.fftw.org).
+The transform plan encodes both the direction and size of the transform.
+The transformation is done in place and the resultant data are 
+returned within the original array.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 106 of file fft.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_fft_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>fft.cpp</secondary></indexterm>
+<indexterm><primary>fft.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

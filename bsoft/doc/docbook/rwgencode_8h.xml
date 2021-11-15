@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rwgencode_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/rwgencode.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/rwgencode.h</primary></indexterm>
+<para>
+
+<para>Header file for reading a genetic code from a file. </para>
+ 
+</para>
+<programlisting>#include &quot;Bstring.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="_rwgencode_8h_1a672fdb9f9ae82131ee23098861241fe7">get_genetic_code</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+
+<para>Gets the genetic code from a parameter file. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwgencode_8h_1a37d7c0047b49f9ae6779aecedb85006a">write_genetic_code</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bstring">Bstring</link> &amp;gc)</para>
+
+<para>Writing genetic code. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwgencode_8h_1aa021dcdd51740f9ba487a7d50697e4f1">index_from_codon</link> (const char codon[3])</para>
+
+<para>Gets the index associated with a specific codon. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for reading a genetic code from a file. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20030316 </para>
+
+<para>Modified: 20060710 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rwgencode_8h_1a672fdb9f9ae82131ee23098861241fe7"/>    <section>
+    <title>get_genetic_code()</title>
+<indexterm><primary>get_genetic_code</primary><secondary>rwgencode.h</secondary></indexterm>
+<indexterm><primary>rwgencode.h</primary><secondary>get_genetic_code</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> get_genetic_code (<link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+
+<para>Gets the genetic code from a parameter file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file name (if empty, use a default file). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_bstring">Bstring</link> 64 character array of residues (+1 0 termination character). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 26 of file rwgencode.cpp.</para>
+    </section><anchor xml:id="_rwgencode_8h_1aa021dcdd51740f9ba487a7d50697e4f1"/>    <section>
+    <title>index_from_codon()</title>
+<indexterm><primary>index_from_codon</primary><secondary>rwgencode.h</secondary></indexterm>
+<indexterm><primary>rwgencode.h</primary><secondary>index_from_codon</secondary></indexterm>
+<para><computeroutput>int index_from_codon (const char codon[3])</computeroutput></para><para>
+
+<para>Gets the index associated with a specific codon. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*codon</entry>
+                                <entry>
+<para>the codon. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int index. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 110 of file rwgencode.cpp.</para>
+    </section><anchor xml:id="_rwgencode_8h_1a37d7c0047b49f9ae6779aecedb85006a"/>    <section>
+    <title>write_genetic_code()</title>
+<indexterm><primary>write_genetic_code</primary><secondary>rwgencode.h</secondary></indexterm>
+<indexterm><primary>rwgencode.h</primary><secondary>write_genetic_code</secondary></indexterm>
+<para><computeroutput>int write_genetic_code (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bstring">Bstring</link> &amp; gc)</computeroutput></para><para>
+
+<para>Writing genetic code. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;gc</entry>
+                                <entry>
+<para>64-byte string with the genetic code. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 61 of file rwgencode.cpp.</para>
+</section>
+</section>
+</section>

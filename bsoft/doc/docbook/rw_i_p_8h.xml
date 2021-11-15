@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rw_i_p_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/rwIP.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/rwIP.h</primary></indexterm>
+<para>
+
+<para>Header file for reading and writing image plate reader files. </para>
+ 
+</para>
+<programlisting>#include &quot;rwimg.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_rw_i_p_8h_1a1e7c6ffac5a7fb4c81d656dca1ef7c53">IPSIZE</link>   2048</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_i_p_8h_1a757e0648ae930630c984ff445acf8c7c">readIP</link> (<link linkend="_class_bimage">Bimage</link> *p, int readdata)</para>
+
+<para>Reading an image plate reader file format. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_i_p_8h_1a84dc8886a8ef3f620412c49e6cced4a1">writeIP</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>Writing an image plate reader file format. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for reading and writing image plate reader files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20041110 </para>
+
+<para>Modified: 20111217 <literallayout><computeroutput>Format: 2D image file format for the image plate reader
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_rw_i_p_8h_1a1e7c6ffac5a7fb4c81d656dca1ef7c53"/>    <section>
+    <title>IPSIZE</title>
+<indexterm><primary>IPSIZE</primary><secondary>rwIP.h</secondary></indexterm>
+<indexterm><primary>rwIP.h</primary><secondary>IPSIZE</secondary></indexterm>
+<para><computeroutput>#define IPSIZE   2048</computeroutput></para><para>
+Definition at line 13 of file rwIP.h.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rw_i_p_8h_1a757e0648ae930630c984ff445acf8c7c"/>    <section>
+    <title>readIP()</title>
+<indexterm><primary>readIP</primary><secondary>rwIP.h</secondary></indexterm>
+<indexterm><primary>rwIP.h</primary><secondary>readIP</secondary></indexterm>
+<para><computeroutput>int readIP (<link linkend="_class_bimage">Bimage</link> * p, int readdata)</computeroutput></para><para>
+
+<para>Reading an image plate reader file format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>readdata</entry>
+                                <entry>
+<para>flag to activate reading of image data. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). An image format used in the Ditabis image plate reader. The header is text with tag-value pairs. Required tags: CREATED = time and date string HEADER = length of header, typically 2048 XPIXEL = x size YPIXEL = y size BYTE PER PIXEL = 2,3,4 XRESOLUTION = x pixel size in um YRESOLUTION = y pixel size in um THUMB-NAIL-ZOOM = zoom factor for preview, typically 10 Additional tags: MAGNIFICATION = microscope magnification OFFSET = zero dose value OFFSET CORRECTION = flag to indicate correction GAIN = gain setting LASER = laser setting PARAMS = settings file FORMAT = format file CHANNEL = data channel MICRON-MARK = position, length and text of micron mark overlay Final tag: COMMENT = comment, always last, terminated by NULL. File format extensions: .IPL, .IPH, .IPR, .IPC Byte order: Always little endian because the IP software runs on Intel machines and there is no way to detect byte order from the text header. Data type: short. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 50 of file rwIP.cpp.</para>
+    </section><anchor xml:id="_rw_i_p_8h_1a84dc8886a8ef3f620412c49e6cced4a1"/>    <section>
+    <title>writeIP()</title>
+<indexterm><primary>writeIP</primary><secondary>rwIP.h</secondary></indexterm>
+<indexterm><primary>rwIP.h</primary><secondary>writeIP</secondary></indexterm>
+<para><computeroutput>int writeIP (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>Writing an image plate reader file format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). A 2D image format used with the image plate reader. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 116 of file rwIP.cpp.</para>
+</section>
+</section>
+</section>

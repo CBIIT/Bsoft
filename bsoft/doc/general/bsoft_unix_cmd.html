@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Unix Commands</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h2>The Bsoft command line</h2>
+<p>The prototype command line for a Bsoft program is:<br />
+<div id="command"><p>program [options] files</p></div>
+<p>Typing only the program name produces usage information, describing the
+intent of the program and the options that can be used. Each option
+starts with a hyphen followed by a tag of one to several characters.
+The user can use any truncated version of a tag as long as it is
+unique. For options taking one or more values, the comma-separated list
+of values must be separated from the tag by a space:</p>
+<div id="command"><p>-&lt;tag&gt; &lt;val1&gt;,&lt;val2&gt;,...</p></div>
+
+<h3>Unix command line</h3>
+<p>Bsoft programs are designed to conform to Unix-style command lines, starting
+with the program name, followed by any number of options to set parameters,
+and ending with data file names, e.g., to truncate the data in an image
+between the values 0 and 100 and with verbose output:</p>
+<div id="command"><p>bimg -verbose 7 -truncate 0,100 input.img output.img</p></div>
+<p>Option tags are words aiming at describing the action or parameter
+to be set. The user can truncate these tags as long as they remain
+unique within the context of a program. E.g., &quot;-v 7&quot; will set the
+verbosity level to 7 in most programs, as long as no other tag for
+those programs begin with a &quot;v&quot;. There must be a space between the
+option tag and the value.</p>
+
+<h3> Data file recognition</h3>
+<p>Data file formats are recognized by the file extension following the last
+period (&quot;.&quot;) in the file name. A file can be read using a particular format
+by specifying this format's extension after a colon (&quot;:&quot;), e.g.:</p>
+<div id="command"><p>bimg -verbose 7 file.img:mrc file.img:tif</p></div>
+
+<h2>Scripts</h2>
+<h3>Brun: Command line construction aid</h3>
+<p>Brun is a Tcl/Tk script which presents the options and data I/O of a program
+in a graphical user interface for ease of command line construction.
+Here is a quick example to show the header parameters in an image file:</p>
+<ul>
+	<li>To start the script, type &quot;brun&quot;.</li>
+	<li>Click the &quot;Program&quot; button, select the program &quot;/usr/local/bsoft/bin/bhead&quot;.</li>
+	<li>Click the top &quot;Browse&quot; button and select an image file.</li>
+	<li>Click the check box next to &quot;input.img&quot;. This adds the file
+		name to the command line.</li>
+	<li>Click the check box next to &quot;-verbose&quot; to insert this
+		option with its current value into the command line.</li>
+	<li>Click the &quot;Execute&quot; button, which should result in an
+		output of the image header parameters in the C-shell window.</li>
+</ul>
+<p>On MacOSX there is a little wrapper script that needs to be run called
+  &quot;brunX&quot;. </p>
+
+<h3><a href="../bshow/bshow.html">Bshow: Image display and manipulation</a></h3>
+<p>Bshow is a Tcl/Tk script tightly interfaced with the Bsoft library to be
+able to display images and do many interactive processing tasks. The main
+documentation is <a href="../bshow/bshow.html">here</a>.</p>
+
+<h3><a href="../scripts/bsoft_scripts.html">Other scripts</a></h3>
+<p>Many processing tasks can be broken up into subtasks and executed on
+different processors or on one processor at different times to avoid exceeding
+memory limitations.</p>
+</div>
+<div id="footer">
+  Bernard Heymann  20141224
+</div>
+</body>
+</html>

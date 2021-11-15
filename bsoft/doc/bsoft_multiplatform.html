@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- Author: Bernard Heymann -->
+<!-- Created: 20100925 -->
+<!-- Modified: 20110812 -->
+<title>Bsoft: Distributed Processing</title>
+<link href="bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+      <h2>Distributed access to Bsoft</h2>
+The most efficient way to manage Bsoft (and other software) in a
+laboratory with many workstations, and potentially a variety of
+platforms, is to provide a central location for software. Under Unix,
+this means designating a common disk on the network as a software disk
+and mounting it on all computers. This allows upgrading the software in
+only one location, as opposed to every computer.<br />
+      <br />
+In addition, the setup proposed below becomes important for distributed
+processing using a package such as <a href="https://lsbr.niams.nih.gov/Peach/">Peach</a>, 
+which requires a common disk not only for access to the programs,
+but also for the data.
+<br />
+      <br />
+Here is an example setup for a typical laboratory. Assume there are
+four different platforms with three of them capable of either 32- or
+64-bit addressing: Mac OSX (Darwin), Linux, SGI (IRIX) and Tru64 (Alpha
+OSF1). The choice for the names comes from the result of the command
+&quot;uname -s&quot; and can be used in an environmental resource file.<br />
+      <br />
+      <ul>
+        <li>/common_disk/
+        <ul>
+          <li>Darwin/
+          <ul>
+            <li>bsoft</li>
+            <li>bsoft32</li>
+          </ul></li>
+          <li>Linux/
+          <ul>
+            <li>bsoft</li>
+            <li>bsoft32</li>
+          </ul></li>
+          <li>IRIX64/
+          <ul>
+            <li>bsoft</li>
+            <li>bsoft32</li>
+          </ul></li>
+          <li>OSF1/
+          <ul>
+            <li>bsoft<br />
+            </li>
+          </ul></li>
+        </ul></li>
+      </ul>
+The 32-bit versions of Bsoft are required for computers not capable of
+64-bit processing (old Macs and 32-bit Linux boxes), or for associated packages. Under
+Mac OSX 10.4, the Tcl/Tk libraries are still 32-bit which means that
+the 32-bit version is still required. The 64-bit capable Macs (G5 and Intel) need only one Bsoft directory because all the required versions are incorporated into universal binaries and libraries.<br />
+      <br />
+      <hr style="width: 100%; height: 2px;" />
+      <h2>Setting up the environment</h2>
+The environment can be set in every user account or on every computer.
+However, it is more efficient to use the common disk and provide a file
+that sets up all the common software for the whole group. The following
+resource file should be set up on the common disk and sourced by the
+system or user resource file on every computer. <br />
+      <h3>Example C-shell resource file text</h3>
+# Example setup script for paths to Bsoft<br />
+# Bernard Heymann<br />
+# 20050809<br />
+      <br />
+set OS = `uname -s | cut -f1 -d&quot;-&quot;`<br />
+      <br />
+# Common programs disk<br />
+setenv PROGS /common_disk<br />
+      <br />
+# Program directories<br />
+setenv BSOFT ${PROGS}/${OS}/bsoft<br />
+setenv BSOFT32 ${PROGS}/${OS}/bsoft32<br />
+      <br />
+if ( $OS == &quot;Darwin&quot; ) then<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; set V = `uname -r | cut -f1
+-d&quot;.&quot;`<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( $V &lt; 8 ) setenv
+BSOFT $BSOFT32<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( `machine` != &quot;ppc970&quot; )
+setenv BSOFT $BSOFT32<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( $?DYLD_LIBRARY_PATH )
+then<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+setenv DYLD_LIBRARY_PATH ${BSOFT32}/lib:${BSOFT}/lib:$DYLD_LIBRARY_PATH<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+setenv DYLD_LIBRARY_PATH ${BSOFT32}/lib:${BSOFT}/lib<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; endif<br />
+endif<br />
+      <br />
+setenv PATH ./:${BSOFT}/bin:$PATH<br />
+      <br />
+if ( $OS == &quot;IRIX&quot; || $OS == &quot;IRIX64&quot; ) then<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( $?LD_LIBRARYN32_PATH )
+then<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+setenv LD_LIBRARYN32_PATH
+${BSOFT32}/lib:$IMOD_DIR/lib32:$LD_LIBRARYN32_PATH<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+setenv LD_LIBRARYN32_PATH ${BSOFT32}/lib:$IMOD_DIR/lib32<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; endif<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( $?LD_LIBRARY64_PATH )
+then<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+setenv LD_LIBRARY64_PATH ${BSOFT}/lib:$LD_LIBRARY64_PATH<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+setenv LD_LIBRARY64_PATH ${BSOFT}/lib<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; endif<br />
+endif<br />
+      <br />
+# Program parameters<br />
+setenv BPARAM $BSOFT/parameters/<br />
+      <br />
+set symlinks=none<br />
+      <br />
+</div>
+<div id="footer">
+  Bernard Heymann  20110812
+</div>
+</body>
+</html>

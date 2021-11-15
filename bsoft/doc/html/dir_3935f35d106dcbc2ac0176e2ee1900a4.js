@@ -1,0 +1,27 @@
+var dir_3935f35d106dcbc2ac0176e2ee1900a4 =
+[
+    [ "mg_align.cpp", "mg__align_8cpp.html", "mg__align_8cpp" ],
+    [ "mg_class.cpp", "mg__class_8cpp.html", "mg__class_8cpp" ],
+    [ "mg_ctf.cpp", "mg__ctf_8cpp.html", "mg__ctf_8cpp" ],
+    [ "mg_extract.cpp", "mg__extract_8cpp.html", "mg__extract_8cpp" ],
+    [ "mg_hand.cpp", "mg__hand_8cpp.html", "mg__hand_8cpp" ],
+    [ "mg_helix.cpp", "mg__helix_8cpp.html", "mg__helix_8cpp" ],
+    [ "mg_img_proc.cpp", "mg__img__proc_8cpp.html", "mg__img__proc_8cpp" ],
+    [ "mg_merge.cpp", "mg__merge_8cpp.html", "mg__merge_8cpp" ],
+    [ "mg_multiple.cpp", "mg__multiple_8cpp.html", "mg__multiple_8cpp" ],
+    [ "mg_multislice.cpp", "mg__multislice_8cpp.html", "mg__multislice_8cpp" ],
+    [ "mg_orient.cpp", "mg__orient_8cpp.html", "mg__orient_8cpp" ],
+    [ "mg_particle_select.cpp", "mg__particle__select_8cpp.html", "mg__particle__select_8cpp" ],
+    [ "mg_particles.cpp", "mg__particles_8cpp.html", "mg__particles_8cpp" ],
+    [ "mg_pick.cpp", "mg__pick_8cpp.html", "mg__pick_8cpp" ],
+    [ "mg_processing.cpp", "mg__processing_8cpp.html", "mg__processing_8cpp" ],
+    [ "mg_random.cpp", "mg__random_8cpp.html", "mg__random_8cpp" ],
+    [ "mg_reconstruct.cpp", "mg__reconstruct_8cpp.html", "mg__reconstruct_8cpp" ],
+    [ "mg_refine.cpp", "mg__refine_8cpp.html", "mg__refine_8cpp" ],
+    [ "mg_resolution.cpp", "mg__resolution_8cpp.html", "mg__resolution_8cpp" ],
+    [ "mg_tomo_rec.cpp", "mg__tomo__rec_8cpp.html", "mg__tomo__rec_8cpp" ],
+    [ "mg_tomo_resol.cpp", "mg__tomo__resol_8cpp.html", "mg__tomo__resol_8cpp" ],
+    [ "mg_tomo_track.cpp", "mg__tomo__track_8cpp.html", "mg__tomo__track_8cpp" ],
+    [ "mg_tomography.cpp", "mg__tomography_8cpp.html", "mg__tomography_8cpp" ],
+    [ "mg_xtal.cpp", "mg__xtal_8cpp.html", "mg__xtal_8cpp" ]
+];

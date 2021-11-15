@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Policies</title>
+<link href="bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+      <h1>Coding style</h1>
+Bsoft is written to facilitate the rapid development of image and
+molecular processing applications. The coding style is kept simple and
+designed to avoid ambiguities. There is a certain formalization and
+discipline required to code this way, as laid out in the following
+guidelines:<br />
+      <ul>
+        <li>Modularity:
+        <ul>
+          <li>Keep globals to a minimum: The main code in Bsoft has only one
+				package-wide global meant mostly for reporting purposes,
+				&quot;verbose&quot;.</li>
+          <li>Separate program front ends from functionality: In Bsoft, each
+				program is viewed as an user interface to process options and drive
+				processing. The Bsoft library can therefore be used in the scope of
+				any program.<br />
+          </li>
+          <li>Encapsulate units of functionality in actual functions:
+				In Bsoft I attempt to write each function doing only a specific task.</li>
+          <li>Every source file in the library has its own header file
+				(don't merge header files!). E.g.: utilities.c and utilities.h.</li>
+          <li>Separate I/O from processing: All the functions reading
+				and writing files and dealing with specific formats feed into a small
+				number of interface functions:
+          <ul>
+            <li>Images: read_img and write_img</li>
+            <li>Molecules: read_molecule and write_molecule</li>
+            <li>Models: read_model and write_model</li>
+            <li>Parameters: read_project and write_project</li>
+          </ul>
+          </li>
+        </ul></li>
+        <li>Generality:
+        <ul>
+          <li>Only four forms of information, each with associated
+				objects (structures or classes) in the code encapsulating all the relevant data:
+            <ul>
+            <li>Images</li>
+            <li>Molecules</li>
+            <li>Models</li>
+            <li>Parameters</li>
+          </ul>
+          </li>
+          <li>Every function is written to deal with all incarnations of the
+			data form it processes. For images, this means that every function
+			needs to address all data types. For molecules, both atomic coordinate
+			and sequence data are encoded in the same structural hierarchy, and
+			each function needs to take this into account.<br />
+          </li>
+          <li>A typical function should be written to provide a general
+			solution to a problem posed, rather than just returning a specific
+			result.</li>
+        </ul></li>
+        <li>Command line option handling:
+        <ul>
+          <li>Old model: The original Bsoft option handling was managed
+			in typical Unix fashion as single letter tags followed in some cases
+			by an option value or argument (using the getopt function).</li>
+          <li>New model: The use of single letter tags proved to be too
+			restrictive as Bsoft grew, and a new mechanism was introduced allowing
+			the user to use truncated versions of long option tags provided they were
+			unambiguous. This is largely compatible with the old style options as
+			long as a space is used between the option tag and value. <br />
+          </li>
+          <li>New model and the usage block: This model uses the &quot;usage&quot;
+			block of strings to determine option mappings, making the design of the
+			usage strings important, as set out in the following rules:
+          <ul>
+            <li>Any line starting with '-' is assumed to indicate an option
+				description.</li>
+            <li>The option tag can only be 15 characters long.</li>
+            <li>The option tag must be separated from the example value
+				by a whitespace.</li>
+            <li>The presence of an example value indicates that the
+				option requires a value.</li>
+          </ul></li>
+          <li>New model mechanism: The command line argument list is parsed
+			for options indicated by '-' as the first character. An argument deemed
+			an option tag is scanned against the usage block to find the full tag
+			and determine whether it takes a value. The option tag-value pairs are
+			stored in a linked list and returned. These tag-value pairs are then
+			evaluated to set command-line parameters.</li>
+        </ul></li>
+        <li>Error handling:
+        <ul>
+          <li>Function return values: Functions in the Bsoft package returns
+			three types of values, where each can be used as an indication of an error:
+          <ul>
+            <li>An integer used as error code: Error codes are always less
+				than zero.</li>
+            <li>A calculated value: An error may be indicated as an
+				implausable value for the return variable.</li>
+            <li>A pointer to a structure: A NULL return value indicates an
+				error.</li>
+          </ul></li>
+          <li>Handling: To make an error condition as useful as possible, the
+			point of failure in each function in the calling hierarchy should be
+			identified by propagating the error condition back to the top level.
+			This means that an error should not let the program exit at a low level
+			function.</li>
+          <li>Warnings: A warning is required to indicate an unexpected
+			condition, or a corrective action that may be counter to what the user
+			expects, but mostly a non-fatal condition.<br />
+          </li>
+        </ul></li>
+        <li>Memory tracking:
+          <ul>
+            <li>All memory is allocated and deallocated explicitly, usually 
+			within the function of use, unless the function returns an allocated structure.</li>
+            <li>In previous versions of Bsoft, memory allocation and deallocation 
+			were tracked and unaccounted instances reported for debugging purposes.</li>
+            <li>With expanded conversion to C++ objects, memory tracking is now 
+			done with a tool such as <a href="http://valgrind.org" target="_blank">valgrind</a></li>
+          </ul>
+        </li>
+        <li>Image processing model:
+          <ul>
+            <li>An image is read as a whole, processed, and the output written
+              as a whole. This ensures modularity in the code, avoiding mixing I/O
+              and processing issues. Due to the possibly prohibitive size of a
+              multi-image file, a facility has been provided to access individual
+            images from a multi-image file.</li>
+            <li>Functions may process image data in place (i.e., replacing the
+              old data) to limit memory requirements, or generate new image
+            structures, depending on the requirements of the algorithm.</li>
+            <li>Very large images can be divided into tiles, processed and reassembled.<br />
+            </li>
+          </ul>
+        </li>
+        <li>Documentation:
+        <ul>
+		  <li>Bsoft used to have its own documentation system, but it is now switched
+		  to a common format to be able to use the
+		  <a href="http://www.doxygen.org" target="_blank">Doxygen</a> documentation generator</li>
+          <li>The comment block must precede the function and start with
+			&quot;/**&quot; and end with &quot;**/&quot; on their own lines.</li>
+          <li>All keywords within the block must start with &quot;@&quot; as the
+			first character on a line.</li>
+          <li>Many keywords can be used, with the following typical:
+          <ul>
+            <li>@brief</li>
+            <li>@param</li>
+            <li>@return</li>
+            <li>@file</li>
+            <li>@author</li>
+            <li>@date</li>
+          </ul></li>
+        </ul></li>
+      </ul>
+<hr size="2" width="100%" />
+      <h1> Image file formats</h1>
+		The varieties of image formats and even greater varieties of programs
+		producing files of these formats, mean that problems are encountered
+		because the programmers did not adhere to a complete and up to date
+		specification of a format, and typically took shortcuts to avoid having
+		to deal with all the issues included in a file format. This generates
+		problems such as poor data type support, omission of statistical
+		information, and even garbage in some fields which make well-behaved
+		programs crash. Here are some of the policies in Bsoft dealing with
+		such sloppiness in image format handling:
+      <ul>
+        <li>The principle in Bsoft is that of access to all images,
+			regardless of format. The notion of an image format converter as a standalone
+			functionality is therefore considered outdated.<br />
+        </li>
+        <li>The Bsoft policy is to adhere as closely as possible to the file
+			format specification. The priority is therefore to follow published
+			specifications, and then to try to deal with the I/O of other
+			packages. In the case of TIFF files, Bsoft provides for many datatypes
+			(including short and float) described in the version 6 specification.<br />
+        </li>
+        <li> The image input functions in Bsoft attempts to clean up image 
+			header problems as best they can, and
+			often such problems experienced with other programs can be resolved by
+			passing it through a Bsoft program such as &quot;bimg&quot;.</li>
+        <li>Endianness is handled on reading images based on the byte order found
+			in particular header fields. When writing images, the native byte order
+			of the processor is imposed.</li>
+        <li>The data type is preserved as far as possible, changed only on
+			user request (option) or when the receiving file format does not
+			support the data type.<br />
+        </li>
+        <li>Due to numerous problems encountered with reading date and time
+			fields in image files, Bsoft programs now only write the date and time
+			into these fields.</li>
+        <li>Labels and titles in image headers may contain garbage with
+			control characters detrimental to program execution. Bsoft programs
+			write their own strings into these fields.</li>
+      </ul>
+</div>
+<div id="footer">
+  Bernard Heymann  20151007
+</div>
+</body>
+</html>

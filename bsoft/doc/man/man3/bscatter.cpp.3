@@ -1,0 +1,196 @@
+.TH "/Users/bernard/b20/bsoft/src/bscatter.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/bscatter.cpp \- Program to calculate scattering cross sections\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'molecule_to_map\&.h'\fP
+.br
+\fC#include 'mol_util\&.h'\fP
+.br
+\fC#include 'seq_util\&.h'\fP
+.br
+\fC#include 'rwmodel_param\&.h'\fP
+.br
+\fC#include 'rwresprop\&.h'\fP
+.br
+\fC#include 'ctf\&.h'\fP
+.br
+\fC#include 'scatter\&.h'\fP
+.br
+\fC#include 'json\&.h'\fP
+.br
+\fC#include 'file_util\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBMAXSCAT\fP   1000"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBmaterial\fP \fBprotein_material_default\fP ()"
+.br
+.RI "Default protein composition adjusted by mass\&. "
+.ti -1c
+.RI "\fBBmaterial\fP \fBmaterial_from_molgroup\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.ti -1c
+.RI "int \fBcross_sections\fP (vector< string > &elements, map< string, \fBBcomptype\fP > &atompar, \fBCTFparam\fP &ctf)"
+.br
+.ti -1c
+.RI "int \fBcross_sections\fP (\fBBmaterial\fP &material, \fBCTFparam\fP &ctf)"
+.br
+.ti -1c
+.RI "int \fBcross_section_half_maximal_frequencies\fP (vector< string > &elements, map< string, \fBBcomptype\fP > &atompar)"
+.br
+.ti -1c
+.RI "int \fBcross_section_half_maximal_frequencies\fP (\fBBmaterial\fP &material)"
+.br
+.ti -1c
+.RI "int \fBaperture_series\fP (double thickness, \fBBmaterial\fP &material, \fBCTFparam\fP &ctf, vector< double > apser)"
+.br
+.ti -1c
+.RI "int \fBcollection_angle_series\fP (double thickness, \fBBmaterial\fP &material, \fBCTFparam\fP &ctf, vector< double > angser)"
+.br
+.ti -1c
+.RI "double \fBparticle_snr\fP (\fBBmaterial\fP &material, double mass, double radius, double thickness, \fBCTFparam\fP &ctf)"
+.br
+.ti -1c
+.RI "\fBBplot\fP * \fBparticle_spectral_signal\fP (\fBBmaterial\fP &material, double mass, double radius, double thickness, \fBCTFparam\fP &ctf)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.ti -1c
+.RI "double \fBelastic_cross_section_lenz\fP (long Z, double volts)"
+.br
+.ti -1c
+.RI "double \fBelastic_cross_section_langmore\fP (long Z, double volts)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Program to calculate scattering cross sections\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20190521 
+.PP
+Modified: 20210311 
+.RE
+.PP
+
+.PP
+Definition in file \fBbscatter\&.cpp\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define MAXSCAT   1000"
+
+.PP
+Definition at line 28 of file bscatter\&.cpp\&.
+.SH "Function Documentation"
+.PP 
+.SS "int aperture_series (double thickness, \fBBmaterial\fP & material, \fBCTFparam\fP & ctf, vector< double > apser)"
+
+.PP
+Definition at line 547 of file bscatter\&.cpp\&.
+.SS "int collection_angle_series (double thickness, \fBBmaterial\fP & material, \fBCTFparam\fP & ctf, vector< double > angser)"
+
+.PP
+Definition at line 575 of file bscatter\&.cpp\&.
+.SS "int cross_section_half_maximal_frequencies (\fBBmaterial\fP & material)"
+
+.PP
+Definition at line 527 of file bscatter\&.cpp\&.
+.SS "int cross_section_half_maximal_frequencies (vector< string > & elements, map< string, \fBBcomptype\fP > & atompar)"
+
+.PP
+Definition at line 505 of file bscatter\&.cpp\&.
+.SS "int cross_sections (\fBBmaterial\fP & material, \fBCTFparam\fP & ctf)"
+
+.PP
+Definition at line 461 of file bscatter\&.cpp\&.
+.SS "int cross_sections (vector< string > & elements, map< string, \fBBcomptype\fP > & atompar, \fBCTFparam\fP & ctf)"
+
+.PP
+Definition at line 417 of file bscatter\&.cpp\&.
+.SS "double elastic_cross_section_langmore (long Z, double volts)"
+
+.PP
+Definition at line 406 of file bscatter\&.cpp\&.
+.SS "double elastic_cross_section_lenz (long Z, double volts)"
+
+.PP
+Definition at line 396 of file bscatter\&.cpp\&.
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 87 of file bscatter\&.cpp\&.
+.SS "\fBBmaterial\fP material_from_molgroup (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Definition at line 344 of file bscatter\&.cpp\&.
+.SS "double particle_snr (\fBBmaterial\fP & material, double mass, double radius, double thickness, \fBCTFparam\fP & ctf)"
+
+.PP
+Definition at line 604 of file bscatter\&.cpp\&.
+.SS "\fBBplot\fP * particle_spectral_signal (\fBBmaterial\fP & material, double mass, double radius, double thickness, \fBCTFparam\fP & ctf)"
+
+.PP
+Definition at line 639 of file bscatter\&.cpp\&.
+.SS "\fBBmaterial\fP protein_material_default ()"
+
+.PP
+Default protein composition adjusted by mass\&. 
+.PP
+\fBReturns\fP
+.RS 4
+\fBBmaterial\fP material\&. 
+.RE
+.PP
+
+.PP
+Definition at line 326 of file bscatter\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+
+.PP
+Definition at line 44 of file bscatter\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

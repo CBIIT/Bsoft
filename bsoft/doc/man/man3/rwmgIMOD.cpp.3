@@ -1,0 +1,199 @@
+.TH "/Users/bernard/b20/bsoft/src/rwparam/rwmgIMOD.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/rwparam/rwmgIMOD.cpp \- Converts between \fBIMOD\fP files and a micrograph parameter file\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmgIMOD\&.h'\fP
+.br
+\fC#include 'mg_img_proc\&.h'\fP
+.br
+\fC#include 'mg_tomography\&.h'\fP
+.br
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBread_imod_xf\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP)"
+.br
+.ti -1c
+.RI "int \fBread_imod_tlt\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP)"
+.br
+.ti -1c
+.RI "int \fBread_imod_xyz\fP (\fBBstring\fP &filename, \fBBreconstruction\fP *rec)"
+.br
+.ti -1c
+.RI "int \fBread_imod_fid\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP)"
+.br
+.ti -1c
+.RI "int \fBread_project_imod\fP (\fBBstring\fP *\fBfile_list\fP, \fBBproject\fP *\fBproject\fP, int flag)"
+.br
+.RI "Creates a project structure using \fBIMOD\fP parameters\&. "
+.ti -1c
+.RI "int \fBwrite_imod_xf\fP (\fBBstring\fP &imodfile, \fBBproject\fP *\fBproject\fP)"
+.br
+.ti -1c
+.RI "int \fBwrite_imod_tlt\fP (\fBBstring\fP &imodfile, \fBBproject\fP *\fBproject\fP)"
+.br
+.ti -1c
+.RI "int \fBwrite_imod_xyz\fP (\fBBstring\fP &imodfile, \fBBproject\fP *\fBproject\fP)"
+.br
+.ti -1c
+.RI "int \fBwrite_project_imod\fP (\fBBstring\fP &imodfile, \fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Creates \fBIMOD\fP parameter files from a project structure\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Converts between \fBIMOD\fP files and a micrograph parameter file\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20070501 
+.PP
+Modified: 20170120 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwmgIMOD\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int read_imod_fid (\fBBstring\fP & filename, \fBBproject\fP * project)"
+
+.PP
+Definition at line 129 of file rwmgIMOD\&.cpp\&.
+.SS "int read_imod_tlt (\fBBstring\fP & filename, \fBBproject\fP * project)"
+
+.PP
+Definition at line 48 of file rwmgIMOD\&.cpp\&.
+.SS "int read_imod_xf (\fBBstring\fP & filename, \fBBproject\fP * project)"
+
+.PP
+Definition at line 20 of file rwmgIMOD\&.cpp\&.
+.SS "int read_imod_xyz (\fBBstring\fP & filename, \fBBreconstruction\fP * rec)"
+
+.PP
+Definition at line 74 of file rwmgIMOD\&.cpp\&.
+.SS "int read_project_imod (\fBBstring\fP * file_list, \fBBproject\fP * project, int flag)"
+
+.PP
+Creates a project structure using \fBIMOD\fP parameters\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*file_list\fP list of \fBIMOD\fP parameter file names\&. 
+.br
+\fI*project\fP initialized project structure\&. 
+.br
+\fIflag\fP flag to indicate conversion of the image file\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.PP
+.nf
+Requirements:
+    Tilt series micrograph image (if 3D then converted to multi-2D)
+    2D transform file (.xf)
+    Tilt angle file (.tlt)
+Calculations:
+    Tilt angle: from tilt angle file
+    Tilt axis: ta = (atan2(-A11, A12) + atan2(-A22, -A21))/2
+    Mg origin: o = on - Ad
+where
+    A:  2x2 transformation matrix
+    ta: tilt axis angle
+    on: nominal micrograph origin (center of mg)
+    o:  aligned micrograph origin
+    d:  shift for micrograph
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 242 of file rwmgIMOD\&.cpp\&.
+.SS "int write_imod_tlt (\fBBstring\fP & imodfile, \fBBproject\fP * project)"
+
+.PP
+Definition at line 374 of file rwmgIMOD\&.cpp\&.
+.SS "int write_imod_xf (\fBBstring\fP & imodfile, \fBBproject\fP * project)"
+
+.PP
+Definition at line 335 of file rwmgIMOD\&.cpp\&.
+.SS "int write_imod_xyz (\fBBstring\fP & imodfile, \fBBproject\fP * project)"
+
+.PP
+Definition at line 396 of file rwmgIMOD\&.cpp\&.
+.SS "int write_project_imod (\fBBstring\fP & imodfile, \fBBproject\fP * project)"
+
+.PP
+Creates \fBIMOD\fP parameter files from a project structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIimodfile\fP \fBIMOD\fP parameter file name\&. 
+.br
+\fIproject\fP project structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Writes both .xf, .tlt and .xyz files.
+Calculations:
+    Tilt angle: from micrograph tilt angle
+    Matrix: A = {cos(ta), -sin(ta), sin(ta), cos(ta)}
+    Shift:  d = o - on
+where
+    A:  2x2 transformation matrix
+    ta: tilt axis angle
+    on: nominal micrograph origin (center of mg)
+    o:  aligned micrograph origin
+    d:  shift for micrograph
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 452 of file rwmgIMOD\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

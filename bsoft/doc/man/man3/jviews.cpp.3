@@ -1,0 +1,154 @@
+.TH "/Users/bernard/b20/bsoft/src/jviews.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/jviews.cpp \- Generates views covering an asymmetric unit or all symmetry related views\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwstar\&.h'\fP
+.br
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_extract\&.h'\fP
+.br
+\fC#include 'mg_subtomo\&.h'\fP
+.br
+\fC#include 'spline\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include <fstream>\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBpdb_matrices_from_particles\fP (\fBBparticle\fP *part, \fBVector3\fP< double > sampling, \fBBstring\fP &filename)"
+.br
+.RI "Generates PDB file matrices from particle views and locations\&. "
+.ti -1c
+.RI "int \fBcmm_views\fP (\fBBstring\fP &filename, \fBBparticle\fP *part, \fBVector3\fP< double > sampling, long part_sel, double fom_cutoff, double colorfom_min, double colorfom_max, \fBRGB\fP< double > color, double diameter, double \fBlength\fP, double thickness)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Generates views covering an asymmetric unit or all symmetry related views\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Juha Huiskonen 
+.PP
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20071203 
+.PP
+Modified: 20080925 
+.PP
+Modified: 20081126 added shift option 
+.PP
+Modified: 20090204 added asymmetric unit views 
+.PP
+Modified: 20090205 added random views 
+.PP
+Modified: 20090206 added PDB output 
+.PP
+Modified: 20090408 added generate views option 
+.PP
+Modified: 20100527 added -Grid option 
+.PP
+Modified: 20110510 changed the orientation of the views when creating a Chimera marker file 
+.PP
+Modified: 20111208 added -Top option 
+.PP
+Modified: 20120123 (BH) 
+.PP
+Modified: 20120316 added -randomizealpha option 
+.PP
+Modified: 20150108 (BH) - incorporated into Bsoft 
+.PP
+.nf
+Writes particle views into a Chimera markerfile for visualization
+Writes particle orientations into a PDB file as BIOIMT matrices 
+(these can be combined with a pseudoatomic model of the template, and all orientations 
+can be visualized in Chimera)
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition in file \fBjviews\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int cmm_views (\fBBstring\fP & filename, \fBBparticle\fP * part, \fBVector3\fP< double > sampling, long part_sel, double fom_cutoff, double colorfom_min, double colorfom_max, \fBRGB\fP< double > color, double diameter, double length, double thickness)"
+
+.PP
+Definition at line 78 of file jviews\&.cpp\&.
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 208 of file jviews\&.cpp\&.
+.SS "int pdb_matrices_from_particles (\fBBparticle\fP * part, \fBVector3\fP< double > sampling, \fBBstring\fP & filename)"
+
+.PP
+Generates PDB file matrices from particle views and locations\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*part\fP list of particles\&. 
+.br
+\fIsampling\fP spatial sampling\&. 
+.br
+\fI&filename\fP PDB file with matrices\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. Writes a PDB file\&. Uses the BIOMT records\&. 
+.RE
+.PP
+
+.PP
+Definition at line 51 of file jviews\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+
+.PP
+Definition at line 162 of file jviews\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

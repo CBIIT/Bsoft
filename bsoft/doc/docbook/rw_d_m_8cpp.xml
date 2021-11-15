@@ -1,0 +1,255 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rw_d_m_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/rwimg/rwDM.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/rwimg/rwDM.cpp</primary></indexterm>
+<para>
+
+<para>Functions for reading and writing Digital Micrograph files. </para>
+ 
+</para>
+<programlisting>#include &quot;rwDM.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_d_m_8cpp_1a592b03a4053c4ee418fc8eaf3a5b3e7e">readFixedDMHeader</link> (ifstream *fimg, <link linkend="_class_bimage">Bimage</link> *p, int readdata)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_d_m_8cpp_1a0f94682d0c7872ac5f3ba29d62cea7d0">readTagGroupData</link> (ifstream *fimg, int dim_flag, <link linkend="_class_bimage">Bimage</link> *p, int readdata)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_d_m_8cpp_1a3cf90411aa3ca048fd9eb4ec353303b6">readTagGroupWithVersion</link> (ifstream *fimg, <link linkend="_class_bimage">Bimage</link> *p, int readdata, int img_select)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_d_m_8cpp_1ae83c07067345faf98c959261a0b7db76">show</link> (0)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_d_m_8cpp_1a9dbd5849c72f51b04c7c64b899e8e348">keep</link> (0)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_d_m_8cpp_1af559b73bfcc4a260734f71d52dc869ac">version</link> (0)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_d_m_8cpp_1a7f7475c3cffaf702ef2766959df86817">sb</link> (0)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_d_m_8cpp_1a010edf4ea9e658acf4a6301febca35b9">endianness</link> (1)</para>
+</listitem>
+            <listitem><para>size_t <link linkend="_rw_d_m_8cpp_1a2f48c9e23195864af2581edd4f60917e">level</link> (0)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_d_m_8cpp_1a90ba1c7cfe38ae9b92543febceb84cbb">readDM</link> (<link linkend="_class_bimage">Bimage</link> *p, int readdata, int img_select)</para>
+
+<para>Reading a Digital Micrograph image file format. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_d_m_8cpp_1a54f70370552a2f3dae80f6ee3cea7926">writeDM</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>Writing a Digital Micrograph map image file format. </para>
+</listitem>
+            <listitem><para><link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> <link linkend="_rw_d_m_8cpp_1ab647c6bfa7c4c73e4d83f6c17541e0a4">datatype_from_dm3_type</link> (<link linkend="_rw_d_m_8h_1a9ae5e142ae72d8367729fb10c19e7e1e">DMDataType</link> dm3_type, <link linkend="_class_bimage">Bimage</link> *p)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_d_m_8cpp_1a839db51521e7b30c2c3365e89a953778">dm3_type_length</link> (int dm3_type)</para>
+</listitem>
+            <listitem><para>double <link linkend="_rw_d_m_8cpp_1aa6c81e7fbe87615763715d2c5a19d316">dm3_value</link> (ifstream *fimg, int dm3_type)</para>
+</listitem>
+            <listitem><para>unsigned long <link linkend="_rw_d_m_8cpp_1a3897b86ece42d41aee51b5dff6433f2a">dm_read_integer</link> (ifstream *fimg, long len)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_d_m_8cpp_1aed03c19b1ba315673cf6d63d744cc340">tag_convert</link> (unsigned char *tag)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_d_m_8cpp_1a59d3e46b7f92a2d4b36874789972e845">readTag</link> (ifstream *fimg, int dim_flag, <link linkend="_class_bimage">Bimage</link> *p, int readdata, int &amp;notag)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_d_m_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions for reading and writing Digital Micrograph files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20020619 </para>
+
+<para>Modified: 20170126 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rw_d_m_8cpp_1ab647c6bfa7c4c73e4d83f6c17541e0a4"/>    <section>
+    <title>datatype_from_dm3_type()</title>
+<indexterm><primary>datatype_from_dm3_type</primary><secondary>rwDM.cpp</secondary></indexterm>
+<indexterm><primary>rwDM.cpp</primary><secondary>datatype_from_dm3_type</secondary></indexterm>
+<para><computeroutput><link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> datatype_from_dm3_type (<link linkend="_rw_d_m_8h_1a9ae5e142ae72d8367729fb10c19e7e1e">DMDataType</link> dm3_type, <link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+Definition at line 121 of file rwDM.cpp.</para>
+    </section><anchor xml:id="_rw_d_m_8cpp_1a839db51521e7b30c2c3365e89a953778"/>    <section>
+    <title>dm3_type_length()</title>
+<indexterm><primary>dm3_type_length</primary><secondary>rwDM.cpp</secondary></indexterm>
+<indexterm><primary>rwDM.cpp</primary><secondary>dm3_type_length</secondary></indexterm>
+<para><computeroutput>int dm3_type_length (int dm3_type)</computeroutput></para><para>
+Definition at line 275 of file rwDM.cpp.</para>
+    </section><anchor xml:id="_rw_d_m_8cpp_1aa6c81e7fbe87615763715d2c5a19d316"/>    <section>
+    <title>dm3_value()</title>
+<indexterm><primary>dm3_value</primary><secondary>rwDM.cpp</secondary></indexterm>
+<indexterm><primary>rwDM.cpp</primary><secondary>dm3_value</secondary></indexterm>
+<para><computeroutput>double dm3_value (ifstream * fimg, int dm3_type)</computeroutput></para><para>
+Definition at line 298 of file rwDM.cpp.</para>
+    </section><anchor xml:id="_rw_d_m_8cpp_1a3897b86ece42d41aee51b5dff6433f2a"/>    <section>
+    <title>dm_read_integer()</title>
+<indexterm><primary>dm_read_integer</primary><secondary>rwDM.cpp</secondary></indexterm>
+<indexterm><primary>rwDM.cpp</primary><secondary>dm_read_integer</secondary></indexterm>
+<para><computeroutput>unsigned long dm_read_integer (ifstream * fimg, long len)</computeroutput></para><para>
+Definition at line 343 of file rwDM.cpp.</para>
+    </section><anchor xml:id="_rw_d_m_8cpp_1a010edf4ea9e658acf4a6301febca35b9"/>    <section>
+    <title>endianness()</title>
+<indexterm><primary>endianness</primary><secondary>rwDM.cpp</secondary></indexterm>
+<indexterm><primary>rwDM.cpp</primary><secondary>endianness</secondary></indexterm>
+<para><computeroutput>int endianness (1 )</computeroutput></para>    </section><anchor xml:id="_rw_d_m_8cpp_1a9dbd5849c72f51b04c7c64b899e8e348"/>    <section>
+    <title>keep()</title>
+<indexterm><primary>keep</primary><secondary>rwDM.cpp</secondary></indexterm>
+<indexterm><primary>rwDM.cpp</primary><secondary>keep</secondary></indexterm>
+<para><computeroutput>int keep (0 )</computeroutput></para>    </section><anchor xml:id="_rw_d_m_8cpp_1a2f48c9e23195864af2581edd4f60917e"/>    <section>
+    <title>level()</title>
+<indexterm><primary>level</primary><secondary>rwDM.cpp</secondary></indexterm>
+<indexterm><primary>rwDM.cpp</primary><secondary>level</secondary></indexterm>
+<para><computeroutput>size_t level (0 )</computeroutput></para>    </section><anchor xml:id="_rw_d_m_8cpp_1a90ba1c7cfe38ae9b92543febceb84cbb"/>    <section>
+    <title>readDM()</title>
+<indexterm><primary>readDM</primary><secondary>rwDM.cpp</secondary></indexterm>
+<indexterm><primary>rwDM.cpp</primary><secondary>readDM</secondary></indexterm>
+<para><computeroutput>int readDM (<link linkend="_class_bimage">Bimage</link> * p, int readdata, int img_select)</computeroutput></para><para>
+
+<para>Reading a Digital Micrograph image file format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>readdata</entry>
+                                <entry>
+<para>flag to activate reading of image data. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>img_select</entry>
+                                <entry>
+<para>image selection in multi-image file (-1 = all images). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). A 2D/3D image format used with CCD cameras in electron microscopy. File format extensions: .dm, .DM Two types: Fixed format (new) and the Macintosh format (old) Fixed format: Header size: 24 bytes (fixed). Byte order determination: An endian flag: Must be 65535 or swap everything Data types: many. Macintosh format: Hermitian Header size: 8 bytes (fixed). Byte order determination: Big-endian Data types: many. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 41 of file rwDM.cpp.</para>
+    </section><anchor xml:id="_rw_d_m_8cpp_1a592b03a4053c4ee418fc8eaf3a5b3e7e"/>    <section>
+    <title>readFixedDMHeader()</title>
+<indexterm><primary>readFixedDMHeader</primary><secondary>rwDM.cpp</secondary></indexterm>
+<indexterm><primary>rwDM.cpp</primary><secondary>readFixedDMHeader</secondary></indexterm>
+<para><computeroutput>int readFixedDMHeader (ifstream * fimg, <link linkend="_class_bimage">Bimage</link> * p, int readdata)</computeroutput></para><para>
+Definition at line 189 of file rwDM.cpp.</para>
+    </section><anchor xml:id="_rw_d_m_8cpp_1a59d3e46b7f92a2d4b36874789972e845"/>    <section>
+    <title>readTag()</title>
+<indexterm><primary>readTag</primary><secondary>rwDM.cpp</secondary></indexterm>
+<indexterm><primary>rwDM.cpp</primary><secondary>readTag</secondary></indexterm>
+<para><computeroutput>int readTag (ifstream * fimg, int dim_flag, <link linkend="_class_bimage">Bimage</link> * p, int readdata, int &amp; notag)</computeroutput></para><para>
+Definition at line 378 of file rwDM.cpp.</para>
+    </section><anchor xml:id="_rw_d_m_8cpp_1a0f94682d0c7872ac5f3ba29d62cea7d0"/>    <section>
+    <title>readTagGroupData()</title>
+<indexterm><primary>readTagGroupData</primary><secondary>rwDM.cpp</secondary></indexterm>
+<indexterm><primary>rwDM.cpp</primary><secondary>readTagGroupData</secondary></indexterm>
+<para><computeroutput>int readTagGroupData (ifstream * fimg, int dim_flag, <link linkend="_class_bimage">Bimage</link> * p, int readdata)</computeroutput></para><para>
+Definition at line 632 of file rwDM.cpp.</para>
+    </section><anchor xml:id="_rw_d_m_8cpp_1a3cf90411aa3ca048fd9eb4ec353303b6"/>    <section>
+    <title>readTagGroupWithVersion()</title>
+<indexterm><primary>readTagGroupWithVersion</primary><secondary>rwDM.cpp</secondary></indexterm>
+<indexterm><primary>rwDM.cpp</primary><secondary>readTagGroupWithVersion</secondary></indexterm>
+<para><computeroutput>int readTagGroupWithVersion (ifstream * fimg, <link linkend="_class_bimage">Bimage</link> * p, int readdata, int img_select)</computeroutput></para><para>
+Definition at line 686 of file rwDM.cpp.</para>
+    </section><anchor xml:id="_rw_d_m_8cpp_1a7f7475c3cffaf702ef2766959df86817"/>    <section>
+    <title>sb()</title>
+<indexterm><primary>sb</primary><secondary>rwDM.cpp</secondary></indexterm>
+<indexterm><primary>rwDM.cpp</primary><secondary>sb</secondary></indexterm>
+<para><computeroutput>int sb (0 )</computeroutput></para>    </section><anchor xml:id="_rw_d_m_8cpp_1ae83c07067345faf98c959261a0b7db76"/>    <section>
+    <title>show()</title>
+<indexterm><primary>show</primary><secondary>rwDM.cpp</secondary></indexterm>
+<indexterm><primary>rwDM.cpp</primary><secondary>show</secondary></indexterm>
+<para><computeroutput>int show (0 )</computeroutput></para>    </section><anchor xml:id="_rw_d_m_8cpp_1aed03c19b1ba315673cf6d63d744cc340"/>    <section>
+    <title>tag_convert()</title>
+<indexterm><primary>tag_convert</primary><secondary>rwDM.cpp</secondary></indexterm>
+<indexterm><primary>rwDM.cpp</primary><secondary>tag_convert</secondary></indexterm>
+<para><computeroutput>int tag_convert (unsigned char * tag)</computeroutput></para><para>
+Definition at line 367 of file rwDM.cpp.</para>
+    </section><anchor xml:id="_rw_d_m_8cpp_1af559b73bfcc4a260734f71d52dc869ac"/>    <section>
+    <title>version()</title>
+<indexterm><primary>version</primary><secondary>rwDM.cpp</secondary></indexterm>
+<indexterm><primary>rwDM.cpp</primary><secondary>version</secondary></indexterm>
+<para><computeroutput>int version (0 )</computeroutput></para>    </section><anchor xml:id="_rw_d_m_8cpp_1a54f70370552a2f3dae80f6ee3cea7926"/>    <section>
+    <title>writeDM()</title>
+<indexterm><primary>writeDM</primary><secondary>rwDM.cpp</secondary></indexterm>
+<indexterm><primary>rwDM.cpp</primary><secondary>writeDM</secondary></indexterm>
+<para><computeroutput>int writeDM (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>Writing a Digital Micrograph map image file format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). A 2D/3D image format used in electron microscopy. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 81 of file rwDM.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_rw_d_m_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>rwDM.cpp</secondary></indexterm>
+<indexterm><primary>rwDM.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

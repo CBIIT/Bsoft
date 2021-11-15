@@ -1,0 +1,547 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mol__symmetry_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/mol_symmetry.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/mol_symmetry.h</primary></indexterm>
+<para>
+
+<para>Library routines used for symmetry operations on atomic coordinates. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmolecule.h&quot;
+#include &quot;rwresprop.h&quot;
+#include &quot;symmetry.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mol__symmetry_8h_1a763eaf2ff423d37b3ecb10683d119ce1">molgroup_apply_point_group</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, <link linkend="_class_view">View</link> ref_view)</para>
+
+<para>Generates all symmetry-related coordinates. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__symmetry_8h_1adbeaf38991a9d808ec143ebf4aca113a">molgroup_generate_helix</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_view">View</link> ref_view, double helix_rise, double helix_angle, int gen_down, int gen_up)</para>
+
+<para>Generates a helix from the given parameters. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__symmetry_8h_1ab2dec792cd6c06bc5efa695b9064457d">molgroup_apply_symmetry_from_pdb</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+
+<para>Generates all symmetry-related coordinates using PDB file matrices. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__symmetry_8h_1a7dd69884d600cd5cb26d24f932db874d">molgroup_apply_matrices_from_pdb</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+
+<para>Generates all symmetry-related coordinates using PDB file matrices. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__symmetry_8h_1acedd0cf58575e03f75217c920ef17046">molgroup_find_standard_view</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, <link linkend="_class_view">View</link> ref_view)</para>
+
+<para>Searches for the standard view based on point group symmetry. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__symmetry_8h_1aa2760a8eb2114dfacd4d37fac63bf06b">molgroup_orient_to_standard_view</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, <link linkend="_class_view">View</link> ref_view, <link linkend="_struct_bresidue__matrix">Bresidue_matrix</link> *simat)</para>
+
+<para>Searches for the standard view based on point group symmetry. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__symmetry_8h_1ad0297e7e1dd86c753e58c158251dd1e2">molgroup_symmetry_RMSD</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym)</para>
+
+<para>Calculates the RMSD for symmetry in the standard orientation. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__symmetry_8h_1adfffb752ef908373fce1f9bfb708ea3a">molgroup_symmetry_B</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym)</para>
+
+<para>Calculates the B factors from symmetry-related molecules. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__symmetry_8h_1acc370ce499f306e8688b41a13dce5ab9">molgroup_generate_crystal</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_unit_cell">UnitCell</link> unit_cell, <link linkend="_class_vector3">Vector3</link>&lt; int &gt; number)</para>
+
+<para>Generates unit cells from a set of coordinates. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines used for symmetry operations on atomic coordinates. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20021020 </para>
+
+<para>Modified: 20150813 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mol__symmetry_8h_1a7dd69884d600cd5cb26d24f932db874d"/>    <section>
+    <title>molgroup_apply_matrices_from_pdb()</title>
+<indexterm><primary>molgroup_apply_matrices_from_pdb</primary><secondary>mol_symmetry.h</secondary></indexterm>
+<indexterm><primary>mol_symmetry.h</primary><secondary>molgroup_apply_matrices_from_pdb</secondary></indexterm>
+<para><computeroutput>int molgroup_apply_matrices_from_pdb (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+
+<para>Generates all symmetry-related coordinates using PDB file matrices. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>PDB file with matrices. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Uses the BIOMT records.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 269 of file mol_symmetry.cpp.</para>
+    </section><anchor xml:id="_mol__symmetry_8h_1a763eaf2ff423d37b3ecb10683d119ce1"/>    <section>
+    <title>molgroup_apply_point_group()</title>
+<indexterm><primary>molgroup_apply_point_group</primary><secondary>mol_symmetry.h</secondary></indexterm>
+<indexterm><primary>mol_symmetry.h</primary><secondary>molgroup_apply_point_group</secondary></indexterm>
+<para><computeroutput>int molgroup_apply_point_group (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, <link linkend="_class_view">View</link> ref_view)</computeroutput></para><para>
+
+<para>Generates all symmetry-related coordinates. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>symmetry structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ref_view</entry>
+                                <entry>
+<para>reference view. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 34 of file mol_symmetry.cpp.</para>
+    </section><anchor xml:id="_mol__symmetry_8h_1ab2dec792cd6c06bc5efa695b9064457d"/>    <section>
+    <title>molgroup_apply_symmetry_from_pdb()</title>
+<indexterm><primary>molgroup_apply_symmetry_from_pdb</primary><secondary>mol_symmetry.h</secondary></indexterm>
+<indexterm><primary>mol_symmetry.h</primary><secondary>molgroup_apply_symmetry_from_pdb</secondary></indexterm>
+<para><computeroutput>int molgroup_apply_symmetry_from_pdb (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+
+<para>Generates all symmetry-related coordinates using PDB file matrices. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>PDB file with matrices. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Uses the SMTRY records.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 199 of file mol_symmetry.cpp.</para>
+    </section><anchor xml:id="_mol__symmetry_8h_1acedd0cf58575e03f75217c920ef17046"/>    <section>
+    <title>molgroup_find_standard_view()</title>
+<indexterm><primary>molgroup_find_standard_view</primary><secondary>mol_symmetry.h</secondary></indexterm>
+<indexterm><primary>mol_symmetry.h</primary><secondary>molgroup_find_standard_view</secondary></indexterm>
+<para><computeroutput>int molgroup_find_standard_view (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, <link linkend="_class_view">View</link> ref_view)</computeroutput></para><para>
+
+<para>Searches for the standard view based on point group symmetry. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>point group symmetry. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ref_view</entry>
+                                <entry>
+<para>reference view. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The molecule group is first analyzed to identify the different
+chains and calculate their centers-of-mass and weights.
+The overall center-of-mass defines a point on at least the
+major symmetry axis (cyclic symmetries), or the likely intersection
+of symmetry axes.
+Note: This function does a reasonable job of orienting the molecule
+group, but it may be off by up to an angstrom!!!
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 365 of file mol_symmetry.cpp.</para>
+    </section><anchor xml:id="_mol__symmetry_8h_1acc370ce499f306e8688b41a13dce5ab9"/>    <section>
+    <title>molgroup_generate_crystal()</title>
+<indexterm><primary>molgroup_generate_crystal</primary><secondary>mol_symmetry.h</secondary></indexterm>
+<indexterm><primary>mol_symmetry.h</primary><secondary>molgroup_generate_crystal</secondary></indexterm>
+<para><computeroutput>int molgroup_generate_crystal (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_unit_cell">UnitCell</link> uc, <link linkend="_class_vector3">Vector3</link>&lt; int &gt; number)</computeroutput></para><para>
+
+<para>Generates unit cells from a set of coordinates. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>uc</entry>
+                                <entry>
+<para>unit cell dimensions. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>number of unit cells in each lattice direction. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 if error. <literallayout><computeroutput>The input molecule group is duplicated to generate the requested number
+of copies in each lattice direction.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 959 of file mol_symmetry.cpp.</para>
+    </section><anchor xml:id="_mol__symmetry_8h_1adbeaf38991a9d808ec143ebf4aca113a"/>    <section>
+    <title>molgroup_generate_helix()</title>
+<indexterm><primary>molgroup_generate_helix</primary><secondary>mol_symmetry.h</secondary></indexterm>
+<indexterm><primary>mol_symmetry.h</primary><secondary>molgroup_generate_helix</secondary></indexterm>
+<para><computeroutput>int molgroup_generate_helix (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_view">View</link> ref_view, double helix_rise, double helix_angle, int gen_down, int gen_up)</computeroutput></para><para>
+
+<para>Generates a helix from the given parameters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ref_view</entry>
+                                <entry>
+<para>reference view. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>helix_rise</entry>
+                                <entry>
+<para>helical rise. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>helix_angle</entry>
+                                <entry>
+<para>helical rotation angle. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>gen_down</entry>
+                                <entry>
+<para>number of asymmetric units generated upwards. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>gen_up</entry>
+                                <entry>
+<para>number of asymmetric units generated downwards. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 134 of file mol_symmetry.cpp.</para>
+    </section><anchor xml:id="_mol__symmetry_8h_1aa2760a8eb2114dfacd4d37fac63bf06b"/>    <section>
+    <title>molgroup_orient_to_standard_view()</title>
+<indexterm><primary>molgroup_orient_to_standard_view</primary><secondary>mol_symmetry.h</secondary></indexterm>
+<indexterm><primary>mol_symmetry.h</primary><secondary>molgroup_orient_to_standard_view</secondary></indexterm>
+<para><computeroutput>int molgroup_orient_to_standard_view (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, <link linkend="_class_view">View</link> ref_view, <link linkend="_struct_bresidue__matrix">Bresidue_matrix</link> * simat)</computeroutput></para><para>
+
+<para>Searches for the standard view based on point group symmetry. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>point group symmetry. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ref_view</entry>
+                                <entry>
+<para>reference view (default should be 0,0,1,0). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*simat</entry>
+                                <entry>
+<para>residue similarity matrix. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Each pair of chains in the molecule groupis tested for sequence
+identity to find symmetry-related molecules. For each pair of matched
+molecules, the transformation to superimpose the one onto the other
+is determined and the symmetry axis and translation calculated.
+The collection of symmetry axes are clustered with a k-means 
+algorithm and the predominant class assigned to the major 
+symmetry axis. For dihedral point groups, a minor axis is also
+assigned (randomly at this time). The molecule group is then
+transformed to orient it with the major axis on {0,0,1} and
+the minor axis on {1,0,0}, and the symmetry center at {0,0,0}.
+Note: This function has not been extensively tested with all
+point groups!!!
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 606 of file mol_symmetry.cpp.</para>
+    </section><anchor xml:id="_mol__symmetry_8h_1adfffb752ef908373fce1f9bfb708ea3a"/>    <section>
+    <title>molgroup_symmetry_B()</title>
+<indexterm><primary>molgroup_symmetry_B</primary><secondary>mol_symmetry.h</secondary></indexterm>
+<indexterm><primary>mol_symmetry.h</primary><secondary>molgroup_symmetry_B</secondary></indexterm>
+<para><computeroutput>double molgroup_symmetry_B (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym)</computeroutput></para><para>
+
+<para>Calculates the B factors from symmetry-related molecules. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>point group symmetry. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double RMSD. <literallayout><computeroutput>The centers-of-mass for all the molecules are calculated as a reduced
+representation of the molecule group. All symmetry operations are 
+imposed on the centers, with the RMSD defined as minimum distance
+between an original cneter and a transformed center.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 877 of file mol_symmetry.cpp.</para>
+    </section><anchor xml:id="_mol__symmetry_8h_1ad0297e7e1dd86c753e58c158251dd1e2"/>    <section>
+    <title>molgroup_symmetry_RMSD()</title>
+<indexterm><primary>molgroup_symmetry_RMSD</primary><secondary>mol_symmetry.h</secondary></indexterm>
+<indexterm><primary>mol_symmetry.h</primary><secondary>molgroup_symmetry_RMSD</secondary></indexterm>
+<para><computeroutput>double molgroup_symmetry_RMSD (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym)</computeroutput></para><para>
+
+<para>Calculates the RMSD for symmetry in the standard orientation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sym</entry>
+                                <entry>
+<para>point group symmetry. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double RMSD. <literallayout><computeroutput>The centers-of-mass for all the molecules are calculated as a reduced
+representation of the molecule group. All symmetry operations are 
+imposed on the centers, with the RMSD defined as minimum distance
+between an original cneter and a transformed center.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 824 of file mol_symmetry.cpp.</para>
+</section>
+</section>
+</section>

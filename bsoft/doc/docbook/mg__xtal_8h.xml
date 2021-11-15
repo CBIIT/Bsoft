@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__xtal_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/mg_xtal.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/mg_xtal.h</primary></indexterm>
+<para>
+
+<para>Header file for functions to process crystallographic data. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_processing.h&quot;
+#include &quot;rwimg.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mg__xtal_8h_1a725f54faae6dcc5f545a07ba20d14599">mg_unitcell_vectors</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg)</para>
+
+<para>Calculates the unit cell vectors for a 2D crystal. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__xtal_8h_1a08b6e00217ffce226209fc0c8c0f1a63">mg_generate_reflections</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; real_size, double resolution)</para>
+
+<para>Generates reflections given the unit cell vectors. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__xtal_8h_1afc9e542441e7be86682995564785da6f">img_mask_reflections</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bstrucfac">Bstrucfac</link> *sflist, double radius)</para>
+
+<para>Masks the image using the list of reflections. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for functions to process crystallographic data. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann and Samuel Payne </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20061110 </para>
+
+<para>Modified: 20180410 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__xtal_8h_1afc9e542441e7be86682995564785da6f"/>    <section>
+    <title>img_mask_reflections()</title>
+<indexterm><primary>img_mask_reflections</primary><secondary>mg_xtal.h</secondary></indexterm>
+<indexterm><primary>mg_xtal.h</primary><secondary>img_mask_reflections</secondary></indexterm>
+<para><computeroutput>int img_mask_reflections (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bstrucfac">Bstrucfac</link> * sflist, double radius)</computeroutput></para><para>
+
+<para>Masks the image using the list of reflections. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>complex image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*sflist</entry>
+                                <entry>
+<para>reflection list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>radius</entry>
+                                <entry>
+<para>radius around reflection to mask. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 153 of file mg_xtal.cpp.</para>
+    </section><anchor xml:id="_mg__xtal_8h_1a08b6e00217ffce226209fc0c8c0f1a63"/>    <section>
+    <title>mg_generate_reflections()</title>
+<indexterm><primary>mg_generate_reflections</primary><secondary>mg_xtal.h</secondary></indexterm>
+<indexterm><primary>mg_xtal.h</primary><secondary>mg_generate_reflections</secondary></indexterm>
+<para><computeroutput>long mg_generate_reflections (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; real_size, double resolution)</computeroutput></para><para>
+
+<para>Generates reflections given the unit cell vectors. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>real_size</entry>
+                                <entry>
+<para>physical image size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>resolution</entry>
+                                <entry>
+<para>resolution limit. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of reflections generated, &lt;0 on error. <literallayout><computeroutput>The structure factor location is given by:
+    x = uh + vk
+where u and v are the unit cell vectors,
+and h and k are the associated Miller indices.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 80 of file mg_xtal.cpp.</para>
+    </section><anchor xml:id="_mg__xtal_8h_1a725f54faae6dcc5f545a07ba20d14599"/>    <section>
+    <title>mg_unitcell_vectors()</title>
+<indexterm><primary>mg_unitcell_vectors</primary><secondary>mg_xtal.h</secondary></indexterm>
+<indexterm><primary>mg_xtal.h</primary><secondary>mg_unitcell_vectors</secondary></indexterm>
+<para><computeroutput>int mg_unitcell_vectors (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg)</computeroutput></para><para>
+
+<para>Calculates the unit cell vectors for a 2D crystal. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>Finds the unit cell vectors u and v by solving the equation:
+    x = uh + vk
+where x is the location of the reflection or structure factor,
+and h and k are the associated Miller indices.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 32 of file mg_xtal.cpp.</para>
+</section>
+</section>
+</section>

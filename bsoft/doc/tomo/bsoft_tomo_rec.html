@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Tomography</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Tomogram reconstruction</h1>
+<p>The reconstruction is done in Fourier space with the same algorithm as
+	used for single particle analysis. The amount of memory required is
+	determined by the frequency space reconstruction volume. Roughly,
+	20 times the size of the tomogram is needed. Exceeding this will
+	impede all operations and the computer may have to be restarted.
+	At the start of the program, an estimated memory requirement is calculated
+	and checked if there is enough memory on the computer.  If not,
+	the program will abort.</p>
+	
+<div id="command"><p>btomrec -verb 1,tim -size 2048,2048,256 -scale 0.5 -resol 6 -CTF flip -rescale 0,1 -trans full -edge 2 -rec RS1_G6_01_rec.mrc -out RS1_G6_01_rec.star RS1_G6_01_ps.star</p></div>
+
+<h3>Options</h3>
+<ul>
+	<li>-size: Size of the tomogram.</li>
+	<li>-scale: For non-unity scale relative to the original micrographs</li>
+	<li>-resolution: Maximum resolution in the tomogram (in Å)</li>
+	<li>-CTF: Contrast transfer function correction applied to a micrograph</li>
+	<li>-rescale: Chenge the average and standard deviation to the given values</li>
+	<li>-transform: Transform the frequency space volume to real space</li>
+	<li>-edge: Smooth the edges of the micrographs before integration (in pixels)</li>
+	<li>-reconstruction: Ouput reconstruction file name</li>
+	<li>-output: Output parameter file</li>
+</ul>
+
+<p>Most tilt series are taken at a pixel size that is much more ambitious
+	than the final detail in the tomogram. The tomogram can therefore be
+	calculated at a smaller scale, with the advantage of being faster and
+	taking less storage space</p>
+<p>The CTF correction is done for tilted images prior to incorporating each
+	micrograph into the 3D volume</p>
+
+<div id="footer">
+  Bernard Heymann  20201023
+</div>
+</body>
+</html>

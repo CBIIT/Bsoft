@@ -1,0 +1,275 @@
+.TH "/Users/bernard/b20/bsoft/include/model_links.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/model_links.h \- Library routines used for model link processing\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel\&.h'\fP
+.br
+\fC#include 'Bstring\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "long \fBmodel_setup_links\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Set up the link list for each component\&. "
+.ti -1c
+.RI "long \fBmodel_link_list_generate\fP (\fBBmodel\fP *\fBmodel\fP, double maxlength)"
+.br
+.RI "Generates a link list for a model based on vertex separation\&. "
+.ti -1c
+.RI "long \fBmodel_link_list_generate\fP (\fBBmodel\fP *\fBmodel\fP, double maxlength, \fBBstring\fP &type1, \fBBstring\fP &type2, int flag)"
+.br
+.RI "Generates a link list for a model based on vertex separation between defined componet types\&. "
+.ti -1c
+.RI "long \fBmodel_set_link_length\fP (\fBBmodel\fP *\fBmodel\fP, double linklength)"
+.br
+.RI "Sets the reference link lengths\&. "
+.ti -1c
+.RI "long \fBmodel_set_link_radius\fP (\fBBmodel\fP *\fBmodel\fP, double linkrad)"
+.br
+.RI "Set the display radius for all links to a specific value\&. "
+.ti -1c
+.RI "long \fBmodel_reduce_linked\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP &submodname, int flags)"
+.br
+.RI "Reduces a model to one component per linked set of components\&. "
+.ti -1c
+.RI "long \fBmodel_links_minimum_valency\fP (\fBBmodel\fP *\fBmodel\fP, long valency)"
+.br
+.RI "Generates links such that each component has at least the given valency\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines used for model link processing\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20060908 
+.PP
+Modified: 20210830 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_links\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "long model_link_list_generate (\fBBmodel\fP * model, double maxlength)"
+
+.PP
+Generates a link list for a model based on vertex separation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fImaxlength\fP maximum link length\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of links\&. 
+.PP
+.nf
+Only the first model is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 75 of file model_links\&.cpp\&.
+.SS "long model_link_list_generate (\fBBmodel\fP * model, double maxlength, \fBBstring\fP & type1, \fBBstring\fP & type2, int flag)"
+
+.PP
+Generates a link list for a model based on vertex separation between defined componet types\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fImaxlength\fP maximum link length\&. 
+.br
+\fItype1\fP first component type\&. 
+.br
+\fItype2\fP second component type\&. 
+.br
+\fIflag\fP 1=closest components\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of links\&. 
+.PP
+.nf
+Only the first model is processed.
+A link is generated for the minimum distance if that is below the maximum length.
+If the flag is set, a link is generated only for the closest second component to the first.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 123 of file model_links\&.cpp\&.
+.SS "long model_links_minimum_valency (\fBBmodel\fP * model, long valency)"
+
+.PP
+Generates links such that each component has at least the given valency\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIvalency\fP the desired valency\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of links\&. 
+.PP
+.nf
+A distance matrix is calculated and a cutoff determined that ensures
+that each column has at least the given valency number below it.
+The links are then created based on the cutoff.
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 411 of file model_links\&.cpp\&.
+.SS "long model_reduce_linked (\fBBmodel\fP * model, \fBBstring\fP & submodname, int flags)"
+
+.PP
+Reduces a model to one component per linked set of components\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure to be modified\&. 
+.br
+\fI&submodname\fP sub-model file name\&. 
+.br
+\fIflags\fP 1=generate averaged types\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of new components\&. 
+.PP
+.nf
+A new reduced set of components is generated.
+Each old set of linked components is saved as a sub-model and referenced as a type.
+Optionally, the old sets of components are averaged and the 
+averaged model saved as a type.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 301 of file model_links\&.cpp\&.
+.SS "long model_set_link_length (\fBBmodel\fP * model, double linklength)"
+
+.PP
+Sets the reference link lengths\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIlinklength\fP reference link length\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of links\&. 
+.PP
+.nf
+Only the first model is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 218 of file model_links\&.cpp\&.
+.SS "long model_set_link_radius (\fBBmodel\fP * model, double linkrad)"
+
+.PP
+Set the display radius for all links to a specific value\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.br
+\fIlinkrad\fP link display radius\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of components selected\&. 
+.PP
+.nf
+Only the first model is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 245 of file model_links\&.cpp\&.
+.SS "long model_setup_links (\fBBmodel\fP * model)"
+
+.PP
+Set up the link list for each component\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model parameters\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long total number of links\&. 
+.PP
+.nf
+Only the first model is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 28 of file model_links\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,204 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_bscatter_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/bscatter.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/bscatter.cpp</primary></indexterm>
+<para>
+
+<para>Program to calculate scattering cross sections. </para>
+ 
+</para>
+<programlisting>#include &quot;molecule_to_map.h&quot;
+#include &quot;mol_util.h&quot;
+#include &quot;seq_util.h&quot;
+#include &quot;rwmodel_param.h&quot;
+#include &quot;rwresprop.h&quot;
+#include &quot;ctf.h&quot;
+#include &quot;scatter.h&quot;
+#include &quot;json.h&quot;
+#include &quot;file_util.h&quot;
+#include &quot;options.h&quot;
+#include &quot;utilities.h&quot;
+#include &quot;timer.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_bscatter_8cpp_1a5e0fa705e3cada0affeb47a62c08e2ec">MAXSCAT</link>   1000</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bmaterial">Bmaterial</link> <link linkend="_bscatter_8cpp_1aa91eab8221da083e80177753523fbb1f">protein_material_default</link> ()</para>
+
+<para>Default protein composition adjusted by mass. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmaterial">Bmaterial</link> <link linkend="_bscatter_8cpp_1acddb6dbfb1b318290f49cdd6617e8f28">material_from_molgroup</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+</listitem>
+            <listitem><para>int <link linkend="_bscatter_8cpp_1a49daa913572a8943fbb4cd7c0fc4d514">cross_sections</link> (vector&lt; string &gt; &amp;elements, map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp;atompar, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf)</para>
+</listitem>
+            <listitem><para>int <link linkend="_bscatter_8cpp_1af56e9721b68d7910c5124d03040563cc">cross_sections</link> (<link linkend="_class_bmaterial">Bmaterial</link> &amp;material, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf)</para>
+</listitem>
+            <listitem><para>int <link linkend="_bscatter_8cpp_1ac40f9ab2489b9d9a7a37e4e15d4612d2">cross_section_half_maximal_frequencies</link> (vector&lt; string &gt; &amp;elements, map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp;atompar)</para>
+</listitem>
+            <listitem><para>int <link linkend="_bscatter_8cpp_1a9e4ba244d794052dc8558b520db20206">cross_section_half_maximal_frequencies</link> (<link linkend="_class_bmaterial">Bmaterial</link> &amp;material)</para>
+</listitem>
+            <listitem><para>int <link linkend="_bscatter_8cpp_1aaa98378e7bed5fb39f564ae9c16d7a6a">aperture_series</link> (double thickness, <link linkend="_class_bmaterial">Bmaterial</link> &amp;material, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf, vector&lt; double &gt; apser)</para>
+</listitem>
+            <listitem><para>int <link linkend="_bscatter_8cpp_1a6477beefb6adb952645590fa7efd9e22">collection_angle_series</link> (double thickness, <link linkend="_class_bmaterial">Bmaterial</link> &amp;material, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf, vector&lt; double &gt; angser)</para>
+</listitem>
+            <listitem><para>double <link linkend="_bscatter_8cpp_1aeb46dd13eddd42d149ab739ada678319">particle_snr</link> (<link linkend="_class_bmaterial">Bmaterial</link> &amp;material, double mass, double radius, double thickness, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bplot">Bplot</link> * <link linkend="_bscatter_8cpp_1a6596d161be42a61d8f9014944511feb4">particle_spectral_signal</link> (<link linkend="_class_bmaterial">Bmaterial</link> &amp;material, double mass, double radius, double thickness, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;ctf)</para>
+</listitem>
+            <listitem><para>int <link linkend="_bscatter_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+            <listitem><para>double <link linkend="_bscatter_8cpp_1a9381dea9105233bda72ce53620237952">elastic_cross_section_lenz</link> (long Z, double volts)</para>
+</listitem>
+            <listitem><para>double <link linkend="_bscatter_8cpp_1ace9d45b9b3989b43ef7e91fd2f00f1f4">elastic_cross_section_langmore</link> (long Z, double volts)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_bscatter_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>const char * <link linkend="_bscatter_8cpp_1a4de0ad4c7190962494815c0fa7f948df">use</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Program to calculate scattering cross sections. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20190521 </para>
+
+<para>Modified: 20210311 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_bscatter_8cpp_1a5e0fa705e3cada0affeb47a62c08e2ec"/>    <section>
+    <title>MAXSCAT</title>
+<indexterm><primary>MAXSCAT</primary><secondary>bscatter.cpp</secondary></indexterm>
+<indexterm><primary>bscatter.cpp</primary><secondary>MAXSCAT</secondary></indexterm>
+<para><computeroutput>#define MAXSCAT   1000</computeroutput></para><para>
+Definition at line 28 of file bscatter.cpp.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_bscatter_8cpp_1aaa98378e7bed5fb39f564ae9c16d7a6a"/>    <section>
+    <title>aperture_series()</title>
+<indexterm><primary>aperture_series</primary><secondary>bscatter.cpp</secondary></indexterm>
+<indexterm><primary>bscatter.cpp</primary><secondary>aperture_series</secondary></indexterm>
+<para><computeroutput>int aperture_series (double thickness, <link linkend="_class_bmaterial">Bmaterial</link> &amp; material, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf, vector&lt; double &gt; apser)</computeroutput></para><para>
+Definition at line 547 of file bscatter.cpp.</para>
+    </section><anchor xml:id="_bscatter_8cpp_1a6477beefb6adb952645590fa7efd9e22"/>    <section>
+    <title>collection_angle_series()</title>
+<indexterm><primary>collection_angle_series</primary><secondary>bscatter.cpp</secondary></indexterm>
+<indexterm><primary>bscatter.cpp</primary><secondary>collection_angle_series</secondary></indexterm>
+<para><computeroutput>int collection_angle_series (double thickness, <link linkend="_class_bmaterial">Bmaterial</link> &amp; material, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf, vector&lt; double &gt; angser)</computeroutput></para><para>
+Definition at line 575 of file bscatter.cpp.</para>
+    </section><anchor xml:id="_bscatter_8cpp_1a9e4ba244d794052dc8558b520db20206"/>    <section>
+    <title>cross_section_half_maximal_frequencies()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>cross_section_half_maximal_frequencies</primary><secondary>bscatter.cpp</secondary></indexterm>
+<indexterm><primary>bscatter.cpp</primary><secondary>cross_section_half_maximal_frequencies</secondary></indexterm>
+<para><computeroutput>int cross_section_half_maximal_frequencies (<link linkend="_class_bmaterial">Bmaterial</link> &amp; material)</computeroutput></para><para>
+Definition at line 527 of file bscatter.cpp.</para>
+    </section><anchor xml:id="_bscatter_8cpp_1ac40f9ab2489b9d9a7a37e4e15d4612d2"/>    <section>
+    <title>cross_section_half_maximal_frequencies()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>cross_section_half_maximal_frequencies</primary><secondary>bscatter.cpp</secondary></indexterm>
+<indexterm><primary>bscatter.cpp</primary><secondary>cross_section_half_maximal_frequencies</secondary></indexterm>
+<para><computeroutput>int cross_section_half_maximal_frequencies (vector&lt; string &gt; &amp; elements, map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp; atompar)</computeroutput></para><para>
+Definition at line 505 of file bscatter.cpp.</para>
+    </section><anchor xml:id="_bscatter_8cpp_1af56e9721b68d7910c5124d03040563cc"/>    <section>
+    <title>cross_sections()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>cross_sections</primary><secondary>bscatter.cpp</secondary></indexterm>
+<indexterm><primary>bscatter.cpp</primary><secondary>cross_sections</secondary></indexterm>
+<para><computeroutput>int cross_sections (<link linkend="_class_bmaterial">Bmaterial</link> &amp; material, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf)</computeroutput></para><para>
+Definition at line 461 of file bscatter.cpp.</para>
+    </section><anchor xml:id="_bscatter_8cpp_1a49daa913572a8943fbb4cd7c0fc4d514"/>    <section>
+    <title>cross_sections()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>cross_sections</primary><secondary>bscatter.cpp</secondary></indexterm>
+<indexterm><primary>bscatter.cpp</primary><secondary>cross_sections</secondary></indexterm>
+<para><computeroutput>int cross_sections (vector&lt; string &gt; &amp; elements, map&lt; string, <link linkend="_class_bcomptype">Bcomptype</link> &gt; &amp; atompar, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf)</computeroutput></para><para>
+Definition at line 417 of file bscatter.cpp.</para>
+    </section><anchor xml:id="_bscatter_8cpp_1ace9d45b9b3989b43ef7e91fd2f00f1f4"/>    <section>
+    <title>elastic_cross_section_langmore()</title>
+<indexterm><primary>elastic_cross_section_langmore</primary><secondary>bscatter.cpp</secondary></indexterm>
+<indexterm><primary>bscatter.cpp</primary><secondary>elastic_cross_section_langmore</secondary></indexterm>
+<para><computeroutput>double elastic_cross_section_langmore (long Z, double volts)</computeroutput></para><para>
+Definition at line 406 of file bscatter.cpp.</para>
+    </section><anchor xml:id="_bscatter_8cpp_1a9381dea9105233bda72ce53620237952"/>    <section>
+    <title>elastic_cross_section_lenz()</title>
+<indexterm><primary>elastic_cross_section_lenz</primary><secondary>bscatter.cpp</secondary></indexterm>
+<indexterm><primary>bscatter.cpp</primary><secondary>elastic_cross_section_lenz</secondary></indexterm>
+<para><computeroutput>double elastic_cross_section_lenz (long Z, double volts)</computeroutput></para><para>
+Definition at line 396 of file bscatter.cpp.</para>
+    </section><anchor xml:id="_bscatter_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>bscatter.cpp</secondary></indexterm>
+<indexterm><primary>bscatter.cpp</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 87 of file bscatter.cpp.</para>
+    </section><anchor xml:id="_bscatter_8cpp_1acddb6dbfb1b318290f49cdd6617e8f28"/>    <section>
+    <title>material_from_molgroup()</title>
+<indexterm><primary>material_from_molgroup</primary><secondary>bscatter.cpp</secondary></indexterm>
+<indexterm><primary>bscatter.cpp</primary><secondary>material_from_molgroup</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmaterial">Bmaterial</link> material_from_molgroup (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+Definition at line 344 of file bscatter.cpp.</para>
+    </section><anchor xml:id="_bscatter_8cpp_1aeb46dd13eddd42d149ab739ada678319"/>    <section>
+    <title>particle_snr()</title>
+<indexterm><primary>particle_snr</primary><secondary>bscatter.cpp</secondary></indexterm>
+<indexterm><primary>bscatter.cpp</primary><secondary>particle_snr</secondary></indexterm>
+<para><computeroutput>double particle_snr (<link linkend="_class_bmaterial">Bmaterial</link> &amp; material, double mass, double radius, double thickness, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf)</computeroutput></para><para>
+Definition at line 604 of file bscatter.cpp.</para>
+    </section><anchor xml:id="_bscatter_8cpp_1a6596d161be42a61d8f9014944511feb4"/>    <section>
+    <title>particle_spectral_signal()</title>
+<indexterm><primary>particle_spectral_signal</primary><secondary>bscatter.cpp</secondary></indexterm>
+<indexterm><primary>bscatter.cpp</primary><secondary>particle_spectral_signal</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bplot">Bplot</link> * particle_spectral_signal (<link linkend="_class_bmaterial">Bmaterial</link> &amp; material, double mass, double radius, double thickness, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; ctf)</computeroutput></para><para>
+Definition at line 639 of file bscatter.cpp.</para>
+    </section><anchor xml:id="_bscatter_8cpp_1aa91eab8221da083e80177753523fbb1f"/>    <section>
+    <title>protein_material_default()</title>
+<indexterm><primary>protein_material_default</primary><secondary>bscatter.cpp</secondary></indexterm>
+<indexterm><primary>bscatter.cpp</primary><secondary>protein_material_default</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmaterial">Bmaterial</link> protein_material_default ( )</computeroutput></para><para>
+
+<para>Default protein composition adjusted by mass. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para><link linkend="_class_bmaterial">Bmaterial</link> material. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 326 of file bscatter.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_bscatter_8cpp_1a4de0ad4c7190962494815c0fa7f948df"/>    <section>
+    <title>use</title>
+<indexterm><primary>use</primary><secondary>bscatter.cpp</secondary></indexterm>
+<indexterm><primary>bscatter.cpp</primary><secondary>use</secondary></indexterm>
+<para><computeroutput>const char* use[]</computeroutput></para><para>
+Definition at line 44 of file bscatter.cpp.</para>
+    </section><anchor xml:id="_bscatter_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>bscatter.cpp</secondary></indexterm>
+<indexterm><primary>bscatter.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Model Masks</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h2>Generating masks from models</h2>
+<p>One of the uses of a model is to define regions within a density map. The model can therefore be used to segment the map and isolate those regions associated with the model. The general idea is to calculate a mask, and then use that mask to produce a new map with only the densities defined by the model.</p>
+<p>&nbsp;</p>
+<h2>Ball-and-stick mask</h2>
+<p>The model components define spheres and the links cylinders captured in a mask. The component and link radii are used to determine the sizes of the spheres and cylinders:</p>
+<div id="command"><p>bmodmask -verb 1 -type model -size 100,100,100 -comp 4 -linkrad 2 -mask 36_10_bns.map -out 36_10_s.cmm 36_10_s.star</p></div>
+<center><img src="36_10_bns_s.png" alt="Ball n stick" width="400" height="285" /></center>
+<center>The map was thresholded to 0.3 to make it slightly larger than the corresonding model.</center>
+<p>&nbsp;</p>
+<h2>Shell mask</h2>
+<p>The shell mask is most useful to model membranes.</p>
+<center><img src="mem_shell_s.png" alt="Membrane shell" width="350" height="332" /></center>
+<h2>Hull mask</h2>
+<p>The hull mask differentiates the inside and outside of the model.</p>
+<center><img src="mem_hull_s.png" alt="Membrane hull" width="350" height="338" /></center>
+<h2>Level mask</h2>
+<p>Each model generates one level of the level mask.</p>
+</div>
+<div id="footer">
+  Bernard Heymann  20120126
+</div>
+</body>
+</html>

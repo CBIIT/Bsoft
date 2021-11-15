@@ -1,0 +1,228 @@
+.TH "/Users/bernard/b20/bsoft/src/model/model_occupancy.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/model/model_occupancy.cpp \- Library routines to count components in maps\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'model_occupancy\&.h'\fP
+.br
+\fC#include 'binomial\&.h'\fP
+.br
+\fC#include 'ps_plot\&.h'\fP
+.br
+\fC#include 'img_combine\&.h'\fP
+.br
+\fC#include 'model_extract_build\&.h'\fP
+.br
+\fC#include 'model_compare\&.h'\fP
+.br
+\fC#include 'model_util\&.h'\fP
+.br
+\fC#include 'math_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "double \fBcomponent_coverage\fP (\fBBimage\fP *p, int img_num, \fBBcomponent\fP *comp, double threshold)"
+.br
+.ti -1c
+.RI "int \fBmodel_occupancy\fP (\fBBmodel\fP *\fBmodel\fP, \fBBimage\fP *pmask, double mol_weight, double rho, double cutoff, int invert_flag)"
+.br
+.RI "Calculates the occupancy of components in a map\&. "
+.ti -1c
+.RI "vector< double > \fBmodel_occupancy_distribution\fP (\fBBmodel\fP *\fBmodel\fP, double cutoff, int nfit, long &ncomp, vector< double > &prob, double &R)"
+.br
+.RI "Calculates the occupancy distribution of models\&. "
+.ti -1c
+.RI "int \fBmodel_refine_comp_for_occupancy\fP (\fBBmodel\fP *\fBmodel\fP, \fBBimage\fP *pmask2, \fBBimage\fP *ptemp, \fBBimage\fP *pmask, double hires, double lores, double max_shift)"
+.br
+.RI "Refines component views and positions by cross-correlation\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines to count components in maps\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Daniel Nemecek and Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20091202 
+.PP
+Modified: 20151110 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_occupancy\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double component_coverage (\fBBimage\fP * p, int img_num, \fBBcomponent\fP * comp, double threshold)"
+
+.PP
+Definition at line 415 of file model_occupancy\&.cpp\&.
+.SS "int model_occupancy (\fBBmodel\fP * model, \fBBimage\fP * pmask, double mol_weight, double rho, double cutoff, int invert_flag)"
+
+.PP
+Calculates the occupancy of components in a map\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Daniel Nemecek and Bernard Heymann 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure to be modified\&. 
+.br
+\fI*pmask\fP 
+.br
+\fImol_weight\fP molecular weight to determine threshold\&. 
+.br
+\fIrho\fP protein density in Da/A3\&. 
+.br
+\fIcutoff\fP coverage cutoff to use for assigning occupancy\&. 
+.br
+\fIinvert_flag\fP flag to invert map density\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The map must have positive density (higher values are considered density).
+The coverage for a component is defined as the fraction of voxels within
+a sphere around the component location that is above the threshold.
+The threshold can be derived from the molecular weight or is taken as
+the sum of the map average and standard deviation.
+The radius of the sphere is taken from the component radius.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 45 of file model_occupancy\&.cpp\&.
+.SS "vector<double> model_occupancy_distribution (\fBBmodel\fP * model, double cutoff, int nfit, long & ncomp, vector< double > & prob, double & R)"
+
+.PP
+Calculates the occupancy distribution of models\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Daniel Nemecek and Bernard Heymann 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure to be modified\&. 
+.br
+\fIcutoff\fP coverage cutoff to determine occupancy\&. 
+.br
+\fInfit\fP number of binomial curves to fit\&. 
+.br
+\fI&ncomp\fP maximum number of components in a model\&. 
+.br
+\fI*prob\fP weight and probability array (2*nfit)\&. 
+.br
+\fI&R\fP pointer to fit residual\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<double>& occupancy distribution histogram and fits\&. 
+.PP
+.nf
+The component coverage must already be calculated and stored in the
+FOM property of each component. A component is considered occupied
+if its coverage exceeds the given cutoff value.
+The distribution, error and fit array is set up with 3+nfit columns:
+    Column1:    Distribution histogram
+    Column2:    Standard deviations
+    Column3:    Overall binomial fit curve (sum of remaining columns)
+    Column4+:   nfit individual binomial curves
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 126 of file model_occupancy\&.cpp\&.
+.SS "int model_refine_comp_for_occupancy (\fBBmodel\fP * model, \fBBimage\fP * pmask2, \fBBimage\fP * ptemp, \fBBimage\fP * pmask, double hires, double lores, double max_shift)"
+
+.PP
+Refines component views and positions by cross-correlation\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Daniel Nemecek and Bernard Heymann 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fI*pmask2\fP mask for the input image\&. 
+.br
+\fI*ptemp\fP density template\&. 
+.br
+\fI*pmask\fP cross-correlation mask\&. 
+.br
+\fIhires\fP high resolution limit for cross-correlation\&. 
+.br
+\fIlores\fP low resolution limit for cross-correlation\&. 
+.br
+\fImax_shift\fP maximum shift in coordinates (angstrom)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The density origin is positioned on the component.
+The component views must already be set.
+The density and search radii are derived from the radius of each component.
+When a shift is out-of-range, returns to the initial position.
+The size of the template determines the search area.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 237 of file model_occupancy\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

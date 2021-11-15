@@ -1,0 +1,95 @@
+.TH "/Users/bernard/b20/bsoft/include/rwHKL.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/rwHKL.h \- Header file for reading and writing HKL reflection files as images\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBreadHKL\fP (\fBBimage\fP *p, int readdata)"
+.br
+.RI "Reading a HKL structure factor file format\&. This function reads a HKL file typically produced with MTZDUMP from X-ray crystallographic structure factor files in the CCP4 package\&. The first line as a space-delimited list of headers for the columns\&. All subsequent lines are rows containing the indices and data\&. Column headers: H K L indices\&. AMP amplitudes\&. SIGAMP amplitude deviations\&. PHI phases\&. SIGPHI phase deviations\&. FOM figure-of-merit values\&. FREE flag for R-free calculations\&. "
+.ti -1c
+.RI "int \fBwriteHKL\fP (\fBBimage\fP *p)"
+.br
+.RI "Writing a HKL structure factor file format\&. This function writes a HKL structure factor file\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for reading and writing HKL reflection files as images\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19981229 
+.PP
+Modified: 20000708 
+.PP
+.nf
+Format: 3D generic structure factor file format
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwHKL\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int readHKL (\fBBimage\fP * p, int readdata)"
+
+.PP
+Reading a HKL structure factor file format\&. This function reads a HKL file typically produced with MTZDUMP from X-ray crystallographic structure factor files in the CCP4 package\&. The first line as a space-delimited list of headers for the columns\&. All subsequent lines are rows containing the indices and data\&. Column headers: H K L indices\&. AMP amplitudes\&. SIGAMP amplitude deviations\&. PHI phases\&. SIGPHI phase deviations\&. FOM figure-of-merit values\&. FREE flag for R-free calculations\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.br
+\fIreaddata\fP flag to activate reading of image data\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 36 of file rwHKL\&.cpp\&.
+.SS "int writeHKL (\fBBimage\fP * p)"
+
+.PP
+Writing a HKL structure factor file format\&. This function writes a HKL structure factor file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 210 of file rwHKL\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

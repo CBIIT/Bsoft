@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Helical Map</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h2>Helical cross sections</h2>
+<p>The average cross section of a filement with known cross-overs can be
+ calculated by reconstructing the 2D projection following the helical twist.
+ The requirements are that the filament lies parallel to the y axis and in the
+ center of the image.</p>
+<center><img src="hel2_proj.jpg" alt="Helical filament"/>
+<p>Projection of an artificial helix with a rise per subunit of 40 Å and a rotation per subunit of 66°. </p></center>
+<p>A cross section can be calculated from this filament image:</p>
+<div id="command">bhelcross -v 7 -cross -helix 40,66 hel2_proj.map hel2_sec.map</div>
+<center><img src="hel2_sec.jpg" alt="Helical filament"/>
+<p>Cross section.</p></center>
+<p>The cross section is intended to enhance the signal along the filament axis.
+Two measures are provided to estimate the signal-to-noise ratio (SNR) in the cross section.
+The first (option -snrradius) is a simple division of the image into a disk
+with a given radius in the center representing
+ signal plus noise (foreground), and the surrounding area representing only noise (background).
+ The SNR is then the relationship between the power (variance) in the foreground
+  and the power (variance) in the background:</p>
+<p>SNR = foreground/background - 1</p>
+<p>The second measure (option -kernel) calculates the local variance within the
+kernel of the given size, divides the variance histogram into foreground and background
+areas, and estimates the SNR from the average variances in these regions.</p>
+<p>The cross section can be aligned to a reference image by cross correlation using the alignment options.</p>
+<p>A 3D volume can be calculated from the cross section by extrusion:</p>
+<div id="command">bhelcross -verb 7 -extrude 400 hel2_sec.map hel2_sec_ext.map</div>
+<center><img src="hel2_sec_ext.png" alt="Helix" width="234" height="400" />
+<p>An extruded cross section</p></center>
+</div>
+<div id="footer">
+  Bernard Heymann  20141223
+</div>
+</body>
+</html>

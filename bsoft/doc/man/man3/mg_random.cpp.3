@@ -1,0 +1,289 @@
+.TH "/Users/bernard/b20/bsoft/src/mg/mg_random.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mg/mg_random.cpp \- Functions for applying some randomization to parameters\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_random\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBproject_random_defocus\fP (\fBBproject\fP *\fBproject\fP, double std)"
+.br
+.RI "Introduces random errors into micrograph defocus averages\&. "
+.ti -1c
+.RI "int \fBproject_random_origins\fP (\fBBproject\fP *\fBproject\fP, double std)"
+.br
+.RI "Introduces random errors into particle origins\&. "
+.ti -1c
+.RI "int \fBproject_random_views\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Replace the original particle orientations by random views\&. "
+.ti -1c
+.RI "int \fBproject_random_helical_views\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Replace the original particle orientations by random side views for a helix\&. "
+.ti -1c
+.RI "double \fBparticle_random_view\fP (\fBBparticle\fP *part, double std)"
+.br
+.ti -1c
+.RI "int \fBproject_random_views\fP (\fBBproject\fP *\fBproject\fP, double std)"
+.br
+.RI "Introduces random errors into particle views\&. "
+.ti -1c
+.RI "int \fBproject_random_magnification\fP (\fBBproject\fP *\fBproject\fP, double std)"
+.br
+.RI "Introduces random errors into particle magnifications\&. "
+.ti -1c
+.RI "int \fBproject_random_symmetry_related_views\fP (\fBBproject\fP *\fBproject\fP, \fBBsymmetry\fP &sym)"
+.br
+.RI "Replaces the original orientations by symmetry-related views\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for applying some randomization to parameters\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010206 
+.PP
+Modified: 20140225 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_random\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double particle_random_view (\fBBparticle\fP * part, double std)"
+
+.PP
+Definition at line 227 of file mg_random\&.cpp\&.
+.SS "int project_random_defocus (\fBBproject\fP * project, double std)"
+
+.PP
+Introduces random errors into micrograph defocus averages\&. 
+.PP
+.nf
+The random deviations are obtained from a Gaussian distribution
+generator.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIstd\fP standard deviation of random error (angstroms)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 28 of file mg_random\&.cpp\&.
+.SS "int project_random_helical_views (\fBBproject\fP * project)"
+
+.PP
+Replace the original particle orientations by random side views for a helix\&. 
+.PP
+.nf
+The random views are generated in the ranges {[0,1], [0,1], [0,1], [-PI,PI]}.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 179 of file mg_random\&.cpp\&.
+.SS "int project_random_magnification (\fBBproject\fP * project, double std)"
+
+.PP
+Introduces random errors into particle magnifications\&. 
+.PP
+.nf
+The random deviations are obtained from a Gaussian distribution
+generator.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIstd\fP standard deviation of random error (fraction)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 313 of file mg_random\&.cpp\&.
+.SS "int project_random_origins (\fBBproject\fP * project, double std)"
+
+.PP
+Introduces random errors into particle origins\&. 
+.PP
+.nf
+The random deviations are obtained from a Gaussian distribution
+generator.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIstd\fP standard deviation of random error (pixels)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 73 of file mg_random\&.cpp\&.
+.SS "int project_random_symmetry_related_views (\fBBproject\fP * project, \fBBsymmetry\fP & sym)"
+
+.PP
+Replaces the original orientations by symmetry-related views\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Eduardo Sanz-Garcia and David Belnap 
+.PP
+.nf
+For each particle all the symmetry-related views are generated and
+one randomly selected.
+
+.fi
+.PP
+ 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI*sym\fP symmetry structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 362 of file mg_random\&.cpp\&.
+.SS "int project_random_views (\fBBproject\fP * project)"
+
+.PP
+Replace the original particle orientations by random views\&. 
+.PP
+.nf
+The random views are generated in the ranges {[0,1], [0,1], [0,1], [-PI,PI]}.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 130 of file mg_random\&.cpp\&.
+.SS "int project_random_views (\fBBproject\fP * project, double std)"
+
+.PP
+Introduces random errors into particle views\&. 
+.PP
+.nf
+The random deviations are obtained from a Gaussian distribution
+generator.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIstd\fP standard deviation of random error (radians)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 255 of file mg_random\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,496 @@
+.TH "/Users/bernard/b20/bsoft/include/rwSUPRIM.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/rwSUPRIM.h \- Header file for reading and writing SUPRIM files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "union \fBREG\fP"
+.br
+.ti -1c
+.RI "struct \fBSUPRIMhead\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBF_AVG\fP   0"
+.br
+.ti -1c
+.RI "#define \fBBACKGROUND\fP   0"
+.br
+.ti -1c
+.RI "#define \fBANG_SAMP\fP   1"
+.br
+.ti -1c
+.RI "#define \fBRAD_SAMP\fP   2"
+.br
+.ti -1c
+.RI "#define \fBO_ROW_SZ\fP   3"
+.br
+.ti -1c
+.RI "#define \fBO_COL_SZ\fP   4"
+.br
+.ti -1c
+.RI "#define \fBROW_ORG\fP   5"
+.br
+.ti -1c
+.RI "#define \fBCOL_ORG\fP   6"
+.br
+.ti -1c
+.RI "#define \fBMASK_RAD\fP   7"
+.br
+.ti -1c
+.RI "#define \fBF_NOTE_R\fP   8"
+.br
+.ti -1c
+.RI "#define \fBF_NOTE_I\fP   9"
+.br
+.ti -1c
+.RI "#define \fBSAMP_DIST\fP   10"
+.br
+.ti -1c
+.RI "#define \fBNSLICES\fP   11"
+.br
+.ti -1c
+.RI "#define \fBENL_BP\fP   12"
+.br
+.ti -1c
+.RI "#define \fBX_FMAX\fP   12"
+.br
+.ti -1c
+.RI "#define \fBTHE_BP\fP   13"
+.br
+.ti -1c
+.RI "#define \fBPHI_BP\fP   14"
+.br
+.ti -1c
+.RI "#define \fBFOUR_TR_CEN\fP   15"
+.br
+.ti -1c
+.RI "#define \fBGSBAR\fP   15"
+.br
+.ti -1c
+.RI "#define \fBX_NIMA\fP   16"
+.br
+.ti -1c
+.RI "#define \fBSYMP2\fP   17"
+.br
+.ti -1c
+.RI "#define \fBX_NPIX\fP   17"
+.br
+.ti -1c
+.RI "#define \fBX_NCLU\fP   18"
+.br
+.ti -1c
+.RI "#define \fBX_NCTR\fP   19"
+.br
+.ti -1c
+.RI "#define \fBX_NAME\fP   20"
+.br
+.ti -1c
+.RI "#define \fBX_LNAM\fP   21"
+.br
+.ti -1c
+.RI "#define \fBX_NTRM\fP   21"
+.br
+.ti -1c
+.RI "#define \fBX_NFAC\fP   22"
+.br
+.ti -1c
+.RI "#define \fBX_NTYP\fP   23"
+.br
+.ti -1c
+.RI "#define \fBFRTHDIM\fP   24"
+.br
+.ti -1c
+.RI "#define \fBX_NIMI\fP   26"
+.br
+.ti -1c
+.RI "#define \fBX_UFAC\fP   27"
+.br
+.ti -1c
+.RI "#define \fBX_WALL\fP   28"
+.br
+.ti -1c
+.RI "#define \fBSLICE_ORG\fP   29"
+.br
+.ti -1c
+.RI "#define \fBNUM_POLYS\fP   31"
+.br
+.ti -1c
+.RI "#define \fBX_FBEG\fP   32"
+.br
+.ti -1c
+.RI "#define \fBPSI_BP\fP   40"
+.br
+.ti -1c
+.RI "#define \fBX_TRP\fP   70"
+.br
+.ti -1c
+.RI "#define \fBR_ANGX\fP   81"
+.br
+.ti -1c
+.RI "#define \fBR_ANGY\fP   82"
+.br
+.ti -1c
+.RI "#define \fBR_ANGZ\fP   83"
+.br
+.ti -1c
+.RI "#define \fBR_NPROJ\fP   84"
+.br
+.ti -1c
+.RI "#define \fBXGLOB\fP   90"
+.br
+.ti -1c
+.RI "#define \fBYGLOB\fP   91"
+.br
+.ti -1c
+.RI "#define \fBROTGLOB\fP   92"
+.br
+.ti -1c
+.RI "#define \fBXX_CELL\fP   93"
+.br
+.ti -1c
+.RI "#define \fBXY_CELL\fP   94"
+.br
+.ti -1c
+.RI "#define \fBYX_CELL\fP   95"
+.br
+.ti -1c
+.RI "#define \fBYY_CELL\fP   96"
+.br
+.ti -1c
+.RI "#define \fBIR_WINID\fP   97"
+.br
+.ti -1c
+.RI "#define \fBO_SLICE_SZ\fP   98"
+.br
+.ti -1c
+.RI "#define \fBCALIB\fP   99"
+.br
+.ti -1c
+.RI "#define \fBNAV\fP   100"
+.br
+.ti -1c
+.RI "#define \fBSUPRIMSIZE\fP   548"
+.br
+.ti -1c
+.RI "#define \fBMAXREG\fP   128"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBreadSUPRIM\fP (\fBBimage\fP *p, int readdata)"
+.br
+.RI "Reading a SUPRIM map image file format\&. A 3D image format used in electron microscopy\&. Header size: 36 bytes basic fields 512 bytes additional fields called 'registers' up to 1024 bytes of 'trace' records File format extensions: \&.spm, \&.sup Byte order determination: Version and third dimension values must be less than 256*256\&. Data types: 1 = byte, 2 = float, 3 = complex float, 4 = run-length-encoded float, 5 = short, 6 = \fBRGB\fP, 7 = int, 8 = double\&. \fBTransform\fP type: Standard\&. "
+.ti -1c
+.RI "int \fBwriteSUPRIM\fP (\fBBimage\fP *p)"
+.br
+.RI "Writing a SUPRIM map image file format\&. A 3D image format used in electron microscopy\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for reading and writing SUPRIM files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19990930 
+.PP
+Modified: 20050705 
+.PP
+.nf
+Format: 3D image file format for the SUPRIM package
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwSUPRIM\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define ANG_SAMP   1"
+
+.PP
+Definition at line 17 of file rwSUPRIM\&.h\&.
+.SS "#define BACKGROUND   0"
+
+.PP
+Definition at line 16 of file rwSUPRIM\&.h\&.
+.SS "#define CALIB   99"
+
+.PP
+Definition at line 66 of file rwSUPRIM\&.h\&.
+.SS "#define COL_ORG   6"
+
+.PP
+Definition at line 22 of file rwSUPRIM\&.h\&.
+.SS "#define ENL_BP   12"
+
+.PP
+Definition at line 28 of file rwSUPRIM\&.h\&.
+.SS "#define F_AVG   0"
+
+.PP
+Definition at line 15 of file rwSUPRIM\&.h\&.
+.SS "#define F_NOTE_I   9"
+
+.PP
+Definition at line 25 of file rwSUPRIM\&.h\&.
+.SS "#define F_NOTE_R   8"
+
+.PP
+Definition at line 24 of file rwSUPRIM\&.h\&.
+.SS "#define FOUR_TR_CEN   15"
+
+.PP
+Definition at line 32 of file rwSUPRIM\&.h\&.
+.SS "#define FRTHDIM   24"
+
+.PP
+Definition at line 44 of file rwSUPRIM\&.h\&.
+.SS "#define GSBAR   15"
+
+.PP
+Definition at line 33 of file rwSUPRIM\&.h\&.
+.SS "#define IR_WINID   97"
+
+.PP
+Definition at line 64 of file rwSUPRIM\&.h\&.
+.SS "#define MASK_RAD   7"
+
+.PP
+Definition at line 23 of file rwSUPRIM\&.h\&.
+.SS "#define MAXREG   128"
+
+.PP
+Definition at line 71 of file rwSUPRIM\&.h\&.
+.SS "#define NAV   100"
+
+.PP
+Definition at line 67 of file rwSUPRIM\&.h\&.
+.SS "#define NSLICES   11"
+
+.PP
+Definition at line 27 of file rwSUPRIM\&.h\&.
+.SS "#define NUM_POLYS   31"
+
+.PP
+Definition at line 49 of file rwSUPRIM\&.h\&.
+.SS "#define O_COL_SZ   4"
+
+.PP
+Definition at line 20 of file rwSUPRIM\&.h\&.
+.SS "#define O_ROW_SZ   3"
+
+.PP
+Definition at line 19 of file rwSUPRIM\&.h\&.
+.SS "#define O_SLICE_SZ   98"
+
+.PP
+Definition at line 65 of file rwSUPRIM\&.h\&.
+.SS "#define PHI_BP   14"
+
+.PP
+Definition at line 31 of file rwSUPRIM\&.h\&.
+.SS "#define PSI_BP   40"
+
+.PP
+Definition at line 51 of file rwSUPRIM\&.h\&.
+.SS "#define R_ANGX   81"
+
+.PP
+Definition at line 53 of file rwSUPRIM\&.h\&.
+.SS "#define R_ANGY   82"
+
+.PP
+Definition at line 54 of file rwSUPRIM\&.h\&.
+.SS "#define R_ANGZ   83"
+
+.PP
+Definition at line 55 of file rwSUPRIM\&.h\&.
+.SS "#define R_NPROJ   84"
+
+.PP
+Definition at line 56 of file rwSUPRIM\&.h\&.
+.SS "#define RAD_SAMP   2"
+
+.PP
+Definition at line 18 of file rwSUPRIM\&.h\&.
+.SS "#define ROTGLOB   92"
+
+.PP
+Definition at line 59 of file rwSUPRIM\&.h\&.
+.SS "#define ROW_ORG   5"
+
+.PP
+Definition at line 21 of file rwSUPRIM\&.h\&.
+.SS "#define SAMP_DIST   10"
+
+.PP
+Definition at line 26 of file rwSUPRIM\&.h\&.
+.SS "#define SLICE_ORG   29"
+
+.PP
+Definition at line 48 of file rwSUPRIM\&.h\&.
+.SS "#define SUPRIMSIZE   548"
+
+.PP
+Definition at line 69 of file rwSUPRIM\&.h\&.
+.SS "#define SYMP2   17"
+
+.PP
+Definition at line 35 of file rwSUPRIM\&.h\&.
+.SS "#define THE_BP   13"
+
+.PP
+Definition at line 30 of file rwSUPRIM\&.h\&.
+.SS "#define X_FBEG   32"
+
+.PP
+Definition at line 50 of file rwSUPRIM\&.h\&.
+.SS "#define X_FMAX   12"
+
+.PP
+Definition at line 29 of file rwSUPRIM\&.h\&.
+.SS "#define X_LNAM   21"
+
+.PP
+Definition at line 40 of file rwSUPRIM\&.h\&.
+.SS "#define X_NAME   20"
+
+.PP
+Definition at line 39 of file rwSUPRIM\&.h\&.
+.SS "#define X_NCLU   18"
+
+.PP
+Definition at line 37 of file rwSUPRIM\&.h\&.
+.SS "#define X_NCTR   19"
+
+.PP
+Definition at line 38 of file rwSUPRIM\&.h\&.
+.SS "#define X_NFAC   22"
+
+.PP
+Definition at line 42 of file rwSUPRIM\&.h\&.
+.SS "#define X_NIMA   16"
+
+.PP
+Definition at line 34 of file rwSUPRIM\&.h\&.
+.SS "#define X_NIMI   26"
+
+.PP
+Definition at line 45 of file rwSUPRIM\&.h\&.
+.SS "#define X_NPIX   17"
+
+.PP
+Definition at line 36 of file rwSUPRIM\&.h\&.
+.SS "#define X_NTRM   21"
+
+.PP
+Definition at line 41 of file rwSUPRIM\&.h\&.
+.SS "#define X_NTYP   23"
+
+.PP
+Definition at line 43 of file rwSUPRIM\&.h\&.
+.SS "#define X_TRP   70"
+
+.PP
+Definition at line 52 of file rwSUPRIM\&.h\&.
+.SS "#define X_UFAC   27"
+
+.PP
+Definition at line 46 of file rwSUPRIM\&.h\&.
+.SS "#define X_WALL   28"
+
+.PP
+Definition at line 47 of file rwSUPRIM\&.h\&.
+.SS "#define XGLOB   90"
+
+.PP
+Definition at line 57 of file rwSUPRIM\&.h\&.
+.SS "#define XX_CELL   93"
+
+.PP
+Definition at line 60 of file rwSUPRIM\&.h\&.
+.SS "#define XY_CELL   94"
+
+.PP
+Definition at line 61 of file rwSUPRIM\&.h\&.
+.SS "#define YGLOB   91"
+
+.PP
+Definition at line 58 of file rwSUPRIM\&.h\&.
+.SS "#define YX_CELL   95"
+
+.PP
+Definition at line 62 of file rwSUPRIM\&.h\&.
+.SS "#define YY_CELL   96"
+
+.PP
+Definition at line 63 of file rwSUPRIM\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int readSUPRIM (\fBBimage\fP * p, int readdata)"
+
+.PP
+Reading a SUPRIM map image file format\&. A 3D image format used in electron microscopy\&. Header size: 36 bytes basic fields 512 bytes additional fields called 'registers' up to 1024 bytes of 'trace' records File format extensions: \&.spm, \&.sup Byte order determination: Version and third dimension values must be less than 256*256\&. Data types: 1 = byte, 2 = float, 3 = complex float, 4 = run-length-encoded float, 5 = short, 6 = \fBRGB\fP, 7 = int, 8 = double\&. \fBTransform\fP type: Standard\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.br
+\fIreaddata\fP flag to activate reading of image data\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 60 of file rwSUPRIM\&.cpp\&.
+.SS "int writeSUPRIM (\fBBimage\fP * p)"
+
+.PP
+Writing a SUPRIM map image file format\&. A 3D image format used in electron microscopy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 203 of file rwSUPRIM\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

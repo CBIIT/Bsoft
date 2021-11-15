@@ -1,0 +1,338 @@
+.TH "/Users/bernard/b20/bsoft/tcltk/tcltk_bimage.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/tcltk/tcltk_bimage.cpp \- A shared object to load Bsoft image files in TCL/Tk\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <tk\&.h>\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'mg_ctf\&.h'\fP
+.br
+\fC#include 'Vector3\&.h'\fP
+.br
+\fC#include 'Euler\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBBmontage\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBdo_show\fP (\fBBimage\fP *p, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_magnify\fP (\fBBimage\fP *p, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_template\fP (\fBBimage\fP *p, Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBdo_montage\fP (\fBBimage\fP *p)"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_delete\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_get\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_line\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_set\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_switch\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_fix_type\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_stats\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_center\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_zero_origin\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_extract\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_crop\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_pad\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_invert\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_truncate\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_rescale\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_reslice\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_rotate\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_bin\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_average\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_variance\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_normalize\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_gaussian\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_histogram\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_histogram_fit\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "Tcl_Obj * \fBdo_radial_average\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_diffraction_origin\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBdo_fft\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBdo_powerspec\fP (\fBBimage\fP *p, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBimage_processing\fP (Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[])"
+.br
+.ti -1c
+.RI "int \fBimage_render\fP (\fBBimage\fP *p, long i, Tcl_Interp *interp, \fBBstring\fP &photoName)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "string \fBcommand\fP"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBimglist\fP"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBimgtemp\fP"
+.br
+.ti -1c
+.RI "struct \fBBmontage\fP \fBmont\fP = {0,0,0,0,0,0,0}"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A shared object to load Bsoft image files in TCL/Tk\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010210 
+.PP
+Modified: 20210110 
+.RE
+.PP
+
+.PP
+Definition in file \fBtcltk_bimage\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int do_average (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1312 of file tcltk_bimage\&.cpp\&.
+.SS "int do_bin (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1297 of file tcltk_bimage\&.cpp\&.
+.SS "int do_center (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1095 of file tcltk_bimage\&.cpp\&.
+.SS "int do_crop (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1157 of file tcltk_bimage\&.cpp\&.
+.SS "Tcl_Obj * do_delete (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 719 of file tcltk_bimage\&.cpp\&.
+.SS "int do_diffraction_origin (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1484 of file tcltk_bimage\&.cpp\&.
+.SS "int do_extract (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1113 of file tcltk_bimage\&.cpp\&.
+.SS "int do_fft (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1513 of file tcltk_bimage\&.cpp\&.
+.SS "int do_fix_type (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1026 of file tcltk_bimage\&.cpp\&.
+.SS "int do_gaussian (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1355 of file tcltk_bimage\&.cpp\&.
+.SS "Tcl_Obj * do_get (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 734 of file tcltk_bimage\&.cpp\&.
+.SS "Tcl_Obj * do_histogram (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1370 of file tcltk_bimage\&.cpp\&.
+.SS "Tcl_Obj * do_histogram_fit (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1391 of file tcltk_bimage\&.cpp\&.
+.SS "int do_invert (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1217 of file tcltk_bimage\&.cpp\&.
+.SS "Tcl_Obj * do_line (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 872 of file tcltk_bimage\&.cpp\&.
+.SS "int do_magnify (\fBBimage\fP * p, Tcl_Interp * interp, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 613 of file tcltk_bimage\&.cpp\&.
+.SS "\fBBimage\fP * do_montage (\fBBimage\fP * p)"
+
+.PP
+Definition at line 697 of file tcltk_bimage\&.cpp\&.
+.SS "int do_normalize (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1340 of file tcltk_bimage\&.cpp\&.
+.SS "int do_pad (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1191 of file tcltk_bimage\&.cpp\&.
+.SS "\fBBimage\fP * do_powerspec (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1531 of file tcltk_bimage\&.cpp\&.
+.SS "Tcl_Obj * do_radial_average (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1413 of file tcltk_bimage\&.cpp\&.
+.SS "int do_rescale (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1243 of file tcltk_bimage\&.cpp\&.
+.SS "int do_reslice (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1261 of file tcltk_bimage\&.cpp\&.
+.SS "int do_rotate (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1275 of file tcltk_bimage\&.cpp\&.
+.SS "int do_set (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 913 of file tcltk_bimage\&.cpp\&.
+.SS "int do_show (\fBBimage\fP * p, Tcl_Interp * interp, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 519 of file tcltk_bimage\&.cpp\&.
+.SS "Tcl_Obj * do_stats (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1037 of file tcltk_bimage\&.cpp\&.
+.SS "int do_switch (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1012 of file tcltk_bimage\&.cpp\&.
+.SS "int do_template (\fBBimage\fP * p, Tcl_Interp * interp, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 651 of file tcltk_bimage\&.cpp\&.
+.SS "int do_truncate (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1226 of file tcltk_bimage\&.cpp\&.
+.SS "int do_variance (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1327 of file tcltk_bimage\&.cpp\&.
+.SS "int do_zero_origin (\fBBimage\fP * p, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 1104 of file tcltk_bimage\&.cpp\&.
+.SS "int image_processing (Tcl_Interp * interp, int objc, Tcl_Obj *CONST objv[])"
+
+.PP
+Definition at line 156 of file tcltk_bimage\&.cpp\&.
+.SS "int image_render (\fBBimage\fP * p, long i, Tcl_Interp * interp, \fBBstring\fP & photoName)"
+
+.PP
+Definition at line 447 of file tcltk_bimage\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "string command\fC [extern]\fP"
+
+.PP
+Definition at line 20 of file utilities\&.cpp\&.
+.SS "\fBBimage\fP* imglist\fC [extern]\fP"
+
+.PP
+Definition at line 32 of file bshow\&.cpp\&.
+.SS "\fBBimage\fP* imgtemp\fC [extern]\fP"
+
+.PP
+Definition at line 36 of file bshow\&.cpp\&.
+.SS "struct \fBBmontage\fP mont = {0,0,0,0,0,0,0}"
+
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

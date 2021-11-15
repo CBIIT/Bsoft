@@ -1,0 +1,552 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_ps__micrograph_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/ps/ps_micrograph.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/ps/ps_micrograph.cpp</primary></indexterm>
+<para>
+
+<para>Postscript output for micrographs. </para>
+ 
+</para>
+<programlisting>#include &quot;ps_micrograph.h&quot;
+#include &quot;ps_plot.h&quot;
+#include &quot;ps_views.h&quot;
+#include &quot;rwimg.h&quot;
+#include &quot;symmetry.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_ps__micrograph_8cpp_1a4f08be657df95ff59fc8a8a778dd6191">ps_origins</link> (ofstream *fps, <link linkend="_class_bstring">Bstring</link> &amp;title, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int flags)</para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__micrograph_8cpp_1a5de6dd4d1382fb6c01078399e7169e23">ps_mg_origins</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bstring">Bstring</link> &amp;title, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Postscript plot of the micrograph origins. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__micrograph_8cpp_1a3fb08b5d9699b75fc21375da0ea44146">ps_mg_particle_positions</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bstring">Bstring</link> &amp;title, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Postscript plot of the positions of particles on micrographs. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__micrograph_8cpp_1aa4782cb7fdb4e4eb72ca489e9d8b86df">ps_particle_views_origins</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bstring">Bstring</link> &amp;title, <link linkend="_class_bstring">Bstring</link> &amp;symmetry_string, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int selection)</para>
+
+<para>Generates asymmetric unit particle view and origin postscript plots. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__micrograph_8cpp_1a95ebe9348d41d7d126fd60387a93cd27">ps_particle_phi_theta</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bstring">Bstring</link> &amp;title, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int selection)</para>
+
+<para>Generates phi-theta views postscript plots. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__micrograph_8cpp_1abd987bc6754e0cfcb85d77afa543d7ea">ps_origins</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bstring">Bstring</link> &amp;title, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int flags)</para>
+
+<para>Generates postscript plot of origins on a square with the size of the box. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__micrograph_8cpp_1adc67703bc0c9d71ede2c2a3256865e94">ps_part_fom_histogram</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Postscript plot of the particle FOM histogram. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__micrograph_8cpp_1a7d919505b5d02f16cda4ea1e71a4465d">ps_defocus_histogram</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Postscript histogram plot of micrograph defocus parameters. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__micrograph_8cpp_1a4a61f1e3d27f1bad4bbde40ae3f95ba7">ps_astigmatism_plot</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Postscript plot of micrograph astigmatism parameters. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__micrograph_8cpp_1a04d02f91fd983113e4459532e5f21a4e">ps_class_average_fom</link> (ofstream *fps, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Postscript histogram plot of class average FOM&apos;s. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_ps__micrograph_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Postscript output for micrographs. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20011127 </para>
+
+<para>Modified: 20210706 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_ps__micrograph_8cpp_1a4a61f1e3d27f1bad4bbde40ae3f95ba7"/>    <section>
+    <title>ps_astigmatism_plot()</title>
+<indexterm><primary>ps_astigmatism_plot</primary><secondary>ps_micrograph.cpp</secondary></indexterm>
+<indexterm><primary>ps_micrograph.cpp</primary><secondary>ps_astigmatism_plot</secondary></indexterm>
+<para><computeroutput>int ps_astigmatism_plot (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Postscript plot of micrograph astigmatism parameters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>output postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, error if &lt;0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 777 of file ps_micrograph.cpp.</para>
+    </section><anchor xml:id="_ps__micrograph_8cpp_1a04d02f91fd983113e4459532e5f21a4e"/>    <section>
+    <title>ps_class_average_fom()</title>
+<indexterm><primary>ps_class_average_fom</primary><secondary>ps_micrograph.cpp</secondary></indexterm>
+<indexterm><primary>ps_micrograph.cpp</primary><secondary>ps_class_average_fom</secondary></indexterm>
+<para><computeroutput>int ps_class_average_fom (ofstream * fps, <link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Postscript histogram plot of class average FOM&apos;s. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*fps</entry>
+                                <entry>
+<para>output stream. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, error if &lt;0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 838 of file ps_micrograph.cpp.</para>
+    </section><anchor xml:id="_ps__micrograph_8cpp_1a7d919505b5d02f16cda4ea1e71a4465d"/>    <section>
+    <title>ps_defocus_histogram()</title>
+<indexterm><primary>ps_defocus_histogram</primary><secondary>ps_micrograph.cpp</secondary></indexterm>
+<indexterm><primary>ps_micrograph.cpp</primary><secondary>ps_defocus_histogram</secondary></indexterm>
+<para><computeroutput>int ps_defocus_histogram (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Postscript histogram plot of micrograph defocus parameters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>output postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, error if &lt;0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 680 of file ps_micrograph.cpp.</para>
+    </section><anchor xml:id="_ps__micrograph_8cpp_1a5de6dd4d1382fb6c01078399e7169e23"/>    <section>
+    <title>ps_mg_origins()</title>
+<indexterm><primary>ps_mg_origins</primary><secondary>ps_micrograph.cpp</secondary></indexterm>
+<indexterm><primary>ps_micrograph.cpp</primary><secondary>ps_mg_origins</secondary></indexterm>
+<para><computeroutput>int ps_mg_origins (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bstring">Bstring</link> &amp; title, <link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Postscript plot of the micrograph origins. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>output postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;title</entry>
+                                <entry>
+<para>title. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, error if &lt;0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 30 of file ps_micrograph.cpp.</para>
+    </section><anchor xml:id="_ps__micrograph_8cpp_1a3fb08b5d9699b75fc21375da0ea44146"/>    <section>
+    <title>ps_mg_particle_positions()</title>
+<indexterm><primary>ps_mg_particle_positions</primary><secondary>ps_micrograph.cpp</secondary></indexterm>
+<indexterm><primary>ps_micrograph.cpp</primary><secondary>ps_mg_particle_positions</secondary></indexterm>
+<para><computeroutput>int ps_mg_particle_positions (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bstring">Bstring</link> &amp; title, <link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Postscript plot of the positions of particles on micrographs. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>output postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;title</entry>
+                                <entry>
+<para>title. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, error if &lt;0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 123 of file ps_micrograph.cpp.</para>
+    </section><anchor xml:id="_ps__micrograph_8cpp_1abd987bc6754e0cfcb85d77afa543d7ea"/>    <section>
+    <title>ps_origins()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>ps_origins</primary><secondary>ps_micrograph.cpp</secondary></indexterm>
+<indexterm><primary>ps_micrograph.cpp</primary><secondary>ps_origins</secondary></indexterm>
+<para><computeroutput>int ps_origins (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bstring">Bstring</link> &amp; title, <link linkend="_class_bproject">Bproject</link> * project, int flags)</computeroutput></para><para>
+
+<para>Generates postscript plot of origins on a square with the size of the box. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Eduardo Sanz-Garcia and Bernard Heymann </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>output postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;title</entry>
+                                <entry>
+<para>title. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>micrograph particle parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>flags. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, error if &lt;0. <literallayout><computeroutput>The plotting options are determined by the flags argument:
+    0 = plot origins
+    1 = plot numbered origins
+    2 = plot origins with shading according to occurrence.
+        The gray level indicates the ratio to the maximum occurrence.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 292 of file ps_micrograph.cpp.</para>
+    </section><anchor xml:id="_ps__micrograph_8cpp_1a4f08be657df95ff59fc8a8a778dd6191"/>    <section>
+    <title>ps_origins()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>ps_origins</primary><secondary>ps_micrograph.cpp</secondary></indexterm>
+<indexterm><primary>ps_micrograph.cpp</primary><secondary>ps_origins</secondary></indexterm>
+<para><computeroutput>int ps_origins (ofstream * fps, <link linkend="_class_bstring">Bstring</link> &amp; title, <link linkend="_class_bproject">Bproject</link> * project, int flags)</computeroutput></para><para>
+Definition at line 309 of file ps_micrograph.cpp.</para>
+    </section><anchor xml:id="_ps__micrograph_8cpp_1adc67703bc0c9d71ede2c2a3256865e94"/>    <section>
+    <title>ps_part_fom_histogram()</title>
+<indexterm><primary>ps_part_fom_histogram</primary><secondary>ps_micrograph.cpp</secondary></indexterm>
+<indexterm><primary>ps_micrograph.cpp</primary><secondary>ps_part_fom_histogram</secondary></indexterm>
+<para><computeroutput>int ps_part_fom_histogram (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Postscript plot of the particle FOM histogram. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>output postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, error if &lt;0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 504 of file ps_micrograph.cpp.</para>
+    </section><anchor xml:id="_ps__micrograph_8cpp_1a95ebe9348d41d7d126fd60387a93cd27"/>    <section>
+    <title>ps_particle_phi_theta()</title>
+<indexterm><primary>ps_particle_phi_theta</primary><secondary>ps_micrograph.cpp</secondary></indexterm>
+<indexterm><primary>ps_micrograph.cpp</primary><secondary>ps_particle_phi_theta</secondary></indexterm>
+<para><computeroutput>int ps_particle_phi_theta (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bstring">Bstring</link> &amp; title, <link linkend="_class_bproject">Bproject</link> * project, int selection)</computeroutput></para><para>
+
+<para>Generates phi-theta views postscript plots. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>output postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;title</entry>
+                                <entry>
+<para>title. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>selection</entry>
+                                <entry>
+<para>selection number (-1 selects positives, 0 selects all). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of view panels. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 250 of file ps_micrograph.cpp.</para>
+    </section><anchor xml:id="_ps__micrograph_8cpp_1aa4782cb7fdb4e4eb72ca489e9d8b86df"/>    <section>
+    <title>ps_particle_views_origins()</title>
+<indexterm><primary>ps_particle_views_origins</primary><secondary>ps_micrograph.cpp</secondary></indexterm>
+<indexterm><primary>ps_micrograph.cpp</primary><secondary>ps_particle_views_origins</secondary></indexterm>
+<para><computeroutput>int ps_particle_views_origins (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bstring">Bstring</link> &amp; title, <link linkend="_class_bstring">Bstring</link> &amp; symmetry_string, <link linkend="_class_bproject">Bproject</link> * project, int selection)</computeroutput></para><para>
+
+<para>Generates asymmetric unit particle view and origin postscript plots. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>output postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;title</entry>
+                                <entry>
+<para>title. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;symmetry_string</entry>
+                                <entry>
+<para>symmetry string to print at the top of the page. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>selection</entry>
+                                <entry>
+<para>selection number (-1 selects positives, 0 selects all). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of view panels. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 211 of file ps_micrograph.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_ps__micrograph_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>ps_micrograph.cpp</secondary></indexterm>
+<indexterm><primary>ps_micrograph.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

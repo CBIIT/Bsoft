@@ -1,0 +1,46 @@
+<textarea readonly rows="60" cols="80">
+#!/bin/tcsh -f
+
+# Bernard Heymann
+# 20041123 - 20060407
+
+if ( $# < 1 ) then
+        echo "prepfit"
+        echo "A script to run bctf to generate a power spectrum from each micrograph,"
+        echo "fit the CTF and write the parameters to a file"
+        echo "Usage:"
+        echo "  prepfit -sampling <sampling> <files>"
+        echo "Example:"
+        echo "  prepfit -sam 1.842 mg*.tif"
+        exit
+endif
+
+set SAM = 1
+
+# Interpret options
+set a = 1
+while ( "x$argv[$a]" =~ x-* )
+#       echo $a $argv[$a]
+        if ( "x$argv[$a]" =~ x-sam* ) then
+                @ a++
+                set SAM = $argv[$a]
+        endif
+        @ a++
+        if ( $a > $# ) break
+end
+
+echo Sampling = $SAM
+
+# Process files
+while ( $a <= $# )
+        foreach FILE ( $argv[$a] )
+                set NM = `echo $FILE | cut -f1 -d"."`
+                set SFILE = ${NM}.star
+                set PFILE = ${NM}_ps.map
+                echo bctf -v 7 -datatype float -action prepfit -sampling $SAM -out $SFILE $FILE $PFILE
+                bctf -v 7 -datatype float -action prepfit -sampling $SAM -out $SFILE $FILE $PFILE
+        end
+        @ a++
+end
+
+</textarea>

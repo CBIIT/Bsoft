@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Cygwin install</title>
+<link href="bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+    <h1> Installation on Cygwin</h1>
+    <div id="note"><p>Note: Bsoft has not been tested extensively on Cygwin for a long time. It is very likely that it will not compile properly, and even if it does, it may not run properly.</p></div>
+    <p>Cygwin provides a virtual Linux environment running within Windows NT and is available from the following web site:</p>
+    <p><a href="http://www.cygwin.com/" target="_blank">http://www.cygwin.com/</a></p>
+    <p>Bsoft can be installed within Cygwin in a fashion similar to Linux, but very little testing has been done and some or all of the Bsoft programs may run into problems. The Cygwin installation requires at a minimum certain packages used in Bsoft (it is best to install all packages from the Cygwin site to ensure that all tools are available):</p>
+    <ul>
+      <li>gcc compilers for C and C++</li>
+      <li>X11</li>
+      <li>Tcl/Tk</li>
+    </ul>
+    <p>The installation is the same as for Unix in general (<a href="bsoft_unix.html">see Unix installation</a>). The recommended location for Bsoft is in /usr/local. If you want to install Bsoft in a different location, change the environment variable BSOFT to point to the appropriate directory:</p>
+    <div id="command"><p>setenv BSOFT /usr/local/bsoft</p></div>
+    <p>OR</p>
+    <div id="command"><p>setenv BSOFT $OTHERPATH/bsoft</p></div>
+    <p>Copy the distribution file to the desired directory (e.g., /usr/local) and unpack it as follows (it will unpack into a directory named &quot;bsoft&quot;):</p>
+    <p><br />
+      Unzip the distribution file and unpack the tar file: <br />
+    <div id="command"><p>gunzip bsoft1_6_0 .tgz </p>
+    <p>tar -xvf bsoft1_6_0 .tar</p></div>
+    <p>OR</p>
+    <p>Unpack the gzipped tar file directly: <br />
+    <div id="command">tar -xzvf bsoft1_6_0 .tgz</p></div>
+    <p>All programs are compiled with the C-shell script &quot;bmake&quot; in the main bsoft directory (the -w option prevents display of warnings):</p>
+    <div id="command"><p>bmake</p></div>
+    <p>&nbsp;</p>
+    <h2>Environment </h2>
+    <p>During compilation the script bmake writes two small files called &quot;bsoft.cshrc&quot; and &quot;bsoft.bashrc&quot; with the required environmental variables. The following Bsoft-specific variables are required:</p>
+    <ul>
+      <li>BSOFT: The main environmental variable pointing to the Bsoft location (usually /usr/local/bsoft)</li>
+      <li>BSOFT32: In cases where both 32 and 64 bit versions of Bsoft is required, this variable points to the 32 bit version directory (usually /usr/local/bsoft32)</li>
+      <li>BPARAM: This variable points to a directory in the Bsoft tree that includes parameter files for molecular modeling and filter kernels.</li>
+    </ul>
+    <p>The following general environmental variables need to be modified as well:</p>
+    <ul>
+      <li>PATH: This points to the executable files (usually /usr/local/bsoft/bin)</li>
+      <li>LD_LIBRARY_PATH: This points to the directory with the shared libraries (usually /usr/local/bsoft/lib)</li>
+    </ul>
+    <p>For the bash shell, add the following line to the end of the .bash_profile file:</p>
+    <div id="command"><p>source /usr/local/bsoft/bsoft.bashrc</p></div>
+    <p>For the csh or tcsh, add the following line to the end of the .cshrc or .tcshrc file:</p>
+    <div id="command"><p>source /usr/local/bsoft/bsoft.cshrc</p></div>
+    <p>The statements in the bsoft.* files can also be added directly to the resource files.</p>
+    <p>&nbsp;</p>
+</div>
+<div id="footer">
+  Bernard Heymann  20120125
+</div>
+</body>
+</html>

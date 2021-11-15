@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__bimage__histogram_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/img/Bimage_histogram.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/img/Bimage_histogram.cpp</primary></indexterm>
+<para>
+
+<para>Library routines to calculate histograms for images. </para>
+ 
+</para>
+<programlisting>#include &quot;Bimage.h&quot;
+#include &quot;simplex.h&quot;
+#include &quot;cluster.h&quot;
+#include &quot;moving_average.h&quot;
+#include &quot;matrix_linear.h&quot;
+#include &quot;qsort_functions.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>double <link linkend="__bimage__histogram_8cpp_1ae3645c230b52949696588b3be119432d">find_maximum_sigma</link> (<link linkend="_class_matrix">Matrix</link> &amp;H, long i, long <link linkend="_rw_d_m_8cpp_1a2f48c9e23195864af2581edd4f60917e">level</link>, long depth, double sum, double &amp;maxsum, vector&lt; double &gt; &amp;t)</para>
+</listitem>
+            <listitem><para>vector&lt; double &gt; <link linkend="__bimage__histogram_8cpp_1a42458a0830081b7dcee90668868ae924">histogram_thresholds</link> (vector&lt; long &gt; h, long number)</para>
+
+<para>Calculates multiple thresholds from a histogram. </para>
+</listitem>
+            <listitem><para>double <link linkend="__bimage__histogram_8cpp_1a0a447b7a33ce3b1aa6abfd0a9848abeb">simplex_gauss_R</link> (<link linkend="_class_bsimplex">Bsimplex</link> &amp;simp)</para>
+</listitem>
+            <listitem><para>double <link linkend="__bimage__histogram_8cpp_1a626538e70f9a41f8b447e789ad89ff83">simplex_poisson_R</link> (<link linkend="_class_bsimplex">Bsimplex</link> &amp;simp)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="__bimage__histogram_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines to calculate histograms for images. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19990321 </para>
+
+<para>Modified: 20210304 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="__bimage__histogram_8cpp_1ae3645c230b52949696588b3be119432d"/>    <section>
+    <title>find_maximum_sigma()</title>
+<indexterm><primary>find_maximum_sigma</primary><secondary>Bimage_histogram.cpp</secondary></indexterm>
+<indexterm><primary>Bimage_histogram.cpp</primary><secondary>find_maximum_sigma</secondary></indexterm>
+<para><computeroutput>double find_maximum_sigma (<link linkend="_class_matrix">Matrix</link> &amp; H, long i, long level, long depth, double sum, double &amp; maxsum, vector&lt; double &gt; &amp; t)</computeroutput></para><para>
+Definition at line 759 of file Bimage_histogram.cpp.</para>
+    </section><anchor xml:id="__bimage__histogram_8cpp_1a42458a0830081b7dcee90668868ae924"/>    <section>
+    <title>histogram_thresholds()</title>
+<indexterm><primary>histogram_thresholds</primary><secondary>Bimage_histogram.cpp</secondary></indexterm>
+<indexterm><primary>Bimage_histogram.cpp</primary><secondary>histogram_thresholds</secondary></indexterm>
+<para><computeroutput>vector&lt;double&gt; histogram_thresholds (vector&lt; long &gt; h, long number)</computeroutput></para><para>
+
+<para>Calculates multiple thresholds from a histogram. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>h</entry>
+                                <entry>
+<para>histogram. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>number of clusters (one more than thresholds). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;double&gt; thresholds. <literallayout><computeroutput>Reference: PS.Liao, TS.Chen, and PC. Chung,
+       Journal of Information Science and Engineering, vol 17, 713-727 (2001)
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 799 of file Bimage_histogram.cpp.</para>
+    </section><anchor xml:id="__bimage__histogram_8cpp_1a0a447b7a33ce3b1aa6abfd0a9848abeb"/>    <section>
+    <title>simplex_gauss_R()</title>
+<indexterm><primary>simplex_gauss_R</primary><secondary>Bimage_histogram.cpp</secondary></indexterm>
+<indexterm><primary>Bimage_histogram.cpp</primary><secondary>simplex_gauss_R</secondary></indexterm>
+<para><computeroutput>double simplex_gauss_R (<link linkend="_class_bsimplex">Bsimplex</link> &amp; simp)</computeroutput></para><para>
+Definition at line 873 of file Bimage_histogram.cpp.</para>
+    </section><anchor xml:id="__bimage__histogram_8cpp_1a626538e70f9a41f8b447e789ad89ff83"/>    <section>
+    <title>simplex_poisson_R()</title>
+<indexterm><primary>simplex_poisson_R</primary><secondary>Bimage_histogram.cpp</secondary></indexterm>
+<indexterm><primary>Bimage_histogram.cpp</primary><secondary>simplex_poisson_R</secondary></indexterm>
+<para><computeroutput>double simplex_poisson_R (<link linkend="_class_bsimplex">Bsimplex</link> &amp; simp)</computeroutput></para><para>
+Definition at line 1222 of file Bimage_histogram.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="__bimage__histogram_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>Bimage_histogram.cpp</secondary></indexterm>
+<indexterm><primary>Bimage_histogram.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

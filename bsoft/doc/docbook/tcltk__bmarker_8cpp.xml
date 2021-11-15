@@ -1,0 +1,430 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_tcltk__bmarker_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/tcltk/tcltk_bmarker.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/tcltk/tcltk_bmarker.cpp</primary></indexterm>
+<para>
+
+<para>A shared object to manage markers in micrograph parameter files in TCL/Tk. </para>
+ 
+</para>
+<programlisting>#include &lt;tk.h&gt;
+#include &quot;tcltk_bmarker.h&quot;
+#include &quot;mg_img_proc.h&quot;
+#include &quot;mg_extract.h&quot;
+#include &quot;mg_tomography.h&quot;
+#include &quot;mg_tomo_track.h&quot;
+#include &quot;rwmg.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;timer.h&quot;
+#include &quot;utilities.h&quot;
+#include &lt;sys/stat.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a5e2270b8564bc4d8466c686f90dce263">marker_count</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1ac4eae1a344000ba47800d0f36abd0623">marker_count</link> (<link linkend="_class_bfield">Bfield</link> *field)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1ab7a2799802508d43caf61d7aced26dd0">marker_count</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a7ea250ee33476e8410945b1efa910d54">marker_count</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a65238fd0ada5964e82d3ceecacc1c5a9">marker_ids</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double fom_cut)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1ac7d6dd6285bd706721d5c3410e6fa62f">marker_ids</link> (<link linkend="_class_bfield">Bfield</link> *field, double fom_cut)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1acca6f309892456f5c2d734041693995f">marker_ids</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, double fom_cut)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a4940a807f28f0d2c222fef0ec108b237">marker_ids</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, double fom_cut)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a38e411dac3b61bf0667fecc71c3b63cc">marker_list</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a309be06d24a4d9a8dae4138fda9bc3e9">marker_list</link> (<link linkend="_class_bfield">Bfield</link> *field)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1ada4626d728df3b0a16a508622bddc694">marker_list</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a1b8b1622a4b6e00330913aab6d5d941a">marker_list</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a226451c5c178ff08751a3667d6631317">marker_location</link> (<link linkend="_struct_bmarker">Bmarker</link> *mark)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a211b44aba9d321c683d4fbe369075033">marker_residual</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a22b5aa0e9a792131217e170836ed6a86">marker_residual</link> (<link linkend="_struct_bmarker">Bmarker</link> *mark)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a8d753c74d66a0c103e50e43a8e4ca030">marker_fom</link> (<link linkend="_struct_bmarker">Bmarker</link> *mark)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a333a52e4a76bdba9caa16c4d281b4c83">marker_fom_maximum</link> (<link linkend="_struct_bmarker">Bmarker</link> *mark)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a9b3f35f524687b32bd24971f0dc94bf1">marker_select</link> (<link linkend="_struct_bmarker">Bmarker</link> *marklist, double rad, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1ac10af5e8526d07a413720d1e2ce7cfc8">marker_select_rectangle</link> (<link linkend="_struct_bmarker">Bmarker</link> *marklist, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1aedfefa4670e19e415cd972b3ce6f692b">marker_get_selection_flag</link> (<link linkend="_struct_bmarker">Bmarker</link> *marklist, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a653b77798c12769f780b8ea914f2df72">marker_set_selection_flag</link> (<link linkend="_struct_bmarker">Bmarker</link> *marklist, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a8a5b910fd7d5adaf4826d5ec648748f6">marker_clear_selection_flag</link> (<link linkend="_struct_bmarker">Bmarker</link> *marklist, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1acc80f6676325d95179f4f661b012ad31">marker_move</link> (<link linkend="_struct_bmarker">Bmarker</link> *marklist, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a6f5b1a64ea3df9845748c2efb8525bcf">marker_create</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a7703120988ac35644c0644111340e5ae">marker_create</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a5596c2b497782affa99e99b4cd4e64c3">marker_center</link> (<link linkend="_struct_bmarker">Bmarker</link> *mark, <link linkend="_class_bimage">Bimage</link> *p, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a3f673e8bc43289b1eb4cf29d520d62d4">marker_generate_from_seed</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a243abd13b3362fae8a29b5c087f8de45">marker_find</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_bimage">Bimage</link> *p, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a2a428a8835972360be84528f92bd5a16">marker_snap</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_bimage">Bimage</link> *p, long mid, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a2c82a4addb13a6e0581595688f9808ab">marker_extract</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_bimage">Bimage</link> *p, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1aa0b190e3c6f19ecca8d8cd57ceca55e2">marker_extract</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_bimage">Bimage</link> *p, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a6d97cf6e634993dc754ff46c11709efb">marker_delete</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1aa9740ebdcef6d4feb0235359a7024579">marker_delete</link> (<link linkend="_class_bfield">Bfield</link> *field, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a1776357824b049d34d4a9b38b06e5a0e">marker_delete</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a87ae2cf891217f34c2f59e71058197c0">marker_delete</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1ac0656718c44fb2998b80e2023ccc3225">marker_edge</link> (<link linkend="_struct_bmarker">Bmarker</link> *mark, <link linkend="_class_bimage">Bimage</link> *p, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1ae89360675e9613b0769d7e490b309a93">marker_accept</link> (<link linkend="_struct_bmarker">Bmarker</link> *mark, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1a1689c893a2b3a49d9f0e33a443a51fe7">do_tomo_thickness</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>int <link linkend="_tcltk__bmarker_8cpp_1afd84e89a03152bf973a22251ec652185">do_tomo_transfer_seed</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>int <link linkend="_tcltk__bmarker_8cpp_1ad23ce71367220a6a800383add6410902">do_tomo_findaxis</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>int <link linkend="_tcltk__bmarker_8cpp_1a726a3ec0cb65d511803d4fe7f08f7233">do_tomo_track</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>int <link linkend="_tcltk__bmarker_8cpp_1a77553c8a363ac1e7718f64837f97d91b">do_tomo_refine</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>int <link linkend="_tcltk__bmarker_8cpp_1ae858b0408e110327b2fafa96ff9ab16a">do_tomo_refine_one</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmarker_8cpp_1adbd53bd31ff19b503bfeeafd2fd5e7f8">do_marker</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>int <link linkend="_tcltk__bmarker_8cpp_1a69e884d58467d53e30c950378fc75eb0">marker_create</link> (<link linkend="_struct_bmarker">Bmarker</link> *mark, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_tcltk__bmarker_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_tcltk__bmarker_8cpp_1a3628124083d8f4fbc4ffd16e5b6202bf">imglist</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>A shared object to manage markers in micrograph parameter files in TCL/Tk. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20030813 </para>
+
+<para>Modified: 20200513 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_tcltk__bmarker_8cpp_1adbd53bd31ff19b503bfeeafd2fd5e7f8"/>    <section>
+    <title>do_marker()</title>
+<indexterm><primary>do_marker</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>do_marker</secondary></indexterm>
+<para><computeroutput>Tcl_Obj* do_marker (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 279 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1ad23ce71367220a6a800383add6410902"/>    <section>
+    <title>do_tomo_findaxis()</title>
+<indexterm><primary>do_tomo_findaxis</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>do_tomo_findaxis</secondary></indexterm>
+<para><computeroutput>int do_tomo_findaxis (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 131 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a77553c8a363ac1e7718f64837f97d91b"/>    <section>
+    <title>do_tomo_refine()</title>
+<indexterm><primary>do_tomo_refine</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>do_tomo_refine</secondary></indexterm>
+<para><computeroutput>int do_tomo_refine (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 179 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1ae858b0408e110327b2fafa96ff9ab16a"/>    <section>
+    <title>do_tomo_refine_one()</title>
+<indexterm><primary>do_tomo_refine_one</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>do_tomo_refine_one</secondary></indexterm>
+<para><computeroutput>int do_tomo_refine_one (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 216 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a1689c893a2b3a49d9f0e33a443a51fe7"/>    <section>
+    <title>do_tomo_thickness()</title>
+<indexterm><primary>do_tomo_thickness</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>do_tomo_thickness</secondary></indexterm>
+<para><computeroutput>Tcl_Obj* do_tomo_thickness (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 68 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a726a3ec0cb65d511803d4fe7f08f7233"/>    <section>
+    <title>do_tomo_track()</title>
+<indexterm><primary>do_tomo_track</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>do_tomo_track</secondary></indexterm>
+<para><computeroutput>int do_tomo_track (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 154 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1afd84e89a03152bf973a22251ec652185"/>    <section>
+    <title>do_tomo_transfer_seed()</title>
+<indexterm><primary>do_tomo_transfer_seed</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>do_tomo_transfer_seed</secondary></indexterm>
+<para><computeroutput>int do_tomo_transfer_seed (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 102 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1ae89360675e9613b0769d7e490b309a93"/>    <section>
+    <title>marker_accept()</title>
+<indexterm><primary>marker_accept</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_accept</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_accept (<link linkend="_struct_bmarker">Bmarker</link> * mark, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 1295 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a5596c2b497782affa99e99b4cd4e64c3"/>    <section>
+    <title>marker_center()</title>
+<indexterm><primary>marker_center</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_center</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_center (<link linkend="_struct_bmarker">Bmarker</link> * mark, <link linkend="_class_bimage">Bimage</link> * p, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 944 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a8a5b910fd7d5adaf4826d5ec648748f6"/>    <section>
+    <title>marker_clear_selection_flag()</title>
+<indexterm><primary>marker_clear_selection_flag</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_clear_selection_flag</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_clear_selection_flag (<link linkend="_struct_bmarker">Bmarker</link> * marklist, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 825 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1ac4eae1a344000ba47800d0f36abd0623"/>    <section>
+    <title>marker_count()<computeroutput>[1/4]</computeroutput></title>
+<indexterm><primary>marker_count</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_count</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_count (<link linkend="_class_bfield">Bfield</link> * field)</computeroutput></para><para>
+Definition at line 458 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1ab7a2799802508d43caf61d7aced26dd0"/>    <section>
+    <title>marker_count()<computeroutput>[2/4]</computeroutput></title>
+<indexterm><primary>marker_count</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_count</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_count (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg)</computeroutput></para><para>
+Definition at line 474 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a5e2270b8564bc4d8466c686f90dce263"/>    <section>
+    <title>marker_count()<computeroutput>[3/4]</computeroutput></title>
+<indexterm><primary>marker_count</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_count</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_count (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+Definition at line 434 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a7ea250ee33476e8410945b1efa910d54"/>    <section>
+    <title>marker_count()<computeroutput>[4/4]</computeroutput></title>
+<indexterm><primary>marker_count</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_count</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_count (<link linkend="_class_breconstruction">Breconstruction</link> * rec)</computeroutput></para><para>
+Definition at line 488 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a69e884d58467d53e30c950378fc75eb0"/>    <section>
+    <title>marker_create()<computeroutput>[1/3]</computeroutput></title>
+<indexterm><primary>marker_create</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_create</secondary></indexterm>
+<para><computeroutput>int marker_create (<link linkend="_struct_bmarker">Bmarker</link> * mark, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 875 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a6f5b1a64ea3df9845748c2efb8525bcf"/>    <section>
+    <title>marker_create()<computeroutput>[2/3]</computeroutput></title>
+<indexterm><primary>marker_create</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_create</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_create (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 894 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a7703120988ac35644c0644111340e5ae"/>    <section>
+    <title>marker_create()<computeroutput>[3/3]</computeroutput></title>
+<indexterm><primary>marker_create</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_create</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_create (<link linkend="_class_breconstruction">Breconstruction</link> * rec, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 919 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1aa9740ebdcef6d4feb0235359a7024579"/>    <section>
+    <title>marker_delete()<computeroutput>[1/4]</computeroutput></title>
+<indexterm><primary>marker_delete</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_delete</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_delete (<link linkend="_class_bfield">Bfield</link> * field, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 1153 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a1776357824b049d34d4a9b38b06e5a0e"/>    <section>
+    <title>marker_delete()<computeroutput>[2/4]</computeroutput></title>
+<indexterm><primary>marker_delete</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_delete</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_delete (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 1196 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a6d97cf6e634993dc754ff46c11709efb"/>    <section>
+    <title>marker_delete()<computeroutput>[3/4]</computeroutput></title>
+<indexterm><primary>marker_delete</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_delete</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_delete (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 1089 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a87ae2cf891217f34c2f59e71058197c0"/>    <section>
+    <title>marker_delete()<computeroutput>[4/4]</computeroutput></title>
+<indexterm><primary>marker_delete</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_delete</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_delete (<link linkend="_class_breconstruction">Breconstruction</link> * rec, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 1234 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1ac0656718c44fb2998b80e2023ccc3225"/>    <section>
+    <title>marker_edge()</title>
+<indexterm><primary>marker_edge</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_edge</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_edge (<link linkend="_struct_bmarker">Bmarker</link> * mark, <link linkend="_class_bimage">Bimage</link> * p, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 1269 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a2c82a4addb13a6e0581595688f9808ab"/>    <section>
+    <title>marker_extract()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>marker_extract</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_extract</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_extract (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_bimage">Bimage</link> * p, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 1035 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1aa0b190e3c6f19ecca8d8cd57ceca55e2"/>    <section>
+    <title>marker_extract()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>marker_extract</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_extract</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_extract (<link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_bimage">Bimage</link> * p, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 1062 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a243abd13b3362fae8a29b5c087f8de45"/>    <section>
+    <title>marker_find()</title>
+<indexterm><primary>marker_find</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_find</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_find (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_bimage">Bimage</link> * p, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 976 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a8d753c74d66a0c103e50e43a8e4ca030"/>    <section>
+    <title>marker_fom()</title>
+<indexterm><primary>marker_fom</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_fom</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_fom (<link linkend="_struct_bmarker">Bmarker</link> * mark)</computeroutput></para><para>
+Definition at line 697 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a333a52e4a76bdba9caa16c4d281b4c83"/>    <section>
+    <title>marker_fom_maximum()</title>
+<indexterm><primary>marker_fom_maximum</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_fom_maximum</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_fom_maximum (<link linkend="_struct_bmarker">Bmarker</link> * mark)</computeroutput></para><para>
+Definition at line 710 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a3f673e8bc43289b1eb4cf29d520d62d4"/>    <section>
+    <title>marker_generate_from_seed()</title>
+<indexterm><primary>marker_generate_from_seed</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_generate_from_seed</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_generate_from_seed (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+Definition at line 955 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1aedfefa4670e19e415cd972b3ce6f692b"/>    <section>
+    <title>marker_get_selection_flag()</title>
+<indexterm><primary>marker_get_selection_flag</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_get_selection_flag</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_get_selection_flag (<link linkend="_struct_bmarker">Bmarker</link> * marklist, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 786 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1ac7d6dd6285bd706721d5c3410e6fa62f"/>    <section>
+    <title>marker_ids()<computeroutput>[1/4]</computeroutput></title>
+<indexterm><primary>marker_ids</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_ids</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_ids (<link linkend="_class_bfield">Bfield</link> * field, double fom_cut)</computeroutput></para><para>
+Definition at line 532 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1acca6f309892456f5c2d734041693995f"/>    <section>
+    <title>marker_ids()<computeroutput>[2/4]</computeroutput></title>
+<indexterm><primary>marker_ids</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_ids</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_ids (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, double fom_cut)</computeroutput></para><para>
+Definition at line 551 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a65238fd0ada5964e82d3ceecacc1c5a9"/>    <section>
+    <title>marker_ids()<computeroutput>[3/4]</computeroutput></title>
+<indexterm><primary>marker_ids</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_ids</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_ids (<link linkend="_class_bproject">Bproject</link> * project, double fom_cut)</computeroutput></para><para>
+Definition at line 502 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a4940a807f28f0d2c222fef0ec108b237"/>    <section>
+    <title>marker_ids()<computeroutput>[4/4]</computeroutput></title>
+<indexterm><primary>marker_ids</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_ids</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_ids (<link linkend="_class_breconstruction">Breconstruction</link> * rec, double fom_cut)</computeroutput></para><para>
+Definition at line 566 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a309be06d24a4d9a8dae4138fda9bc3e9"/>    <section>
+    <title>marker_list()<computeroutput>[1/4]</computeroutput></title>
+<indexterm><primary>marker_list</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_list</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_list (<link linkend="_class_bfield">Bfield</link> * field)</computeroutput></para><para>
+Definition at line 610 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1ada4626d728df3b0a16a508622bddc694"/>    <section>
+    <title>marker_list()<computeroutput>[2/4]</computeroutput></title>
+<indexterm><primary>marker_list</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_list</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_list (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg)</computeroutput></para><para>
+Definition at line 627 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a38e411dac3b61bf0667fecc71c3b63cc"/>    <section>
+    <title>marker_list()<computeroutput>[3/4]</computeroutput></title>
+<indexterm><primary>marker_list</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_list</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_list (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+Definition at line 581 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a1b8b1622a4b6e00330913aab6d5d941a"/>    <section>
+    <title>marker_list()<computeroutput>[4/4]</computeroutput></title>
+<indexterm><primary>marker_list</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_list</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_list (<link linkend="_class_breconstruction">Breconstruction</link> * rec)</computeroutput></para><para>
+Definition at line 642 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a226451c5c178ff08751a3667d6631317"/>    <section>
+    <title>marker_location()</title>
+<indexterm><primary>marker_location</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_location</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_location (<link linkend="_struct_bmarker">Bmarker</link> * mark)</computeroutput></para><para>
+Definition at line 657 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1acc80f6676325d95179f4f661b012ad31"/>    <section>
+    <title>marker_move()</title>
+<indexterm><primary>marker_move</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_move</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_move (<link linkend="_struct_bmarker">Bmarker</link> * marklist, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 847 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a22b5aa0e9a792131217e170836ed6a86"/>    <section>
+    <title>marker_residual()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>marker_residual</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_residual</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_residual (<link linkend="_struct_bmarker">Bmarker</link> * mark)</computeroutput></para><para>
+Definition at line 684 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a211b44aba9d321c683d4fbe369075033"/>    <section>
+    <title>marker_residual()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>marker_residual</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_residual</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_residual (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+Definition at line 673 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a9b3f35f524687b32bd24971f0dc94bf1"/>    <section>
+    <title>marker_select()</title>
+<indexterm><primary>marker_select</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_select</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_select (<link linkend="_struct_bmarker">Bmarker</link> * marklist, double rad, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 724 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1ac10af5e8526d07a413720d1e2ce7cfc8"/>    <section>
+    <title>marker_select_rectangle()</title>
+<indexterm><primary>marker_select_rectangle</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_select_rectangle</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_select_rectangle (<link linkend="_struct_bmarker">Bmarker</link> * marklist, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 756 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a653b77798c12769f780b8ea914f2df72"/>    <section>
+    <title>marker_set_selection_flag()</title>
+<indexterm><primary>marker_set_selection_flag</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_set_selection_flag</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_set_selection_flag (<link linkend="_struct_bmarker">Bmarker</link> * marklist, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 805 of file tcltk_bmarker.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a2a428a8835972360be84528f92bd5a16"/>    <section>
+    <title>marker_snap()</title>
+<indexterm><primary>marker_snap</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>marker_snap</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * marker_snap (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_bimage">Bimage</link> * p, long mid, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 1001 of file tcltk_bmarker.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_tcltk__bmarker_8cpp_1a3628124083d8f4fbc4ffd16e5b6202bf"/>    <section>
+    <title>imglist</title>
+<indexterm><primary>imglist</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>imglist</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* imglist<computeroutput>[extern]</computeroutput></computeroutput></para><para>
+Definition at line 32 of file bshow.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmarker_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>tcltk_bmarker.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmarker.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

@@ -1,0 +1,507 @@
+.TH "/Users/bernard/b20/bsoft/src/mol/mol_edit.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mol/mol_edit.cpp \- Library routines used for atomic coordinates\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmolecule\&.h'\fP
+.br
+\fC#include 'rwatomprop\&.h'\fP
+.br
+\fC#include 'rwresprop\&.h'\fP
+.br
+\fC#include 'mol_transform\&.h'\fP
+.br
+\fC#include 'mol_edit\&.h'\fP
+.br
+\fC#include 'mol_util\&.h'\fP
+.br
+\fC#include 'seq_util\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'Matrix3\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "long \fBmolgroup_set_atom_types_to_elements\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Sets atom types to element names\&. "
+.ti -1c
+.RI "int \fBmolgroup_remove_hydrogens\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Removes all hydrogens from a molecular system\&. "
+.ti -1c
+.RI "bool \fBbond_find\fP (\fBBmolgroup\fP *molgroup, \fBBatom\fP *atom1, \fBBatom\fP *atom2)"
+.br
+.ti -1c
+.RI "int \fBmolgroup_add_disulfides\fP (\fBBmolgroup\fP *molgroup, double \fBdistance\fP)"
+.br
+.RI "Adds disulfide bonds when sulfur atoms are close to each other\&. "
+.ti -1c
+.RI "\fBBmolgroup\fP ** \fBmolgroup_split_into_slices\fP (\fBBmolgroup\fP *molgroup, double slice_thickness, int &nslices)"
+.br
+.RI "Splits a set of coordinates into slices with a given thickness\&. "
+.ti -1c
+.RI "int \fBmolgroup_insert\fP (\fBBmolgroup\fP *molgroup, \fBBmolgroup\fP *molinsert, double \fBdistance\fP)"
+.br
+.RI "Inserts one set of molecules into another\&. "
+.ti -1c
+.RI "int \fBmolgroup_randomize\fP (\fBBmolgroup\fP *molgroup, double random_max)"
+.br
+.RI "Applies random displacements to coordinates\&. "
+.ti -1c
+.RI "int \fBmolgroup_randomize_B\fP (\fBBmolgroup\fP *molgroup, double B)"
+.br
+.RI "Applies random displacements to coordinates\&. "
+.ti -1c
+.RI "int \fBmolgroup_remove_overlapping_atoms\fP (\fBBmolgroup\fP *molgroup, double mindist)"
+.br
+.RI "Removes overlapping atoms\&. "
+.ti -1c
+.RI "int \fBmolgroup_bond_pseudo_atoms\fP (\fBBmolgroup\fP *molgroup, int atoms_per_bond, int wrap)"
+.br
+.RI "Places pseudo-atoms on bonds\&. "
+.ti -1c
+.RI "char * \fBgrid_from_molgroup\fP (\fBBmolgroup\fP *molgroup, \fBVector3\fP< double > min, double sampling, \fBVector3\fP< int > size)"
+.br
+.ti -1c
+.RI "char * \fBgrid_from_molecule\fP (\fBBmolecule\fP *mol, \fBVector3\fP< double > min, double sampling, \fBVector3\fP< int > size)"
+.br
+.ti -1c
+.RI "int \fBmolgroup_prune_molecules\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Deletes overlapping molecules\&. "
+.ti -1c
+.RI "long \fBmolgroup_delete_deselected_molecules\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Deletes deselected molecules\&. "
+.ti -1c
+.RI "long \fBmolgroup_prune_overlapping_atoms\fP (\fBBmolgroup\fP *molgroup, double mindist)"
+.br
+.RI "Prunes overlapping atoms based on a distance criterion\&. "
+.ti -1c
+.RI "long \fBmolgroup_delete_deselected_atoms\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Deletes deselected atoms\&. "
+.ti -1c
+.RI "int \fBmolgroup_untangle_molecules\fP (\fBBmolgroup\fP *molgroup, double sampling, double lambda)"
+.br
+.RI "Moves overlapping molecules away from each other\&. "
+.ti -1c
+.RI "int \fBmolgroup_untangle_groups\fP (\fBBmolgroup\fP *molgroup, double sampling, double lambda)"
+.br
+.RI "Moves overlapping molecules away from each other\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines used for atomic coordinates\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19980214 
+.PP
+Modified: 20110811 
+.RE
+.PP
+
+.PP
+Definition in file \fBmol_edit\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "bool bond_find (\fBBmolgroup\fP * molgroup, \fBBatom\fP * atom1, \fBBatom\fP * atom2)"
+
+.PP
+Definition at line 85 of file mol_edit\&.cpp\&.
+.SS "char* grid_from_molecule (\fBBmolecule\fP * mol, \fBVector3\fP< double > min, double sampling, \fBVector3\fP< int > size)"
+
+.PP
+Definition at line 576 of file mol_edit\&.cpp\&.
+.SS "char* grid_from_molgroup (\fBBmolgroup\fP * molgroup, \fBVector3\fP< double > min, double sampling, \fBVector3\fP< int > size)"
+
+.PP
+Definition at line 551 of file mol_edit\&.cpp\&.
+.SS "int molgroup_add_disulfides (\fBBmolgroup\fP * molgroup, double distance)"
+
+.PP
+Adds disulfide bonds when sulfur atoms are close to each other\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIdistance\fP maximum separation between sulfur atoms\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of disulfide bonds added\&. 
+.RE
+.PP
+
+.PP
+Definition at line 101 of file mol_edit\&.cpp\&.
+.SS "int molgroup_bond_pseudo_atoms (\fBBmolgroup\fP * molgroup, int atoms_per_bond, int wrap)"
+
+.PP
+Places pseudo-atoms on bonds\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.br
+\fIatoms_per_bond\fP number of pseudo-atoms per bond\&. 
+.br
+\fIwrap\fP wrap around periodic boundaries if !=0\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bbond* new bond list\&. 
+.PP
+.nf
+The requested number of new atoms are placed to coincide with each bond.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 530 of file mol_edit\&.cpp\&.
+.SS "long molgroup_delete_deselected_atoms (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Deletes deselected atoms\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure to be modified\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of atoms deleted\&. 
+.RE
+.PP
+
+.PP
+Definition at line 717 of file mol_edit\&.cpp\&.
+.SS "long molgroup_delete_deselected_molecules (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Deletes deselected molecules\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure to be modified\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of molecules deleted\&. 
+.RE
+.PP
+
+.PP
+Definition at line 645 of file mol_edit\&.cpp\&.
+.SS "int molgroup_insert (\fBBmolgroup\fP * molgroup, \fBBmolgroup\fP * molinsert, double distance)"
+
+.PP
+Inserts one set of molecules into another\&. 
+.PP
+.nf
+Molecules overlapping in the receiving molecule group are deleted.
+The footprint of the molecules being inserted is calculated on a grid
+and all atoms within this footprint is tested for deletion.
+Note: The molecule list is transferred from the insertion group to 
+    the main group and the insertion group is deallocated.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure to be modified\&. 
+.br
+\fI*molinsert\fP molecule group structure to insert\&. (deallocated) 
+.br
+\fIdistance\fP cutoff distance to remove atoms\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 244 of file mol_edit\&.cpp\&.
+.SS "int molgroup_prune_molecules (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Deletes overlapping molecules\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 603 of file mol_edit\&.cpp\&.
+.SS "long molgroup_prune_overlapping_atoms (\fBBmolgroup\fP * molgroup, double mindist)"
+
+.PP
+Prunes overlapping atoms based on a distance criterion\&. 
+.PP
+.nf
+The first atom in any pair of overlapping atoms is kept.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure to be modified\&. 
+.br
+\fImindist\fP distance criterion\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of remaining atoms\&. 
+.RE
+.PP
+
+.PP
+Definition at line 686 of file mol_edit\&.cpp\&.
+.SS "int molgroup_randomize (\fBBmolgroup\fP * molgroup, double random_max)"
+
+.PP
+Applies random displacements to coordinates\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure to be modified\&. 
+.br
+\fIrandom_max\fP maximum displacement\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 369 of file mol_edit\&.cpp\&.
+.SS "int molgroup_randomize_B (\fBBmolgroup\fP * molgroup, double B)"
+
+.PP
+Applies random displacements to coordinates\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure to be modified\&. 
+.br
+\fIB\fP B factor\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 403 of file mol_edit\&.cpp\&.
+.SS "int molgroup_remove_hydrogens (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Removes all hydrogens from a molecular system\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of hydrogens removed\&. 
+.RE
+.PP
+
+.PP
+Definition at line 52 of file mol_edit\&.cpp\&.
+.SS "int molgroup_remove_overlapping_atoms (\fBBmolgroup\fP * molgroup, double mindist)"
+
+.PP
+Removes overlapping atoms\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fImindist\fP minimum distance allowed between atoms\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of atoms removed, <0 on error\&. 
+.PP
+.nf
+The input molecule group is checked for any atom pairs closer than
+a minimum allowed distance. The second atom of an overlapping pair
+is removed. This is intended to clean up after symmetry operations
+that generate overlapping pseudo-atoms lying on symmetry axes.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 441 of file mol_edit\&.cpp\&.
+.SS "long molgroup_set_atom_types_to_elements (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Sets atom types to element names\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of atoms\&. 
+.RE
+.PP
+
+.PP
+Definition at line 29 of file mol_edit\&.cpp\&.
+.SS "\fBBmolgroup\fP** molgroup_split_into_slices (\fBBmolgroup\fP * molgroup, double slice_thickness, int & nslices)"
+
+.PP
+Splits a set of coordinates into slices with a given thickness\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIslice_thickness\fP slice thickness (in angstrom)\&. 
+.br
+\fI&nslices\fP pointer to the number of slices generated 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolgroup** set of molecule groups\&. 
+.RE
+.PP
+
+.PP
+Definition at line 158 of file mol_edit\&.cpp\&.
+.SS "int molgroup_untangle_groups (\fBBmolgroup\fP * molgroup, double sampling, double lambda)"
+
+.PP
+Moves overlapping molecules away from each other\&. 
+.PP
+.nf
+The overlap of molecules are assessed by projecting atom positions
+onto a grid. Overlapping molecules are then moved away from each other
+along a vector through their centers-of-mass.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.br
+\fIsampling\fP grid sampling (angstrom)\&. 
+.br
+\fIlambda\fP damping factor\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 882 of file mol_edit\&.cpp\&.
+.SS "int molgroup_untangle_molecules (\fBBmolgroup\fP * molgroup, double sampling, double lambda)"
+
+.PP
+Moves overlapping molecules away from each other\&. 
+.PP
+.nf
+The overlap of molecules are assessed by projecting atom positions
+onto a grid. Overlapping molecules are then moved away from each other
+along a vector through their centers-of-mass.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP the molecule group\&. 
+.br
+\fIsampling\fP grid sampling (angstrom)\&. 
+.br
+\fIlambda\fP damping factor\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 799 of file mol_edit\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

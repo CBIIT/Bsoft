@@ -1,0 +1,337 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mol__water_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mol/mol_water.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mol/mol_water.cpp</primary></indexterm>
+<para>
+
+<para>Generating and managing water. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmolecule.h&quot;
+#include &quot;mol_bonds.h&quot;
+#include &quot;Matrix3.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;random_numbers.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_struct_bmolecule">Bmolecule</link> * <link linkend="_mol__water_8cpp_1aef21e01bcda7837be370327e3aaf7c6e">mol_generate_one_water</link> (<link linkend="_struct_bmolecule">Bmolecule</link> **mollist, char *watername, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; Ocoord)</para>
+
+<para>Generates one water molecule at a given location. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolgroup">Bmolgroup</link> * <link linkend="_mol__water_8cpp_1a382452f445a08c40fa765ddd0d7033ba">molgroup_generate_regular_water</link> (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; size, int type)</para>
+
+<para>Generates a block of water based on a regular lattice. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolgroup">Bmolgroup</link> * <link linkend="_mol__water_8cpp_1ad09ef22d16b168ba30f94788a84e0d46">molgroup_generate_random_water</link> (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; size)</para>
+
+<para>Generates a block of water with random placement. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bbond">Bbond</link> * <link linkend="_mol__water_8cpp_1a88f59a2aace011cab54b3ebef42f515f">water_bond_list</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Generates a bond list for a block of waters. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bangle">Bangle</link> * <link linkend="_mol__water_8cpp_1a6de50df2dcaa1289cc84861735a584e2">water_angle_list</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Generates a bond angle list for a block of waters. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__water_8cpp_1a3461588cd1c38e7ac71e48f85aae1038">molgroup_calc_water_rdf</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double interval, double cutoff)</para>
+
+<para>Calculates a radial distribution function for water molecules. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mol__water_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Generating and managing water. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20001014 </para>
+
+<para>Modified: 20110811 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mol__water_8cpp_1aef21e01bcda7837be370327e3aaf7c6e"/>    <section>
+    <title>mol_generate_one_water()</title>
+<indexterm><primary>mol_generate_one_water</primary><secondary>mol_water.cpp</secondary></indexterm>
+<indexterm><primary>mol_water.cpp</primary><secondary>mol_generate_one_water</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolecule">Bmolecule</link>* mol_generate_one_water (<link linkend="_struct_bmolecule">Bmolecule</link> ** mollist, char * watername, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; Ocoord)</computeroutput></para><para>
+
+<para>Generates one water molecule at a given location. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**mollist</entry>
+                                <entry>
+<para>molecule list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*watername</entry>
+                                <entry>
+<para>molecule name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Ocoord</entry>
+                                <entry>
+<para>oxygen coordinates. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolecule* new water molecule. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 26 of file mol_water.cpp.</para>
+    </section><anchor xml:id="_mol__water_8cpp_1a3461588cd1c38e7ac71e48f85aae1038"/>    <section>
+    <title>molgroup_calc_water_rdf()</title>
+<indexterm><primary>molgroup_calc_water_rdf</primary><secondary>mol_water.cpp</secondary></indexterm>
+<indexterm><primary>mol_water.cpp</primary><secondary>molgroup_calc_water_rdf</secondary></indexterm>
+<para><computeroutput>int molgroup_calc_water_rdf (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double interval, double cutoff)</computeroutput></para><para>
+
+<para>Calculates a radial distribution function for water molecules. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>interval</entry>
+                                <entry>
+<para>interval between bins. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>cutoff</entry>
+                                <entry>
+<para>distance cutoff. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 323 of file mol_water.cpp.</para>
+    </section><anchor xml:id="_mol__water_8cpp_1ad09ef22d16b168ba30f94788a84e0d46"/>    <section>
+    <title>molgroup_generate_random_water()</title>
+<indexterm><primary>molgroup_generate_random_water</primary><secondary>mol_water.cpp</secondary></indexterm>
+<indexterm><primary>mol_water.cpp</primary><secondary>molgroup_generate_random_water</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolgroup">Bmolgroup</link>* molgroup_generate_random_water (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; size)</computeroutput></para><para>
+
+<para>Generates a block of water with random placement. </para>
+</para>
+
+<para><literallayout><computeroutput>The number of water molecules generated is calculated as:
+    n = volume * 0.03346.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of block. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolgroup* new molecule group. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 181 of file mol_water.cpp.</para>
+    </section><anchor xml:id="_mol__water_8cpp_1a382452f445a08c40fa765ddd0d7033ba"/>    <section>
+    <title>molgroup_generate_regular_water()</title>
+<indexterm><primary>molgroup_generate_regular_water</primary><secondary>mol_water.cpp</secondary></indexterm>
+<indexterm><primary>mol_water.cpp</primary><secondary>molgroup_generate_regular_water</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolgroup">Bmolgroup</link>* molgroup_generate_regular_water (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; size, int type)</computeroutput></para><para>
+
+<para>Generates a block of water based on a regular lattice. </para>
+</para>
+
+<para><literallayout><computeroutput>The number of water molecules generated is calculated as:
+    n = volume * 0.03346.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of block. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>type</entry>
+                                <entry>
+<para>type of lattice, 2=rectangular, 3=tetrahedral. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolgroup* new molecule group. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 89 of file mol_water.cpp.</para>
+    </section><anchor xml:id="_mol__water_8cpp_1a6de50df2dcaa1289cc84861735a584e2"/>    <section>
+    <title>water_angle_list()</title>
+<indexterm><primary>water_angle_list</primary><secondary>mol_water.cpp</secondary></indexterm>
+<indexterm><primary>mol_water.cpp</primary><secondary>water_angle_list</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bangle">Bangle</link>* water_angle_list (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Generates a bond angle list for a block of waters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bangle* new bond angle list. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 291 of file mol_water.cpp.</para>
+    </section><anchor xml:id="_mol__water_8cpp_1a88f59a2aace011cab54b3ebef42f515f"/>    <section>
+    <title>water_bond_list()</title>
+<indexterm><primary>water_bond_list</primary><secondary>mol_water.cpp</secondary></indexterm>
+<indexterm><primary>mol_water.cpp</primary><secondary>water_bond_list</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bbond">Bbond</link>* water_bond_list (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Generates a bond list for a block of waters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bbond* new bond list. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 249 of file mol_water.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_mol__water_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>mol_water.cpp</secondary></indexterm>
+<indexterm><primary>mol_water.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

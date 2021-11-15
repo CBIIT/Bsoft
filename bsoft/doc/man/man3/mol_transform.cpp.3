@@ -1,0 +1,626 @@
+.TH "/Users/bernard/b20/bsoft/src/mol/mol_transform.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mol/mol_transform.cpp \- Library routines used for atomic coordinate transformations\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmolecule\&.h'\fP
+.br
+\fC#include 'mol_transform\&.h'\fP
+.br
+\fC#include 'mol_util\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBmolgroup\fP * \fBmolgroup_rotate\fP (\fBBmolgroup\fP *molgroup, \fBMatrix3\fP mat, \fBVector3\fP< double > origin, \fBVector3\fP< double > trans)"
+.br
+.ti -1c
+.RI "\fBBmolecule\fP * \fBmol_rotate\fP (\fBBmolecule\fP *mol, \fBMatrix3\fP mat, \fBVector3\fP< double > origin, \fBVector3\fP< double > trans)"
+.br
+.ti -1c
+.RI "int \fBmolgroup_coor_shift\fP (\fBBmolgroup\fP *molgroup, \fBVector3\fP< double > shift)"
+.br
+.RI "Translates a molecule group\&. "
+.ti -1c
+.RI "int \fBmol_coor_shift\fP (\fBBmolecule\fP *mol, \fBVector3\fP< double > shift)"
+.br
+.RI "Translates a molecule\&. "
+.ti -1c
+.RI "int \fBmolgroup_coor_rotate\fP (\fBBmolgroup\fP *molgroup, \fBTransform\fP t)"
+.br
+.RI "Rotates and translates a molecule group\&. "
+.ti -1c
+.RI "int \fBmol_coor_rotate\fP (\fBBmolecule\fP *mol, \fBTransform\fP t)"
+.br
+.RI "Rotates and translates a molecule\&. "
+.ti -1c
+.RI "\fBBmolgroup\fP * \fBmolgroup_rotate_to_view\fP (\fBBmolgroup\fP *molgroup, \fBView\fP view, \fBVector3\fP< double > origin, \fBVector3\fP< double > trans)"
+.br
+.RI "Rotates a molecule group to a specified view and translates it afterwards\&. "
+.ti -1c
+.RI "\fBBmolgroup\fP * \fBmolgroup_rotate_from_view\fP (\fBBmolgroup\fP *molgroup, \fBView\fP view, \fBVector3\fP< double > origin, \fBVector3\fP< double > trans)"
+.br
+.RI "Rotates a molecule group from a specified view and translates it afterwards\&. "
+.ti -1c
+.RI "\fBBmolecule\fP * \fBmol_rotate_to_view\fP (\fBBmolecule\fP *mol, \fBView\fP view, \fBVector3\fP< double > origin, \fBVector3\fP< double > trans)"
+.br
+.RI "Rotates a molecule to a specified view and translates it afterwards\&. "
+.ti -1c
+.RI "\fBBmolecule\fP * \fBmol_rotate_from_view\fP (\fBBmolecule\fP *mol, \fBView\fP view, \fBVector3\fP< double > origin, \fBVector3\fP< double > trans)"
+.br
+.RI "Rotates a molecule from a specified view and translates it afterwards\&. "
+.ti -1c
+.RI "int \fBmolgroup_coor_transform\fP (\fBBmolgroup\fP *molgroup, \fBTransform\fP t)"
+.br
+.RI "Rotates and translates a molecule group\&. "
+.ti -1c
+.RI "int \fBmol_coor_transform\fP (\fBBmolecule\fP *mol, \fBTransform\fP t)"
+.br
+.RI "Rotates and translates a molecule\&. "
+.ti -1c
+.RI "int \fBmolgroup_coor_invert\fP (\fBBmolgroup\fP *molgroup, \fBVector3\fP< double > point)"
+.br
+.RI "Inverts the coordinates of a molecule through a given point\&. "
+.ti -1c
+.RI "int \fBmolgroup_resolve_pbc\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Recombines coordinates split across periodic box boundaries\&. "
+.ti -1c
+.RI "int \fBmolgroup_pack_in_periodic_box\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Distributes coordinates across periodic box boundaries\&. "
+.ti -1c
+.RI "int \fBmolgroup_coor_shift_PBC\fP (\fBBmolgroup\fP *molgroup, \fBVector3\fP< double > shift)"
+.br
+.RI "Translates a molecule within a periodic box\&. "
+.ti -1c
+.RI "int \fBmolgroup_coor_shift_rotate_PBC\fP (\fBBmolgroup\fP *molgroup, \fBVector3\fP< double > origin, \fBMatrix3\fP mat, \fBVector3\fP< double > shift)"
+.br
+.RI "Translates and rotates a molecule within a periodic box\&. "
+.ti -1c
+.RI "int \fBmolgroup_shift_to_center_of_mass\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Translates a set of coordinates to the center of mass\&. "
+.ti -1c
+.RI "int \fBmol_shift_to_center_of_mass\fP (\fBBmolecule\fP *mol)"
+.br
+.RI "Translates a set of coordinates to the center of mass\&. "
+.ti -1c
+.RI "int \fBmolgroup_place_at_coordinates\fP (\fBBmolgroup\fP *molgroup, \fBVector3\fP< double > location)"
+.br
+.RI "Translates a set of coordinates to a defined center-of-mass\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines used for atomic coordinate transformations\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19980214 
+.PP
+Modified: 20070614 
+.RE
+.PP
+
+.PP
+Definition in file \fBmol_transform\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int mol_coor_rotate (\fBBmolecule\fP * mol, \fBTransform\fP t)"
+
+.PP
+Rotates and translates a molecule\&. 
+.PP
+.nf
+The new coordinates are:
+    coord_new = (coord - origin)*rot_mat + origin + shift.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol\fP molecule structure\&. 
+.br
+\fIt\fP transform structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 131 of file mol_transform\&.cpp\&.
+.SS "int mol_coor_shift (\fBBmolecule\fP * mol, \fBVector3\fP< double > shift)"
+
+.PP
+Translates a molecule\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol\fP molecule structure\&. 
+.br
+\fIshift\fP three-valued translation vector\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 56 of file mol_transform\&.cpp\&.
+.SS "int mol_coor_transform (\fBBmolecule\fP * mol, \fBTransform\fP t)"
+
+.PP
+Rotates and translates a molecule\&. 
+.PP
+.nf
+The new coordinates are:
+    coord_new = (coord - origin)*rot_mat + origin + shift.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol\fP molecule structure\&. 
+.br
+\fIt\fP transform structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 378 of file mol_transform\&.cpp\&.
+.SS "\fBBmolecule\fP * mol_rotate (\fBBmolecule\fP * mol, \fBMatrix3\fP mat, \fBVector3\fP< double > origin, \fBVector3\fP< double > trans)"
+
+.PP
+Definition at line 294 of file mol_transform\&.cpp\&.
+.SS "\fBBmolecule\fP* mol_rotate_from_view (\fBBmolecule\fP * mol, \fBView\fP view, \fBVector3\fP< double > origin, \fBVector3\fP< double > trans)"
+
+.PP
+Rotates a molecule from a specified view and translates it afterwards\&. 
+.PP
+.nf
+A new rotated and translated molecule is generated.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol\fP molecule structure (unmodified)\&. 
+.br
+\fIview\fP view to rotate from\&. 
+.br
+\fIorigin\fP origin of rotation\&. 
+.br
+\fItrans\fP 3-valued translation vector\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolecule* new molecule group\&. 
+.RE
+.PP
+
+.PP
+Definition at line 281 of file mol_transform\&.cpp\&.
+.SS "\fBBmolecule\fP* mol_rotate_to_view (\fBBmolecule\fP * mol, \fBView\fP view, \fBVector3\fP< double > origin, \fBVector3\fP< double > trans)"
+
+.PP
+Rotates a molecule to a specified view and translates it afterwards\&. 
+.PP
+.nf
+A new rotated and translated molecule is generated.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol\fP molecule structure (unmodified)\&. 
+.br
+\fIview\fP view to rotate to\&. 
+.br
+\fIorigin\fP origin of rotation\&. 
+.br
+\fItrans\fP 3-valued translation vector\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolecule* new molecule group\&. 
+.RE
+.PP
+
+.PP
+Definition at line 258 of file mol_transform\&.cpp\&.
+.SS "int mol_shift_to_center_of_mass (\fBBmolecule\fP * mol)"
+
+.PP
+Translates a set of coordinates to the center of mass\&. 
+.PP
+.nf
+The function mol_center_of_mass is used to calculate the center of mass.
+The function mol_coor_shift is used to shift the coordinates.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mol\fP molecule structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 645 of file mol_transform\&.cpp\&.
+.SS "int molgroup_coor_invert (\fBBmolgroup\fP * molgroup, \fBVector3\fP< double > point)"
+
+.PP
+Inverts the coordinates of a molecule through a given point\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIpoint\fP 3-valued inversion point\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 419 of file mol_transform\&.cpp\&.
+.SS "int molgroup_coor_rotate (\fBBmolgroup\fP * molgroup, \fBTransform\fP t)"
+
+.PP
+Rotates and translates a molecule group\&. 
+.PP
+.nf
+The new coordinates are:
+    coord_new = (coord - origin)*rot_mat + origin + shift.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIt\fP transform structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 87 of file mol_transform\&.cpp\&.
+.SS "int molgroup_coor_shift (\fBBmolgroup\fP * molgroup, \fBVector3\fP< double > shift)"
+
+.PP
+Translates a molecule group\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIshift\fP three-valued translation vector\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 28 of file mol_transform\&.cpp\&.
+.SS "int molgroup_coor_shift_PBC (\fBBmolgroup\fP * molgroup, \fBVector3\fP< double > shift)"
+
+.PP
+Translates a molecule within a periodic box\&. 
+.PP
+.nf
+The periodic box is defined in the molecule group structure.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIshift\fP three-valued translation vector\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 544 of file mol_transform\&.cpp\&.
+.SS "int molgroup_coor_shift_rotate_PBC (\fBBmolgroup\fP * molgroup, \fBVector3\fP< double > origin, \fBMatrix3\fP mat, \fBVector3\fP< double > shift)"
+
+.PP
+Translates and rotates a molecule within a periodic box\&. 
+.PP
+.nf
+The molecule group is first rotated around the origin and then shifted.
+The periodic box is defined in the molecule group structure.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIorigin\fP 3-valued origin for rotation\&. 
+.br
+\fImat\fP 3x3 rotation matrix\&. 
+.br
+\fIshift\fP 3-valued translation vector\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 581 of file mol_transform\&.cpp\&.
+.SS "int molgroup_coor_transform (\fBBmolgroup\fP * molgroup, \fBTransform\fP t)"
+
+.PP
+Rotates and translates a molecule group\&. 
+.PP
+.nf
+The new coordinates are:
+    coord_new = (coord - origin)*rot_mat + origin + shift.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIt\fP transform structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 332 of file mol_transform\&.cpp\&.
+.SS "int molgroup_pack_in_periodic_box (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Distributes coordinates across periodic box boundaries\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 513 of file mol_transform\&.cpp\&.
+.SS "int molgroup_place_at_coordinates (\fBBmolgroup\fP * molgroup, \fBVector3\fP< double > location)"
+
+.PP
+Translates a set of coordinates to a defined center-of-mass\&. 
+.PP
+.nf
+The function molgroup_center_of_mass is used to calculate the center of mass.
+The function molgroup_coor_shift is used to shift the coordinates.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fIlocation\fP desired center-of-mass coordinates\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 666 of file mol_transform\&.cpp\&.
+.SS "int molgroup_resolve_pbc (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Recombines coordinates split across periodic box boundaries\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The center of mass of each molecule is calculated to determine the
+shift needed to be applied to get the center of mass within the box.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 450 of file mol_transform\&.cpp\&.
+.SS "\fBBmolgroup\fP * molgroup_rotate (\fBBmolgroup\fP * molgroup, \fBMatrix3\fP mat, \fBVector3\fP< double > origin, \fBVector3\fP< double > trans)"
+
+.PP
+Definition at line 216 of file mol_transform\&.cpp\&.
+.SS "\fBBmolgroup\fP* molgroup_rotate_from_view (\fBBmolgroup\fP * molgroup, \fBView\fP view, \fBVector3\fP< double > origin, \fBVector3\fP< double > trans)"
+
+.PP
+Rotates a molecule group from a specified view and translates it afterwards\&. 
+.PP
+.nf
+A new rotated and translated molecule group is generated.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure (unmodified)\&. 
+.br
+\fIview\fP view to rotate from\&. 
+.br
+\fIorigin\fP origin of rotation\&. 
+.br
+\fItrans\fP 3-valued translation vector\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolgroup* new molecule group\&. 
+.RE
+.PP
+
+.PP
+Definition at line 203 of file mol_transform\&.cpp\&.
+.SS "\fBBmolgroup\fP* molgroup_rotate_to_view (\fBBmolgroup\fP * molgroup, \fBView\fP view, \fBVector3\fP< double > origin, \fBVector3\fP< double > trans)"
+
+.PP
+Rotates a molecule group to a specified view and translates it afterwards\&. 
+.PP
+.nf
+A new rotated and translated molecule group is generated.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure (unmodified)\&. 
+.br
+\fIview\fP view to rotate to\&. 
+.br
+\fIorigin\fP origin of rotation\&. 
+.br
+\fItrans\fP 3-valued translation vector\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmolgroup* new molecule group\&. 
+.RE
+.PP
+
+.PP
+Definition at line 180 of file mol_transform\&.cpp\&.
+.SS "int molgroup_shift_to_center_of_mass (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Translates a set of coordinates to the center of mass\&. 
+.PP
+.nf
+The function molgroup_center_of_mass is used to calculate the center of mass.
+The function molgroup_coor_shift is used to shift the coordinates.
+
+.fi
+.PP
+ 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 625 of file mol_transform\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

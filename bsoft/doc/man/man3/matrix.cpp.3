@@ -1,0 +1,203 @@
+.TH "/Users/bernard/b20/bsoft/src/util/matrix.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/util/matrix.cpp \- \fBMatrix\fP manipulation functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Matrix\&.h'\fP
+.br
+\fC#include 'matrix_linear\&.h'\fP
+.br
+\fC#include 'math_util\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSQR\fP(x)   ((x)*(x))"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "ostream & \fBoperator<<\fP (ostream &output, \fBMatrix\fP &mat)"
+.br
+.ti -1c
+.RI "\fBVector3\fP< double > \fBprincipal_axes\fP (\fBVector3\fP< double > avg, \fBVector3\fP< double > avg2, \fBVector3\fP< double > avgx, \fBVector3\fP< double > *eigenvec)"
+.br
+.RI "Calculates the principal axes of 3D coordinates\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBprincipal_axes\fP (vector< \fBVector3\fP< double >> &coor, \fBMatrix\fP &a)"
+.br
+.RI "Calculates the principal axes of 3D coordinates\&. "
+.ti -1c
+.RI "void \fBdsytrd3\fP (\fBMatrix\fP &A, vector< double > &d, vector< double > &e)"
+.br
+.RI "Reduces a symmetric 3x3 matrix to tridiagonal form\&. "
+.ti -1c
+.RI "vector< double > \fBdsyevq3\fP (\fBMatrix\fP &A)"
+.br
+.RI "Calculates the eigenvalues and normalized eigenvectors of a symmetric 3x3 matrix\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fBMatrix\fP manipulation functions\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20000501 
+.PP
+Modified: 20180723 
+.RE
+.PP
+
+.PP
+Definition in file \fBmatrix\&.cpp\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define SQR(x)   ((x)*(x))"
+
+.PP
+Definition at line 809 of file matrix\&.cpp\&.
+.SH "Function Documentation"
+.PP 
+.SS "vector<double> dsyevq3 (\fBMatrix\fP & A)"
+
+.PP
+Calculates the eigenvalues and normalized eigenvectors of a symmetric 3x3 matrix\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIA\fP matrix, replaced by normalized eigenvectors\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double* eigenvalues\&. 
+.PP
+.nf
+Calculates the eigenvalues and normalized eigenvectors of a symmetric 3x3
+matrix A using the QL algorithm with implicit shifts, preceded by a
+Householder reduction to tridiagonal form.
+The function accesses only the diagonal and upper triangular parts of A.
+
+.fi
+.PP
+ Reference: Kopp (2008)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 914 of file matrix\&.cpp\&.
+.SS "void dsytrd3 (\fBMatrix\fP & A, vector< double > & d, vector< double > & e)"
+
+.PP
+Reduces a symmetric 3x3 matrix to tridiagonal form\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIA\fP matrix, replaced by tridiagonal matrix\&. 
+.br
+\fId\fP diagonal\&. 
+.br
+\fIe\fP off-diagonal\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+void \&. 
+.PP
+.nf
+Reduces a symmetric 3x3 matrix to tridiagonal form by applying
+(unitary) Householder transformations:
+            [ d[0]  e[0]       ]
+    A = Q . [ e[0]  d[1]  e[1] ] . Q^T
+            [       e[1]  d[2] ]
+The function accesses only the diagonal and upper triangular parts of A.
+
+.fi
+.PP
+ Reference: Kopp (2008)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 828 of file matrix\&.cpp\&.
+.SS "ostream& operator<< (ostream & output, \fBMatrix\fP & mat)"
+
+.PP
+Definition at line 18 of file matrix\&.cpp\&.
+.SS "\fBVector3\fP<double> principal_axes (\fBVector3\fP< double > avg, \fBVector3\fP< double > avg2, \fBVector3\fP< double > avgx, \fBVector3\fP< double > * eigenvec)"
+
+.PP
+Calculates the principal axes of 3D coordinates\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIavg\fP average of vectors\&. 
+.br
+\fIavg2\fP average of squared vectors\&. 
+.br
+\fIavgx\fP average of cross products {xy, xz, yz}\&. 
+.br
+\fI*eigenvec\fP 3 return eigen vectors (can be NULL)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP principal axes\&.
+.RE
+.PP
+Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.PP
+Definition at line 706 of file matrix\&.cpp\&.
+.SS "\fBVector3\fP<double> principal_axes (vector< \fBVector3\fP< double >> & coor, \fBMatrix\fP & a)"
+
+.PP
+Calculates the principal axes of 3D coordinates\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIcoor\fP vector of coordinates\&. 
+.br
+\fI&a\fP matrix with eigen vectors\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP principal axes\&.
+.RE
+.PP
+Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.PP
+Definition at line 753 of file matrix\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

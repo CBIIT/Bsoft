@@ -1,0 +1,256 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rwimg_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/rwimg.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/rwimg.h</primary></indexterm>
+<para>
+
+<para>Header file for 2D and 3D image I/O. </para>
+ 
+</para>
+<programlisting>#include &quot;Bimage.h&quot;
+#include &quot;Vector3.h&quot;
+#include &quot;View.h&quot;
+#include &quot;UnitCell.h&quot;
+#include &lt;fstream&gt;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_rwimg_8h_1ade8421b546a2fdb856da47a9fd3b62a8">SWAPTRIG</link>   65535</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_rwimg_8h_1acdfff89c05fc4e04ab2c7eeb3476b119">read_img</link> (char *filename, int readdata, int img_select)</para>
+
+<para>General driver function to read multiple image formats. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_rwimg_8h_1a735a07cb23a4ee47bc75b6a8b0dba088">read_img</link> (<link linkend="_class_bstring">Bstring</link> filename, int readdata, int img_select)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_rwimg_8h_1a353ff4544b933a9d321979d1356d9739">read_img</link> (string filename, int readdata, int img_select)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwimg_8h_1a07e3752b431c47cd82c592ed2150c86e">write_img</link> (const char *filename, <link linkend="_class_bimage">Bimage</link> *p, int compression)</para>
+
+<para>General driver function to write multiple image formats. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwimg_8h_1ac04a49365f0c9528dcd777e6e992202e">write_img</link> (<link linkend="_class_bstring">Bstring</link> filename, <link linkend="_class_bimage">Bimage</link> *p, int compression)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwimg_8h_1a22abaf6b35505764d439c2321e2d5efd">write_img</link> (string filename, <link linkend="_class_bimage">Bimage</link> *p, int compression)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwimg_8h_1a5118c170fa61a5be8e2f9eb6e08dc07a">img_convert_fourier</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="__bimage_8h_1a01e0deba350901d769526633e868806f">FourierType</link> newtransform)</para>
+
+<para>Converts Fourier transform types. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for 2D and 3D image I/O. </para>
+
+<para>Header file for reading and writing ImageMagick MIFF files.</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19990321 </para>
+
+<para>Modified: 20180419</para>
+</formalpara>
+<formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19990321 </para>
+
+<para>Modified: 20111217 <literallayout><computeroutput>Format: 2D image file format for the Image Magick package
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_rwimg_8h_1ade8421b546a2fdb856da47a9fd3b62a8"/>    <section>
+    <title>SWAPTRIG</title>
+<indexterm><primary>SWAPTRIG</primary><secondary>rwimg.h</secondary></indexterm>
+<indexterm><primary>rwimg.h</primary><secondary>SWAPTRIG</secondary></indexterm>
+<para><computeroutput>#define SWAPTRIG   65535</computeroutput></para><para>
+Definition at line 16 of file rwimg.h.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rwimg_8h_1a5118c170fa61a5be8e2f9eb6e08dc07a"/>    <section>
+    <title>img_convert_fourier()</title>
+<indexterm><primary>img_convert_fourier</primary><secondary>rwimg.h</secondary></indexterm>
+<indexterm><primary>rwimg.h</primary><secondary>img_convert_fourier</secondary></indexterm>
+<para><computeroutput>int img_convert_fourier (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="__bimage_8h_1a01e0deba350901d769526633e868806f">FourierType</link> nutransform)</computeroutput></para><para>
+
+<para>Converts Fourier transform types. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nutransform</entry>
+                                <entry>
+<para>new transform type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). Fourier transform classification: 0=NoTransform: No transform: Just a complex data set 1=Standard: Standard transform with origin = (0,0,0) (Suprim) 2=Centered: Centered transform with origin = (nx/2,ny/2,nz/2) (Imagic) 3=Hermitian: Hermitian transform with origin = (0,0,0) and size (nx/2+1,ny,nz) (Spider, EM) 4=CentHerm: Centered hermitian transform with origin = (0,ny/2,nz/2) and size (nx/2+1,ny,nz) (MRC) Assumption: The correct dimensions for a standard transform is stored in the x, y, and z fields. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 550 of file rwimg.cpp.</para>
+    </section><anchor xml:id="_rwimg_8h_1a735a07cb23a4ee47bc75b6a8b0dba088"/>    <section>
+    <title>read_img()<computeroutput>[1/3]</computeroutput></title>
+<indexterm><primary>read_img</primary><secondary>rwimg.h</secondary></indexterm>
+<indexterm><primary>rwimg.h</primary><secondary>read_img</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* read_img (<link linkend="_class_bstring">Bstring</link> filename, int readdata, int img_select)</computeroutput></para><para>
+Definition at line 85 of file rwimg.cpp.</para>
+    </section><anchor xml:id="_rwimg_8h_1acdfff89c05fc4e04ab2c7eeb3476b119"/>    <section>
+    <title>read_img()<computeroutput>[2/3]</computeroutput></title>
+<indexterm><primary>read_img</primary><secondary>rwimg.h</secondary></indexterm>
+<indexterm><primary>rwimg.h</primary><secondary>read_img</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* read_img (char * filename, int readdata, int img_select)</computeroutput></para><para>
+
+<para>General driver function to read multiple image formats. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>filename</entry>
+                                <entry>
+<para>file name (plus any tags for the RAW format). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>readdata</entry>
+                                <entry>
+<para>flag to activate reading of image data. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>img_select</entry>
+                                <entry>
+<para>image selection in multi-image file (-1 = all images). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* the image structure, NULL if reading failed. This is the only image reading function that should be called from programs. A <link linkend="_class_bimage">Bimage</link> structure is initialized with default values. The file format is deduced from the file name extension. Every file format has its own funtion to read the file. The selection argument is used to read only one image from a multi-image file if it is greater than -1. This selection must be handled within each format to ensure the correct allocation of the sub-image structure. If the requested selection is equal or larger than the number of images, the selection is set to the last image. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 79 of file rwimg.cpp.</para>
+    </section><anchor xml:id="_rwimg_8h_1a353ff4544b933a9d321979d1356d9739"/>    <section>
+    <title>read_img()<computeroutput>[3/3]</computeroutput></title>
+<indexterm><primary>read_img</primary><secondary>rwimg.h</secondary></indexterm>
+<indexterm><primary>rwimg.h</primary><secondary>read_img</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* read_img (string filename, int readdata, int img_select)</computeroutput></para><para>
+Definition at line 90 of file rwimg.cpp.</para>
+    </section><anchor xml:id="_rwimg_8h_1ac04a49365f0c9528dcd777e6e992202e"/>    <section>
+    <title>write_img()<computeroutput>[1/3]</computeroutput></title>
+<indexterm><primary>write_img</primary><secondary>rwimg.h</secondary></indexterm>
+<indexterm><primary>rwimg.h</primary><secondary>write_img</secondary></indexterm>
+<para><computeroutput>int write_img (<link linkend="_class_bstring">Bstring</link> filename, <link linkend="_class_bimage">Bimage</link> * p, int compression)</computeroutput></para><para>
+Definition at line 293 of file rwimg.cpp.</para>
+    </section><anchor xml:id="_rwimg_8h_1a07e3752b431c47cd82c592ed2150c86e"/>    <section>
+    <title>write_img()<computeroutput>[2/3]</computeroutput></title>
+<indexterm><primary>write_img</primary><secondary>rwimg.h</secondary></indexterm>
+<indexterm><primary>rwimg.h</primary><secondary>write_img</secondary></indexterm>
+<para><computeroutput>int write_img (const char * filename, <link linkend="_class_bimage">Bimage</link> * p, int compression)</computeroutput></para><para>
+
+<para>General driver function to write multiple image formats. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>filename</entry>
+                                <entry>
+<para>file name (plus any tags for the RAW format). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>compression</entry>
+                                <entry>
+<para>compression type: 0=none, 5=LZW(Tiff) </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). This is the only image writing function that should be called from programs. The file format is deduced from the file name extension. Every file format has its own funtion to write the file. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 286 of file rwimg.cpp.</para>
+    </section><anchor xml:id="_rwimg_8h_1a22abaf6b35505764d439c2321e2d5efd"/>    <section>
+    <title>write_img()<computeroutput>[3/3]</computeroutput></title>
+<indexterm><primary>write_img</primary><secondary>rwimg.h</secondary></indexterm>
+<indexterm><primary>rwimg.h</primary><secondary>write_img</secondary></indexterm>
+<para><computeroutput>int write_img (string filename, <link linkend="_class_bimage">Bimage</link> * p, int compression)</computeroutput></para><para>
+Definition at line 298 of file rwimg.cpp.</para>
+</section>
+</section>
+</section>

@@ -1,0 +1,119 @@
+<HTML>
+<HEAD>
+	<meta name="Author" content="Bernard Heymann">
+	<TITLE>Bsoft: bmg </TITLE>
+	<link type="image/png" href="Bsoft_16x16.png" rel="icon">
+</HEAD>
+<BODY bgcolor="#FFFFFF">
+<h2><i><font color="#000099">Bsoft program</font></i></h2>
+<center><h1><font color="#FF0000">bmg</font></h1></center>  <h3>Usage: bmg [options] input.star/input.img [input.star/input.img]</h3>
+Manipulates micrograph parameter files. <br>
+If the input files are images, a new parameter file will be created.   <h3>Actions:</h3>
+<table><tbody>
+<tr><td>-reconstructions</td><td>Operate on reconstruction parameters rather than micrographs.</td></tr>
+<tr><td>-getfield field1</td><td>Get a single field from a parameter file.</td></tr>
+<tr><td>-getmicrograph mg1</td><td>Get a single micrograph from a parameter file.</td></tr>
+<tr><td>-selected</td><td>Show selected particles.</td></tr>
+<tr><td>-histogram 80,0.01</td><td>Histogram of magnification values of selected particles.</td></tr>
+<tr><td>-add</td><td>Add micrograph coordinates and particle origins.</td></tr>
+<tr><td>-Euler</td><td>Convert orientations from views to Euler angles.</td></tr>
+<tr><td>-View</td><td>Convert orientations from Euler angles to views.</td></tr>
+<tr><td>-flip y</td><td>Reverse the particle coordinates in the micrographs along the given axis.</td></tr>
+<tr><td>-oriflip y</td><td>Reverse the particle origins along the given axis.</td></tr>
+<tr><td>-toview -2.5,5.5,9,45</td><td>Transform particle orientations relative to this view.</td></tr>
+<tr><td>-toeuler 45,30,10</td><td>Transform particle orientations relative to these Euler angles.</td></tr>
+<tr><td>-remove</td><td>Do not write non-selected micrographs into the parameter file.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Actions dealing with file references:</h3>
+<table><tbody>
+<tr><td>-check</td><td>Check if files can be found.</td></tr>
+<tr><td>-filenames</td><td>Delete file names of files not found.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Actions for generating parameters from images:</h3>
+<table><tbody>
+<tr><td>-extract part</td><td>Extract views from images: mg, frame, rec, part, fil.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Actions modifiying images:</h3>
+<table><tbody>
+<tr><td>-write</td><td>Write particle views into images.</td></tr>
+<tr><td>-bin 3</td><td>Bin micrographs by given kernel size, new file names with a "_b<n>" insert.</td></tr>
+<tr><td>-changepixelsize 3.68</td><td>Change the pixel size and all associated size parameters.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Parameters:</h3>
+<table><tbody>
+<tr><td>-verbose 7</td><td>Verbosity of output.</td></tr>
+<tr><td>-numberperfield 3</td><td>Number of micrographs per field-of-view (default 1).</td></tr>
+<tr><td>-fieldID dbgd</td><td>Set the field ID (multiple micrographs will get numbered ID's).</td></tr>
+<tr><td>-mgpath dir/subdir</td><td>Set micrograph file paths.</td></tr>
+<tr><td>-framepath dir/subdir</td><td>Set micrograph frames file paths.</td></tr>
+<tr><td>-pspath dir/subdir</td><td>Set power spectrum file paths.</td></tr>
+<tr><td>-partpath dir/subdir</td><td>Set particle file paths.</td></tr>
+<tr><td>-filpath dir/subdir</td><td>Set filament file paths.</td></tr>
+<tr><td>-samemgpart</td><td>Set micrograph and particle file names to be the same.</td></tr>
+<tr><td>-Scansampling 3.6</td><td>Set scan sampling or pixel size (um/pixel).</td></tr>
+<tr><td>-mgpixelsize 1.2,1.15,1</td><td>Set micrograph pixel size (angstrom/pixel, one value sets all).</td></tr>
+<tr><td>-partpixelsize 2.3,2.2,1</td><td>Set particle pixel size (angstrom/pixel, one value sets all).</td></tr>
+<tr><td>-boxsize 55</td><td>Set particle box size (default from parameter file).</td></tr>
+<tr><td>-mgorigin 1256,1256,1</td><td>Set micrograph origins (voxels).</td></tr>
+<tr><td>-partorigin 215,215,1</td><td>Set particle origins (voxels).</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Actions setting microscope and CTF parameters:</h3>
+<table><tbody>
+<tr><td>-Magnification 38500</td><td>Set magnification.</td></tr>
+<tr><td>-electrondose 35.5</td><td>Set electron dose (electrons/angstrom)</td></tr>
+<tr><td>-Defocus 1.8,0.3,-34</td><td>Set defocus average, deviation, and astigmatism angle (um, degrees).</td></tr>
+<tr><td>-Astigmatism 0.3,-34</td><td>Set defocus deviation and astigmatism angle (um, degrees).</td></tr>
+<tr><td>-Cs 2.0</td><td>Set spherical aberration, Cs (mm).</td></tr>
+<tr><td>-Volt 100</td><td>Set acceleration voltage (kV).</td></tr>
+<tr><td>-Amplitude 0.07</td><td>Set amplitude contrast (fraction)</td></tr>
+<tr><td>-alpha 0.15</td><td>Set illumination half-angle (milliradians).</td></tr>
+<tr><td>-basetype 2</td><td>Baseline type: (default 1)</td></tr>
+<tr><td></td><td>                         Type 1: Polynomial with 5 coefficients.</td></tr>
+<tr><td></td><td>                         Type 2: Double Gaussian with 5 coefficients.</td></tr>
+<tr><td></td><td>                         Type 3: EMAN style with 4 coefficients.</td></tr>
+<tr><td>-baseline</td><td>1,1.5,-2.6,12.9,30,118 Baseline type and 4 or 5 coefficients: (default 1,0,0,0,0)</td></tr>
+<tr><td>-envtype 3</td><td>Envelope type: (default 4)</td></tr>
+<tr><td></td><td>                         Type 1: Single gaussian (2 coefficients).</td></tr>
+<tr><td></td><td>                         Type 2: Single gaussian with constant (3 coefficients).</td></tr>
+<tr><td></td><td>                         Type 3: Double gaussian (4 coefficients).</td></tr>
+<tr><td></td><td>                         Type 4: Double gaussian with constant (5 coefficients).</td></tr>
+<tr><td>-reset defocus</td><td>Reset particle defocus to micrograph defocus.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Input:</h3>
+<table><tbody>
+<tr><td>-input input.star</td><td>Input master parameter file to merge in data blocks from other input files.</td></tr>
+<tr><td>-revert part.star,15</td><td>Replace file names with those in this file,</td></tr>
+<tr><td></td><td>                         with a flag indicating: 1=mg, 2=ps, 4=rec, 8=part.</td></tr>
+<tr><td>-replacectf ctf.star</td><td>Replace CTF parameters with those in this file.</td></tr>
+<tr><td>-replacepart part.star</td><td>Replace particle parameters with those in this file.</td></tr>
+<tr><td>-validate mg.xsd</td><td>Validate XML input file(s) with this schema.</td></tr>
+<tr><td>-ppx update</td><td>Process files in directory "ppx":</td></tr>
+<tr><td></td><td>                         update: Update particle records in the parameter file.</td></tr>
+<tr><td></td><td>                         list: List existing ppx files.</td></tr>
+<tr><td></td><td>                         absent: List absent ppx files.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table><br>
+<h3>Output:</h3>
+<table><tbody>
+<tr><td>-output output.star</td><td>Output parameter file (required any time "-split" is used to indicate the type).</td></tr>
+<tr><td>-split 3</td><td>Split micrograph or reconstruction data blocks into individual files:</td></tr>
+<tr><td></td><td>                         Argument: 1-6: number of digits inserted before extension</td></tr>
+<tr><td></td><td>                         Argument: "id": micrograph ID's are used as file names (no -output required).</td></tr>
+<tr><td></td><td>                         Argument: "field": field ID's are used as file names (no -output required).</td></tr>
+<tr><td>-dump file.txt</td><td>Dump all the particle origins and views.</td></tr>
+<tr><td></td><td> </td></tr>
+</tbody></table>
+<br>Bsoft version 2.0.7-20200917 (64 bit)<br>
+<HR WIDTH="100%"><BR>
+Generated by bdoc.pl on Mon Oct 26 08:20:11 2020 <BR>
+<HR WIDTH="100%"><BR>
+<center><a href="bsoft.html">Back to the Bsoft home</a></center>
+<HR WIDTH="100%"><BR>
+</BODY>
+</HTML>

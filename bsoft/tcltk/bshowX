@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Launch script for bshow
+# Bernard Heymann
+# 20030907 - 20150630
+
+if [ $# == 0 ]
+then
+	"/Applications/Bshow.app/Contents/MacOS/Wish" &
+fi
+
+for a
+do
+	b=`echo "$a" | cut -f1 -d"@" | cut -f1 -d"#" | cut -f1 -d":"`
+	if [ -e "$b" ]
+	then
+		"/Applications/Bshow.app/Contents/MacOS/Wish" "$a" &
+	fi
+done

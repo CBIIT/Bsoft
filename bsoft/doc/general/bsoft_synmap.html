@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Synthetic Map</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+
+<h1>Calculating a synthetic image</h1>
+
+<h2>Source of data</h2>
+<p>Reference maps for single particle analysis can be derived from three
+sources:</p>
+<ul>
+	<li>Atomic structures (from X-ray crystallography, electron microscopy or NMR).</li>
+	<li>Electron microscopic reconstructions.</li>
+	<li>Artificial shapes.<br />
+	</li>
+</ul>
+<p>The closer the resemblance of reference projections to the actual
+particle images, the easier the processing.
+Whatever the source of the reference map, it must have the same scale
+and dimensions as the particle. The reference map must be a cube with
+each edge the same length as the edge of a picked particle image.</p>
+<br />
+<h2>Calculating maps from atomic coordinates</h2>
+<h3>Real space</h3>
+<p>Maps can be calculated from atomic structures using either a real space
+approach or a reciprocal space approach. The real space calculation
+simply places gaussian spheres for each atom. The resolution is
+determined by the decay constant (sigma):</p>
+<div id="command"><p>bgex -verbose 7 -size 100,100,100 -origin 50,50,50 -sampling 1.5
+-resolution 10 -coordinates input.pdb output.map</p></div>
+<p>Note though that the resolution parameter may not correspond to its typical meaning:
+i.e., that the structure factors at higher resolution are mainly noise or absent.
+The placement of the gaussian spheres results in good phases, but the amplitudes
+are suppressed at high resolution, giving the map a smooth appearance. 
+This can be improved by increasing the high frequency amplitudes. </p>
+      <br />
+<h3>Reciprocal space</h3>
+<p>In reciprocal space, the atomic potential (or structure factors) is calculated using electron
+scattering curves and backtransformed to real space (using the
+-realspace option):</p>
+<div id="command"><p>bsf -verbose 7 -size 100,100,100 -origin 50,50,50 -sampling 1.5
+-resolution 10 -realspace -coordinates input.pdb output.map</p></div>
+<p>In each case, the origin of the coordinates is placed in the image at
+the origin specified by the -origin option (given in voxel units).</p>
+      <br />
+<h2>Generating an artificial map</h2>
+<p>A simple artificial map can be easily calculated using some primitive
+shapes and applying the desired symmetry:</p>
+<div id="command"><p>beditimg -v 7 -create 100,100,100 -origin 50,50,50 -sphere 35,35,38,12
+-edge 3 -fill 1 spot1.map</p>
+<p>beditimg -v 7 -sphere 21,40,38,2 -edge 1 -fill 1 spot1.map spot2.map</p>
+<p>bsym -verb 7 -sym D5 spot2.map d5.map</p></div>
+      <br />
+      <center><img src="d5_ref.jpg"
+ alt="D5 reference map" style="width: 400px; height: 400px;" />
+<p>Isosurfaced at a threshold of 2.2 sigma.</p></center>
+<br />
+<h2>Map orientation</h2>
+<p>If a map has symmetry and this will be used in further processing, it
+has to be oriented correctly according to the conventions adopted in
+Bsoft.</p>
+      <br />
+<h2>Generating projections</h2>
+<p>To generate projections in the asymmetric unit:</p>
+<div id="command"><p>bproject -verbose 7 -symmetry D5 -angles 3 -Postscript d5_proj.ps
+d5.map d5_proj.pif</p></div>
+      <br />
+      <center><img src="d5_proj.jpg"
+ alt="D5 projections" style="width: 400px; height: 220px;" /></center>
+      <p>The postscript file contains a plot of the distribution of
+views generated:</p>
+      <center><img
+ style="border: 2px solid ; width: 300px; height: 310px;"
+ alt="Views in asymmetric unit" src="d5_proj_ps.jpg" /></center>
+</div>
+<div id="footer">
+  Bernard Heymann  20150223
+</div>
+</body>
+</html>

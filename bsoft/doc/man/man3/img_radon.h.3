@@ -1,0 +1,247 @@
+.TH "/Users/bernard/b20/bsoft/radon/img_radon.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/radon/img_radon.h
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'symmetry\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_radon_transform\fP (\fBBimage\fP *p, int type, int nkernel, int kernel_power, int padd, int ntheta)"
+.br
+.RI "Calculates the Radon transform of an image\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_radon_inverse_transform\fP (\fBBimage\fP *p, int type, int nkernel, int kernel_power, int padd)"
+.br
+.RI "Calculates a 3D image from a Radon transform\&. "
+.ti -1c
+.RI "int \fBimg_radon_pocs_filter\fP (\fBBimage\fP *p, int n_cyc_out, int n_cyc_in, double rad_3D, double rad_plane, int support, \fBBimage\fP *pmask)"
+.br
+.RI "Filters a radon transform using the POCS method\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_radon_reconstruction\fP (\fBBproject\fP *\fBproject\fP, \fBBsymmetry\fP &sym, \fBBstring\fP &file_mask, int rec_size, int ntheta, int table_size, double threshold, \fBVector3\fP< double > origin, int nkernel, int kernel_power)"
+.br
+.RI "Reconstructs a Radon transform from a set of projections\&. "
+.ti -1c
+.RI "int \fBimg_resize_to_next_power2\fP (\fBBimage\fP *p, int fill_type, double fill)"
+.br
+.RI "Resizes without interpolation or rescaling to the next power of 2\&. "
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBBimage\fP* img_radon_inverse_transform (\fBBimage\fP * p, int type, int nkernel, int kernel_power, int padd)"
+
+.PP
+Calculates a 3D image from a Radon transform\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP radon transform to be back-transformed\&. 
+.br
+\fItype\fP type of transformation\&. 
+.br
+\fInkernel\fP kernel size\&. 
+.br
+\fIkernel_power\fP kernel exponent (usually 2)\&. 
+.br
+\fIpadd\fP padding flag (0=no padding, 1=padding twofold)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* transformed image\&. 
+.PP
+.nf
+Type:
+1 = From single axis proj. to 3D structure, output is a 3D image with size (z,z,z)
+2 = From quarter radon transform to single axis proj., output is a gallery of ntheta 2D image with size (z,z)
+3 = From full radon transform to 3D structure, output is a 3D image with size (z,z,z)
+4 = From quarter radon transform to 3D structure, output is a 3D image with size (z,z,z)
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 141 of file img_radon\&.cpp\&.
+.SS "int img_radon_pocs_filter (\fBBimage\fP * p, int n_cyc_out, int n_cyc_in, double rad_3D, double rad_plane, int support, \fBBimage\fP * pmask)"
+
+.PP
+Filters a radon transform using the POCS method\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP radon transform\&. 
+.br
+\fIn_cyc_out\fP outer cycles, swapping r,phi and r,theta planes 
+.br
+\fIn_cyc_in\fP inner cycles, within r,phi and r,theta planes 
+.br
+\fIrad_3D\fP limiting radius in 3D\&. 
+.br
+\fIrad_plane\fP limiting radius in plane\&. 
+.br
+\fIsupport\fP flag to impose finiteness in real space\&. 
+.br
+\fI*pmask\fP mask of dimension (ntheta/2,ntheta/2)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* transformed image\&. 
+.PP
+.nf
+Filters a Radon transform to impose consistency and/or to fill holes.
+It can be used in two ways:
+a) When the Radon transform is not completely filled, it fills the holes
+    described in the mask file produced by proj_to_radon.
+b) When the Radon transform is filled and noisy, it impose consistency.
+The mask must have the same dimensions as a plane in the radon transform.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 221 of file img_radon\&.cpp\&.
+.SS "\fBBimage\fP* img_radon_reconstruction (\fBBproject\fP * project, \fBBsymmetry\fP & sym, \fBBstring\fP & file_mask, int rec_size, int ntheta, int table_size, double threshold, \fBVector3\fP< double > origin, int nkernel, int kernel_power)"
+
+.PP
+Reconstructs a Radon transform from a set of projections\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP image processing parameter structure\&. 
+.br
+\fI&sym\fP point group symmetry\&. 
+.br
+\fI&file_mask\fP output file name of mask of dimension (ntheta,ntheta)\&. 
+.br
+\fIrec_size\fP reconstruction size (x,y,z) 
+.br
+\fIntheta\fP number of angles in the 2*PI range\&. 
+.br
+\fItable_size\fP lookup table size\&. 
+.br
+\fIthreshold\fP threshold for rejecting images\&. 
+.br
+\fIorigin\fP origin reference for shifts\&. 
+.br
+\fInkernel\fP kernel size\&. 
+.br
+\fIkernel_power\fP kernel exponent (usually 2)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* transformed image\&. 
+.PP
+.nf
+The parameters are defined in the hierarchical project structure.
+The radon transform of each image is calculated and all its 
+symmetry-related views are written into the reconstruction volume.
+A mask image is calculated for the angular coverage of orientation
+space and used to weigh the reconstruction.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 292 of file img_radon\&.cpp\&.
+.SS "\fBBimage\fP* img_radon_transform (\fBBimage\fP * p, int type, int nkernel, int kernel_power, int padd, int ntheta)"
+
+.PP
+Calculates the Radon transform of an image\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image to be transformed\&. 
+.br
+\fItype\fP type of transformation\&. 
+.br
+\fInkernel\fP kernel size\&. 
+.br
+\fIkernel_power\fP kernel exponent (usually 2)\&. 
+.br
+\fIpadd\fP padding flag (0=no padding, 1=padding twofold)\&. 
+.br
+\fIntheta\fP number of angles in the 2*PI range\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* transformed image\&. 
+.PP
+.nf
+Computes the Radon transform of a 3D image with all sides equal
+(a cube) and a power of 2. The transform is calculated in spherical
+coordinates where ntheta is the number of sampling points in the 
+range 0 - 2*PI along the two angular axes. Because half of this 
+range is redundant (0-PI is enough), a smaller output can be 
+generated.
+    Type:
+1 = From 3D structure to single axis proj., output is a gallery of ntheta 2D image with size (x,x)
+2 = From single axis proj. to quarter radon transform, output is a 3D image with size (x,ntheta/2,ntheta/2)
+3 = From 3D structure to full radon transform, output is a 3D image with size (x,ntheta,ntheta)
+4 = From 3D structure to quarter radon transform, output is a 3D image with size (x,ntheta/2,ntheta/2)
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 54 of file img_radon\&.cpp\&.
+.SS "int img_resize_to_next_power2 (\fBBimage\fP * p, int fill_type, double fill)"
+
+.PP
+Resizes without interpolation or rescaling to the next power of 2\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIp\fP image (modified)\&. 
+.br
+\fIfill_type\fP FILL_AVERAGE, FILL_BACKGROUND, FILL_USER 
+.br
+\fIfill\fP value to fill in new regions\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+An image is resized to the next power of two in each dimension
+greater than 1 with translation and filling of new regions with 
+a given value.
+The new data replaces the old data.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 457 of file img_radon\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

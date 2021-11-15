@@ -1,0 +1,367 @@
+.TH "/Users/bernard/b20/bsoft/src/mg/mg_helix.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mg/mg_helix.cpp \- Functions to process helical data\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'Bimage\&.h'\fP
+.br
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_img_proc\&.h'\fP
+.br
+\fC#include 'mg_helix\&.h'\fP
+.br
+\fC#include 'mg_extract\&.h'\fP
+.br
+\fC#include 'spline\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'Complex\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "double * \fBfilament_profile\fP (\fBBfilnode\fP *fnode, \fBBimage\fP *p, long img_num, int id, double width, long &n)"
+.br
+.RI "Calculates a filament profile and node profile\&. "
+.ti -1c
+.RI "double \fBnodes_center\fP (\fBBfilnode\fP *fnode, \fBBimage\fP *p, long img_num, int width)"
+.br
+.ti -1c
+.RI "double \fBfilaments_center\fP (\fBBfilament\fP *fillist, \fBBimage\fP *p, long img_num, int filament_width)"
+.br
+.RI "Centers filament nodes in a micrograph\&. "
+.ti -1c
+.RI "double \fBproject_center_filaments\fP (\fBBproject\fP *\fBproject\fP, int filament_width)"
+.br
+.RI "Centers filament nodes in all micrographs in a project\&. "
+.ti -1c
+.RI "int \fBproject_filament_powerspectrum\fP (\fBBproject\fP *\fBproject\fP, int pad, int rotated, \fBBstring\fP &path)"
+.br
+.RI "Calculates and average power spectrum from filaments\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBproject_filament_density\fP (\fBBproject\fP *\fBproject\fP, int filament_width)"
+.br
+.RI "Extracts filament images from micrographs defined in a project and estimates their density per length\&. "
+.ti -1c
+.RI "int \fBmg_generate_layer_lines\fP (\fBBmicrograph\fP *mg, int rad_lim)"
+.br
+.RI "Generates layer lines given the unit cell vectors\&. "
+.ti -1c
+.RI "int \fBimg_mask_layer_lines\fP (\fBBimage\fP *p, \fBBlayerline\fP *layer_line, float helix_axis, float width)"
+.br
+.RI "Masks the image using the list of layer lines\&. "
+.ti -1c
+.RI "double * \fBimg_extract_layer_line\fP (\fBBimage\fP *p, \fBBlayerline\fP *line, float helix_axis, int \fBlength\fP)"
+.br
+.RI "Extracts one layer line from an image\&. "
+.ti -1c
+.RI "int \fBmg_extract_show_layer_lines\fP (\fBBmicrograph\fP *mg, int \fBlength\fP, int \fBshow\fP)"
+.br
+.RI "Extracts and prints layer lines from an image with corresponding Bessel functions\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to process helical data\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20061110 
+.PP
+Modified: 20170623 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_helix\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double* filament_profile (\fBBfilnode\fP * fnode, \fBBimage\fP * p, long img_num, int id, double width, long & n)"
+
+.PP
+Calculates a filament profile and node profile\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fnode\fP node list\&. 
+.br
+\fI*p\fP image with filament\&. 
+.br
+\fIimg_num\fP sub-image number\&. 
+.br
+\fIid\fP identifier of selected node\&. 
+.br
+\fIwidth\fP width of box around filament\&. 
+.br
+\fI&n\fP number of elements in the profile\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double* two profile arrays, each length n\&. 
+.PP
+.nf
+A filament image is extracted from the micrograph along a spline through
+the nodes. The overall profile and the profile around a specified node
+are calculated and returned in a single array.
+It only works for 2D images.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 39 of file mg_helix\&.cpp\&.
+.SS "double filaments_center (\fBBfilament\fP * fillist, \fBBimage\fP * p, long img_num, int filament_width)"
+
+.PP
+Centers filament nodes in a micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fillist\fP list of filaments\&. 
+.br
+\fI*p\fP image with filament\&. 
+.br
+\fIimg_num\fP sub-image number\&. 
+.br
+\fIfilament_width\fP width of box around filament\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double average correlation coefficient\&. 
+.PP
+.nf
+The profile for each node is calculated and centered by cross-correlation
+with the mirrored profile.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 190 of file mg_helix\&.cpp\&.
+.SS "double* img_extract_layer_line (\fBBimage\fP * p, \fBBlayerline\fP * line, float helix_axis, int length)"
+
+.PP
+Extracts one layer line from an image\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP power spectrum\&. 
+.br
+\fI*line\fP layer line\&. 
+.br
+\fIhelix_axis\fP helix axis angle\&. 
+.br
+\fIlength\fP length of line\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double* array with line values\&. 
+.RE
+.PP
+
+.PP
+Definition at line 551 of file mg_helix\&.cpp\&.
+.SS "int img_mask_layer_lines (\fBBimage\fP * p, \fBBlayerline\fP * layer_line, float helix_axis, float width)"
+
+.PP
+Masks the image using the list of layer lines\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP complex image\&. 
+.br
+\fI*layer_line\fP layer line list\&. 
+.br
+\fIhelix_axis\fP helix axis angle\&. 
+.br
+\fIwidth\fP width of mask for a line\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of lines or error code\&. 
+.RE
+.PP
+
+.PP
+Definition at line 499 of file mg_helix\&.cpp\&.
+.SS "int mg_extract_show_layer_lines (\fBBmicrograph\fP * mg, int length, int show)"
+
+.PP
+Extracts and prints layer lines from an image with corresponding Bessel functions\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph\&. 
+.br
+\fIlength\fP length of line\&. 
+.br
+\fIshow\fP show: 1=extracted layer lines, 2=Bessel functions, 3=both 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 580 of file mg_helix\&.cpp\&.
+.SS "int mg_generate_layer_lines (\fBBmicrograph\fP * mg, int rad_lim)"
+
+.PP
+Generates layer lines given the unit cell vectors\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph\&. 
+.br
+\fIrad_lim\fP layer line radial limit\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of layer lines generated, <0 on error\&. 
+.PP
+.nf
+The structure factor location is given by:
+    x = uh + vk
+where u and v are the unit cell vectors,
+and h and k are the associated Miller indices.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 456 of file mg_helix\&.cpp\&.
+.SS "double nodes_center (\fBBfilnode\fP * fnode, \fBBimage\fP * p, long img_num, int width)"
+
+.PP
+Definition at line 102 of file mg_helix\&.cpp\&.
+.SS "double project_center_filaments (\fBBproject\fP * project, int filament_width)"
+
+.PP
+Centers filament nodes in all micrographs in a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project object\&. 
+.br
+\fIfilament_width\fP width of box around filament\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double average correlation coefficient\&. 
+.PP
+.nf
+The profile for each node is calculated and centered by cross-correlation
+with the mirrored profile.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 221 of file mg_helix\&.cpp\&.
+.SS "\fBBimage\fP* project_filament_density (\fBBproject\fP * project, int filament_width)"
+
+.PP
+Extracts filament images from micrographs defined in a project and estimates their density per length\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP micrograph project\&. 
+.br
+\fIfilament_width\fP extracted filament width\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* image with all densities\&. 
+.RE
+.PP
+
+.PP
+Definition at line 375 of file mg_helix\&.cpp\&.
+.SS "int project_filament_powerspectrum (\fBBproject\fP * project, int pad, int rotated, \fBBstring\fP & path)"
+
+.PP
+Calculates and average power spectrum from filaments\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIpad\fP additional padding before transformation\&. 
+.br
+\fIrotated\fP flag to indicate if particles are already rotated\&. 
+.br
+\fI&path\fP path to write power spectra\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Particles derived from picked filaments are extracted and transformed
+to orient the helical axis along the x-axis. These images are then
+Fourier transformed and their power spectra averaged.
+One average per micrograph is calculated.
+Requirements: The filaments must be picked and converted to particle locations.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 278 of file mg_helix\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,556 @@
+.TH "Bmodel" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Bmodel
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <rwmodel\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBmodel\fP ()"
+.br
+.ti -1c
+.RI "\fBBmodel\fP (string s)"
+.br
+.ti -1c
+.RI "\fBBmodel\fP (\fBBstring\fP s)"
+.br
+.ti -1c
+.RI "\fBBmodel\fP (long i)"
+.br
+.ti -1c
+.RI "void \fBcomment\fP (string s)"
+.br
+.ti -1c
+.RI "string & \fBcomment\fP ()"
+.br
+.ti -1c
+.RI "void \fBidentifier\fP (string s)"
+.br
+.ti -1c
+.RI "void \fBidentifier\fP (\fBBstring\fP s)"
+.br
+.ti -1c
+.RI "string & \fBidentifier\fP ()"
+.br
+.ti -1c
+.RI "void \fBmodel_type\fP (string s)"
+.br
+.ti -1c
+.RI "string & \fBmodel_type\fP ()"
+.br
+.ti -1c
+.RI "void \fBmapfile\fP (string s)"
+.br
+.ti -1c
+.RI "string & \fBmapfile\fP ()"
+.br
+.ti -1c
+.RI "void \fBmaskfile\fP (string s)"
+.br
+.ti -1c
+.RI "string & \fBmaskfile\fP ()"
+.br
+.ti -1c
+.RI "void \fBimage_number\fP (long i)"
+.br
+.ti -1c
+.RI "long \fBimage_number\fP ()"
+.br
+.ti -1c
+.RI "void \fBsymmetry\fP (string s)"
+.br
+.ti -1c
+.RI "string & \fBsymmetry\fP ()"
+.br
+.ti -1c
+.RI "void \fBhandedness\fP (long i)"
+.br
+.ti -1c
+.RI "long \fBhandedness\fP ()"
+.br
+.ti -1c
+.RI "void \fBFOM\fP (double d)"
+.br
+.ti -1c
+.RI "double \fBFOM\fP ()"
+.br
+.ti -1c
+.RI "void \fBselect\fP (long i)"
+.br
+.ti -1c
+.RI "long \fBselect\fP ()"
+.br
+.ti -1c
+.RI "long \fBselect_increment\fP ()"
+.br
+.ti -1c
+.RI "\fBVector3\fP< double > \fBminimum\fP ()"
+.br
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmaximum\fP ()"
+.br
+.ti -1c
+.RI "\fBBmodel\fP * \fBadd\fP (string s)"
+.br
+.ti -1c
+.RI "\fBBmodel\fP * \fBadd\fP (long i)"
+.br
+.ti -1c
+.RI "\fBBmodel\fP * \fBadd\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.ti -1c
+.RI "\fBBmodel\fP * \fBcopy\fP ()"
+.br
+.ti -1c
+.RI "\fBBcomptype\fP * \fBcopy_types\fP ()"
+.br
+.ti -1c
+.RI "\fBBcomponent\fP * \fBcopy_components\fP ()"
+.br
+.ti -1c
+.RI "\fBBlink\fP * \fBcopy_links\fP (\fBBcomponent\fP *c)"
+.br
+.ti -1c
+.RI "\fBBpolygon\fP * \fBcopy_polygons\fP (\fBBcomponent\fP *c)"
+.br
+.ti -1c
+.RI "long \fBcount\fP ()"
+.br
+.ti -1c
+.RI "\fBBcomponent\fP * \fBadd_component\fP (string s)"
+.br
+.ti -1c
+.RI "\fBBcomponent\fP * \fBadd_component\fP (long i)"
+.br
+.ti -1c
+.RI "\fBBcomponent\fP * \fBadd_component\fP (\fBBcomponent\fP *c)"
+.br
+.ti -1c
+.RI "\fBBcomponent\fP * \fBfind_component\fP (string s)"
+.br
+.ti -1c
+.RI "\fBBlink\fP * \fBfind_link\fP (\fBBcomponent\fP *c1, \fBBcomponent\fP *c2)"
+.br
+.ti -1c
+.RI "\fBBlink\fP * \fBfind_link\fP (string s1, string s2)"
+.br
+.ti -1c
+.RI "float \fBcomponent_count\fP ()"
+.br
+.ti -1c
+.RI "float \fBcomponent_count_selected\fP ()"
+.br
+.ti -1c
+.RI "long \fBset_component_radius\fP (double r)"
+.br
+.ti -1c
+.RI "long \fBset_component_density\fP (double d)"
+.br
+.ti -1c
+.RI "long \fBset_component_fom\fP (double f)"
+.br
+.ti -1c
+.RI "\fBBcomponent\fP * \fBclosest_component\fP (\fBVector3\fP< double > loc)"
+.br
+.ti -1c
+.RI "void \fBcalculate_normals\fP ()"
+.br
+.ti -1c
+.RI "long \fBset_type_filenames\fP (string &fn)"
+.br
+.ti -1c
+.RI "\fBBcomptype\fP * \fBadd_type\fP (string s)"
+.br
+.ti -1c
+.RI "\fBBcomptype\fP * \fBadd_type\fP (\fBBstring\fP s)"
+.br
+.ti -1c
+.RI "\fBBcomptype\fP * \fBadd_type\fP (long i)"
+.br
+.ti -1c
+.RI "\fBBcomptype\fP * \fBadd_type\fP (string fn, long img_num)"
+.br
+.ti -1c
+.RI "\fBBcomptype\fP * \fBadd_type\fP (string s, string fn, long img_num)"
+.br
+.ti -1c
+.RI "\fBBcomptype\fP * \fBfind_type\fP (string s)"
+.br
+.ti -1c
+.RI "long \fBcomponent_type_count\fP ()"
+.br
+.ti -1c
+.RI "long \fBcomponent_type_count_selected\fP ()"
+.br
+.ti -1c
+.RI "void \fBupdate_type_counts\fP ()"
+.br
+.ti -1c
+.RI "void \fBupdate_component_types\fP (map< string, \fBBcomptype\fP > &types)"
+.br
+.ti -1c
+.RI "long \fBlink_count\fP ()"
+.br
+.ti -1c
+.RI "long \fBpolygon_count\fP ()"
+.br
+.ti -1c
+.RI "bool \fBcheck\fP ()"
+.br
+.ti -1c
+.RI "void \fBcalculate_bounds\fP ()"
+.br
+.ti -1c
+.RI "\fBVector3\fP< double > \fBcenter_of_coordinates\fP ()"
+.br
+.ti -1c
+.RI "\fBVector3\fP< double > \fBcenter_of_mass\fP ()"
+.br
+.ti -1c
+.RI "long \fBshift\fP (\fBVector3\fP< double > t)"
+.br
+.ti -1c
+.RI "void \fBshow_components\fP ()"
+.br
+.ti -1c
+.RI "void \fBshow_links\fP ()"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBBmodel\fP * \fBnext\fP"
+.br
+.ti -1c
+.RI "\fBBcomptype\fP * \fBtype\fP"
+.br
+.ti -1c
+.RI "\fBBcomponent\fP * \fBcomp\fP"
+.br
+.ti -1c
+.RI "\fBBlink\fP * \fBlink\fP"
+.br
+.ti -1c
+.RI "\fBBpolygon\fP * \fBpoly\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 651 of file rwmodel\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Bmodel::Bmodel ()\fC [inline]\fP"
+
+.PP
+Definition at line 686 of file rwmodel\&.h\&.
+.SS "Bmodel::Bmodel (string s)\fC [inline]\fP"
+
+.PP
+Definition at line 687 of file rwmodel\&.h\&.
+.SS "Bmodel::Bmodel (\fBBstring\fP s)\fC [inline]\fP"
+
+.PP
+Definition at line 688 of file rwmodel\&.h\&.
+.SS "Bmodel::Bmodel (long i)\fC [inline]\fP"
+
+.PP
+Definition at line 689 of file rwmodel\&.h\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "\fBBmodel\fP* Bmodel::add (\fBBmodel\fP * model)\fC [inline]\fP"
+
+.PP
+Definition at line 724 of file rwmodel\&.h\&.
+.SS "\fBBmodel\fP* Bmodel::add (long i)\fC [inline]\fP"
+
+.PP
+Definition at line 719 of file rwmodel\&.h\&.
+.SS "\fBBmodel\fP* Bmodel::add (string s)\fC [inline]\fP"
+
+.PP
+Definition at line 714 of file rwmodel\&.h\&.
+.SS "\fBBcomponent\fP* Bmodel::add_component (\fBBcomponent\fP * c)\fC [inline]\fP"
+
+.PP
+Definition at line 806 of file rwmodel\&.h\&.
+.SS "\fBBcomponent\fP* Bmodel::add_component (long i)\fC [inline]\fP"
+
+.PP
+Definition at line 802 of file rwmodel\&.h\&.
+.SS "\fBBcomponent\fP* Bmodel::add_component (string s)\fC [inline]\fP"
+
+.PP
+Definition at line 798 of file rwmodel\&.h\&.
+.SS "\fBBcomptype\fP* Bmodel::add_type (\fBBstring\fP s)\fC [inline]\fP"
+
+.PP
+Definition at line 868 of file rwmodel\&.h\&.
+.SS "\fBBcomptype\fP* Bmodel::add_type (long i)\fC [inline]\fP"
+
+.PP
+Definition at line 872 of file rwmodel\&.h\&.
+.SS "\fBBcomptype\fP* Bmodel::add_type (string fn, long img_num)\fC [inline]\fP"
+
+.PP
+Definition at line 876 of file rwmodel\&.h\&.
+.SS "\fBBcomptype\fP* Bmodel::add_type (string s)\fC [inline]\fP"
+
+.PP
+Definition at line 864 of file rwmodel\&.h\&.
+.SS "\fBBcomptype\fP* Bmodel::add_type (string s, string fn, long img_num)\fC [inline]\fP"
+
+.PP
+Definition at line 880 of file rwmodel\&.h\&.
+.SS "void Bmodel::calculate_bounds ()\fC [inline]\fP"
+
+.PP
+Definition at line 923 of file rwmodel\&.h\&.
+.SS "void Bmodel::calculate_normals ()\fC [inline]\fP"
+
+.PP
+Definition at line 854 of file rwmodel\&.h\&.
+.SS "\fBVector3\fP<double> Bmodel::center_of_coordinates ()\fC [inline]\fP"
+
+.PP
+Definition at line 932 of file rwmodel\&.h\&.
+.SS "\fBVector3\fP<double> Bmodel::center_of_mass ()\fC [inline]\fP"
+
+.PP
+Definition at line 944 of file rwmodel\&.h\&.
+.SS "bool Bmodel::check ()\fC [inline]\fP"
+
+.PP
+Definition at line 905 of file rwmodel\&.h\&.
+.SS "\fBBcomponent\fP* Bmodel::closest_component (\fBVector3\fP< double > loc)\fC [inline]\fP"
+
+.PP
+Definition at line 851 of file rwmodel\&.h\&.
+.SS "string& Bmodel::comment ()\fC [inline]\fP"
+
+.PP
+Definition at line 691 of file rwmodel\&.h\&.
+.SS "void Bmodel::comment (string s)\fC [inline]\fP"
+
+.PP
+Definition at line 690 of file rwmodel\&.h\&.
+.SS "float Bmodel::component_count ()\fC [inline]\fP"
+
+.PP
+Definition at line 822 of file rwmodel\&.h\&.
+.SS "float Bmodel::component_count_selected ()\fC [inline]\fP"
+
+.PP
+Definition at line 823 of file rwmodel\&.h\&.
+.SS "long Bmodel::component_type_count ()\fC [inline]\fP"
+
+.PP
+Definition at line 888 of file rwmodel\&.h\&.
+.SS "long Bmodel::component_type_count_selected ()\fC [inline]\fP"
+
+.PP
+Definition at line 889 of file rwmodel\&.h\&.
+.SS "\fBBmodel\fP* Bmodel::copy ()\fC [inline]\fP"
+
+.PP
+Definition at line 729 of file rwmodel\&.h\&.
+.SS "\fBBcomponent\fP* Bmodel::copy_components ()\fC [inline]\fP"
+
+.PP
+Definition at line 756 of file rwmodel\&.h\&.
+.SS "\fBBlink\fP* Bmodel::copy_links (\fBBcomponent\fP * c)\fC [inline]\fP"
+
+.PP
+Definition at line 769 of file rwmodel\&.h\&.
+.SS "\fBBpolygon\fP* Bmodel::copy_polygons (\fBBcomponent\fP * c)\fC [inline]\fP"
+
+.PP
+Definition at line 781 of file rwmodel\&.h\&.
+.SS "\fBBcomptype\fP* Bmodel::copy_types ()\fC [inline]\fP"
+
+.PP
+Definition at line 746 of file rwmodel\&.h\&.
+.SS "long Bmodel::count ()\fC [inline]\fP"
+
+.PP
+Definition at line 793 of file rwmodel\&.h\&.
+.SS "\fBBcomponent\fP* Bmodel::find_component (string s)\fC [inline]\fP"
+
+.PP
+Definition at line 810 of file rwmodel\&.h\&.
+.SS "\fBBlink\fP* Bmodel::find_link (\fBBcomponent\fP * c1, \fBBcomponent\fP * c2)\fC [inline]\fP"
+
+.PP
+Definition at line 814 of file rwmodel\&.h\&.
+.SS "\fBBlink\fP* Bmodel::find_link (string s1, string s2)\fC [inline]\fP"
+
+.PP
+Definition at line 818 of file rwmodel\&.h\&.
+.SS "\fBBcomptype\fP* Bmodel::find_type (string s)\fC [inline]\fP"
+
+.PP
+Definition at line 884 of file rwmodel\&.h\&.
+.SS "double Bmodel::FOM ()\fC [inline]\fP"
+
+.PP
+Definition at line 708 of file rwmodel\&.h\&.
+.SS "void Bmodel::FOM (double d)\fC [inline]\fP"
+
+.PP
+Definition at line 707 of file rwmodel\&.h\&.
+.SS "long Bmodel::handedness ()\fC [inline]\fP"
+
+.PP
+Definition at line 706 of file rwmodel\&.h\&.
+.SS "void Bmodel::handedness (long i)\fC [inline]\fP"
+
+.PP
+Definition at line 705 of file rwmodel\&.h\&.
+.SS "string& Bmodel::identifier ()\fC [inline]\fP"
+
+.PP
+Definition at line 694 of file rwmodel\&.h\&.
+.SS "void Bmodel::identifier (\fBBstring\fP s)\fC [inline]\fP"
+
+.PP
+Definition at line 693 of file rwmodel\&.h\&.
+.SS "void Bmodel::identifier (string s)\fC [inline]\fP"
+
+.PP
+Definition at line 692 of file rwmodel\&.h\&.
+.SS "long Bmodel::image_number ()\fC [inline]\fP"
+
+.PP
+Definition at line 702 of file rwmodel\&.h\&.
+.SS "void Bmodel::image_number (long i)\fC [inline]\fP"
+
+.PP
+Definition at line 701 of file rwmodel\&.h\&.
+.SS "long Bmodel::link_count ()\fC [inline]\fP"
+
+.PP
+Definition at line 903 of file rwmodel\&.h\&.
+.SS "string& Bmodel::mapfile ()\fC [inline]\fP"
+
+.PP
+Definition at line 698 of file rwmodel\&.h\&.
+.SS "void Bmodel::mapfile (string s)\fC [inline]\fP"
+
+.PP
+Definition at line 697 of file rwmodel\&.h\&.
+.SS "string& Bmodel::maskfile ()\fC [inline]\fP"
+
+.PP
+Definition at line 700 of file rwmodel\&.h\&.
+.SS "void Bmodel::maskfile (string s)\fC [inline]\fP"
+
+.PP
+Definition at line 699 of file rwmodel\&.h\&.
+.SS "\fBVector3\fP<double> Bmodel::maximum ()\fC [inline]\fP"
+
+.PP
+Definition at line 713 of file rwmodel\&.h\&.
+.SS "\fBVector3\fP<double> Bmodel::minimum ()\fC [inline]\fP"
+
+.PP
+Definition at line 712 of file rwmodel\&.h\&.
+.SS "string& Bmodel::model_type ()\fC [inline]\fP"
+
+.PP
+Definition at line 696 of file rwmodel\&.h\&.
+.SS "void Bmodel::model_type (string s)\fC [inline]\fP"
+
+.PP
+Definition at line 695 of file rwmodel\&.h\&.
+.SS "long Bmodel::polygon_count ()\fC [inline]\fP"
+
+.PP
+Definition at line 904 of file rwmodel\&.h\&.
+.SS "long Bmodel::select ()\fC [inline]\fP"
+
+.PP
+Definition at line 710 of file rwmodel\&.h\&.
+.SS "void Bmodel::select (long i)\fC [inline]\fP"
+
+.PP
+Definition at line 709 of file rwmodel\&.h\&.
+.SS "long Bmodel::select_increment ()\fC [inline]\fP"
+
+.PP
+Definition at line 711 of file rwmodel\&.h\&.
+.SS "long Bmodel::set_component_density (double d)\fC [inline]\fP"
+
+.PP
+Definition at line 833 of file rwmodel\&.h\&.
+.SS "long Bmodel::set_component_fom (double f)\fC [inline]\fP"
+
+.PP
+Definition at line 842 of file rwmodel\&.h\&.
+.SS "long Bmodel::set_component_radius (double r)\fC [inline]\fP"
+
+.PP
+Definition at line 824 of file rwmodel\&.h\&.
+.SS "long Bmodel::set_type_filenames (string & fn)\fC [inline]\fP"
+
+.PP
+Definition at line 855 of file rwmodel\&.h\&.
+.SS "long Bmodel::shift (\fBVector3\fP< double > t)\fC [inline]\fP"
+
+.PP
+Definition at line 960 of file rwmodel\&.h\&.
+.SS "void Bmodel::show_components ()\fC [inline]\fP"
+
+.PP
+Definition at line 964 of file rwmodel\&.h\&.
+.SS "void Bmodel::show_links ()\fC [inline]\fP"
+
+.PP
+Definition at line 969 of file rwmodel\&.h\&.
+.SS "string& Bmodel::symmetry ()\fC [inline]\fP"
+
+.PP
+Definition at line 704 of file rwmodel\&.h\&.
+.SS "void Bmodel::symmetry (string s)\fC [inline]\fP"
+
+.PP
+Definition at line 703 of file rwmodel\&.h\&.
+.SS "void Bmodel::update_component_types (map< string, \fBBcomptype\fP > & types)\fC [inline]\fP"
+
+.PP
+Definition at line 898 of file rwmodel\&.h\&.
+.SS "void Bmodel::update_type_counts ()\fC [inline]\fP"
+
+.PP
+Definition at line 890 of file rwmodel\&.h\&.
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBBcomponent\fP* Bmodel::comp"
+
+.PP
+Definition at line 683 of file rwmodel\&.h\&.
+.SS "\fBBlink\fP* Bmodel::link"
+
+.PP
+Definition at line 684 of file rwmodel\&.h\&.
+.SS "\fBBmodel\fP* Bmodel::next"
+
+.PP
+Definition at line 667 of file rwmodel\&.h\&.
+.SS "\fBBpolygon\fP* Bmodel::poly"
+
+.PP
+Definition at line 685 of file rwmodel\&.h\&.
+.SS "\fBBcomptype\fP* Bmodel::type"
+
+.PP
+Definition at line 682 of file rwmodel\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

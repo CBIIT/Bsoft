@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Simple manipulations</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+      <h2>Simple Bsoft command lines</h2>
+Every program that can read and write images, can be used as a
+conversion
+program. The following changes the unit cell parameters in the image
+header
+(note: if the second file name is the same as the first, the original
+file
+is overwritten):
+      <div id="command"><p>bhead -verbose 7 -unitcell 42.5,60,125.7,90,120,45 2omf.grd
+test.mrc</p></div>
+      <p>Using different image processing packages often means that
+different
+conventions of axis order and image orientation are used. The following
+two examples rotate an image around the y axis by 90 degrees and mirror
+the image along the z axis: </p>
+       <div id="command"><p>bimg -verbose 7 -reslice zy-x 2omf.grd test.mrc </p></div>
+      <div id="command"><p>bimg -verbose 7 -reslice xy-z 2omf.grd test.mrc</p></div>
+      <p>The histogram of an image and information content associated
+with it
+can be calculated over 200 bins and output to a postscript file
+indicated
+by the &quot;-p&quot; option: </p>
+      <div id="command"><p>bhisto -verbose 7 -bins 200 -p output.ps 2omf.grd</p></div>
+      <p>An image can be scaled to 1.4 times the sampling and resized: </p>
+      <div id="command"><p>bint -verbose 7 -scale 1.4,1.4,1.4 2omf.grd test.mrc</p></div>
+      <p>Files can be compared in various ways, with the following
+example doing
+a linear least squares fit between two images and returning the
+difference
+after fitting: </p>
+      <div id="command"><p>bop -verbose 7 -fit 10 2omf.grd test.mrc t2.mrc</p></div>
+      <p>Multiple image files can be concatenated into one file as
+multiple images
+or as slices of a 3D image: </p>
+      <div id="command"><p>bcat -verbose 7 -output file.mrc in*.map</p></div>
+      <p>&nbsp;</p>
+</div>
+<div id="footer">
+  Bernard Heymann  20120126
+</div>
+</body>
+</html>

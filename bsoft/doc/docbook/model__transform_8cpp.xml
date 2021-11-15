@@ -1,0 +1,976 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_model__transform_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/model/model_transform.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/model/model_transform.cpp</primary></indexterm>
+<para>
+
+<para>Library routines used for model transformation. </para>
+ 
+</para>
+<programlisting>#include &quot;model_transform.h&quot;
+#include &quot;model_compare.h&quot;
+#include &quot;model_util.h&quot;
+#include &quot;Transform.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>long <link linkend="_model__transform_8cpp_1a2133b207763cf66251339d5e0180e9b8">model_center</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Shifts one models to its center of mass. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__transform_8cpp_1a265cea81d372bfdc5a4051262a4ea0c9">model_shift</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; shift)</para>
+
+<para>Shifts a model. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__transform_8cpp_1ae0ce5e568f24b9bc162f55fdcf3b405a">models_shift</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; shift)</para>
+
+<para>Shifts all models. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__transform_8cpp_1a51c5fe3d1787d3e961406e275ac7aac5">model_scale</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; scale, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</para>
+
+<para>Scales a model. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__transform_8cpp_1a86e0195ba77cb4275a2264d08ce4d545">models_scale</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; scale, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</para>
+
+<para>Scales a model. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__transform_8cpp_1a5055de3eef849fc9d3d5babc3eeac5dc">model_reflect</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; normal, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</para>
+
+<para>Reflects the model through a mirror plane. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__transform_8cpp_1a50a42adf7a874a3bee8672240742ca91">models_reflect</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; normal, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</para>
+
+<para>Reflects the model through a mirror plane. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__transform_8cpp_1a23652b897563ca2d76db07f711bdfa41">model_reflect_and_compare</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; normal, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</para>
+
+<para>Copies and reflects the model and compares it with the original. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__transform_8cpp_1a3ecd16ff7d9227c91843b83f72303eba">model_rotate</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_matrix3">Matrix3</link> mat)</para>
+
+<para>Rotates the model. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__transform_8cpp_1a3f511caadd09ff67c54d20e067d67c28">model_rotate</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_matrix3">Matrix3</link> mat, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</para>
+
+<para>Rotates the model. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__transform_8cpp_1a9c6c2dc7ebb7a2a95a5af74bd3cc02e0">model_rotate</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_matrix3">Matrix3</link> mat, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; shift)</para>
+
+<para>Rotates the model. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__transform_8cpp_1af7810fa1d6eb455a39e59732a6719226">model_rotate</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_view2">View2</link>&lt; float &gt; view)</para>
+
+<para>Rotates the model. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__transform_8cpp_1a274f80451cf245ef3e61d0252468eb19">model_rotate</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_view2">View2</link>&lt; float &gt; view, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; shift)</para>
+
+<para>Rotates the model. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__transform_8cpp_1a7200cd1227e6b0e79b0673b1cfc0b8d6">model_rotate</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_transform">Transform</link> t)</para>
+
+<para>Rotates the model. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__transform_8cpp_1a945db485e04d36505ecc8c4c28b066de">model_rotate_and_compare</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_transform">Transform</link> t)</para>
+
+<para>Copies and rotates the model and compares it with the original. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__transform_8cpp_1a897dea79b71406effdfa294dade95840">model_adjust_for_binning</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; bin)</para>
+
+<para>A binned model list is converted back to the unbinned version. </para>
+</listitem>
+            <listitem><para>long <link linkend="_model__transform_8cpp_1a521992da27364c9d208fee6a20dcfd18">model_align_to_guide</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bmodel">Bmodel</link> *guide)</para>
+
+<para>A model is oriented to coincide with a guide model. </para>
+</listitem>
+            <listitem><para><link linkend="_class_transform">Transform</link> <link linkend="_model__transform_8cpp_1ae8fd10433436e024aa99ed58a86d3924">model_find_transform</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bmodel">Bmodel</link> *refmod)</para>
+
+<para>A model is fitted to a reference model. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_model__transform_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines used for model transformation. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20060908 </para>
+
+<para>Modified: 20150209 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_model__transform_8cpp_1a897dea79b71406effdfa294dade95840"/>    <section>
+    <title>model_adjust_for_binning()</title>
+<indexterm><primary>model_adjust_for_binning</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>model_adjust_for_binning</secondary></indexterm>
+<para><computeroutput>long model_adjust_for_binning (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; bin)</computeroutput></para><para>
+
+<para>A binned model list is converted back to the unbinned version. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>the model list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>3-value bin vector. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components processed. <literallayout><computeroutput>All component coordinates are converted back to the unbinned values.
+Only the first model is adjusted.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 417 of file model_transform.cpp.</para>
+    </section><anchor xml:id="_model__transform_8cpp_1a521992da27364c9d208fee6a20dcfd18"/>    <section>
+    <title>model_align_to_guide()</title>
+<indexterm><primary>model_align_to_guide</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>model_align_to_guide</secondary></indexterm>
+<para><computeroutput>long model_align_to_guide (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bmodel">Bmodel</link> * guide)</computeroutput></para><para>
+
+<para>A model is oriented to coincide with a guide model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model (rotated). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*guide</entry>
+                                <entry>
+<para>guide model. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components processed. <literallayout><computeroutput>The principal axes of the guide model is calculated and the model rotated.
+Only the first model is aligned.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 444 of file model_transform.cpp.</para>
+    </section><anchor xml:id="_model__transform_8cpp_1a2133b207763cf66251339d5e0180e9b8"/>    <section>
+    <title>model_center()</title>
+<indexterm><primary>model_center</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>model_center</secondary></indexterm>
+<para><computeroutput>long model_center (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Shifts one models to its center of mass. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components processed. <literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 27 of file model_transform.cpp.</para>
+    </section><anchor xml:id="_model__transform_8cpp_1ae8fd10433436e024aa99ed58a86d3924"/>    <section>
+    <title>model_find_transform()</title>
+<indexterm><primary>model_find_transform</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>model_find_transform</secondary></indexterm>
+<para><computeroutput><link linkend="_class_transform">Transform</link> model_find_transform (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bmodel">Bmodel</link> * refmod)</computeroutput></para><para>
+
+<para>A model is fitted to a reference model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*refmod</entry>
+                                <entry>
+<para>template model. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_transform">Transform</link> transform. <literallayout><computeroutput>The components in the model and the reference must match exactly.
+Only the first model and template in the lists are processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 471 of file model_transform.cpp.</para>
+    </section><anchor xml:id="_model__transform_8cpp_1a5055de3eef849fc9d3d5babc3eeac5dc"/>    <section>
+    <title>model_reflect()</title>
+<indexterm><primary>model_reflect</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>model_reflect</secondary></indexterm>
+<para><computeroutput>long model_reflect (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; normal, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</computeroutput></para><para>
+
+<para>Reflects the model through a mirror plane. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>normal</entry>
+                                <entry>
+<para>plane normal. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>model origin. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components processed. <literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 144 of file model_transform.cpp.</para>
+    </section><anchor xml:id="_model__transform_8cpp_1a23652b897563ca2d76db07f711bdfa41"/>    <section>
+    <title>model_reflect_and_compare()</title>
+<indexterm><primary>model_reflect_and_compare</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>model_reflect_and_compare</secondary></indexterm>
+<para><computeroutput>double model_reflect_and_compare (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; normal, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</computeroutput></para><para>
+
+<para>Copies and reflects the model and compares it with the original. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>normal</entry>
+                                <entry>
+<para>plane normal. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>model origin. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double RMSD. <literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 193 of file model_transform.cpp.</para>
+    </section><anchor xml:id="_model__transform_8cpp_1a3ecd16ff7d9227c91843b83f72303eba"/>    <section>
+    <title>model_rotate()<computeroutput>[1/6]</computeroutput></title>
+<indexterm><primary>model_rotate</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>model_rotate</secondary></indexterm>
+<para><computeroutput>long model_rotate (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_matrix3">Matrix3</link> mat)</computeroutput></para><para>
+
+<para>Rotates the model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mat</entry>
+                                <entry>
+<para>rotation matrix. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components processed. <literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 239 of file model_transform.cpp.</para>
+    </section><anchor xml:id="_model__transform_8cpp_1a3f511caadd09ff67c54d20e067d67c28"/>    <section>
+    <title>model_rotate()<computeroutput>[2/6]</computeroutput></title>
+<indexterm><primary>model_rotate</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>model_rotate</secondary></indexterm>
+<para><computeroutput>long model_rotate (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_matrix3">Matrix3</link> mat, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</computeroutput></para><para>
+
+<para>Rotates the model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mat</entry>
+                                <entry>
+<para>rotation matrix. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>rotation origin. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components processed. <literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 255 of file model_transform.cpp.</para>
+    </section><anchor xml:id="_model__transform_8cpp_1a9c6c2dc7ebb7a2a95a5af74bd3cc02e0"/>    <section>
+    <title>model_rotate()<computeroutput>[3/6]</computeroutput></title>
+<indexterm><primary>model_rotate</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>model_rotate</secondary></indexterm>
+<para><computeroutput>long model_rotate (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_matrix3">Matrix3</link> mat, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; shift)</computeroutput></para><para>
+
+<para>Rotates the model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mat</entry>
+                                <entry>
+<para>rotation matrix. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>rotation origin. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift</entry>
+                                <entry>
+<para>translation after rotation. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components processed. <literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 272 of file model_transform.cpp.</para>
+    </section><anchor xml:id="_model__transform_8cpp_1a7200cd1227e6b0e79b0673b1cfc0b8d6"/>    <section>
+    <title>model_rotate()<computeroutput>[4/6]</computeroutput></title>
+<indexterm><primary>model_rotate</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>model_rotate</secondary></indexterm>
+<para><computeroutput>long model_rotate (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_transform">Transform</link> t)</computeroutput></para><para>
+
+<para>Rotates the model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>t</entry>
+                                <entry>
+<para>rotation operation. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components processed. <literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 343 of file model_transform.cpp.</para>
+    </section><anchor xml:id="_model__transform_8cpp_1af7810fa1d6eb455a39e59732a6719226"/>    <section>
+    <title>model_rotate()<computeroutput>[5/6]</computeroutput></title>
+<indexterm><primary>model_rotate</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>model_rotate</secondary></indexterm>
+<para><computeroutput>long model_rotate (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_view2">View2</link>&lt; float &gt; view)</computeroutput></para><para>
+
+<para>Rotates the model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view</entry>
+                                <entry>
+<para>view to rotate to. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components processed. <literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 310 of file model_transform.cpp.</para>
+    </section><anchor xml:id="_model__transform_8cpp_1a274f80451cf245ef3e61d0252468eb19"/>    <section>
+    <title>model_rotate()<computeroutput>[6/6]</computeroutput></title>
+<indexterm><primary>model_rotate</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>model_rotate</secondary></indexterm>
+<para><computeroutput>long model_rotate (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_view2">View2</link>&lt; float &gt; view, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; shift)</computeroutput></para><para>
+
+<para>Rotates the model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>view</entry>
+                                <entry>
+<para>view to rotate to. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>rotation origin. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift</entry>
+                                <entry>
+<para>translation after rotation. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components processed. <literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 328 of file model_transform.cpp.</para>
+    </section><anchor xml:id="_model__transform_8cpp_1a945db485e04d36505ecc8c4c28b066de"/>    <section>
+    <title>model_rotate_and_compare()</title>
+<indexterm><primary>model_rotate_and_compare</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>model_rotate_and_compare</secondary></indexterm>
+<para><computeroutput>double model_rotate_and_compare (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_transform">Transform</link> t)</computeroutput></para><para>
+
+<para>Copies and rotates the model and compares it with the original. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>t</entry>
+                                <entry>
+<para>rotation operation. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double RMSD. <literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 370 of file model_transform.cpp.</para>
+    </section><anchor xml:id="_model__transform_8cpp_1a51c5fe3d1787d3e961406e275ac7aac5"/>    <section>
+    <title>model_scale()</title>
+<indexterm><primary>model_scale</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>model_scale</secondary></indexterm>
+<para><computeroutput>long model_scale (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; scale, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</computeroutput></para><para>
+
+<para>Scales a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>scale. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>model origin. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components processed. <literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 88 of file model_transform.cpp.</para>
+    </section><anchor xml:id="_model__transform_8cpp_1a265cea81d372bfdc5a4051262a4ea0c9"/>    <section>
+    <title>model_shift()</title>
+<indexterm><primary>model_shift</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>model_shift</secondary></indexterm>
+<para><computeroutput>long model_shift (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; shift)</computeroutput></para><para>
+
+<para>Shifts a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift</entry>
+                                <entry>
+<para>translation vector. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components processed. <literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 43 of file model_transform.cpp.</para>
+    </section><anchor xml:id="_model__transform_8cpp_1a50a42adf7a874a3bee8672240742ca91"/>    <section>
+    <title>models_reflect()</title>
+<indexterm><primary>models_reflect</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>models_reflect</secondary></indexterm>
+<para><computeroutput>long models_reflect (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; normal, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</computeroutput></para><para>
+
+<para>Reflects the model through a mirror plane. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>normal</entry>
+                                <entry>
+<para>plane normal. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>model origin. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components processed. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 172 of file model_transform.cpp.</para>
+    </section><anchor xml:id="_model__transform_8cpp_1a86e0195ba77cb4275a2264d08ce4d545"/>    <section>
+    <title>models_scale()</title>
+<indexterm><primary>models_scale</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>models_scale</secondary></indexterm>
+<para><computeroutput>long models_scale (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; scale, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; origin)</computeroutput></para><para>
+
+<para>Scales a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>scale</entry>
+                                <entry>
+<para>scale. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>origin</entry>
+                                <entry>
+<para>model origin. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components processed. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 118 of file model_transform.cpp.</para>
+    </section><anchor xml:id="_model__transform_8cpp_1ae0ce5e568f24b9bc162f55fdcf3b405a"/>    <section>
+    <title>models_shift()</title>
+<indexterm><primary>models_shift</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>models_shift</secondary></indexterm>
+<para><computeroutput>long models_shift (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; shift)</computeroutput></para><para>
+
+<para>Shifts all models. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>shift</entry>
+                                <entry>
+<para>translation vector. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components processed. <literallayout><computeroutput>All models in the list are processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 66 of file model_transform.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_model__transform_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>model_transform.cpp</secondary></indexterm>
+<indexterm><primary>model_transform.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

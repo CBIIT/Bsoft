@@ -1,0 +1,189 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_bpatch_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/bpatch.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/bpatch.cpp</primary></indexterm>
+<para>
+
+<para>Program to patch tiled image files. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmg.h&quot;
+#include &quot;rwimg.h&quot;
+#include &quot;file_util.h&quot;
+#include &quot;utilities.h&quot;
+#include &quot;options.h&quot;
+#include &quot;timer.h&quot;
+#include &lt;fstream&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_bpatch_8cpp_1a6f0584ecae7a86938ac63970dde91142">img_patch</link> (<link linkend="_class_bstring">Bstring</link> *<link linkend="_file__util_8cpp_1a3c3411ced4b9632566ecc66ffa64a72a">file_list</link>, <link linkend="_class_bstring">Bstring</link> tile_file, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> nudatatype, double cutmin, double cutmax, double nuavg, double nustd)</para>
+
+<para>Assembles overlapping tiles into a single image. </para>
+</listitem>
+            <listitem><para>int <link linkend="_bpatch_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+            <listitem><para>int <link linkend="_bpatch_8cpp_1a05792bdd46c5ccab0b3971e2ebdcfa7d">img_pack_into_image</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bimage">Bimage</link> *ppatch, <link linkend="_class_vector3">Vector3</link>&lt; int &gt; start, <link linkend="_class_vector3">Vector3</link>&lt; int &gt; overlap)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_bpatch_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>const char * <link linkend="_bpatch_8cpp_1a4de0ad4c7190962494815c0fa7f948df">use</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Program to patch tiled image files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20040712 </para>
+
+<para>Modified: 20190218 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_bpatch_8cpp_1a05792bdd46c5ccab0b3971e2ebdcfa7d"/>    <section>
+    <title>img_pack_into_image()</title>
+<indexterm><primary>img_pack_into_image</primary><secondary>bpatch.cpp</secondary></indexterm>
+<indexterm><primary>bpatch.cpp</primary><secondary>img_pack_into_image</secondary></indexterm>
+<para><computeroutput>int img_pack_into_image (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bimage">Bimage</link> * ppatch, <link linkend="_class_vector3">Vector3</link>&lt; int &gt; start, <link linkend="_class_vector3">Vector3</link>&lt; int &gt; overlap)</computeroutput></para><para>
+Definition at line 178 of file bpatch.cpp.</para>
+    </section><anchor xml:id="_bpatch_8cpp_1a6f0584ecae7a86938ac63970dde91142"/>    <section>
+    <title>img_patch()</title>
+<indexterm><primary>img_patch</primary><secondary>bpatch.cpp</secondary></indexterm>
+<indexterm><primary>bpatch.cpp</primary><secondary>img_patch</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link> * img_patch (<link linkend="_class_bstring">Bstring</link> * file_list, <link linkend="_class_bstring">Bstring</link> tile_file, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> nudatatype, double cutmin, double cutmax, double nuavg, double nustd)</computeroutput></para><para>
+
+<para>Assembles overlapping tiles into a single image. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*file_list</entry>
+                                <entry>
+<para>list of files with tiles. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>tile_file</entry>
+                                <entry>
+<para>text file specifying the tile size, overlap and locations. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nudatatype</entry>
+                                <entry>
+<para>new data type to convert to. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>cutmin</entry>
+                                <entry>
+<para>minimum to truncate each tile before assembly. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>cutmax</entry>
+                                <entry>
+<para>maximum to truncate each tile before assembly. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nuavg</entry>
+                                <entry>
+<para>new average to set each tile before assembly. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nustd</entry>
+                                <entry>
+<para>new standard deviation to set each tile before assembly. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* new composite image. <literallayout><computeroutput>Each tile extents halfway into overlapped areas, representing a step
+function between tiles.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 233 of file bpatch.cpp.</para>
+    </section><anchor xml:id="_bpatch_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>bpatch.cpp</secondary></indexterm>
+<indexterm><primary>bpatch.cpp</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 53 of file bpatch.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_bpatch_8cpp_1a4de0ad4c7190962494815c0fa7f948df"/>    <section>
+    <title>use</title>
+<indexterm><primary>use</primary><secondary>bpatch.cpp</secondary></indexterm>
+<indexterm><primary>bpatch.cpp</primary><secondary>use</secondary></indexterm>
+<para><computeroutput>const char* use[]</computeroutput></para><emphasis role="strong">Initial value:</emphasis><programlisting>=&#32;{
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Usage:&#32;bpatch&#32;[options]&#32;input.images/input.star&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-----------------------------------------------&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Patches&#32;a&#32;list&#32;of&#32;tiles&#32;together&#32;with&#32;overlap.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Requires&#32;a&#32;text&#32;file&#32;generated&#32;by&#32;btile&#32;that&#32;specifies&#32;the&#32;size&#32;and&#32;order&#32;of&#32;the&#32;tiles.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Any&#32;number&#32;of&#32;input&#32;images&#32;may&#32;be&#32;given&#32;and&#32;may&#32;include&#32;the&#32;wild&#32;card&#32;\&quot;*\&quot;.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;All&#32;images&#32;must&#32;have&#32;the&#32;same&#32;data&#32;type.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Parameters:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-verbose&#32;3&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Verbosity&#32;of&#32;output.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-datatype&#32;u&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Force&#32;writing&#32;of&#32;a&#32;new&#32;data&#32;type.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-sampling&#32;1.5,1.5,1.5&#32;&#32;&#32;&#32;Sampling&#32;(A/pixel;&#32;a&#32;single&#32;value&#32;can&#32;be&#32;given).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-origin&#32;0.8,-10,15.7&#32;&#32;&#32;&#32;&#32;Set&#32;the&#32;origin&#32;of&#32;the&#32;output&#32;image&#32;(default&#32;0,0,0).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-size&#32;1024,1024,120&#32;&#32;&#32;&#32;&#32;&#32;Output&#32;image&#32;size&#32;(default&#32;from&#32;tile&#32;file).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-mode&#32;1&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Overlap&#32;handling:&#32;0=average(default),&#32;1=weigh,&#32;2=central.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-rescale&#32;127,27.5&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Rescale&#32;all&#32;input&#32;data&#32;to&#32;average&#32;and&#32;standard&#32;deviation.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-truncate&#32;-5,5.5&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Truncate&#32;data&#32;to&#32;minimum&#32;and&#32;maximum&#32;after&#32;rescaling.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Input:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-tiles&#32;text.tiles&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Text&#32;file&#32;with&#32;overall&#32;size&#32;and&#32;tile&#32;origins.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Output:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-output&#32;output.img&#32;&#32;&#32;&#32;&#32;&#32;&#32;Output&#32;image&#32;(default&#32;patch.pif).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-parameters&#32;file.star&#32;&#32;&#32;&#32;Output&#32;micrograph&#32;parameter&#32;file.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+NULL
+}
+</programlisting><para>
+Definition at line 24 of file bpatch.cpp.</para>
+    </section><anchor xml:id="_bpatch_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>bpatch.cpp</secondary></indexterm>
+<indexterm><primary>bpatch.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

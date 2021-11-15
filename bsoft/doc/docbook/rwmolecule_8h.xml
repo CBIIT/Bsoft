@@ -1,0 +1,1990 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rwmolecule_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/rwmolecule.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/rwmolecule.h</primary></indexterm>
+<para>
+
+<para>Header file for reading reflection files. </para>
+ 
+</para>
+<programlisting>#include &quot;UnitCell.h&quot;
+#include &quot;Vector3.h&quot;
+#include &quot;Bstring.h&quot;
+</programlisting><simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>struct <link linkend="_struct_batom">Batom</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_bresidue">Bresidue</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_bsecondary">Bsecondary</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_bmolecule">Bmolecule</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_bbond">Bbond</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_bangle">Bangle</link></para>
+</listitem>
+            <listitem><para>struct <link linkend="_struct_bmolgroup">Bmolgroup</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_rwmolecule_8h_1a37a3c7403f83fe578869f1f094a81ba5">MAXSEQLEN</link>   1000000</para>
+</listitem>
+            <listitem><para>#define <link linkend="_rwmolecule_8h_1a2fa72f67ae5080318561afa62480a825">_Bmolecule_</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Enumerations    </title>
+        <itemizedlist>
+            <listitem><para>enum <link linkend="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806">SecondaryType</link> { 
+<link linkend="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806ad00b06e013a390c5419f9448f660ab3f">RightHandedAlpha</link> = 1
+, <link linkend="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806aa16207d5773e0177838951cd54ed3f07">RightHandedOmega</link> = 2
+, <link linkend="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806a75e1b953719e5dbf0998c3d7176be0c7">RightHandedPi</link> = 3
+, <link linkend="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806a6d1feda136d81cd7928a820ac8231f5b">RightHandedGamma</link> = 4
+, 
+<link linkend="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806a593bb962f5e2c62a45af5994a800fd85">RightHanded310</link> = 5
+, <link linkend="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806af9a9297887db80497644f2cf65aef863">LeftHandedAlpha</link> = 6
+, <link linkend="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806aa51f41b967b974a3bf232d0ad1228fd3">LeftHandedOmega</link> = 7
+, <link linkend="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806ada6b75cb5613639fccce73ad59343616">LeftHandedGamma</link> = 8
+, 
+<link linkend="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806a18d32fb85f2f2677ebce16e9b3e1c264">TwoSevenRibbon</link> = 9
+, <link linkend="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806aaefb7329b3362d310152ac3bf8c75c46">Polyproline</link> = 10
+, <link linkend="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806a93159c7b6fcfbae8b318915da4ae0620">Strand</link> = 11
+, <link linkend="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806a0c1b9bb2e704447170944d00fcca57a3">Turn</link> = 12
+ }</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_struct_bmolgroup">Bmolgroup</link> * <link linkend="_rwmolecule_8h_1a9e1b46ffcc90a66b160481d549cb4894">molgroup_init</link> ()</para>
+
+<para>Initializes and allocates a new molecule group. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolecule">Bmolecule</link> * <link linkend="_rwmolecule_8h_1ae18fb10c9fbf67f14dac1ca697377272">molecule_add</link> (<link linkend="_struct_bmolecule">Bmolecule</link> **mol, char *name)</para>
+
+<para>Adds a molecule to a linked list. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolecule">Bmolecule</link> * <link linkend="_rwmolecule_8h_1a0260e8ec88cebd8a1a06debbaa4e79cc">molecule_add</link> (<link linkend="_struct_bmolecule">Bmolecule</link> **mol, <link linkend="_class_bstring">Bstring</link> &amp;name)</para>
+</listitem>
+            <listitem><para><link linkend="_struct_bresidue">Bresidue</link> * <link linkend="_rwmolecule_8h_1a0d048192737fec46783a157b2eedf871">residue_add</link> (<link linkend="_struct_bresidue">Bresidue</link> **res, const char *type)</para>
+
+<para>Adds a residue to a linked list. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bresidue">Bresidue</link> * <link linkend="_rwmolecule_8h_1ad8f21c2790e27b24f3aa9fc512a64f0c">residue_add</link> (<link linkend="_struct_bresidue">Bresidue</link> **res, <link linkend="_class_bstring">Bstring</link> &amp;type)</para>
+</listitem>
+            <listitem><para><link linkend="_struct_batom">Batom</link> * <link linkend="_rwmolecule_8h_1a7e394bb20114c7d595bca78ced5eb5fd">atom_add</link> (<link linkend="_struct_batom">Batom</link> **atom, const char *type)</para>
+
+<para>Adds an atom to a linked list. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_batom">Batom</link> * <link linkend="_rwmolecule_8h_1aa2923c59c0ae49fba6e8da6840af08a2">atom_add</link> (<link linkend="_struct_batom">Batom</link> **atom, <link linkend="_class_bstring">Bstring</link> &amp;type)</para>
+</listitem>
+            <listitem><para>long <link linkend="_rwmolecule_8h_1a05967305daa4c372f488f452b691fa68">residue_count</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Counts the number of residues in a molecule group. </para>
+</listitem>
+            <listitem><para>long <link linkend="_rwmolecule_8h_1a59fcac126977caccc8f5fa2ebd9f3f39">atom_count</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Counts the number of atoms in a molecule group. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmolecule_8h_1a68c7bf4749ada5f5e6dd63c38201b638">atom_clean_type</link> (<link linkend="_struct_batom">Batom</link> *atom, const char *type)</para>
+
+<para>Cleans up the type string and assigns an element code to an atom. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bbond">Bbond</link> * <link linkend="_rwmolecule_8h_1a2334af19059b1556cec6d87e9c7b52bd">bond_add</link> (<link linkend="_struct_bbond">Bbond</link> **bond, <link linkend="_struct_batom">Batom</link> *atom1, <link linkend="_struct_batom">Batom</link> *atom2, double l, double k)</para>
+
+<para>Adds a bond to a linked list. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bangle">Bangle</link> * <link linkend="_rwmolecule_8h_1a753dc8c456486260e32d0eba95b77d5b">angle_add</link> (<link linkend="_struct_bangle">Bangle</link> **<link linkend="__vector3_8h_1a4d0ad562e2f2e87c018fe778805aa3cf">angle</link>, <link linkend="_struct_batom">Batom</link> *atom1, <link linkend="_struct_batom">Batom</link> *atom2, <link linkend="_struct_batom">Batom</link> *atom3, double a, double k)</para>
+
+<para>Adds an angle to a linked list. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmolecule_8h_1ace0bc318a068bc0c942574a9797200c7">molgroup_list_kill</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Destroys a molecule group linked list. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmolecule_8h_1a6945fc3f2ded87a0ff7c9d70bb0fb67b">molgroup_kill</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Destroys a molecule group. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmolecule_8h_1ab36800fa7bf2b7e292ef98ffb0fbdf6f">molecule_kill</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol)</para>
+
+<para>Destroys a molecule. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmolecule_8h_1a467c2cde10b55a4ce5e041d7c18d98c4">residue_kill</link> (<link linkend="_struct_bresidue">Bresidue</link> *res)</para>
+
+<para>Destroys a residue. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmolecule_8h_1ac0e71d965861afb2b405e2064a1fd3c4">bond_kill</link> (<link linkend="_struct_bbond">Bbond</link> *bond)</para>
+
+<para>Dealocates a list of bonds. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmolecule_8h_1a003f82c8b52d2bd1a39a5089bd0b8aba">angle_kill</link> (<link linkend="_struct_bangle">Bangle</link> *<link linkend="__vector3_8h_1a4d0ad562e2f2e87c018fe778805aa3cf">angle</link>)</para>
+
+<para>Dealocates a list of angles. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolgroup">Bmolgroup</link> * <link linkend="_rwmolecule_8h_1a2bc2d01474dbd8fd75b3a425dd68c2a3">molgroup_list_copy</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Copies a molecule group list. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolgroup">Bmolgroup</link> * <link linkend="_rwmolecule_8h_1adde4b5b613ccde6e4c42cab22f65340d">molgroup_copy</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Copies a molecule group. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolecule">Bmolecule</link> * <link linkend="_rwmolecule_8h_1a1c9c568d941d48cc36e498b8454b723a">molecule_copy</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol)</para>
+
+<para>Copies a molecule. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolecule">Bmolecule</link> * <link linkend="_rwmolecule_8h_1aee00f9ef53bfe7854f01a0910186aa95">mol_copy_and_add_to_molgroup</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_struct_bmolecule">Bmolecule</link> *mol)</para>
+
+<para>Copies a molecule and assign to a new pointer in the molgroup. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bbond">Bbond</link> * <link linkend="_rwmolecule_8h_1ad5fecdafdba4720c1904f30e9870a6ef">molgroup_bond_list_copy</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroupcopy)</para>
+
+<para>Copies a bond list. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmolecule_8h_1aacc556c48eb0a50d7001e55d5035b489">molgroup_from_molgroup_list</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Converts a molecule group list to a single molecule group. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolgroup">Bmolgroup</link> * <link linkend="_rwmolecule_8h_1a1762ade3058f826568992b27932e7c0d">read_molecule</link> (const char *filename, const char *select, const char *paramfile)</para>
+
+<para>The generalized function for reading molecular files. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolgroup">Bmolgroup</link> * <link linkend="_rwmolecule_8h_1a1b420908c413bf45ff7d7a501cad964d">read_molecule</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bstring">Bstring</link> &amp;atom_select, <link linkend="_class_bstring">Bstring</link> &amp;paramfile)</para>
+</listitem>
+            <listitem><para><link linkend="_struct_bmolgroup">Bmolgroup</link> * <link linkend="_rwmolecule_8h_1a9f046a01f64adc31e270afde4071606d">read_molecule</link> (<link linkend="_class_bstring">Bstring</link> *<link linkend="_file__util_8cpp_1a3c3411ced4b9632566ecc66ffa64a72a">file_list</link>, int set_pbc, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; box, <link linkend="_class_bstring">Bstring</link> atom_select, <link linkend="_class_bstring">Bstring</link> paramfile)</para>
+
+<para>Reads and catenates multiple molecule files. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmolecule_8h_1ab1338f33d05dc8b362c04cf5cc5d6057">write_molecule</link> (char *filename, <link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Writes a molecule group. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmolecule_8h_1ac895a2b1d25a507879a484d5ed9edd43">write_molecule</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmolecule_8h_1a3d3f996ec767099f9f87f310cd36336d">molgroup_list_write</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Writes a molecule group list. </para>
+</listitem>
+            <listitem><para>long <link linkend="_rwmolecule_8h_1a3fcfe8f771cd6f1dcf5a4d6be14597f8">molgroup_count_molecules</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Counts the total number of molecules in a molecule group. </para>
+</listitem>
+            <listitem><para>long <link linkend="_rwmolecule_8h_1a80bbbe70f861ffd10cb9f1cafa6cab96">molgroup_count_residues</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Counts the total number of residues in a molecule group. </para>
+</listitem>
+            <listitem><para>long <link linkend="_rwmolecule_8h_1a11c931013bfe061696480dafb57010ea">mol_count_residues</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol)</para>
+
+<para>Counts the total number of residues in a molecule. </para>
+</listitem>
+            <listitem><para>long <link linkend="_rwmolecule_8h_1a09944fa9dc092ab7eebc239d0da57d47">molgroup_count_atoms</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Counts the total number of atoms in a molecule group. </para>
+</listitem>
+            <listitem><para>long <link linkend="_rwmolecule_8h_1a2943ec117ce59100bbfd6a125ab96d6d">mol_count_atoms</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol)</para>
+
+<para>Counts the total number of atoms in a molecule. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmolecule_8h_1a643c7bf4faf29ed87773f9b463fa9629">molgroup_consolidate_gaps</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Removes redundant gaps from an alignment. </para>
+</listitem>
+            <listitem><para>long <link linkend="_rwmolecule_8h_1a1b4483d146b6e58e6a86bf60a081d896">molgroup_stats</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, int <link linkend="_rw_d_m_8cpp_1ae83c07067345faf98c959261a0b7db76">show</link>)</para>
+
+<para>Calculates the statistics of a molecule group. </para>
+</listitem>
+            <listitem><para>long <link linkend="_rwmolecule_8h_1ac02e917459746ac7d00a8ebdcb3e87dd">molgroup_stats</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+</listitem>
+            <listitem><para>long <link linkend="_rwmolecule_8h_1a45cb782c06b3abbca6fba4af8cb451b3">mol_stats</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol, int <link linkend="_rw_d_m_8cpp_1ae83c07067345faf98c959261a0b7db76">show</link>)</para>
+
+<para>Calculates the statistics of a molecule. </para>
+</listitem>
+            <listitem><para>long <link linkend="_rwmolecule_8h_1a4885274df7d5e73d1e5498df7260e977">mol_stats</link> (<link linkend="_struct_bmolecule">Bmolecule</link> *mol)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmolecule_8h_1a4b73b44b430bf88bc308c6a6f25752b2">molecule_update_comment</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, int n, char **strings)</para>
+
+<para>Puts a set of strings and time in the main comment of a molecule group. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmolecule_8h_1aa641952a9836b183dce7853681004165">molecule_get_masses</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bstring">Bstring</link> &amp;paramfile)</para>
+
+<para>Gets atomic masses from a parameter file. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bbond">Bbond</link> * <link linkend="_rwmolecule_8h_1af59a5326e13d4b49368012c3d41ec672">molgroup_bond_list_generate</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double maxlength, int wrap)</para>
+
+<para>Generates a bond list based on atom separation. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bbond">Bbond</link> * <link linkend="_rwmolecule_8h_1acb05fe4b8bda1a9cd0ea2b8a7b4ab126">mol_bond_list_generate</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double bondlength, int wrap)</para>
+
+<para>Generates an intramolecular distance-based bond list. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmolecule_8h_1ada98d651ff7ac302c4d662fcbc7ab37e">molecules_to_molgroups</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Converts molecules in a molecule group to individual molecule groups. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for reading reflection files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19980822 </para>
+
+<para>Modified: 20170509 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_rwmolecule_8h_1a2fa72f67ae5080318561afa62480a825"/>    <section>
+    <title>_Bmolecule_</title>
+<indexterm><primary>_Bmolecule_</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>_Bmolecule_</secondary></indexterm>
+<para><computeroutput>#define _Bmolecule_</computeroutput></para><para>
+Definition at line 193 of file rwmolecule.h.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a37a3c7403f83fe578869f1f094a81ba5"/>    <section>
+    <title>MAXSEQLEN</title>
+<indexterm><primary>MAXSEQLEN</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>MAXSEQLEN</secondary></indexterm>
+<para><computeroutput>#define MAXSEQLEN   1000000</computeroutput></para><para>
+Definition at line 14 of file rwmolecule.h.</para>
+</section>
+</section>
+<section>
+<title>Enumeration Type Documentation</title>
+<anchor xml:id="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806"/>    <section>
+    <title>SecondaryType</title>
+<indexterm><primary>SecondaryType</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>SecondaryType</secondary></indexterm>
+<para><computeroutput>enum <link linkend="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806">SecondaryType</link></computeroutput></para><informaltable frame="all">
+<title>Enumerator</title>
+    <tgroup cols="2" align="left" colsep="1" rowsep="1">
+      <colspec colname='c1'/>
+      <colspec colname='c2'/>
+<tbody>
+<row><entry><indexterm><primary>RightHandedAlpha</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>RightHandedAlpha</secondary></indexterm>
+<anchor xml:id="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806ad00b06e013a390c5419f9448f660ab3f"/>RightHandedAlpha</entry><entry></entry></row><row><entry><indexterm><primary>RightHandedOmega</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>RightHandedOmega</secondary></indexterm>
+<anchor xml:id="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806aa16207d5773e0177838951cd54ed3f07"/>RightHandedOmega</entry><entry></entry></row><row><entry><indexterm><primary>RightHandedPi</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>RightHandedPi</secondary></indexterm>
+<anchor xml:id="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806a75e1b953719e5dbf0998c3d7176be0c7"/>RightHandedPi</entry><entry></entry></row><row><entry><indexterm><primary>RightHandedGamma</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>RightHandedGamma</secondary></indexterm>
+<anchor xml:id="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806a6d1feda136d81cd7928a820ac8231f5b"/>RightHandedGamma</entry><entry></entry></row><row><entry><indexterm><primary>RightHanded310</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>RightHanded310</secondary></indexterm>
+<anchor xml:id="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806a593bb962f5e2c62a45af5994a800fd85"/>RightHanded310</entry><entry></entry></row><row><entry><indexterm><primary>LeftHandedAlpha</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>LeftHandedAlpha</secondary></indexterm>
+<anchor xml:id="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806af9a9297887db80497644f2cf65aef863"/>LeftHandedAlpha</entry><entry></entry></row><row><entry><indexterm><primary>LeftHandedOmega</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>LeftHandedOmega</secondary></indexterm>
+<anchor xml:id="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806aa51f41b967b974a3bf232d0ad1228fd3"/>LeftHandedOmega</entry><entry></entry></row><row><entry><indexterm><primary>LeftHandedGamma</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>LeftHandedGamma</secondary></indexterm>
+<anchor xml:id="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806ada6b75cb5613639fccce73ad59343616"/>LeftHandedGamma</entry><entry></entry></row><row><entry><indexterm><primary>TwoSevenRibbon</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>TwoSevenRibbon</secondary></indexterm>
+<anchor xml:id="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806a18d32fb85f2f2677ebce16e9b3e1c264"/>TwoSevenRibbon</entry><entry></entry></row><row><entry><indexterm><primary>Polyproline</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>Polyproline</secondary></indexterm>
+<anchor xml:id="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806aaefb7329b3362d310152ac3bf8c75c46"/>Polyproline</entry><entry></entry></row><row><entry><indexterm><primary>Strand</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>Strand</secondary></indexterm>
+<anchor xml:id="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806a93159c7b6fcfbae8b318915da4ae0620"/>Strand</entry><entry></entry></row><row><entry><indexterm><primary>Turn</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>Turn</secondary></indexterm>
+<anchor xml:id="_rwmolecule_8h_1a2403a7fa6b34471d6ea53d11bdf86806a0c1b9bb2e704447170944d00fcca57a3"/>Turn</entry><entry></entry></row>    </tbody>
+    </tgroup>
+</informaltable>
+<para>
+Definition at line 64 of file rwmolecule.h.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rwmolecule_8h_1a753dc8c456486260e32d0eba95b77d5b"/>    <section>
+    <title>angle_add()</title>
+<indexterm><primary>angle_add</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>angle_add</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bangle">Bangle</link>* angle_add (<link linkend="_struct_bangle">Bangle</link> ** angle, <link linkend="_struct_batom">Batom</link> * atom1, <link linkend="_struct_batom">Batom</link> * atom2, <link linkend="_struct_batom">Batom</link> * atom3, double a, double k)</computeroutput></para><para>
+
+<para>Adds an angle to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**angle</entry>
+                                <entry>
+<para>pointer to any angle in the list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*atom1</entry>
+                                <entry>
+<para>atom1 of angle. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*atom2</entry>
+                                <entry>
+<para>atom2 of angle (central atom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*atom3</entry>
+                                <entry>
+<para>atom3 of angle. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>a</entry>
+                                <entry>
+<para>reference angle. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>k</entry>
+                                <entry>
+<para>angle strength. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bangle* new angle. <literallayout><computeroutput>The function allocates memory for a new angle structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 316 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a003f82c8b52d2bd1a39a5089bd0b8aba"/>    <section>
+    <title>angle_kill()</title>
+<indexterm><primary>angle_kill</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>angle_kill</secondary></indexterm>
+<para><computeroutput>int angle_kill (<link linkend="_struct_bangle">Bangle</link> * angle)</computeroutput></para><para>
+
+<para>Dealocates a list of angles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*angle</entry>
+                                <entry>
+<para>first angle in the list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>All angles downstream are deallocated.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 505 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1aa2923c59c0ae49fba6e8da6840af08a2"/>    <section>
+    <title>atom_add()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>atom_add</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>atom_add</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_batom">Batom</link>* atom_add (<link linkend="_struct_batom">Batom</link> ** atom, <link linkend="_class_bstring">Bstring</link> &amp; type)</computeroutput></para><para>
+Definition at line 158 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a7e394bb20114c7d595bca78ced5eb5fd"/>    <section>
+    <title>atom_add()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>atom_add</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>atom_add</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_batom">Batom</link>* atom_add (<link linkend="_struct_batom">Batom</link> ** atom, const char * type)</computeroutput></para><para>
+
+<para>Adds an atom to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**atom</entry>
+                                <entry>
+<para>pointer to any atom in the list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*type</entry>
+                                <entry>
+<para>atom type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Batom* new atom. <literallayout><computeroutput>The function allocates memory for a new atom structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 152 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a68c7bf4749ada5f5e6dd63c38201b638"/>    <section>
+    <title>atom_clean_type()</title>
+<indexterm><primary>atom_clean_type</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>atom_clean_type</secondary></indexterm>
+<para><computeroutput>int atom_clean_type (<link linkend="_struct_batom">Batom</link> * atom, const char * type)</computeroutput></para><para>
+
+<para>Cleans up the type string and assigns an element code to an atom. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*atom</entry>
+                                <entry>
+<para>atom. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*type</entry>
+                                <entry>
+<para>atom type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The first two alphanumeric characters of the type string is used to
+determine the element.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 229 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a59fcac126977caccc8f5fa2ebd9f3f39"/>    <section>
+    <title>atom_count()</title>
+<indexterm><primary>atom_count</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>atom_count</secondary></indexterm>
+<para><computeroutput>long atom_count (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Counts the number of atoms in a molecule group. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of atoms. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 205 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a2334af19059b1556cec6d87e9c7b52bd"/>    <section>
+    <title>bond_add()</title>
+<indexterm><primary>bond_add</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>bond_add</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bbond">Bbond</link>* bond_add (<link linkend="_struct_bbond">Bbond</link> ** bond, <link linkend="_struct_batom">Batom</link> * atom1, <link linkend="_struct_batom">Batom</link> * atom2, double l, double k)</computeroutput></para><para>
+
+<para>Adds a bond to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**bond</entry>
+                                <entry>
+<para>pointer to any bond in the list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*atom1</entry>
+                                <entry>
+<para>atom1 of bond. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*atom2</entry>
+                                <entry>
+<para>atom2 of bond. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>l</entry>
+                                <entry>
+<para>reference bond length. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>k</entry>
+                                <entry>
+<para>bond strength. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bbond* new bond. <literallayout><computeroutput>The function allocates memory for a new bond structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 273 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1ac0e71d965861afb2b405e2064a1fd3c4"/>    <section>
+    <title>bond_kill()</title>
+<indexterm><primary>bond_kill</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>bond_kill</secondary></indexterm>
+<para><computeroutput>int bond_kill (<link linkend="_struct_bbond">Bbond</link> * bond)</computeroutput></para><para>
+
+<para>Dealocates a list of bonds. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*bond</entry>
+                                <entry>
+<para>first bond in the list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>All bonds downstream are deallocated.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 484 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1acb05fe4b8bda1a9cd0ea2b8a7b4ab126"/>    <section>
+    <title>mol_bond_list_generate()</title>
+<indexterm><primary>mol_bond_list_generate</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>mol_bond_list_generate</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bbond">Bbond</link>* mol_bond_list_generate (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double bondlength, int wrap)</computeroutput></para><para>
+
+<para>Generates an intramolecular distance-based bond list. </para>
+</para>
+
+<para><literallayout><computeroutput>This function defines bonds on distance and within molecules.
+If the molecule group already has a bond list, no new bonds are generated. 
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bondlength</entry>
+                                <entry>
+<para>maximum bond length. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wrap</entry>
+                                <entry>
+<para>wrap around periodic boundaries if !=0. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bbond* new bond list. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1684 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1aee00f9ef53bfe7854f01a0910186aa95"/>    <section>
+    <title>mol_copy_and_add_to_molgroup()</title>
+<indexterm><primary>mol_copy_and_add_to_molgroup</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>mol_copy_and_add_to_molgroup</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolecule">Bmolecule</link>* mol_copy_and_add_to_molgroup (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_struct_bmolecule">Bmolecule</link> * mol)</computeroutput></para><para>
+
+<para>Copies a molecule and assign to a new pointer in the molgroup. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*mol</entry>
+                                <entry>
+<para>the molecule to be copied. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolecule* the new molecule, NULL if copy failed. <literallayout><computeroutput>Adds a new molecule to the molecule group identical to the given
+molecule and returns a pointer to the new molecule.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 668 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a2943ec117ce59100bbfd6a125ab96d6d"/>    <section>
+    <title>mol_count_atoms()</title>
+<indexterm><primary>mol_count_atoms</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>mol_count_atoms</secondary></indexterm>
+<para><computeroutput>long mol_count_atoms (<link linkend="_struct_bmolecule">Bmolecule</link> * mol)</computeroutput></para><para>
+
+<para>Counts the total number of atoms in a molecule. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mol</entry>
+                                <entry>
+<para>the molecule. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of atoms. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1144 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a11c931013bfe061696480dafb57010ea"/>    <section>
+    <title>mol_count_residues()</title>
+<indexterm><primary>mol_count_residues</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>mol_count_residues</secondary></indexterm>
+<para><computeroutput>long mol_count_residues (<link linkend="_struct_bmolecule">Bmolecule</link> * mol)</computeroutput></para><para>
+
+<para>Counts the total number of residues in a molecule. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mol</entry>
+                                <entry>
+<para>the molecule. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of residues. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1110 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a4885274df7d5e73d1e5498df7260e977"/>    <section>
+    <title>mol_stats()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>mol_stats</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>mol_stats</secondary></indexterm>
+<para><computeroutput>long mol_stats (<link linkend="_struct_bmolecule">Bmolecule</link> * mol)</computeroutput></para><para>
+Definition at line 1453 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a45cb782c06b3abbca6fba4af8cb451b3"/>    <section>
+    <title>mol_stats()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>mol_stats</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>mol_stats</secondary></indexterm>
+<para><computeroutput>long mol_stats (<link linkend="_struct_bmolecule">Bmolecule</link> * mol, int show)</computeroutput></para><para>
+
+<para>Calculates the statistics of a molecule. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mol</entry>
+                                <entry>
+<para>the molecule. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>show</entry>
+                                <entry>
+<para>flag to show statistics. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of atoms (&lt;0 if writing failed). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1366 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a0260e8ec88cebd8a1a06debbaa4e79cc"/>    <section>
+    <title>molecule_add()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>molecule_add</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molecule_add</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolecule">Bmolecule</link>* molecule_add (<link linkend="_struct_bmolecule">Bmolecule</link> ** mol, <link linkend="_class_bstring">Bstring</link> &amp; name)</computeroutput></para><para>
+Definition at line 82 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1ae18fb10c9fbf67f14dac1ca697377272"/>    <section>
+    <title>molecule_add()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>molecule_add</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molecule_add</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolecule">Bmolecule</link>* molecule_add (<link linkend="_struct_bmolecule">Bmolecule</link> ** mol, char * name)</computeroutput></para><para>
+
+<para>Adds a molecule to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**mol</entry>
+                                <entry>
+<para>pointer to any molecule in the list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*name</entry>
+                                <entry>
+<para>molecule name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolecule* new molecule. <literallayout><computeroutput>The function allocates memory for a new molecule structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 76 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a1c9c568d941d48cc36e498b8454b723a"/>    <section>
+    <title>molecule_copy()</title>
+<indexterm><primary>molecule_copy</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molecule_copy</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolecule">Bmolecule</link>* molecule_copy (<link linkend="_struct_bmolecule">Bmolecule</link> * mol)</computeroutput></para><para>
+
+<para>Copies a molecule. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mol</entry>
+                                <entry>
+<para>the molecule to be copied. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolecule* the new molecule, NULL if copy failed. <literallayout><computeroutput>Generates a new molecule with the same structure as the given molecule.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 603 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1aa641952a9836b183dce7853681004165"/>    <section>
+    <title>molecule_get_masses()</title>
+<indexterm><primary>molecule_get_masses</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molecule_get_masses</secondary></indexterm>
+<para><computeroutput>int molecule_get_masses (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bstring">Bstring</link> &amp; paramfile)</computeroutput></para><para>
+
+<para>Gets atomic masses from a parameter file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;paramfile</entry>
+                                <entry>
+<para>parameter file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1495 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1ab36800fa7bf2b7e292ef98ffb0fbdf6f"/>    <section>
+    <title>molecule_kill()</title>
+<indexterm><primary>molecule_kill</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molecule_kill</secondary></indexterm>
+<para><computeroutput>int molecule_kill (<link linkend="_struct_bmolecule">Bmolecule</link> * mol)</computeroutput></para><para>
+
+<para>Destroys a molecule. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mol</entry>
+                                <entry>
+<para>the molecule. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 421 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a4b73b44b430bf88bc308c6a6f25752b2"/>    <section>
+    <title>molecule_update_comment()</title>
+<indexterm><primary>molecule_update_comment</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molecule_update_comment</secondary></indexterm>
+<para><computeroutput>int molecule_update_comment (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, int n, char ** strings)</computeroutput></para><para>
+
+<para>Puts a set of strings and time in the main comment of a molecule group. </para>
+</para>
+
+<para><literallayout><computeroutput>This is designed to pack the command line into a string followed by
+a second string for the time.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>the number of strings. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>**strings</entry>
+                                <entry>
+<para>an array of strings. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int string length of the new comment. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1471 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1ada98d651ff7ac302c4d662fcbc7ab37e"/>    <section>
+    <title>molecules_to_molgroups()</title>
+<indexterm><primary>molecules_to_molgroups</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molecules_to_molgroups</secondary></indexterm>
+<para><computeroutput>int molecules_to_molgroups (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Converts molecules in a molecule group to individual molecule groups. </para>
+</para>
+
+<para><literallayout><computeroutput>A new linked list of molecule groups is created and the links to the
+individual molecules set. 
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure (modified). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1748 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1ad5fecdafdba4720c1904f30e9870a6ef"/>    <section>
+    <title>molgroup_bond_list_copy()</title>
+<indexterm><primary>molgroup_bond_list_copy</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molgroup_bond_list_copy</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bbond">Bbond</link>* molgroup_bond_list_copy (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroupcopy)</computeroutput></para><para>
+
+<para>Copies a bond list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*molgroupcopy</entry>
+                                <entry>
+<para>molecule group structure to copy bonds to. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bbond* new bond list. <literallayout><computeroutput>A copy of the molecule group bond list is generated and returned. 
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 710 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1af59a5326e13d4b49368012c3d41ec672"/>    <section>
+    <title>molgroup_bond_list_generate()</title>
+<indexterm><primary>molgroup_bond_list_generate</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molgroup_bond_list_generate</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bbond">Bbond</link>* molgroup_bond_list_generate (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double maxlength, int wrap)</computeroutput></para><para>
+
+<para>Generates a bond list based on atom separation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>maxlength</entry>
+                                <entry>
+<para>maximum bond length. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wrap</entry>
+                                <entry>
+<para>wrap around periodic boundaries if !=0. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bbond* new bond list. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1564 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a643c7bf4faf29ed87773f9b463fa9629"/>    <section>
+    <title>molgroup_consolidate_gaps()</title>
+<indexterm><primary>molgroup_consolidate_gaps</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molgroup_consolidate_gaps</secondary></indexterm>
+<para><computeroutput>int molgroup_consolidate_gaps (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Removes redundant gaps from an alignment. </para>
+</para>
+
+<para><literallayout><computeroutput>All positions in an alignment with only gaps are removed.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1253 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1adde4b5b613ccde6e4c42cab22f65340d"/>    <section>
+    <title>molgroup_copy()</title>
+<indexterm><primary>molgroup_copy</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molgroup_copy</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolgroup">Bmolgroup</link>* molgroup_copy (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Copies a molecule group. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolgroup* new molecule group. <literallayout><computeroutput>All parts of a molecule group are copied to a completely new structure
+hierarchy, except sequence flag array.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 551 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a09944fa9dc092ab7eebc239d0da57d47"/>    <section>
+    <title>molgroup_count_atoms()</title>
+<indexterm><primary>molgroup_count_atoms</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molgroup_count_atoms</secondary></indexterm>
+<para><computeroutput>long molgroup_count_atoms (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Counts the total number of atoms in a molecule group. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of atoms. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1128 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a3fcfe8f771cd6f1dcf5a4d6be14597f8"/>    <section>
+    <title>molgroup_count_molecules()</title>
+<indexterm><primary>molgroup_count_molecules</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molgroup_count_molecules</secondary></indexterm>
+<para><computeroutput>long molgroup_count_molecules (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Counts the total number of molecules in a molecule group. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of molecules. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1079 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a80bbbe70f861ffd10cb9f1cafa6cab96"/>    <section>
+    <title>molgroup_count_residues()</title>
+<indexterm><primary>molgroup_count_residues</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molgroup_count_residues</secondary></indexterm>
+<para><computeroutput>long molgroup_count_residues (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Counts the total number of residues in a molecule group. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of residues. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1094 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1aacc556c48eb0a50d7001e55d5035b489"/>    <section>
+    <title>molgroup_from_molgroup_list()</title>
+<indexterm><primary>molgroup_from_molgroup_list</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molgroup_from_molgroup_list</secondary></indexterm>
+<para><computeroutput>int molgroup_from_molgroup_list (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Converts a molecule group list to a single molecule group. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The input molecule group list is replace by a single molecule group. 
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 764 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a9e1b46ffcc90a66b160481d549cb4894"/>    <section>
+    <title>molgroup_init()</title>
+<indexterm><primary>molgroup_init</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molgroup_init</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolgroup">Bmolgroup</link>* molgroup_init ( )</computeroutput></para><para>
+
+<para>Initializes and allocates a new molecule group. </para>
+</para>
+
+<para><formalpara><title>Returns</title>
+
+<para>Bmolgroup* the new molecule group, NULL if initialization failed. <literallayout><computeroutput>The selection string is set to &quot;all&quot;.
+The spacegroup is set to 1, the space group string to &quot;P 1&quot;.
+The point group is set to &quot;C1&quot;.
+The unit cell is set to 1,1,1,90,90,90.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 45 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a6945fc3f2ded87a0ff7c9d70bb0fb67b"/>    <section>
+    <title>molgroup_kill()</title>
+<indexterm><primary>molgroup_kill</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molgroup_kill</secondary></indexterm>
+<para><computeroutput>int molgroup_kill (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Destroys a molecule group. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 378 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a2bc2d01474dbd8fd75b3a425dd68c2a3"/>    <section>
+    <title>molgroup_list_copy()</title>
+<indexterm><primary>molgroup_list_copy</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molgroup_list_copy</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolgroup">Bmolgroup</link>* molgroup_list_copy (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Copies a molecule group list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolgroup* new molecule group list. <literallayout><computeroutput>All molecule groups are copied to a completely new list.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 526 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1ace0bc318a068bc0c942574a9797200c7"/>    <section>
+    <title>molgroup_list_kill()</title>
+<indexterm><primary>molgroup_list_kill</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molgroup_list_kill</secondary></indexterm>
+<para><computeroutput>int molgroup_list_kill (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Destroys a molecule group linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group linked list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 351 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a3d3f996ec767099f9f87f310cd36336d"/>    <section>
+    <title>molgroup_list_write()</title>
+<indexterm><primary>molgroup_list_write</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molgroup_list_write</secondary></indexterm>
+<para><computeroutput>int molgroup_list_write (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Writes a molecule group list. </para>
+</para>
+
+<para><literallayout><computeroutput>The output files are numbered if the list constains more than one molecule group.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*filename</entry>
+                                <entry>
+<para>the file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of molecules written (&lt;0 if writing failed). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1057 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1ac02e917459746ac7d00a8ebdcb3e87dd"/>    <section>
+    <title>molgroup_stats()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>molgroup_stats</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molgroup_stats</secondary></indexterm>
+<para><computeroutput>long molgroup_stats (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+Definition at line 1353 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a1b4483d146b6e58e6a86bf60a081d896"/>    <section>
+    <title>molgroup_stats()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>molgroup_stats</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>molgroup_stats</secondary></indexterm>
+<para><computeroutput>long molgroup_stats (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, int show)</computeroutput></para><para>
+
+<para>Calculates the statistics of a molecule group. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>show</entry>
+                                <entry>
+<para>flag to show statistics. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of molecules (&lt;0 if writing failed). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1300 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a1b420908c413bf45ff7d7a501cad964d"/>    <section>
+    <title>read_molecule()<computeroutput>[1/3]</computeroutput></title>
+<indexterm><primary>read_molecule</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>read_molecule</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolgroup">Bmolgroup</link>* read_molecule (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bstring">Bstring</link> &amp; atom_select, <link linkend="_class_bstring">Bstring</link> &amp; paramfile)</computeroutput></para><para>
+Definition at line 830 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a9f046a01f64adc31e270afde4071606d"/>    <section>
+    <title>read_molecule()<computeroutput>[2/3]</computeroutput></title>
+<indexterm><primary>read_molecule</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>read_molecule</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolgroup">Bmolgroup</link>* read_molecule (<link linkend="_class_bstring">Bstring</link> * file_list, int set_pbc, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; box, <link linkend="_class_bstring">Bstring</link> atom_select, <link linkend="_class_bstring">Bstring</link> paramfile)</computeroutput></para><para>
+
+<para>Reads and catenates multiple molecule files. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>file_list</entry>
+                                <entry>
+<para>list of file names. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>set_pbc</entry>
+                                <entry>
+<para>flag to fit within periodic boundaries. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>box</entry>
+                                <entry>
+<para>periodic boundary box. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>atom_select</entry>
+                                <entry>
+<para>atomic selection. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>paramfile</entry>
+                                <entry>
+<para>atomic parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolgroup* new molecule group. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 920 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a1762ade3058f826568992b27932e7c0d"/>    <section>
+    <title>read_molecule()<computeroutput>[3/3]</computeroutput></title>
+<indexterm><primary>read_molecule</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>read_molecule</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bmolgroup">Bmolgroup</link>* read_molecule (const char * filename, const char * atom_select, const char * paramfile)</computeroutput></para><para>
+
+<para>The generalized function for reading molecular files. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*filename</entry>
+                                <entry>
+<para>the file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*atom_select</entry>
+                                <entry>
+<para>a selection string. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*paramfile</entry>
+                                <entry>
+<para>parameter file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmolgroup* new molecule group, NULL if reading failed. <literallayout><computeroutput>All sequence and atomic coordinate information is read from a file into
+an internal hierarchy of structures in linked lists:
+    Bmolgroup   molecule group or collection of molecules
+    Bmolecule   linked list of molecules in the group
+    Bresidue    linked list of residues in a molecule
+    Batom       linked list of atoms in a residue
+    Bbond       linked list of bonds in the molecule group
+The selection string is used to select for specific atom types:
+    CA          C-alpha atoms only
+The parameter file is used to load atomic properties, such as mass
+    and charge. The default file is bsoft/parameters/atom_prop.star.
+The input format is based on the file name extension.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 822 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1ad8f21c2790e27b24f3aa9fc512a64f0c"/>    <section>
+    <title>residue_add()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>residue_add</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>residue_add</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bresidue">Bresidue</link>* residue_add (<link linkend="_struct_bresidue">Bresidue</link> ** res, <link linkend="_class_bstring">Bstring</link> &amp; type)</computeroutput></para><para>
+Definition at line 119 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a0d048192737fec46783a157b2eedf871"/>    <section>
+    <title>residue_add()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>residue_add</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>residue_add</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bresidue">Bresidue</link>* residue_add (<link linkend="_struct_bresidue">Bresidue</link> ** res, const char * type)</computeroutput></para><para>
+
+<para>Adds a residue to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**res</entry>
+                                <entry>
+<para>pointer to any residue in the list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*type</entry>
+                                <entry>
+<para>residue type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bresidue* new residue. <literallayout><computeroutput>The function allocates memory for a new residue structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 113 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a05967305daa4c372f488f452b691fa68"/>    <section>
+    <title>residue_count()</title>
+<indexterm><primary>residue_count</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>residue_count</secondary></indexterm>
+<para><computeroutput>long residue_count (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Counts the number of residues in a molecule group. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of residues. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 188 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1a467c2cde10b55a4ce5e041d7c18d98c4"/>    <section>
+    <title>residue_kill()</title>
+<indexterm><primary>residue_kill</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>residue_kill</secondary></indexterm>
+<para><computeroutput>int residue_kill (<link linkend="_struct_bresidue">Bresidue</link> * res)</computeroutput></para><para>
+
+<para>Destroys a residue. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*res</entry>
+                                <entry>
+<para>the residue. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 457 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1ac895a2b1d25a507879a484d5ed9edd43"/>    <section>
+    <title>write_molecule()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>write_molecule</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>write_molecule</secondary></indexterm>
+<para><computeroutput>int write_molecule (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+Definition at line 985 of file rwmolecule.cpp.</para>
+    </section><anchor xml:id="_rwmolecule_8h_1ab1338f33d05dc8b362c04cf5cc5d6057"/>    <section>
+    <title>write_molecule()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>write_molecule</primary><secondary>rwmolecule.h</secondary></indexterm>
+<indexterm><primary>rwmolecule.h</primary><secondary>write_molecule</secondary></indexterm>
+<para><computeroutput>int write_molecule (char * filename, <link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Writes a molecule group. </para>
+</para>
+
+<para><literallayout><computeroutput>The output format is based on the file name extension.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*filename</entry>
+                                <entry>
+<para>the file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of molecules written (&lt;0 if writing failed). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 979 of file rwmolecule.cpp.</para>
+</section>
+</section>
+</section>

@@ -1,0 +1,650 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_seq__analysis_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mol/seq_analysis.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mol/seq_analysis.cpp</primary></indexterm>
+<para>
+
+<para>Analysis of protein sequences. </para>
+ 
+</para>
+<programlisting>#include &quot;seq_analysis.h&quot;
+#include &quot;seq_util.h&quot;
+#include &quot;ps_sequence.h&quot;
+#include &quot;moving_average.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>double <link linkend="_seq__analysis_8cpp_1a3263a80ec4d193a5a71ddabb07abf9be">log_2</link> (double a)</para>
+</listitem>
+            <listitem><para>long <link linkend="_seq__analysis_8cpp_1ae63e986b2072c8dd374e972801278443">seq_limit</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bstring">Bstring</link> &amp;refseq)</para>
+
+<para>Limits the selection to the reference sequence in an aligned set. </para>
+</listitem>
+            <listitem><para><link linkend="_class_matrix">Matrix</link> <link linkend="_seq__analysis_8cpp_1af59ab959240bc0fb3ed8dcfe80a077ee">seq_aligned_identity</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Calculates the pairwise identities between aligned sequences. </para>
+</listitem>
+            <listitem><para><link linkend="_class_matrix">Matrix</link> <link linkend="_seq__analysis_8cpp_1a2001a9ef78ad6a78096bafaaf14db48a">seq_aligned_similarity</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, double threshold, <link linkend="_struct_bresidue__matrix">Bresidue_matrix</link> *simat)</para>
+
+<para>Calculates the pairwise similarities between aligned sequences. </para>
+</listitem>
+            <listitem><para>long <link linkend="_seq__analysis_8cpp_1ab7bbfbb31c4f0105fcfc428c96dd50ba">seq_select</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, long minlen, long maxlen)</para>
+
+<para>Selects sequences within a range of lengths. </para>
+</listitem>
+            <listitem><para>long <link linkend="_seq__analysis_8cpp_1ae565b62640f8f3f1509750d025f0c1d0">seq_select</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_matrix">Matrix</link> mat, long ref, double cutoff)</para>
+
+<para>Selects sequences based on a comparison matrix of aligned sequences. </para>
+</listitem>
+            <listitem><para>long <link linkend="_seq__analysis_8cpp_1a07152153a8fef5bb924dc3f6942c8254">seq_delete</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_matrix">Matrix</link> mat)</para>
+
+<para>Deletes non-selected sequences and corresponding elelments of a comparison matrix. </para>
+</listitem>
+            <listitem><para>string <link linkend="_seq__analysis_8cpp_1aca6f84917da8feae585df8682b1ed7d6">seq_aligned_profile</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Generates a PROSITE format profile from an aligned set of sequences. </para>
+</listitem>
+            <listitem><para>int <link linkend="_seq__analysis_8cpp_1ac0bf64706aa52e370e6b0b9478a8484e">seq_aligned_information</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, int window, <link linkend="_class_bstring">Bstring</link> &amp;psfile)</para>
+
+<para>Calculates the sequence logo representation for an alignment. </para>
+</listitem>
+            <listitem><para>int <link linkend="_seq__analysis_8cpp_1ab1046c781c78bce22535ae13ea69dd5c">seq_aligned_hydrophobicity</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, int window, double threshold, <link linkend="_class_bstring">Bstring</link> &amp;hphobfile, <link linkend="_class_bstring">Bstring</link> &amp;psfile)</para>
+
+<para>Calculates the average hydrophobicity at every position in an alignment. </para>
+</listitem>
+            <listitem><para>vector&lt; <link linkend="_class_complex">Complex</link>&lt; float &gt; &gt; <link linkend="_seq__analysis_8cpp_1ab88255babb35572984165f1fc5195900">seq_frequency_analysis</link> (long win, long start, long end, vector&lt; double &gt; &amp;data)</para>
+
+<para>Fourier transforms a vector for frequency analysis. </para>
+</listitem>
+            <listitem><para>vector&lt; double &gt; <link linkend="_seq__analysis_8cpp_1ac658436dded6348d66a097339744127d">seq_aligned_weight</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+</listitem>
+            <listitem><para><link linkend="_class_matrix">Matrix</link> <link linkend="_seq__analysis_8cpp_1a29d606323d59e804ca0dc1c23c734878">seq_correlated_mutation</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_class_bstring">Bstring</link> &amp;refseqid, double cutoff, <link linkend="_class_bstring">Bstring</link> &amp;simfile)</para>
+
+<para>Correlated mutation analysis of an alignment. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_seq__analysis_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Analysis of protein sequences. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19990123 </para>
+
+<para>Modified: 20210426 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_seq__analysis_8cpp_1a3263a80ec4d193a5a71ddabb07abf9be"/>    <section>
+    <title>log_2()</title>
+<indexterm><primary>log_2</primary><secondary>seq_analysis.cpp</secondary></indexterm>
+<indexterm><primary>seq_analysis.cpp</primary><secondary>log_2</secondary></indexterm>
+<para><computeroutput>double log_2 (double a)</computeroutput></para><para>
+Definition at line 20 of file seq_analysis.cpp.</para>
+    </section><anchor xml:id="_seq__analysis_8cpp_1ab1046c781c78bce22535ae13ea69dd5c"/>    <section>
+    <title>seq_aligned_hydrophobicity()</title>
+<indexterm><primary>seq_aligned_hydrophobicity</primary><secondary>seq_analysis.cpp</secondary></indexterm>
+<indexterm><primary>seq_analysis.cpp</primary><secondary>seq_aligned_hydrophobicity</secondary></indexterm>
+<para><computeroutput>int seq_aligned_hydrophobicity (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, int window, double threshold, <link linkend="_class_bstring">Bstring</link> &amp; hphobfile, <link linkend="_class_bstring">Bstring</link> &amp; psfile)</computeroutput></para><para>
+
+<para>Calculates the average hydrophobicity at every position in an alignment. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the set of sequences. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>window</entry>
+                                <entry>
+<para>moving average window. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>threshold</entry>
+                                <entry>
+<para>fraction of sequences with a residue in a position. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;hphobfile</entry>
+                                <entry>
+<para>parameter file. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;psfile</entry>
+                                <entry>
+<para>postscript output file. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0.</para>
+</formalpara>
+The default hydrophobicity scale is the GES scale. </para>
+<para>
+Definition at line 642 of file seq_analysis.cpp.</para>
+    </section><anchor xml:id="_seq__analysis_8cpp_1af59ab959240bc0fb3ed8dcfe80a077ee"/>    <section>
+    <title>seq_aligned_identity()</title>
+<indexterm><primary>seq_aligned_identity</primary><secondary>seq_analysis.cpp</secondary></indexterm>
+<indexterm><primary>seq_analysis.cpp</primary><secondary>seq_aligned_identity</secondary></indexterm>
+<para><computeroutput><link linkend="_class_matrix">Matrix</link> seq_aligned_identity (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Calculates the pairwise identities between aligned sequences. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the set of sequences. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_matrix">Matrix</link> the matrix of identities.</para>
+</formalpara>
+The identity between two sequences is defined as: number of identical residues identity = -------------------------&#8212; overlap where the overlap is the number of positions with residues in both sequences. </para>
+<para>
+Definition at line 70 of file seq_analysis.cpp.</para>
+    </section><anchor xml:id="_seq__analysis_8cpp_1ac0bf64706aa52e370e6b0b9478a8484e"/>    <section>
+    <title>seq_aligned_information()</title>
+<indexterm><primary>seq_aligned_information</primary><secondary>seq_analysis.cpp</secondary></indexterm>
+<indexterm><primary>seq_analysis.cpp</primary><secondary>seq_aligned_information</secondary></indexterm>
+<para><computeroutput>int seq_aligned_information (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, int window, <link linkend="_class_bstring">Bstring</link> &amp; psfile)</computeroutput></para><para>
+
+<para>Calculates the sequence logo representation for an alignment. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the set of sequences. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>window</entry>
+                                <entry>
+<para>window for calculating the moving average. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;psfile</entry>
+                                <entry>
+<para>the postscript file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0.</para>
+</formalpara>
+The information content of each position in an alignment is calculated as: information = log_2(n) - sum(pi * log_2(pi) ) fi pi = ----&#8212; sum(fi) fi = frequency of residue type i at this position n = sum(fi) if sum(fi) &lt; 20, otherwise n = 20 A moving average of the information is calculated over a given window to smooth the resultant data. The sequence logo representation for the occurrence of every residue type at every position is generated and written into a postscript file. </para>
+<para>
+Definition at line 502 of file seq_analysis.cpp.</para>
+    </section><anchor xml:id="_seq__analysis_8cpp_1aca6f84917da8feae585df8682b1ed7d6"/>    <section>
+    <title>seq_aligned_profile()</title>
+<indexterm><primary>seq_aligned_profile</primary><secondary>seq_analysis.cpp</secondary></indexterm>
+<indexterm><primary>seq_analysis.cpp</primary><secondary>seq_aligned_profile</secondary></indexterm>
+<para><computeroutput>string seq_aligned_profile (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Generates a PROSITE format profile from an aligned set of sequences. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the set of sequences. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>string profile in PROSITE format.</para>
+</formalpara>
+At each position in the alignment, the number of distinct residue types are counted. If there are more than 3 residue types represented at a position, or there is a gap, it is designated as variable by an &quot;x&quot;. The profile finally contains 1-3 residue type possibilities for highly conserved positions interspersed by variable length gaps. </para>
+<para>
+Definition at line 419 of file seq_analysis.cpp.</para>
+    </section><anchor xml:id="_seq__analysis_8cpp_1a2001a9ef78ad6a78096bafaaf14db48a"/>    <section>
+    <title>seq_aligned_similarity()</title>
+<indexterm><primary>seq_aligned_similarity</primary><secondary>seq_analysis.cpp</secondary></indexterm>
+<indexterm><primary>seq_analysis.cpp</primary><secondary>seq_aligned_similarity</secondary></indexterm>
+<para><computeroutput><link linkend="_class_matrix">Matrix</link> seq_aligned_similarity (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, double threshold, <link linkend="_struct_bresidue__matrix">Bresidue_matrix</link> * simat)</computeroutput></para><para>
+
+<para>Calculates the pairwise similarities between aligned sequences. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the set of sequences. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>threshold</entry>
+                                <entry>
+<para>threshold to accept residues as similar. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*simat</entry>
+                                <entry>
+<para>residue similarity matrix. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_matrix">Matrix</link> the matrix of similarities.</para>
+</formalpara>
+The similarity between two sequences is defined as: sum(residue similarity) similarity = --------------------&#8212; overlap number of residues with similarity &gt; threshold fraction similarity = -------------------------------------------&#8212; overlap where the overlap is the number of positions with residues in both sequences. The residue similarity is taken from a residue substitution matrix. The default substitution matrix is BLOSUM62. </para>
+<para>
+Definition at line 149 of file seq_analysis.cpp.</para>
+    </section><anchor xml:id="_seq__analysis_8cpp_1ac658436dded6348d66a097339744127d"/>    <section>
+    <title>seq_aligned_weight()</title>
+<indexterm><primary>seq_aligned_weight</primary><secondary>seq_analysis.cpp</secondary></indexterm>
+<indexterm><primary>seq_analysis.cpp</primary><secondary>seq_aligned_weight</secondary></indexterm>
+<para><computeroutput>vector&lt;double&gt; seq_aligned_weight (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+Definition at line 819 of file seq_analysis.cpp.</para>
+    </section><anchor xml:id="_seq__analysis_8cpp_1a29d606323d59e804ca0dc1c23c734878"/>    <section>
+    <title>seq_correlated_mutation()</title>
+<indexterm><primary>seq_correlated_mutation</primary><secondary>seq_analysis.cpp</secondary></indexterm>
+<indexterm><primary>seq_analysis.cpp</primary><secondary>seq_correlated_mutation</secondary></indexterm>
+<para><computeroutput><link linkend="_class_matrix">Matrix</link> seq_correlated_mutation (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bstring">Bstring</link> &amp; refseqid, double cutoff, <link linkend="_class_bstring">Bstring</link> &amp; simfile)</computeroutput></para><para>
+
+<para>Correlated mutation analysis of an alignment. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the set of aligned sequences. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>refseqid</entry>
+                                <entry>
+<para>reference sequence to report on. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>cutoff</entry>
+                                <entry>
+<para>cutoff for reporting correlated mutations. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;simfile</entry>
+                                <entry>
+<para>similarity matrix file. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_matrix">Matrix</link> the analysis result matrix.</para>
+</formalpara>
+Reference: Gobel, Sander &amp; Schneider (1994) Proteins 18, 309-317. Mutation (residue variation) correlation is defined as: 1 r(i,j) = ----------&#8212; sum(w(k,l)*(s(i,k,l) - &lt;s(i)&gt;)*(s(j,k,l) - &lt;s(j)&gt;)) m^2*o(i)*o(j) where: m: number of sequences o(i): standard deviation of similarities at alignment position i w(k,l): weight for sequences k and l (1 - fractional identity: see function seq_aligned_identity) s(i,k,l): similarity for alignment position i between sequences k and l &lt;s(i)&gt;: average similarity at alignment position i Individual high-scoring correlations (using the given cutoff value) are reported as follows: Res1 Num1 Res2 Num2 Total Corr T 9 I 17 210 0.631 TAIIIVVVIVVVIVIIIIIII IILLLLLLLLLLLLLLLLLLL The first 4 values gives the type and alignment position of the correlating residues. The total is the number of comparisons made: maximally m*(m-1)/2 The last number is the correlation coefficient. The following two lines gives the corresponding residues at the two alignment positions for all the sequences, allowing the user to see on what basis this is a high correlation. </para>
+<para>
+Definition at line 884 of file seq_analysis.cpp.</para>
+    </section><anchor xml:id="_seq__analysis_8cpp_1a07152153a8fef5bb924dc3f6942c8254"/>    <section>
+    <title>seq_delete()</title>
+<indexterm><primary>seq_delete</primary><secondary>seq_analysis.cpp</secondary></indexterm>
+<indexterm><primary>seq_analysis.cpp</primary><secondary>seq_delete</secondary></indexterm>
+<para><computeroutput>long seq_delete (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_matrix">Matrix</link> mat)</computeroutput></para><para>
+
+<para>Deletes non-selected sequences and corresponding elelments of a comparison matrix. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the set of sequences. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mat</entry>
+                                <entry>
+<para>comparison matrix. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of sequences retained. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 359 of file seq_analysis.cpp.</para>
+    </section><anchor xml:id="_seq__analysis_8cpp_1ab88255babb35572984165f1fc5195900"/>    <section>
+    <title>seq_frequency_analysis()</title>
+<indexterm><primary>seq_frequency_analysis</primary><secondary>seq_analysis.cpp</secondary></indexterm>
+<indexterm><primary>seq_analysis.cpp</primary><secondary>seq_frequency_analysis</secondary></indexterm>
+<para><computeroutput>vector&lt;<link linkend="_class_complex">Complex</link>&lt;float&gt; &gt; seq_frequency_analysis (long win, long start, long end, vector&lt; double &gt; &amp; data)</computeroutput></para><para>
+
+<para>Fourier transforms a vector for frequency analysis. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>win</entry>
+                                <entry>
+<para>window size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>start</entry>
+                                <entry>
+<para>start within window. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>end</entry>
+                                <entry>
+<para>end within window. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*data</entry>
+                                <entry>
+<para>sequence. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0.</para>
+</formalpara>
+A brute force Fourier transform is done. </para>
+<para>
+Definition at line 772 of file seq_analysis.cpp.</para>
+    </section><anchor xml:id="_seq__analysis_8cpp_1ae63e986b2072c8dd374e972801278443"/>    <section>
+    <title>seq_limit()</title>
+<indexterm><primary>seq_limit</primary><secondary>seq_analysis.cpp</secondary></indexterm>
+<indexterm><primary>seq_analysis.cpp</primary><secondary>seq_limit</secondary></indexterm>
+<para><computeroutput>long seq_limit (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_bstring">Bstring</link> &amp; refseq)</computeroutput></para><para>
+
+<para>Limits the selection to the reference sequence in an aligned set. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the set of sequences. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;refseq</entry>
+                                <entry>
+<para>reference sequence identifier. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of selected residues. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 33 of file seq_analysis.cpp.</para>
+    </section><anchor xml:id="_seq__analysis_8cpp_1ab7bbfbb31c4f0105fcfc428c96dd50ba"/>    <section>
+    <title>seq_select()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>seq_select</primary><secondary>seq_analysis.cpp</secondary></indexterm>
+<indexterm><primary>seq_analysis.cpp</primary><secondary>seq_select</secondary></indexterm>
+<para><computeroutput>long seq_select (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, long minlen, long maxlen)</computeroutput></para><para>
+
+<para>Selects sequences within a range of lengths. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the set of sequences. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>minlen</entry>
+                                <entry>
+<para>minimum length. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>maxlen</entry>
+                                <entry>
+<para>maximum length. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of sequences retained. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 230 of file seq_analysis.cpp.</para>
+    </section><anchor xml:id="_seq__analysis_8cpp_1ae565b62640f8f3f1509750d025f0c1d0"/>    <section>
+    <title>seq_select()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>seq_select</primary><secondary>seq_analysis.cpp</secondary></indexterm>
+<indexterm><primary>seq_analysis.cpp</primary><secondary>seq_select</secondary></indexterm>
+<para><computeroutput>long seq_select (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_class_matrix">Matrix</link> mat, long ref, double cutoff)</computeroutput></para><para>
+
+<para>Selects sequences based on a comparison matrix of aligned sequences. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>the set of sequences. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mat</entry>
+                                <entry>
+<para>comparison matrix. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ref</entry>
+                                <entry>
+<para>reference sequence number (starting at 1). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>cutoff</entry>
+                                <entry>
+<para>threshold for selecting sequences. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of sequences retained. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 263 of file seq_analysis.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_seq__analysis_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>seq_analysis.cpp</secondary></indexterm>
+<indexterm><primary>seq_analysis.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

@@ -1,0 +1,311 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_tcltk__bmg_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/tcltk/tcltk_bmg.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/tcltk/tcltk_bmg.cpp</primary></indexterm>
+<para>
+
+<para>A shared object to manage micrograph parameter files in TCL/Tk. </para>
+ 
+</para>
+<programlisting>#include &lt;tk.h&gt;
+#include &quot;tcltk_bbox.h&quot;
+#include &quot;tcltk_bfil.h&quot;
+#include &quot;tcltk_bhelix.h&quot;
+#include &quot;tcltk_bxtal.h&quot;
+#include &quot;tcltk_bmarker.h&quot;
+#include &quot;mg_processing.h&quot;
+#include &quot;mg_multiple.h&quot;
+#include &quot;mg_img_proc.h&quot;
+#include &quot;mg_select.h&quot;
+#include &quot;mg_ctf.h&quot;
+#include &quot;mg_ctf_fit.h&quot;
+#include &quot;mg_tomography.h&quot;
+#include &quot;mg_tags.h&quot;
+#include &quot;rwmg.h&quot;
+#include &quot;rwimg.h&quot;
+#include &quot;rwmodel_param.h&quot;
+#include &quot;scatter.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;timer.h&quot;
+#include &quot;utilities.h&quot;
+#include &lt;sys/stat.h&gt;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmg_8cpp_1a849facd61150f3c7a83a9fa94cead3c5">do_get</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>int <link linkend="_tcltk__bmg_8cpp_1a51bb9495b9a0955309d60344b286c38b">do_set</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmg_8cpp_1abf6bd1f3529e74285bfcbce23667173c">do_rps</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmg_8cpp_1a9986d22f118c63e94ca27e54cff873a6">do_emfp</link> (int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmg_8cpp_1a2aeb269e01d3539beba1e2ccc8e113d1">do_material_list</link> ()</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmg_8cpp_1ac89f28ea0a4bf558ae07f15c9f829a37">do_ctf_fit</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmg_8cpp_1aae78db101320ffbc1dbc0d8e2dc3af31">do_mg_sort</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>int <link linkend="_tcltk__bmg_8cpp_1a663af2a19fa4dc6330644c152050de39">project_processing</link> (Tcl_Interp *interp, int objc, Tcl_Obj *CONST objv[])</para>
+
+<para>Implements the &quot;Bmg&quot; command in Tcl/Tk to access micrograph parameter files through Bsoft. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="_tcltk__bmg_8cpp_1ad1622be535247d3f3a313b374677d7aa">get_all_file_names</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="_tcltk__bmg_8cpp_1a4c800cc307bcff5a6b38a1c31934f0e9">get_all_file_names</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> imgtype)</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmg_8cpp_1a66823305785303716aa59f76b0e3359d">part_select</link> (<link linkend="_class_bparticle">Bparticle</link> *part, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+            <listitem><para>Tcl_Obj * <link linkend="_tcltk__bmg_8cpp_1a00b3a3d6ee6bbe798d4516a4a7d154e0">part_fom</link> (<link linkend="_class_bparticle">Bparticle</link> *part, int objc, Tcl_Obj *CONST objv[])</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_tcltk__bmg_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para><link linkend="_class_bproject">Bproject</link> * <link linkend="_tcltk__bmg_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link></para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_tcltk__bmg_8cpp_1a3628124083d8f4fbc4ffd16e5b6202bf">imglist</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>A shared object to manage micrograph parameter files in TCL/Tk. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20030813 </para>
+
+<para>Modified: 20210311 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_tcltk__bmg_8cpp_1ac89f28ea0a4bf558ae07f15c9f829a37"/>    <section>
+    <title>do_ctf_fit()</title>
+<indexterm><primary>do_ctf_fit</primary><secondary>tcltk_bmg.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmg.cpp</primary><secondary>do_ctf_fit</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * do_ctf_fit (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 1761 of file tcltk_bmg.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmg_8cpp_1a9986d22f118c63e94ca27e54cff873a6"/>    <section>
+    <title>do_emfp()</title>
+<indexterm><primary>do_emfp</primary><secondary>tcltk_bmg.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmg.cpp</primary><secondary>do_emfp</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * do_emfp (int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 1689 of file tcltk_bmg.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmg_8cpp_1a849facd61150f3c7a83a9fa94cead3c5"/>    <section>
+    <title>do_get()</title>
+<indexterm><primary>do_get</primary><secondary>tcltk_bmg.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmg.cpp</primary><secondary>do_get</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * do_get (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 613 of file tcltk_bmg.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmg_8cpp_1a2aeb269e01d3539beba1e2ccc8e113d1"/>    <section>
+    <title>do_material_list()</title>
+<indexterm><primary>do_material_list</primary><secondary>tcltk_bmg.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmg.cpp</primary><secondary>do_material_list</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * do_material_list ( )</computeroutput></para><para>
+Definition at line 1744 of file tcltk_bmg.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmg_8cpp_1aae78db101320ffbc1dbc0d8e2dc3af31"/>    <section>
+    <title>do_mg_sort()</title>
+<indexterm><primary>do_mg_sort</primary><secondary>tcltk_bmg.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmg.cpp</primary><secondary>do_mg_sort</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * do_mg_sort (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 1883 of file tcltk_bmg.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmg_8cpp_1abf6bd1f3529e74285bfcbce23667173c"/>    <section>
+    <title>do_rps()</title>
+<indexterm><primary>do_rps</primary><secondary>tcltk_bmg.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmg.cpp</primary><secondary>do_rps</secondary></indexterm>
+<para><computeroutput>Tcl_Obj * do_rps (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 1552 of file tcltk_bmg.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmg_8cpp_1a51bb9495b9a0955309d60344b286c38b"/>    <section>
+    <title>do_set()</title>
+<indexterm><primary>do_set</primary><secondary>tcltk_bmg.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmg.cpp</primary><secondary>do_set</secondary></indexterm>
+<para><computeroutput>int do_set (<link linkend="_class_bproject">Bproject</link> * project, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 1179 of file tcltk_bmg.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmg_8cpp_1ad1622be535247d3f3a313b374677d7aa"/>    <section>
+    <title>get_all_file_names()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>get_all_file_names</primary><secondary>tcltk_bmg.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmg.cpp</primary><secondary>get_all_file_names</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> get_all_file_names (<link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+Definition at line 314 of file tcltk_bmg.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmg_8cpp_1a4c800cc307bcff5a6b38a1c31934f0e9"/>    <section>
+    <title>get_all_file_names()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>get_all_file_names</primary><secondary>tcltk_bmg.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmg.cpp</primary><secondary>get_all_file_names</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> get_all_file_names (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> imgtype)</computeroutput></para><para>
+Definition at line 425 of file tcltk_bmg.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmg_8cpp_1a00b3a3d6ee6bbe798d4516a4a7d154e0"/>    <section>
+    <title>part_fom()</title>
+<indexterm><primary>part_fom</primary><secondary>tcltk_bmg.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmg.cpp</primary><secondary>part_fom</secondary></indexterm>
+<para><computeroutput>Tcl_Obj* part_fom (<link linkend="_class_bparticle">Bparticle</link> * part, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 589 of file tcltk_bmg.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmg_8cpp_1a66823305785303716aa59f76b0e3359d"/>    <section>
+    <title>part_select()</title>
+<indexterm><primary>part_select</primary><secondary>tcltk_bmg.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmg.cpp</primary><secondary>part_select</secondary></indexterm>
+<para><computeroutput>Tcl_Obj* part_select (<link linkend="_class_bparticle">Bparticle</link> * part, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+Definition at line 567 of file tcltk_bmg.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmg_8cpp_1a663af2a19fa4dc6330644c152050de39"/>    <section>
+    <title>project_processing()</title>
+<indexterm><primary>project_processing</primary><secondary>tcltk_bmg.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmg.cpp</primary><secondary>project_processing</secondary></indexterm>
+<para><computeroutput>int project_processing (Tcl_Interp * interp, int objc, Tcl_Obj *CONST objv[])</computeroutput></para><para>
+
+<para>Implements the &quot;Bmg&quot; command in Tcl/Tk to access micrograph parameter files through Bsoft. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*interp</entry>
+                                <entry>
+<para>a Tcl interpreter within Tcl. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>objc</entry>
+                                <entry>
+<para>number of arguments passed (+1). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*objv[]</entry>
+                                <entry>
+<para>arguments passed as Tcl objects. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int Tcl result. <literallayout><computeroutput>Bmg command syntax:
+    Bmg &lt;action&gt; &lt;arguments&gt;.
+    where:
+        action          &quot;create&quot;, &quot;exists&quot;, &quot;read&quot;, &quot;add&quot;, &quot;write&quot;, &quot;kill&quot;, &quot;get&quot;, &quot;set&quot;, 
+                        &quot;image_type&quot;, &quot;rps&quot;, &quot;ctf_fit&quot;, &quot;update_matrices&quot;,
+                        &quot;unitcell_vectors&quot;  &quot;refine&quot; &quot;box&quot; &quot;filament&quot; &quot;node&quot; &quot;layerline&quot; &quot;spot&quot; &quot;marker&quot;
+        arguments               action-specific arguments:
+            &quot;create&quot;            &lt;number_micrographs&gt; &lt;number_reconstructions&gt;
+            &quot;read&quot;              &lt;filename&gt;
+            &quot;add&quot;               &lt;filename&gt;
+            &quot;write&quot;             &lt;filename&gt;
+            &quot;get&quot;               &lt;property&gt; [arguments]
+            &quot;set&quot;               &lt;property&gt; &lt;value&gt;
+            &quot;rps&quot;
+            &quot;ctf_fit&quot;           &lt;level&gt; &lt;lores&gt; &lt;hires&gt;
+            &quot;sort&quot;              &lt;tag&gt;
+            &quot;update_matrices&quot;
+            &quot;unitcell_vectors&quot;
+            &quot;findaxis&quot;          &lt;axis&gt; &lt;step&gt; &lt;start&gt; &lt;end&gt;
+            &quot;track&quot;             &lt;iterations&gt; &lt;refine_markers&gt;
+            &quot;refine&quot;            &lt;operation&gt;
+            &quot;box&quot;               [arguments]
+            &quot;filament&quot;          [arguments]
+            &quot;node&quot;              [arguments]
+            &quot;layerline&quot;         [arguments]
+            &quot;spot&quot;              [arguments]
+            &quot;marker&quot;            [arguments]
+            where:
+                property    &quot;active &lt;flag&gt;&quot;
+                            &quot;id &lt;string&gt;&quot;
+                            &quot;id_from_index &lt;mg_num&gt;&quot;
+                            &quot;img_num &lt;mg_num&gt;&quot;
+                            &quot;number_of_mg&quot;
+                            &quot;number_of_rec&quot;
+                            &quot;number_of_part&quot;
+                            &quot;field &lt;string&gt;&quot;
+                            &quot;filename &lt;string&gt; &lt;imgtype&gt;&quot;
+                            &quot;select &lt;y/n&gt;&quot;
+                            &quot;fom &lt;mg_num&gt;&quot;
+                            &quot;pixel_size &lt;angstrom&gt;&quot;
+                            &quot;size &lt;x&gt; &lt;y&gt; &lt;z&gt;&quot;
+                            &quot;origin &lt;x&gt; &lt;y&gt; &lt;z&gt; / &lt;mg_num&gt;&quot;
+                            &quot;part_origin &lt;x&gt; &lt;y&gt; &lt;z&gt; / &lt;part_num&gt;&quot;
+                            &quot;scale &lt;x&gt; &lt;y&gt; &lt;z&gt; / &lt;mg_num&gt;&quot;
+                            &quot;dose&quot; &lt;electrons/Å2&gt;
+                            &quot;intensity&quot;
+                            &quot;defocus &lt;angstrom&gt;&quot;
+                            &quot;defocus_deviation &lt;angstrom&gt;&quot;
+                            &quot;astigmatism_angle &lt;radians&gt;&quot;
+                            &quot;volt &lt;volts&gt;&quot;
+                            &quot;Cs &lt;angstrom&gt;&quot;
+                            &quot;amp_fac &lt;fraction&gt;&quot;
+                            &quot;focal_length &lt;angstrom&gt;&quot;
+                            &quot;aperture &lt;angstrom&gt;&quot;
+                            &quot;slit_width &lt;volts&gt;&quot;
+                            &quot;zero &lt;angstrom&gt;&quot;
+                            &quot;baseline &lt;string&gt;&quot;
+                            &quot;envelope &lt;string&gt;&quot;
+                            &quot;view &lt;mg_num&gt;&quot;
+                            &quot;axis [&lt;radians&gt;] &lt;mg_num&gt;&quot;
+                            &quot;tilt [&lt;radians&gt;] &lt;mg_num&gt;&quot;
+                            &quot;level [&lt;radians&gt;] &lt;mg_num&gt;&quot;
+                            &quot;unitcell &lt;ux&gt; &lt;uy&gt; &lt;vx&gt; &lt;vy&gt;&quot;
+                            &quot;helix_axis &lt;radians&gt;&quot;
+                            &quot;helix_rise &lt;angstrom&gt;&quot;
+                            &quot;helix_angle &lt;radians&gt;&quot;
+                            &quot;helix_radius &lt;angstrom&gt;&quot;
+                            &quot;box_size &lt;x&gt; &lt;y&gt; &lt;z&gt;&quot;
+                            &quot;bad_radius &lt;pixels&gt;&quot;
+                            &quot;filament_width &lt;width&gt;&quot;
+                            &quot;filament_node_radius&quot;
+                            &quot;marker_radius &lt;pixels&gt;&quot;
+Return values:
+    Each action may have a return value:
+        &quot;create&quot;    (none)
+        &quot;exists&quot;    0=no, 1=yes
+        &quot;read&quot;      micrograph id
+        &quot;write&quot;     (none)
+        &quot;kill&quot;      (none)
+        &quot;get&quot;       return value based on property
+        &quot;set&quot;       modify micrograph property
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 140 of file tcltk_bmg.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_tcltk__bmg_8cpp_1a3628124083d8f4fbc4ffd16e5b6202bf"/>    <section>
+    <title>imglist</title>
+<indexterm><primary>imglist</primary><secondary>tcltk_bmg.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmg.cpp</primary><secondary>imglist</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* imglist<computeroutput>[extern]</computeroutput></computeroutput></para><para>
+Definition at line 32 of file bshow.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmg_8cpp_1aea438e09dfc03683a0f49a05e9a69cac"/>    <section>
+    <title>project</title>
+<indexterm><primary>project</primary><secondary>tcltk_bmg.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmg.cpp</primary><secondary>project</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bproject">Bproject</link>* project<computeroutput>[extern]</computeroutput></computeroutput></para><para>
+Definition at line 33 of file bshow.cpp.</para>
+    </section><anchor xml:id="_tcltk__bmg_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>tcltk_bmg.cpp</secondary></indexterm>
+<indexterm><primary>tcltk_bmg.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

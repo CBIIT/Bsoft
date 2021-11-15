@@ -1,0 +1,111 @@
+.TH "/Users/bernard/b20/bsoft/src/mg/mg_ctf_sim.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mg/mg_ctf_sim.cpp \- Functions to simulate tilted micrographs\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_ctf\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBimg_ttf_simulate_line\fP (\fBBimage\fP *p, \fBBimage\fP *pn, long img_num, long i, char ax, \fBCTFparam\fP &ctf, int action, double wiener, double scale, \fBfft_plan\fP plan)"
+.br
+.ti -1c
+.RI "long \fBimg_ttf_simulate_one\fP (\fBBimage\fP *p, \fBBimage\fP *pn, long img_num, \fBCTFparam\fP &ctf, int action, double wiener, double tilt, double axis, \fBfft_plan\fP plan)"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBimg_ttf_simulate\fP (\fBBimage\fP *pn, \fBCTFparam\fP &ctf, int action, double wiener, double tilt, double tilt_inc, double axis)"
+.br
+.RI "Calculates an exact tilted CTF imposed image\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to simulate tilted micrographs\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20150224 
+.PP
+Modified: 20200525 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_ctf_sim\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBimage\fP* img_ttf_simulate (\fBBimage\fP * pn, \fBCTFparam\fP & ctf, int action, double wiener, double tilt, double tilt_inc, double axis)"
+
+.PP
+Calculates an exact tilted CTF imposed image\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*pn\fP image structure\&. 
+.br
+\fI&ctf\fP CTF parameter structure\&. 
+.br
+\fIaction\fP 0=apply, 1=flip\&. 
+.br
+\fIwiener\fP Wiener factor\&. 
+.br
+\fItilt\fP tilt angle in radians\&. 
+.br
+\fItilt_inc\fP tilt increment per sub-image in radians\&. 
+.br
+\fIaxis\fP tilt axis direction in radians\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* new image\&. 
+.PP
+.nf
+A CTF function is calculated for each line parallel to the tilt axis,
+applied to the whole image, and the transformed line written into a new image.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 109 of file mg_ctf_sim\&.cpp\&.
+.SS "int img_ttf_simulate_line (\fBBimage\fP * p, \fBBimage\fP * pn, long img_num, long i, char ax, \fBCTFparam\fP & ctf, int action, double wiener, double scale, \fBfft_plan\fP plan)"
+
+.PP
+Definition at line 17 of file mg_ctf_sim\&.cpp\&.
+.SS "long img_ttf_simulate_one (\fBBimage\fP * p, \fBBimage\fP * pn, long img_num, \fBCTFparam\fP & ctf, int action, double wiener, double tilt, double axis, \fBfft_plan\fP plan)"
+
+.PP
+Definition at line 51 of file mg_ctf_sim\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

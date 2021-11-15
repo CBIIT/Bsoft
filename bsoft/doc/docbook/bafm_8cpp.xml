@@ -1,0 +1,278 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_bafm_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/bafm.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/bafm.cpp</primary></indexterm>
+<para>
+
+<para>Simulation of AFM experiments. </para>
+ 
+</para>
+<programlisting>#include &quot;rwimg.h&quot;
+#include &quot;utilities.h&quot;
+#include &quot;options.h&quot;
+#include &quot;timer.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_bafm_8cpp_1a20a77efc352c9397dafad62ea926d8c4">afm_generate_tip</link> (<link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sampling, double radius, double <link linkend="__vector3_8h_1a4d0ad562e2f2e87c018fe778805aa3cf">angle</link>, double resolution)</para>
+
+<para>Generates a rounded conical AFM tip. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bplot">Bplot</link> * <link linkend="_bafm_8cpp_1a6b42389f51e32bf10ebf4a8bc7866865">afm_simulate</link> (<link linkend="_class_bimage">Bimage</link> *ptip, <link linkend="_class_bimage">Bimage</link> *p, double spring, double modulus, double thick)</para>
+
+<para>Simulates and AFM experiment. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_bafm_8cpp_1a65530fd7bc528b0921461434c0b23b27">afm_force_to_height</link> (<link linkend="_class_bimage">Bimage</link> *pf, double force_step)</para>
+
+<para>Converts an AFM force map into a set of 2D height images at different constant force values. </para>
+</listitem>
+            <listitem><para>int <link linkend="_bafm_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+            <listitem><para>int <link linkend="_bafm_8cpp_1ab423cecac450e84f99ee6c5b62c95b80">afm_simulate_at_xy</link> (<link linkend="_class_bimage">Bimage</link> *ptip, <link linkend="_class_bimage">Bimage</link> *p, long ii, float *force, double spring, double modulus, double thick)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_bafm_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>const char * <link linkend="_bafm_8cpp_1a4de0ad4c7190962494815c0fa7f948df">use</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Simulation of AFM experiments. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19990124 </para>
+
+<para>Modified: 20170612 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_bafm_8cpp_1a65530fd7bc528b0921461434c0b23b27"/>    <section>
+    <title>afm_force_to_height()</title>
+<indexterm><primary>afm_force_to_height</primary><secondary>bafm.cpp</secondary></indexterm>
+<indexterm><primary>bafm.cpp</primary><secondary>afm_force_to_height</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link> * afm_force_to_height (<link linkend="_class_bimage">Bimage</link> * pf, double force_step)</computeroutput></para><para>
+
+<para>Converts an AFM force map into a set of 2D height images at different constant force values. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*pf</entry>
+                                <entry>
+<para>force map. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>force_step</entry>
+                                <entry>
+<para>force intervals for height images </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>*ph height images. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 448 of file bafm.cpp.</para>
+    </section><anchor xml:id="_bafm_8cpp_1a20a77efc352c9397dafad62ea926d8c4"/>    <section>
+    <title>afm_generate_tip()</title>
+<indexterm><primary>afm_generate_tip</primary><secondary>bafm.cpp</secondary></indexterm>
+<indexterm><primary>bafm.cpp</primary><secondary>afm_generate_tip</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link> * afm_generate_tip (<link linkend="_class_vector3">Vector3</link>&lt; long &gt; size, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; sampling, double radius, double angle, double resolution)</computeroutput></para><para>
+
+<para>Generates a rounded conical AFM tip. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>size</entry>
+                                <entry>
+<para>size of the tip density </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sampling</entry>
+                                <entry>
+<para>sampling/spacing (in angstrom/pixel) </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>radius</entry>
+                                <entry>
+<para>radius of the tip curvature (in angstrom) </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>angle</entry>
+                                <entry>
+<para>angle of the tip side (in radians) </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>resolution</entry>
+                                <entry>
+<para>the resolution affects the tip surface softness </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* tip 3D map. <literallayout><computeroutput>A 2D image of a conical tip is generated, with a 45 degree angle and
+a rounding tip with the desired radius and softness.
+The 2D image is then converted to a 3D surface using the function 
+img_to_surface and returned.  The density of beta-silicon nitride
+of 1.925 Da/A3 is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 200 of file bafm.cpp.</para>
+    </section><anchor xml:id="_bafm_8cpp_1a6b42389f51e32bf10ebf4a8bc7866865"/>    <section>
+    <title>afm_simulate()</title>
+<indexterm><primary>afm_simulate</primary><secondary>bafm.cpp</secondary></indexterm>
+<indexterm><primary>bafm.cpp</primary><secondary>afm_simulate</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bplot">Bplot</link> * afm_simulate (<link linkend="_class_bimage">Bimage</link> * ptip, <link linkend="_class_bimage">Bimage</link> * p, double spring, double modulus, double thick)</computeroutput></para><para>
+
+<para>Simulates and AFM experiment. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*ptip</entry>
+                                <entry>
+<para>AFM tip density map - converted to force map. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>specimen density map. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>spring</entry>
+                                <entry>
+<para>AFM cantilever spring constant (N/m). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>modulus</entry>
+                                <entry>
+<para>bulk modules (N/m2). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>thick</entry>
+                                <entry>
+<para>sample thickness (angstrom). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bplot* force curve. <literallayout><computeroutput>The elastic force on an AFM tip is calculated as:
+    F = kt*dz = kb*dV/d
+where   kt is the cantilever spring constant, typically 0.01 - 0.1 N/m.
+        dz is the tip displacement due to specimen interaction.
+        kb is the bulk modulus of the specimen, typically 1e9 N/m2.
+        dV is the volume of the specimen displaced by the tip. This
+            volume is here approximated as the density overlap volume.
+        d is the specimen thickness in angstrom.
+The tip is positioned at each point (x,y,z) in the density map and the
+overlap volume calculated (i.e., a type of convolution).  This tip
+position corresponds to a zero displacement.  The correct tip position
+is found by shifting the tip upwards (in the z-direction) until the 
+displacement and elastic forces are approximately equal.  The tip 
+displacement is refined by interpolation and the force calculated.  
+The force map is returned in place of the original density map.
+Forces are calculated in piconewton. 
+The origin of the tip density is taken as nx/2, ny/2, 0.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 358 of file bafm.cpp.</para>
+    </section><anchor xml:id="_bafm_8cpp_1ab423cecac450e84f99ee6c5b62c95b80"/>    <section>
+    <title>afm_simulate_at_xy()</title>
+<indexterm><primary>afm_simulate_at_xy</primary><secondary>bafm.cpp</secondary></indexterm>
+<indexterm><primary>bafm.cpp</primary><secondary>afm_simulate_at_xy</secondary></indexterm>
+<para><computeroutput>int afm_simulate_at_xy (<link linkend="_class_bimage">Bimage</link> * ptip, <link linkend="_class_bimage">Bimage</link> * p, long ii, float * force, double spring, double modulus, double thick)</computeroutput></para><para>
+Definition at line 265 of file bafm.cpp.</para>
+    </section><anchor xml:id="_bafm_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>bafm.cpp</secondary></indexterm>
+<indexterm><primary>bafm.cpp</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 62 of file bafm.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_bafm_8cpp_1a4de0ad4c7190962494815c0fa7f948df"/>    <section>
+    <title>use</title>
+<indexterm><primary>use</primary><secondary>bafm.cpp</secondary></indexterm>
+<indexterm><primary>bafm.cpp</primary><secondary>use</secondary></indexterm>
+<para><computeroutput>const char* use[]</computeroutput></para><para>
+Definition at line 25 of file bafm.cpp.</para>
+    </section><anchor xml:id="_bafm_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>bafm.cpp</secondary></indexterm>
+<indexterm><primary>bafm.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

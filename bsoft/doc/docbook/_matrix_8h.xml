@@ -1,0 +1,228 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__matrix_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/Matrix.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/Matrix.h</primary></indexterm>
+<para>
+
+<para>Generalized matrix class. </para>
+ 
+</para>
+<programlisting>#include &quot;random_numbers.h&quot;
+#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+</programlisting><simplesect>
+    <title>Classes    </title>
+        <itemizedlist>
+            <listitem><para>class <link linkend="_class_matrix">Matrix</link></para>
+</listitem>
+            <listitem><para>class <link linkend="_class_matrix_1_1_row">Matrix::Row</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>ostream &amp; <link linkend="__matrix_8h_1acd7bde8947fa59ebb53aec5096163d07">operator&lt;&lt;</link> (ostream &amp;output, <link linkend="_class_matrix">Matrix</link> &amp;mat)</para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="__matrix_8h_1a974f53d4343f0e91131bc2578b6ed490">principal_axes</link> (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; avg, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; avg2, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; avgx, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; *eigenvec)</para>
+
+<para>Calculates the principal axes of 3D coordinates. </para>
+</listitem>
+            <listitem><para><link linkend="_class_vector3">Vector3</link>&lt; double &gt; <link linkend="__matrix_8h_1aece50ee436ba58143ad874bdcf049c1d">principal_axes</link> (vector&lt; <link linkend="_class_vector3">Vector3</link>&lt; double &gt;&gt; &amp;coor, <link linkend="_class_matrix">Matrix</link> &amp;eigenvec)</para>
+
+<para>Calculates the principal axes of 3D coordinates. </para>
+</listitem>
+            <listitem><para>vector&lt; double &gt; <link linkend="__matrix_8h_1a893a079ce8578752950c300ce49e1c4f">dsyevq3</link> (<link linkend="_class_matrix">Matrix</link> &amp;A)</para>
+
+<para>Calculates the eigenvalues and normalized eigenvectors of a symmetric 3x3 matrix. </para>
+</listitem>
+            <listitem><para>void <link linkend="__matrix_8h_1a59bb5462c7360d026b78dbfeb05fb73c">dsytrd3</link> (<link linkend="_class_matrix">Matrix</link> &amp;A, double d[3], double e[2])</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="__matrix_8h_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Generalized matrix class. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20000501 </para>
+
+<para>Modified: 20180723 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="__matrix_8h_1a893a079ce8578752950c300ce49e1c4f"/>    <section>
+    <title>dsyevq3()</title>
+<indexterm><primary>dsyevq3</primary><secondary>Matrix.h</secondary></indexterm>
+<indexterm><primary>Matrix.h</primary><secondary>dsyevq3</secondary></indexterm>
+<para><computeroutput>vector&lt;double&gt; dsyevq3 (<link linkend="_class_matrix">Matrix</link> &amp; A)</computeroutput></para><para>
+
+<para>Calculates the eigenvalues and normalized eigenvectors of a symmetric 3x3 matrix. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>A</entry>
+                                <entry>
+<para>matrix, replaced by normalized eigenvectors. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double* eigenvalues. <literallayout><computeroutput>Calculates the eigenvalues and normalized eigenvectors of a symmetric 3x3
+matrix A using the QL algorithm with implicit shifts, preceded by a
+Householder reduction to tridiagonal form.
+The function accesses only the diagonal and upper triangular parts of A.
+</computeroutput></literallayout> Reference: Kopp (2008). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 914 of file matrix.cpp.</para>
+    </section><anchor xml:id="__matrix_8h_1a59bb5462c7360d026b78dbfeb05fb73c"/>    <section>
+    <title>dsytrd3()</title>
+<indexterm><primary>dsytrd3</primary><secondary>Matrix.h</secondary></indexterm>
+<indexterm><primary>Matrix.h</primary><secondary>dsytrd3</secondary></indexterm>
+<para><computeroutput>void dsytrd3 (<link linkend="_class_matrix">Matrix</link> &amp; A, double d[3], double e[2])</computeroutput></para>    </section><anchor xml:id="__matrix_8h_1acd7bde8947fa59ebb53aec5096163d07"/>    <section>
+    <title>operator&lt;&lt;()</title>
+<indexterm><primary>operator&lt;&lt;</primary><secondary>Matrix.h</secondary></indexterm>
+<indexterm><primary>Matrix.h</primary><secondary>operator&lt;&lt;</secondary></indexterm>
+<para><computeroutput>ostream&amp; operator&lt;&lt; (ostream &amp; output, <link linkend="_class_matrix">Matrix</link> &amp; mat)</computeroutput></para><para>
+Definition at line 18 of file matrix.cpp.</para>
+    </section><anchor xml:id="__matrix_8h_1a974f53d4343f0e91131bc2578b6ed490"/>    <section>
+    <title>principal_axes()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>principal_axes</primary><secondary>Matrix.h</secondary></indexterm>
+<indexterm><primary>Matrix.h</primary><secondary>principal_axes</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; principal_axes (<link linkend="_class_vector3">Vector3</link>&lt; double &gt; avg, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; avg2, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; avgx, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; * eigenvec)</computeroutput></para><para>
+
+<para>Calculates the principal axes of 3D coordinates. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>avg</entry>
+                                <entry>
+<para>average of vectors. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>avg2</entry>
+                                <entry>
+<para>average of squared vectors. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>avgx</entry>
+                                <entry>
+<para>average of cross products {xy, xz, yz}. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*eigenvec</entry>
+                                <entry>
+<para>3 return eigen vectors (can be NULL). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> principal axes.</para>
+</formalpara>
+Reference: Press W.H. et al (1992) Numerical Recipes in C. </para>
+<para>
+Definition at line 706 of file matrix.cpp.</para>
+    </section><anchor xml:id="__matrix_8h_1aece50ee436ba58143ad874bdcf049c1d"/>    <section>
+    <title>principal_axes()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>principal_axes</primary><secondary>Matrix.h</secondary></indexterm>
+<indexterm><primary>Matrix.h</primary><secondary>principal_axes</secondary></indexterm>
+<para><computeroutput><link linkend="_class_vector3">Vector3</link>&lt;double&gt; principal_axes (vector&lt; <link linkend="_class_vector3">Vector3</link>&lt; double &gt;&gt; &amp; coor, <link linkend="_class_matrix">Matrix</link> &amp; a)</computeroutput></para><para>
+
+<para>Calculates the principal axes of 3D coordinates. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>coor</entry>
+                                <entry>
+<para>vector of coordinates. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;a</entry>
+                                <entry>
+<para>matrix with eigen vectors. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_vector3">Vector3&lt;double&gt;</link> principal axes.</para>
+</formalpara>
+Reference: Press W.H. et al (1992) Numerical Recipes in C. </para>
+<para>
+Definition at line 753 of file matrix.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="__matrix_8h_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>Matrix.h</secondary></indexterm>
+<indexterm><primary>Matrix.h</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

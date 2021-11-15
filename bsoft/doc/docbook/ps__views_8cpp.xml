@@ -1,0 +1,376 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_ps__views_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/ps/ps_views.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/ps/ps_views.cpp</primary></indexterm>
+<para>
+
+<para>Postscript output for views. </para>
+ 
+</para>
+<programlisting>#include &quot;ps_views.h&quot;
+#include &quot;ps_plot.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_ps__views_8cpp_1ab26ff3c689a4226022a03e5f2d28d9fc">ps_views</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bstring">Bstring</link> &amp;symmetry_string, <link linkend="_class_view">View</link> *view, int flags)</para>
+
+<para>Generates postscript plot of views on the unit sphere. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__views_8cpp_1a7daa0a0b2ab47c766bd0ca9776c7dccb">ps_views</link> (ofstream *fps, <link linkend="_class_bstring">Bstring</link> &amp;symmetry_string, <link linkend="_class_view">View</link> *view, int flags)</para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__views_8cpp_1ad653ae8313121bcb8443bbee86f8a4c4">ps_views2</link> (ofstream *fps, string &amp;symmetry_string, list&lt; <link linkend="_class_view2">View2</link>&lt; float &gt;&gt; &amp;view, int flags)</para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__views_8cpp_1a3be5a01e383fb32ed7c4396853f97c17">ps_views</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_view">View</link> *view)</para>
+
+<para>Generates postscript plot of views projected as phi and theta. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__views_8cpp_1a56bf55a82acdefda2233ceb498fefb99">ps_views</link> (ofstream *fps, <link linkend="_class_view">View</link> *view)</para>
+
+<para>Generates postscript plot of views projected as phi and theta. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__views_8cpp_1add60a9bad88803b961b26f18d18fd8fa">ps_sets_of_views</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bstring">Bstring</link> &amp;title, int nv, <link linkend="_class_view">View</link> *views, int ns, double *fom)</para>
+
+<para>Postscript plot of the distribution of sets of views. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__views_8cpp_1ab71b2d8b9ea379dd787f6d22059c3467">ps_phi_theta_plot</link> (ofstream *fps, int left, int bottom, int width, int height, int ncol)</para>
+
+<para>Generates postscript plot of projected phi and theta. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_ps__views_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Postscript output for views. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20011127 </para>
+
+<para>Modified: 20201125 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_ps__views_8cpp_1ab71b2d8b9ea379dd787f6d22059c3467"/>    <section>
+    <title>ps_phi_theta_plot()</title>
+<indexterm><primary>ps_phi_theta_plot</primary><secondary>ps_views.cpp</secondary></indexterm>
+<indexterm><primary>ps_views.cpp</primary><secondary>ps_phi_theta_plot</secondary></indexterm>
+<para><computeroutput>int ps_phi_theta_plot (ofstream * fps, int left, int bottom, int width, int height, int ncol)</computeroutput></para><para>
+
+<para>Generates postscript plot of projected phi and theta. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*fps</entry>
+                                <entry>
+<para>postscript file stream. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>left</entry>
+                                <entry>
+<para>left edge of plot. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bottom</entry>
+                                <entry>
+<para>bottom edge of plot. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>width</entry>
+                                <entry>
+<para>width of plot. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>height</entry>
+                                <entry>
+<para>height of plot. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ncol</entry>
+                                <entry>
+<para>number of columns in the Data table. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The plotting options are determined by the flags argument:
+    0 = plot views
+    1 = plot numbered views
+    2 = plot views with shading according to occurrence.
+        The gray level indicates an estimated increase in signal-to-noise ratio.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 513 of file ps_views.cpp.</para>
+    </section><anchor xml:id="_ps__views_8cpp_1add60a9bad88803b961b26f18d18fd8fa"/>    <section>
+    <title>ps_sets_of_views()</title>
+<indexterm><primary>ps_sets_of_views</primary><secondary>ps_views.cpp</secondary></indexterm>
+<indexterm><primary>ps_views.cpp</primary><secondary>ps_sets_of_views</secondary></indexterm>
+<para><computeroutput>int ps_sets_of_views (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bstring">Bstring</link> &amp; title, int nv, <link linkend="_class_view">View</link> * views, int ns, double * fom)</computeroutput></para><para>
+
+<para>Postscript plot of the distribution of sets of views. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>output postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;title</entry>
+                                <entry>
+<para>title. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nv</entry>
+                                <entry>
+<para>number of views. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*views</entry>
+                                <entry>
+<para>list of views. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ns</entry>
+                                <entry>
+<para>number of sets. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*fom</entry>
+                                <entry>
+<para>FOM values (nv*ns values). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, error if &lt;0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 458 of file ps_views.cpp.</para>
+    </section><anchor xml:id="_ps__views_8cpp_1ab26ff3c689a4226022a03e5f2d28d9fc"/>    <section>
+    <title>ps_views()<computeroutput>[1/4]</computeroutput></title>
+<indexterm><primary>ps_views</primary><secondary>ps_views.cpp</secondary></indexterm>
+<indexterm><primary>ps_views.cpp</primary><secondary>ps_views</secondary></indexterm>
+<para><computeroutput>int ps_views (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bstring">Bstring</link> &amp; symmetry_string, <link linkend="_class_view">View</link> * view, int flags)</computeroutput></para><para>
+
+<para>Generates postscript plot of views on the unit sphere. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>output postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;symmetry_string</entry>
+                                <entry>
+<para>symmetry string to print at the top of the page. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*view</entry>
+                                <entry>
+<para>linked list of views. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>flags. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The plotting options are determined by the flags argument:
+    0 = plot views
+    1 = plot numbered views
+    2 = plot views with shading according to occurrence.
+        The gray level indicates an estimated increase in signal-to-noise ratio.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 34 of file ps_views.cpp.</para>
+    </section><anchor xml:id="_ps__views_8cpp_1a3be5a01e383fb32ed7c4396853f97c17"/>    <section>
+    <title>ps_views()<computeroutput>[2/4]</computeroutput></title>
+<indexterm><primary>ps_views</primary><secondary>ps_views.cpp</secondary></indexterm>
+<indexterm><primary>ps_views.cpp</primary><secondary>ps_views</secondary></indexterm>
+<para><computeroutput>int ps_views (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_view">View</link> * view)</computeroutput></para><para>
+
+<para>Generates postscript plot of views projected as phi and theta. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>output postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*view</entry>
+                                <entry>
+<para>linked list of views. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 399 of file ps_views.cpp.</para>
+    </section><anchor xml:id="_ps__views_8cpp_1a7daa0a0b2ab47c766bd0ca9776c7dccb"/>    <section>
+    <title>ps_views()<computeroutput>[3/4]</computeroutput></title>
+<indexterm><primary>ps_views</primary><secondary>ps_views.cpp</secondary></indexterm>
+<indexterm><primary>ps_views.cpp</primary><secondary>ps_views</secondary></indexterm>
+<para><computeroutput>int ps_views (ofstream * fps, <link linkend="_class_bstring">Bstring</link> &amp; symmetry_string, <link linkend="_class_view">View</link> * view, int flags)</computeroutput></para><para>
+Definition at line 51 of file ps_views.cpp.</para>
+    </section><anchor xml:id="_ps__views_8cpp_1a56bf55a82acdefda2233ceb498fefb99"/>    <section>
+    <title>ps_views()<computeroutput>[4/4]</computeroutput></title>
+<indexterm><primary>ps_views</primary><secondary>ps_views.cpp</secondary></indexterm>
+<indexterm><primary>ps_views.cpp</primary><secondary>ps_views</secondary></indexterm>
+<para><computeroutput>int ps_views (ofstream * fps, <link linkend="_class_view">View</link> * view)</computeroutput></para><para>
+
+<para>Generates postscript plot of views projected as phi and theta. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*fps</entry>
+                                <entry>
+<para>output postscript file stream. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*view</entry>
+                                <entry>
+<para>linked list of views. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 420 of file ps_views.cpp.</para>
+    </section><anchor xml:id="_ps__views_8cpp_1ad653ae8313121bcb8443bbee86f8a4c4"/>    <section>
+    <title>ps_views2()</title>
+<indexterm><primary>ps_views2</primary><secondary>ps_views.cpp</secondary></indexterm>
+<indexterm><primary>ps_views.cpp</primary><secondary>ps_views2</secondary></indexterm>
+<para><computeroutput>int ps_views2 (ofstream * fps, string &amp; symmetry_string, list&lt; <link linkend="_class_view2">View2</link>&lt; float &gt;&gt; &amp; view, int flags)</computeroutput></para><para>
+Definition at line 223 of file ps_views.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_ps__views_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>ps_views.cpp</secondary></indexterm>
+<indexterm><primary>ps_views.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/bsoft.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: SPA CTF</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="../Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="../Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Single Particle Analysis: CTF determination</h1>
+<br />
+<h2>1. Automated CTF fitting and generating parameter files:</h2>
+<p>An automated CTF fitting can be run on all the micrographs,
+generating a power spectrum image file for each. The resultant
+fits need to be checked and refined in <b>bshow</b>:<br />
+<br />
+<div id="command"><p>bctf -v 7 -datatype float -action prepfit -sampling 2.2 -out
+klh_000239_fit.star klh_000239.star</p></div>
+<br />
+<br />
+<h2>2. CTF fitting in bshow<br />
+</h2>
+<h3>2.1 Setup</h3>
+Depending on the option chosen in the previous section, start in the
+following way:<br />
+<br />
+<h3>3.1.1. Existing parameter file for the micrograph:</h3>
+Open the micrograph parameter file in <b>bshow</b>:<br />
+<br />
+<div id="command"><p>bshow klh_000239_fit.star &amp;</p></div>
+<br />
+Select the micrograph image to open. Then calculate the power spectrum
+(see below).<br />
+<br />
+<h3>3.1.2. Using bshow directly:</h3>
+Open the micrograph file in <b>bshow</b>:<br />
+<br />
+<div id="command"><p>bshow klh_000239.mrc &amp;</p></div>
+<br />
+Then calculate the power spectrum (see below).<br />
+<br />
+<h3>3.1.3. Existing parameter file and calculated power spectrum:</h3>
+The power spectrum is already calculated and an initial fit done.
+Open the micrograph parameter file in <b>bshow</b>:<br />
+<br />
+<div id="command"><p>bshow klh_000239.star &amp;</p></div>
+<br />
+Select the power spectrum to open.<br />
+<br />
+<h3>3.2. Calculating the power spectrum</h3>
+The micrograph image is opened in <b>bshow</b>, and the power spectrum is
+calculated (menu item &#8220;Image/Power spectrum&#8221;). The power spectrum can
+be calculated in different ways, but for fitting the CTF the best is to
+calculate tiles, and to average these to obtain a good estimate of the
+power spectrum <b>(don&#8217;t calculate the logarithm of the power spectrum, as
+this would not allow an accurate baseline to be fitted)</b>. The default
+size for the tiles is typically sufficient, although smaller tiles will
+give a better estimate of the power spectrum with a decrease in the
+sampling of the radial power spectrum. The power spectrum can be saved
+for future reference (menu item &quot;File/Save&quot;).<br />
+<br />
+<h3>3.3. Fitting the CTF</h3>
+Once the power spectrum is calculated, the CTF can be fitted in <b>bshow</b>
+(menu item &#8220;Micrograph/Fit CTF&#8221;). After setting the accelerating
+voltage, Cs (typically 2 mm ) and amplitude contribution (typically 0.2
+for negative stain and 0.07 for vitrous ice) to the correct values, the
+quick
+fit button provides for a fast initial attempt to fit the radial power
+spectrum. If it does not give a reasonable initial fit, the user can
+manipulate the defocus until the first zero agrees with the first
+minimum in the radial power spectrum. The fit can be refined by
+successively going through the three buttons for baseline, envelope and
+defocus, each controlling only one aspect of the fit at a time. Once a
+good fit is obtained, the astigmatism button allows for an estimation
+of the astigmatism, only modifying the defocus deviation and
+astigmatism angle. The radial power spectrum is adjusted for
+astigmatism. At every stage, the user has full control over the fit and
+can improve it by hand. The extent to which the fitted CTF curve agrees
+with the radial power spectrum, gives the information limit. In other
+words, the point at which the last zero agrees with an apparent minimum
+in the radial power spectrum, gives the approximate maximum resolution
+with significant information above the background noise. This measure
+can be used to eliminate bad micrographs from further processing.<br />
+<br />
+
+</div>
+<div id="footer">
+  Bernard Heymann  20150121
+</div>
+</body>
+</html>

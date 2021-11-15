@@ -1,0 +1,132 @@
+.TH "/Users/bernard/b20/bsoft/include/rwPIF.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/rwPIF.h \- Header file for reading and writing PIF files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBPIFhead\fP"
+.br
+.ti -1c
+.RI "struct \fBPIFcolor\fP"
+.br
+.ti -1c
+.RI "struct \fBPIFimagehead\fP"
+.br
+.ti -1c
+.RI "struct \fBPIFimagehead_new\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBPIFSIZE\fP   1024"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBreadPIF\fP (\fBBimage\fP *p, int readdata, int img_select)"
+.br
+.RI "Reading a PIF image and structure factor file format\&. A 2D and 3D image format used in electron microscopy\&. There are two types of files: "
+.ti -1c
+.RI "int \fBwritePIF\fP (\fBBimage\fP *p)"
+.br
+.RI "Writing a PIF image file format\&. A 2D and 3D image format used in electron microscopy\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for reading and writing PIF files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19991112 
+.PP
+Modified: 20111218 
+.PP
+.nf
+Format: 3D crystallographic image file format for the Purdue package
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwPIF\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define PIFSIZE   1024"
+
+.PP
+Definition at line 13 of file rwPIF\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int readPIF (\fBBimage\fP * p, int readdata, int img_select)"
+
+.PP
+Reading a PIF image and structure factor file format\&. A 2D and 3D image format used in electron microscopy\&. There are two types of files: 
+.IP "1." 4
+A typical binary image format with a file header and a header for each sub-image\&.
+.IP "2." 4
+A binary structure factor format with the same file header as for the image format File header size: 512 bytes followed by optional 768 byte colour table Image header size: 512 bytes for each image File format extensions: \&.pif Identifier: supposed to be the first 8 bytes Byte order determination: Data type and third dimension values must be less than 256*256\&. Data types: 0 = byte, 1 = short, 2 = float, 3 = complex short, 4 = complex float\&. \fBTransform\fP type: List of structure factors\&. Note: To avoid endianness problems associated with different floating point formats (particularly those under VMS), this format was intended to store only integers\&. A 16 byte string following the 8th byte encodes a floating point conversion scale to convert an integer map and some of the fields in the header back to floating point\&. However, this format was designed in the CCP4/MRC style format, and the floating point data type was retained, as well as complex types used for transforms\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.br
+\fIreaddata\fP flag to activate reading of image data\&. 
+.br
+\fIimg_select\fP image selection in multi-image file (-1 = all images)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+
+.PP
+Definition at line 60 of file rwPIF\&.cpp\&.
+.SS "int writePIF (\fBBimage\fP * p)"
+
+.PP
+Writing a PIF image file format\&. A 2D and 3D image format used in electron microscopy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 370 of file rwPIF\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Tomography</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Resolution estimation</h1>
+<p>The resolution of each micrograph is estimated by comparing it to 
+	projections of reconstructions of the tilt series according to
+	the method of Cardone et al. (2005) and described (btomres) 
+	in Heymann (2007) and Heymann (2018).</p>
+<p>This requires the alignment and CTF parameters, but can be done before
+	a full tomogram is calculated. The fast option uses only a few
+	adjacent micrographs in the tilt series to calculate projections
+	and is recommended to save time. </p>
+<p>The CTF correction is done for each micrograph during the analysis.</p>
+
+<h2>Estimating the resolution for one micrograph: NLOO-2D</h2>
+<p>If the -micrograph option is used, only the selected micrograph will be analyzed.</p>
+<div id="command"><p>btomres -v 1 -mic 5 -size 1024,1024,128 -fast 10 -CTF flip -res 10 -cutoff 0.3 -Post gold3_5_res.ps gold3_ref.star</p></div>
+<h3>Options</h3>
+<ul>
+	<li>-micrograph: The micrograph number selected for analysis.</li>
+	<li>-size: Size of the tomogram.</li>
+	<li>-fast: Angular limit for micrographs included in calculating projections (°)</li>
+	<li>-CTF: Contrast transfer function correction applied to a micrograph.</li>
+	<li>-resolution: Maximum resolution in the tomogram (in Å).</li>
+	<li>-cutoff: The threshold in the FSC curve to estimate the resolution.</li>
+	<li>-Postscript: NLOO-2D plot. </li>
+</ul>
+
+<h2>Estimating the resolution for a tilt series: NLOO-3D</h2>
+<p>If the -micrograph option is not specified, all the micrographs in the tilt
+	series will be analyzed sequentially. The output Postscript file will
+	then contain two plots. The first shows the resolution versus the tilt 
+	angle, while the second shows the NLOO-3D curve.</p>
+
+<h2>Using script</h2>
+<p>The resolution for each micrograph with respect to the reconstruction can be determined using the script <a href="../scripts/tomres.html">tomres</a>.</p>
+<div id="command"><p>tomres -size 2048,2048,240 -resolution 30 -postscript gold3_res.ps ft.star &gt;&amp; gold3_res.log &amp;</p></div>
+<div id="footer">
+  Bernard Heymann  20201023
+</div>
+</body>
+</html>

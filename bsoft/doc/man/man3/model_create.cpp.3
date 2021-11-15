@@ -1,0 +1,840 @@
+.TH "/Users/bernard/b20/bsoft/src/model/model_create.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/model/model_create.cpp \- A tool to expand models\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel\&.h'\fP
+.br
+\fC#include 'model_create\&.h'\fP
+.br
+\fC#include 'model_transform\&.h'\fP
+.br
+\fC#include 'model_symmetry\&.h'\fP
+.br
+\fC#include 'model_util\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBcomponent\fP * \fBmodel_add_component\fP (\fBBmodel\fP *\fBmodel\fP, \fBBstring\fP &id, \fBBstring\fP &type, \fBVector3\fP< double > loc)"
+.br
+.RI "Adds a component to a model\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_platonic\fP (\fBBsymmetry\fP &sym, double radius)"
+.br
+.RI "Generates a platonic polyhedron\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_helix\fP (double radius, double helix_rise, double helix_angle, long ncomp)"
+.br
+.RI "Generates a helix model\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_random\fP (long ncomp, double comp_radius, double max_radius)"
+.br
+.RI "Generates components at random non-overlapping locations and with random views\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_random\fP (long ncomp, double comp_radius, \fBVector3\fP< double > min, \fBVector3\fP< double > max)"
+.br
+.RI "Generates components at random non-overlapping locations and with random views\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_random_gaussian\fP (long ncomp, double std)"
+.br
+.RI "Generates components at random gaussian-distributed locations and with random views\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_random_shell\fP (long ncomp, double radius)"
+.br
+.RI "Generates random components on a shell\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_random_shell\fP (long ncomp, double radius, double separation)"
+.br
+.RI "Generates random components on a shell\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_create_shell\fP (long number, double radius, double separation)"
+.br
+.RI "Creates a spherical shell point model\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_create_fibonacci_sphere\fP (long number, double radius)"
+.br
+.RI "Creates a Fibonacci sphere point model\&. "
+.ti -1c
+.RI "long \fBmodel_subdivide\fP (\fBBmodel\fP *\fBmodel\fP, long division)"
+.br
+.ti -1c
+.RI "long \fBmodel_spherize\fP (\fBBmodel\fP *\fBmodel\fP, double sphere_fraction)"
+.br
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_create_dodecahedron\fP (double radius, long divisions, double sphere_fraction)"
+.br
+.RI "Creates an dodecahedron point model\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_create_icosahedron\fP (double radius, long divisions, double sphere_fraction)"
+.br
+.RI "Creates an icosahedron point model\&. "
+.ti -1c
+.RI "double \fBellipsoid_slice_distance_error\fP (\fBVector3\fP< double > axes, double z1, double z2, double \fBdistance\fP)"
+.br
+.RI "Calculates how far the slice separation is from ideal\&. "
+.ti -1c
+.RI "double \fBellipsoid_next_z\fP (\fBVector3\fP< double > axes, double z1, double \fBdistance\fP)"
+.br
+.RI "Calculates the next slice's z component to evenly space slices\&. "
+.ti -1c
+.RI "double \fBellipse_next_x\fP (\fBVector3\fP< double > axes, double x1, double \fBdistance\fP)"
+.br
+.RI "Calculates the next slice's x component to evenly space points\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_create_circle\fP (double radius, double z, double \fBdistance\fP)"
+.br
+.RI "Creates a circle with the given radius, height, and component separation\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_create_ellipse\fP (\fBVector3\fP< double > axes, double \fBdistance\fP)"
+.br
+.RI "Creates an ellipse with given semiaxes and component separation\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_create_ellipsoid\fP (\fBVector3\fP< double > axes, double \fBdistance\fP)"
+.br
+.RI "Creates an ellipsoid with given semiaxes and component separation\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_create_cylinder\fP (\fBVector3\fP< double > direction, double radius, double \fBlength\fP, double \fBdistance\fP)"
+.br
+.RI "Creates a cylinder with the given radius, length, and component separation\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_create_plane\fP (double \fBlength\fP, double width, double z, double \fBdistance\fP)"
+.br
+.RI "Creates a plane with the given length, width, height, and component separation\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_create_spindle\fP (\fBVector3\fP< double > direction, double radius, double separation, double packing)"
+.br
+.RI "Creates a spindle packed inside a sphere\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_create_cubic_lattice\fP (\fBVector3\fP< long > lattice, double separation)"
+.br
+.RI "Creates a cubic lattice with the given length, width, height, and component separation\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_create_hexagonal_lattice\fP (\fBVector3\fP< long > lattice, double separation)"
+.br
+.RI "Creates a hexagonal lattice with the given length, width, height, and component separation\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+A tool to expand models\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20090714 
+.PP
+Modified: 20210310 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_create\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double ellipse_next_x (\fBVector3\fP< double > axes, double x1, double distance)"
+
+.PP
+Calculates the next slice's x component to evenly space points\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Jonathan Luo 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIaxes\fP the ellipse axis lengths and z-height 
+.br
+\fIx1\fP ??? 
+.br
+\fIdistance\fP separation distance 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double next x-coordinate 
+.PP
+.nf
+Solves the 4th order polynomial by bracketing.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 863 of file model_create\&.cpp\&.
+.SS "double ellipsoid_next_z (\fBVector3\fP< double > axes, double z1, double distance)"
+
+.PP
+Calculates the next slice's z component to evenly space slices\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Jonathan Luo 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIaxes\fP ellipsoid axis lengths 
+.br
+\fIz1\fP previous slice's z 
+.br
+\fIdistance\fP separation distance 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double next slice's z-coordinate 
+.RE
+.PP
+
+.PP
+Definition at line 823 of file model_create\&.cpp\&.
+.SS "double ellipsoid_slice_distance_error (\fBVector3\fP< double > axes, double z1, double z2, double distance)"
+
+.PP
+Calculates how far the slice separation is from ideal\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Jonathan Luo 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIaxes\fP ellipsoid axis lengths 
+.br
+\fIz1\fP previous slice z value 
+.br
+\fIz2\fP next slice z value 
+.br
+\fIdistance\fP target separation distance 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double the distance error (2\&.0*distance is target sum for the 2 distances) 
+.PP
+.nf
+For the generalized ellipsoid, the distance between points of 2 slices varies
+if the x and y axes are not equal. The best slice will have a component some
+distance+error separated at the shorter axis and distance-error at the longer axis,
+distributing the error. Solve the ellipsoid equation for those two points and distances. 
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 805 of file model_create\&.cpp\&.
+.SS "\fBBcomponent\fP* model_add_component (\fBBmodel\fP * model, \fBBstring\fP & id, \fBBstring\fP & type, \fBVector3\fP< double > loc)"
+
+.PP
+Adds a component to a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model list\&. 
+.br
+\fI&id\fP model identifier\&. 
+.br
+\fI&type\fP component type\&. 
+.br
+\fIloc\fP component location\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bcomponent* new component\&. 
+.PP
+.nf
+The component is added to the model indicated by the ID, the type and
+the location given.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 32 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_create_circle (double radius, double z, double distance)"
+
+.PP
+Creates a circle with the given radius, height, and component separation\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Jonathan Luo 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIradius\fP radius length\&. 
+.br
+\fIz\fP height\&. 
+.br
+\fIdistance\fP separation distance\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new circle model\&. 
+.PP
+.nf
+Find angle associated with separation distance using Law of Cosines.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 914 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_create_cubic_lattice (\fBVector3\fP< long > lattice, double separation)"
+
+.PP
+Creates a cubic lattice with the given length, width, height, and component separation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIlattice\fP lattice dimensions\&. 
+.br
+\fIseparation\fP distances between components\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new lattice model\&. 
+.PP
+.nf
+The components are placed in a cubic arrangement.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1334 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_create_cylinder (\fBVector3\fP< double > direction, double radius, double length, double distance)"
+
+.PP
+Creates a cylinder with the given radius, length, and component separation\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Jonathan Luo 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIdirection\fP cylinder axis direction 
+.br
+\fIradius\fP radius length\&. 
+.br
+\fIlength\fP cylinder length\&. 
+.br
+\fIdistance\fP separation distance\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new cylinder model\&. 
+.PP
+.nf
+Find angle associated with separation distance using Law of Cosines.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1127 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_create_dodecahedron (double radius, long divisions, double sphere_fraction)"
+
+.PP
+Creates an dodecahedron point model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIradius\fP sphere radius\&. 
+.br
+\fIdivisions\fP number of divisions from a base dodecahedron\&. 
+.br
+\fIsphere_fraction\fP spherical fraction: 0=dodecahedral, 1=spherical\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new sphere model\&. 
+.RE
+.PP
+
+.PP
+Definition at line 697 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_create_ellipse (\fBVector3\fP< double > axes, double distance)"
+
+.PP
+Creates an ellipse with given semiaxes and component separation\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Jonathan Luo 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIaxes\fP ellipse axis x and y lengths and z height 
+.br
+\fIdistance\fP separation distance 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new ellipse model\&. 
+.RE
+.PP
+
+.PP
+Definition at line 966 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_create_ellipsoid (\fBVector3\fP< double > axes, double distance)"
+
+.PP
+Creates an ellipsoid with given semiaxes and component separation\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Jonathan Luo 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIaxes\fP ellipsoid axis lengths 
+.br
+\fIdistance\fP separation distance 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new ellipsoid model\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1033 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_create_fibonacci_sphere (long number, double radius)"
+
+.PP
+Creates a Fibonacci sphere point model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fInumber\fP number of points\&. 
+.br
+\fIradius\fP sphere radius\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new sphere model\&. 
+.RE
+.PP
+
+.PP
+Definition at line 588 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_create_hexagonal_lattice (\fBVector3\fP< long > lattice, double separation)"
+
+.PP
+Creates a hexagonal lattice with the given length, width, height, and component separation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIlattice\fP lattice dimensions\&. 
+.br
+\fIseparation\fP distances between components\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new lattice model\&. 
+.PP
+.nf
+The components are placed in a hexagonal arrangement to simulate the
+most commonly expected close packing.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1387 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_create_icosahedron (double radius, long divisions, double sphere_fraction)"
+
+.PP
+Creates an icosahedron point model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIradius\fP sphere radius\&. 
+.br
+\fIdivisions\fP number of divisions from a base icosahedron\&. 
+.br
+\fIsphere_fraction\fP spherical fraction: 0=dodecahedral, 1=spherical\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new sphere model\&. 
+.RE
+.PP
+
+.PP
+Definition at line 751 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_create_plane (double length, double width, double z, double distance)"
+
+.PP
+Creates a plane with the given length, width, height, and component separation\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIlength\fP dimension in x\&. 
+.br
+\fIwidth\fP dimension in y\&. 
+.br
+\fIz\fP height\&. 
+.br
+\fIdistance\fP separation distance\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new plane model\&. 
+.PP
+.nf
+The components are placed in a hexagonal arrangement to simulate the
+most commonly expected close packingx.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1198 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_create_shell (long number, double radius, double separation)"
+
+.PP
+Creates a spherical shell point model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fInumber\fP number of points\&. 
+.br
+\fIradius\fP shell radius\&. 
+.br
+\fIseparation\fP distance between points\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new shell model\&. 
+.PP
+.nf
+Two of the three arguments need to be given (the other zero).
+If all three arguments are given, only the radius and distance is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 486 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_create_spindle (\fBVector3\fP< double > direction, double radius, double separation, double packing)"
+
+.PP
+Creates a spindle packed inside a sphere\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIdirection\fP spindle axis direction 
+.br
+\fIradius\fP sphere radius\&. 
+.br
+\fIseparation\fP separation distance between successive components\&. 
+.br
+\fIpacking\fP distance between spindle strands\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new spindle model\&.
+.RE
+.PP
+The spindle starts at the minimum Z-pole of the sphere, winding up along the spherical wall to the other pole, and back down inside the first shell\&. The process is repeated until the whole sphere is packed\&. 
+.PP
+Definition at line 1259 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_helix (double radius, double helix_rise, double helix_angle, long ncomp)"
+
+.PP
+Generates a helix model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIradius\fP distance of each vertex from helical axis\&. 
+.br
+\fIhelix_rise\fP helical rise\&. 
+.br
+\fIhelix_angle\fP helical rotation angle\&. 
+.br
+\fIncomp\fP number of components\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model\&. 
+.RE
+.PP
+
+.PP
+Definition at line 155 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_platonic (\fBBsymmetry\fP & sym, double radius)"
+
+.PP
+Generates a platonic polyhedron\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*sym\fP symmetry\&. 
+.br
+\fIradius\fP distance of each vertex from origin\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model\&. 
+.PP
+.nf
+Polyhedral components are generated on symmetry axes.
+Symmetry designations supported:
+    T-3     tetrahedron.
+    O-2     truncated octahedron.
+    O-3     cube.
+    O-4     octahedron.
+    I-2     truncated icosahedron.
+    I-3     dodecahedron.
+    I-5     icosahedron.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 83 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_random (long ncomp, double comp_radius, double max_radius)"
+
+.PP
+Generates components at random non-overlapping locations and with random views\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIncomp\fP number of components\&. 
+.br
+\fIcomp_radius\fP component radius\&. 
+.br
+\fImax_radius\fP maximum radius of components\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model\&. 
+.PP
+.nf
+If a new component overlaps within an existing component, as defined
+by the component radius, new random coordinates are generated for it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 205 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_random (long ncomp, double comp_radius, \fBVector3\fP< double > min, \fBVector3\fP< double > max)"
+
+.PP
+Generates components at random non-overlapping locations and with random views\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIncomp\fP number of components\&. 
+.br
+\fIcomp_radius\fP component radius\&. 
+.br
+\fImin\fP minimum bounds\&. 
+.br
+\fImax\fP maximum bounds\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model\&. 
+.PP
+.nf
+If a new component overlaps within an existing component, as defined
+by the component radius, new random coordinates are generated for it.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 266 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_random_gaussian (long ncomp, double std)"
+
+.PP
+Generates components at random gaussian-distributed locations and with random views\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIncomp\fP number of components\&. 
+.br
+\fIstd\fP standard deviation of gaussian distribution\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model\&. 
+.PP
+.nf
+Overlapping components are generated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 326 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_random_shell (long ncomp, double radius)"
+
+.PP
+Generates random components on a shell\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIncomp\fP number of components\&. 
+.br
+\fIradius\fP shell radius\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model\&. 
+.PP
+.nf
+Overlapping components are generated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 371 of file model_create\&.cpp\&.
+.SS "\fBBmodel\fP* model_random_shell (long ncomp, double radius, double separation)"
+
+.PP
+Generates random components on a shell\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIncomp\fP number of components\&. 
+.br
+\fIradius\fP shell radius\&. 
+.br
+\fIseparation\fP minimum vertex separation distance\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model\&. 
+.PP
+.nf
+The vertices are created with a desired separation, which means that
+if too many vertices are requested with too large separation, the 
+function may never return. The following must therefore be true:
+    n*(d/r)^2 < 8
+where
+    n: number of vertices
+    d: minimum separation distance
+    r: polyhedron radius
+If this not true, the number of vertices is decreased.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 427 of file model_create\&.cpp\&.
+.SS "long model_spherize (\fBBmodel\fP * model, double sphere_fraction)"
+
+.PP
+Definition at line 674 of file model_create\&.cpp\&.
+.SS "long model_subdivide (\fBBmodel\fP * model, long division)"
+
+.PP
+Definition at line 640 of file model_create\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rw_s_u_p_r_i_m_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/rwimg/rwSUPRIM.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/rwimg/rwSUPRIM.cpp</primary></indexterm>
+<para>
+
+<para>Functions for reading and writing SUPRIM files. </para>
+ 
+</para>
+<programlisting>#include &quot;rwSUPRIM.h&quot;
+#include &quot;file_util.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_view">View</link> <link linkend="_rw_s_u_p_r_i_m_8cpp_1ab35bcc3ebc197025b4f50c37d6f42134">view_from_suprim_euler</link> (<link linkend="_struct_s_u_p_r_i_mhead">SUPRIMhead</link> *header)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_s_u_p_r_i_m_8cpp_1a859b3050aa6f9ac07c2899ed9144e3ac">suprim_euler_from_view</link> (<link linkend="_struct_s_u_p_r_i_mhead">SUPRIMhead</link> *header, <link linkend="_class_view">View</link> view)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_s_u_p_r_i_m_8cpp_1a8f3eb6cf1ff98a08c8374e299b3ae969">readSUPRIM</link> (<link linkend="_class_bimage">Bimage</link> *p, int readdata)</para>
+
+<para>Reading a SUPRIM map image file format. A 3D image format used in electron microscopy. Header size: 36 bytes basic fields 512 bytes additional fields called &quot;registers&quot; up to 1024 bytes of &quot;trace&quot; records File format extensions: .spm, .sup Byte order determination: Version and third dimension values must be less than 256*256. Data types: 1 = byte, 2 = float, 3 = complex float, 4 = run-length-encoded float, 5 = short, 6 = <link linkend="_class_r_g_b">RGB</link>, 7 = int, 8 = double. <link linkend="_class_transform">Transform</link> type: Standard. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_s_u_p_r_i_m_8cpp_1a1f239a6a549d639c3398bc56fde6b0ac">writeSUPRIM</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>Writing a SUPRIM map image file format. A 3D image format used in electron microscopy. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_s_u_p_r_i_m_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions for reading and writing SUPRIM files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19990930 </para>
+
+<para>Modified: 20120409 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rw_s_u_p_r_i_m_8cpp_1a8f3eb6cf1ff98a08c8374e299b3ae969"/>    <section>
+    <title>readSUPRIM()</title>
+<indexterm><primary>readSUPRIM</primary><secondary>rwSUPRIM.cpp</secondary></indexterm>
+<indexterm><primary>rwSUPRIM.cpp</primary><secondary>readSUPRIM</secondary></indexterm>
+<para><computeroutput>int readSUPRIM (<link linkend="_class_bimage">Bimage</link> * p, int readdata)</computeroutput></para><para>
+
+<para>Reading a SUPRIM map image file format. A 3D image format used in electron microscopy. Header size: 36 bytes basic fields 512 bytes additional fields called &quot;registers&quot; up to 1024 bytes of &quot;trace&quot; records File format extensions: .spm, .sup Byte order determination: Version and third dimension values must be less than 256*256. Data types: 1 = byte, 2 = float, 3 = complex float, 4 = run-length-encoded float, 5 = short, 6 = <link linkend="_class_r_g_b">RGB</link>, 7 = int, 8 = double. <link linkend="_class_transform">Transform</link> type: Standard. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>readdata</entry>
+                                <entry>
+<para>flag to activate reading of image data. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 60 of file rwSUPRIM.cpp.</para>
+    </section><anchor xml:id="_rw_s_u_p_r_i_m_8cpp_1a859b3050aa6f9ac07c2899ed9144e3ac"/>    <section>
+    <title>suprim_euler_from_view()</title>
+<indexterm><primary>suprim_euler_from_view</primary><secondary>rwSUPRIM.cpp</secondary></indexterm>
+<indexterm><primary>rwSUPRIM.cpp</primary><secondary>suprim_euler_from_view</secondary></indexterm>
+<para><computeroutput>int suprim_euler_from_view (<link linkend="_struct_s_u_p_r_i_mhead">SUPRIMhead</link> * header, <link linkend="_class_view">View</link> view)</computeroutput></para><para>
+Definition at line 31 of file rwSUPRIM.cpp.</para>
+    </section><anchor xml:id="_rw_s_u_p_r_i_m_8cpp_1ab35bcc3ebc197025b4f50c37d6f42134"/>    <section>
+    <title>view_from_suprim_euler()</title>
+<indexterm><primary>view_from_suprim_euler</primary><secondary>rwSUPRIM.cpp</secondary></indexterm>
+<indexterm><primary>rwSUPRIM.cpp</primary><secondary>view_from_suprim_euler</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link> view_from_suprim_euler (<link linkend="_struct_s_u_p_r_i_mhead">SUPRIMhead</link> * header)</computeroutput></para><para>
+Definition at line 16 of file rwSUPRIM.cpp.</para>
+    </section><anchor xml:id="_rw_s_u_p_r_i_m_8cpp_1a1f239a6a549d639c3398bc56fde6b0ac"/>    <section>
+    <title>writeSUPRIM()</title>
+<indexterm><primary>writeSUPRIM</primary><secondary>rwSUPRIM.cpp</secondary></indexterm>
+<indexterm><primary>rwSUPRIM.cpp</primary><secondary>writeSUPRIM</secondary></indexterm>
+<para><computeroutput>int writeSUPRIM (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>Writing a SUPRIM map image file format. A 3D image format used in electron microscopy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 203 of file rwSUPRIM.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_rw_s_u_p_r_i_m_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>rwSUPRIM.cpp</secondary></indexterm>
+<indexterm><primary>rwSUPRIM.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

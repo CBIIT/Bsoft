@@ -1,0 +1,112 @@
+.TH "/Users/bernard/b20/bsoft/include/model_neighbors.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/model_neighbors.h \- Functions to manipulate model component neighbors\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwmodel\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmodel_set_neighbors\fP (\fBBmodel\fP *\fBmodel\fP, int number)"
+.br
+.RI "Sets the desired number of components as neighbors for each component\&. "
+.ti -1c
+.RI "int \fBmodel_set_neighbors\fP (\fBBmodel\fP *\fBmodel\fP, int number, double \fBdistance\fP)"
+.br
+.ti -1c
+.RI "int \fBmodel_neighbor_reciprocity\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Counts how many neighbors of a component also has that component as a neighbor\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to manipulate model component neighbors\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010828 
+.PP
+Modified: 20141006 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_neighbors\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int model_neighbor_reciprocity (\fBBmodel\fP * model)"
+
+.PP
+Counts how many neighbors of a component also has that component as a neighbor\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of non-reciprocated neighbors\&. 
+.PP
+.nf
+For each neighbor of component, the neighbor list of the neighbor is searched
+for the id of the first component.
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 152 of file model_neighbors\&.cpp\&.
+.SS "int model_set_neighbors (\fBBmodel\fP * model, int number)"
+
+.PP
+Sets the desired number of components as neighbors for each component\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model\&. 
+.br
+\fInumber\fP number of neighbors to set\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+For each component, its neighbor list is set to the closest components.
+Only the first model in the linked list is used.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 28 of file model_neighbors\&.cpp\&.
+.SS "int model_set_neighbors (\fBBmodel\fP * model, int number, double distance)"
+
+.PP
+Definition at line 61 of file model_neighbors\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

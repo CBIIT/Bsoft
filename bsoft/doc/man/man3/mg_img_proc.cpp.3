@@ -1,0 +1,1007 @@
+.TH "/Users/bernard/b20/bsoft/src/mg/mg_img_proc.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mg/mg_img_proc.cpp \- Functions for image processing from micrograph structures\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_img_proc\&.h'\fP
+.br
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_select\&.h'\fP
+.br
+\fC#include 'mg_ctf\&.h'\fP
+.br
+\fC#include 'img_combine\&.h'\fP
+.br
+\fC#include 'qsort_functions\&.h'\fP
+.br
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'math_util\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBmicrograph\fP * \fBmicrograph_create_from_image\fP (\fBBimage\fP *p, \fBBstring\fP type)"
+.br
+.ti -1c
+.RI "\fBBreconstruction\fP * \fBreconstruction_create_from_image\fP (\fBBimage\fP *p, \fBBstring\fP type)"
+.br
+.ti -1c
+.RI "\fBBstring\fP \fBimage_type\fP (\fBBstring\fP type)"
+.br
+.RI "Converts an image type string to a standard form\&. "
+.ti -1c
+.RI "\fBBproject\fP * \fBproject_create_from_image_old\fP (\fBBimage\fP *p, \fBBstring\fP type)"
+.br
+.RI "Creates a project structure using image file names\&. "
+.ti -1c
+.RI "\fBBproject\fP * \fBproject_create_from_images_old\fP (\fBBstring\fP *\fBfile_list\fP, \fBBstring\fP type)"
+.br
+.RI "Creates a project structure using image file names\&. "
+.ti -1c
+.RI "\fBBproject\fP * \fBproject_create_from_image\fP (\fBBimage\fP *p, \fBBstring\fP type)"
+.br
+.RI "Creates a project structure using image file names\&. "
+.ti -1c
+.RI "\fBBproject\fP * \fBproject_create_from_images\fP (\fBBstring\fP *\fBfile_list\fP, \fBBstring\fP type)"
+.br
+.RI "Creates a project structure using image file names\&. "
+.ti -1c
+.RI "\fBBparticle\fP * \fBparticles_from_image\fP (\fBBimage\fP *p)"
+.br
+.ti -1c
+.RI "\fBBfilament\fP * \fBfilaments_from_image\fP (\fBBimage\fP *p, \fBVector3\fP< double > fildir, \fBVector3\fP< double > start, long finc)"
+.br
+.ti -1c
+.RI "double \fBmicrograph_intensity\fP (\fBBmicrograph\fP *mg, \fBBimage\fP *p, int flag)"
+.br
+.RI "Gets the average of a micrograph and sets the dose\&. "
+.ti -1c
+.RI "double \fBmicrograph_intensity\fP (\fBBmicrograph\fP *mg, int flag)"
+.br
+.RI "Gets the average of a micrograph and sets the dose\&. "
+.ti -1c
+.RI "int \fBproject_mg_avg_intensities\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Retrieves the average micrograph intensities\&. "
+.ti -1c
+.RI "int \fBproject_catenate_micrographs\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Concatenates all micrograph image files into one file\&. "
+.ti -1c
+.RI "\fBBimage\fP * \fBparticle_read_img\fP (\fBBparticle\fP *part, int readflag)"
+.br
+.RI "Reads a particle image file\&. "
+.ti -1c
+.RI "int \fBparticle_write_img\fP (\fBBparticle\fP *part, \fBBimage\fP *p, int compression)"
+.br
+.RI "Writes a particle image file\&. "
+.ti -1c
+.RI "int \fBproject_check_particles\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Checks particle numbers and box sizes\&. "
+.ti -1c
+.RI "\fBVector3\fP< long > \fBmicrograph_get_size\fP (\fBBmicrograph\fP *mg)"
+.br
+.RI "Gets the size of a micrograph\&. "
+.ti -1c
+.RI "\fBVector3\fP< double > \fBmicrograph_get_nominal_origin\fP (\fBBmicrograph\fP *mg)"
+.br
+.RI "Gets the nominal origin for a micrograph\&. "
+.ti -1c
+.RI "int \fBproject_set_nominal_mg_origins\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Sets micrograph origins to the centers of the micrographs\&. "
+.ti -1c
+.RI "int \fBproject_reset_origins\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Resets particle origins to nominal values\&. "
+.ti -1c
+.RI "int \fBproject_set_part_img_origins\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Writes particle origins into particle image files\&. "
+.ti -1c
+.RI "long \fBproject_delesect_edge_particles\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Deselects particles that are too close to the image edges\&. "
+.ti -1c
+.RI "int \fBproject_get_part_box_size\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Gets the box size from particle image files\&. "
+.ti -1c
+.RI "\fBVector3\fP< long > \fBparticle_get_box_size\fP (\fBBparticle\fP *part)"
+.br
+.RI "Gets the box size from particle image file\&. "
+.ti -1c
+.RI "int \fBproject_write_particle_classes\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Writes particles to different stacks based on class\&. "
+.ti -1c
+.RI "int \fBproject_trim_class_averages\fP (\fBBproject\fP *\fBproject\fP, \fBBstring\fP &list)"
+.br
+.RI "Deletes selected class averages from the project\&.\&. "
+.ti -1c
+.RI "int \fBproject_flip_particle_coordinates\fP (\fBBproject\fP *\fBproject\fP, int flip)"
+.br
+.RI "Reverses one or more particle coordinates\&. "
+.ti -1c
+.RI "int \fBproject_set_views_from_images\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Gets views from particle images\&. "
+.ti -1c
+.RI "int \fBproject_set_views_in_images\fP (\fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Sets views in particle images from the project parameter structure\&. "
+.ti -1c
+.RI "\fBBstring\fP \fBmg_img_scale\fP (\fBBstring\fP &filename, \fBBstring\fP &path, \fBBstring\fP &\fBinsert\fP, double scale, \fBVector3\fP< double > origin, \fBVector3\fP< double > pixel_size)"
+.br
+.ti -1c
+.RI "int \fBproject_scale_box\fP (\fBBproject\fP *\fBproject\fP, double scale, \fBBstring\fP mgpath, \fBBstring\fP partpath, \fBBstring\fP \fBinsert\fP)"
+.br
+.RI "Changes all the micrograph fields linked to the box size and write new particle files\&. "
+.ti -1c
+.RI "int \fBproject_bin_micrographs\fP (\fBBproject\fP *\fBproject\fP, int bin, \fBBstring\fP mgpath, \fBBstring\fP partpath)"
+.br
+.RI "Bins all micrographs a project\&. "
+.ti -1c
+.RI "int \fBproject_change_pixel_size\fP (\fBBproject\fP *\fBproject\fP, \fBVector3\fP< double > new_pixel_size, \fBBstring\fP mgpath, \fBBstring\fP partpath)"
+.br
+.RI "Changes all the micrograph fields linked to the pixel size\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for image processing from micrograph structures\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010206 
+.PP
+Modified: 20210806 
+.RE
+.PP
+
+.PP
+Definition in file \fBmg_img_proc\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBfilament\fP* filaments_from_image (\fBBimage\fP * p, \fBVector3\fP< double > fildir, \fBVector3\fP< double > start, long finc)"
+
+.PP
+Definition at line 658 of file mg_img_proc\&.cpp\&.
+.SS "\fBBstring\fP image_type (\fBBstring\fP type)"
+
+.PP
+Converts an image type string to a standard form\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fItype\fP a string with a type definition\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBBstring\fP standard type definition\&. 
+.PP
+.nf
+The input string is converted to the following strings:
+mg      micrograph
+frame   micrograph frames
+rec     reconstruction
+part    particle
+fil     filament
+ps      power spectrum
+ft      Fourier transform
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 42 of file mg_img_proc\&.cpp\&.
+.SS "\fBBstring\fP mg_img_scale (\fBBstring\fP & filename, \fBBstring\fP & path, \fBBstring\fP & insert, double scale, \fBVector3\fP< double > origin, \fBVector3\fP< double > pixel_size)"
+
+.PP
+Definition at line 1668 of file mg_img_proc\&.cpp\&.
+.SS "\fBBmicrograph\fP * micrograph_create_from_image (\fBBimage\fP * p, \fBBstring\fP type)"
+
+.PP
+Definition at line 679 of file mg_img_proc\&.cpp\&.
+.SS "\fBVector3\fP<double> micrograph_get_nominal_origin (\fBBmicrograph\fP * mg)"
+
+.PP
+Gets the nominal origin for a micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<double>\fP nominal origin\&. 
+.PP
+.nf
+The nominal origin is defined as the center of the micrograph.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1169 of file mg_img_proc\&.cpp\&.
+.SS "\fBVector3\fP<long> micrograph_get_size (\fBBmicrograph\fP * mg)"
+
+.PP
+Gets the size of a micrograph\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<long>\fP size\&. 
+.PP
+.nf
+The micrograph image header is read.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1140 of file mg_img_proc\&.cpp\&.
+.SS "double micrograph_intensity (\fBBmicrograph\fP * mg, \fBBimage\fP * p, int flag)"
+
+.PP
+Gets the average of a micrograph and sets the dose\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph parameter structure\&. 
+.br
+\fI*p\fP image\&. 
+.br
+\fIflag\fP flag to force calculation of statistics of not available\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double intensity\&. 
+.PP
+.nf
+The micrograph image header is read.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 862 of file mg_img_proc\&.cpp\&.
+.SS "double micrograph_intensity (\fBBmicrograph\fP * mg, int flag)"
+
+.PP
+Gets the average of a micrograph and sets the dose\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*mg\fP micrograph parameter structure\&. 
+.br
+\fIflag\fP flag to force calculation of statistics of not available\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double intensity\&. 
+.PP
+.nf
+The micrograph image header is read.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 899 of file mg_img_proc\&.cpp\&.
+.SS "\fBVector3\fP<long> particle_get_box_size (\fBBparticle\fP * part)"
+
+.PP
+Gets the box size from particle image file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*part\fP particle\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBVector3<long>\fP box size (0 if image does not exist)\&. 
+.PP
+.nf
+Reads the particle file header and returns the box size.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1365 of file mg_img_proc\&.cpp\&.
+.SS "\fBBimage\fP* particle_read_img (\fBBparticle\fP * part, int readflag)"
+
+.PP
+Reads a particle image file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*part\fP particle\&. 
+.br
+\fIreadflag\fP flag to indicate reading the data\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bimage* image (NULL means failure)\&. 
+.PP
+.nf
+The file name is taken from the particle record by preference,
+otherwise from the micrograph record.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1000 of file mg_img_proc\&.cpp\&.
+.SS "int particle_write_img (\fBBparticle\fP * part, \fBBimage\fP * p, int compression)"
+
+.PP
+Writes a particle image file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*part\fP particle\&. 
+.br
+\fI*p\fP image to be written\&. 
+.br
+\fIcompression\fP flag to indicate compression\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int images written\&. 
+.PP
+.nf
+The file name is taken from the particle record by preference,
+otherwise from the micrograph record.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1046 of file mg_img_proc\&.cpp\&.
+.SS "\fBBparticle\fP* particles_from_image (\fBBimage\fP * p)"
+
+.PP
+Definition at line 638 of file mg_img_proc\&.cpp\&.
+.SS "int project_bin_micrographs (\fBBproject\fP * project, int bin, \fBBstring\fP mgpath, \fBBstring\fP partpath)"
+
+.PP
+Bins all micrographs a project\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIbin\fP binning value\&. 
+.br
+\fImgpath\fP binned micrograph path (must be allocated)\&. 
+.br
+\fIpartpath\fP binned particle path (must be allocated)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+All micrographs in a project are binned by the indicated value.
+New micrograph file names are generated with a "_b<n>" insert,
+where the n indicates the bin value.
+The path to the binned micrograph can be specified.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1923 of file mg_img_proc\&.cpp\&.
+.SS "int project_catenate_micrographs (\fBBproject\fP * project)"
+
+.PP
+Concatenates all micrograph image files into one file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The new file name is the common part of the original
+micrograph file names.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 953 of file mg_img_proc\&.cpp\&.
+.SS "int project_change_pixel_size (\fBBproject\fP * project, \fBVector3\fP< double > new_pixel_size, \fBBstring\fP mgpath, \fBBstring\fP partpath)"
+
+.PP
+Changes all the micrograph fields linked to the pixel size\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fInew_pixel_size\fP new pixel size\&. 
+.br
+\fImgpath\fP binned micrograph path (must be allocated)\&. 
+.br
+\fIpartpath\fP binned particle path (must be allocated)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The fields linked to pixel size are:
+    pixel_size
+    shift
+    box, bad and marker radii
+    particle origins and locations
+    bad area and marker locations
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1954 of file mg_img_proc\&.cpp\&.
+.SS "int project_check_particles (\fBBproject\fP * project)"
+
+.PP
+Checks particle numbers and box sizes\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.PP
+.nf
+Reads each particle file header, checks the number of particles
+and sets the box size for the micrograph.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1085 of file mg_img_proc\&.cpp\&.
+.SS "\fBBproject\fP* project_create_from_image (\fBBimage\fP * p, \fBBstring\fP type)"
+
+.PP
+Creates a project structure using image file names\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image\&. 
+.br
+\fItype\fP type of images: mg, frame, rec, part, fil\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bproject* new project parameter structure\&. 
+.PP
+.nf
+The function sets up the project hierarchy from one image base on the type.
+If the type is not specified, it is guessed based on the following rules:
+    #sub-images = 1
+        z=1 => micrograph
+        z>1 => reconstruction
+    #sub-images > 1
+        z=1 => frames
+        z>1
+            x=y => particles
+            x≠y => filaments
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 495 of file mg_img_proc\&.cpp\&.
+.SS "\fBBproject\fP* project_create_from_image_old (\fBBimage\fP * p, \fBBstring\fP type)"
+
+.PP
+Creates a project structure using image file names\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP list of images\&. 
+.br
+\fItype\fP type of images: mg, frame, rec, part, fil\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bproject* new project parameter structure\&. 
+.PP
+.nf
+The function sets up the project hierarchy from a list of file names.
+Each file may represent a micrograph or a picked particle file.
+If the image is equal or larger than 1024x1024, it is assumed to be
+a micrograph, its name will be assigned as a micrograph
+file name, and no particle tags will be added.
+If the image is smaller than 1024x1024 or the make_part flag is set,
+it is taken to be picked particles and the file name will 
+be assigned as a particle file name.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 73 of file mg_img_proc\&.cpp\&.
+.SS "\fBBproject\fP* project_create_from_images (\fBBstring\fP * file_list, \fBBstring\fP type)"
+
+.PP
+Creates a project structure using image file names\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*file_list\fP list of file names\&. 
+.br
+\fItype\fP type of images: mg, frame, rec, part, fil\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bproject* new project parameter structure\&. 
+.PP
+.nf
+The function sets up the project hierarchy from a list of file names.
+Each file may represent a micrograph or a picked particle file.
+If the image is equal or larger than 1024x1024, it is assumed to be
+a micrograph, its name will be assigned as a micrograph
+file name, and no particle tags will be added.
+If the image is smaller than 1024x1024 or the make_part flag is set,
+it is taken to be picked particles and the file name will
+be assigned as a particle file name.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 562 of file mg_img_proc\&.cpp\&.
+.SS "\fBBproject\fP* project_create_from_images_old (\fBBstring\fP * file_list, \fBBstring\fP type)"
+
+.PP
+Creates a project structure using image file names\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*file_list\fP list of file names\&. 
+.br
+\fItype\fP type of images: mg, frame, rec, part, fil\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bproject* new project parameter structure\&. 
+.PP
+.nf
+The function sets up the project hierarchy from a list of file names.
+Each file may represent a micrograph or a picked particle file.
+If the image is equal or larger than 1024x1024, it is assumed to be
+a micrograph, its name will be assigned as a micrograph
+file name, and no particle tags will be added.
+If the image is smaller than 1024x1024 or the make_part flag is set,
+it is taken to be picked particles and the file name will 
+be assigned as a particle file name.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 238 of file mg_img_proc\&.cpp\&.
+.SS "long project_delesect_edge_particles (\fBBproject\fP * project)"
+
+.PP
+Deselects particles that are too close to the image edges\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+long number of particles selected\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1295 of file mg_img_proc\&.cpp\&.
+.SS "int project_flip_particle_coordinates (\fBBproject\fP * project, int flip)"
+
+.PP
+Reverses one or more particle coordinates\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIflip\fP axes to flip\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The specification of axes to flip is embedded in the flip number:
+    first bit  - x
+    second bit - y
+    third bit  - z
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1509 of file mg_img_proc\&.cpp\&.
+.SS "int project_get_part_box_size (\fBBproject\fP * project)"
+
+.PP
+Gets the box size from particle image files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.PP
+.nf
+Reads each particle file header and sets the box size for the micrograph. 
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1332 of file mg_img_proc\&.cpp\&.
+.SS "int project_mg_avg_intensities (\fBBproject\fP * project)"
+
+.PP
+Retrieves the average micrograph intensities\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+For each micrograph the FOM is set to the micrograph average.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 929 of file mg_img_proc\&.cpp\&.
+.SS "int project_reset_origins (\fBBproject\fP * project)"
+
+.PP
+Resets particle origins to nominal values\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+For each micrograph a particle image header is read and the origin
+is set to to the middle of the image.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1228 of file mg_img_proc\&.cpp\&.
+.SS "int project_scale_box (\fBBproject\fP * project, double scale, \fBBstring\fP mgpath, \fBBstring\fP partpath, \fBBstring\fP insert)"
+
+.PP
+Changes all the micrograph fields linked to the box size and write new particle files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fIscale\fP scaling factor\&. 
+.br
+\fImgpath\fP scaled micrograph path\&. 
+.br
+\fIpartpath\fP scaled particle path\&. 
+.br
+\fIinsert\fP string to insert into new file names\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The fields linked to pixel size are:
+    pixel_size
+    shift
+    box, bad and marker radii
+    particle origins and locations
+    bad area and marker locations
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1727 of file mg_img_proc\&.cpp\&.
+.SS "int project_set_nominal_mg_origins (\fBBproject\fP * project)"
+
+.PP
+Sets micrograph origins to the centers of the micrographs\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+For each micrograph the micrograph origin is set to the center.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1198 of file mg_img_proc\&.cpp\&.
+.SS "int project_set_part_img_origins (\fBBproject\fP * project)"
+
+.PP
+Writes particle origins into particle image files\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+D\&. Belnap 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.PP
+.nf
+Sets the origins (offsets from the first voxel) in an image header to
+values set within a project.  Rewrites image to file. 
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1267 of file mg_img_proc\&.cpp\&.
+.SS "int project_set_views_from_images (\fBBproject\fP * project)"
+
+.PP
+Gets views from particle images\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1572 of file mg_img_proc\&.cpp\&.
+.SS "int project_set_views_in_images (\fBBproject\fP * project)"
+
+.PP
+Sets views in particle images from the project parameter structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1621 of file mg_img_proc\&.cpp\&.
+.SS "int project_trim_class_averages (\fBBproject\fP * project, \fBBstring\fP & list)"
+
+.PP
+Deletes selected class averages from the project\&.\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project parameter structure\&. 
+.br
+\fI&list\fP selection list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The new class average file name has an insert of "_del".
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1457 of file mg_img_proc\&.cpp\&.
+.SS "int project_write_particle_classes (\fBBproject\fP * project)"
+
+.PP
+Writes particles to different stacks based on class\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*project\fP project\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.PP
+.nf
+Writes new particle image files, numbered by the selection number. 
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1387 of file mg_img_proc\&.cpp\&.
+.SS "\fBBreconstruction\fP * reconstruction_create_from_image (\fBBimage\fP * p, \fBBstring\fP type)"
+
+.PP
+Definition at line 792 of file mg_img_proc\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

@@ -1,0 +1,309 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_ps__model_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/ps/ps_model.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/ps/ps_model.cpp</primary></indexterm>
+<para>
+
+<para>Postscript output for models. </para>
+ 
+</para>
+<programlisting>#include &quot;ps_model.h&quot;
+#include &quot;ps_plot.h&quot;
+#include &quot;ps_views.h&quot;
+#include &quot;model_views.h&quot;
+#include &quot;model_compare.h&quot;
+#include &quot;model_util.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_ps__model_8cpp_1ad15c6e49ae20a65cf2a66e6785373c5c">ps_model_views</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, int combined)</para>
+
+<para>Postscript plot of the distribution of model views. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__model_8cpp_1ad84e643c756545bad41f40d8860beb8c">ps_model_symmetry_views</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, string &amp;symmetry_string, int combined)</para>
+
+<para>Postscript plot of the distribution of model views. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__model_8cpp_1a141f3c96078d8eb902778b4cd1015ade">ps_model_fom_histogram</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Postscript plot of the model component FOM histogram. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__model_8cpp_1aa4e270fca9578c6228d0bc5e9f494ff7">ps_model_occupancy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double cutoff, int bins, int nfit, vector&lt; double &gt; &amp;distrib, vector&lt; double &gt; &amp;prob, double R, <link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+
+<para>Generates a postscript plot for a model occupancy analysis. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_ps__model_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Postscript output for models. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20090203 </para>
+
+<para>Modified: 20190201 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_ps__model_8cpp_1a141f3c96078d8eb902778b4cd1015ade"/>    <section>
+    <title>ps_model_fom_histogram()</title>
+<indexterm><primary>ps_model_fom_histogram</primary><secondary>ps_model.cpp</secondary></indexterm>
+<indexterm><primary>ps_model.cpp</primary><secondary>ps_model_fom_histogram</secondary></indexterm>
+<para><computeroutput>int ps_model_fom_histogram (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Postscript plot of the model component FOM histogram. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>output postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameter structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, error if &lt;0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 143 of file ps_model.cpp.</para>
+    </section><anchor xml:id="_ps__model_8cpp_1aa4e270fca9578c6228d0bc5e9f494ff7"/>    <section>
+    <title>ps_model_occupancy()</title>
+<indexterm><primary>ps_model_occupancy</primary><secondary>ps_model.cpp</secondary></indexterm>
+<indexterm><primary>ps_model.cpp</primary><secondary>ps_model_occupancy</secondary></indexterm>
+<para><computeroutput>int ps_model_occupancy (<link linkend="_class_bmodel">Bmodel</link> * model, double cutoff, int bins, int nfit, vector&lt; double &gt; &amp; distrib, vector&lt; double &gt; &amp; prob, double R, <link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+
+<para>Generates a postscript plot for a model occupancy analysis. </para>
+</para>
+
+<para><formalpara><title>Author</title>
+
+<para>Daniel Nemecek </para>
+
+<para>Bernard Heymann </para>
+</formalpara>
+
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>cutoff</entry>
+                                <entry>
+<para>coverage cutoff (if 0 don&apos;t show). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bins</entry>
+                                <entry>
+<para>number of bins for histograms. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nfit</entry>
+                                <entry>
+<para>number of binomial distributions to fit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&lt;em&gt;distrib</entry>
+                                <entry>
+<para>distribution array ((3+nfit)(ncomp+1)). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*prob</entry>
+                                <entry>
+<para>weight and probability array (2*nfit). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>R</entry>
+                                <entry>
+<para>binomial fit residual. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>postscript file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, &lt;0 on error. <literallayout><computeroutput>The distribution and probability arrays must already be allocated
+and the content calculated with model_occupancy_distribution.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 222 of file ps_model.cpp.</para>
+    </section><anchor xml:id="_ps__model_8cpp_1ad84e643c756545bad41f40d8860beb8c"/>    <section>
+    <title>ps_model_symmetry_views()</title>
+<indexterm><primary>ps_model_symmetry_views</primary><secondary>ps_model.cpp</secondary></indexterm>
+<indexterm><primary>ps_model.cpp</primary><secondary>ps_model_symmetry_views</secondary></indexterm>
+<para><computeroutput>int ps_model_symmetry_views (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bmodel">Bmodel</link> * model, string &amp; symmetry_string, int combined)</computeroutput></para><para>
+
+<para>Postscript plot of the distribution of model views. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>output postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;symmetry_string</entry>
+                                <entry>
+<para>symmetry. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>combined</entry>
+                                <entry>
+<para>flag to show all models combined. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, error if &lt;0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 94 of file ps_model.cpp.</para>
+    </section><anchor xml:id="_ps__model_8cpp_1ad15c6e49ae20a65cf2a66e6785373c5c"/>    <section>
+    <title>ps_model_views()</title>
+<indexterm><primary>ps_model_views</primary><secondary>ps_model.cpp</secondary></indexterm>
+<indexterm><primary>ps_model.cpp</primary><secondary>ps_model_views</secondary></indexterm>
+<para><computeroutput>int ps_model_views (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bmodel">Bmodel</link> * model, int combined)</computeroutput></para><para>
+
+<para>Postscript plot of the distribution of model views. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>output postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>combined</entry>
+                                <entry>
+<para>flag to show all models combined. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0, error if &lt;0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 28 of file ps_model.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_ps__model_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>ps_model.cpp</secondary></indexterm>
+<indexterm><primary>ps_model.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

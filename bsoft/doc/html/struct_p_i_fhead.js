@@ -1,0 +1,26 @@
+var struct_p_i_fhead =
+[
+    [ "a0", "struct_p_i_fhead.html#ad24af83e51e8cd0fb696899d1c839033", null ],
+    [ "a1", "struct_p_i_fhead.html#a3e5d27cfe4701c4f5114c8f1ffe8c943", null ],
+    [ "a2", "struct_p_i_fhead.html#a56279a3c3b36358f457178588af2e71f", null ],
+    [ "a3", "struct_p_i_fhead.html#a5f0c1ce505b309c52b055c5e68ac63a3", null ],
+    [ "a4", "struct_p_i_fhead.html#aef581ea165a20b943c1ddde74da005d0", null ],
+    [ "a5", "struct_p_i_fhead.html#a64ff7f9b30b060cd6679e94d09f8d53b", null ],
+    [ "dummy", "struct_p_i_fhead.html#aba6a2ff57d17422b4a9278f23d81821d", null ],
+    [ "endianness", "struct_p_i_fhead.html#ae2dbb20d82bae442e7aff548218d2441", null ],
+    [ "even", "struct_p_i_fhead.html#a8943ff452a687e37006036adfb6699af", null ],
+    [ "file_id", "struct_p_i_fhead.html#ab810593343bca4e39243f652f92c629b", null ],
+    [ "floatScaleStr", "struct_p_i_fhead.html#af3e5741fdb7ee0f79e2cef9b1bff6a1e", null ],
+    [ "genprogram", "struct_p_i_fhead.html#a45872beadc24f88d1d6baf793f9fea9c", null ],
+    [ "htype", "struct_p_i_fhead.html#adf2e0afb59a9fc5932c0c0d3f7ace22e", null ],
+    [ "label", "struct_p_i_fhead.html#a9be67158620281ed6cea7395be6d9699", null ],
+    [ "mode", "struct_p_i_fhead.html#ab70e296832faeab0e57e743c71b9238f", null ],
+    [ "mrcX", "struct_p_i_fhead.html#a7b82e842c63dd58ce335c9ecfa0bee0b", null ],
+    [ "mrcY", "struct_p_i_fhead.html#a1ba63f2070d1a325c362c121f5a265ed", null ],
+    [ "mrcZ", "struct_p_i_fhead.html#a63b245890017fb4f4d7bf854b0dadabe", null ],
+    [ "numimages", "struct_p_i_fhead.html#ae7bde2b9389a0aa4d4490f5d152dd85d", null ],
+    [ "nx", "struct_p_i_fhead.html#a10cc512904527862674eccd5a8e8af04", null ],
+    [ "ny", "struct_p_i_fhead.html#a9a466c4cead5e505d1153e3d9530810e", null ],
+    [ "nz", "struct_p_i_fhead.html#ac52e7f56c2b7db0b2a286e2c687b210e", null ],
+    [ "realscalefactor", "struct_p_i_fhead.html#aa1e4186354ca9d0e7cb96727fdeb438a", null ]
+];

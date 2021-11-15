@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Tomography</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Tomographic series alignment without fiducials</h1>
+<p>Tomographic reconstructions without fiducial markers are always of lesser
+	quality than with markers. However, it is valuable in many situations
+	where the addition of markers to a specimen may be problematic.
+	The tilt axis and tilt angles must be known to a good accuracy.
+	Because the tilt axis is fixed for a specific microscope installation,
+	it can be determined by doing a fiducial-based tilt series
+	of any arbitrary specimen (such as gold particles on carbon).
+	</p>
+<p>The algorithm here attempts to do subset reconstructions to improve 
+	the signal-to-noise ratio for cross-correlation. It does this iteratively
+	to improve the alignment.</p>
+<p>As stated in the page on preparation, the .mdoc files produced from SerialEM
+	can be used directly in Bsoft. Alternatively, all the parameters can be
+	set up as on the <a href="bsoft_tomo_prep.html">preparation page</a>.
+	The fastest way of aligning the tilt series is one command line:</p>
+<div id="command"><p>btomaln -verb 1 -align 3,1,3 -resol 20 -edge 20,3 -lambda 2165 -out 20190117_RS1_G6_10_aln.star 20190117_RS1_G6_10.mrc.mdoc</p></div>
+<p>The -align option takes three parameters:</p>
+<ul>
+	<li>Number of iterations: These are iterations over the full tilt series
+		attempting to refine the micrograph orientations</li>
+	<li>Stopping condition: Sets the threshold to stop when the average 
+		micrograph shift difference compared to the pervious iteration 
+		drops below it.
+	<li>Number of adjacent micrographs to include in each subset reconstruction.
+</ul>
+<p>The -resolution option sets the high resolution limit for cross correlations</p>
+<p>The edge option smooths the edges of the micrographs which includes erasing
+	extraneous areas at high tilts. The parameters are the width of the edge
+	and the standard deviation of the transition, both in pixels</p>
+<p>The -lambda option specifies the proportionality parameter for estimating the
+	thickness (see the <a href="bsoft_tomo_prep.html">section on thickness</a>).</p>
+<p>As with other operations, the alignment can be done from <b>bshow</b>.
+	Select the "Workflow/Align micrographs" item to obtain the fllowing dialog
+	window:<p>
+	<center><img
+	 style="width: 500px;" alt="Alignment dialog"
+	 src="tomo_aln_mg.png" /><br />
+	</center>
+<p>The output is written to a text window that can be saved using the
+"File" menu.</p>
+<p>At this stage the results are not yet in
+<b>bshow</b> memory. Close the text window and click
+on the "Load" button in the "AlignMicrographs" window to load the new
+parameter file in memory.</p>
+<br/>
+<h2>Troubleshooting</h2>
+<p>Sometimes the alignment fails. While the program attempts to deal with every eventuality,
+it must make some assumptions regading the state of the input information. One possibility
+is that the direction of initial alignment biases it. To change the order in which alignment
+takes place, set the 180° to the tilt axis angle. Just be aware that this will change the
+eventual handedness of the reconstruction. </p>
+<p>Another approach is to place markers on recognizable structures. Place one or more markers
+on the zero-tilt micrograph and then use the "Workflow/Generate markers from seed" menu item
+to produce the corresponding markers on the other micrographs. These can then be re-positioned
+and the alignment parameters refined (<a href="bsoft_tomo_fid.html">Fiducial markers</a>).
+<div id="footer">
+  Bernard Heymann  20210716
+</div>
+</body>
+</html>

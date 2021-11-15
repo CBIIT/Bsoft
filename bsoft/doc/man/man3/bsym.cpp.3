@@ -1,0 +1,123 @@
+.TH "/Users/bernard/b20/bsoft/src/bsym.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/bsym.cpp \- Program to generate symmetry axes for point group symmetries\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'rwsymop\&.h'\fP
+.br
+\fC#include 'symmetry\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBimg_write_symmetry_views\fP (\fBBimage\fP *p, \fBBsymmetry\fP &sym, \fBView\fP ref_view, \fBBstring\fP &filename, \fBDataType\fP datatype, double avg, double std)"
+.br
+.RI "Rotates an image to all symmetry-related views and writes out the resultant images\&. "
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Program to generate symmetry axes for point group symmetries\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20001119 
+.PP
+Modified: 20191104 
+.RE
+.PP
+
+.PP
+Definition in file \fBbsym\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int img_write_symmetry_views (\fBBimage\fP * p, \fBBsymmetry\fP & sym, \fBView\fP ref_view, \fBBstring\fP & filename, \fBDataType\fP datatype, double avg, double std)"
+
+.PP
+Rotates an image to all symmetry-related views and writes out the resultant images\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP image to be rotated and saved\&. 
+.br
+\fI*sym\fP point group symmetry\&. 
+.br
+\fIref_view\fP reference view (default 0,0,1,0)\&. 
+.br
+\fI&filename\fP output filename (converted to name_??\&.img) 
+.br
+\fIdatatype\fP new data type\&. 
+.br
+\fIavg\fP new average\&. 
+.br
+\fIstd\fP new standard deviation\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The resultant image is rescaled to the desired average and standard
+deviation, and converted to the desired data type. If the standard
+deviation is zero, no rescaling is applied. The output filenames
+are numbered with an underscore and two digits, starting at 1.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 300 of file bsym\&.cpp\&.
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 71 of file bsym\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+
+.PP
+Definition at line 24 of file bsym\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

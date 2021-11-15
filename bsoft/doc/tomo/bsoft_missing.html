@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Missing region masks</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h2>Masks excluding missing data regions in maps</h2>
+<p>In tomography the typical limited ranges of tilt angles achievable leaves significant regions in Fourier space unsampled. To compensate for this &quot;missing data&quot; in cross-correlation algorithms, a mask needs to be generated. The different geometries for acquiring tomographic data is reflected in the different ways in which these masks can be generated with the program <b>bmissing</b>.</p>
+<p>The examples below have been generated to center the masks in the middle of the volumes. However, the standard Fourier transform (to which the masks will be applied) has an origin at the {0,0,0} voxel. Therefore, to create a suitable mask, the -origin option should be omitted and the -wrap option used.</p>
+<p>&nbsp;</p>
+<h2>Missing wedge mask</h2>
+<p>A missing wedge is defined by the tilt axis angle (starting from the x-axis and increasing counter-clockwise), and the negative and positive tilt angle extremes. </p>
+<center><img src="mis_wedge1s.png" alt="Missing wedge" width="200" height="226" /> </center>
+<div id="command"><p>bmissing -v 7 -create 200,200,200 -origin 100,100,100 -sam 2.5 -wedge 90,-60,60 mis_wedge1.mrc</p></div>
+<p>The missing wedge can also be resolution limited to eliminate higher resolution data that my be dominated by noise.</p>
+<center><img src="mis_wedge2s.png" alt="Missing wedge resolution limited" width="200" height="185" /></center>
+<div id="command"><p>bmissing -v 7 -create 200,200,200 -origin 100,100,100 -sam 2.5 -wedge 30,-60,60 -resol 10 mis_wedge3.mrc</p></div>
+<p>&nbsp;</p>
+<h2>Missing pyramid mask</h2>
+<p>The missing pyramid is just an intersection of two wedges, and requires the specification of two tilt axes and four tilt angles.</p>
+<center><img src="mis_pyr1s.png" alt="Missing pyramid" width="200" height="200" /></center>
+<div id="command"><p>bmissing -v 7 -create 200,200,200 -samp 1.34 -resol 5 -pyramid 30,-30,70,120,-60,50 -origin 100,100,100 mis_pyr1.mrc</p></div>
+<p>&nbsp;</p>
+<h2>Missing cone</h2>
+<p>A missing cone in tomography is usually the result of rotating a specimen tilted at a constant angle, and only this angle need to be specified.</p>
+<center><img src="mis_cone1s.png" alt="Missing cone" width="200" height="200" /></center>
+<div id="command"><p>bmissing -v 7 -create 200,200,200 -samp 1.5 -resol 6 -cone 60 -origin 100,100,100 mis_cone1.mrc</p></div>
+<p>&nbsp;</p>
+<h2>A missing data mask from an aligned tilt series</h2>
+<p>The alignment information from a tomographic tilt series can be used to generate a corresponding missing data mask. The mask will then not only repesent the alrge missing wedge at the top and bottom, but also all the small missing regions between the central section planes derived from the images in the tilt series.</p>
+<center><img src="tomo_masks.png" alt="Tomo missing mask" width="200" height="196" /></center>
+<div id="command"><p>bmissing -v 7 -create 200,200,200 -origin 100,100,100 -wrap -resol 20 ccv_060126_1_ref7.star tomo_mask.mrc</p></div>
+<p>To generate a mask with the correct origin, omit the -origin option. The following image also show the small regions of missing data.</p>
+<center><img src="tomo_mask1.png" alt="Tomo missing mask" width="420" height="315" /></center>
+<div id="command"><p>bmissing -v 7 -create 200,200,200 -wrap -resol 20 ccv_060126_1_ref7.star tomo_mask1.mrc</p></div>
+<p><br />
+</p>
+</div>
+<div id="footer">
+  Bernard Heymann  20120126
+</div>
+</body>
+</html>

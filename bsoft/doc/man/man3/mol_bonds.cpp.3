@@ -1,0 +1,470 @@
+.TH "/Users/bernard/b20/bsoft/src/mol/mol_bonds.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/mol/mol_bonds.cpp \- Functions for molecular dynamics\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mol_bonds\&.h'\fP
+.br
+\fC#include 'rwmd\&.h'\fP
+.br
+\fC#include 'rwmolecule\&.h'\fP
+.br
+\fC#include 'Matrix\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBbond\fP * \fBmd_generate_bond_list\fP (\fBBmolgroup\fP *molgroup, \fBBmd\fP *md)"
+.br
+.RI "Generates a distance-based bond list\&. "
+.ti -1c
+.RI "\fBBbond\fP * \fBmd_generate_molecular_bond_list\fP (\fBBmolgroup\fP *molgroup, \fBBmd\fP *md)"
+.br
+.RI "Generates an intramolecular distance-based bond list\&. "
+.ti -1c
+.RI "\fBBbond\fP * \fBmd_bondlist_get_top\fP (\fBBbond\fP *bondlist, int number)"
+.br
+.ti -1c
+.RI "\fBBbond\fP * \fBmd_generate_bond_list_with_valence\fP (\fBBmolgroup\fP *molgroup, \fBBmd\fP *md, int valence)"
+.br
+.RI "Generates a bond list based on a single valence and the shortest current bond lengths\&. "
+.ti -1c
+.RI "double \fBmd_bond_list_set_parameters\fP (\fBBbond\fP *bondlist, \fBBbondtype\fP *bondtype)"
+.br
+.RI "Assigns covalent bond lengths to bonds\&. "
+.ti -1c
+.RI "int \fBmd_show_bonds\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Shows the bonds and bond lengths\&. "
+.ti -1c
+.RI "int \fBmd_show_angles\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Shows the angles and angular sizes\&. "
+.ti -1c
+.RI "int \fBmd_show_bond_stats\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Shows the number of bonds and the valency per atom\&. "
+.ti -1c
+.RI "double \fBmd_find_bond_length\fP (\fBBatom\fP *atom1, \fBBatom\fP *atom2, \fBBbondtype\fP *bondtype)"
+.br
+.RI "Finds the reference covalent bond length\&. "
+.ti -1c
+.RI "\fBBbondtype\fP * \fBmd_find_bond_type\fP (\fBBatom\fP *atom1, \fBBatom\fP *atom2, \fBBbondtype\fP *bondtype)"
+.br
+.RI "Finds the bond type\&. "
+.ti -1c
+.RI "int \fBmd_show_bond_types\fP (\fBBmolgroup\fP *molgroup, \fBBbondtype\fP *bondtype)"
+.br
+.RI "Shows the bond type composition\&. "
+.ti -1c
+.RI "double \fBmd_angle\fP (\fBBatom\fP *atom1, \fBBatom\fP *atom2, \fBBatom\fP *atom3)"
+.br
+.RI "Calculates the angle between three atoms\&. "
+.ti -1c
+.RI "double \fBmd_calculate_deviations\fP (\fBBmolgroup\fP *molgroup, int wrap)"
+.br
+.RI "Calculates deviations from the reference bond lengths and angles\&. "
+.ti -1c
+.RI "int \fBmd_calculate_radial_deviation\fP (\fBBmolgroup\fP *molgroup)"
+.br
+.RI "Calculates the radial deviations from the center of the box\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for molecular dynamics\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010828 
+.PP
+Modified: 20180226 
+.RE
+.PP
+
+.PP
+Definition in file \fBmol_bonds\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double md_angle (\fBBatom\fP * atom1, \fBBatom\fP * atom2, \fBBatom\fP * atom3)"
+
+.PP
+Calculates the angle between three atoms\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*atom1\fP first atom\&. 
+.br
+\fI*atom2\fP second atom\&. 
+.br
+\fI*atom3\fP third atom\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double angle\&. 
+.PP
+.nf
+The angle associated with the second atom and between the bonds linking
+the first and third atoms is calculated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 637 of file mol_bonds\&.cpp\&.
+.SS "double md_bond_list_set_parameters (\fBBbond\fP * bondlist, \fBBbondtype\fP * bondtype)"
+
+.PP
+Assigns covalent bond lengths to bonds\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*bondlist\fP list of bonds\&. 
+.br
+\fI*bondtype\fP list of bond types\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double fraction of bond types found\&. 
+.PP
+.nf
+The bond lengths are taken from a bond type list.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 299 of file mol_bonds\&.cpp\&.
+.SS "\fBBbond\fP* md_bondlist_get_top (\fBBbond\fP * bondlist, int number)"
+
+.PP
+Definition at line 162 of file mol_bonds\&.cpp\&.
+.SS "double md_calculate_deviations (\fBBmolgroup\fP * molgroup, int wrap)"
+
+.PP
+Calculates deviations from the reference bond lengths and angles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fIwrap\fP flag to wrap around periodic boundaries\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double angle\&. 
+.RE
+.PP
+
+.PP
+Definition at line 742 of file mol_bonds\&.cpp\&.
+.SS "int md_calculate_radial_deviation (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Calculates the radial deviations from the center of the box\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double angle\&. 
+.RE
+.PP
+
+.PP
+Definition at line 809 of file mol_bonds\&.cpp\&.
+.SS "double md_find_bond_length (\fBBatom\fP * atom1, \fBBatom\fP * atom2, \fBBbondtype\fP * bondtype)"
+
+.PP
+Finds the reference covalent bond length\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*atom1\fP first atom\&. 
+.br
+\fI*atom2\fP second atom\&. 
+.br
+\fI*bondtype\fP bond type list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double bond length\&. 
+.PP
+.nf
+The bond type is found in the bond type list, and the bond length is
+set from the bond type structure.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 510 of file mol_bonds\&.cpp\&.
+.SS "\fBBbondtype\fP* md_find_bond_type (\fBBatom\fP * atom1, \fBBatom\fP * atom2, \fBBbondtype\fP * bondtype)"
+
+.PP
+Finds the bond type\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*atom1\fP first atom\&. 
+.br
+\fI*atom2\fP second atom\&. 
+.br
+\fI*bondtype\fP bond type list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bbondtype* bond type structure\&. 
+.PP
+.nf
+The bond type is found in the bond type list.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 542 of file mol_bonds\&.cpp\&.
+.SS "\fBBbond\fP* md_generate_bond_list (\fBBmolgroup\fP * molgroup, \fBBmd\fP * md)"
+
+.PP
+Generates a distance-based bond list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fI*md\fP global molecular dynamics structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bbond* new bond list\&. 
+.PP
+.nf
+This function assumes very little and defines bonds purely on distance.
+This means that the bond distances must already have been defined well.
+The bond length is defined in the molecular dynamics structure.
+If the molecule group already has a bond list, no new bonds are generated. 
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 30 of file mol_bonds\&.cpp\&.
+.SS "\fBBbond\fP* md_generate_bond_list_with_valence (\fBBmolgroup\fP * molgroup, \fBBmd\fP * md, int valence)"
+
+.PP
+Generates a bond list based on a single valence and the shortest current bond lengths\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fI*md\fP global molecular dynamics structure\&. 
+.br
+\fIvalence\fP atom valence\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bbond* new bond list\&. 
+.PP
+.nf
+This function attempts to assign bonds based on atomic valence by
+finding the top number of shortests bonds. The current bond length is
+encoded in the bond strength variable, k, in the bond structure.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 208 of file mol_bonds\&.cpp\&.
+.SS "\fBBbond\fP* md_generate_molecular_bond_list (\fBBmolgroup\fP * molgroup, \fBBmd\fP * md)"
+
+.PP
+Generates an intramolecular distance-based bond list\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group structure\&. 
+.br
+\fI*md\fP global molecular dynamics structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bbond* new bond list\&. 
+.PP
+.nf
+This function defines bonds on distance and within molecules.
+This means that the bond distances must already have been defined well.
+The bond length is defined in the molecular dynamics structure.
+If the molecule group already has a bond list, no new bonds are generated. 
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 105 of file mol_bonds\&.cpp\&.
+.SS "int md_show_angles (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Shows the angles and angular sizes\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of angles\&. 
+.PP
+.nf
+Uses the angle list defined for the molecule group.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 350 of file mol_bonds\&.cpp\&.
+.SS "int md_show_bond_stats (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Shows the number of bonds and the valency per atom\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of bonds\&. 
+.PP
+.nf
+Uses the bond list defined for the molecule group.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 371 of file mol_bonds\&.cpp\&.
+.SS "int md_show_bond_types (\fBBmolgroup\fP * molgroup, \fBBbondtype\fP * bondtype)"
+
+.PP
+Shows the bond type composition\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.br
+\fI*bondtype\fP bond type list\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+For each bond, the bond type is found in the bond type list.
+The number variable for each bond type is used for counting.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 580 of file mol_bonds\&.cpp\&.
+.SS "int md_show_bonds (\fBBmolgroup\fP * molgroup)"
+
+.PP
+Shows the bonds and bond lengths\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*molgroup\fP molecule group\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of bonds\&. 
+.PP
+.nf
+Uses the bond list defined for the molecule group.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 329 of file mol_bonds\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

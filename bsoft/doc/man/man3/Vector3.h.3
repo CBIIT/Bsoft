@@ -1,0 +1,341 @@
+.TH "/Users/bernard/b20/bsoft/include/Vector3.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/Vector3.h \- Class for 3-value vectors\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <iostream>\fP
+.br
+\fC#include <cmath>\fP
+.br
+\fC#include <vector>\fP
+.br
+\fC#include 'math_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBVector3< Type >\fP"
+.br
+.RI "Vector class for 3-value vectors used in 3D space\&. The internal variables are an array of 3 numbers\&. "
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "template<typename Type > ostream & \fBoperator<<\fP (ostream &output, \fBVector3\fP< Type > vec)"
+.br
+.ti -1c
+.RI "template<typename Type > ostream & \fBoperator<<\fP (ostream &output, vector< Type > vec)"
+.br
+.ti -1c
+.RI "template<typename T > vector< T > \fBoperator\-\fP (vector< T > v1)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > vector< T1 > \fBoperator+\fP (vector< T1 > v1, vector< T2 > v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > vector< T1 > \fBoperator+\fP (vector< T1 > v1, T2 v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > void \fBoperator+=\fP (vector< T1 > &v1, vector< T2 > v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > void \fBoperator+=\fP (vector< T1 > &v1, T2 v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > vector< T1 > \fBoperator\-\fP (vector< T1 > v1, vector< T2 > v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > vector< T1 > \fBoperator\-\fP (vector< T1 > v1, \fBVector3\fP< T2 > &v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > vector< T1 > \fBoperator\-\fP (vector< T1 > v1, T2 v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > void \fBoperator\-=\fP (vector< T1 > &v1, vector< T2 > v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > void \fBoperator\-=\fP (vector< T1 > &v1, T2 v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > vector< T1 > \fBoperator*\fP (vector< T1 > v1, T2 v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > void \fBoperator*=\fP (vector< T1 > &v1, T2 v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > vector< T1 > \fBoperator*\fP (vector< T1 > v1, vector< T2 > v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > void \fBoperator*=\fP (vector< T1 > &v1, vector< T2 > v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > vector< T1 > \fBoperator/\fP (vector< T1 > v1, T2 v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > void \fBoperator/=\fP (vector< T1 > &v1, T2 v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > vector< T1 > \fBoperator/\fP (vector< T1 > v1, vector< T2 > v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > void \fBoperator/=\fP (vector< T1 > v1, vector< T2 > v2)"
+.br
+.ti -1c
+.RI "template<typename T > double \fBlength2\fP (vector< T > v)"
+.br
+.ti -1c
+.RI "template<typename T > double \fBlength\fP (vector< T > v)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > double \fBdistance\fP (vector< T1 > &v1, vector< T2 > &v2)"
+.br
+.ti -1c
+.RI "template<typename T > T \fBvolume\fP (vector< T > v)"
+.br
+.ti -1c
+.RI "template<typename T > vector< T > \fBabsolute\fP (vector< T > v1)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > vector< T1 > \fBvecmin\fP (vector< T1 > v1, vector< T2 > v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > vector< T1 > \fBvecmin\fP (vector< T1 > v1, T2 v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > vector< T1 > \fBvecmax\fP (vector< T1 > v1, vector< T2 > v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > vector< T1 > \fBvecmax\fP (vector< T1 > v1, T2 v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > double \fBscalar\fP (vector< T1 > &v1, vector< T2 > &v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > vector< T1 > \fBcross\fP (vector< T1 > &v1, vector< T2 > &v2)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > vector< T1 > \fBangle\fP (vector< T1 > &v1, vector< T2 > &v2)"
+.br
+.ti -1c
+.RI "template<typename Type > \fBVector3\fP< Type > \fBoperator/\fP (double d, \fBVector3\fP< Type > vec)"
+.br
+.RI "Divides a value by each of the elements of a 3-value vector\&. "
+.ti -1c
+.RI "template<typename Type > \fBVector3\fP< Type > \fBvector3_scalar_range\fP (\fBVector3\fP< Type > vec, double min, double max)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > \fBVector3\fP< T1 > \fBvector3_origin_to_shift\fP (\fBVector3\fP< T1 > origin, \fBVector3\fP< T2 > size)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > \fBVector3\fP< T1 > \fBvector3_set_PBC\fP (\fBVector3\fP< T1 > coord, \fBVector3\fP< T2 > box)"
+.br
+.ti -1c
+.RI "template<typename T1 , typename T2 > \fBVector3\fP< T1 > \fBvector3_difference_PBC\fP (\fBVector3\fP< T1 > &v1, \fBVector3\fP< T1 > &v2, \fBVector3\fP< T2 > &box)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Class for 3-value vectors\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20000501 
+.PP
+Modified: 20190708 
+.RE
+.PP
+
+.PP
+Definition in file \fBVector3\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "template<typename T > vector<T> absolute (vector< T > v1)\fC [inline]\fP"
+
+.PP
+Definition at line 586 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > vector<T1> angle (vector< T1 > & v1, vector< T2 > & v2)\fC [inline]\fP"
+
+.PP
+Definition at line 664 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > vector<T1> cross (vector< T1 > & v1, vector< T2 > & v2)\fC [inline]\fP"
+
+.PP
+Definition at line 652 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > double distance (vector< T1 > & v1, vector< T2 > & v2)\fC [inline]\fP"
+
+.PP
+Definition at line 566 of file Vector3\&.h\&.
+.SS "template<typename T > double length (vector< T > v)\fC [inline]\fP"
+
+.PP
+Definition at line 558 of file Vector3\&.h\&.
+.SS "template<typename T > double length2 (vector< T > v)\fC [inline]\fP"
+
+.PP
+Definition at line 547 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > vector<T1> operator* (vector< T1 > v1, T2 v2)\fC [inline]\fP"
+
+.PP
+Definition at line 475 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > vector<T1> operator* (vector< T1 > v1, vector< T2 > v2)\fC [inline]\fP"
+
+.PP
+Definition at line 493 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > void operator*= (vector< T1 > & v1, T2 v2)\fC [inline]\fP"
+
+.PP
+Definition at line 486 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > void operator*= (vector< T1 > & v1, vector< T2 > v2)\fC [inline]\fP"
+
+.PP
+Definition at line 504 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > vector<T1> operator+ (vector< T1 > v1, T2 v2)\fC [inline]\fP"
+
+.PP
+Definition at line 404 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > vector<T1> operator+ (vector< T1 > v1, vector< T2 > v2)\fC [inline]\fP"
+
+.PP
+Definition at line 393 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > void operator+= (vector< T1 > & v1, T2 v2)\fC [inline]\fP"
+
+.PP
+Definition at line 422 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > void operator+= (vector< T1 > & v1, vector< T2 > v2)\fC [inline]\fP"
+
+.PP
+Definition at line 415 of file Vector3\&.h\&.
+.SS "template<typename T > vector<T> operator\- (vector< T > v1)\fC [inline]\fP"
+
+.PP
+Definition at line 382 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > vector<T1> operator\- (vector< T1 > v1, T2 v2)\fC [inline]\fP"
+
+.PP
+Definition at line 450 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > vector<T1> operator\- (vector< T1 > v1, \fBVector3\fP< T2 > & v2)\fC [inline]\fP"
+
+.PP
+Definition at line 441 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > vector<T1> operator\- (vector< T1 > v1, vector< T2 > v2)\fC [inline]\fP"
+
+.PP
+Definition at line 430 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > void operator\-= (vector< T1 > & v1, T2 v2)\fC [inline]\fP"
+
+.PP
+Definition at line 468 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > void operator\-= (vector< T1 > & v1, vector< T2 > v2)\fC [inline]\fP"
+
+.PP
+Definition at line 461 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP<Type> operator/ (double d, \fBVector3\fP< Type > vec)\fC [inline]\fP"
+
+.PP
+Divides a value by each of the elements of a 3-value vector\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fId\fP value to be divided\&. 
+.br
+\fIvec\fP 3-value vector\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Vector3<Type> new 3-value vector\&. 
+.PP
+.nf
+All elements of the vector must be non-zero.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 682 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > vector<T1> operator/ (vector< T1 > v1, T2 v2)\fC [inline]\fP"
+
+.PP
+Definition at line 511 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > vector<T1> operator/ (vector< T1 > v1, vector< T2 > v2)\fC [inline]\fP"
+
+.PP
+Definition at line 529 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > void operator/= (vector< T1 > & v1, T2 v2)\fC [inline]\fP"
+
+.PP
+Definition at line 522 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > void operator/= (vector< T1 > v1, vector< T2 > v2)\fC [inline]\fP"
+
+.PP
+Definition at line 540 of file Vector3\&.h\&.
+.SS "template<typename Type > ostream& operator<< (ostream & output, \fBVector3\fP< Type > vec)"
+
+.PP
+Definition at line 320 of file Vector3\&.h\&.
+.SS "template<typename Type > ostream& operator<< (ostream & output, vector< Type > vec)"
+
+.PP
+Definition at line 327 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > double scalar (vector< T1 > & v1, vector< T2 > & v2)\fC [inline]\fP"
+
+.PP
+Definition at line 641 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > vector<T1> vecmax (vector< T1 > v1, T2 v2)\fC [inline]\fP"
+
+.PP
+Definition at line 630 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > vector<T1> vecmax (vector< T1 > v1, vector< T2 > v2)\fC [inline]\fP"
+
+.PP
+Definition at line 619 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > vector<T1> vecmin (vector< T1 > v1, T2 v2)\fC [inline]\fP"
+
+.PP
+Definition at line 608 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > vector<T1> vecmin (vector< T1 > v1, vector< T2 > v2)\fC [inline]\fP"
+
+.PP
+Definition at line 597 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > \fBVector3\fP<T1> vector3_difference_PBC (\fBVector3\fP< T1 > & v1, \fBVector3\fP< T1 > & v2, \fBVector3\fP< T2 > & box)\fC [inline]\fP"
+
+.PP
+Definition at line 734 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > \fBVector3\fP<T1> vector3_origin_to_shift (\fBVector3\fP< T1 > origin, \fBVector3\fP< T2 > size)"
+
+.PP
+Definition at line 706 of file Vector3\&.h\&.
+.SS "template<typename Type > \fBVector3\fP<Type> vector3_scalar_range (\fBVector3\fP< Type > vec, double min, double max)\fC [inline]\fP"
+
+.PP
+Definition at line 691 of file Vector3\&.h\&.
+.SS "template<typename T1 , typename T2 > \fBVector3\fP<T1> vector3_set_PBC (\fBVector3\fP< T1 > coord, \fBVector3\fP< T2 > box)\fC [inline]\fP"
+
+.PP
+Definition at line 721 of file Vector3\&.h\&.
+.SS "template<typename T > T volume (vector< T > v)\fC [inline]\fP"
+
+.PP
+Definition at line 575 of file Vector3\&.h\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

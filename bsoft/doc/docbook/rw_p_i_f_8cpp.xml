@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rw_p_i_f_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/rwimg/rwPIF.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/rwimg/rwPIF.cpp</primary></indexterm>
+<para>
+
+<para>Functions for reading and writing PIF files. </para>
+ 
+</para>
+<programlisting>#include &quot;rwPIF.h&quot;
+#include &quot;file_util.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_rw_p_i_f_8cpp_1a8d38fdfc6d8c8c08de52b47615cc3c04">PIF_SCALE</link>   1e-5</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>char * <link linkend="_rw_p_i_f_8cpp_1a06fabd9b9141424b5b338a6b67f53e9b">read_sf</link> (ifstream *fimg, <link linkend="_class_bimage">Bimage</link> *p, int mode, int <link linkend="_rw_d_m_8cpp_1a7f7475c3cffaf702ef2766959df86817">sb</link>)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_p_i_f_8cpp_1a729336c9166c42fcb250cba22df96701">readPIF</link> (<link linkend="_class_bimage">Bimage</link> *p, int readdata, int img_select)</para>
+
+<para>Reading a PIF image and structure factor file format. A 2D and 3D image format used in electron microscopy. There are two types of files: </para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_p_i_f_8cpp_1a437546630c1d8da78224026c4452457f">writePIF</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>Writing a PIF image file format. A 2D and 3D image format used in electron microscopy. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_p_i_f_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>char * <link linkend="_rw_p_i_f_8cpp_1abccbc24c7569657b2c2af7fcd59d2cc9">month</link> []</para>
+</listitem>
+            <listitem><para>double <link linkend="_rw_p_i_f_8cpp_1abe76df61659cd5d214b502dd7af24185">PIFscale</link> = <link linkend="_rw_p_i_f_8cpp_1a8d38fdfc6d8c8c08de52b47615cc3c04">PIF_SCALE</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions for reading and writing PIF files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19991112 </para>
+
+<para>Modified: 20120706 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_rw_p_i_f_8cpp_1a8d38fdfc6d8c8c08de52b47615cc3c04"/>    <section>
+    <title>PIF_SCALE</title>
+<indexterm><primary>PIF_SCALE</primary><secondary>rwPIF.cpp</secondary></indexterm>
+<indexterm><primary>rwPIF.cpp</primary><secondary>PIF_SCALE</secondary></indexterm>
+<para><computeroutput>#define PIF_SCALE   1e-5</computeroutput></para><para>
+Definition at line 19 of file rwPIF.cpp.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rw_p_i_f_8cpp_1a06fabd9b9141424b5b338a6b67f53e9b"/>    <section>
+    <title>read_sf()</title>
+<indexterm><primary>read_sf</primary><secondary>rwPIF.cpp</secondary></indexterm>
+<indexterm><primary>rwPIF.cpp</primary><secondary>read_sf</secondary></indexterm>
+<para><computeroutput>char * read_sf (ifstream * fimg, <link linkend="_class_bimage">Bimage</link> * p, int mode, int sb)</computeroutput></para><para>
+Definition at line 357 of file rwPIF.cpp.</para>
+    </section><anchor xml:id="_rw_p_i_f_8cpp_1a729336c9166c42fcb250cba22df96701"/>    <section>
+    <title>readPIF()</title>
+<indexterm><primary>readPIF</primary><secondary>rwPIF.cpp</secondary></indexterm>
+<indexterm><primary>rwPIF.cpp</primary><secondary>readPIF</secondary></indexterm>
+<para><computeroutput>int readPIF (<link linkend="_class_bimage">Bimage</link> * p, int readdata, int img_select)</computeroutput></para><para>
+
+<para>Reading a PIF image and structure factor file format. A 2D and 3D image format used in electron microscopy. There are two types of files: </para>
+</para>
+
+<para><orderedlist>
+<listitem>
+<para>A typical binary image format with a file header and a header for each sub-image.</para>
+</listitem><listitem>
+<para>A binary structure factor format with the same file header as for the image format File header size: 512 bytes followed by optional 768 byte colour table Image header size: 512 bytes for each image File format extensions: .pif Identifier: supposed to be the first 8 bytes Byte order determination: Data type and third dimension values must be less than 256*256. Data types: 0 = byte, 1 = short, 2 = float, 3 = complex short, 4 = complex float. <link linkend="_class_transform">Transform</link> type: List of structure factors. Note: To avoid endianness problems associated with different floating point formats (particularly those under VMS), this format was intended to store only integers. A 16 byte string following the 8th byte encodes a floating point conversion scale to convert an integer map and some of the fields in the header back to floating point. However, this format was designed in the CCP4/MRC style format, and the floating point data type was retained, as well as complex types used for transforms. 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>readdata</entry>
+                                <entry>
+<para>flag to activate reading of image data. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>img_select</entry>
+                                <entry>
+<para>image selection in multi-image file (-1 = all images). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+</listitem></orderedlist>
+</para>
+<para>
+Definition at line 60 of file rwPIF.cpp.</para>
+    </section><anchor xml:id="_rw_p_i_f_8cpp_1a437546630c1d8da78224026c4452457f"/>    <section>
+    <title>writePIF()</title>
+<indexterm><primary>writePIF</primary><secondary>rwPIF.cpp</secondary></indexterm>
+<indexterm><primary>rwPIF.cpp</primary><secondary>writePIF</secondary></indexterm>
+<para><computeroutput>int writePIF (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>Writing a PIF image file format. A 2D and 3D image format used in electron microscopy. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 370 of file rwPIF.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_rw_p_i_f_8cpp_1abccbc24c7569657b2c2af7fcd59d2cc9"/>    <section>
+    <title>month</title>
+<indexterm><primary>month</primary><secondary>rwPIF.cpp</secondary></indexterm>
+<indexterm><primary>rwPIF.cpp</primary><secondary>month</secondary></indexterm>
+<para><computeroutput>char* month[]<computeroutput>[extern]</computeroutput></computeroutput></para><para>
+Definition at line 58 of file rwimg.cpp.</para>
+    </section><anchor xml:id="_rw_p_i_f_8cpp_1abe76df61659cd5d214b502dd7af24185"/>    <section>
+    <title>PIFscale</title>
+<indexterm><primary>PIFscale</primary><secondary>rwPIF.cpp</secondary></indexterm>
+<indexterm><primary>rwPIF.cpp</primary><secondary>PIFscale</secondary></indexterm>
+<para><computeroutput>double PIFscale = <link linkend="_rw_p_i_f_8cpp_1a8d38fdfc6d8c8c08de52b47615cc3c04">PIF_SCALE</link></computeroutput></para><para>
+Definition at line 20 of file rwPIF.cpp.</para>
+    </section><anchor xml:id="_rw_p_i_f_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>rwPIF.cpp</secondary></indexterm>
+<indexterm><primary>rwPIF.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

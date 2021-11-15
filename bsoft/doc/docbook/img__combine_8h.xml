@@ -1,0 +1,312 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_img__combine_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/img_combine.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/img_combine.h</primary></indexterm>
+<para>
+
+<para>Header file for combining two images in various ways. </para>
+ 
+</para>
+<programlisting>#include &quot;rwimg.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_img__combine_8h_1a54eac9fda26f6944a905dee501f3dd11">img_add</link> (<link linkend="_class_bstring">Bstring</link> *<link linkend="_file__util_8cpp_1a3c3411ced4b9632566ecc66ffa64a72a">file_list</link>, int flags)</para>
+
+<para>Adds multiple images together with optional variance or standard deviation. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_img__combine_8h_1a636f7370aef8c8865e6cdb680e1644d6">img_setup_combined</link> (<link linkend="_class_bstring">Bstring</link> *<link linkend="_file__util_8cpp_1a3c3411ced4b9632566ecc66ffa64a72a">file_list</link>, long &amp;nimg, int cat=0)</para>
+
+<para>Sets up a list of images for concatenation or summation. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_img__combine_8h_1aa194cf582907f86e6a529784f137b335">img_catenate</link> (<link linkend="_class_bstring">Bstring</link> *<link linkend="_file__util_8cpp_1a3c3411ced4b9632566ecc66ffa64a72a">file_list</link>, <link linkend="_class_bstring">Bstring</link> &amp;rawstring, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> newdatatype, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; nusize, int setZslices=0, int fill_type=0, double fill=0, double newavg=0, double newstd=0)</para>
+
+<para>Catenates a list of images into a multi-image structure. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_img__combine_8h_1a07ccfd951e0f75171daf15f9e39798b1">img_add_weighed</link> (<link linkend="_class_bstring">Bstring</link> *<link linkend="_file__util_8cpp_1a3c3411ced4b9632566ecc66ffa64a72a">file_list</link>, vector&lt; double &gt; weight, double newavg=0, double newstd=0, int flags=0)</para>
+
+<para>Adds multiple images together with given weights. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for combining two images in various ways. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20000430 </para>
+
+<para>Modified: 20190208 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_img__combine_8h_1a54eac9fda26f6944a905dee501f3dd11"/>    <section>
+    <title>img_add()</title>
+<indexterm><primary>img_add</primary><secondary>img_combine.h</secondary></indexterm>
+<indexterm><primary>img_combine.h</primary><secondary>img_add</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_add (<link linkend="_class_bstring">Bstring</link> * file_list, int flags)</computeroutput></para><para>
+
+<para>Adds multiple images together with optional variance or standard deviation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*file_list</entry>
+                                <entry>
+<para>list of file names. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>flags to modify summation. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* resultant image (floating point). <literallayout><computeroutput>Images are read from a number files and added.
+All the images must be the same size, but could have different numbers of sub-images.
+The flags that can set are:
+    1   calculate the average in stead of the sum.
+    2   calculate the variance as FOM
+    4   calculate the standard deviation as FOM (supercedes the variance)
+All images are converted to floating point.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 32 of file img_combine.cpp.</para>
+    </section><anchor xml:id="_img__combine_8h_1a07ccfd951e0f75171daf15f9e39798b1"/>    <section>
+    <title>img_add_weighed()</title>
+<indexterm><primary>img_add_weighed</primary><secondary>img_combine.h</secondary></indexterm>
+<indexterm><primary>img_combine.h</primary><secondary>img_add_weighed</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_add_weighed (<link linkend="_class_bstring">Bstring</link> * file_list, vector&lt; double &gt; weight, double newavg, double newstd, int flags)</computeroutput></para><para>
+
+<para>Adds multiple images together with given weights. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*file_list</entry>
+                                <entry>
+<para>list of file names. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>weight</entry>
+                                <entry>
+<para>list of weights (can be NULL). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>newavg</entry>
+                                <entry>
+<para>new average for rescaling. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>newstd</entry>
+                                <entry>
+<para>new standard deviation for rescaling. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>flags to modify summation. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* resultant image (floating point). <literallayout><computeroutput>Images are read from a number files and added to each other, using
+the given weights to determine each contribution.
+The images are rescaled to a new average and standard deviation before 
+weighted addition. If the given standard deviation is zero or less,
+this step is omitted.
+The weighed average is calculated and returned as a new image.
+The flags that can set are:
+    1   calculate the average in stead of the sum.
+    2   calculate the variance as FOM
+    4   calculate the standard deviation as FOM (supercedes the variance)
+    8   center each image before summation
+All images are converted to floating point.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 291 of file img_combine.cpp.</para>
+    </section><anchor xml:id="_img__combine_8h_1aa194cf582907f86e6a529784f137b335"/>    <section>
+    <title>img_catenate()</title>
+<indexterm><primary>img_catenate</primary><secondary>img_combine.h</secondary></indexterm>
+<indexterm><primary>img_combine.h</primary><secondary>img_catenate</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_catenate (<link linkend="_class_bstring">Bstring</link> * file_list, <link linkend="_class_bstring">Bstring</link> &amp; rawstring, <link linkend="_utilities_8h_1ad8ed01ff3ff33333d8e19db4d2818bb6">DataType</link> nudatatype, <link linkend="_class_vector3">Vector3</link>&lt; long &gt; nusize, int setZslices, int fill_type, double fill, double newavg, double newstd)</computeroutput></para><para>
+
+<para>Catenates a list of images into a multi-image structure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*file_list</entry>
+                                <entry>
+<para>list of file names. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;rawstring</entry>
+                                <entry>
+<para>format for re-interpretation of file. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nudatatype</entry>
+                                <entry>
+<para>new data type (default from first image). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nusize</entry>
+                                <entry>
+<para>new size (default from images). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>setZslices</entry>
+                                <entry>
+<para>flag to create 2D images from slices. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fill_type</entry>
+                                <entry>
+<para>fill type for expanding images. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fill</entry>
+                                <entry>
+<para>fill value for expanding images. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>newavg</entry>
+                                <entry>
+<para>new average to set each individual image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>newstd</entry>
+                                <entry>
+<para>new standard deviation to set each individual image. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* catenated image. <literallayout><computeroutput>The images can have different numbers of sub-images, sizes and data types.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 163 of file img_combine.cpp.</para>
+    </section><anchor xml:id="_img__combine_8h_1a636f7370aef8c8865e6cdb680e1644d6"/>    <section>
+    <title>img_setup_combined()</title>
+<indexterm><primary>img_setup_combined</primary><secondary>img_combine.h</secondary></indexterm>
+<indexterm><primary>img_combine.h</primary><secondary>img_setup_combined</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_setup_combined (<link linkend="_class_bstring">Bstring</link> * file_list, long &amp; nimg, int cat)</computeroutput></para><para>
+
+<para>Sets up a list of images for concatenation or summation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*file_list</entry>
+                                <entry>
+<para>list of file names. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;nimg</entry>
+                                <entry>
+<para>number of concatenated images. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>cat</entry>
+                                <entry>
+<para>flag to indicate concatenation. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* new image into which to write data. <literallayout><computeroutput>The images can have different numbers of sub-images, sizes and data types.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 107 of file img_combine.cpp.</para>
+</section>
+</section>
+</section>

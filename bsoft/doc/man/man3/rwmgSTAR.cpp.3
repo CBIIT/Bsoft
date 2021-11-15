@@ -1,0 +1,317 @@
+.TH "/Users/bernard/b20/bsoft/src/rwparam/rwmgSTAR.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/rwparam/rwmgSTAR.cpp \- Library routines to read and write micrograph parameters in STAR format\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'rwmgSTAR\&.h'\fP
+.br
+\fC#include 'rwstar\&.h'\fP
+.br
+\fC#include 'mg_tags\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBstar_to_project\fP (\fBBstar\fP *star, \fBBproject\fP *\fBproject\fP)"
+.br
+.ti -1c
+.RI "int \fBproject_to_star\fP (\fBBproject\fP *\fBproject\fP, \fBBstar\fP *star, int mg_select, int rec_select)"
+.br
+.ti -1c
+.RI "int \fBread_project_star\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP)"
+.br
+.RI "Reading micrograph parameters from STAR files\&. "
+.ti -1c
+.RI "int \fBwrite_project_star\fP (const char *filename, \fBBproject\fP *\fBproject\fP, int mg_select, int rec_select)"
+.br
+.RI "Writing micrograph parameters to a STAR file\&. "
+.ti -1c
+.RI "int \fBwrite_project_star\fP (\fBBstring\fP &filename, \fBBproject\fP *\fBproject\fP, int mg_select, int rec_select)"
+.br
+.ti -1c
+.RI "int \fBmg_star_update_tags\fP (\fBBstar\fP *star)"
+.br
+.RI "Replacing old STAR tags with new ones\&. "
+.ti -1c
+.RI "\fBBframe\fP * \fBframe_from_starblock\fP (\fBBstar_block\fP *block)"
+.br
+.ti -1c
+.RI "\fBBparticle\fP * \fBparticle_from_starblock\fP (\fBBstar_block\fP *block, \fBFOMType\fP fom_tag[\fBNFOM\fP])"
+.br
+.ti -1c
+.RI "\fBBfilament\fP * \fBfilament_from_starblock\fP (\fBBstar_block\fP *block)"
+.br
+.ti -1c
+.RI "\fBBbadarea\fP * \fBbadarea_from_starblock\fP (\fBBstar_block\fP *block)"
+.br
+.ti -1c
+.RI "\fBBmarker\fP * \fBmarker_from_starblock\fP (\fBBstar_block\fP *block)"
+.br
+.ti -1c
+.RI "\fBBstrucfac\fP * \fBstrucfac_from_starblock\fP (\fBBstar_block\fP *block)"
+.br
+.ti -1c
+.RI "\fBBlayerline\fP * \fBlayerline_from_starblock\fP (\fBBstar_block\fP *block)"
+.br
+.ti -1c
+.RI "\fBCTFparam\fP * \fBctf_from_starblock\fP (\fBBstar_block\fP *block)"
+.br
+.ti -1c
+.RI "\fBBmicrograph\fP * \fBmicrograph_from_starblock\fP (\fBBstar_block\fP *block, \fBBstring\fP &mg_id, \fBFOMType\fP fom_tag[\fBNFOM\fP])"
+.br
+.ti -1c
+.RI "\fBBreconstruction\fP * \fBreconstruction_from_starblock\fP (\fBBstar_block\fP *block, \fBFOMType\fP fom_tag[\fBNFOM\fP])"
+.br
+.ti -1c
+.RI "int \fBitem_put_filament_list\fP (\fBBstar_block\fP *block, const char *tag, \fBBfilament\fP *fil, const char *format)"
+.br
+.ti -1c
+.RI "int \fBframe_to_starblock\fP (\fBBframe\fP *frame, \fBBstar_block\fP *block)"
+.br
+.ti -1c
+.RI "int \fBparticle_to_starblock\fP (\fBBparticle\fP *part, \fBBstar_block\fP *block, \fBFOMType\fP fom_tag[\fBNFOM\fP], int euler_flag, int omega_flag)"
+.br
+.ti -1c
+.RI "int \fBbadarea_to_starblock\fP (\fBBbadarea\fP *bad, \fBBstar_block\fP *block)"
+.br
+.ti -1c
+.RI "int \fBfilament_to_starblock\fP (\fBBfilament\fP *fil, \fBBstar_block\fP *block)"
+.br
+.ti -1c
+.RI "int \fBmarker_to_starblock\fP (\fBBmarker\fP *mark, \fBBstar_block\fP *block)"
+.br
+.ti -1c
+.RI "int \fBstrucfac_to_starblock\fP (\fBBstrucfac\fP *sf, \fBBstar_block\fP *block)"
+.br
+.ti -1c
+.RI "int \fBlayerline_to_starblock\fP (\fBBlayerline\fP *line, \fBBstar_block\fP *block)"
+.br
+.ti -1c
+.RI "int \fBctf_to_starblock\fP (\fBCTFparam\fP *ctf, \fBBstar_block\fP *block)"
+.br
+.ti -1c
+.RI "int \fBmicrograph_to_starblock\fP (\fBBmicrograph\fP *mg, \fBBstar_block\fP *block, \fBFOMType\fP fom_tag[\fBNFOM\fP], int euler_flag, int omega_flag)"
+.br
+.ti -1c
+.RI "int \fBreconstruction_to_starblock\fP (\fBBreconstruction\fP *rec, \fBBstar_block\fP *block, \fBFOMType\fP fom_tag[\fBNFOM\fP], int euler_flag, int omega_flag)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Library routines to read and write micrograph parameters in STAR format\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010206 
+.PP
+Modified: 20200202
+.RE
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010206 
+.PP
+Modified: 20210728 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwmgSTAR\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "\fBBbadarea\fP* badarea_from_starblock (\fBBstar_block\fP * block)"
+
+.PP
+Definition at line 359 of file rwmgSTAR\&.cpp\&.
+.SS "int badarea_to_starblock (\fBBbadarea\fP * bad, \fBBstar_block\fP * block)"
+
+.PP
+Definition at line 1218 of file rwmgSTAR\&.cpp\&.
+.SS "\fBCTFparam\fP* ctf_from_starblock (\fBBstar_block\fP * block)"
+
+.PP
+Definition at line 572 of file rwmgSTAR\&.cpp\&.
+.SS "int ctf_to_starblock (\fBCTFparam\fP * ctf, \fBBstar_block\fP * block)"
+
+.PP
+Definition at line 1345 of file rwmgSTAR\&.cpp\&.
+.SS "\fBBfilament\fP* filament_from_starblock (\fBBstar_block\fP * block)"
+
+.PP
+Definition at line 309 of file rwmgSTAR\&.cpp\&.
+.SS "int filament_to_starblock (\fBBfilament\fP * fil, \fBBstar_block\fP * block)"
+
+.PP
+Definition at line 1234 of file rwmgSTAR\&.cpp\&.
+.SS "\fBBframe\fP* frame_from_starblock (\fBBstar_block\fP * block)"
+
+.PP
+Definition at line 132 of file rwmgSTAR\&.cpp\&.
+.SS "int frame_to_starblock (\fBBframe\fP * frame, \fBBstar_block\fP * block)"
+
+.PP
+Definition at line 1080 of file rwmgSTAR\&.cpp\&.
+.SS "int item_put_filament_list (\fBBstar_block\fP * block, const char * tag, \fBBfilament\fP * fil, const char * format)"
+
+.PP
+Definition at line 1040 of file rwmgSTAR\&.cpp\&.
+.SS "\fBBlayerline\fP* layerline_from_starblock (\fBBstar_block\fP * block)"
+
+.PP
+Definition at line 523 of file rwmgSTAR\&.cpp\&.
+.SS "int layerline_to_starblock (\fBBlayerline\fP * line, \fBBstar_block\fP * block)"
+
+.PP
+Definition at line 1320 of file rwmgSTAR\&.cpp\&.
+.SS "\fBBmarker\fP* marker_from_starblock (\fBBstar_block\fP * block)"
+
+.PP
+Definition at line 391 of file rwmgSTAR\&.cpp\&.
+.SS "int marker_to_starblock (\fBBmarker\fP * mark, \fBBstar_block\fP * block)"
+
+.PP
+Definition at line 1250 of file rwmgSTAR\&.cpp\&.
+.SS "int mg_star_update_tags (\fBBstar\fP * star)"
+
+.PP
+Replacing old STAR tags with new ones\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*star\fP STAR database\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 83 of file rwmgSTAR\&.cpp\&.
+.SS "\fBBmicrograph\fP* micrograph_from_starblock (\fBBstar_block\fP * block, \fBBstring\fP & mg_id, \fBFOMType\fP fom_tag[NFOM])"
+
+.PP
+Definition at line 619 of file rwmgSTAR\&.cpp\&.
+.SS "int micrograph_to_starblock (\fBBmicrograph\fP * mg, \fBBstar_block\fP * block, \fBFOMType\fP fom_tag[NFOM], int euler_flag, int omega_flag)"
+
+.PP
+Definition at line 1375 of file rwmgSTAR\&.cpp\&.
+.SS "\fBBparticle\fP* particle_from_starblock (\fBBstar_block\fP * block, \fBFOMType\fP fom_tag[NFOM])"
+
+.PP
+Definition at line 164 of file rwmgSTAR\&.cpp\&.
+.SS "int particle_to_starblock (\fBBparticle\fP * part, \fBBstar_block\fP * block, \fBFOMType\fP fom_tag[NFOM], int euler_flag, int omega_flag)"
+
+.PP
+Definition at line 1101 of file rwmgSTAR\&.cpp\&.
+.SS "int project_to_star (\fBBproject\fP * project, \fBBstar\fP * star, int mg_select, int rec_select)"
+
+.PP
+Definition at line 1573 of file rwmgSTAR\&.cpp\&.
+.SS "int read_project_star (\fBBstring\fP & filename, \fBBproject\fP * project)"
+
+.PP
+Reading micrograph parameters from STAR files\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name (or comma-delimited list)\&. 
+.br
+\fI*project\fP initialized project structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 29 of file rwmgSTAR\&.cpp\&.
+.SS "\fBBreconstruction\fP* reconstruction_from_starblock (\fBBstar_block\fP * block, \fBFOMType\fP fom_tag[NFOM])"
+
+.PP
+Definition at line 751 of file rwmgSTAR\&.cpp\&.
+.SS "int reconstruction_to_starblock (\fBBreconstruction\fP * rec, \fBBstar_block\fP * block, \fBFOMType\fP fom_tag[NFOM], int euler_flag, int omega_flag)"
+
+.PP
+Definition at line 1479 of file rwmgSTAR\&.cpp\&.
+.SS "int star_to_project (\fBBstar\fP * star, \fBBproject\fP * project)"
+
+.PP
+Definition at line 898 of file rwmgSTAR\&.cpp\&.
+.SS "\fBBstrucfac\fP* strucfac_from_starblock (\fBBstar_block\fP * block)"
+
+.PP
+Definition at line 454 of file rwmgSTAR\&.cpp\&.
+.SS "int strucfac_to_starblock (\fBBstrucfac\fP * sf, \fBBstar_block\fP * block)"
+
+.PP
+Definition at line 1283 of file rwmgSTAR\&.cpp\&.
+.SS "int write_project_star (\fBBstring\fP & filename, \fBBproject\fP * project, int mg_select, int rec_select)"
+
+.PP
+Definition at line 62 of file rwmgSTAR\&.cpp\&.
+.SS "int write_project_star (const char * filename, \fBBproject\fP * project, int mg_select, int rec_select)"
+
+.PP
+Writing micrograph parameters to a STAR file\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP file name\&. 
+.br
+\fI*project\fP project structure\&. 
+.br
+\fImg_select\fP flag to only write selected micrographs\&. 
+.br
+\fIrec_select\fP flag to only convert selected reconstructions\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 56 of file rwmgSTAR\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

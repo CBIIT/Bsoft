@@ -1,0 +1,141 @@
+.TH "/Users/bernard/b20/bsoft/src/bfcc.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/bfcc.cpp \- Fast cross-correlation search for the best fit of a 3D map to a template\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+\fC#include 'mg_processing\&.h'\fP
+.br
+\fC#include 'mg_particle_select\&.h'\fP
+.br
+\fC#include 'rwmg\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'file_util\&.h'\fP
+.br
+\fC#include 'options\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+\fC#include 'timer\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "double \fBimg_fcc_search\fP (\fBBimage\fP *p, \fBBimage\fP *ptemp, \fBView\fP *view, \fBFSI_Kernel\fP *\fBkernel\fP, double hires, double lores, \fBBimage\fP *pmask)"
+.br
+.RI "Fast cross-correlation searches a 2D/3D density map for a template\&. "
+.ti -1c
+.RI "double \fBimg_fcc_for_view\fP (\fBBimage\fP *p, \fBBimage\fP *ptemp, \fBView\fP view, \fBFSI_Kernel\fP *\fBkernel\fP, double hires, double lores, \fBBimage\fP *pmask)"
+.br
+.ti -1c
+.RI "double \fBimg_cc_for_view\fP (\fBBimage\fP *p, \fBBimage\fP *ptemp, \fBView\fP view, \fBFSI_Kernel\fP *\fBkernel\fP, double hires, double lores, double searchrad, \fBBimage\fP *pmask)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (int argc, char **argv)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.ti -1c
+.RI "const char * \fBuse\fP []"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Fast cross-correlation search for the best fit of a 3D map to a template\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20130523 
+.PP
+Modified: 20160604 
+.RE
+.PP
+
+.PP
+Definition in file \fBbfcc\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double img_cc_for_view (\fBBimage\fP * p, \fBBimage\fP * ptemp, \fBView\fP view, \fBFSI_Kernel\fP * kernel, double hires, double lores, double searchrad, \fBBimage\fP * pmask)"
+
+.PP
+Definition at line 731 of file bfcc\&.cpp\&.
+.SS "double img_fcc_for_view (\fBBimage\fP * p, \fBBimage\fP * ptemp, \fBView\fP view, \fBFSI_Kernel\fP * kernel, double hires, double lores, \fBBimage\fP * pmask)"
+
+.PP
+Definition at line 659 of file bfcc\&.cpp\&.
+.SS "double img_fcc_search (\fBBimage\fP * p, \fBBimage\fP * ptemp, \fBView\fP * view, \fBFSI_Kernel\fP * kernel, double hires, double lores, \fBBimage\fP * pmask)"
+
+.PP
+Fast cross-correlation searches a 2D/3D density map for a template\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the Fourier transformed image\&. 
+.br
+\fI*ptemp\fP the Fourier transformed template to be searched for\&. 
+.br
+\fIview\fP view\&. 
+.br
+\fI*kernel\fP interpolation kernel\&. 
+.br
+\fIhires\fP high resolution limit\&. 
+.br
+\fIlores\fP low resolution limit\&. 
+.br
+\fI*pmask\fP mask for cross-correlation (ignored if NULL)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double correlation coefficient\&. 
+.PP
+.nf
+The template is rotated to the view and cross-correlated to find
+a set of high-scoring fits.
+The views must be calculated externally to allow for custom sets.
+The best view is returned in the image view record.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 589 of file bfcc\&.cpp\&.
+.SS "int main (int argc, char ** argv)"
+
+.PP
+Definition at line 100 of file bfcc\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "const char* use[]"
+
+.PP
+Definition at line 33 of file bfcc\&.cpp\&.
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

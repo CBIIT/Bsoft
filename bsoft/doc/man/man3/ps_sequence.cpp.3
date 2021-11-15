@@ -1,0 +1,139 @@
+.TH "/Users/bernard/b20/bsoft/src/ps/ps_sequence.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/ps/ps_sequence.cpp \- Postscript output for sequence analysis functions\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'ps_plot\&.h'\fP
+.br
+\fC#include 'Complex\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBps_seq_representation\fP (ofstream *fps, vector< double > &nseq)"
+.br
+.ti -1c
+.RI "int \fBps_seq_periodicity\fP (ofstream *fps, vector< \fBComplex\fP< float >> &per)"
+.br
+.ti -1c
+.RI "int \fBps_seq_info\fP (\fBBstring\fP &filename, \fBBstring\fP &title, int nres, vector< double > &info, vector< double > &nseq, vector< \fBComplex\fP< float >> &per, vector< double > &freq, string &pattern)"
+.br
+.RI "Generates a postscript plot from an information content analysis of a protein sequence alignment\&. "
+.ti -1c
+.RI "int \fBps_seq_hydrophob\fP (\fBBstring\fP &filename, \fBBstring\fP &title, vector< double > &Hphob, vector< int > &HPseg, vector< double > &nseq, vector< \fBComplex\fP< float >> &per)"
+.br
+.RI "Generates a postscript plot from a hydrophobicity analysis of a protein sequence alignment\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Postscript output for sequence analysis functions\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010515 
+.PP
+Modified: 20210426 
+.RE
+.PP
+
+.PP
+Definition in file \fBps_sequence\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int ps_seq_hydrophob (\fBBstring\fP & filename, \fBBstring\fP & title, vector< double > & Hphob, vector< int > & HPseg, vector< double > & nseq, vector< \fBComplex\fP< float >> & per)"
+
+.PP
+Generates a postscript plot from a hydrophobicity analysis of a protein sequence alignment\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP postscript file name\&. 
+.br
+\fI&title\fP title\&. 
+.br
+\fI*Hphob\fP moving average of average hydrophobicity at each position\&. 
+.br
+\fI*HPseg\fP assignment of hydrophobic segments\&. 
+.br
+\fI*nseq\fP number of sequences represented at each position\&. 
+.br
+\fI*per\fP periodicity analysis\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 193 of file ps_sequence\&.cpp\&.
+.SS "int ps_seq_info (\fBBstring\fP & filename, \fBBstring\fP & title, int nres, vector< double > & info, vector< double > & nseq, vector< \fBComplex\fP< float >> & per, vector< double > & freq, string & pattern)"
+
+.PP
+Generates a postscript plot from an information content analysis of a protein sequence alignment\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP postscript file name\&. 
+.br
+\fI&title\fP title\&. 
+.br
+\fInres\fP number of residue types\&. 
+.br
+\fI&info\fP moving average of information content\&. 
+.br
+\fI&nseq\fP number of sequences represented at each position\&. 
+.br
+\fI&per\fP periodicity analysis\&. 
+.br
+\fI&freq\fP frequence of each residue type at each position\&. 
+.br
+\fI&pattern\fP residue types at each position, in frequency order\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 32 of file ps_sequence\&.cpp\&.
+.SS "int ps_seq_periodicity (ofstream * fps, vector< \fBComplex\fP< float >> & per)"
+
+.PP
+Definition at line 327 of file ps_sequence\&.cpp\&.
+.SS "int ps_seq_representation (ofstream * fps, vector< double > & nseq)"
+
+.PP
+Definition at line 282 of file ps_sequence\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

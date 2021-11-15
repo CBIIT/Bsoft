@@ -1,0 +1,668 @@
+.TH "/Users/bernard/b20/bsoft/src/model/model_poly.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/model/model_poly.cpp \- Functions to manipulate polyhedral coordinate files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'model_poly\&.h'\fP
+.br
+\fC#include 'model_transform\&.h'\fP
+.br
+\fC#include 'model_views\&.h'\fP
+.br
+\fC#include 'model_util\&.h'\fP
+.br
+\fC#include 'matrix_linear\&.h'\fP
+.br
+\fC#include 'model_links\&.h'\fP
+.br
+\fC#include 'model_compare\&.h'\fP
+.br
+\fC#include 'math_util\&.h'\fP
+.br
+\fC#include 'random_numbers\&.h'\fP
+.br
+\fC#include 'symmetry\&.h'\fP
+.br
+\fC#include 'Vector3\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNSMAX\fP   100"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBmodel_poly_faces\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Generates links between the vertices to define the polyhedron faces\&. "
+.ti -1c
+.RI "int \fBpoly_get_connectivity\fP (\fBBcomponent\fP *comp, int ilink, int nlink, \fBBpolygon\fP *poly)"
+.br
+.ti -1c
+.RI "int \fBmodel_poly_generate\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Generates polygons based on a vertex network\&. "
+.ti -1c
+.RI "int \fBmodel_vertex_types\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Determines the vertex type based on adjacent polygons\&. "
+.ti -1c
+.RI "\fBBstring\fP \fBcomponent_6digit_type\fP (\fBBcomponent\fP *comp)"
+.br
+.ti -1c
+.RI "int \fBmodel_extended_vertex_types\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Determines the vertex type based on adjacent and opposed polygons\&. "
+.ti -1c
+.RI "\fBBmodel\fP * \fBmodel_poly_dual\fP (\fBBmodel\fP *\fBmodel\fP, int order)"
+.br
+.RI "Calculates the dual of a polyhedral network\&. "
+.ti -1c
+.RI "int \fBmodel_poly_analyze\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Analyzes a model for polygon regularity and planarity\&. "
+.ti -1c
+.RI "int \fBmodel_poly_links\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates all the model links\&. "
+.ti -1c
+.RI "int \fBmodel_poly_angles\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates all the polygon angles\&. "
+.ti -1c
+.RI "double \fBmodel_poly_regularity\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Analyzes a model for polygon regularity\&. "
+.ti -1c
+.RI "double \fBmodel_poly_planarity\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Analyzes a model for polygon planarity\&. "
+.ti -1c
+.RI "double \fBmodel_poly_energy\fP (\fBBmodel\fP *\fBmodel\fP, double angle_ref)"
+.br
+.RI "Calculates the different energy terms for all models\&. "
+.ti -1c
+.RI "int \fBmodel_poly_pentagon_adjacency\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates the number of edges shared by pentagons\&. "
+.ti -1c
+.RI "\fBBstring\fP \fBmodel_poly_find_symmetry\fP (\fBBmodel\fP *\fBmodel\fP, double threshold)"
+.br
+.RI "Finds the symmetry axes associated with polyhedral elements\&. "
+.ti -1c
+.RI "int \fBmodel_poly_hand\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Calculates the polyhedron hand\&. "
+.ti -1c
+.RI "int \fBmodel_poly_compare\fP (\fBBmodel\fP *\fBmodel\fP, \fBBmodel\fP *refmodel)"
+.br
+.RI "Compares a model with reference models based on the eigenvalues of the adjacency matrix\&. "
+.ti -1c
+.RI "vector< double > \fBmodel_poly_eigenvalues\fP (\fBBmodel\fP *\fBmodel\fP, int \fBshow\fP)"
+.br
+.RI "Generates the eigenvalues of the adjacency matrix for a model\&. "
+.ti -1c
+.RI "int \fBcomp_count_connected\fP (\fBBcomponent\fP *comp)"
+.br
+.ti -1c
+.RI "int \fBmodel_number_connected_clusters\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.ti -1c
+.RI "vector< double > \fBmodel_poly_sphere_coor\fP (\fBBmodel\fP *\fBmodel\fP)"
+.br
+.RI "Generates coordinates for components based on the eigenvectors of the adjacency matrix\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to manipulate polyhedral coordinate files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20010828 
+.PP
+Modified: 20150208 
+.RE
+.PP
+
+.PP
+Definition in file \fBmodel_poly\&.cpp\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define NSMAX   100"
+
+.PP
+Definition at line 1090 of file model_poly\&.cpp\&.
+.SH "Function Documentation"
+.PP 
+.SS "int comp_count_connected (\fBBcomponent\fP * comp)"
+
+.PP
+Definition at line 1629 of file model_poly\&.cpp\&.
+.SS "\fBBstring\fP component_6digit_type (\fBBcomponent\fP * comp)"
+
+.PP
+Definition at line 353 of file model_poly\&.cpp\&.
+.SS "int model_extended_vertex_types (\fBBmodel\fP * model)"
+
+.PP
+Determines the vertex type based on adjacent and opposed polygons\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The link flag of each component is asigned such that the order of the
+rigth adjacent polygon is in the first digit, that of the left adjacent
+polygon in the second digit, and that of the opposing polygon in the 
+third digit.
+New component types are generated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 398 of file model_poly\&.cpp\&.
+.SS "int model_number_connected_clusters (\fBBmodel\fP * model)"
+
+.PP
+Definition at line 1641 of file model_poly\&.cpp\&.
+.SS "int model_poly_analyze (\fBBmodel\fP * model)"
+
+.PP
+Analyzes a model for polygon regularity and planarity\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 547 of file model_poly\&.cpp\&.
+.SS "int model_poly_angles (\fBBmodel\fP * model)"
+
+.PP
+Calculates all the polygon angles\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of angles\&. 
+.PP
+.nf
+The angles for each polygon is calculated and averaged. The overall 
+statistics for every polygon order is shown.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 655 of file model_poly\&.cpp\&.
+.SS "int model_poly_compare (\fBBmodel\fP * model, \fBBmodel\fP * refmodel)"
+
+.PP
+Compares a model with reference models based on the eigenvalues of the adjacency matrix\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fI*refmodel\fP reference model(s) to compare\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The comparison is based on the eigenvectors of the adjacency matrix,
+which are related to spherical harmonics.
+There are 3 P(sigma) eigenvectors giving the vertex coordinates.
+These are usually (but not always) vectors 2, 3, and 4 ordered by eigenvalue.
+The eigenvalues are characteristic for a polyhedron, although they may not be unique.
+For every model identified, the model type is set from the reference ID.
+The reference model selection is incremented to indicate the count. 
+
+Dover Publications, Inc., Mineola, New York, pages 101 - 104.
+
+.fi
+.PP
+ Reference: Fowler, P\&.W\&. and Manolopoulos, D\&.E\&. (2006) An Atlas of Fullerenes\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1509 of file model_poly\&.cpp\&.
+.SS "\fBBmodel\fP* model_poly_dual (\fBBmodel\fP * model, int order)"
+
+.PP
+Calculates the dual of a polyhedral network\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIorder\fP order of polygons to convert to vertices, < 3 = all\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+Bmodel* new model structure with the dual\&. 
+.PP
+.nf
+The polygons are first defined to calculate the dual network that
+has vertices at the polygon centers.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 457 of file model_poly\&.cpp\&.
+.SS "vector<double> model_poly_eigenvalues (\fBBmodel\fP * model, int show)"
+
+.PP
+Generates the eigenvalues of the adjacency matrix for a model\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure (modified with the topological coordinates)\&. 
+.br
+\fIshow\fP flag to show eigenvalues\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+vector<double> eigenvalues\&. 
+.PP
+.nf
+The eigenvectors of the adjacency matrix are related to spherical harmonics.
+The eigenvalues are characteristic for a polyhedron, although they may not be unique.
+Only the first model in the list is processed.
+
+Dover Publications, Inc., Mineola, New York, pages 101 - 104.
+
+.fi
+.PP
+ Reference: Fowler, P\&.W\&. and Manolopoulos, D\&.E\&. (2006) An Atlas of Fullerenes\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1595 of file model_poly\&.cpp\&.
+.SS "double model_poly_energy (\fBBmodel\fP * model, double angle_ref)"
+
+.PP
+Calculates the different energy terms for all models\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIangle_ref\fP reference angle (<=0 to use the polygon angle)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double 0\&. 
+.PP
+.nf
+The angular energy is calculated either with a given reference angle,
+or with the nominal polygon inner angle as reference.
+Regularity is defined as the adherence to a constant distance of each
+vertex from the polygon center. The polygon area is:
+     n * s^2       1 + cos(2*PI/n)
+A = ------- sqrt(-----------------)
+       4           1 - cos(2*PI/n)
+where n is the number of vertices in the polygon.
+The contribution of each polygon to the polyhedral volume is:
+V = A * dc / 3
+where dc is the distance of the polygon center to the polyhedral center.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 925 of file model_poly\&.cpp\&.
+.SS "int model_poly_faces (\fBBmodel\fP * model)"
+
+.PP
+Generates links between the vertices to define the polyhedron faces\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+Two vertices are linked only when they are on the surface of the 
+polyhedron, i.e., all other vertices are on one side of the pair 
+of vertices. This is only true if there are no other vertices v
+with the following property:
+    v•v0 > v0•v0
+where v0 is the average of the two vertices considered for linkage.
+Only the first model is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 39 of file model_poly\&.cpp\&.
+.SS "\fBBstring\fP model_poly_find_symmetry (\fBBmodel\fP * model, double threshold)"
+
+.PP
+Finds the symmetry axes associated with polyhedral elements\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.br
+\fIthreshold\fP cutoff to flag a symmetry axis\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+\fBBstring\fP symmetry string\&. 
+.PP
+.nf
+Symmetry axes are associated with specific elements:
+    link        reflection and 2-fold axis.
+    vertex      n-fold axis based on vertex order.
+    polygon     n-fold axis based on polygon order.
+Only the first model in the list is processed.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1105 of file model_poly\&.cpp\&.
+.SS "int model_poly_generate (\fBBmodel\fP * model)"
+
+.PP
+Generates polygons based on a vertex network\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The search startegy is to start at a vertex and then search always turning into
+the same direction. First the outward pointing normal for each vertex is
+calculated. Then the connectivity is followed always turning in the same 
+direction at each vertex.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 144 of file model_poly\&.cpp\&.
+.SS "int model_poly_hand (\fBBmodel\fP * model)"
+
+.PP
+Calculates the polyhedron hand\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int hand sign\&. 
+.PP
+.nf
+The hand of a polyhedron is based on the sign of the rotational strength 
+element associated with the first two eigenvectors of the adjacency matrix.
+It is assumed that the symmetry has been determined.
+The hand sign is:
+    0   no handedness.
+    1   one enantiomorph.
+    -1  other enantiomorph.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 1439 of file model_poly\&.cpp\&.
+.SS "int model_poly_links (\fBBmodel\fP * model)"
+
+.PP
+Calculates all the model links\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of links\&. 
+.RE
+.PP
+
+.PP
+Definition at line 606 of file model_poly\&.cpp\&.
+.SS "int model_poly_pentagon_adjacency (\fBBmodel\fP * model)"
+
+.PP
+Calculates the number of edges shared by pentagons\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int number of edges shared by pentagons for last model\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1051 of file model_poly\&.cpp\&.
+.SS "double model_poly_planarity (\fBBmodel\fP * model)"
+
+.PP
+Analyzes a model for polygon planarity\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double standard deviation from planarity\&. 
+.PP
+.nf
+A plane is fit through the polygon vertices and the normal calculated from:
+    n•p = d
+where n is the normal vector, p is a point in the plane, and d is the offset.
+The polygon planarity is defined as the root-mean-square-deviation from 
+the fitted plane.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 845 of file model_poly\&.cpp\&.
+.SS "double model_poly_regularity (\fBBmodel\fP * model)"
+
+.PP
+Analyzes a model for polygon regularity\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double standard deviation from regularity\&. 
+.PP
+.nf
+Regularity is defined as the adherence to a constant distance of each
+vertex from the polygon center. The polygon area is:
+     n * s^2       1 + cos(2*PI/n)
+A = ------- sqrt(-----------------)
+       4           1 - cos(2*PI/n)
+where n is the number of vertices in the polygon.
+The contribution of each polygon to the polyhedral volume is:
+V = A * dc / 3
+where dc is the distance of the polygon center to the polyhedral center.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 760 of file model_poly\&.cpp\&.
+.SS "vector<double> model_poly_sphere_coor (\fBBmodel\fP * model)"
+
+.PP
+Generates coordinates for components based on the eigenvectors of the adjacency matrix\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+dvector<double> eigenvalues\&. 
+.PP
+.nf
+The eigenvectors of the adjacency matrix are related to spherical harmonics.
+There are 3 P(sigma) eigenvectors giving the vertex coordinates.
+These are usually (but not always) vectors 2, 3, and 4 ordered by eigenvalue.
+The actual 3 P(sigma) eigenvectors are identified as those having exactly
+a single node, i.e., closely connected vertices cluster together in every dimension.
+The eigenvalues are characteristic for a polyhedron, although they may not be unique.
+
+Dover Publications, Inc., Mineola, New York, pages 101 - 104.
+
+.fi
+.PP
+ Reference: Fowler, P\&.W\&. and Manolopoulos, D\&.E\&. (2006) An Atlas of Fullerenes\&. 
+.RE
+.PP
+
+.PP
+Definition at line 1674 of file model_poly\&.cpp\&.
+.SS "int model_vertex_types (\fBBmodel\fP * model)"
+
+.PP
+Determines the vertex type based on adjacent polygons\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*model\fP model structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The polygon order is written into flags for vertex links in one
+direction for each polygon.
+New component types are generated.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 314 of file model_poly\&.cpp\&.
+.SS "int poly_get_connectivity (\fBBcomponent\fP * comp, int ilink, int nlink, \fBBpolygon\fP * poly)"
+
+.PP
+Definition at line 85 of file model_poly\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

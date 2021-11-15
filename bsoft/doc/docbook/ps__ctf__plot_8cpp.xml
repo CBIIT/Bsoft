@@ -1,0 +1,330 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_ps__ctf__plot_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/ps/ps_ctf_plot.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/ps/ps_ctf_plot.cpp</primary></indexterm>
+<para>
+
+<para>Postscript output functions for calculating CTF parameters. </para>
+ 
+</para>
+<programlisting>#include &quot;ps_plot.h&quot;
+#include &quot;ps_ctf_plot.h&quot;
+#include &quot;moving_average.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_ps__ctf__plot_8cpp_1a93df9d200c238230b2f2121ee0080811">ps_show_ctf_param</link> (<link linkend="_class_bplot">Bplot</link> *plot, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;em_ctf)</para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__ctf__plot_8cpp_1ae9b938f4de19a4e5173aa0a7bbb402e9">ps_show_ctf_fit</link> (<link linkend="_class_bplot">Bplot</link> *plot, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;em_ctf)</para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__ctf__plot_8cpp_1a1cf7b8642661e0023b98b526769a202d">ps_ctf_plot</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;em_ctf, size_t n, double freq_step)</para>
+
+<para>Generates a postscript plot from CTF parameters for defocus and the envelope. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__ctf__plot_8cpp_1ab0349dc84aea368cbff8e8af77e8bc89">ps_ctf_plot</link> (long n, double *rps, double interval, <link linkend="_class_c_t_fparam">CTFparam</link> *em_ctf, <link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+
+<para>Generates a postscript plot of a contrast transfer function. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__ctf__plot_8cpp_1a4bff09a67741345e552fe1a11488c68a">ps_ctf_defocus_zeroes</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, double volts, double Cs, double amp_shift)</para>
+
+<para>Generates a postscript plot of defocus versus zeroes. </para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__ctf__plot_8cpp_1a889b7589b91fe749553545ee47fcee09">point_spread</link> (size_t n, vector&lt; double &gt; &amp;a, double step)</para>
+</listitem>
+            <listitem><para>int <link linkend="_ps__ctf__plot_8cpp_1a9e56367cf12b9761aa036a87cfd3e23e">ps_point_spread</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_c_t_fparam">CTFparam</link> &amp;em_ctf, size_t n, double freq_step)</para>
+
+<para>Generates a point spread plot from CTF envelope parameters. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_ps__ctf__plot_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Postscript output functions for calculating CTF parameters. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010515 </para>
+
+<para>Modified: 20210531 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_ps__ctf__plot_8cpp_1a889b7589b91fe749553545ee47fcee09"/>    <section>
+    <title>point_spread()</title>
+<indexterm><primary>point_spread</primary><secondary>ps_ctf_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_ctf_plot.cpp</primary><secondary>point_spread</secondary></indexterm>
+<para><computeroutput>int point_spread (size_t n, vector&lt; double &gt; &amp; a, double step)</computeroutput></para><para>
+Definition at line 304 of file ps_ctf_plot.cpp.</para>
+    </section><anchor xml:id="_ps__ctf__plot_8cpp_1a4bff09a67741345e552fe1a11488c68a"/>    <section>
+    <title>ps_ctf_defocus_zeroes()</title>
+<indexterm><primary>ps_ctf_defocus_zeroes</primary><secondary>ps_ctf_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_ctf_plot.cpp</primary><secondary>ps_ctf_defocus_zeroes</secondary></indexterm>
+<para><computeroutput>int ps_ctf_defocus_zeroes (<link linkend="_class_bstring">Bstring</link> &amp; filename, double volts, double Cs, double amp_shift)</computeroutput></para><para>
+
+<para>Generates a postscript plot of defocus versus zeroes. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>postscript output file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>volts</entry>
+                                <entry>
+<para>accelerating voltage (in volts). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>Cs</entry>
+                                <entry>
+<para>spherical aberration (in angstrom). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>amp_shift</entry>
+                                <entry>
+<para>amplitude contribution phase shift (radians). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>A postscript plot is generated from microscope and defocus parameters
+to show the corresponding defocus and zero values.
+Defocus is given in um.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 233 of file ps_ctf_plot.cpp.</para>
+    </section><anchor xml:id="_ps__ctf__plot_8cpp_1a1cf7b8642661e0023b98b526769a202d"/>    <section>
+    <title>ps_ctf_plot()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>ps_ctf_plot</primary><secondary>ps_ctf_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_ctf_plot.cpp</primary><secondary>ps_ctf_plot</secondary></indexterm>
+<para><computeroutput>int ps_ctf_plot (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; em_ctf, size_t n, double freq_step)</computeroutput></para><para>
+
+<para>Generates a postscript plot from CTF parameters for defocus and the envelope. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;em_ctf</entry>
+                                <entry>
+<para>CTF parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>number of reciprocal space steps. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>freq_step</entry>
+                                <entry>
+<para>spatial frequency increment per step. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Postscript output is generated from microscope and defocus
+parameters.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 71 of file ps_ctf_plot.cpp.</para>
+    </section><anchor xml:id="_ps__ctf__plot_8cpp_1ab0349dc84aea368cbff8e8af77e8bc89"/>    <section>
+    <title>ps_ctf_plot()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>ps_ctf_plot</primary><secondary>ps_ctf_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_ctf_plot.cpp</primary><secondary>ps_ctf_plot</secondary></indexterm>
+<para><computeroutput>int ps_ctf_plot (long n, double * rps, double interval, <link linkend="_class_c_t_fparam">CTFparam</link> * em_ctf, <link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+
+<para>Generates a postscript plot of a contrast transfer function. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>number of elements in the radial power spectrum. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*rps</entry>
+                                <entry>
+<para>radial power spectrum. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>interval</entry>
+                                <entry>
+<para>spatial frequency step size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*em_ctf</entry>
+                                <entry>
+<para>CTF parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>postscript file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Postscript output is generated from fitted defocus, envelope and background
+parameters and compared to the radial average of the power spectrum image.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 150 of file ps_ctf_plot.cpp.</para>
+    </section><anchor xml:id="_ps__ctf__plot_8cpp_1a9e56367cf12b9761aa036a87cfd3e23e"/>    <section>
+    <title>ps_point_spread()</title>
+<indexterm><primary>ps_point_spread</primary><secondary>ps_ctf_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_ctf_plot.cpp</primary><secondary>ps_point_spread</secondary></indexterm>
+<para><computeroutput>int ps_point_spread (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; em_ctf, size_t n, double freq_step)</computeroutput></para><para>
+
+<para>Generates a point spread plot from CTF envelope parameters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>postscript file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;em_ctf</entry>
+                                <entry>
+<para>CTF parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>n</entry>
+                                <entry>
+<para>number of reciprocal space steps. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>freq_step</entry>
+                                <entry>
+<para>spatial frequency increment per step. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Postscript output is generated from microscope and defocus
+parameters.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 337 of file ps_ctf_plot.cpp.</para>
+    </section><anchor xml:id="_ps__ctf__plot_8cpp_1ae9b938f4de19a4e5173aa0a7bbb402e9"/>    <section>
+    <title>ps_show_ctf_fit()</title>
+<indexterm><primary>ps_show_ctf_fit</primary><secondary>ps_ctf_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_ctf_plot.cpp</primary><secondary>ps_show_ctf_fit</secondary></indexterm>
+<para><computeroutput>int ps_show_ctf_fit (<link linkend="_class_bplot">Bplot</link> * plot, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; em_ctf)</computeroutput></para><para>
+Definition at line 36 of file ps_ctf_plot.cpp.</para>
+    </section><anchor xml:id="_ps__ctf__plot_8cpp_1a93df9d200c238230b2f2121ee0080811"/>    <section>
+    <title>ps_show_ctf_param()</title>
+<indexterm><primary>ps_show_ctf_param</primary><secondary>ps_ctf_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_ctf_plot.cpp</primary><secondary>ps_show_ctf_param</secondary></indexterm>
+<para><computeroutput>int ps_show_ctf_param (<link linkend="_class_bplot">Bplot</link> * plot, <link linkend="_class_c_t_fparam">CTFparam</link> &amp; em_ctf)</computeroutput></para><para>
+Definition at line 17 of file ps_ctf_plot.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_ps__ctf__plot_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>ps_ctf_plot.cpp</secondary></indexterm>
+<indexterm><primary>ps_ctf_plot.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

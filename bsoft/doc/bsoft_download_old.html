@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Download</title>
+<link href="bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+    <h1>Binary distributions</h1>
+	
+	<p>Selected binary distributions are provided to simplify installation of
+		the more complicated parts of Bsoft. In particular, the FFTW3 library
+		and threading (OpenMP or Grand Central Dispatch) support are included
+		in the distributions.
+		In most cases Bsoft was compiled against Tcl/Tk 8.5.</p>
+	<p>These distributions will unpack in a directory called "bsoft" (no need to compile with bmake).
+		To complete the installation, make sure the environmental variables
+		are set correctly to point to the Bsoft programs and library (see <a href="bsoft_unix.html">here</a>).
+		On Mac OSX, also run the macinstall script to properly install
+		Bshow and Brun.</p>
+	<p>See below for the source code that can be compiled on any Unix flavor.</p>
+	
+	<table border=1>
+		<tr><th>File</th><th>Date</th><th>Description</th></tr>
+		<tr><td><a href="bsoft1_9_4_OSX_10_12.tgz">bsoft1_9_4_OSX_10_12.tgz</a></td><td>20161214</td><td>Mac OS X 10.12 (Sierra) - with FFTW3 and Grand Central Dispatch support</td>
+		<tr><td><a href="bsoft1_9_4_Fedora_20.tgz">bsoft1_9_4_Fedora_20.tgz</a></td><td>20161214</td><td>Fedora 20 (Heisenbug) - with FFTW3 and OpenMP support</td>
+	</table>
+	<br/>
+	<hr/>
+	
+    <h1>Source code</h1>
+	
+	<table border=1>
+		<tr><th>File</th><th>Date</th><th>Description</th></tr>
+		<tr><td><a href="bsoft1_9_4.tgz">bsoft1_9_4.tgz</a></td><td>20161214</td><td>Gzipped tar archive (~42 Mb)</td>
+		<tr><td><a href="bsoft1_9_4.tar">bsoft1_9_4.tar</a></td><td>20161214</td><td>Tar archive (~173 Mb)</td>
+	</table>
+	<br/>
+	<h3>Old versions</h3>
+	<p><a href="old">Old versions</a> of Bsoft are provided for those who developed code based on those. 
+	<br/>
+	<h3>New versions</h3>
+    <p>Newer versions than the current major release can be found <a href="new">here</a>.
+	These distributions are not necessarily complete and need to be 
+	unpacked within an existing bsoft directory.</p>
+	<br/>
+    <h2>Platforms supported</h2>
+    <ul>
+      <li>Linux (i386/i686, x86_64, PowerPC, Alpha, Itanium)</li>
+      <li>Darwin or MacOSX (PowerPC, Intel)</li>
+      <li>IRIX64 (SGI)</li>
+      <li>Solaris (Sun)</li>
+      <li>AIX (IBM)</li>
+      <li>OSF1 or Tru64 (Alpha)</li>
+      <li>VMS (Alpha)</li>
+      <li>Cygwin_NT (Windows NT)</li>
+    </ul>
+    <p>In principle the package could be compiled on any Unix-based operating system.</p>
+    <br/>
+    <h2>Requirements</h2>
+    <h3>Mac OS X:</h3>
+    <p>The default installations of Mac OS X don't have the compilers installed.
+	Download Xcode from the Apple developer's web site and install it first:</p>
+    <ul>
+      <a href="https://developer.apple.com/xcode/">https://developer.apple.com/xcode</a>
+    </ul>
+    <p>Note that the Mac OS X Xcode versions should be matched with the different operating systems:</p>
+    <ul>
+      <li>Mac OS X 10.4 (Tiger): Xcode 2.5</li>
+      <li>Mac OS X 10.5 (Leopard): Xcode 3</li>
+      <li>Mac OS X 10.6 (Snow Leopard): Xcode 3</li>
+      <li>Mac OS X 10.7 (Lion): Xcode 4</li>
+      <li>Mac OS X 10.8 (Mountain Lion): Xcode 4</li>
+      <li>Mac OS X 10.9 (Mavericks): Xcode 5</li>
+      <li>Mac OS X 10.10 (Yosemite): Xcode 6</li>
+      <li>Mac OS X 10.11 (El Capitan): Xcode 7</li>
+      <li>Mac OS X 10.12 (Sierra): Xcode 8</li>
+    </ul>
+    <br/>
+    <h3>The Z library:</h3>
+    <p>The inclusion of the PNG format in Bsoft requires libz for compression.
+	The required files are:</p>
+    <ul>
+		<li>/usr/include/zlib.h or /usr/local/include/zlib.h</li>
+      	<li>/usr/lib/libz.* (such as libz.a or libz.so)</li>
+    </ul>
+    <p>On some versions of Unix and VMS, libz may not be available, therefore 
+	it is included in the distribution and will be compiled.</p>
+    <br />
+    <h3>Tcl/Tk:</h3>
+    <p>Bsoft is primarily a command-line package, with all the necessary code 
+	included in the package. However, from version 0.9, it includes a Tcl/Tk 
+	interface and a Tcl/Tk script, <strong>bshow</strong>, useful for the 
+	display of images and a few interactive manipulations (not available for VMS). 
+	The Tcl/Tk version must be 8.3 or higher. Bsoft can be compiled without 
+	Tcl/Tk (see below for details).</p>
+  <p>On most Unix boxes, the Tcl/Tk headers and libraries are installed in either
+  /usr or /usr/local (look for /usr/include/tk.h or /usr/local/include/tk.h). 
+  Linux distributions typically have separate packages for the runtime and 
+  developer versions of Tcl/Tk. Both need to be installed to be able to use 
+  <strong>bshow</strong>.</p>
+    <p>The Bsoft compiler script, bmake, tries to find the Tcl/Tk headers 
+	automatically. Make sure the Tcl/Tk version is 8.3 or higher. There may 
+	be a version suitable for installation under VMS, but try at your own 
+	risk. Make sure the commands &quot;tcl&quot; and &quot;wish&quot; are 
+	in your executable path.</p>
+    <br/>
+    <h3>XML:</h3>
+    <p>The default format for  parameter files is the STAR format. These can 
+	also be written in an XML format, but requires the <strong>libxml2</strong> 
+	library with its header files. The common locations for the header files 
+	are in /usr/include/libxml2 and the library in /usr/lib. The source code
+	for this library is not included in Bsoft due to its sheer size.</p>
+	<br/>
+    <h2>Enhancements</h2>
+    <p>These enhancements are optional and may be included during compilation.</p>
+    <h3>OpenMP:</h3>
+    <p>Several operations in Bsoft have been parallelized with OpenMP. Support 
+	for OpenMP has been part of gcc since version 4.2, and platforms such as 
+	Mac OS X (before 10.7) and Linux support it.</p>
+    <h3>Grand Central Dispatch:</h3>
+    <p>On mac OS X 10.7 and later, the compiler has been changed to clang which
+	does not support OpenMP. In stead, threading is done using Grand Central Dispatch.</p>
+    <h3>FFTW3:</h3>
+    <p>Because of the complexities in the new versions of FFTW (3.x), it is no 
+	longer included with the Bsoft distribution. It should be compiled as 
+	single-precision floating point with support for OpenMP turned on if 
+	parallel operations are also desired.</p>
+</div>
+<div id="footer">
+  Bernard Heymann  20161214
+</div>
+</body>
+</html>

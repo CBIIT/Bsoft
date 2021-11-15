@@ -1,0 +1,112 @@
+.TH "/Users/bernard/b20/bsoft/include/binomial.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/binomial.h \- Functions to generate and fit binomials\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "double \fBBnpk\fP (int n, double p, int k, double w)"
+.br
+.RI "Calculates the probability of k occurrences in n cases\&. "
+.ti -1c
+.RI "double \fBbinomial_fit\fP (vector< double > &distrib, int n, int nfit, vector< double > &coeff)"
+.br
+.RI "Fits a distribution to one or more binomial distributions\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions to generate and fit binomials\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Daniel Nemecek and Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20091202 
+.PP
+Modified: 20190201 
+.RE
+.PP
+
+.PP
+Definition in file \fBbinomial\&.h\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "double binomial_fit (vector< double > & distrib, int n, int nfit, vector< double > & coeff)"
+
+.PP
+Fits a distribution to one or more binomial distributions\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Daniel Nemecek and Bernard Heymann 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fI&distrib\fP distribution\&. 
+.br
+\fIn\fP number of cases (number of values in distribution)\&. 
+.br
+\fInfit\fP number of binomial curves to fit\&. 
+.br
+\fI&coeff\fP fitted coefficients (weights and probabilities)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double residual\&. 
+.PP
+.nf
+The binomial curve(s) is(are) fit using the downhill simplex method.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 89 of file binomial\&.cpp\&.
+.SS "double Bnpk (int n, double p, int k, double w)"
+
+.PP
+Calculates the probability of k occurrences in n cases\&. 
+.PP
+\fBAuthor\fP
+.RS 4
+Daniel Nemecek and Bernard Heymann 
+.RE
+.PP
+\fBParameters\fP
+.RS 4
+\fIn\fP number of cases\&. 
+.br
+\fIp\fP probability of one occurrence [0-1]\&. 
+.br
+\fIk\fP occurrences (<=n)\&. 
+.br
+\fIw\fP weight [0-1]\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+double weighted probability\&. 
+.RE
+.PP
+
+.PP
+Definition at line 28 of file binomial\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

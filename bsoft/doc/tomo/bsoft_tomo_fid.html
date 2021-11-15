@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Tomography</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Tomographic series fiducial-based alignment</h1>
+<p>The fiducial-based alignment algorithm attempts to predict where a fiducial
+	marker image moves with a change in tilt angle. Because the major
+	movement is perpendicular to the tilt axis, the tilt axis angle must
+	be known to a reasonable degree of accuracy. The following workflow
+	starts with defining a marker seed set in the zero-degree (or close to it)
+	micrograph. The tilt axis is then determined, followed by marker
+	tracking and refinement. The final product is a full 3D transform 
+	for every micrograph to place it within the same frame of reference.</p>
+<p>All of this can be done automatically on the command line. However,
+	the user must use some judgment in choosing the parameters for each
+	alignment. These include the parameter sfor generating the power
+	spectra and fitting the CTF. Sometimes the marker tracking
+	fails for some micrographs, which then need to be corrected manually.</p>
+	<br />
+<h2>1. Generating seed fiducial markers</h2>
+<p>Open the parameter file in bshow and change to the zero-degree tilt
+	micrograph. Make sure the marker radius is accurately set to half
+	the diameter of a typical marker image. Select the menu item 
+	&#8220;Tomography/Find markers in current image&#8221;. 
+	This will cross-correlate a synthetic marker based on the marker 
+	radius with the image, and present a set of hits and a dialog box. 
+	Adjust the FOM slider in the dialog box until a satisfactory set 
+	of markers are selected and click on &quot;Done&quot;.</p>
+	<center><img
+	style="width: 500px;" alt="Seed markers and FOM slider window"
+	src="tomo_seed_markers.png" /><br />
+	</center>
+
+<p>Markers can be added or deleted manually with the marker tool:</p>
+	 <img id="inline" title="Marker" src="../bshow/marker_active.gif" alt="Marker" width="36" height="36" />
+<p>Eliminate markers that are close to edges, because they
+	might not stay within the frames of all the images in the series.
+	Markers that are clustered should all be selected because the
+	algorithm relies on cross-correlating the vicinity of every marker,
+	not just the marker.
+	Save the result to a parameter file using the menu item
+	&quot;Micrograph/Write parameters&quot;.<br />
+<br />
+<h2>2. Finding the tilt axis</h2>
+<p>The tilt axis angle is determined by how the camera is installed,
+	as well as the magnification used. In modern electron microscopes
+	the magnifications are chosen to avoid big rotations when changing
+	magnification. Once the tilt axis angle is known for a particular
+	microscope and magnification, it can be used as starting point for
+	alignment. In Bsoft, the tilt axis angle is defined
+  	as the counterclockwise rotation angle from the x-axis to the tilt
+  	axis. To find the tilt axis angle to within acceptable accuracy, 
+  	two methods are available. The first is a fast method potentially with
+  	less accuracy, and the second is slower and more accurate.
+  	Eventually, after proper tracking of the markers, the refinement
+  	of the micrograph orientations will give the best possible tilt
+  	axis angle. This axis angle can then be used for all subsequent
+  	tilt series obtained from the same microscope.</p>
+<p>Note that the nominal tilt angles must already be specified.</p>
+<br/>
+<h3>2.1. Fast tilt axis determination</h3>
+<p>The program <b>btrack</b> offers a fast way to determine
+	the tilt axis. The algorithm uses two micrographs closest to the
+	positive and negative of the tilt angle specified. At each axis angle
+	within the range specified, the seed markers are used to generate
+	an image that has the distribution of markers expected. This is then
+	correlated with the corresponding micrograph. The axis angle that
+	gives the maximum correlation is taken as the correct one.</p>
+<p>The following command line selects micrographs close to 15° tilt
+	and with a tilt axis angle step size of 1° witin the range of
+	-10° to 10°:</p>
+<div id="command"><p>btrack -v 1 -findaxis 15,1,-10,10 -out gold3_findaxis.star gold3.star</p></div>
+<p>The same command can be launched from within <b>bshow</b>
+	using the "Workflow/Find tilt axis" menu item.<p>
+<center><img
+style="width: 500px;" alt="Find tilt axis dialog window"
+src="tomo_findaxis.png" /><br />
+</center>
+<p>The output is written to a text window that can be saved using the
+	"File" menu.</p>
+	<center><img
+	style="width: 500px;" alt="Find tilt axis results window"
+	src="tomo_findaxis_result.png" /><br />
+	</center>
+
+<p>At this stage the results are not yet in
+	<b>bshow</b> memory. Close the text window and click
+	on the "Load" button in the "FindAxis" window to load the new
+	parameter file in memory. The best tilt axis angle should now
+	be displayed in the "Tomography" window.</p>
+  <br />
+
+<h3>2.2. The tomax script</h3>
+<p>This script uses full tracking runs with different tilt axis
+	angles to determine the best residual. It is very
+	compute-intensive and should only be used if the faster
+	method doesn't work. The <a href="../scripts/tomax.html">tomax</a>
+	script is run specifying the initial angle, the angle step size,
+	and the final angle to test for:</p>
+  <div id="command"><p>tomax -angles -10,1,10 gold3_seed.star</p></div>
+  <p>or:</p>
+  <div id="command"><p>tomax.pl --file gold3.star --start -10 --end 10</p></div>
+  <p>The output gives the residual for a single iteration attempt of
+  tracking the markers at each tilt axis angle. The best (lowest)
+  residual is reported and should be used subsequently.</p>
+  <p>Output from the tomax script:</p>
+<center><img
+style="width: 300px;" alt="Log from the tomax script"
+src="tomax_log.png" /><br />
+</center>
+<br />
+<h2>3. Alignment: Tracking markers</h2>
+<p>The program <b>btrack</b> tracks the markers
+	starting at the micrograph with the seed fiducial
+	markers, usually one close to zero-degree tilt. The tracking proceeds
+	from low to high tilt angles in both directions. For each micrograph,
+	it generates an image containing all the markers at their current
+	locations and considering the current tilt angle. This is then
+	correlated with the micrograph to get the shift (which defines the
+	micrograph origin). The z-coordinate of each marker is then determined by
+	tracking along a line perpendicular to the tilt axis, cross-correlating
+	with a marker reference image. This generates a z-coordinate for
+	the marker for every micrograph in the tilt series. The actual
+	z-coordinate is taken as the average of all the z-coordinates.
+	The standard deviation of the z-coordinates is used as an
+	indication of how well the marker location is defined.
+	This process is iterated (typically 2-5 times) until the average
+	change in z-coordinates drop below a set stopping condition
+	(usually one pixel) or up to the maximum number of iterations.
+	The combination of translations and rotations have an infinite
+	number of representations. To restrict them to the most useful
+	representations, the overall z-coordinates should be recentered
+	after processing each micrograph. This keeps the micrographs
+	within the same volume that will eventually become that of
+	the reconstructed tomogram. Finally, the exact positions
+	of the markers in each micrograph are then refined (-refine markers).</p>
+<p>The tracking can be done from the command line or from
+	<b>bshow</b> (see below).
+	A typical command line is:</p>
+  <div id="command"><p>btrack -v 1 -exclude none -reset -update -track 1,1.5 -axis -5 -resol 20,1000 -recenter -refine markers -out gold3_trk.star gold3_seed.star &gt;&amp; gold3_trk.log &amp;</p></div>
+<p>The options used here are:</p>
+<ul>
+	<li>The -exclude none option ensures that all the micrographs are selected.</li>
+	<li>The -resetmodel option ensures that the zero-tilt marker positions agree with those of the 3D model at the start of tracking.</li>
+	<li>The -updatematrix option recalculates the micrograph orientation matrices from the tilt axis and tilt angles.</li>
+	<li>The -track option activates tracking and sets the maximum number of iterations and the target stopping condition.</li>
+	<li>The -axis option sets the tilt axis angle</li>
+	<li>The -resolution option limits cross-correlation. For high-intensity gold markers the relatively low resolution limit of 20 Å should suffice in most cases.</li>
+	<li>The -recenter option centers the overal z-coordinates at every update.</li>
+	<li>The -refine markers option adjusts the final locations of the markers by cross-correlation with a marker reference image.</li>
+</ul>
+<p>The equivalent in <b>bshow</b> is done by selecting the
+	"Workflow/Track markers" menu item:</p>
+<center><img
+style="width: 500px;" alt="Track dialog window"
+src="tomo_track_dialog.png" /><br />
+</center>
+
+<p>After every iteration a parameter file is written to allow for user
+  inspection and trouble-shooting (file names gold3_trk_01.star,
+  gold3_trk_02.star, ... ).
+  To follow the progress in tracking, the log file can be queried:</p>
+  <div id="command"><p>grep Cycle gold3_trk.log</p></div>
+  <p>Cycle 1:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Average change in
+  positions = 35.8846</p>
+  <p>Cycle 2:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Average change in
+  positions = 0.440963</p>
+  <p>This gives the change in marker positions for every iteration,
+  with the first always a high number because the z-coordinates are
+  zero at the start. When the change in positions drop below the
+  stopping condition, a reasonable
+  alignment has been reached and the program finishes.
+  Otherwise, the iterations continue up to the maximum specified.
+  The overall residual is given at the end of the log file:</p>
+  <div id="command"><p>tail -2 gold3_trk.log</p></div>
+  <p>Average residual = 1.98881 pixels</p>
+  <p>The new parameter file can be read with <b>bshow</b>
+   to examine the marker positions:</p>
+  <div id="command"><p>bshow gold3_trk.star &amp;</p></div>
+  <p>If the tracking is done from <b>bshow</b>, the output
+  parameter file can be loaded with the "Load" button in the tracking
+  dialog window (see above).</p>
+<h2>4. Alignment: Fixing markers and refinement</h2>
+<p>The success of tracking varies because of intrinsic features in
+	each tilt series. In the majority of cases the marker locations
+	need to be adjusted manually to improve the alignment. In the
+	<b>bshow</b> image display, the markers have
+	orange lines, where each line indicates
+	the difference between the current marker position and the position
+	predicted from the 3D marker model. Markers with big deviations or
+	those that are obviously incorrect, can be adjusted manually.
+	For manual positioning, drag the marker until it fits nicely over
+	the correct marker image. In some cases, the whole set of markers
+	are offset. This can be fixed with the grouping tool:</p>
+	<img id="inline" title="Marker" src="../bshow/marker_group_active.gif"
+	alt="Marker group" width="36" height="36" />
+	<p>Place the cursor on one marker and drag the whole set to coincide
+	with correct marker images. To turn off the grouping behavior,
+	select the pointer tool:</p>
+	<img id="inline" title="Marker" src="../bshow/point_active.gif"
+	   alt="Marker group" width="36" height="36" />
+<p>Select the "Tomography/Refine" alignment. This opens a dialog box
+	with several options to improve the alignment:</p>
+	<center><img
+	style="width: 300px;" alt="Refinement dialog window"
+	src="tomo_refine_dialog.png" /><br />
+	</center>
+<ul>
+  <li>Markers, which refines the marker positions on the micrographs</li>
+  <li>Z-coordinates, which refines the 3D model z-coordinates</li>
+  <li>Micrographs, which refines the geometry associated with each
+micrograph</li>
+  <ul>
+    <li>Views</li>
+    <li>Origins</li>
+    <li>Scales (be careful here, scale refinement may compensate for
+tilts and should only be done once and as the last refinement)</li>
+    </ul>
+  </ul>
+<p>The top option is to refine the marker positions by cross-correlation.
+	This is the same as the -refine markers option in btrack. Run this option
+	once by clicking on the "Do" button. This will change the "Residual"
+	value in the main "Tomography" window. This is typically be in the range
+	of 1-20 pixels before any further refinement.</p>
+	<p>Next, select the "Z-coordinates" checkbutton and run it. Then
+	select the "Micrographs" checkbutton, as well as the "Views" and
+	"Origins", and run it. Both these should reduce the residuals.
+	Run these two options alternately until the residual stay about
+	the same.</p>
+<p> The menu item &quot;Tomography/Show marker table&quot; and the
+	"Marker table" button in the main Tomography window opens a table
+	of markers. This table lists the markers with their associated
+	FOM's and residuals. The buttons at the bottom allow the user
+	to find the highest and lowest of each parameter, and step
+	through the markers. The display in the main window will change
+	to show the selected marker. Select the markers with high residuals
+	and manually adjust them to positions that are correct by eye.
+	Then click on the "Update" button to recalculate the overall residual
+	displayed in the main Tomography window. Combine this with
+	refining the Z-coordinates and micrograph orientations in
+	the "Refine" window.</p>
+<p>The refinement can also be run on the command line:</p>
+<div id="command"><p>btrack -v 1 -reset -refine 10,z,o,v -out gold3_ref.star gold3_trk.star &gt;&amp; gold3_ref.log &amp;</p></div>
+<p>Once the overall residual is acceptably low (typically 1-3 pixels)
+	and all markers are deemed to be in the correct locations,
+	save the parameter file. The micrograph orientations are now
+	appropriately specified for reconstruction. The algorithms in Bsoft
+	are based on a general rigid-body target function with no restrictions
+	on the view (such as assuming a tilt axis perpendicular to the
+	electron beam), so that the final alignment can be used directly
+	in reconstruction.</p>
+<br/>
+<h2><a name="troubleshooting" id="troubleshooting"></a>5. Trouble shooting</h2>
+<h3>5.1. Marker reference images</h3>
+<p>If the overall residual remains high (&gt; 5 pixels), there may a
+	problem with how the alignemnet is done. The marker tracking and
+	location refinement rely on a marker reference images produced as
+	an average of the marker images in the zero-tilt micrograph.
+	These images are written into the files &quot;marker_track_ref.map&quot;
+	and &quot;marker_refine_ref.map&quot; for tracking and refinement,
+	respectively. They should look something like this: </p>
+<center><img src="marker_track_ref.png" alt="Tracking reference marker" width="100" height="100" /><br />
+</center>
+<p>If they look significantly different from the example, please send me a bug report with all the details (<a href="mailto:bernard_heymann@nih.gov">bernard_heymann@nih.gov</a>).</p>
+<br/>
+<h3>5.2. Manual marker positioning</h3>
+<p>If marker tracking completely fails, the markers can be manually
+	positioned. To alleviate some of the manual labor required, markers
+	can be generated from a seed in the zero-tilt micrograph, using the
+	nominal tilt axis and tilt angles:</p>
+<div id="command"><p>btrack -v 1 -generate -out gold3_gen.star gold3_seed.star</p></div>
+<p>This can also be done in <b>bshow</b> using the menu item &quot;Tomography/Generate markers from seed&quot;. The markers can then
+	be correctly placed manually, poentially followed by the refinement
+	steps aoutlined above.</p>
+  <br />
+</div>
+<div id="footer">
+  Bernard Heymann  20200326
+</div>
+</body>
+</html>

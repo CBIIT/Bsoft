@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Tomography</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Tomogram denoising</h1>
+<p>Important: Denoising is not recommended when the goal is subtomogram
+	averaging, because any form of filtering removes high resolution 
+	information. </p>
+<p>There is a trade-off between the speed of denoising algorithms and 
+	the quality of the resultant tomogram. The sections below start with 
+	best method and followed by other lesser ones. Limiting the resolution
+	in the tomogram during or after reconstruction also removes
+	high frequency noise, but that approach is not covered here.</p>
+<br/>
+
+<h2>Non-linear anisotropic diffusion: bnad</h2>
+<p>This algorithm aims to smooth the tomogram to remove noise while
+	preserving features (Frangakis et al. 2001). </p>
+<div id="command"><p>bnad -v 7 -dat float -iter 100 -slabsize 8 -out 10 map.mrc map_nad.mrc</p></div>
+<h3>Options</h3>
+<ul>
+	<li>-datatype: Converts the tomogram to floating point for processing.</li>
+	<li>-iterations: Number of iterations.</li>
+	<li>-slabsize: Number of z slices to process per thread</li>
+	<li>-output: The frequency of writing intermediate maps.</li>
+</ul>
+<p>Each slab is processed in a thread, allowing parallel processing. The 
+	combined memeory use of all the threads should not exceed the memry of 
+	the computer.</p>  
+<br/>
+<h2>Bilateral filtering: bbif</h2>
+<div id="command"><p>bbif -verb 7 -dat float -space 1.5 -range 25 map.mrc map_bif.mrc</p></div>
+<br/>
+<h2>Median filtering: bmedian</h2>
+<div id="command"><p>bmedian -verb 7 -dat float -kernel 5 -iter 3 map.mrc map_med3.mrc</p></div>
+<br/>
+<h2>Gaussian smoothing filtering: bfilter</h2>
+<div id="command"><p>bfilter -verb 7 -dat float -gaussian 19,3 map.mrc map_g3.mrc</p></div>
+<br/>
+<h2>Averaging filtering: bfilter</h2>
+<div id="command"><p>bfilter -verb 7 -dat float -average 7 map.mrc map_a7.mrc</p></div>
+<br/>
+<h2>Denoising with limited memory</h2>
+<p>Tomograms are large and require considerable memory to denoise with
+	the diffusion algorithm.
+	There is an approach in Bsoft to divide the tomogram into overlapping tiles
+	to allow piecewise and distributed denoising. The first program, btile,
+	generates the tiles together with a small text file specifying how
+	the tiles are organized. Each tile is then denoised with bnad, followed
+	by reassembly with bpatch.
+  The key parameter is the tile overlap, which must be at least as many
+  pixels as the number of cycles used for denoising. The memory
+  requirement is high, so the tiles should not be too large (1 Gb of
+  memory would allow a block of maximum 400x400x200 to be denoised).</p>
+<p>The tomogram is first tiled:<br />
+  <div id="command"><p>btile -v 7 -size 400,400,240 -overlap 100,100,0 gold3_rec.pif tile.mrc</p></div>
+<p>Each tile is then denoised, using the script <a href="../scripts/tomnad.html">tomnad</a>.</p>
+<p>The tiles are finally reassembled into the full tomogram as floating
+  point:</p>
+<div id="command"><p>bpatch -v 7 -tiles tile.tiles -out patch.mrc tile_0??_nad.mrc</p></div>
+<p>The tomogram is then truncated to the average +- 5*standard deviation
+  and converted to byte data type:<br />
+<div id="command"><p>bimg -v 7 -dat byte -trunc 74,179 patch.mrc gold3_den.pif</p></div>
+
+
+
+<div id="footer">
+  Bernard Heymann  20201023
+</div>
+</body>
+</html>

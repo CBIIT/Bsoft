@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_bmolsym_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/bmolsym.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/bmolsym.cpp</primary></indexterm>
+<para>
+
+<para>A tool to perform symmetry operations on coordinate files. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmolecule.h&quot;
+#include &quot;mol_symmetry.h&quot;
+#include &quot;mol_transform.h&quot;
+#include &quot;mol_edit.h&quot;
+#include &quot;mol_util.h&quot;
+#include &quot;utilities.h&quot;
+#include &quot;options.h&quot;
+#include &quot;timer.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_bmolsym_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627">main</link> (int argc, char **argv)</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_bmolsym_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>const char * <link linkend="_bmolsym_8cpp_1a4de0ad4c7190962494815c0fa7f948df">use</link> []</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>A tool to perform symmetry operations on coordinate files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19980214 </para>
+
+<para>Modified: 20150813 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_bmolsym_8cpp_1a3c04138a5bfe5d72780bb7e82a18e627"/>    <section>
+    <title>main()</title>
+<indexterm><primary>main</primary><secondary>bmolsym.cpp</secondary></indexterm>
+<indexterm><primary>bmolsym.cpp</primary><secondary>main</secondary></indexterm>
+<para><computeroutput>int main (int argc, char ** argv)</computeroutput></para><para>
+Definition at line 53 of file bmolsym.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_bmolsym_8cpp_1a4de0ad4c7190962494815c0fa7f948df"/>    <section>
+    <title>use</title>
+<indexterm><primary>use</primary><secondary>bmolsym.cpp</secondary></indexterm>
+<indexterm><primary>bmolsym.cpp</primary><secondary>use</secondary></indexterm>
+<para><computeroutput>const char* use[]</computeroutput></para><emphasis role="strong">Initial value:</emphasis><programlisting>=&#32;{
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Usage:&#32;bmolsym&#32;[options]&#32;in.pdb&#32;out.pdb&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;---------------------------------------&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Performs&#32;symmetry&#32;operations&#32;on&#32;molecules.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Actions:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-translate&#32;0,-50,22&#32;&#32;&#32;&#32;&#32;&#32;Translate&#32;(angstrom).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-rotate&#32;0.5,0,5.8,45&#32;&#32;&#32;&#32;&#32;Rotate&#32;around&#32;a&#32;vector&#32;(x,y,z)&#32;by&#32;an&#32;angle.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-select&#32;CA&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Atom&#32;selection&#32;(default&#32;all).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-apply&#32;C5&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Apply&#32;point&#32;group&#32;symmetry.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-find&#32;C5&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Find&#32;standard&#32;orientation&#32;for&#32;this&#32;point&#32;group&#32;symmetry.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-Bfactor&#32;D5&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Calculate&#32;B&#32;factors&#32;for&#32;this&#32;point&#32;group&#32;symmetry.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-pdbsymmetry&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Read&#32;SMTRY&#32;matrices&#32;from&#32;a&#32;PDB&#32;file&#32;and&#32;apply&#32;them.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-pdbbiomt&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Read&#32;BIOMT&#32;matrices&#32;from&#32;a&#32;PDB&#32;file&#32;and&#32;apply&#32;them.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-rename&#32;D&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Rename&#32;molecules&#32;from&#32;the&#32;given&#32;letter.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-show&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Show&#32;operational&#32;symmetry&#32;matrices.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Parameters:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-verbose&#32;7&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Verbosity&#32;of&#32;output.&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-origin&#32;10,-10,20&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Origin&#32;for&#32;rotation&#32;(default&#32;0,0,0,&#32;can&#32;be&#32;\&quot;center\&quot;&#32;for&#32;COM).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-reference&#32;0,1.5,-0.2,35&#32;Reference&#32;symmetry&#32;axis&#32;and&#32;rotation&#32;angle&#32;(default&#32;0,0,1,0).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-distance&#32;3.5&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;&#32;Distance&#32;between&#32;overlapping&#32;atoms&#32;allowed&#32;(default&#32;3&#32;angstrom,&#32;use&#32;with&#32;-apply).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;Input:&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-parameters&#32;parm.star&#32;&#32;&#32;&#32;Atomic&#32;properties&#32;parameter&#32;file&#32;(default&#32;atom_prop.star).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;-similarity&#32;sim.star&#32;&#32;&#32;&#32;&#32;Residue&#32;similarity&#32;matrix&#32;for&#32;finding&#32;orientation&#32;(default&#32;blosum62.star).&quot;</emphasis>,
+<emphasis role="stringliteral">&quot;&#32;&quot;</emphasis>,
+NULL
+}
+</programlisting><para>
+Definition at line 22 of file bmolsym.cpp.</para>
+    </section><anchor xml:id="_bmolsym_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>bmolsym.cpp</secondary></indexterm>
+<indexterm><primary>bmolsym.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

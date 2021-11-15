@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Sequence Analysis</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Correlated mutation analysis</h1>
+<p>The correlated mutation analysis follows the method set out in Gobel, Sander
+&amp; Schneider (1994) Proteins 18, 309-317, with a few minor differences.</p>
+<p>The mutational correlation between two positions i and j in the alignment is defined as:</p>
+&nbsp;<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sum(w(k,l)*(s(i,k,l)
+- &lt;s(i)&gt;)*(s(j,k,l) - &lt;s(j)&gt;))</tt><br/>
+<tt>r(i,j) =&nbsp; ------------------------------------------------ </tt><br/>      
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+m^2*o(i)*o(j)</tt>
+<br />
+<tt> where:</tt><br />
+&nbsp; <tt>m:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+number of sequences<br />
+      </tt>
+<tt>&nbsp;o(i):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; standard
+deviation of similarities
+at alignment position i</tt><br />
+<tt>&nbsp;w(k,l):&nbsp;&nbsp;&nbsp; weight for sequences k and l<br />
+        </tt>
+<tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+(1 - fractional identity: see function seq_aligned_identity)</tt><br />
+<tt>&nbsp;s(i,k,l):&nbsp; similarity for alignment position i
+between sequences
+k and l<br />
+    </tt>
+<tt>&nbsp;&lt;s(i)&gt;:&nbsp;&nbsp;&nbsp; average similarity at
+alignment
+position i</tt>
+      <br />
+&nbsp;
+      <p>&nbsp;      </p>
+<h3>Example:</h3>
+<div id="command"><p>bcormut -verbose 7 -datatype b -image vp23.jpg
+          -cutoff 0.6 vp23.pir</p></div>
+<p><u>Output with high-scoring correlations:</u></p>
+<tt>Res1 Num1 Res2 Num2 Total Corr</tt>
+      
+        <br />
+<tt>T 9 I 17 210&nbsp; 0.631</tt>
+      
+<tt>TAIIIVVVIVVVIVIIIIIII</tt>
+      
+<tt>IILLLLLLLLLLLLLLLLLLL</tt>
+      
+        <br />
+<tt>T 104 D 115 210&nbsp; 0.610</tt>
+      
+<tt>TTTTTTTTTTTTTKVAVVVKT</tt>
+      
+<tt>DDDDDDDDDDDDDGTSTSTID</tt>
+      
+        <br />
+<tt>Q 26 S 136 210&nbsp; 0.623</tt>
+      
+<tt>QQQQQQQQTSCCCQQQQQQQQ</tt>
+      
+<tt>SSSSSSSSLVLLLSSSSSSSS</tt>
+      
+        <br />
+<tt>L 44 S 136 210&nbsp; 0.602</tt>
+      
+<tt>LLLLLLLLHSSSNVIILLLLV</tt>
+      
+<tt>SSSSSSSSLVLLLSSSSSSSS</tt>
+      
+<tt><br />
+        S 136 I 230 210&nbsp; 0.610</tt>
+      
+<tt>SSSSSSSSLVLLLSSSSSSSS</tt>
+      
+<tt>IIIIIIIIASAAALVIIILLV</tt>
+      
+<tt><br />
+        Correlations reported:&nbsp; 5</tt>
+      <br />
+&nbsp;
+<p>Each high-scoring correlation (above the threshold of 0.6 given with
+the &quot;-c&quot; option) generates three output lines. The first line contains 6
+values with the first 4 values giving the types and alignment positions
+of the correlated residues. The residue types indicate those in the
+reference sequence (typically the first sequence in the alignment, but
+can be set on the command line). The next value is the number of
+comparisons made: maximally m*(m-1)/2. The last number is the
+correlation coefficient. </p>
+<p>The next two lines gives the corresponding residues at the two alignment
+positions for all the sequences, allowing the user to see on what basis
+this is a high correlation. Often, poorly represented pairs of
+positions score high and these should not be used to reach any
+conclusions.</p>
+<br/>
+<p><u>Output image:      </u></p>
+<p>The image, &quot;vp23.jpg&quot;, generated in this example represents
+all the correlation coefficients calculated for all the positional pairs in the
+alignment:</p>
+<center><img src="vp23.jpg" style="height: 340px; width: 340px;"
+ alt="Correlated mutation matrix" /></center>
+<p>The line across the diagonal is the comparison between
+identical sequences (i.e., i = j). The homogenous band towards the right
+represents a part of the alignment with large gaps for most of the
+sequences.</p>
+</div>
+<div id="footer">
+	Bernard Heymann  20141226
+</div>
+</body>
+</html>

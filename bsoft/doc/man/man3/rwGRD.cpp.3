@@ -1,0 +1,121 @@
+.TH "/Users/bernard/b20/bsoft/src/rwimg/rwGRD.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/rwimg/rwGRD.cpp \- Functions for reading and writing GRD files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwGRD\&.h'\fP
+.br
+\fC#include 'file_util\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBgrid_decompress\fP (\fBBimage\fP *p, long len, unsigned char *buf)"
+.br
+.ti -1c
+.RI "unsigned char * \fBgrid_compress\fP (\fBBimage\fP *p, long &compress)"
+.br
+.ti -1c
+.RI "int \fBreadGRD\fP (\fBBimage\fP *p, int readdata, int img_select)"
+.br
+.RI "Reading a Basel GRD map image file format\&. "
+.ti -1c
+.RI "int \fBwriteGRD\fP (\fBBimage\fP *p, int flags)"
+.br
+.RI "Writing a Basel GRD map image file format\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Functions for reading and writing GRD files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19990410 
+.PP
+Modified: 20210304 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwGRD\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "unsigned char* grid_compress (\fBBimage\fP * p, long & compress)"
+
+.PP
+Definition at line 42 of file rwGRD\&.cpp\&.
+.SS "int grid_decompress (\fBBimage\fP * p, long len, unsigned char * buf)"
+
+.PP
+Definition at line 16 of file rwGRD\&.cpp\&.
+.SS "int readGRD (\fBBimage\fP * p, int readdata, int img_select)"
+
+.PP
+Reading a Basel GRD map image file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.br
+\fIreaddata\fP flag to activate reading of image data\&. 
+.br
+\fIimg_select\fP image selection in multi-image file (-1 = all images)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. A 3D image format used in electron microscopy\&. Header size: 512 bytes (fixed)\&. File format extensions: \&.grd The identifier is a 4-byte magic number (not used)\&. Machine identifier: 1 = little endian, 2 = big endian\&. Byte order determination: Data type and third dimension values must be less than 256*256\&. Old data types: 1 = byte, 2 = float, 3 = complex float 4 = 3-value vector (float), 5 = view (float) 6 = \fBRGB\fP byte, 7 = \fBRGB\fP float 8 = \fBRGBA\fP byte, 9 = \fBRGBA\fP float 10 = multi The Bsoft data type and compound type are combined to give the mode: mode = 100*compound_type + data_type 
+.RE
+.PP
+
+.PP
+Definition at line 93 of file rwGRD\&.cpp\&.
+.SS "int writeGRD (\fBBimage\fP * p, int flags)"
+
+.PP
+Writing a Basel GRD map image file format\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.br
+\fIflags\fP flags to set output properties\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. A 3D image format used in electron microscopy\&. flags: 0 no compression 1 rul-length compression (only byte data types) 
+.RE
+.PP
+
+.PP
+Definition at line 223 of file rwGRD\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

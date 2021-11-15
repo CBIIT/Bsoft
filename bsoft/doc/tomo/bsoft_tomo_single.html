@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Bsoft: Tomography</title>
+<link href="../bsoft.css" rel="stylesheet" type="text/css" />
+<link rel="icon" href="Bsoft_16x16.png" type="image/png" />
+<link rel="icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="Bsoft_16x16.ico" type="image/x-icon" />
+</head>
+
+<body class="bsoft_layout">
+
+<div id="content">
+<h1>Tomographic series alignment and reconstruction</h1>
+<center><img src="Tomo_flowchart.png" alt="Tomography flowchart" width="216" height="436" /></center>
+    <p>An example of gold fiducial markers on
+      holy carbon is provided for training:<br />
+      </p>
+    <p align="center"><a href="../data/gold3.pif" type="application/octet-stream">gold3.pif</a><br />
+    </p>
+    <p>The pixel size is about 5 &Aring;/pixel, the fiducial markers are about
+      100 &Aring; in diameter, the tilt axis is close to the x-axis (-5&#730;), and the
+      tilt series start at -60&#730; and proceed in 5&#730; steps.<br />
+      </p>
+<h2>1. Preparation</h2>
+<p>The tomographic tilt series is represented in the parameter files in
+  Bsoft as a
+  single field-of-view with multiple micrographs, one for each image. The
+  image must therefore be in a multi-image format such as PIF or Spider
+  before it is processed. The programs bhead, bimg and bnorm have an
+  option to convert 3D slices into a stack of 2D images for multi-image
+  formats, and the program btomo automatically does the conversion:<br />
+  <br />
+  <div id="command"><p>bimg -v 7 -images gold3.map gold3.pif</p></div>
+  <br />
+  In preparation for alignment and reconstruction, the contrast variation
+  in the series due to increased thickness at higher tilt angles must be
+  compensated. To normalize the contrast in the series, the central part
+  of the histogram of each micrograph is fitted to a Gaussian function,
+  and rescaled to a given average and standard deviation:<br />
+  <br />
+  <div id="command"><p>bnorm -v 7 -rescale 127,10 -data byte -out gold3.star gold3.pif
+  gold3_norm.pif</p></div>
+<p>Alternatively, the normalization can also be done after setting the initial parameters in a parameter file (see next section to set initial parameters):</p>
+<div id="command"><p>bnorm -v 7 -rescale 127,10 -data byte -out gold3_norm.star gold3_2.star</p></div>
+  <br />
+</p>
+<h2>2. Setting the initial parameters</h2>
+<p>Some of the initial parameters can be set up with btomo, starting from either the tilt series images, or an initial parameter file (such as generated from normalization in the previous section):</p>
+<div id="command"><p>btomo -v 7 -sampling 5 -axis -5.7 -tilt -60,5 -gold 10 -out
+gold3_2.star gold3.pif</p></div>
+</p>
+<p>OR<br />
+      <br />
+  <div id="command">btomo -v 7 -sampling 5 -axis -5.7 -tilt -60,5 -gold 10 -out
+  gold3_2.star gold3.star</p></div>
+  <br />
+  All of the initial parameters can set up in bshow:<br />
+  <br />
+  <div id="command">bshow gold3.star &amp;</p></div>
+  <br />
+  Set the following parameters:<br />
+</p>
+<ul>
+  <li>Enter the correct pixel size in the main window</li>
+  <li>Select the menu item
+&quot;Micrograph/Tomography&quot; and enter the fiducial marker radius in pixels</li>
+  <li>Enter the tilt axis and angles:</li>
+  <ul>
+    <li>Select the menu item &quot;Tomography/Set tilt angles&quot; and enter the tilt axis angle, the 
+      startimg angle
+      and the angular increment.</li>
+    <li>or select the menu item &quot;Tomography/Read rawtlt
+      file&quot; and read the angles from a *.rawtlt file</li>
+  </ul>
+</ul>
+The tilt axis angle is defined as the angle relative to the x-axis and
+rotating anti-clockwise, and with the normal to the specimen plane
+progressing from negative to positive tilt angles, from left to right
+(for a tilt axis close to the y-axis or 90&#730;) or top to bottom (for a
+tilt axis close to the x-axis or 0&#730;). <br />
+<br />
+<center><img
+ style="width: 145px; height: 145px;" alt="Tilt axis definition"
+ src="tilt_axis.jpg" /><br />
+</center>
+The rotation around the tilt axis (dark arrow) is right-handed (curved
+arrow), so that the normal to the specimen plane rotates from the
+negative to the positive tilt angles (broken arrows). The tilt axis
+angle here is 45&#730; (rotation from the x-axis).<br />
+<br />
+<h2>3. Generating seed fiducial markers</h2>
+In bshow, change to the zero-degree tilt image and select the menu item
+&#8220;Tomography/Find markers in current image&#8221;. This will cross-correlate a
+synthetic marker based on the marker radius with the image, and present
+a set of peaks and a dialog box. Adjust the FOM slider in the dialog box
+until a satisfactory set of markers are selected and click on &quot;Done&quot;.
+Markers can be added or deleted manually. Eliminate markers that are
+close to edges, because they might not stay within the frames of all
+the images in the series. Save to a parameter file using the menu item
+&quot;Micrograph/Write parameters&quot; - in this case the file is called
+&quot;gold3_seed.star&quot;.<br />
+<br />
+<h2>4. Finding the tilt axis</h2>
+<p>Often the tilt axis for a particular magnification on a microscope is
+  not known accurately, or there might be a misunderstanding of the
+  definition of the tilt axis. In Bsoft, the tilt axis angle is defined
+  as the counterclockwise rotation angle from the x-axis to the tilt
+  axis. To find the tilt axis angle to within acceptable accuracy, two methods are available.</p>
+<h3>4.1. The tomax script</h3>
+<p>This script uses full tracking runs with different tilt axis angles to determine the best residual. It is very compute-intensive and should only be used if the faster method (see below) doesn't work. The <a href="../scripts/tomax.html">tomax</a> script is run specifying the initial angle, the angle step size, and the final angle to test for:<br />
+      <br />
+  <div id="command"><p>tomax -angles -10,1,10 gold3_seed.star</p></div>
+    <br />
+  The output gives the residual for a single iteration attempt at
+  tracking the markers, and the tilt axis angle with the lowest residual
+  should be used subsequently.<br />
+  <br />
+  Output from the tomax script:<br />
+</p>
+Tilt axis angle determination:<br />
+-----------------------------<br />
+Tue Mar 27 15:25:05 EDT 2007<br />
+File&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = gold3_seed.star<br />
+Angles&nbsp;&nbsp;&nbsp;&nbsp; = -10,1,10<br />
+Angle Residual<br />
+-10 8.31441<br />
+-9 6.82922<br />
+-8 5.49762<br />
+-7 3.66594<br />
+-6 2.36111<br />
+-5 1.94484<br />
+-4 2.87278<br />
+-3 4.3095<br />
+-2 5.4044<br />
+-1 6.708<br />
+0 8.16417<br />
+1 8.89508<br />
+2 9.68846<br />
+3 10.0579<br />
+4 10.4262<br />
+5 10.872<br />
+6 10.959<br />
+7 11.2977<br />
+8 11.4032<br />
+9 11.4698<br />
+10 11.4875<br />
+<p><br />
+  The best tilt axis angle is -5&#730; and that will be used for tracking.</p>
+<h3>4.2. Using btrack with the -findaxis option</h3>
+<p>The program <b>btrack</b> offers a faster alternative to the tomax script with potentially less accuracy. This method uses only two micrographs close to a user-defined tilt angle to test for the tilt axis angle. The following command line selects micrographs close to 15° tilt and with a tilt axis angle step size of 1.5°:</p>
+<div id="command"><p>btrack -v 1 -findaxis 15,1.5 -out gold3_ax.star gold3_2.star</p></div>
+<p>The best tilt axis angle is written into the micrograph parameters. A plot of the correlation coefficients indicate that the tilt axis angle is better determined at around 20°, although this may be different in other cases.</p>
+<center><img src="gold3_ax.png" alt="Gold axis angles CC plot" width="350" height="316" /></center>
+<p align="center">Test for the tilt axis angle with different pairs of micrographs.</p>
+  <br />
+<h2>5. Alignment using fiducial markers</h2>
+<p>From the fiducial marker seed in the zero-degree tilt image, the z
+  coordinates of the markers as well as the image shift for each
+  micrograph is determined (btrack). The basic algorithm first attempts
+  to find the z-coordinate for each marker in an image by doing real
+  space correlations along a line determined by the tilt direction. It
+  then generates a projection image from the whole marker set at the
+  nominal tilt angle and cross-correlates it with the image to find the
+  shift. The process proceeds from the low-angle tilts to higher tilts in
+  both directions, using the lower dependence of the low-tilt images on
+  correct marker z-coordinates. This process is iterated (typically 2-5
+  times) until the change in z-coordinates drop below one pixel on
+  average or up to the maximum number of iterations. The exact positions
+  of the markers in each micrograph are then
+  refined (-refine markers). <br />
+  <br />
+  <div id="command">btrack -v 1 -reset -axis -5 -exclude none -update -track 5 -refine markers
+  -out gold3_trk.star gold3_seed.star &gt;&amp; gold3_trk.log &amp;</p></div>
+<p>The -resetmodel option ensures that the zero-tilt marker positions agree with those of the 3D model at the start of  tracking. The -updatematrix option recalculates the micrograph orientation matrices from the tilt axis and tilt angles.<br />
+  <br />
+  After every iteration a parameter file is written to allow for user
+  inspection (file names gold3_trk_01.star, gold3_trk_02.star, ... ). To
+  follow the progress in tracking, the log file can be queried:<br />
+  <br />
+  <div id="command"><p>grep Cycle gold3_trk.log</p></div>
+  Cycle 1:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Average change in
+  positions = 35.8846<br />
+  Cycle 2:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Average change in
+  positions = 0.440963<br />
+  <br />
+  This gives the change in marker positions for every iteration, with the
+  first always a high number because the z-coordinates are zero at the
+  start. When the change in positions drop below 1, a reasonable
+  alignment has been reached and the program finishes. The overall
+  residual is given at the end of the log file:<br />
+  <br />
+  <div id="command"><p>tail -2 gold3_trk.log</p></div>
+  Average residual = 1.98881 pixels<br />
+  <br />
+  The new parameter file can read with bshow to examine the marker
+  positions:<br />
+  <br />
+  <div id="command"><p>bshow gold3_trk.star &amp;</p></div>
+  <br />
+  The markers are indicated with orange lines, where each line indicates
+  the difference between the current marker position and the position
+  predicted from the 3D marker model. Markers with big deviations or
+  those that are obviously incorrect, can be adjusted manually and the
+  results saved into a new parameter file (gold3_trk2.star). The menu item &quot;Tomography/Show marker table&quot;, provides a listing of the markers and buttons to find the lowest and highest residuals and FOM's.<br />
+  <br />
+  Next, several rounds of refinement of the z-coordinates,
+  the view and origin of each image are done to improve the alignment. A
+  general rigid-body target function is used with no restrictions on the
+  view (such as assuming a tilt axis perpendicular to the electron beam),
+  so that the final alignment can be used directly in reconstruction.<br />
+  <br />
+  <div id="command"><p>btrack -v 1 -reset -refine 10,z,o,v -out gold3_ref.star gold3_trk2.star
+  &gt;&amp; gold3_ref.log &amp;</p></div>
+  <br />
+  <div id="command"><p>tail -2 gold3_ref.log</p></div>
+  Average residual = 1.13986 pixels<br />
+  <br />
+  In bshow, single iterations of these refinements can also be done.
+  Select the &quot;Tomography/Refine alignment&quot; menu item. One of three types
+  can be selected: <br />
+</p>
+<ul>
+  <li>Markers, which refines the marker positions on the micrographs</li>
+  <li>Z-coordinates, which refines the 3D model z-coordinates</li>
+  <li>Micrographs, which refines the geometry associated with each
+micrograph</li>
+  <ul>
+    <li>Views</li>
+    <li>Origins</li>
+    <li>Scales (be careful here, scale refinement may compensate for
+tilts and should only be done once and as the last refinement)</li>
+    </ul>
+  </ul>
+<p>If the residual remains high (&gt; 5 pixels), please see the section on <a href="#troubleshooting" target="_self">trouble shooting</a> at the bottom.<br />
+</p>
+<h2>6. Tomogram reconstruction</h2>
+The reconstruction is done in Fourier space with the same algorithm as
+for single particle analysis, with the modification that separate slabs
+in
+Fourier space can be calculated, assembled and backtransformed later
+(bmgft, btomrec, bzfft). The use of the programs is rather involved,
+and to handle all the different issues and dependencies, the
+reconstruction can be done using the <a href="../scripts/tomrec.html">tomrec</a>
+script:<br />
+<br />
+<div id="command"><p>tomrec -rec gold3_rec.pif -resol 30 -size 1024,1024,120 -thick 20
+-scale 1 -out gold3_rec.star gold3_ref.star &gt;&amp; gold3_rec.log &amp;</p></div>
+<br />
+<h2>7. Denoising</h2>
+<p>The reconstruction can be denoised using the non-linear anisotropic
+  diffusion algorithm Frangakis et al. (2001) (bnad). To allow
+  piecewise and distributed denoising, the tomogram is divided into
+  overlapping tiles
+  (btile), each tile denoised (bnad), and the tiles reassembled (bpatch).
+  The key parameter is the tile overlap, which must be at least as many
+  pixels as the number of cycles used for denoising. The memory
+  requirement is high, so the tiles should not be too large (1 Gb of
+  memory would allow a block of maximum 400x400x200 to be denoised).<br />
+  <br />
+  The tomogram is first tiled:<br />
+  <div id="command"><p>btile -v 7 -size 400,400,240 -overlap 100,100,0 gold3_rec.pif tile.mrc</p></div>
+  <br />
+  Each tile is then denoised, using the script <a href="../scripts/tomnad.html">tomnad</a>.<br />
+  <br />
+  The tiles are finally reassembled into the full tomogram as floating
+  point:<br />
+  <div id="command"><p>bpatch -v 7 -tiles tile.tiles -out patch.mrc tile_0??_nad.mrc</p></div>
+  <br />
+  The tomogram is then truncated to the average +- 5*standard deviation
+  and converted to byte data type:<br />
+  <div id="command"><p>bimg -v 7 -dat byte -trunc 74,179 patch.mrc gold3_den.pif</p></div>
+  </p>
+<h2>8. Resolution determination</h2>
+<p>The resolution for each micrograph with respect to the reconstruction can be determined using the scripts <a href="../scripts/mgft.html">mgft</a> and <a href="../scripts/tomres.html">tomres</a>, based on the method of Cardone et al. (2005) and described (btomres) in Heymann et al. (2007).</p>
+<p>The <a href="../scripts/mgft.html">mgft</a> script prepares the Fourier transforms of all the micrographs:</p>
+<div id="command"><p>mgft -size 2048,2048,240 -pad 0 -output ft.star gold3_ref.star</p></div>
+<p>The <a href="../scripts/tomres.html">tomres</a> script subsequently calculates the resolution for each micrograph:</p>
+<div id="command"><p>tomres -size 2048,2048,240 -resolution 30 -postscript gold3_res.ps ft.star &gt;&amp; gold3_res.log &amp;</p></div>
+<h2><a name="troubleshooting" id="troubleshooting"></a>9. Trouble shooting</h2>
+<h3>Marker reference images</h3>
+<p>The marker tracking and location refinement rely on a marker reference images produced as an average of the marker images in the zero-tilt micrograph. These images are written into the files &quot;marker_track_ref.map&quot; and &quot;marker_refine_ref.map&quot; for tracking and refinement, respectively. They should look something like this: </p>
+<center><img src="marker_track_ref.png" alt="Tracking reference marker" width="100" height="100" /><br />
+</center>
+<p>If they look significantly different from the example, please send me a bug report with all the details (<a href="mailto:bernard_heymann@nih.gov">bernard_heymann@nih.gov</a>).</p>
+<h3>Manual marker positioning</h3>
+<p>If marker tracking completely fails, the markers can be manually positioned. To alleviate some of the manual labor required, markers can be generated from a seed in the zero-tilt micrograph, using the nominal tilt axis and tilt angles:</p>
+<div id="command"><p>btrack -v 1 -generate -out gold3_gen.star gold3_seed.star</p></div>
+<p>This can also be done in <b>bshow</b> using the menu item &quot;Tomography/Generate markers from seed&quot;.</p>
+  <br />
+</div>
+<div id="footer">
+  Bernard Heymann  20120126
+</div>
+</body>
+</html>

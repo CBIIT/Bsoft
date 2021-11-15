@@ -1,0 +1,631 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mol__bonds_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/mol_bonds.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/mol_bonds.h</primary></indexterm>
+<para>
+
+<para>Header for molecular dynamics. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmd.h&quot;
+#include &quot;rwmolecule.h&quot;
+#include &quot;mol_util.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_struct_bbond">Bbond</link> * <link linkend="_mol__bonds_8h_1a82071e30f389173d52cb38fe9b67f371">md_generate_bond_list</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_struct_bmd">Bmd</link> *md)</para>
+
+<para>Generates a distance-based bond list. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bbond">Bbond</link> * <link linkend="_mol__bonds_8h_1a284fd2d1723a6d24b578755891506784">md_generate_molecular_bond_list</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_struct_bmd">Bmd</link> *md)</para>
+
+<para>Generates an intramolecular distance-based bond list. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bbond">Bbond</link> * <link linkend="_mol__bonds_8h_1afb9f125fd976feaae28962fd41d1bf7a">md_generate_bond_list_with_valence</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_struct_bmd">Bmd</link> *md, int valence)</para>
+
+<para>Generates a bond list based on a single valence and the shortest current bond lengths. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__bonds_8h_1ada61ddbf0a924df1e0453f37f3047971">md_bond_list_set_parameters</link> (<link linkend="_struct_bbond">Bbond</link> *bondlist, <link linkend="_struct_bbondtype">Bbondtype</link> *bondtype)</para>
+
+<para>Assigns covalent bond lengths to bonds. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__bonds_8h_1a7ce12a42d5adfebc7272a3ad670a68fe">md_show_bonds</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Shows the bonds and bond lengths. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__bonds_8h_1aeae7188cf8383bd44a2ed7c53b348f47">md_show_bond_stats</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Shows the number of bonds and the valency per atom. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__bonds_8h_1af8659d56988fb97f12888723c6d4460a">md_find_bond_length</link> (<link linkend="_struct_batom">Batom</link> *atom1, <link linkend="_struct_batom">Batom</link> *atom2, <link linkend="_struct_bbondtype">Bbondtype</link> *bondtype)</para>
+
+<para>Finds the reference covalent bond length. </para>
+</listitem>
+            <listitem><para><link linkend="_struct_bbondtype">Bbondtype</link> * <link linkend="_mol__bonds_8h_1a142f8db66160e96617f9bd1198a36da0">md_find_bond_type</link> (<link linkend="_struct_batom">Batom</link> *atom1, <link linkend="_struct_batom">Batom</link> *atom2, <link linkend="_struct_bbondtype">Bbondtype</link> *bondtype)</para>
+
+<para>Finds the bond type. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__bonds_8h_1a57825d03f4d0b21bd9a3aa04122b250c">md_show_bond_types</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, <link linkend="_struct_bbondtype">Bbondtype</link> *bondtype)</para>
+
+<para>Shows the bond type composition. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__bonds_8h_1a17515e95f0c97cc1a2d15ffa4fccf33a">md_angle</link> (<link linkend="_struct_batom">Batom</link> *atom1, <link linkend="_struct_batom">Batom</link> *atom2, <link linkend="_struct_batom">Batom</link> *atom3)</para>
+
+<para>Calculates the angle between three atoms. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mol__bonds_8h_1a4e67d8d19920ea0e70cd8d1459456007">md_calculate_deviations</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup, int wrap)</para>
+
+<para>Calculates deviations from the reference bond lengths and angles. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mol__bonds_8h_1a67ade9c1669f284c9b30e2472549f482">md_calculate_radial_deviation</link> (<link linkend="_struct_bmolgroup">Bmolgroup</link> *molgroup)</para>
+
+<para>Calculates the radial deviations from the center of the box. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header for molecular dynamics. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010828 </para>
+
+<para>Modified: 20180228 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mol__bonds_8h_1a17515e95f0c97cc1a2d15ffa4fccf33a"/>    <section>
+    <title>md_angle()</title>
+<indexterm><primary>md_angle</primary><secondary>mol_bonds.h</secondary></indexterm>
+<indexterm><primary>mol_bonds.h</primary><secondary>md_angle</secondary></indexterm>
+<para><computeroutput>double md_angle (<link linkend="_struct_batom">Batom</link> * atom1, <link linkend="_struct_batom">Batom</link> * atom2, <link linkend="_struct_batom">Batom</link> * atom3)</computeroutput></para><para>
+
+<para>Calculates the angle between three atoms. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*atom1</entry>
+                                <entry>
+<para>first atom. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*atom2</entry>
+                                <entry>
+<para>second atom. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*atom3</entry>
+                                <entry>
+<para>third atom. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double angle. <literallayout><computeroutput>The angle associated with the second atom and between the bonds linking
+the first and third atoms is calculated.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 637 of file mol_bonds.cpp.</para>
+    </section><anchor xml:id="_mol__bonds_8h_1ada61ddbf0a924df1e0453f37f3047971"/>    <section>
+    <title>md_bond_list_set_parameters()</title>
+<indexterm><primary>md_bond_list_set_parameters</primary><secondary>mol_bonds.h</secondary></indexterm>
+<indexterm><primary>mol_bonds.h</primary><secondary>md_bond_list_set_parameters</secondary></indexterm>
+<para><computeroutput>double md_bond_list_set_parameters (<link linkend="_struct_bbond">Bbond</link> * bondlist, <link linkend="_struct_bbondtype">Bbondtype</link> * bondtype)</computeroutput></para><para>
+
+<para>Assigns covalent bond lengths to bonds. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*bondlist</entry>
+                                <entry>
+<para>list of bonds. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*bondtype</entry>
+                                <entry>
+<para>list of bond types. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double fraction of bond types found. <literallayout><computeroutput>The bond lengths are taken from a bond type list.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 299 of file mol_bonds.cpp.</para>
+    </section><anchor xml:id="_mol__bonds_8h_1a4e67d8d19920ea0e70cd8d1459456007"/>    <section>
+    <title>md_calculate_deviations()</title>
+<indexterm><primary>md_calculate_deviations</primary><secondary>mol_bonds.h</secondary></indexterm>
+<indexterm><primary>mol_bonds.h</primary><secondary>md_calculate_deviations</secondary></indexterm>
+<para><computeroutput>double md_calculate_deviations (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, int wrap)</computeroutput></para><para>
+
+<para>Calculates deviations from the reference bond lengths and angles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>wrap</entry>
+                                <entry>
+<para>flag to wrap around periodic boundaries. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double angle. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 742 of file mol_bonds.cpp.</para>
+    </section><anchor xml:id="_mol__bonds_8h_1a67ade9c1669f284c9b30e2472549f482"/>    <section>
+    <title>md_calculate_radial_deviation()</title>
+<indexterm><primary>md_calculate_radial_deviation</primary><secondary>mol_bonds.h</secondary></indexterm>
+<indexterm><primary>mol_bonds.h</primary><secondary>md_calculate_radial_deviation</secondary></indexterm>
+<para><computeroutput>int md_calculate_radial_deviation (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Calculates the radial deviations from the center of the box. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double angle. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 809 of file mol_bonds.cpp.</para>
+    </section><anchor xml:id="_mol__bonds_8h_1af8659d56988fb97f12888723c6d4460a"/>    <section>
+    <title>md_find_bond_length()</title>
+<indexterm><primary>md_find_bond_length</primary><secondary>mol_bonds.h</secondary></indexterm>
+<indexterm><primary>mol_bonds.h</primary><secondary>md_find_bond_length</secondary></indexterm>
+<para><computeroutput>double md_find_bond_length (<link linkend="_struct_batom">Batom</link> * atom1, <link linkend="_struct_batom">Batom</link> * atom2, <link linkend="_struct_bbondtype">Bbondtype</link> * bondtype)</computeroutput></para><para>
+
+<para>Finds the reference covalent bond length. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*atom1</entry>
+                                <entry>
+<para>first atom. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*atom2</entry>
+                                <entry>
+<para>second atom. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*bondtype</entry>
+                                <entry>
+<para>bond type list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double bond length. <literallayout><computeroutput>The bond type is found in the bond type list, and the bond length is
+set from the bond type structure.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 510 of file mol_bonds.cpp.</para>
+    </section><anchor xml:id="_mol__bonds_8h_1a142f8db66160e96617f9bd1198a36da0"/>    <section>
+    <title>md_find_bond_type()</title>
+<indexterm><primary>md_find_bond_type</primary><secondary>mol_bonds.h</secondary></indexterm>
+<indexterm><primary>mol_bonds.h</primary><secondary>md_find_bond_type</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bbondtype">Bbondtype</link>* md_find_bond_type (<link linkend="_struct_batom">Batom</link> * atom1, <link linkend="_struct_batom">Batom</link> * atom2, <link linkend="_struct_bbondtype">Bbondtype</link> * bondtype)</computeroutput></para><para>
+
+<para>Finds the bond type. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*atom1</entry>
+                                <entry>
+<para>first atom. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*atom2</entry>
+                                <entry>
+<para>second atom. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*bondtype</entry>
+                                <entry>
+<para>bond type list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bbondtype* bond type structure. <literallayout><computeroutput>The bond type is found in the bond type list.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 542 of file mol_bonds.cpp.</para>
+    </section><anchor xml:id="_mol__bonds_8h_1a82071e30f389173d52cb38fe9b67f371"/>    <section>
+    <title>md_generate_bond_list()</title>
+<indexterm><primary>md_generate_bond_list</primary><secondary>mol_bonds.h</secondary></indexterm>
+<indexterm><primary>mol_bonds.h</primary><secondary>md_generate_bond_list</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bbond">Bbond</link>* md_generate_bond_list (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_struct_bmd">Bmd</link> * md)</computeroutput></para><para>
+
+<para>Generates a distance-based bond list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*md</entry>
+                                <entry>
+<para>global molecular dynamics structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bbond* new bond list. <literallayout><computeroutput>This function assumes very little and defines bonds purely on distance.
+This means that the bond distances must already have been defined well.
+The bond length is defined in the molecular dynamics structure.
+If the molecule group already has a bond list, no new bonds are generated. 
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 30 of file mol_bonds.cpp.</para>
+    </section><anchor xml:id="_mol__bonds_8h_1afb9f125fd976feaae28962fd41d1bf7a"/>    <section>
+    <title>md_generate_bond_list_with_valence()</title>
+<indexterm><primary>md_generate_bond_list_with_valence</primary><secondary>mol_bonds.h</secondary></indexterm>
+<indexterm><primary>mol_bonds.h</primary><secondary>md_generate_bond_list_with_valence</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bbond">Bbond</link>* md_generate_bond_list_with_valence (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_struct_bmd">Bmd</link> * md, int valence)</computeroutput></para><para>
+
+<para>Generates a bond list based on a single valence and the shortest current bond lengths. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*md</entry>
+                                <entry>
+<para>global molecular dynamics structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>valence</entry>
+                                <entry>
+<para>atom valence. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bbond* new bond list. <literallayout><computeroutput>This function attempts to assign bonds based on atomic valence by
+finding the top number of shortests bonds. The current bond length is
+encoded in the bond strength variable, k, in the bond structure.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 208 of file mol_bonds.cpp.</para>
+    </section><anchor xml:id="_mol__bonds_8h_1a284fd2d1723a6d24b578755891506784"/>    <section>
+    <title>md_generate_molecular_bond_list()</title>
+<indexterm><primary>md_generate_molecular_bond_list</primary><secondary>mol_bonds.h</secondary></indexterm>
+<indexterm><primary>mol_bonds.h</primary><secondary>md_generate_molecular_bond_list</secondary></indexterm>
+<para><computeroutput><link linkend="_struct_bbond">Bbond</link>* md_generate_molecular_bond_list (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_struct_bmd">Bmd</link> * md)</computeroutput></para><para>
+
+<para>Generates an intramolecular distance-based bond list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*md</entry>
+                                <entry>
+<para>global molecular dynamics structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bbond* new bond list. <literallayout><computeroutput>This function defines bonds on distance and within molecules.
+This means that the bond distances must already have been defined well.
+The bond length is defined in the molecular dynamics structure.
+If the molecule group already has a bond list, no new bonds are generated. 
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 105 of file mol_bonds.cpp.</para>
+    </section><anchor xml:id="_mol__bonds_8h_1aeae7188cf8383bd44a2ed7c53b348f47"/>    <section>
+    <title>md_show_bond_stats()</title>
+<indexterm><primary>md_show_bond_stats</primary><secondary>mol_bonds.h</secondary></indexterm>
+<indexterm><primary>mol_bonds.h</primary><secondary>md_show_bond_stats</secondary></indexterm>
+<para><computeroutput>int md_show_bond_stats (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Shows the number of bonds and the valency per atom. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of bonds. <literallayout><computeroutput>Uses the bond list defined for the molecule group.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 371 of file mol_bonds.cpp.</para>
+    </section><anchor xml:id="_mol__bonds_8h_1a57825d03f4d0b21bd9a3aa04122b250c"/>    <section>
+    <title>md_show_bond_types()</title>
+<indexterm><primary>md_show_bond_types</primary><secondary>mol_bonds.h</secondary></indexterm>
+<indexterm><primary>mol_bonds.h</primary><secondary>md_show_bond_types</secondary></indexterm>
+<para><computeroutput>int md_show_bond_types (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup, <link linkend="_struct_bbondtype">Bbondtype</link> * bondtype)</computeroutput></para><para>
+
+<para>Shows the bond type composition. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*bondtype</entry>
+                                <entry>
+<para>bond type list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>For each bond, the bond type is found in the bond type list.
+The number variable for each bond type is used for counting.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 580 of file mol_bonds.cpp.</para>
+    </section><anchor xml:id="_mol__bonds_8h_1a7ce12a42d5adfebc7272a3ad670a68fe"/>    <section>
+    <title>md_show_bonds()</title>
+<indexterm><primary>md_show_bonds</primary><secondary>mol_bonds.h</secondary></indexterm>
+<indexterm><primary>mol_bonds.h</primary><secondary>md_show_bonds</secondary></indexterm>
+<para><computeroutput>int md_show_bonds (<link linkend="_struct_bmolgroup">Bmolgroup</link> * molgroup)</computeroutput></para><para>
+
+<para>Shows the bonds and bond lengths. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*molgroup</entry>
+                                <entry>
+<para>molecule group. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of bonds. <literallayout><computeroutput>Uses the bond list defined for the molecule group.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 329 of file mol_bonds.cpp.</para>
+</section>
+</section>
+</section>

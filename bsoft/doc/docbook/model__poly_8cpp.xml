@@ -1,0 +1,922 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_model__poly_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/model/model_poly.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/model/model_poly.cpp</primary></indexterm>
+<para>
+
+<para>Functions to manipulate polyhedral coordinate files. </para>
+ 
+</para>
+<programlisting>#include &quot;model_poly.h&quot;
+#include &quot;model_transform.h&quot;
+#include &quot;model_views.h&quot;
+#include &quot;model_util.h&quot;
+#include &quot;matrix_linear.h&quot;
+#include &quot;model_links.h&quot;
+#include &quot;model_compare.h&quot;
+#include &quot;math_util.h&quot;
+#include &quot;random_numbers.h&quot;
+#include &quot;symmetry.h&quot;
+#include &quot;Vector3.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_model__poly_8cpp_1a9de48502da3a35561d0f472c4d9113da">NSMAX</link>   100</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_model__poly_8cpp_1ae222afe171915bf11ebb12ed1adf935f">model_poly_faces</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Generates links between the vertices to define the polyhedron faces. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__poly_8cpp_1a161dfce55680989088111159b165cbb8">poly_get_connectivity</link> (<link linkend="_class_bcomponent">Bcomponent</link> *comp, int ilink, int nlink, <link linkend="_class_bpolygon">Bpolygon</link> *poly)</para>
+</listitem>
+            <listitem><para>int <link linkend="_model__poly_8cpp_1a69630144dc2a1a5c121d2ce88195a4de">model_poly_generate</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Generates polygons based on a vertex network. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__poly_8cpp_1a833472f113be3db0394f66c2c1977eab">model_vertex_types</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Determines the vertex type based on adjacent polygons. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="_model__poly_8cpp_1abecf398aa430e1c4d4735c51d14077f3">component_6digit_type</link> (<link linkend="_class_bcomponent">Bcomponent</link> *comp)</para>
+</listitem>
+            <listitem><para>int <link linkend="_model__poly_8cpp_1aef4ebc5cf734b6dc4079b90ecaacbe38">model_extended_vertex_types</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Determines the vertex type based on adjacent and opposed polygons. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__poly_8cpp_1a783d8ef747741403d3179699d5e1c1dd">model_poly_dual</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, int order)</para>
+
+<para>Calculates the dual of a polyhedral network. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__poly_8cpp_1a3d645d79148629e28359e6d56544483f">model_poly_analyze</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Analyzes a model for polygon regularity and planarity. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__poly_8cpp_1afbc37112393d5be62a4cbda6bcf9e748">model_poly_links</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Calculates all the model links. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__poly_8cpp_1a7c7c3975f7ca736804cf3d2ab818540c">model_poly_angles</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Calculates all the polygon angles. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__poly_8cpp_1acc64136b0d773295f36c483ea45c36ca">model_poly_regularity</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Analyzes a model for polygon regularity. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__poly_8cpp_1a42971b213f9ab2a2b2098a9286a7f31b">model_poly_planarity</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Analyzes a model for polygon planarity. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__poly_8cpp_1a4e483dc0ab7525ce728f656e6a4f7a59">model_poly_energy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double angle_ref)</para>
+
+<para>Calculates the different energy terms for all models. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__poly_8cpp_1adf230b314f43f17e0e225c34de14963f">model_poly_pentagon_adjacency</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Calculates the number of edges shared by pentagons. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="_model__poly_8cpp_1a76055407ce2074fbd3dfb313748c72d3">model_poly_find_symmetry</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double threshold)</para>
+
+<para>Finds the symmetry axes associated with polyhedral elements. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__poly_8cpp_1a744e4405963456b438652b1d6fe6c577">model_poly_hand</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Calculates the polyhedron hand. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__poly_8cpp_1af3b5d8268cbe1605e1bdaba6ec97d20e">model_poly_compare</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bmodel">Bmodel</link> *refmodel)</para>
+
+<para>Compares a model with reference models based on the eigenvalues of the adjacency matrix. </para>
+</listitem>
+            <listitem><para>vector&lt; double &gt; <link linkend="_model__poly_8cpp_1a8bd9083e23ffbd837e4dbe0e2813fbb0">model_poly_eigenvalues</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, int <link linkend="_rw_d_m_8cpp_1ae83c07067345faf98c959261a0b7db76">show</link>)</para>
+
+<para>Generates the eigenvalues of the adjacency matrix for a model. </para>
+</listitem>
+            <listitem><para>int <link linkend="_model__poly_8cpp_1a532a21a6752383d334666921d1635443">comp_count_connected</link> (<link linkend="_class_bcomponent">Bcomponent</link> *comp)</para>
+</listitem>
+            <listitem><para>int <link linkend="_model__poly_8cpp_1a40cd9f7fb76a95749027f5b1d23461ae">model_number_connected_clusters</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+</listitem>
+            <listitem><para>vector&lt; double &gt; <link linkend="_model__poly_8cpp_1a2f8b2fe0119a34f4ad3f229b8f1f04a8">model_poly_sphere_coor</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Generates coordinates for components based on the eigenvectors of the adjacency matrix. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_model__poly_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions to manipulate polyhedral coordinate files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20010828 </para>
+
+<para>Modified: 20150208 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_model__poly_8cpp_1a9de48502da3a35561d0f472c4d9113da"/>    <section>
+    <title>NSMAX</title>
+<indexterm><primary>NSMAX</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>NSMAX</secondary></indexterm>
+<para><computeroutput>#define NSMAX   100</computeroutput></para><para>
+Definition at line 1090 of file model_poly.cpp.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_model__poly_8cpp_1a532a21a6752383d334666921d1635443"/>    <section>
+    <title>comp_count_connected()</title>
+<indexterm><primary>comp_count_connected</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>comp_count_connected</secondary></indexterm>
+<para><computeroutput>int comp_count_connected (<link linkend="_class_bcomponent">Bcomponent</link> * comp)</computeroutput></para><para>
+Definition at line 1629 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1abecf398aa430e1c4d4735c51d14077f3"/>    <section>
+    <title>component_6digit_type()</title>
+<indexterm><primary>component_6digit_type</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>component_6digit_type</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> component_6digit_type (<link linkend="_class_bcomponent">Bcomponent</link> * comp)</computeroutput></para><para>
+Definition at line 353 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1aef4ebc5cf734b6dc4079b90ecaacbe38"/>    <section>
+    <title>model_extended_vertex_types()</title>
+<indexterm><primary>model_extended_vertex_types</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>model_extended_vertex_types</secondary></indexterm>
+<para><computeroutput>int model_extended_vertex_types (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Determines the vertex type based on adjacent and opposed polygons. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The link flag of each component is asigned such that the order of the
+rigth adjacent polygon is in the first digit, that of the left adjacent
+polygon in the second digit, and that of the opposing polygon in the 
+third digit.
+New component types are generated.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 398 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1a40cd9f7fb76a95749027f5b1d23461ae"/>    <section>
+    <title>model_number_connected_clusters()</title>
+<indexterm><primary>model_number_connected_clusters</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>model_number_connected_clusters</secondary></indexterm>
+<para><computeroutput>int model_number_connected_clusters (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+Definition at line 1641 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1a3d645d79148629e28359e6d56544483f"/>    <section>
+    <title>model_poly_analyze()</title>
+<indexterm><primary>model_poly_analyze</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>model_poly_analyze</secondary></indexterm>
+<para><computeroutput>int model_poly_analyze (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Analyzes a model for polygon regularity and planarity. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 547 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1a7c7c3975f7ca736804cf3d2ab818540c"/>    <section>
+    <title>model_poly_angles()</title>
+<indexterm><primary>model_poly_angles</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>model_poly_angles</secondary></indexterm>
+<para><computeroutput>int model_poly_angles (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Calculates all the polygon angles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of angles. <literallayout><computeroutput>The angles for each polygon is calculated and averaged. The overall 
+statistics for every polygon order is shown.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 655 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1af3b5d8268cbe1605e1bdaba6ec97d20e"/>    <section>
+    <title>model_poly_compare()</title>
+<indexterm><primary>model_poly_compare</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>model_poly_compare</secondary></indexterm>
+<para><computeroutput>int model_poly_compare (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bmodel">Bmodel</link> * refmodel)</computeroutput></para><para>
+
+<para>Compares a model with reference models based on the eigenvalues of the adjacency matrix. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*refmodel</entry>
+                                <entry>
+<para>reference model(s) to compare. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The comparison is based on the eigenvectors of the adjacency matrix,
+which are related to spherical harmonics.
+There are 3 P(sigma) eigenvectors giving the vertex coordinates.
+These are usually (but not always) vectors 2, 3, and 4 ordered by eigenvalue.
+The eigenvalues are characteristic for a polyhedron, although they may not be unique.
+For every model identified, the model type is set from the reference ID.
+The reference model selection is incremented to indicate the count. 
+
+Dover Publications, Inc., Mineola, New York, pages 101 - 104.
+</computeroutput></literallayout> Reference: Fowler, P.W. and Manolopoulos, D.E. (2006) An Atlas of Fullerenes. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1509 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1a783d8ef747741403d3179699d5e1c1dd"/>    <section>
+    <title>model_poly_dual()</title>
+<indexterm><primary>model_poly_dual</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>model_poly_dual</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_poly_dual (<link linkend="_class_bmodel">Bmodel</link> * model, int order)</computeroutput></para><para>
+
+<para>Calculates the dual of a polyhedral network. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>order</entry>
+                                <entry>
+<para>order of polygons to convert to vertices, &lt; 3 = all. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new model structure with the dual. <literallayout><computeroutput>The polygons are first defined to calculate the dual network that
+has vertices at the polygon centers.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 457 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1a8bd9083e23ffbd837e4dbe0e2813fbb0"/>    <section>
+    <title>model_poly_eigenvalues()</title>
+<indexterm><primary>model_poly_eigenvalues</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>model_poly_eigenvalues</secondary></indexterm>
+<para><computeroutput>vector&lt;double&gt; model_poly_eigenvalues (<link linkend="_class_bmodel">Bmodel</link> * model, int show)</computeroutput></para><para>
+
+<para>Generates the eigenvalues of the adjacency matrix for a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure (modified with the topological coordinates). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>show</entry>
+                                <entry>
+<para>flag to show eigenvalues. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>vector&lt;double&gt; eigenvalues. <literallayout><computeroutput>The eigenvectors of the adjacency matrix are related to spherical harmonics.
+The eigenvalues are characteristic for a polyhedron, although they may not be unique.
+Only the first model in the list is processed.
+
+Dover Publications, Inc., Mineola, New York, pages 101 - 104.
+</computeroutput></literallayout> Reference: Fowler, P.W. and Manolopoulos, D.E. (2006) An Atlas of Fullerenes. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1595 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1a4e483dc0ab7525ce728f656e6a4f7a59"/>    <section>
+    <title>model_poly_energy()</title>
+<indexterm><primary>model_poly_energy</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>model_poly_energy</secondary></indexterm>
+<para><computeroutput>double model_poly_energy (<link linkend="_class_bmodel">Bmodel</link> * model, double angle_ref)</computeroutput></para><para>
+
+<para>Calculates the different energy terms for all models. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>angle_ref</entry>
+                                <entry>
+<para>reference angle (&lt;=0 to use the polygon angle). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double 0. <literallayout><computeroutput>The angular energy is calculated either with a given reference angle,
+or with the nominal polygon inner angle as reference.
+Regularity is defined as the adherence to a constant distance of each
+vertex from the polygon center. The polygon area is:
+     n * s^2       1 + cos(2*PI/n)
+A = ------- sqrt(-----------------)
+       4           1 - cos(2*PI/n)
+where n is the number of vertices in the polygon.
+The contribution of each polygon to the polyhedral volume is:
+V = A * dc / 3
+where dc is the distance of the polygon center to the polyhedral center.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 925 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1ae222afe171915bf11ebb12ed1adf935f"/>    <section>
+    <title>model_poly_faces()</title>
+<indexterm><primary>model_poly_faces</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>model_poly_faces</secondary></indexterm>
+<para><computeroutput>int model_poly_faces (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Generates links between the vertices to define the polyhedron faces. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>Two vertices are linked only when they are on the surface of the 
+polyhedron, i.e., all other vertices are on one side of the pair 
+of vertices. This is only true if there are no other vertices v
+with the following property:
+    v•v0 &gt; v0•v0
+where v0 is the average of the two vertices considered for linkage.
+Only the first model is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 39 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1a76055407ce2074fbd3dfb313748c72d3"/>    <section>
+    <title>model_poly_find_symmetry()</title>
+<indexterm><primary>model_poly_find_symmetry</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>model_poly_find_symmetry</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> model_poly_find_symmetry (<link linkend="_class_bmodel">Bmodel</link> * model, double threshold)</computeroutput></para><para>
+
+<para>Finds the symmetry axes associated with polyhedral elements. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>threshold</entry>
+                                <entry>
+<para>cutoff to flag a symmetry axis. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_bstring">Bstring</link> symmetry string. <literallayout><computeroutput>Symmetry axes are associated with specific elements:
+    link        reflection and 2-fold axis.
+    vertex      n-fold axis based on vertex order.
+    polygon     n-fold axis based on polygon order.
+Only the first model in the list is processed.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1105 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1a69630144dc2a1a5c121d2ce88195a4de"/>    <section>
+    <title>model_poly_generate()</title>
+<indexterm><primary>model_poly_generate</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>model_poly_generate</secondary></indexterm>
+<para><computeroutput>int model_poly_generate (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Generates polygons based on a vertex network. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The search startegy is to start at a vertex and then search always turning into
+the same direction. First the outward pointing normal for each vertex is
+calculated. Then the connectivity is followed always turning in the same 
+direction at each vertex.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 144 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1a744e4405963456b438652b1d6fe6c577"/>    <section>
+    <title>model_poly_hand()</title>
+<indexterm><primary>model_poly_hand</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>model_poly_hand</secondary></indexterm>
+<para><computeroutput>int model_poly_hand (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Calculates the polyhedron hand. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int hand sign. <literallayout><computeroutput>The hand of a polyhedron is based on the sign of the rotational strength 
+element associated with the first two eigenvectors of the adjacency matrix.
+It is assumed that the symmetry has been determined.
+The hand sign is:
+    0   no handedness.
+    1   one enantiomorph.
+    -1  other enantiomorph.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1439 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1afbc37112393d5be62a4cbda6bcf9e748"/>    <section>
+    <title>model_poly_links()</title>
+<indexterm><primary>model_poly_links</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>model_poly_links</secondary></indexterm>
+<para><computeroutput>int model_poly_links (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Calculates all the model links. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of links. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 606 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1adf230b314f43f17e0e225c34de14963f"/>    <section>
+    <title>model_poly_pentagon_adjacency()</title>
+<indexterm><primary>model_poly_pentagon_adjacency</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>model_poly_pentagon_adjacency</secondary></indexterm>
+<para><computeroutput>int model_poly_pentagon_adjacency (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Calculates the number of edges shared by pentagons. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of edges shared by pentagons for last model. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1051 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1a42971b213f9ab2a2b2098a9286a7f31b"/>    <section>
+    <title>model_poly_planarity()</title>
+<indexterm><primary>model_poly_planarity</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>model_poly_planarity</secondary></indexterm>
+<para><computeroutput>double model_poly_planarity (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Analyzes a model for polygon planarity. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double standard deviation from planarity. <literallayout><computeroutput>A plane is fit through the polygon vertices and the normal calculated from:
+    n•p = d
+where n is the normal vector, p is a point in the plane, and d is the offset.
+The polygon planarity is defined as the root-mean-square-deviation from 
+the fitted plane.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 845 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1acc64136b0d773295f36c483ea45c36ca"/>    <section>
+    <title>model_poly_regularity()</title>
+<indexterm><primary>model_poly_regularity</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>model_poly_regularity</secondary></indexterm>
+<para><computeroutput>double model_poly_regularity (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Analyzes a model for polygon regularity. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double standard deviation from regularity. <literallayout><computeroutput>Regularity is defined as the adherence to a constant distance of each
+vertex from the polygon center. The polygon area is:
+     n * s^2       1 + cos(2*PI/n)
+A = ------- sqrt(-----------------)
+       4           1 - cos(2*PI/n)
+where n is the number of vertices in the polygon.
+The contribution of each polygon to the polyhedral volume is:
+V = A * dc / 3
+where dc is the distance of the polygon center to the polyhedral center.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 760 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1a2f8b2fe0119a34f4ad3f229b8f1f04a8"/>    <section>
+    <title>model_poly_sphere_coor()</title>
+<indexterm><primary>model_poly_sphere_coor</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>model_poly_sphere_coor</secondary></indexterm>
+<para><computeroutput>vector&lt;double&gt; model_poly_sphere_coor (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Generates coordinates for components based on the eigenvectors of the adjacency matrix. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>dvector&lt;double&gt; eigenvalues. <literallayout><computeroutput>The eigenvectors of the adjacency matrix are related to spherical harmonics.
+There are 3 P(sigma) eigenvectors giving the vertex coordinates.
+These are usually (but not always) vectors 2, 3, and 4 ordered by eigenvalue.
+The actual 3 P(sigma) eigenvectors are identified as those having exactly
+a single node, i.e., closely connected vertices cluster together in every dimension.
+The eigenvalues are characteristic for a polyhedron, although they may not be unique.
+
+Dover Publications, Inc., Mineola, New York, pages 101 - 104.
+</computeroutput></literallayout> Reference: Fowler, P.W. and Manolopoulos, D.E. (2006) An Atlas of Fullerenes. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1674 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1a833472f113be3db0394f66c2c1977eab"/>    <section>
+    <title>model_vertex_types()</title>
+<indexterm><primary>model_vertex_types</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>model_vertex_types</secondary></indexterm>
+<para><computeroutput>int model_vertex_types (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Determines the vertex type based on adjacent polygons. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The polygon order is written into flags for vertex links in one
+direction for each polygon.
+New component types are generated.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 314 of file model_poly.cpp.</para>
+    </section><anchor xml:id="_model__poly_8cpp_1a161dfce55680989088111159b165cbb8"/>    <section>
+    <title>poly_get_connectivity()</title>
+<indexterm><primary>poly_get_connectivity</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>poly_get_connectivity</secondary></indexterm>
+<para><computeroutput>int poly_get_connectivity (<link linkend="_class_bcomponent">Bcomponent</link> * comp, int ilink, int nlink, <link linkend="_class_bpolygon">Bpolygon</link> * poly)</computeroutput></para><para>
+Definition at line 85 of file model_poly.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_model__poly_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>model_poly.cpp</secondary></indexterm>
+<indexterm><primary>model_poly.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

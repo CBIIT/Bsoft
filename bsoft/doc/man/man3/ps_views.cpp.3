@@ -1,0 +1,235 @@
+.TH "/Users/bernard/b20/bsoft/src/ps/ps_views.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/src/ps/ps_views.cpp \- Postscript output for views\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'ps_views\&.h'\fP
+.br
+\fC#include 'ps_plot\&.h'\fP
+.br
+\fC#include 'linked_list\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBps_views\fP (\fBBstring\fP &filename, \fBBstring\fP &symmetry_string, \fBView\fP *view, int flags)"
+.br
+.RI "Generates postscript plot of views on the unit sphere\&. "
+.ti -1c
+.RI "int \fBps_views\fP (ofstream *fps, \fBBstring\fP &symmetry_string, \fBView\fP *view, int flags)"
+.br
+.ti -1c
+.RI "int \fBps_views2\fP (ofstream *fps, string &symmetry_string, list< \fBView2\fP< float >> &view, int flags)"
+.br
+.ti -1c
+.RI "int \fBps_views\fP (\fBBstring\fP &filename, \fBView\fP *view)"
+.br
+.RI "Generates postscript plot of views projected as phi and theta\&. "
+.ti -1c
+.RI "int \fBps_views\fP (ofstream *fps, \fBView\fP *view)"
+.br
+.RI "Generates postscript plot of views projected as phi and theta\&. "
+.ti -1c
+.RI "int \fBps_sets_of_views\fP (\fBBstring\fP &filename, \fBBstring\fP &title, int nv, \fBView\fP *views, int ns, double *fom)"
+.br
+.RI "Postscript plot of the distribution of sets of views\&. "
+.ti -1c
+.RI "int \fBps_phi_theta_plot\fP (ofstream *fps, int left, int bottom, int width, int height, int ncol)"
+.br
+.RI "Generates postscript plot of projected phi and theta\&. "
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int \fBverbose\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Postscript output for views\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 20011127 
+.PP
+Modified: 20201125 
+.RE
+.PP
+
+.PP
+Definition in file \fBps_views\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int ps_phi_theta_plot (ofstream * fps, int left, int bottom, int width, int height, int ncol)"
+
+.PP
+Generates postscript plot of projected phi and theta\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fps\fP postscript file stream\&. 
+.br
+\fIleft\fP left edge of plot\&. 
+.br
+\fIbottom\fP bottom edge of plot\&. 
+.br
+\fIwidth\fP width of plot\&. 
+.br
+\fIheight\fP height of plot\&. 
+.br
+\fIncol\fP number of columns in the Data table\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The plotting options are determined by the flags argument:
+    0 = plot views
+    1 = plot numbered views
+    2 = plot views with shading according to occurrence.
+        The gray level indicates an estimated increase in signal-to-noise ratio.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 513 of file ps_views\&.cpp\&.
+.SS "int ps_sets_of_views (\fBBstring\fP & filename, \fBBstring\fP & title, int nv, \fBView\fP * views, int ns, double * fom)"
+
+.PP
+Postscript plot of the distribution of sets of views\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP output postscript file name\&. 
+.br
+\fI&title\fP title\&. 
+.br
+\fInv\fP number of views\&. 
+.br
+\fI*views\fP list of views\&. 
+.br
+\fIns\fP number of sets\&. 
+.br
+\fI*fom\fP FOM values (nv*ns values)\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0, error if <0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 458 of file ps_views\&.cpp\&.
+.SS "int ps_views (\fBBstring\fP & filename, \fBBstring\fP & symmetry_string, \fBView\fP * view, int flags)"
+
+.PP
+Generates postscript plot of views on the unit sphere\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP output postscript file name\&. 
+.br
+\fI&symmetry_string\fP symmetry string to print at the top of the page\&. 
+.br
+\fI*view\fP linked list of views\&. 
+.br
+\fIflags\fP flags\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.PP
+.nf
+The plotting options are determined by the flags argument:
+    0 = plot views
+    1 = plot numbered views
+    2 = plot views with shading according to occurrence.
+        The gray level indicates an estimated increase in signal-to-noise ratio.
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 34 of file ps_views\&.cpp\&.
+.SS "int ps_views (\fBBstring\fP & filename, \fBView\fP * view)"
+
+.PP
+Generates postscript plot of views projected as phi and theta\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI&filename\fP output postscript file name\&. 
+.br
+\fI*view\fP linked list of views\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 399 of file ps_views\&.cpp\&.
+.SS "int ps_views (ofstream * fps, \fBBstring\fP & symmetry_string, \fBView\fP * view, int flags)"
+
+.PP
+Definition at line 51 of file ps_views\&.cpp\&.
+.SS "int ps_views (ofstream * fps, \fBView\fP * view)"
+
+.PP
+Generates postscript plot of views projected as phi and theta\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*fps\fP output postscript file stream\&. 
+.br
+\fI*view\fP linked list of views\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0\&. 
+.RE
+.PP
+
+.PP
+Definition at line 420 of file ps_views\&.cpp\&.
+.SS "int ps_views2 (ofstream * fps, string & symmetry_string, list< \fBView2\fP< float >> & view, int flags)"
+
+.PP
+Definition at line 223 of file ps_views\&.cpp\&.
+.SH "Variable Documentation"
+.PP 
+.SS "int verbose\fC [extern]\fP"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

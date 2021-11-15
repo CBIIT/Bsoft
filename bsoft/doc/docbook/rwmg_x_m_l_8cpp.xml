@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rwmg_x_m_l_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/rwparam/rwmgXML.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/rwparam/rwmgXML.cpp</primary></indexterm>
+<para>
+
+<para>Reads and writes micrograph XML files. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_tags.h&quot;
+#include &quot;mg_processing.h&quot;
+#include &quot;rwmg.h&quot;
+#include &quot;file_util.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rwmg_x_m_l_8cpp_1a266163c5506535d809122221fc856b92">read_project_xml</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>)</para>
+
+<para>Reading micrograph parameters from XML files. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmg_x_m_l_8cpp_1a536278fdbfebf234e61c7afc161f5211">write_project_xml</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, int mg_select, int rec_select)</para>
+
+<para>Writing micrograph parameters to a XML file. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rwmg_x_m_l_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Reads and writes micrograph XML files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20050920 </para>
+
+<para>Modified: 20200202 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rwmg_x_m_l_8cpp_1a266163c5506535d809122221fc856b92"/>    <section>
+    <title>read_project_xml()</title>
+<indexterm><primary>read_project_xml</primary><secondary>rwmgXML.cpp</secondary></indexterm>
+<indexterm><primary>rwmgXML.cpp</primary><secondary>read_project_xml</secondary></indexterm>
+<para><computeroutput>int read_project_xml (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bproject">Bproject</link> * project)</computeroutput></para><para>
+
+<para>Reading micrograph parameters from XML files. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>initialized project structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 144 of file rwmgXML.cpp.</para>
+    </section><anchor xml:id="_rwmg_x_m_l_8cpp_1a536278fdbfebf234e61c7afc161f5211"/>    <section>
+    <title>write_project_xml()</title>
+<indexterm><primary>write_project_xml</primary><secondary>rwmgXML.cpp</secondary></indexterm>
+<indexterm><primary>rwmgXML.cpp</primary><secondary>write_project_xml</secondary></indexterm>
+<para><computeroutput>int write_project_xml (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bproject">Bproject</link> * project, int mg_select, int rec_select)</computeroutput></para><para>
+
+<para>Writing micrograph parameters to a XML file. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mg_select</entry>
+                                <entry>
+<para>flag to only write selected micrographs. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>rec_select</entry>
+                                <entry>
+<para>flag to only convert selected reconstructions. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 258 of file rwmgXML.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_rwmg_x_m_l_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>rwmgXML.cpp</secondary></indexterm>
+<indexterm><primary>rwmgXML.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

@@ -1,0 +1,1307 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rwmodel_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/rwmodel/rwmodel.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/rwmodel/rwmodel.cpp</primary></indexterm>
+<para>
+
+<para>Library routines to read and write atomic model parameters. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmodel.h&quot;
+#include &quot;rwmodel_star.h&quot;
+#include &quot;rwmodel_xml.h&quot;
+#include &quot;rwmodel_cmm.h&quot;
+#include &quot;rwmodel_bild.h&quot;
+#include &quot;rwmodel_mol.h&quot;
+#include &quot;rwmodel_vega.h&quot;
+#include &quot;model_links.h&quot;
+#include &quot;file_util.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;Color.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_rwmodel_8cpp_1ac97c50e35b1960b3762ede04e556ce06">read_model</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_rwmodel_8cpp_1a810dfb4b907a049b3f2b0baa48b147c1">read_model</link> (<link linkend="_class_bstring">Bstring</link> *<link linkend="_file__util_8cpp_1a3c3411ced4b9632566ecc66ffa64a72a">file_list</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_rwmodel_8cpp_1a08007ca443b95429702f48f61dd6ccbe">read_model</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bstring">Bstring</link> &amp;paramfile)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_rwmodel_8cpp_1aaa3d7b9d5570d45b6bccb5ba1b84a20f">read_model</link> (<link linkend="_class_bstring">Bstring</link> *<link linkend="_file__util_8cpp_1a3c3411ced4b9632566ecc66ffa64a72a">file_list</link>, <link linkend="_class_bstring">Bstring</link> &amp;paramfile)</para>
+
+<para>Reads model parameters. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1a041127357e33849f55d16a7e9239f3ac">write_model</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Writes model parameters. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1ab2d6f17b2f2f1c31c06f2a29ea1bfd98">write_model</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, <link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, int <link linkend="_string__util_8cpp_1add313f0fe82466f4c1c4622307d928bc">split</link>)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_rwmodel_8cpp_1af12aacfc866951102389d84b839b9841">model_add</link> (<link linkend="_class_bmodel">Bmodel</link> **<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, string id)</para>
+
+<para>Adds a model to a linked list. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bcomponent">Bcomponent</link> * <link linkend="_rwmodel_8cpp_1a7faae3e9401b9082758e29918ed3c24a">component_add</link> (<link linkend="_class_bcomponent">Bcomponent</link> **comp, string &amp;id)</para>
+
+<para>Adds a component to a linked list. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bcomponent">Bcomponent</link> * <link linkend="_rwmodel_8cpp_1a3f3c7697c8f447f2c475df8bc9aa379c">component_add</link> (<link linkend="_class_bcomponent">Bcomponent</link> **comp, long number)</para>
+</listitem>
+            <listitem><para><link linkend="_class_blink">Blink</link> * <link linkend="_rwmodel_8cpp_1afe6df6a836d297d3ffce4b764f2f2602">link_add</link> (<link linkend="_class_blink">Blink</link> **link, <link linkend="_class_bcomponent">Bcomponent</link> *comp1, <link linkend="_class_bcomponent">Bcomponent</link> *comp2, double <link linkend="__vector3_8h_1a7baf5ed670fcf9bcca9a3a400820e292">length</link>, double radius)</para>
+
+<para>Adds a component link to a linked list. </para>
+</listitem>
+            <listitem><para><link linkend="_class_blink">Blink</link> * <link linkend="_rwmodel_8cpp_1ac943dc851eee280900ec851471d1b716">link_add</link> (<link linkend="_class_blink">Blink</link> **link, <link linkend="_class_bcomponent">Bcomponent</link> *comp1, <link linkend="_class_bcomponent">Bcomponent</link> *comp2)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1a64338597cab826cf0f8201ee81336cd2">model_set_map_filenames</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bstring">Bstring</link> &amp;mapfile)</para>
+
+<para>Sets all the map file names of selected models. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1af72220661669061c8fa9d6f8f57f7e4a">model_set_type</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bstring">Bstring</link> &amp;set_type)</para>
+
+<para>Reset the component types. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1a5ac06c3b10c435516440ecf67919eab3">model_change_type</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bstring">Bstring</link> &amp;change_type)</para>
+
+<para>Change a component type name. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1a61288be344bc584c235ec833d7feecc7">model_check</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bstring">Bstring</link> path)</para>
+
+<para>Checks model properties. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_rwmodel_8cpp_1a16b254cc5d76b79bdcb967f8e5fc761b">model_list_copy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Copies a model. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_rwmodel_8cpp_1a0bf2616fb45e094d7b316edda6574fd1">model_copy</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Copies a model. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1af0b4ad605eb57ff0e0e27b57a36d764d">component_kill</link> (<link linkend="_class_bcomponent">Bcomponent</link> *comp)</para>
+
+<para>Deallocates memory for one component. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1ac1b9eab88cf92b96392fb308dec6d88b">component_list_kill</link> (<link linkend="_class_bcomponent">Bcomponent</link> *comp)</para>
+
+<para>Deallocates memory for a list of components. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1aaa8e791654c724b62eca98f30bc4fcbb">comp_type_kill</link> (<link linkend="_class_bcomptype">Bcomptype</link> *type)</para>
+
+<para>Deallocates memory for one component type. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1a10942a7d1017a448cf989936558e6a42">comp_type_list_kill</link> (<link linkend="_class_bcomptype">Bcomptype</link> *type)</para>
+
+<para>Deallocates memory for a list of component types. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1ad5ab6ec7cf1a8fda3fad924f31d0dbb2">model_link_list_kill</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Deallocates memory for a list of component links. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1a4b1b7cb60a9bd9ba79ec834c2b5449f1">link_kill</link> (<link linkend="_class_blink">Blink</link> **link_list, <link linkend="_class_bcomponent">Bcomponent</link> *comp, int i)</para>
+
+<para>Deletes a link. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1a3454ca3791ba8703b33966c65a05b155">link_kill</link> (<link linkend="_class_blink">Blink</link> **link_list, <link linkend="_class_bcomponent">Bcomponent</link> *comp, <link linkend="_class_bcomponent">Bcomponent</link> *comp2)</para>
+
+<para>Deletes a link. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1aec7736b5460c55fa827de4354d0ae941">poly_list_kill</link> (<link linkend="_class_bpolygon">Bpolygon</link> *poly)</para>
+
+<para>Deallocates memory for a list of polygons. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1a3f6d8a4ff6b4ba32927200c1bbdecc29">comp_associated_links_kill</link> (<link linkend="_class_bcomponent">Bcomponent</link> *comp, <link linkend="_class_blink">Blink</link> **link)</para>
+
+<para>Deallocates memory for links associated with a component. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1a9a0f6a54310941d6a4d324f497047a96">model_kill</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Deallocates all memory in the list. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1abff27e4db751640f01bee347386005c6">model_associate</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bstring">Bstring</link> &amp;associate_type, <link linkend="_class_bstring">Bstring</link> &amp;associate_file)</para>
+
+<para>Associates a model file with a component type. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1af9d7ac5852d7fbbfb0d12847412ffa19">model_associate_mass</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bstring">Bstring</link> &amp;associate_type, double mass)</para>
+
+<para>Associates a mass with a component type. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1a152cdc055aea678009cd5c1d86a3c71f">model_set_comptype_filenames</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, <link linkend="_class_bstring">Bstring</link> &amp;filename)</para>
+
+<para>Sets the filenames of all selected component types to the given string. </para>
+</listitem>
+            <listitem><para>long <link linkend="_rwmodel_8cpp_1a04d870f86b4ac8aa833d794e4a78d811">model_set_component_radius</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>, double comprad)</para>
+
+<para>Set the display radius for all components to a specific value. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rwmodel_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+            <listitem><para>string <link linkend="_rwmodel_8cpp_1a4c9ef422180cc13bda2c623c7b9d43e5">command</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines to read and write atomic model parameters. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20060919 </para>
+
+<para>Modified: 20210126 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rwmodel_8cpp_1a3f6d8a4ff6b4ba32927200c1bbdecc29"/>    <section>
+    <title>comp_associated_links_kill()</title>
+<indexterm><primary>comp_associated_links_kill</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>comp_associated_links_kill</secondary></indexterm>
+<para><computeroutput>int comp_associated_links_kill (<link linkend="_class_bcomponent">Bcomponent</link> * comp, <link linkend="_class_blink">Blink</link> ** link)</computeroutput></para><para>
+
+<para>Deallocates memory for links associated with a component. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*comp</entry>
+                                <entry>
+<para>associated componet. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>**link</entry>
+                                <entry>
+<para>pointer to component link list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of component links deallocated. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 688 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1aaa8e791654c724b62eca98f30bc4fcbb"/>    <section>
+    <title>comp_type_kill()</title>
+<indexterm><primary>comp_type_kill</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>comp_type_kill</secondary></indexterm>
+<para><computeroutput>int comp_type_kill (<link linkend="_class_bcomptype">Bcomptype</link> * type)</computeroutput></para><para>
+
+<para>Deallocates memory for one component type. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*type</entry>
+                                <entry>
+<para>component type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 510 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1a10942a7d1017a448cf989936558e6a42"/>    <section>
+    <title>comp_type_list_kill()</title>
+<indexterm><primary>comp_type_list_kill</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>comp_type_list_kill</secondary></indexterm>
+<para><computeroutput>int comp_type_list_kill (<link linkend="_class_bcomptype">Bcomptype</link> * type)</computeroutput></para><para>
+
+<para>Deallocates memory for a list of component types. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*type</entry>
+                                <entry>
+<para>component type list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int total number of component types. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 522 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1a3f3c7697c8f447f2c475df8bc9aa379c"/>    <section>
+    <title>component_add()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>component_add</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>component_add</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bcomponent">Bcomponent</link>* component_add (<link linkend="_class_bcomponent">Bcomponent</link> ** comp, long number)</computeroutput></para><para>
+Definition at line 195 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1a7faae3e9401b9082758e29918ed3c24a"/>    <section>
+    <title>component_add()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>component_add</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>component_add</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bcomponent">Bcomponent</link>* component_add (<link linkend="_class_bcomponent">Bcomponent</link> ** comp, string &amp; id)</computeroutput></para><para>
+
+<para>Adds a component to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**comp</entry>
+                                <entry>
+<para>component list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;id</entry>
+                                <entry>
+<para>component identifier. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_bcomponent">Bcomponent</link> new component.</para>
+</formalpara>
+<literallayout><computeroutput>The function allocates memory for a new component structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+</computeroutput></literallayout> </para>
+<para>
+Definition at line 185 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1af0b4ad605eb57ff0e0e27b57a36d764d"/>    <section>
+    <title>component_kill()</title>
+<indexterm><primary>component_kill</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>component_kill</secondary></indexterm>
+<para><computeroutput>int component_kill (<link linkend="_class_bcomponent">Bcomponent</link> * comp)</computeroutput></para><para>
+
+<para>Deallocates memory for one component. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*comp</entry>
+                                <entry>
+<para>component. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 476 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1ac1b9eab88cf92b96392fb308dec6d88b"/>    <section>
+    <title>component_list_kill()</title>
+<indexterm><primary>component_list_kill</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>component_list_kill</secondary></indexterm>
+<para><computeroutput>int component_list_kill (<link linkend="_class_bcomponent">Bcomponent</link> * comp)</computeroutput></para><para>
+
+<para>Deallocates memory for a list of components. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*comp</entry>
+                                <entry>
+<para>component list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int total number of components. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 489 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1ac943dc851eee280900ec851471d1b716"/>    <section>
+    <title>link_add()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>link_add</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>link_add</secondary></indexterm>
+<para><computeroutput><link linkend="_class_blink">Blink</link>* link_add (<link linkend="_class_blink">Blink</link> ** link, <link linkend="_class_bcomponent">Bcomponent</link> * comp1, <link linkend="_class_bcomponent">Bcomponent</link> * comp2)</computeroutput></para><para>
+Definition at line 240 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1afe6df6a836d297d3ffce4b764f2f2602"/>    <section>
+    <title>link_add()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>link_add</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>link_add</secondary></indexterm>
+<para><computeroutput><link linkend="_class_blink">Blink</link>* link_add (<link linkend="_class_blink">Blink</link> ** link, <link linkend="_class_bcomponent">Bcomponent</link> * comp1, <link linkend="_class_bcomponent">Bcomponent</link> * comp2, double length, double radius)</computeroutput></para><para>
+
+<para>Adds a component link to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**link</entry>
+                                <entry>
+<para>component link list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*comp1</entry>
+                                <entry>
+<para>first component. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*comp2</entry>
+                                <entry>
+<para>second component. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>length</entry>
+                                <entry>
+<para>length of link. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>radius</entry>
+                                <entry>
+<para>display radius. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_bcomponent">Bcomponent</link> new component. <literallayout><computeroutput>The function allocates memory for a new link structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 216 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1a3454ca3791ba8703b33966c65a05b155"/>    <section>
+    <title>link_kill()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>link_kill</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>link_kill</secondary></indexterm>
+<para><computeroutput>int link_kill (<link linkend="_class_blink">Blink</link> ** link_list, <link linkend="_class_bcomponent">Bcomponent</link> * comp, <link linkend="_class_bcomponent">Bcomponent</link> * comp2)</computeroutput></para><para>
+
+<para>Deletes a link. </para>
+</para>
+
+<para><literallayout><computeroutput>The link in the model link list is removed.
+The associated references to the link in the component link arrays
+are removed and the link arrays reorganized.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**link_list</entry>
+                                <entry>
+<para>pointer to list of links. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*comp</entry>
+                                <entry>
+<para>one component in the link. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*comp2</entry>
+                                <entry>
+<para>second component in the link. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bdistmat* new distance matrix structure. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 647 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1a4b1b7cb60a9bd9ba79ec834c2b5449f1"/>    <section>
+    <title>link_kill()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>link_kill</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>link_kill</secondary></indexterm>
+<para><computeroutput>int link_kill (<link linkend="_class_blink">Blink</link> ** link_list, <link linkend="_class_bcomponent">Bcomponent</link> * comp, int i)</computeroutput></para><para>
+
+<para>Deletes a link. </para>
+</para>
+
+<para><literallayout><computeroutput>The link in the model link list is removed.
+The associated references to the link in the component link arrays
+are removed and the link arrays reorganized.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**link_list</entry>
+                                <entry>
+<para>pointer to list of links. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*comp</entry>
+                                <entry>
+<para>one component in the link. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>i</entry>
+                                <entry>
+<para>index for second component in link array of first component. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bdistmat* new distance matrix structure. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 584 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1af12aacfc866951102389d84b839b9841"/>    <section>
+    <title>model_add()</title>
+<indexterm><primary>model_add</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>model_add</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_add (<link linkend="_class_bmodel">Bmodel</link> ** model, string id)</computeroutput></para><para>
+
+<para>Adds a model to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**model</entry>
+                                <entry>
+<para>model list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>id</entry>
+                                <entry>
+<para>model identifier. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* new model. <literallayout><computeroutput>The function allocates memory for a new model structure.
+If the content of the pointer is null, the new structure is
+the first in the list. Otherwise, the end of the list is found
+and the new structure added to it.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 163 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1abff27e4db751640f01bee347386005c6"/>    <section>
+    <title>model_associate()</title>
+<indexterm><primary>model_associate</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>model_associate</secondary></indexterm>
+<para><computeroutput>int model_associate (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bstring">Bstring</link> &amp; associate_type, <link linkend="_class_bstring">Bstring</link> &amp; associate_file)</computeroutput></para><para>
+
+<para>Associates a model file with a component type. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>the model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;associate_type</entry>
+                                <entry>
+<para>component type. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;associate_file</entry>
+                                <entry>
+<para>component file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of types associated. <literallayout><computeroutput>Model files can be coordinates or maps.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 748 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1af9d7ac5852d7fbbfb0d12847412ffa19"/>    <section>
+    <title>model_associate_mass()</title>
+<indexterm><primary>model_associate_mass</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>model_associate_mass</secondary></indexterm>
+<para><computeroutput>int model_associate_mass (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bstring">Bstring</link> &amp; associate_type, double mass)</computeroutput></para><para>
+
+<para>Associates a mass with a component type. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;associate_type</entry>
+                                <entry>
+<para>component type. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>mass</entry>
+                                <entry>
+<para>component type mass. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of types associated. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 778 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1a5ac06c3b10c435516440ecf67919eab3"/>    <section>
+    <title>model_change_type()</title>
+<indexterm><primary>model_change_type</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>model_change_type</secondary></indexterm>
+<para><computeroutput>int model_change_type (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bstring">Bstring</link> &amp; change_type)</computeroutput></para><para>
+
+<para>Change a component type name. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;change_type</entry>
+                                <entry>
+<para>component type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of models. <literallayout><computeroutput>Sets all the component types to the given string.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 299 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1a61288be344bc584c235ec833d7feecc7"/>    <section>
+    <title>model_check()</title>
+<indexterm><primary>model_check</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>model_check</secondary></indexterm>
+<para><computeroutput>int model_check (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bstring">Bstring</link> path)</computeroutput></para><para>
+
+<para>Checks model properties. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>path</entry>
+                                <entry>
+<para>search path to find map files. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 323 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1a0bf2616fb45e094d7b316edda6574fd1"/>    <section>
+    <title>model_copy()</title>
+<indexterm><primary>model_copy</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>model_copy</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_copy (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Copies a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* model copy. <literallayout><computeroutput>Copies only the first model in the list.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 403 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1a9a0f6a54310941d6a4d324f497047a96"/>    <section>
+    <title>model_kill()</title>
+<indexterm><primary>model_kill</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>model_kill</secondary></indexterm>
+<para><computeroutput>int model_kill (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Deallocates all memory in the list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 720 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1ad5ab6ec7cf1a8fda3fad924f31d0dbb2"/>    <section>
+    <title>model_link_list_kill()</title>
+<indexterm><primary>model_link_list_kill</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>model_link_list_kill</secondary></indexterm>
+<para><computeroutput>int model_link_list_kill (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Deallocates memory for a list of component links. </para>
+</para>
+
+<para><literallayout><computeroutput>Only the first model in the list is processed.
+</computeroutput></literallayout> 
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int total number of component links. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 546 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1a16b254cc5d76b79bdcb967f8e5fc761b"/>    <section>
+    <title>model_list_copy()</title>
+<indexterm><primary>model_list_copy</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>model_list_copy</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_list_copy (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Copies a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* model copy. <literallayout><computeroutput>Copies all the models in a list.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 375 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1a04d870f86b4ac8aa833d794e4a78d811"/>    <section>
+    <title>model_set_component_radius()</title>
+<indexterm><primary>model_set_component_radius</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>model_set_component_radius</secondary></indexterm>
+<para><computeroutput>long model_set_component_radius (<link linkend="_class_bmodel">Bmodel</link> * model, double comprad)</computeroutput></para><para>
+
+<para>Set the display radius for all components to a specific value. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>comprad</entry>
+                                <entry>
+<para>component display radius. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of components selected. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 831 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1a152cdc055aea678009cd5c1d86a3c71f"/>    <section>
+    <title>model_set_comptype_filenames()</title>
+<indexterm><primary>model_set_comptype_filenames</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>model_set_comptype_filenames</secondary></indexterm>
+<para><computeroutput>int model_set_comptype_filenames (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+
+<para>Sets the filenames of all selected component types to the given string. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>component file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of component types set. <literallayout><computeroutput>The image numbers are sequentially set as well.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 810 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1a64338597cab826cf0f8201ee81336cd2"/>    <section>
+    <title>model_set_map_filenames()</title>
+<indexterm><primary>model_set_map_filenames</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>model_set_map_filenames</secondary></indexterm>
+<para><computeroutput>int model_set_map_filenames (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bstring">Bstring</link> &amp; mapfile)</computeroutput></para><para>
+
+<para>Sets all the map file names of selected models. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;mapfile</entry>
+                                <entry>
+<para>map file name. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 251 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1af72220661669061c8fa9d6f8f57f7e4a"/>    <section>
+    <title>model_set_type()</title>
+<indexterm><primary>model_set_type</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>model_set_type</secondary></indexterm>
+<para><computeroutput>int model_set_type (<link linkend="_class_bmodel">Bmodel</link> * model, <link linkend="_class_bstring">Bstring</link> &amp; set_type)</computeroutput></para><para>
+
+<para>Reset the component types. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;set_type</entry>
+                                <entry>
+<para>component type. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of models. <literallayout><computeroutput>Sets all the component types to the given string.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 270 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1aec7736b5460c55fa827de4354d0ae941"/>    <section>
+    <title>poly_list_kill()</title>
+<indexterm><primary>poly_list_kill</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>poly_list_kill</secondary></indexterm>
+<para><computeroutput>int poly_list_kill (<link linkend="_class_bpolygon">Bpolygon</link> * poly)</computeroutput></para><para>
+
+<para>Deallocates memory for a list of polygons. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*poly</entry>
+                                <entry>
+<para>polygon list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int total number of polygons. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 666 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1ac97c50e35b1960b3762ede04e556ce06"/>    <section>
+    <title>read_model()<computeroutput>[1/4]</computeroutput></title>
+<indexterm><primary>read_model</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>read_model</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* read_model (<link linkend="_class_bstring">Bstring</link> &amp; filename)</computeroutput></para><para>
+Definition at line 29 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1a08007ca443b95429702f48f61dd6ccbe"/>    <section>
+    <title>read_model()<computeroutput>[2/4]</computeroutput></title>
+<indexterm><primary>read_model</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>read_model</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* read_model (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bstring">Bstring</link> &amp; paramfile)</computeroutput></para><para>
+Definition at line 40 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1a810dfb4b907a049b3f2b0baa48b147c1"/>    <section>
+    <title>read_model()<computeroutput>[3/4]</computeroutput></title>
+<indexterm><primary>read_model</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>read_model</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* read_model (<link linkend="_class_bstring">Bstring</link> * file_list)</computeroutput></para><para>
+Definition at line 34 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1aaa3d7b9d5570d45b6bccb5ba1b84a20f"/>    <section>
+    <title>read_model()<computeroutput>[4/4]</computeroutput></title>
+<indexterm><primary>read_model</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>read_model</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* read_model (<link linkend="_class_bstring">Bstring</link> * file_list, <link linkend="_class_bstring">Bstring</link> &amp; paramfile)</computeroutput></para><para>
+
+<para>Reads model parameters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*file_list</entry>
+                                <entry>
+<para>list of model parameter file names. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;paramfile</entry>
+                                <entry>
+<para>parameter file. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* model parameters. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 51 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1a041127357e33849f55d16a7e9239f3ac"/>    <section>
+    <title>write_model()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>write_model</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>write_model</secondary></indexterm>
+<para><computeroutput>int write_model (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Writes model parameters. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>model parameter file name. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model parameters. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int number of models. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 95 of file rwmodel.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1ab2d6f17b2f2f1c31c06f2a29ea1bfd98"/>    <section>
+    <title>write_model()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>write_model</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>write_model</secondary></indexterm>
+<para><computeroutput>int write_model (<link linkend="_class_bstring">Bstring</link> &amp; filename, <link linkend="_class_bmodel">Bmodel</link> * model, int split)</computeroutput></para><para>
+Definition at line 100 of file rwmodel.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_rwmodel_8cpp_1a4c9ef422180cc13bda2c623c7b9d43e5"/>    <section>
+    <title>command</title>
+<indexterm><primary>command</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>command</secondary></indexterm>
+<para><computeroutput>string command<computeroutput>[extern]</computeroutput></computeroutput></para><para>
+Definition at line 20 of file utilities.cpp.</para>
+    </section><anchor xml:id="_rwmodel_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>rwmodel.cpp</secondary></indexterm>
+<indexterm><primary>rwmodel.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

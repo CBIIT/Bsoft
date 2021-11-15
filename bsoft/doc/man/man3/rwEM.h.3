@@ -1,0 +1,115 @@
+.TH "/Users/bernard/b20/bsoft/include/rwEM.h" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/include/rwEM.h \- Header file for reading and writing EM files\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'rwimg\&.h'\fP
+.br
+
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "struct \fBEMhead\fP"
+.br
+.in -1c
+.SS "Macros"
+
+.in +1c
+.ti -1c
+.RI "#define \fBEMSIZE\fP   512"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBreadEM\fP (\fBBimage\fP *p, int readdata)"
+.br
+.RI "Reading a EM map image file format\&. A 3D image format used in electron microscopy\&. Header size: 512 bytes (fixed)\&. File format extensions: \&.em, \&.EM The identifier is a machine stamp in the first byte: 0 OS-9 1 VAX (VMS little endian) 2 CONVEX (historical) 3 SGI IRIX, Linux (big endian) 4 SUN 5 MAC 6 DEC UNIX, Linux (little endian) (Note: not always implemented - so unreliable) Byte order determination: The z-dimension value must be less than 256*256\&. Data types: 1 = byte, 2 = short, 4 = int, 5 = float, 8 = complex float\&. \fBTransform\fP type: Hermitian The x-dimension contains the x-size of the full transform\&. "
+.ti -1c
+.RI "int \fBwriteEM\fP (\fBBimage\fP *p)"
+.br
+.RI "Writing a EM map image file format\&. A 3D image format used in electron microscopy\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Header file for reading and writing EM files\&. 
+
+
+.PP
+\fBAuthor\fP
+.RS 4
+Bernard Heymann 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 19990418 
+.PP
+Modified: 20111217 
+.PP
+.nf
+Format: 3D image file format for the EM package
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition in file \fBrwEM\&.h\fP\&.
+.SH "Macro Definition Documentation"
+.PP 
+.SS "#define EMSIZE   512"
+
+.PP
+Definition at line 13 of file rwEM\&.h\&.
+.SH "Function Documentation"
+.PP 
+.SS "int readEM (\fBBimage\fP * p, int readdata)"
+
+.PP
+Reading a EM map image file format\&. A 3D image format used in electron microscopy\&. Header size: 512 bytes (fixed)\&. File format extensions: \&.em, \&.EM The identifier is a machine stamp in the first byte: 0 OS-9 1 VAX (VMS little endian) 2 CONVEX (historical) 3 SGI IRIX, Linux (big endian) 4 SUN 5 MAC 6 DEC UNIX, Linux (little endian) (Note: not always implemented - so unreliable) Byte order determination: The z-dimension value must be less than 256*256\&. Data types: 1 = byte, 2 = short, 4 = int, 5 = float, 8 = complex float\&. \fBTransform\fP type: Hermitian The x-dimension contains the x-size of the full transform\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.br
+\fIreaddata\fP flag to activate reading of image data\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 41 of file rwEM\&.cpp\&.
+.SS "int writeEM (\fBBimage\fP * p)"
+
+.PP
+Writing a EM map image file format\&. A 3D image format used in electron microscopy\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP the image structure\&. 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int error code (<0 means failure)\&. 
+.RE
+.PP
+
+.PP
+Definition at line 115 of file rwEM\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

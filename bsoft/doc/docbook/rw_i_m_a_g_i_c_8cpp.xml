@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rw_i_m_a_g_i_c_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/rwimg/rwIMAGIC.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/rwimg/rwIMAGIC.cpp</primary></indexterm>
+<para>
+
+<para>Functions for reading and writing Image Science&apos;s Imagic files. </para>
+ 
+</para>
+<programlisting>#include &quot;rwIMAGIC.h&quot;
+#include &quot;file_util.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_view">View</link> <link linkend="_rw_i_m_a_g_i_c_8cpp_1a7a6e3eebd97c02dd0b263bf75472e6c9">view_from_imagic_euler</link> (<link linkend="_struct_i_m_a_g_i_chead">IMAGIChead</link> *header)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_i_m_a_g_i_c_8cpp_1a3a1f9449932e58ea43d4e56dc2324519">imagic_euler_from_view</link> (<link linkend="_struct_i_m_a_g_i_chead">IMAGIChead</link> *header, <link linkend="_class_view">View</link> view)</para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_i_m_a_g_i_c_8cpp_1a8cee29427396c226a43258e61e5e9d89">readIMAGIC</link> (<link linkend="_class_bimage">Bimage</link> *p, int readdata, int img_select)</para>
+
+<para>Reading an IMAGIC image format. A 2D file format for the IMAGIC package. The header is stored in a separate file with extension &quot;.hed&quot; and a fixed size of 1024 bytes per image. The image data is stored in a single block in a file with the extension &quot;.img&quot;. Machine stamp (4 bytes or integer): VAX/VMS 1 0 0 0 (16777216) Little endian 2 2 2 2 (33686018) Big endian 4 4 4 4 (67372036) Byte order determination: Year and hour values must be less than 256*256. Data types: PACK = byte, INTG = short, REAL = float, RECO,COMP = complex float. <link linkend="_class_transform">Transform</link> type: Centered (COMP data type) RECO is not a transform Note that the x and y dimensions are interchanged (actually a display issue). </para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_i_m_a_g_i_c_8cpp_1a164260d7aa169e91c9596868b2689c2e">writeIMAGIC</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>Writing an IMAGIC image format. A file format for the IMAGIC package. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_i_m_a_g_i_c_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions for reading and writing Image Science&apos;s Imagic files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19990424 </para>
+
+<para>Modified: 20180329 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rw_i_m_a_g_i_c_8cpp_1a3a1f9449932e58ea43d4e56dc2324519"/>    <section>
+    <title>imagic_euler_from_view()</title>
+<indexterm><primary>imagic_euler_from_view</primary><secondary>rwIMAGIC.cpp</secondary></indexterm>
+<indexterm><primary>rwIMAGIC.cpp</primary><secondary>imagic_euler_from_view</secondary></indexterm>
+<para><computeroutput>int imagic_euler_from_view (<link linkend="_struct_i_m_a_g_i_chead">IMAGIChead</link> * header, <link linkend="_class_view">View</link> view)</computeroutput></para><para>
+Definition at line 31 of file rwIMAGIC.cpp.</para>
+    </section><anchor xml:id="_rw_i_m_a_g_i_c_8cpp_1a8cee29427396c226a43258e61e5e9d89"/>    <section>
+    <title>readIMAGIC()</title>
+<indexterm><primary>readIMAGIC</primary><secondary>rwIMAGIC.cpp</secondary></indexterm>
+<indexterm><primary>rwIMAGIC.cpp</primary><secondary>readIMAGIC</secondary></indexterm>
+<para><computeroutput>int readIMAGIC (<link linkend="_class_bimage">Bimage</link> * p, int readdata, int img_select)</computeroutput></para><para>
+
+<para>Reading an IMAGIC image format. A 2D file format for the IMAGIC package. The header is stored in a separate file with extension &quot;.hed&quot; and a fixed size of 1024 bytes per image. The image data is stored in a single block in a file with the extension &quot;.img&quot;. Machine stamp (4 bytes or integer): VAX/VMS 1 0 0 0 (16777216) Little endian 2 2 2 2 (33686018) Big endian 4 4 4 4 (67372036) Byte order determination: Year and hour values must be less than 256*256. Data types: PACK = byte, INTG = short, REAL = float, RECO,COMP = complex float. <link linkend="_class_transform">Transform</link> type: Centered (COMP data type) RECO is not a transform Note that the x and y dimensions are interchanged (actually a display issue). </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>readdata</entry>
+                                <entry>
+<para>flag to activate reading of image data. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>img_select</entry>
+                                <entry>
+<para>image selection in multi-image file (-1 = all images). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 65 of file rwIMAGIC.cpp.</para>
+    </section><anchor xml:id="_rw_i_m_a_g_i_c_8cpp_1a7a6e3eebd97c02dd0b263bf75472e6c9"/>    <section>
+    <title>view_from_imagic_euler()</title>
+<indexterm><primary>view_from_imagic_euler</primary><secondary>rwIMAGIC.cpp</secondary></indexterm>
+<indexterm><primary>rwIMAGIC.cpp</primary><secondary>view_from_imagic_euler</secondary></indexterm>
+<para><computeroutput><link linkend="_class_view">View</link> view_from_imagic_euler (<link linkend="_struct_i_m_a_g_i_chead">IMAGIChead</link> * header)</computeroutput></para><para>
+Definition at line 16 of file rwIMAGIC.cpp.</para>
+    </section><anchor xml:id="_rw_i_m_a_g_i_c_8cpp_1a164260d7aa169e91c9596868b2689c2e"/>    <section>
+    <title>writeIMAGIC()</title>
+<indexterm><primary>writeIMAGIC</primary><secondary>rwIMAGIC.cpp</secondary></indexterm>
+<indexterm><primary>rwIMAGIC.cpp</primary><secondary>writeIMAGIC</secondary></indexterm>
+<para><computeroutput>int writeIMAGIC (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>Writing an IMAGIC image format. A file format for the IMAGIC package. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 246 of file rwIMAGIC.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_rw_i_m_a_g_i_c_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>rwIMAGIC.cpp</secondary></indexterm>
+<indexterm><primary>rwIMAGIC.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_rw_b_r_i_x_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/rwBRIX.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/rwBRIX.h</primary></indexterm>
+<para>
+
+<para>Header file for reading and writing Brix files. </para>
+ 
+</para>
+<programlisting>#include &quot;rwimg.h&quot;
+</programlisting><simplesect>
+    <title>Macros    </title>
+        <itemizedlist>
+            <listitem><para>#define <link linkend="_rw_b_r_i_x_8h_1ae4d91093c4c06598340de3ae8e525fde">BRIXSIZE</link>   512</para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_rw_b_r_i_x_8h_1aa9d1f7fc80e91eb0eae4597fedad1b54">readBRIX</link> (<link linkend="_class_bimage">Bimage</link> *p, int readdata)</para>
+
+<para>Reading a BRIX image file format. </para>
+</listitem>
+            <listitem><para>int <link linkend="_rw_b_r_i_x_8h_1ac2b2a15b3521bdece0e3323394092ce1">writeBRIX</link> (<link linkend="_class_bimage">Bimage</link> *p)</para>
+
+<para>Writing a BRIX image file format. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Header file for reading and writing Brix files. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 19990424 </para>
+
+<para>Modified: 20111217 <literallayout><computeroutput>Format: 3D crystallographic image file format for the program &apos;O&apos;
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Macro Definition Documentation</title>
+<anchor xml:id="_rw_b_r_i_x_8h_1ae4d91093c4c06598340de3ae8e525fde"/>    <section>
+    <title>BRIXSIZE</title>
+<indexterm><primary>BRIXSIZE</primary><secondary>rwBRIX.h</secondary></indexterm>
+<indexterm><primary>rwBRIX.h</primary><secondary>BRIXSIZE</secondary></indexterm>
+<para><computeroutput>#define BRIXSIZE   512</computeroutput></para><para>
+Definition at line 13 of file rwBRIX.h.</para>
+</section>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_rw_b_r_i_x_8h_1aa9d1f7fc80e91eb0eae4597fedad1b54"/>    <section>
+    <title>readBRIX()</title>
+<indexterm><primary>readBRIX</primary><secondary>rwBRIX.h</secondary></indexterm>
+<indexterm><primary>rwBRIX.h</primary><secondary>readBRIX</secondary></indexterm>
+<para><computeroutput>int readBRIX (<link linkend="_class_bimage">Bimage</link> * p, int readdata)</computeroutput></para><para>
+
+<para>Reading a BRIX image file format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>readdata</entry>
+                                <entry>
+<para>flag to activate reading of image data. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). A 3D image format intended for use with the &apos;O&apos; program. It has a text header of 512 bytes (fixed size). File format extension: .brx. Identifier: &apos;:-)&apos; (byte 0). Data type: byte, packed as 8x8x8 pages. The header specifies the following keywords: origin: origin extent: size in pixels grid: unit cell size in pixels cell: unit cell parameters in angstroms and degrees prod: scale to convert original map to byte plus: average sigma: standard deviation of original map The voxel size is given by the unit cell size divided by the grid size (Since the unit cell size may not fit exactly onto the grid, the voxel size as calculated from the unit cell size and grid may not be accurate). </para>
+</formalpara>
+</para>
+<para>
+Definition at line 37 of file rwBRIX.cpp.</para>
+    </section><anchor xml:id="_rw_b_r_i_x_8h_1ac2b2a15b3521bdece0e3323394092ce1"/>    <section>
+    <title>writeBRIX()</title>
+<indexterm><primary>writeBRIX</primary><secondary>rwBRIX.h</secondary></indexterm>
+<indexterm><primary>rwBRIX.h</primary><secondary>writeBRIX</secondary></indexterm>
+<para><computeroutput>int writeBRIX (<link linkend="_class_bimage">Bimage</link> * p)</computeroutput></para><para>
+
+<para>Writing a BRIX image file format. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>the image structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int error code (&lt;0 means failure). A 3D image format intended for use with the &apos;O&apos; program. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 120 of file rwBRIX.cpp.</para>
+</section>
+</section>
+</section>

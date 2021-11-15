@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_model__path_8h" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/include/model_path.h File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/include/model_path.h</primary></indexterm>
+<para>
+
+<para>Library routines used for model processing. </para>
+ 
+</para>
+<programlisting>#include &quot;rwmodel.h&quot;
+#include &quot;Matrix.h&quot;
+#include &quot;Bstring.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_matrix">Matrix</link> <link linkend="_model__path_8h_1addb976c188f5f5abdbca5833ddc917c1">model_shortest_path</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Calculates the shortest path between every pair of vertices. </para>
+</listitem>
+            <listitem><para>double <link linkend="_model__path_8h_1a1b9c7dd1929c60de7d6ea9e56b098c09">model_wiener_index</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Calculates the Wiener index. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bmodel">Bmodel</link> * <link linkend="_model__path_8h_1a440ac73cd6191f2a6b8b6d21fd8ccf64">model_hamiltonian_cycle</link> (<link linkend="_class_bmodel">Bmodel</link> *<link linkend="_tcltk__bmodel_8cpp_1a828359eaa8de833b547ac96934f43841">model</link>)</para>
+
+<para>Calculates the Hamiltonian cycles in a model. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Library routines used for model processing. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20060908 </para>
+
+<para>Modified: 20150208 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_model__path_8h_1a440ac73cd6191f2a6b8b6d21fd8ccf64"/>    <section>
+    <title>model_hamiltonian_cycle()</title>
+<indexterm><primary>model_hamiltonian_cycle</primary><secondary>model_path.h</secondary></indexterm>
+<indexterm><primary>model_path.h</primary><secondary>model_hamiltonian_cycle</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bmodel">Bmodel</link>* model_hamiltonian_cycle (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Calculates the Hamiltonian cycles in a model. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bmodel* linked list of models with cycle links. <literallayout><computeroutput>A Hamiltonian cycle passes through each component once.
+The cycles are limited to the links in the input model.
+Redundant cycles are discarded.
+Only the first model in the linked list is used.
+Each of the resultant models has links forming a Hamiltonian cycle.
+</computeroutput></literallayout> Reference: H. Wiener, J. Am. Chem. Soc., 1947, 69, 17. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 240 of file model_path.cpp.</para>
+    </section><anchor xml:id="_model__path_8h_1addb976c188f5f5abdbca5833ddc917c1"/>    <section>
+    <title>model_shortest_path()</title>
+<indexterm><primary>model_shortest_path</primary><secondary>model_path.h</secondary></indexterm>
+<indexterm><primary>model_path.h</primary><secondary>model_shortest_path</secondary></indexterm>
+<para><computeroutput><link linkend="_class_matrix">Matrix</link> model_shortest_path (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Calculates the shortest path between every pair of vertices. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_matrix">Matrix</link> path matrix. <literallayout><computeroutput>The adjacency matrix is calculated as a starting point.
+Only the first model in the linked list is used.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 36 of file model_path.cpp.</para>
+    </section><anchor xml:id="_model__path_8h_1a1b9c7dd1929c60de7d6ea9e56b098c09"/>    <section>
+    <title>model_wiener_index()</title>
+<indexterm><primary>model_wiener_index</primary><secondary>model_path.h</secondary></indexterm>
+<indexterm><primary>model_path.h</primary><secondary>model_wiener_index</secondary></indexterm>
+<para><computeroutput>double model_wiener_index (<link linkend="_class_bmodel">Bmodel</link> * model)</computeroutput></para><para>
+
+<para>Calculates the Wiener index. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*model</entry>
+                                <entry>
+<para>model structure. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double average Wiener index. <literallayout><computeroutput>The Wiener index is calculated as the sum of the elements of
+the shortest path matrix.
+Only the first model in the linked list is used.
+</computeroutput></literallayout> Reference: H. Wiener, J. Am. Chem. Soc., 1947, 69, 17. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 82 of file model_path.cpp.</para>
+</section>
+</section>
+</section>

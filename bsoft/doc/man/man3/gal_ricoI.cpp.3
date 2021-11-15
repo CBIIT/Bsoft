@@ -1,0 +1,225 @@
+.TH "/Users/bernard/b20/bsoft/radon/gal_ricoI.cpp" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/bernard/b20/bsoft/radon/gal_ricoI.cpp
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'gal_ricoI\&.h'\fP
+.br
+\fC#include 'fft_tool\&.h'\fP
+.br
+\fC#include 'Bimage\&.h'\fP
+.br
+\fC#include 'utilities\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBpolcar_f\fP (\fBBimage\fP *p, float *pfr, float *pfi, int bordo, int n_radii, int n_theta, \fBkernel\fP *ker, int padd)"
+.br
+.ti -1c
+.RI "int \fBpolcart_fourier\fP (float *pfri, float r, float phi, float *val, int bordo, int n_radii, int n_theta, \fBkernel\fP *ker)"
+.br
+.ti -1c
+.RI "int \fBpadding\fP (\fBBimage\fP *p, \fBBimage\fP *ppiano, int z)"
+.br
+.RI "Padds an image\&. "
+.ti -1c
+.RI "int \fBcopy180\fP (\fBBimage\fP *p, float *pfr, float *pfi, int bordo)"
+.br
+.ti -1c
+.RI "int \fBshift_phase\fP (\fBBimage\fP *p, float npix)"
+.br
+.ti -1c
+.RI "\fBBimage\fP * \fBgal_ricoI\fP (\fBBimage\fP *p, int tipo, \fBkernel\fP *ker, int padd)"
+.br
+.RI "Reconstruct an image from a sinogram\&. "
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+\fBAuthor\fP
+.RS 4
+P\&.L\&. Bellon, F\&. Cantele and S\&. Lanzavecchia Dip\&. Chimica Strutturale e Stereochimica Inorganica Via Venezian 21, 20133 Milano, Italy 
+.RE
+.PP
+\fBDate\fP
+.RS 4
+Created: 7 04 2003 
+.PP
+Modified: 11 08 2011 (BH) 
+.RE
+.PP
+
+.PP
+Definition in file \fBgal_ricoI\&.cpp\fP\&.
+.SH "Function Documentation"
+.PP 
+.SS "int copy180 (\fBBimage\fP * p, float * pfr, float * pfi, int bordo)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 
+.br
+ 
+.br
+\fI*pfr\fP 
+.br
+\fI*pfi\fP 
+.br
+\fIbordo\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 339 of file gal_ricoI\&.cpp\&.
+.SS "\fBBimage\fP* gal_ricoI (\fBBimage\fP * p, int tipo, \fBkernel\fP * ker, int padd)"
+
+.PP
+Reconstruct an image from a sinogram\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP parameters of the image 
+.br
+\fItipo\fP type of reconstruction (can be 1/2/3/4) 
+.br
+\fI*ker\fP table of coefficients for interpolation 
+.br
+\fIpadd\fP use of padding (0/1) 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.PP
+.nf
+float *psource  = sinogram
+float *pdest    = reconstructed image
+
+.fi
+.PP
+ 
+.RE
+.PP
+
+.PP
+Definition at line 36 of file gal_ricoI\&.cpp\&.
+.SS "int padding (\fBBimage\fP * p, \fBBimage\fP * ppiano, int z)"
+
+.PP
+Padds an image\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP starting image parameters 
+.br
+\fI*ppiano\fP padded image 
+.br
+\fIz\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 307 of file gal_ricoI\&.cpp\&.
+.SS "int polcar_f (\fBBimage\fP * p, float * pfr, float * pfi, int bordo, int n_radii, int n_theta, \fBkernel\fP * ker, int padd)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 
+.br
+ 
+.br
+\fI*pfr\fP 
+.br
+\fI*pfi\fP 
+.br
+\fIbordo\fP 
+.br
+\fIn_radii\fP 
+.br
+\fIn_theta\fP 
+.br
+\fI*ker\fP 
+.br
+\fIpadd\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 148 of file gal_ricoI\&.cpp\&.
+.SS "int polcart_fourier (float * pfri, float r, float phi, float * val, int bordo, int n_radii, int n_theta, \fBkernel\fP * ker)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*pfri\fP 
+.br
+\fIr\fP 
+.br
+\fIphi\fP 
+.br
+\fI*val\fP 
+.br
+\fIbordo\fP 
+.br
+\fIn_radii\fP 
+.br
+\fIn_theta\fP 
+.br
+\fI*ker\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 227 of file gal_ricoI\&.cpp\&.
+.SS "int shift_phase (\fBBimage\fP * p, float npix)"
+
+.PP
+\fBParameters\fP
+.RS 4
+\fI*p\fP 
+.br
+ 
+.br
+\fInpix\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 0 
+.RE
+.PP
+
+.PP
+Definition at line 450 of file gal_ricoI\&.cpp\&.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

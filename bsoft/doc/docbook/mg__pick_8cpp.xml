@@ -1,0 +1,1280 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="_mg__pick_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/mg/mg_pick.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/mg/mg_pick.cpp</primary></indexterm>
+<para>
+
+<para>Functions for picking single particle images from a micrograph. </para>
+ 
+</para>
+<programlisting>#include &quot;mg_pick.h&quot;
+#include &quot;mg_processing.h&quot;
+#include &quot;mg_select.h&quot;
+#include &quot;linked_list.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__pick_8cpp_1ab40e2d61217406462080c98e3b1904a0">img_prepare_for_picking</link> (<link linkend="_class_bimage">Bimage</link> *p, int flags, long sigma, long bin)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> * <link linkend="_mg__pick_8cpp_1a367c1b65a79d87ef3d61ec097675d1ad">particles_from_peaks</link> (<link linkend="_class_bimage">Bimage</link> *pcc, long bin, double excl_dist, double part_ori, double &amp;fommin, double fommax, long maxnum, double pix_min, double pix_max)</para>
+
+<para>Finds the peaks in a cross-correlation map corresponding to particles. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> * <link linkend="_mg__pick_8cpp_1ad3dd2278839dcdc0380e035d0ebed219">particles_pick_cc</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bimage">Bimage</link> *ptemp, <link linkend="_class_bimage">Bimage</link> *pmask, double hires, double lores, double fommin, double fommax, double excl_dist, long bin)</para>
+
+<para>Picks particles using cross-correlation. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__pick_8cpp_1a20be79f55d41a6d7d4c1c052d301ba1f">gauss_find_intersection</link> (long ngauss, vector&lt; double &gt; &amp;gauss)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> * <link linkend="_mg__pick_8cpp_1ae2f1438f6a2d6d40c31fc529ba33f73f">particles_pick_var</link> (<link linkend="_class_bimage">Bimage</link> *p, long avg_kernel, long var_kernel, double nsig, double part_ori, double excl_dist, long bin)</para>
+
+<para>Picks particles in variance map. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> * <link linkend="_mg__pick_8cpp_1af3274430aa8feca9e1eb34a232cb99f7">particles_pick_var</link> (<link linkend="_class_bimage">Bimage</link> *p, long avg_kernel, long var_kernel, double cutmin, double cutmax, double part_ori, double excl_dist, long bin)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> * <link linkend="_mg__pick_8cpp_1a47689800d3a6de846b17e758efa0a06f">particles_pick_cc</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, long img_num, <link linkend="_class_bimage">Bimage</link> *ptemp, <link linkend="_class_bimage">Bimage</link> *pmask, double hires, double lores, double fommin, double fommax, double excl_dist, long bin)</para>
+
+<para>Picks particles using cross-correlation. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> * <link linkend="_mg__pick_8cpp_1a037600ff8a8bae724b3b0e76a393c022">particles_pick_var</link> (<link linkend="_class_bstring">Bstring</link> &amp;filename, long img_num, long avg_kernel, long var_kernel, double nsig, double part_ori, double excl_dist, long bin)</para>
+
+<para>Picks particles in variance map. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__pick_8cpp_1a4ed8ad2c0073e2dc73df1085cce3e704">img_marker_set_difference_at_voxel</link> (<link linkend="_class_bimage">Bimage</link> *p, long i, <link linkend="_struct_bmarker">Bmarker</link> *markin, <link linkend="_struct_bmarker">Bmarker</link> *markout)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__pick_8cpp_1ac2a01efdfbc6dbf37c991ca03410aa06">img_marker_set_difference</link> (<link linkend="_class_bimage">Bimage</link> *p, <link linkend="_struct_bmarker">Bmarker</link> *markin, <link linkend="_struct_bmarker">Bmarker</link> *markout, int contrast)</para>
+
+<para>Calculates the average difference between voxels tagged by two marker sets. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__pick_8cpp_1ad0860e54bc2cedb27331d323df001bf4">mg_pick_particles</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_bimage">Bimage</link> *p, <link linkend="_struct_bmarker">Bmarker</link> *markin, <link linkend="_struct_bmarker">Bmarker</link> *markout, int avg_kernel, int contrast)</para>
+
+<para>Locates particles using a fore/background difference measure. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__pick_8cpp_1a55548a3e01919c369449304470bb943a">project_pick_particles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bimage">Bimage</link> *ptemp, <link linkend="_class_bimage">Bimage</link> *pmask, double hires, double lores, double fommin, double fommax, double excl_dist, long bin)</para>
+
+<para>Picks particles using cross-correlation. </para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__pick_8cpp_1a39a9e60bf38238658363118fe02ff4e1">project_pick_particles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long avg_kernel, long var_kernel, double nsig, double part_ori, double excl_dist, long bin)</para>
+
+<para>Picks particles in variance map. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__pick_8cpp_1a3577fe340636129fd51e37f2e57aaa8b">project_pick_particles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, double din, double dout, int avg_kernel, double ainc, int flags, int contrast)</para>
+
+<para>Locates particles using a fore/background difference measure. </para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__pick_8cpp_1ad1b90ebc741c215015a8e05492d5ff0f">part_mask_particles</link> (<link linkend="_class_bparticle">Bparticle</link> *part, <link linkend="_class_bimage">Bimage</link> *pmask, long box_size)</para>
+</listitem>
+            <listitem><para>int <link linkend="_mg__pick_8cpp_1ad5398812e2a860737e856e6647ea1cf3">img_mask_above_threshold</link> (<link linkend="_class_bimage">Bimage</link> *pvar, <link linkend="_class_bimage">Bimage</link> *p, double threshold)</para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__pick_8cpp_1a9901599332dc0c19c617db248307dfc0">mg_pick_background</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_bimage">Bimage</link> *p, long number, long avg_kernel, long var_kernel, double excl_dist)</para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__pick_8cpp_1a25588a61db3299794495002b33963e51">rec_pick_background</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_bimage">Bimage</link> *p, long number, long avg_kernel, long var_kernel, double excl_dist)</para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__pick_8cpp_1a29f9a520066032bae08b70c9c9ed7450">project_pick_background</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, long number, long avg_kernel, long var_kernel, double excl_dist)</para>
+
+<para>Picks background areas not overlapping existing particles. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bparticle">Bparticle</link> * <link linkend="_mg__pick_8cpp_1afc1d0f4073ea5538b11a9a9af938ed5e">part_pick_sym_axis</link> (<link linkend="_class_bparticle">Bparticle</link> *part, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, <link linkend="_class_view">View</link> &amp;refview, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; refori, double axis_dist)</para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__pick_8cpp_1a26bb7fcc279d123048308edcc26e93f9">project_pick_sym_axis</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, int sym_axis, double axis_dist)</para>
+
+<para>Picks subregions in 3D particles on the given symmetry axis. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__pick_8cpp_1a9ad9a90f4ab95130055a9ba8d5db9d4e">img_prepare_projections</link> (<link linkend="_class_bstring">Bstring</link> &amp;tempfile, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double hires, long bin)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bimage">Bimage</link> * <link linkend="_mg__pick_8cpp_1a815b2f54843b5eeb21e5bfdd2112af20">img_prepare_orientations</link> (<link linkend="_class_bstring">Bstring</link> &amp;tempfile, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double hires, long bin)</para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__pick_8cpp_1a1c1234b97e051060f9e6fe9fba805a9e">part_align</link> (<link linkend="_class_bparticle">Bparticle</link> *part, <link linkend="_class_bimage">Bimage</link> *p, <link linkend="_class_bimage">Bimage</link> *ptemp, double hires, double lores, double shift_limit, long bin, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a6ecaa8728bab23c3a7d96fe0cadc75f2">planf</link>, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a9ec8849996c5e210d7b7e8e05b98639d">planb</link>)</para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__pick_8cpp_1a320a594b42f5ddeebb418f2ed09a758a">mg_extract_orient_particles</link> (<link linkend="_class_bmicrograph">Bmicrograph</link> *mg, <link linkend="_class_bimage">Bimage</link> *ptemp, double hires, double lores, long bin, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a6ecaa8728bab23c3a7d96fe0cadc75f2">planf</link>, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a9ec8849996c5e210d7b7e8e05b98639d">planb</link>)</para>
+
+<para>Finds the centers of picked particles within a micrograph. </para>
+</listitem>
+            <listitem><para>long <link linkend="_mg__pick_8cpp_1a954f63aefec2a16273c03efb20d0310b">rec_extract_orient_particles</link> (<link linkend="_class_breconstruction">Breconstruction</link> *rec, <link linkend="_class_bimage">Bimage</link> *ptemp, double hires, double lores, long bin, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a6ecaa8728bab23c3a7d96fe0cadc75f2">planf</link>, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> <link linkend="_bico_8cpp_1a9ec8849996c5e210d7b7e8e05b98639d">planb</link>)</para>
+</listitem>
+            <listitem><para>double <link linkend="_mg__pick_8cpp_1a8dae4e50317671edde11c61bb12a6ede">project_extract_orient_particles</link> (<link linkend="_class_bproject">Bproject</link> *<link linkend="_tcltk__bmodel_8cpp_1aea438e09dfc03683a0f49a05e9a69cac">project</link>, <link linkend="_class_bstring">Bstring</link> &amp;tempfile, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp;sym, double hires, double lores, long bin)</para>
+
+<para>Picks particles using cross-correlation. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="_mg__pick_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions for picking single particle images from a micrograph. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20000505 </para>
+
+<para>Modified: 20210510 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="_mg__pick_8cpp_1a20be79f55d41a6d7d4c1c052d301ba1f"/>    <section>
+    <title>gauss_find_intersection()</title>
+<indexterm><primary>gauss_find_intersection</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>gauss_find_intersection</secondary></indexterm>
+<para><computeroutput>double gauss_find_intersection (long ngauss, vector&lt; double &gt; &amp; gauss)</computeroutput></para><para>
+Definition at line 182 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1ac2a01efdfbc6dbf37c991ca03410aa06"/>    <section>
+    <title>img_marker_set_difference()</title>
+<indexterm><primary>img_marker_set_difference</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>img_marker_set_difference</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_marker_set_difference (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_struct_bmarker">Bmarker</link> * markin, <link linkend="_struct_bmarker">Bmarker</link> * markout, int contrast)</computeroutput></para><para>
+
+<para>Calculates the average difference between voxels tagged by two marker sets. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*markin</entry>
+                                <entry>
+<para>inner marker set (relates to particle). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*markout</entry>
+                                <entry>
+<para>outer marker set (relates to background). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>contrast</entry>
+                                <entry>
+<para>contrast direction (foreground: white=1, black=0). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bimage* map with resultant differences. <literallayout><computeroutput>The values in the image corresponding to the coordinates of the
+inner marker set is subtracted from those of the outer marker set.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 431 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1a4ed8ad2c0073e2dc73df1085cce3e704"/>    <section>
+    <title>img_marker_set_difference_at_voxel()</title>
+<indexterm><primary>img_marker_set_difference_at_voxel</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>img_marker_set_difference_at_voxel</secondary></indexterm>
+<para><computeroutput>double img_marker_set_difference_at_voxel (<link linkend="_class_bimage">Bimage</link> * p, long i, <link linkend="_struct_bmarker">Bmarker</link> * markin, <link linkend="_struct_bmarker">Bmarker</link> * markout)</computeroutput></para><para>
+Definition at line 387 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1ad5398812e2a860737e856e6647ea1cf3"/>    <section>
+    <title>img_mask_above_threshold()</title>
+<indexterm><primary>img_mask_above_threshold</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>img_mask_above_threshold</secondary></indexterm>
+<para><computeroutput>int img_mask_above_threshold (<link linkend="_class_bimage">Bimage</link> * pvar, <link linkend="_class_bimage">Bimage</link> * p, double threshold)</computeroutput></para><para>
+Definition at line 744 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1ab40e2d61217406462080c98e3b1904a0"/>    <section>
+    <title>img_prepare_for_picking()</title>
+<indexterm><primary>img_prepare_for_picking</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>img_prepare_for_picking</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_prepare_for_picking (<link linkend="_class_bimage">Bimage</link> * p, int flags, long sigma, long bin)</computeroutput></para><para>
+Definition at line 19 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1a815b2f54843b5eeb21e5bfdd2112af20"/>    <section>
+    <title>img_prepare_orientations()</title>
+<indexterm><primary>img_prepare_orientations</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>img_prepare_orientations</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_prepare_orientations (<link linkend="_class_bstring">Bstring</link> &amp; tempfile, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double hires, long bin)</computeroutput></para><para>
+Definition at line 1061 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1a9ad9a90f4ab95130055a9ba8d5db9d4e"/>    <section>
+    <title>img_prepare_projections()</title>
+<indexterm><primary>img_prepare_projections</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>img_prepare_projections</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bimage">Bimage</link>* img_prepare_projections (<link linkend="_class_bstring">Bstring</link> &amp; tempfile, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double hires, long bin)</computeroutput></para><para>
+Definition at line 1004 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1a320a594b42f5ddeebb418f2ed09a758a"/>    <section>
+    <title>mg_extract_orient_particles()</title>
+<indexterm><primary>mg_extract_orient_particles</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>mg_extract_orient_particles</secondary></indexterm>
+<para><computeroutput>long mg_extract_orient_particles (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_bimage">Bimage</link> * ptemp, double hires, double lores, long bin, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planf, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planb)</computeroutput></para><para>
+
+<para>Finds the centers of picked particles within a micrograph. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*ptemp</entry>
+                                <entry>
+<para>template image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>level of image binning. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>planf</entry>
+                                <entry>
+<para>FFT forward plan. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>planb</entry>
+                                <entry>
+<para>FFT backward plan. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles. <literallayout><computeroutput>An image processing parameter structure loaded with micrograph
+information is used to extract particle images from the micrograph
+image using the particle coordinates in the parameter structure.
+The extracted particle images are each rotated by PI and the shift
+found by cross-correlation between the unrotated and rotated images.
+The particle coordinates in the parameter structure are updated with
+the shift.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1208 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1a9901599332dc0c19c617db248307dfc0"/>    <section>
+    <title>mg_pick_background()</title>
+<indexterm><primary>mg_pick_background</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>mg_pick_background</secondary></indexterm>
+<para><computeroutput>double mg_pick_background (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_bimage">Bimage</link> * p, long number, long avg_kernel, long var_kernel, double excl_dist)</computeroutput></para><para>
+Definition at line 756 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1ad0860e54bc2cedb27331d323df001bf4"/>    <section>
+    <title>mg_pick_particles()</title>
+<indexterm><primary>mg_pick_particles</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>mg_pick_particles</secondary></indexterm>
+<para><computeroutput>double mg_pick_particles (<link linkend="_class_bmicrograph">Bmicrograph</link> * mg, <link linkend="_class_bimage">Bimage</link> * p, <link linkend="_struct_bmarker">Bmarker</link> * markin, <link linkend="_struct_bmarker">Bmarker</link> * markout, int avg_kernel, int contrast)</computeroutput></para><para>
+
+<para>Locates particles using a fore/background difference measure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*mg</entry>
+                                <entry>
+<para>micrograph parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>micrograph image, if NULL, read from mg. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*markin</entry>
+                                <entry>
+<para>foreground marker set. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*markout</entry>
+                                <entry>
+<para>background marker set. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>avg_kernel</entry>
+                                <entry>
+<para>averaging kernle to smooth difference map. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>contrast</entry>
+                                <entry>
+<para>contrast direction (foreground: white=1, black=0). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double threshold used to accept peaks. <literallayout><computeroutput>The two marker sets are used to calculate a difference
+between the foreground and background as an estimate of the
+presence of a particle.
+The resultant image is smoothed by an averaging kernel and rescaled to [0,1].
+This image is then scanned to identify particles.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 475 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1a1c1234b97e051060f9e6fe9fba805a9e"/>    <section>
+    <title>part_align()</title>
+<indexterm><primary>part_align</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>part_align</secondary></indexterm>
+<para><computeroutput>double part_align (<link linkend="_class_bparticle">Bparticle</link> * part, <link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bimage">Bimage</link> * ptemp, double hires, double lores, double shift_limit, long bin, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planf, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planb)</computeroutput></para><para>
+Definition at line 1122 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1ad1b90ebc741c215015a8e05492d5ff0f"/>    <section>
+    <title>part_mask_particles()</title>
+<indexterm><primary>part_mask_particles</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>part_mask_particles</secondary></indexterm>
+<para><computeroutput>int part_mask_particles (<link linkend="_class_bparticle">Bparticle</link> * part, <link linkend="_class_bimage">Bimage</link> * pmask, long box_size)</computeroutput></para><para>
+Definition at line 731 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1afc1d0f4073ea5538b11a9a9af938ed5e"/>    <section>
+    <title>part_pick_sym_axis()</title>
+<indexterm><primary>part_pick_sym_axis</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>part_pick_sym_axis</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>* part_pick_sym_axis (<link linkend="_class_bparticle">Bparticle</link> * part, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, <link linkend="_class_view">View</link> &amp; refview, <link linkend="_class_vector3">Vector3</link>&lt; double &gt; refori, double axis_dist)</computeroutput></para><para>
+Definition at line 901 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1a367c1b65a79d87ef3d61ec097675d1ad"/>    <section>
+    <title>particles_from_peaks()</title>
+<indexterm><primary>particles_from_peaks</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>particles_from_peaks</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>* particles_from_peaks (<link linkend="_class_bimage">Bimage</link> * pcc, long bin, double excl_dist, double part_ori, double &amp; fommin, double fommax, long maxnum, double pix_min, double pix_max)</computeroutput></para><para>
+
+<para>Finds the peaks in a cross-correlation map corresponding to particles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*pcc</entry>
+                                <entry>
+<para>peak map (after binning). </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>binning to speed up calculations. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>excl_dist</entry>
+                                <entry>
+<para>distance between peaks. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>part_ori</entry>
+                                <entry>
+<para>particle origin. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fommin</entry>
+                                <entry>
+<para>minimum threshold to accept peaks. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fommax</entry>
+                                <entry>
+<para>maximum threshold to accept peaks. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>maxnum</entry>
+                                <entry>
+<para>maximum number of peaks to pick. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pix_min</entry>
+                                <entry>
+<para>minimum peak width. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>pix_max</entry>
+                                <entry>
+<para>maximum peak width. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bparticle* list of particles. <literallayout><computeroutput>The map is searched in increments of the particle radius to identify
+peaks above the threshold and within a box the size of the
+particle radius. The identified peaks are further examined to eliminate 
+ones that are too close to a higher scoring peak. The acceptable distance
+between peaks is set to 1.8 times the particle radius.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 75 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1ad3dd2278839dcdc0380e035d0ebed219"/>    <section>
+    <title>particles_pick_cc()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>particles_pick_cc</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>particles_pick_cc</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>* particles_pick_cc (<link linkend="_class_bimage">Bimage</link> * p, <link linkend="_class_bimage">Bimage</link> * ptemp, <link linkend="_class_bimage">Bimage</link> * pmask, double hires, double lores, double fommin, double fommax, double excl_dist, long bin)</computeroutput></para><para>
+
+<para>Picks particles using cross-correlation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image to pick from. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*ptemp</entry>
+                                <entry>
+<para>template image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask</entry>
+                                <entry>
+<para>frequency space mask. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fommin</entry>
+                                <entry>
+<para>minimum FOM cutoff. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fommax</entry>
+                                <entry>
+<para>maximum FOM cutoff. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>excl_dist</entry>
+                                <entry>
+<para>minimum distance between particles. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>level of image binning. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bparticle* list of particles. <literallayout><computeroutput>A template is cross-correlated with the input image including
+bandpass filtering to target the size of the particle.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 141 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1a47689800d3a6de846b17e758efa0a06f"/>    <section>
+    <title>particles_pick_cc()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>particles_pick_cc</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>particles_pick_cc</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>* particles_pick_cc (<link linkend="_class_bstring">Bstring</link> &amp; filename, long img_num, <link linkend="_class_bimage">Bimage</link> * ptemp, <link linkend="_class_bimage">Bimage</link> * pmask, double hires, double lores, double fommin, double fommax, double excl_dist, long bin)</computeroutput></para><para>
+
+<para>Picks particles using cross-correlation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>image to pick from. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>img_num</entry>
+                                <entry>
+<para>sub-image number. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*ptemp</entry>
+                                <entry>
+<para>template image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask</entry>
+                                <entry>
+<para>frequency space mask. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fommin</entry>
+                                <entry>
+<para>minimum FOM cutoff. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fommax</entry>
+                                <entry>
+<para>maximum FOM cutoff. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>excl_dist</entry>
+                                <entry>
+<para>minimum distance between particles. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>level of image binning. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bparticle* list of particles. <literallayout><computeroutput>A template is cross-correlated with the input image including
+bandpass filtering to target the size of the particle.
+The template must have the correct pixel size.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 338 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1af3274430aa8feca9e1eb34a232cb99f7"/>    <section>
+    <title>particles_pick_var()<computeroutput>[1/3]</computeroutput></title>
+<indexterm><primary>particles_pick_var</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>particles_pick_var</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>* particles_pick_var (<link linkend="_class_bimage">Bimage</link> * p, long avg_kernel, long var_kernel, double cutmin, double cutmax, double part_ori, double excl_dist, long bin)</computeroutput></para><para>
+Definition at line 288 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1ae2f1438f6a2d6d40c31fc529ba33f73f"/>    <section>
+    <title>particles_pick_var()<computeroutput>[2/3]</computeroutput></title>
+<indexterm><primary>particles_pick_var</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>particles_pick_var</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>* particles_pick_var (<link linkend="_class_bimage">Bimage</link> * p, long avg_kernel, long var_kernel, double nsig, double part_ori, double excl_dist, long bin)</computeroutput></para><para>
+
+<para>Picks particles in variance map. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*p</entry>
+                                <entry>
+<para>image to pick from. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>avg_kernel</entry>
+                                <entry>
+<para>averaging kernel size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>var_kernel</entry>
+                                <entry>
+<para>variance kernel size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nsig</entry>
+                                <entry>
+<para>multiple of sigma above variance average to accept peaks. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>part_ori</entry>
+                                <entry>
+<para>particle origin. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>excl_dist</entry>
+                                <entry>
+<para>minimum distance between particles. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>level of image binning. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bparticle* list of particles. <literallayout><computeroutput>A copy of the micrograph is filtered with an averaging kernel
+and a variance map calculated. The variance map is then used to
+find high variance peaks as candidate locations for particles.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 222 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1a037600ff8a8bae724b3b0e76a393c022"/>    <section>
+    <title>particles_pick_var()<computeroutput>[3/3]</computeroutput></title>
+<indexterm><primary>particles_pick_var</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>particles_pick_var</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bparticle">Bparticle</link>* particles_pick_var (<link linkend="_class_bstring">Bstring</link> &amp; filename, long img_num, long avg_kernel, long var_kernel, double nsig, double part_ori, double excl_dist, long bin)</computeroutput></para><para>
+
+<para>Picks particles in variance map. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>image to pick from. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>img_num</entry>
+                                <entry>
+<para>sub-image number. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>avg_kernel</entry>
+                                <entry>
+<para>averaging kernel size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>var_kernel</entry>
+                                <entry>
+<para>variance kernel size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nsig</entry>
+                                <entry>
+<para>multiple of sigma above variance average to accept peaks. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>part_ori</entry>
+                                <entry>
+<para>particle origin. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>excl_dist</entry>
+                                <entry>
+<para>minimum distance between particles. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>level of image binning. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bparticle* list of particles. <literallayout><computeroutput>A copy of the micrograph is filtered with an averaging kernel
+and a variance map calculated. The variance map is then used to
+find high variance peaks as candidate locations for particles.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 372 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1a8dae4e50317671edde11c61bb12a6ede"/>    <section>
+    <title>project_extract_orient_particles()</title>
+<indexterm><primary>project_extract_orient_particles</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>project_extract_orient_particles</secondary></indexterm>
+<para><computeroutput>double project_extract_orient_particles (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bstring">Bstring</link> &amp; tempfile, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, double hires, double lores, long bin)</computeroutput></para><para>
+
+<para>Picks particles using cross-correlation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;tempfile</entry>
+                                <entry>
+<para>template image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sym</entry>
+                                <entry>
+<para>point group symmetry. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>level of image binning. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double minimum threshold used to accept peaks. <literallayout><computeroutput>Each micrograph is cross-correlated with the template image including
+bandpass filtering and frequency space masking.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 1303 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1a29f9a520066032bae08b70c9c9ed7450"/>    <section>
+    <title>project_pick_background()</title>
+<indexterm><primary>project_pick_background</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>project_pick_background</secondary></indexterm>
+<para><computeroutput>long project_pick_background (<link linkend="_class_bproject">Bproject</link> * project, long number, long avg_kernel, long var_kernel, double excl_dist)</computeroutput></para><para>
+
+<para>Picks background areas not overlapping existing particles. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>number</entry>
+                                <entry>
+<para>maximum number of background images to pick. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>avg_kernel</entry>
+                                <entry>
+<para>averaging kernel to smooth the image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>var_kernel</entry>
+                                <entry>
+<para>kernel to calculate a local variance image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>excl_dist</entry>
+                                <entry>
+<para>exclusion distance between areas. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of background areas. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 850 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1a55548a3e01919c369449304470bb943a"/>    <section>
+    <title>project_pick_particles()<computeroutput>[1/3]</computeroutput></title>
+<indexterm><primary>project_pick_particles</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>project_pick_particles</secondary></indexterm>
+<para><computeroutput>double project_pick_particles (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_class_bimage">Bimage</link> * ptemp, <link linkend="_class_bimage">Bimage</link> * pmask, double hires, double lores, double fommin, double fommax, double excl_dist, long bin)</computeroutput></para><para>
+
+<para>Picks particles using cross-correlation. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*ptemp</entry>
+                                <entry>
+<para>template image. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*pmask</entry>
+                                <entry>
+<para>frequency space mask. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>hires</entry>
+                                <entry>
+<para>high resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>lores</entry>
+                                <entry>
+<para>low resolution limit. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fommin</entry>
+                                <entry>
+<para>minimum FOM cutoff. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>fommax</entry>
+                                <entry>
+<para>maximum FOM cutoff. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>excl_dist</entry>
+                                <entry>
+<para>minimum distance between particles. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>level of image binning. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double minimum threshold used to accept peaks. <literallayout><computeroutput>Each micrograph is cross-correlated with the template image including
+bandpass filtering and frequency space masking.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 535 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1a3577fe340636129fd51e37f2e57aaa8b"/>    <section>
+    <title>project_pick_particles()<computeroutput>[2/3]</computeroutput></title>
+<indexterm><primary>project_pick_particles</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>project_pick_particles</secondary></indexterm>
+<para><computeroutput>long project_pick_particles (<link linkend="_class_bproject">Bproject</link> * project, double din, double dout, int avg_kernel, double ainc, int flags, int contrast)</computeroutput></para><para>
+
+<para>Locates particles using a fore/background difference measure. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>din</entry>
+                                <entry>
+<para>inner diameter corresponding to particle edge. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>dout</entry>
+                                <entry>
+<para>outer diameter corresponding to background. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>avg_kernel</entry>
+                                <entry>
+<para>averaging kernle to smooth difference map. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>ainc</entry>
+                                <entry>
+<para>angular increment. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>flags</entry>
+                                <entry>
+<para>flags: bit 1 = filter extremes. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>contrast</entry>
+                                <entry>
+<para>contrast direction (foreground: white=1, black=0). </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of particles. <literallayout><computeroutput>Two marker sets are generated at the indicated diameters.
+At each pixel, the marker sets are used to calculate a difference
+between the foreground and background as an estimate of the
+presence of a particle.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 678 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1a39a9e60bf38238658363118fe02ff4e1"/>    <section>
+    <title>project_pick_particles()<computeroutput>[3/3]</computeroutput></title>
+<indexterm><primary>project_pick_particles</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>project_pick_particles</secondary></indexterm>
+<para><computeroutput>double project_pick_particles (<link linkend="_class_bproject">Bproject</link> * project, long avg_kernel, long var_kernel, double nsig, double part_ori, double excl_dist, long bin)</computeroutput></para><para>
+
+<para>Picks particles in variance map. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>project parameter structure. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>avg_kernel</entry>
+                                <entry>
+<para>averaging kernel size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>var_kernel</entry>
+                                <entry>
+<para>variance kernel size. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>nsig</entry>
+                                <entry>
+<para>multiple of sigma above variance average to accept peaks. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>part_ori</entry>
+                                <entry>
+<para>particle origin. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>excl_dist</entry>
+                                <entry>
+<para>minimum distance between particles. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>bin</entry>
+                                <entry>
+<para>level of image binning. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>double minimum threshold used to accept peaks. <literallayout><computeroutput>A copy of the micrograph is filtered with an averaging kernel
+and a variance map calculated. The variance map is then used to
+find high variance peaks as candidate locations for particles.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 607 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1a26bb7fcc279d123048308edcc26e93f9"/>    <section>
+    <title>project_pick_sym_axis()</title>
+<indexterm><primary>project_pick_sym_axis</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>project_pick_sym_axis</secondary></indexterm>
+<para><computeroutput>long project_pick_sym_axis (<link linkend="_class_bproject">Bproject</link> * project, <link linkend="_struct_bsymmetry">Bsymmetry</link> &amp; sym, int sym_axis, double axis_dist)</computeroutput></para><para>
+
+<para>Picks subregions in 3D particles on the given symmetry axis. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*project</entry>
+                                <entry>
+<para>parameter structure with all parameters. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sym</entry>
+                                <entry>
+<para>point group symmetry. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>sym_axis</entry>
+                                <entry>
+<para>symmetry axis to pick subregions. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>axis_dist</entry>
+                                <entry>
+<para>distance along symmetry axis. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>long number of new particles. <literallayout><computeroutput>The existing particles are replaced by the new particles.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 946 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1a954f63aefec2a16273c03efb20d0310b"/>    <section>
+    <title>rec_extract_orient_particles()</title>
+<indexterm><primary>rec_extract_orient_particles</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>rec_extract_orient_particles</secondary></indexterm>
+<para><computeroutput>long rec_extract_orient_particles (<link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_bimage">Bimage</link> * ptemp, double hires, double lores, long bin, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planf, <link linkend="_fft_8h_1a61d23c567e69684715ea52482137a5e6">fft_plan</link> planb)</computeroutput></para><para>
+Definition at line 1248 of file mg_pick.cpp.</para>
+    </section><anchor xml:id="_mg__pick_8cpp_1a25588a61db3299794495002b33963e51"/>    <section>
+    <title>rec_pick_background()</title>
+<indexterm><primary>rec_pick_background</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>rec_pick_background</secondary></indexterm>
+<para><computeroutput>double rec_pick_background (<link linkend="_class_breconstruction">Breconstruction</link> * rec, <link linkend="_class_bimage">Bimage</link> * p, long number, long avg_kernel, long var_kernel, double excl_dist)</computeroutput></para><para>
+Definition at line 799 of file mg_pick.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="_mg__pick_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>mg_pick.cpp</secondary></indexterm>
+<indexterm><primary>mg_pick.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>

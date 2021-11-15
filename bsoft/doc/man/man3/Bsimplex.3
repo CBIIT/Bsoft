@@ -1,0 +1,257 @@
+.TH "Bsimplex" 3 "Wed Sep 1 2021" "Version 2.1.0" "Bsoft" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Bsimplex \- Structure used in the downhill simplex method\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <simplex\&.h>\fP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBBsimplex\fP ()"
+.br
+.ti -1c
+.RI "\fBBsimplex\fP (long nv, long np, long nc, long n, vector< double > &ax, vector< double > &ay)"
+.br
+.RI "Initializes a \fBBsimplex\fP structure\&. "
+.ti -1c
+.RI "long \fBvariables\fP ()"
+.br
+.ti -1c
+.RI "long \fBconstants\fP ()"
+.br
+.ti -1c
+.RI "double \fBconstant\fP (long i)"
+.br
+.ti -1c
+.RI "void \fBconstant\fP (long i, double p)"
+.br
+.ti -1c
+.RI "void \fBconstants\fP (long n, vector< double > &p)"
+.br
+.ti -1c
+.RI "long \fBpoints\fP ()"
+.br
+.ti -1c
+.RI "long \fBparameters\fP ()"
+.br
+.ti -1c
+.RI "void \fBparameters\fP (long n, vector< double > &p)"
+.br
+.ti -1c
+.RI "void \fBparameter\fP (long i, double p)"
+.br
+.ti -1c
+.RI "double \fBparameter\fP (long i)"
+.br
+.ti -1c
+.RI "void \fBlimit_low\fP (long i, double v)"
+.br
+.ti -1c
+.RI "double \fBlimit_low\fP (long i)"
+.br
+.ti -1c
+.RI "void \fBlimit_high\fP (long i, double v)"
+.br
+.ti -1c
+.RI "double \fBlimit_high\fP (long i)"
+.br
+.ti -1c
+.RI "void \fBlimits\fP (long i, double vlo, double vhi)"
+.br
+.ti -1c
+.RI "void \fBlimits_low\fP (long n, vector< double > &p)"
+.br
+.ti -1c
+.RI "void \fBlimits_high\fP (long n, vector< double > &p)"
+.br
+.ti -1c
+.RI "vector< double > & \fBindependent_values\fP ()"
+.br
+.ti -1c
+.RI "vector< double > & \fBdependent_values\fP ()"
+.br
+.ti -1c
+.RI "double \fBdependent_variance\fP ()"
+.br
+.ti -1c
+.RI "double \fBrun\fP (long maxcycles, double tolerance, double(funk)(\fBBsimplex\fP &))"
+.br
+.ti -1c
+.RI "double \fBamotry\fP (vector< double > &mp, vector< double > &R, long ihi, double fac, double(funk)(\fBBsimplex\fP &))"
+.br
+.ti -1c
+.RI "void \fBshow\fP ()"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Structure used in the downhill simplex method\&. 
+
+
+.PP
+.nf
+Nelder and Mead downhill simplex method for generalized parameter fitting
+Adapted from Numerical Recipes, 2nd edition, Press et al. 1992
+The structure is set up to accommodate any number of variables, parameters,
+constants and points.
+The structure is very flexible in the sense that only some fields
+are absolutely required and with a fixed meaning for the simplex method.
+The required fields are:
+    nparam, param, lo, hi
+The other fields may be recast and used as desired in the user function.
+Intended sizes:
+    param       nparam.
+    lo          nparam.
+    hi          nparam.
+    c           nconstant.
+    x           npoint*nvar.
+    fx          npoint.
+x or fx can be recast as a different pointer, as long as it is handled
+by the user before calling kill_simplex.
+
+.fi
+.PP
+ 
+.PP
+Definition at line 42 of file simplex\&.h\&.
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Bsimplex::Bsimplex ()\fC [inline]\fP"
+
+.PP
+Definition at line 67 of file simplex\&.h\&.
+.SS "Bsimplex::Bsimplex (long nv, long np, long nc, long n, vector< double > & ax, vector< double > & ay)"
+
+.PP
+Initializes a \fBBsimplex\fP structure\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fInv\fP number of independent variables\&. 
+.br
+\fInp\fP number of parameters to determine\&. 
+.br
+\fInc\fP number of constants\&. 
+.br
+\fIn\fP number of points or function values\&. 
+.br
+\fI&ax\fP array of independent variables (nv*n)\&. 
+.br
+\fI&ay\fP array of dependent variables (n)\&. 
+.PP
+.nf
+The minimum setup of the simplex structure requires a number of
+parameters greater than 0
+
+.fi
+.PP
+ Reference: Press W\&.H\&. et al (1992) Numerical Recipes in C\&. 
+.RE
+.PP
+
+.PP
+Definition at line 32 of file simplex\&.cpp\&.
+.SH "Member Function Documentation"
+.PP 
+.SS "double Bsimplex::amotry (vector< double > & mp, vector< double > & R, long ihi, double fac, double(funk)(\fBBsimplex\fP &))"
+
+.PP
+Definition at line 238 of file simplex\&.cpp\&.
+.SS "double Bsimplex::constant (long i)\fC [inline]\fP"
+
+.PP
+Definition at line 71 of file simplex\&.h\&.
+.SS "void Bsimplex::constant (long i, double p)\fC [inline]\fP"
+
+.PP
+Definition at line 72 of file simplex\&.h\&.
+.SS "long Bsimplex::constants ()\fC [inline]\fP"
+
+.PP
+Definition at line 70 of file simplex\&.h\&.
+.SS "void Bsimplex::constants (long n, vector< double > & p)\fC [inline]\fP"
+
+.PP
+Definition at line 73 of file simplex\&.h\&.
+.SS "vector<double>& Bsimplex::dependent_values ()\fC [inline]\fP"
+
+.PP
+Definition at line 95 of file simplex\&.h\&.
+.SS "double Bsimplex::dependent_variance ()\fC [inline]\fP"
+
+.PP
+Definition at line 96 of file simplex\&.h\&.
+.SS "vector<double>& Bsimplex::independent_values ()\fC [inline]\fP"
+
+.PP
+Definition at line 94 of file simplex\&.h\&.
+.SS "double Bsimplex::limit_high (long i)\fC [inline]\fP"
+
+.PP
+Definition at line 86 of file simplex\&.h\&.
+.SS "void Bsimplex::limit_high (long i, double v)\fC [inline]\fP"
+
+.PP
+Definition at line 85 of file simplex\&.h\&.
+.SS "double Bsimplex::limit_low (long i)\fC [inline]\fP"
+
+.PP
+Definition at line 84 of file simplex\&.h\&.
+.SS "void Bsimplex::limit_low (long i, double v)\fC [inline]\fP"
+
+.PP
+Definition at line 83 of file simplex\&.h\&.
+.SS "void Bsimplex::limits (long i, double vlo, double vhi)\fC [inline]\fP"
+
+.PP
+Definition at line 87 of file simplex\&.h\&.
+.SS "void Bsimplex::limits_high (long n, vector< double > & p)\fC [inline]\fP"
+
+.PP
+Definition at line 91 of file simplex\&.h\&.
+.SS "void Bsimplex::limits_low (long n, vector< double > & p)\fC [inline]\fP"
+
+.PP
+Definition at line 88 of file simplex\&.h\&.
+.SS "double Bsimplex::parameter (long i)\fC [inline]\fP"
+
+.PP
+Definition at line 82 of file simplex\&.h\&.
+.SS "void Bsimplex::parameter (long i, double p)\fC [inline]\fP"
+
+.PP
+Definition at line 81 of file simplex\&.h\&.
+.SS "long Bsimplex::parameters ()\fC [inline]\fP"
+
+.PP
+Definition at line 77 of file simplex\&.h\&.
+.SS "void Bsimplex::parameters (long n, vector< double > & p)\fC [inline]\fP"
+
+.PP
+Definition at line 78 of file simplex\&.h\&.
+.SS "long Bsimplex::points ()\fC [inline]\fP"
+
+.PP
+Definition at line 76 of file simplex\&.h\&.
+.SS "double Bsimplex::run (long maxcycles, double tolerance, double(funk)(\fBBsimplex\fP &))"
+
+.PP
+Definition at line 87 of file simplex\&.cpp\&.
+.SS "void Bsimplex::show ()\fC [inline]\fP"
+
+.PP
+Definition at line 103 of file simplex\&.h\&.
+.SS "long Bsimplex::variables ()\fC [inline]\fP"
+
+.PP
+Definition at line 69 of file simplex\&.h\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for Bsoft from the source code\&.

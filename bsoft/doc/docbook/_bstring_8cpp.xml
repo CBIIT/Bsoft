@@ -1,0 +1,505 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<section xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="__bstring_8cpp" xml:lang="en-US">
+<title>/Users/bernard/b20/bsoft/src/util/Bstring.cpp File Reference</title>
+<indexterm><primary>/Users/bernard/b20/bsoft/src/util/Bstring.cpp</primary></indexterm>
+<para>
+
+<para>Functions in the string class. </para>
+ 
+</para>
+<programlisting>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;ctype.h&gt;
+#include &quot;Bstring.h&quot;
+#include &quot;utilities.h&quot;
+</programlisting><simplesect>
+    <title>Functions    </title>
+        <itemizedlist>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="__bstring_8cpp_1ab29281fc6120e344f6bd472eca657fb3">operator+</link> (const char *c, const <link linkend="_class_bstring">Bstring</link> &amp;s)</para>
+</listitem>
+            <listitem><para>istream &amp; <link linkend="__bstring_8cpp_1a5b1ba6d7d836de3a4374fd0899064682">operator&gt;&gt;</link> (istream &amp;input, <link linkend="_class_bstring">Bstring</link> &amp;s)</para>
+</listitem>
+            <listitem><para>ostream &amp; <link linkend="__bstring_8cpp_1af1fc059c1bcfe3d73f7da0279b507460">operator&lt;&lt;</link> (ostream &amp;output, <link linkend="_class_bstring">Bstring</link> &amp;s)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> * <link linkend="__bstring_8cpp_1a7f784a89c16640b39c197fabc7062930">string_add</link> (<link linkend="_class_bstring">Bstring</link> **list, const char *string)</para>
+
+<para>Adds a string to a linked list. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> * <link linkend="__bstring_8cpp_1a804a6fb318de2e47f5bbf3e84c915490">string_add</link> (<link linkend="_class_bstring">Bstring</link> **list, <link linkend="_class_bstring">Bstring</link> &amp;string)</para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="__bstring_8cpp_1a2d08d18bfadb2e1057784bf9bc7ac7aa">string_catenate</link> (<link linkend="_class_bstring">Bstring</link> *list)</para>
+
+<para>Catenates a string linked list into one string. </para>
+</listitem>
+            <listitem><para>int <link linkend="__bstring_8cpp_1a28d272b0a3d80dfeacf2ee7bf9c6d4c2">string_kill</link> (<link linkend="_class_bstring">Bstring</link> *list)</para>
+
+<para>Kills a string linked list. </para>
+</listitem>
+            <listitem><para><link linkend="_class_bstring">Bstring</link> <link linkend="__bstring_8cpp_1ae06719a39570ac5e7ceec60123d35e19">parameter_file_path</link> (<link linkend="_class_bstring">Bstring</link> filename)</para>
+
+<para>Finds the parameter file path. </para>
+</listitem>
+            <listitem><para>int <link linkend="__bstring_8cpp_1a0f253b6e6246e4add3082a48ee0c81d7">QsortSmallToLargeString</link> (const void *x, const void *y)</para>
+
+<para>Utility function for sorting string lexically in qsort. </para>
+</listitem>
+            <listitem><para>int <link linkend="__bstring_8cpp_1aecfb154037a55e84c3935515b9ef4374">QsortLargeToSmallString</link> (const void *x, const void *y)</para>
+
+<para>Utility function for sorting string lexically in qsort. </para>
+</listitem>
+            <listitem><para>int <link linkend="__bstring_8cpp_1ad17957c2bb0ab8dc5a301697f86808a6">QsortSmallToLargeStringValue</link> (const void *x, const void *y)</para>
+
+<para>Utility function for sorting string values in qsort. </para>
+</listitem>
+            <listitem><para>int <link linkend="__bstring_8cpp_1abc1d14cc550902bf75bd96939cbca169">QsortLargeToSmallStringValue</link> (const void *x, const void *y)</para>
+
+<para>Utility function for sorting string values in qsort. </para>
+</listitem>
+            <listitem><para>int <link linkend="__bstring_8cpp_1ae0d83007cde6bf79ab6c3ee65fa3aadf">string_sort</link> (<link linkend="_class_bstring">Bstring</link> *slist, int descending, int value)</para>
+
+<para>Sorts a list of strings in ascending (descending) lexical or value order. </para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<simplesect>
+    <title>Variables    </title>
+        <itemizedlist>
+            <listitem><para>int <link linkend="__bstring_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453">verbose</link></para>
+</listitem>
+        </itemizedlist>
+</simplesect>
+<section>
+<title>Detailed Description</title>
+
+<para>Functions in the string class. </para>
+
+<para><formalpara><title>Author</title>
+
+<para>Bernard Heymann </para>
+</formalpara>
+<formalpara><title>Date</title>
+
+<para>Created: 20051020 </para>
+
+<para>Modified: 20210115 </para>
+</formalpara>
+</para>
+</section>
+<section>
+<title>Function Documentation</title>
+<anchor xml:id="__bstring_8cpp_1ab29281fc6120e344f6bd472eca657fb3"/>    <section>
+    <title>operator+()</title>
+<indexterm><primary>operator+</primary><secondary>Bstring.cpp</secondary></indexterm>
+<indexterm><primary>Bstring.cpp</primary><secondary>operator+</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> operator+ (const char * c, const <link linkend="_class_bstring">Bstring</link> &amp; s)</computeroutput></para><para>
+Definition at line 682 of file Bstring.cpp.</para>
+    </section><anchor xml:id="__bstring_8cpp_1af1fc059c1bcfe3d73f7da0279b507460"/>    <section>
+    <title>operator&lt;&lt;()</title>
+<indexterm><primary>operator&lt;&lt;</primary><secondary>Bstring.cpp</secondary></indexterm>
+<indexterm><primary>Bstring.cpp</primary><secondary>operator&lt;&lt;</secondary></indexterm>
+<para><computeroutput>ostream&amp; operator&lt;&lt; (ostream &amp; output, <link linkend="_class_bstring">Bstring</link> &amp; s)</computeroutput></para><para>
+Definition at line 695 of file Bstring.cpp.</para>
+    </section><anchor xml:id="__bstring_8cpp_1a5b1ba6d7d836de3a4374fd0899064682"/>    <section>
+    <title>operator&gt;&gt;()</title>
+<indexterm><primary>operator&gt;&gt;</primary><secondary>Bstring.cpp</secondary></indexterm>
+<indexterm><primary>Bstring.cpp</primary><secondary>operator&gt;&gt;</secondary></indexterm>
+<para><computeroutput>istream&amp; operator&gt;&gt; (istream &amp; input, <link linkend="_class_bstring">Bstring</link> &amp; s)</computeroutput></para><para>
+Definition at line 688 of file Bstring.cpp.</para>
+    </section><anchor xml:id="__bstring_8cpp_1ae06719a39570ac5e7ceec60123d35e19"/>    <section>
+    <title>parameter_file_path()</title>
+<indexterm><primary>parameter_file_path</primary><secondary>Bstring.cpp</secondary></indexterm>
+<indexterm><primary>Bstring.cpp</primary><secondary>parameter_file_path</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> parameter_file_path (<link linkend="_class_bstring">Bstring</link> filename)</computeroutput></para><para>
+
+<para>Finds the parameter file path. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>&amp;filename</entry>
+                                <entry>
+<para>the parameter filename. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_bstring">Bstring</link> the full path and file name. <literallayout><computeroutput>The parameter file path should primarily be defined in the environmental
+variable &quot;BPARAM&quot;.
+Otherwise a default is used which may or may not be valid.
+The string returned has a length containing the path plus one byte.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 788 of file Bstring.cpp.</para>
+    </section><anchor xml:id="__bstring_8cpp_1aecfb154037a55e84c3935515b9ef4374"/>    <section>
+    <title>QsortLargeToSmallString()</title>
+<indexterm><primary>QsortLargeToSmallString</primary><secondary>Bstring.cpp</secondary></indexterm>
+<indexterm><primary>Bstring.cpp</primary><secondary>QsortLargeToSmallString</secondary></indexterm>
+<para><computeroutput>int QsortLargeToSmallString (const void * x, const void * y)</computeroutput></para><para>
+
+<para>Utility function for sorting string lexically in qsort. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*x</entry>
+                                <entry>
+<para>first string pointer. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*y</entry>
+                                <entry>
+<para>second string pointer. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>-1 if x &lt; y and 1 otherwise. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 829 of file Bstring.cpp.</para>
+    </section><anchor xml:id="__bstring_8cpp_1abc1d14cc550902bf75bd96939cbca169"/>    <section>
+    <title>QsortLargeToSmallStringValue()</title>
+<indexterm><primary>QsortLargeToSmallStringValue</primary><secondary>Bstring.cpp</secondary></indexterm>
+<indexterm><primary>Bstring.cpp</primary><secondary>QsortLargeToSmallStringValue</secondary></indexterm>
+<para><computeroutput>int QsortLargeToSmallStringValue (const void * x, const void * y)</computeroutput></para><para>
+
+<para>Utility function for sorting string values in qsort. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*x</entry>
+                                <entry>
+<para>first string pointer. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*y</entry>
+                                <entry>
+<para>second string pointer. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>-1 if x &lt; y and 1 otherwise. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 857 of file Bstring.cpp.</para>
+    </section><anchor xml:id="__bstring_8cpp_1a0f253b6e6246e4add3082a48ee0c81d7"/>    <section>
+    <title>QsortSmallToLargeString()</title>
+<indexterm><primary>QsortSmallToLargeString</primary><secondary>Bstring.cpp</secondary></indexterm>
+<indexterm><primary>Bstring.cpp</primary><secondary>QsortSmallToLargeString</secondary></indexterm>
+<para><computeroutput>int QsortSmallToLargeString (const void * x, const void * y)</computeroutput></para><para>
+
+<para>Utility function for sorting string lexically in qsort. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*x</entry>
+                                <entry>
+<para>first string pointer. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*y</entry>
+                                <entry>
+<para>second string pointer. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int -1 if x &lt; y and 1 otherwise. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 815 of file Bstring.cpp.</para>
+    </section><anchor xml:id="__bstring_8cpp_1ad17957c2bb0ab8dc5a301697f86808a6"/>    <section>
+    <title>QsortSmallToLargeStringValue()</title>
+<indexterm><primary>QsortSmallToLargeStringValue</primary><secondary>Bstring.cpp</secondary></indexterm>
+<indexterm><primary>Bstring.cpp</primary><secondary>QsortSmallToLargeStringValue</secondary></indexterm>
+<para><computeroutput>int QsortSmallToLargeStringValue (const void * x, const void * y)</computeroutput></para><para>
+
+<para>Utility function for sorting string values in qsort. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*x</entry>
+                                <entry>
+<para>first string pointer. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>*y</entry>
+                                <entry>
+<para>second string pointer. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>-1 if x &lt; y and 1 otherwise. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 843 of file Bstring.cpp.</para>
+    </section><anchor xml:id="__bstring_8cpp_1a804a6fb318de2e47f5bbf3e84c915490"/>    <section>
+    <title>string_add()<computeroutput>[1/2]</computeroutput></title>
+<indexterm><primary>string_add</primary><secondary>Bstring.cpp</secondary></indexterm>
+<indexterm><primary>Bstring.cpp</primary><secondary>string_add</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link>* string_add (<link linkend="_class_bstring">Bstring</link> ** list, <link linkend="_class_bstring">Bstring</link> &amp; string)</computeroutput></para><para>
+Definition at line 712 of file Bstring.cpp.</para>
+    </section><anchor xml:id="__bstring_8cpp_1a7f784a89c16640b39c197fabc7062930"/>    <section>
+    <title>string_add()<computeroutput>[2/2]</computeroutput></title>
+<indexterm><primary>string_add</primary><secondary>Bstring.cpp</secondary></indexterm>
+<indexterm><primary>Bstring.cpp</primary><secondary>string_add</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link>* string_add (<link linkend="_class_bstring">Bstring</link> ** list, const char * string)</computeroutput></para><para>
+
+<para>Adds a string to a linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>**list</entry>
+                                <entry>
+<para>the string linked list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>&amp;string</entry>
+                                <entry>
+<para>string - unchanged. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>Bstring* new string structure. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 706 of file Bstring.cpp.</para>
+    </section><anchor xml:id="__bstring_8cpp_1a2d08d18bfadb2e1057784bf9bc7ac7aa"/>    <section>
+    <title>string_catenate()</title>
+<indexterm><primary>string_catenate</primary><secondary>Bstring.cpp</secondary></indexterm>
+<indexterm><primary>Bstring.cpp</primary><secondary>string_catenate</secondary></indexterm>
+<para><computeroutput><link linkend="_class_bstring">Bstring</link> string_catenate (<link linkend="_class_bstring">Bstring</link> * list)</computeroutput></para><para>
+
+<para>Catenates a string linked list into one string. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*list</entry>
+                                <entry>
+<para>the string linked list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para><link linkend="_class_bstring">Bstring</link> new string. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 740 of file Bstring.cpp.</para>
+    </section><anchor xml:id="__bstring_8cpp_1a28d272b0a3d80dfeacf2ee7bf9c6d4c2"/>    <section>
+    <title>string_kill()</title>
+<indexterm><primary>string_kill</primary><secondary>Bstring.cpp</secondary></indexterm>
+<indexterm><primary>Bstring.cpp</primary><secondary>string_kill</secondary></indexterm>
+<para><computeroutput>int string_kill (<link linkend="_class_bstring">Bstring</link> * list)</computeroutput></para><para>
+
+<para>Kills a string linked list. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*list</entry>
+                                <entry>
+<para>the string linked list. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. </para>
+</formalpara>
+</para>
+<para>
+Definition at line 761 of file Bstring.cpp.</para>
+    </section><anchor xml:id="__bstring_8cpp_1ae0d83007cde6bf79ab6c3ee65fa3aadf"/>    <section>
+    <title>string_sort()</title>
+<indexterm><primary>string_sort</primary><secondary>Bstring.cpp</secondary></indexterm>
+<indexterm><primary>Bstring.cpp</primary><secondary>string_sort</secondary></indexterm>
+<para><computeroutput>int string_sort (<link linkend="_class_bstring">Bstring</link> * slist, int descending, int value)</computeroutput></para><para>
+
+<para>Sorts a list of strings in ascending (descending) lexical or value order. </para>
+</para>
+
+<para>
+                <formalpara>
+                    <title>
+Parameters                    </title>
+                    <para>
+                    <table frame="all">
+                        <tgroup cols="2" align="left" colsep="1" rowsep="1">
+                        <colspec colwidth="1*"/>
+                        <colspec colwidth="4*"/>
+                        <tbody>
+                            <row>
+                                <entry>*slist</entry>
+                                <entry>
+<para>string list. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>descending</entry>
+                                <entry>
+<para>flag to do a descending sort. </para>
+</entry>
+                            </row>
+                            <row>
+                                <entry>value</entry>
+                                <entry>
+<para>sort in value order. </para>
+</entry>
+                            </row>
+                        </tbody>
+                        </tgroup>
+                    </table>
+                    </para>
+                </formalpara>
+                <formalpara><title>Returns</title>
+
+<para>int 0. <literallayout><computeroutput>The string list is first convert to an array, quicksorted, and
+written back into the string list.
+</computeroutput></literallayout> </para>
+</formalpara>
+</para>
+<para>
+Definition at line 876 of file Bstring.cpp.</para>
+</section>
+</section>
+<section>
+<title>Variable Documentation</title>
+<anchor xml:id="__bstring_8cpp_1a0b2caeb4b6f130be43e5a2f0267dd453"/>    <section>
+    <title>verbose</title>
+<indexterm><primary>verbose</primary><secondary>Bstring.cpp</secondary></indexterm>
+<indexterm><primary>Bstring.cpp</primary><secondary>verbose</secondary></indexterm>
+<para><computeroutput>int verbose<computeroutput>[extern]</computeroutput></computeroutput></para></section>
+</section>
+</section>
