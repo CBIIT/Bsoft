@@ -1,0 +1,61 @@
+#!/bin/bash
+
+# MacOSX installation of Tcl/Tk scripts as Finder applications
+# Usage:
+#		macinstall <applications_folder>
+# Example:
+#		macinstall /Applications
+# Bernard Heymann
+# 20030818 - 20210101
+
+APP="/Applications"
+if [[ -d $1 ]]; then APP=$1; fi
+
+set CURR = `pwd`
+
+BSOFT=`dirname $0`
+if [[ -z $BSOFT ]]; then BSOFT=`pwd`; fi
+if [ "$BSOFT" = "." ]; then BSOFT=`pwd`; fi
+
+rm -f Bshow.app/Contents/Resources/Scripts/AppMain.tcl
+rm -f Brun.app/Contents/Resources/Scripts/AppMain.tcl
+
+echo ""
+echo Bsoft home: $BSOFT
+
+# Tcl/Tk applications that can be run from the Finder or the Dock
+TKVERSION=`echo 'puts $tk_version; exit' | wish`
+echo ""
+echo "TK version: $TKVERSION"
+echo Installing Bshow and Brun in ${APP}
+cp -r Bshow.app ${APP}
+cp -r Brun.app ${APP}
+
+cd ${APP}/Bshow.app/Contents
+sed s\z/usr/local/bsoftz${BSOFT}zg Info.plist > t.t
+mv t.t Info.plist
+
+cd ${APP}/Bshow.app/Contents/Resources/Scripts
+rm -f AppMain.tcl
+ln -s ${BSOFT}/tcltk/bshow AppMain.tcl
+
+cd ${APP}/Brun.app/Contents
+sed s\z/usr/local/bsoftz${BSOFT}zg Info.plist > t.t
+mv t.t Info.plist
+
+cd ${APP}/Brun.app/Contents/Resources/Scripts
+rm -f AppMain.tcl
+ln -s ${BSOFT}/tcltk/brun AppMain.tcl
+
+if [ $TKVERSION = 8.6 ]; then
+	if [ -e /Library/Frameworks/Tk.framework ]; then
+		cd ${APP}/Bshow.app/Contents/MacOS
+		cp /Library/Frameworks/Tk.framework/Resources/Wish.app/Contents/MacOS/Wish* .
+		cd ${APP}/Brun.app/Contents/MacOS
+		cp /Library/Frameworks/Tk.framework/Resources/Wish.app/Contents/MacOS/Wish* .
+	fi
+fi
+
+cd ${CURR}
+echo ""
+

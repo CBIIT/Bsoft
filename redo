@@ -1,0 +1,19 @@
+#!/bin/sh
+
+today=`date +"%Y%m%d"`
+version='2.0.0'
+if [[ -e BVERSION ]]; then version=`cat BVERSION`; fi
+
+BINSTALL=/usr/local/bsoft/
+sed -i old s/BVERSION\ \"2.....20......\"/BVERSION\ \"${version}-${today}\"/ include/utilities.h
+
+rm src/$1.o
+rm bin/$1
+rm lib/*
+
+make
+
+cp -r lib $BINSTALL
+cp -r bin/$1 $BINSTALL/bin/
+cp -r tcltk $BINSTALL
+

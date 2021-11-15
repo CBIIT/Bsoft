@@ -1,0 +1,120 @@
+#!/bin/bash
+
+#----------------------------------------------------------
+# A script to write Bsoft environment resource files
+# Author: Bernard Heymann 
+# 20131230 - 20200809
+
+SYS=`uname -s | cut -f1 -d"-"`
+MACHINE=`uname -m`
+
+BSOFT=`dirname $0`
+if [[ -z $BSOFT ]]; then BSOFT=`pwd`; fi
+if [[ -n $1 ]]; then BSOFT="$( cd $1 && pwd )"; fi
+
+echo "Bsoft directory: $BSOFT"
+
+# Writing bsoft.cshrc containing environmental variables
+BENV=bsoft.cshrc
+echo "Writing $BENV"
+
+echo "# Environmental variables for Bsoft on $SYS ($MACHINE)" > $BENV
+echo ' ' >> $BENV
+echo "setenv BSOFT $BSOFT" >> $BENV
+echo 'setenv BPARAM $BSOFT/parameters/' >> $BENV
+echo ' ' >> $BENV
+
+echo 'if ( $?PATH ) then' >> $BENV
+echo '	setenv PATH $BSOFT/bin:$PATH' >> $BENV
+echo 'else' >> $BENV
+echo '	setenv PATH $BSOFT/bin' >> $BENV
+echo 'endif' >> $BENV
+echo ' ' >> $BENV
+     
+echo 'if ( $?LD_LIBRARY_PATH ) then' >> $BENV
+echo '	setenv LD_LIBRARY_PATH $BSOFT/lib:$LD_LIBRARY_PATH' >> $BENV
+echo 'else' >> $BENV
+echo '	setenv LD_LIBRARY_PATH $BSOFT/lib' >> $BENV
+echo 'endif' >> $BENV
+echo ' ' >> $BENV
+
+if [[ $SYS =~ IRIX ]]; then
+	if [ $SET32 ]; then
+		echo 'if ( $?LD_LIBRARYN32_PATH ) then' >> $BENV
+		echo '	setenv LD_LIBRARYN32_PATH $BSOFT/lib:$LD_LIBRARYN32_PATH' >> $BENV
+		echo 'else' >> $BENV
+		echo '	setenv LD_LIBRARYN32_PATH $BSOFT/lib' >> $BENV
+		echo 'endif' >> $BENV
+	else
+		echo 'if ( $?LD_LIBRARY64_PATH ) then' >> $BENV
+		echo '	setenv LD_LIBRARY64_PATH $BSOFT/lib:$LD_LIBRARY64_PATH' >> $BENV
+		echo 'else' >> $BENV
+		echo '	setenv LD_LIBRARY64_PATH $BSOFT/lib' >> $BENV
+		echo 'endif' >> $BENV
+	fi
+elif [[ $SYS = Darwin ]]; then
+	echo 'if ( $?DYLD_LIBRARY_PATH ) then' >> $BENV
+	echo '	setenv DYLD_LIBRARY_PATH $BSOFT/lib:$DYLD_LIBRARY_PATH' >> $BENV
+	echo 'else' >> $BENV
+	echo '	setenv DYLD_LIBRARY_PATH $BSOFT/lib' >> $BENV
+	echo 'endif' >> $BENV
+fi
+echo ' ' >> $BENV
+
+
+# Writing bsoft.bashrc containing environmental variables
+BENV=bsoft.bashrc
+echo "Writing $BENV"
+
+echo "# Environmental variables for Bsoft on $SYS ($MACHINE)" > $BENV
+echo ' ' >> $BENV
+echo "BSOFT=$BSOFT" >> $BENV
+echo 'export BSOFT' >> $BENV
+echo 'BPARAM=$BSOFT/parameters/' >> $BENV
+echo 'export BPARAM' >> $BENV
+echo ' ' >> $BENV
+
+echo 'if [ "$PATH" ]; then' >> $BENV
+echo '	PATH=$BSOFT/bin:$PATH' >> $BENV
+echo 'else' >> $BENV
+echo '	PATH=$BSOFT/bin' >> $BENV
+echo 'fi' >> $BENV
+if [[ $SYS =~ CYGWIN ]]; then echo 'PATH=$BSOFT/lib:$PATH' >> $BENV; fi
+echo 'export PATH' >> $BENV
+echo ' ' >> $BENV
+     
+echo 'if [ "$LD_LIBRARY_PATH" ]; then' >> $BENV
+echo '	LD_LIBRARY_PATH=$BSOFT/lib:$LD_LIBRARY_PATH' >> $BENV
+echo 'else' >> $BENV
+echo '	LD_LIBRARY_PATH=$BSOFT/lib' >> $BENV
+echo 'fi' >> $BENV
+echo 'export LD_LIBRARY_PATH' >> $BENV
+echo ' ' >> $BENV
+
+if [[ $SYS =~ IRIX ]]; then
+	if [ $SET32 ]; then
+		echo 'if [ ${LD_LIBRARYN32_PATH} ]; then' >> $BENV
+		echo '	LD_LIBRARYN32_PATH=$BSOFT/lib:$LD_LIBRARYN32_PATH' >> $BENV
+		echo 'else' >> $BENV
+		echo '	LD_LIBRARYN32_PATH=$BSOFT/lib' >> $BENV
+		echo 'fi' >> $BENV
+		echo 'export LD_LIBRARYN32_PATH' >> $BENV
+	else
+		echo 'if [ ${LD_LIBRARY64_PATH} ]; then' >> $BENV
+		echo '	LD_LIBRARY64_PATH=$BSOFT/lib:$LD_LIBRARY64_PATH' >> $BENV
+		echo 'else' >> $BENV
+		echo '	LD_LIBRARY64_PATH=$BSOFT/lib' >> $BENV
+		echo 'fi' >> $BENV
+		echo 'export LD_LIBRARY64_PATH' >> $BENV
+	fi
+elif [[ $SYS = Darwin ]]; then
+	echo 'if [ ${DYLD_LIBRARY_PATH} ]; then' >> $BENV
+	echo '	DYLD_LIBRARY_PATH=$BSOFT/lib:$DYLD_LIBRARY_PATH' >> $BENV
+	echo 'else' >> $BENV
+	echo '	DYLD_LIBRARY_PATH=$BSOFT/lib' >> $BENV
+	echo 'fi' >> $BENV
+	echo 'export DYLD_LIBRARY_PATH' >> $BENV
+fi
+echo ' ' >> $BENV
+
+

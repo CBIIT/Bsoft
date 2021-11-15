@@ -1,0 +1,46 @@
+#!/bin/bash
+
+#----------------------------------------------------------
+# A script to set up the Bsoft environment
+# Author: Bernard Heymann 
+# 20170914 - 20210421
+
+BSOFT=`dirname $0`
+if [[ -z $BSOFT ]]; then BSOFT=`pwd`; fi
+if [[ $BSOFT == "." ]]; then BSOFT=`pwd`; fi
+if [[ -n $1 ]]; then BSOFT="$( cd $1 && pwd )"; fi
+
+echo "Bsoft directory: $BSOFT"
+
+cd $BSOFT
+
+# Create the resource files
+./benv
+
+# Setting the resource files for bash
+if [[ -d /etc/profile.d ]]; then
+	cp ${BSOFT}/bsoft.bashrc /etc/profile.d/bsoft.sh
+elif [[ -e /etc/profile ]]; then
+	if [[ `grep bsoft /etc/profile` ]]; then
+		sed -i.orig '/.*bsoft.*/d' /etc/profile
+	fi
+	echo source ${BSOFT}/bsoft.bashrc >> /etc/profile
+fi
+
+# Setting the resource files for csh
+if [[ -e /etc/csh.cshrc ]]; then
+	if [[ `grep bsoft /etc/csh.cshrc` ]]; then
+		sed -i.orig '/.*bsoft.*/d' /etc/csh.cshrc
+	fi
+	echo source ${BSOFT}/bsoft.cshrc >> /etc/csh.cshrc
+fi
+
+# Make sure permissions are set correctly
+chmod 755 $BSOFT/bin/*
+chmod 755 $BSOFT/lib/*
+
+SYS=`uname -s | cut -f1 -d"-"`
+if [[ $SYS = Darwin ]]; then
+	./macinstall
+fi
+

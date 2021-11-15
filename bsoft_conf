@@ -1,0 +1,323 @@
+#! /bin/bash
+
+# Bsoft configure script
+# Bernard Heymann
+# 20131205 - 20210624
+
+# --------------------------------------------------------------------------
+# Main directories that can be changed
+# --------------------------------------------------------------------------
+BDIR=`pwd`
+BINSTALL=/Users/bernard/b20install
+LIBFFTW=""
+LIBTIFF=""
+LIBJPEG=""
+LIBPNG=""
+# Example directories for dependencies in other places
+#LIBFFTW=$BDIR/../fftw-3.3.5
+#LIBTIFF=$BDIR/../tiff-4.0.6
+#LIBJPEG=$BDIR/../jpeg-9b
+#LIBPNG=$BDIR/../libpng-1.6.24
+# --------------------------------------------------------------------------
+
+source ../dev.rsc
+
+usage()
+{
+    echo "Usage: $0 [arguments]"
+    echo ""
+    echo "Arguments:"
+    echo "\t-h --help"
+    echo "\t--prefix=$BINSTALL"
+    echo "\t--fftw=$LIBFFTW"
+    echo "\t--tiff=$LIBTIFF"
+    echo "\t--jpeg=$LIBJPEG"
+    echo "\t--png=$LIBPNG"
+    echo "\t-c --configure"
+    echo "\tCC"
+   	echo "\tCXX"
+    echo ""
+}
+
+developer_resources
+
+while [ "$1" != "" ]; do
+    PARAM=`echo $1 | awk -F= '{print $1}'`
+    VALUE=`echo $1 | awk -F= '{print $2}'`
+    case $PARAM in
+        -h | --help)
+            usage
+            exit
+            ;;
+        --prefix)
+            BINSTALL=$VALUE
+            ;;
+        --fftw)
+            LIBFFTW=$VALUE
+            ;;
+        --tiff)
+            LIBTIFF=$VALUE
+            ;;
+        --jpeg)
+            LIBJPEG=$VALUE
+            ;;
+        --png)
+            LIBPNG=$VALUE
+            ;;
+        CC)
+            CC=$VALUE
+            ;;
+        CXX)
+            CXX=$VALUE
+            ;;
+        *)
+            echo "ERROR: unknown parameter \"$PARAM\""
+            usage
+            exit 1
+            ;;
+    esac
+    shift
+done
+
+echo "bsoft_conf:"
+
+check_dependencies
+
+if [[ -z $SYS ]]; then
+	show_configuration
+fi
+
+if [[ -z $PAR ]]; then
+	detect_parallelization
+fi
+
+tarfile=bsoft${today}.tar
+tgzfile=bsoft${today}.tgz
+
+#LPATH=$BINSTALL/lib
+
+# System-specific settings
+if [[ $SYS =~ Darwin ]]; then
+	#ARCH='-arch i386 -arch x86_64'
+	ARCH='-arch x86_64'
+	LIBBSOFT=lib/libbsoft.dylib
+	DYNFLAGS="-all_load -dynamiclib"
+	RPATH='@loader_path/../lib'
+	LIBPATH="-headerpad_max_install_names -install_name $RPATH/libbsoft.dylib"
+	LINKOPTS="-bind_at_load"
+elif [[ $SYS =~ Linux ]]; then
+	ARCH='-m64'
+	LIBBSOFT="lib/libbsoft.so"
+	DYNFLAGS="-fPIC -shared"
+	RPATH='\$${ORIGIN}/../lib'
+#	LIBPATH="-Wl,-rpath=$RPATH:$LPATH --enable-new-dtags"
+	LIBPATH="-Wl,-rpath=$RPATH --enable-new-dtags"
+	LINKOPTS="$LIBPATH"
+else
+	echo System $SYS not supported!
+	exit
+fi
+
+CFLAGS="-O3 -fPIC -std=c++14 -Wall -Wno-sign-compare $ARCH"
+INCLUDES="-I./ -I$BDIR/include -I$BDIR/radon -I$BDIR/eer"
+LDFLAGS="$DYNFLAGS $ARCH $LIBPATH"
+LINKOPTS="$LINKOPTS -fPIC $ARCH -L$BDIR/lib -lbsoft"
+
+# Dependencies:
+LIBDIR=""
+LINKLIBS=" -lpthread"
+LIBLIST=""
+
+
+XMLINC=$SDK/usr/include/libxml2
+if [ -e $XMLINC ]; then
+	CFLAGS=$CFLAGS' -DHAVE_XML'
+	if [ $HAVE_XML == 2 ]; then
+		CFLAGS=$CFLAGS' -DOLD_XML'
+	fi
+	INCLUDES="$INCLUDES -I$XMLINC"
+	LINKLIBS=" -lxml2 -llzma $LINKLIBS"
+fi
+
+#FFTW3INC=$LIBFFTW/api
+FFTW3INC=$LIBFFTW/include
+#echo "FFTW3INC = $FFTW3INC"
+
+if [ -e $FFTW3INC ]; then
+#	FFTW3INC=$LIBFFTW/include
+	INCLUDES="$INCLUDES -I$FFTW3INC"
+	LIBLIST="$LIBLIST $LIBFFTW/lib/libfftw3f.a"
+fi
+#echo "INCLUDES = $INCLUDES"
+
+# Parallelization: GCD or OpenMP
+if [[ $PAR =~ GCD ]]; then
+	CFLAGS=$CFLAGS' -DHAVE_GCD'
+	LIBLIST="$LIBLIST $LIBFFTW/lib/libfftw3f_threads.a"
+elif [[ $PAR =~ OMP ]]; then
+	CFLAGS=$CFLAGS' -DHAVE_OMP -fopenmp'
+	LINKLIBS="$LINKLIBS -fopenmp"
+	LIBLIST="$LIBLIST $LIBFFTW/lib/libfftw3f_omp.a"
+else
+	echo "# No parallelization available"
+fi
+echo
+
+if [ $HAVE_TIFF = 1 ]; then
+	CFLAGS="$CFLAGS -DHAVE_TIFF"
+	INCLUDES="$INCLUDES -I$LIBTIFF/libtiff"
+#	LIBDIR="$LIBDIR -L$LIBTIFF/lib"
+#	LINKLIBS="$LINKLIBS -ltiff";
+	LIBLIST="$LIBLIST $LIBTIFF/lib/libtiff.a"
+fi
+
+if [ $HAVE_PNG = 1 ]; then
+	CFLAGS="$CFLAGS -DHAVE_PNG"
+	INCLUDES="$INCLUDES -I$LIBPNG"
+#	LIBDIR="$LIBDIR -L$LIBPNG/lib"
+#	LINKLIBS="$LINKLIBS -lz -lpng";
+	LINKLIBS="$LINKLIBS -lz";
+	LIBLIST="$LIBLIST $LIBPNG/lib/libpng.a"
+fi
+
+if [ $HAVE_JPEG = 1 ]; then
+	CFLAGS="$CFLAGS -DHAVE_JPEG"
+	INCLUDES="$INCLUDES -I$LIBJPEG"
+#	LIBDIR="$LIBDIR -L$LIBJPEG/lib"
+#	LINKLIBS="$LINKLIBS -ljpeg";
+	LIBLIST="$LIBLIST $LIBJPEG/lib/libjpeg.a"
+fi
+
+# Tcl/Tk
+btk=$BDIR/tcltk
+TKO=$btk/bsoft_tcl.o
+INCLUDES="$INCLUDES -I$TCLINC -I$TKINC"
+#DEPREC="-DUSE_INTERP_RESULT -DUSE_INTERP_ERRORLINE"
+#DEPREC="-DTCL_NO_DEPRECATED"
+if [[ $SYS =~ Darwin ]]; then
+	LIBTCLTK=$BDIR/lib/libbshow.dylib
+	CFLAGS="$CFLAGS $DEPREC"
+	TKLDFLAGS="$DYNFLAGS $ARCH -framework Tcl -framework Tk -lbsoft $LIBPATH/libbshow.dylib"
+elif [[ $SYS =~ Linux ]]; then
+	LIBTCLTK=$BDIR/lib/libbshow.so
+	TKLDFLAGS="$DYNFLAGS $ARCH $LIBPATH"
+else
+	echo No Tcl/Tk libraries found! Bshow will not be compiled!
+	TKO=""
+fi
+
+
+if [ ! -e lib ]; then mkdir lib; fi
+if [ ! -e bin ]; then mkdir bin; fi
+
+
+echo "--------------------------------------------------------------------------"
+echo "Composing the Bsoft Makefile"
+echo "--------------------------------------------------------------------------"
+
+mk=Makefile
+
+echo "# Makefile for Bsoft" > $mk
+echo "# "`date` >> $mk
+echo >> $mk
+echo "# Bsoft source directory:" >> $mk
+echo "BDIR=$BDIR" >> $mk
+echo >> $mk
+echo "# Bsoft install directory:" >> $mk
+echo "BINSTALL=$BINSTALL" >> $mk
+echo >> $mk
+echo "# System: $SYS" >> $mk
+echo >> $mk
+
+echo "SHELL = /bin/sh -x" >> $mk
+echo "MAKE = make" >> $mk
+echo >> $mk
+
+echo "# Compiler settings" >> $mk
+echo "CC=$CC" >> $mk
+echo "CXX=$CXX" >> $mk
+echo >> $mk
+echo "CFLAGS=$CFLAGS" >> $mk
+echo "INCLUDES=$INCLUDES" >> $mk
+echo >> $mk
+
+echo "# Library loader settings" >> $mk
+echo "LDFLAGS=$LDFLAGS" >> $mk
+echo "TKLDFLAGS=$TKLDFLAGS" >> $mk
+echo "LINKOPTS=$LINKOPTS" >> $mk
+echo "LINKLIBS=$LINKLIBS" >> $mk
+echo "LIBLIST=$LIBLIST" >> $mk
+echo "LIBBSOFT=$LIBBSOFT" >> $mk
+echo "LIBTCLTK=$LIBTCLTK" >> $mk
+echo "LIBDIR=$LIBDIR" >> $mk
+echo "TKO=$TKO" >> $mk
+echo >> $mk
+
+echo "# Sources, objects and executables" >> $mk
+echo 'EXE_SOURCES=$(wildcard src/*.cpp)' >> $mk
+echo 'LIB_SOURCES=$(wildcard src/*/*.cpp) $(wildcard radon/*.cpp) $(wildcard eer/*.cpp)' >> $mk
+echo 'TK_SOURCES=$(wildcard tcltk/*.cpp)' >> $mk
+echo 'EXE_OBJECTS=$(patsubst %.cpp,%.o,$(EXE_SOURCES))' >> $mk
+echo 'LIB_OBJECTS=$(patsubst %.cpp,%.o,$(LIB_SOURCES))' >> $mk
+echo 'TK_OBJECTS=$(patsubst %.cpp,%.o,$(TK_SOURCES))' >> $mk
+echo 'EXECUTABLES=$(patsubst src/%.cpp,bin/%,$(EXE_SOURCES))' >> $mk
+echo >> $mk
+
+echo "TARFILE=$tarfile" >> $mk
+echo "TGZFILE=$tgzfile" >> $mk
+echo >> $mk
+
+echo 'all: $(LIB_OBJECTS) $(TK_OBJECTS) $(RDN_OBJECTS) $(LIBBSOFT) $(LIBTCLTK) $(EXE_OBJECTS) $(EXECUTABLES)' >> $mk
+echo >> $mk
+
+echo '.PHONY : clean tar' >> $mk
+echo >> $mk
+
+echo '%.o: %.cpp' >> $mk
+#echo '	rm lib/*' >> $mk
+echo '	$(CXX) $(INCLUDES) $(CFLAGS) $< -c -o $@' >> $mk
+echo >> $mk
+
+echo '$(LIBBSOFT):' >> $mk
+echo '	$(CXX) -o $(LIBBSOFT) $(LDFLAGS) $(TKO) $(LIB_OBJECTS) $(LIBDIR) $(LINKLIBS) $(LIBLIST)' >> $mk
+echo >> $mk
+
+echo '$(EXECUTABLES):' >> $mk
+echo '	$(CXX) -o $@ $(patsubst bin/%,src/%.o,$@) $(LINKOPTS) $(LIBDIR) $(LINKLIBS)' >> $mk
+echo >> $mk
+
+echo '$(LIBTCLTK):' >> $mk
+echo '	$(CXX) $(LINKOPTS) $(TKLDFLAGS) -o $@ $(TK_OBJECTS) $(LIBDIR) $(LINKLIBS)' >> $mk
+echo >> $mk
+
+echo 'install:' >> $mk
+echo '	mkdir -p $(BINSTALL)' >> $mk
+echo '	cp BVERSION $(BINSTALL)' >> $mk
+echo '	cp bsetup $(BINSTALL)' >> $mk
+echo '	cp benv $(BINSTALL)' >> $mk
+echo '	cp -r $(BDIR)/lib $(BINSTALL)' >> $mk
+echo '	cp -r $(BDIR)/bin $(BINSTALL)' >> $mk
+echo '	cp -r $(BDIR)/tcltk $(BINSTALL)' >> $mk
+echo '	cp -r $(BDIR)/parameters $(BINSTALL)' >> $mk
+echo '	cp -r $(BDIR)/Scripts $(BINSTALL)' >> $mk
+echo '	cd $(BINSTALL) && ./benv $(BINSTALL)' >> $mk
+echo '	cd $(BINSTALL)/bin && ln -vfs ../tcltk/bshow bshow && ln -vfs ../tcltk/brun brun' >> $mk
+if [[ $SYS =~ Darwin ]]; then
+	echo '	cp macinstall $(BINSTALL)' >> $mk
+	echo '	cd $(BINSTALL)/bin && ln -vfs ../tcltk/bshowX bshowX && ln -vfs ../tcltk/brunX brunX' >> $mk
+	echo '	cp -r $(BDIR)/Bshow.app $(BINSTALL)' >> $mk
+	echo '	cp -r $(BDIR)/Brun.app $(BINSTALL)' >> $mk
+fi
+echo '	cp -r $(BDIR)/doc $(BINSTALL)' >> $mk
+echo >> $mk
+
+echo 'clean:' >> $mk
+echo '	rm */*.o src/*/*.o bin/* lib/*' >> $mk
+echo '	rm -f */blevel* */bmaskmod* src/rwparam/rwmodel_param.cpp' >> $mk
+echo >> $mk
+
+echo 'tar:' >> $mk
+echo '	tar cfv $(TARFILE) include/*.h tcltk/*.h $(LIB_SOURCES) $(TK_SOURCES) $(EXE_SOURCES)' >> $mk
+echo '	gzip -c $(TARFILE) > $(TGZFILE)' >> $mk
+echo >> $mk
+
