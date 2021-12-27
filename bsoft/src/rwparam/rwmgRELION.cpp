@@ -3,7 +3,7 @@
 @brief	Library routines to read and write micrograph parameters in RELION STAR format
 @author Bernard Heymann
 @date	Created: 20061101
-@date	Modified: 20210330
+@date	Modified: 20211223
 **/
 
 #include "mg_processing.h"
@@ -22,47 +22,31 @@ extern int 	verbose;		// Level of output to the screen
 int			relion_to_project(Bstar2& star, Bproject* project)
 {
 	int				err(0);
-	long			i, j, pid(0);
+	long			i, j, pid(0), box_size(0);
+	long			nmg(0), npart(0);
 	Bstring			pfile;
-	double			px(1), mag(1), defU, defV, prev_defU(0), volt(12e4), Cs(2e7), amp(0.07);
+	double			mpx(1), ppx(1), defU(0), defV(0);
+	double			volt(12e4), Cs(2e7), amp(0.07);
+	Euler			euler;
 
 	Bstring			field_id("1"), mg_id("1");
-	Bfield*			field = field_add(&project->field, field_id);
+	Bfield*			field = NULL;
 	Bmicrograph*	mg = NULL;
-	Bparticle*		partlist = NULL;
 	Bparticle*		part = NULL;
-	Bparticle*		prev_part = NULL;
-
-	Bstring*		mg_name_list = NULL;
-	Bstring*		mg_name = NULL;
+	string			mg_name, pmg_name;
 
 	for ( auto ib: star.blocks() ) {
+		if ( verbose )
+			cout << "Reading block: " << ib.tag() << endl;
 		for ( auto il: ib.loops() ) {
-			if ( ( i = il.find("rlnMicrographName") ) >= 0 ) {
+			if ( ( i = il.find("rlnOpticsGroup") ) >= 0 ) {
 				for ( auto ir: il.data() ) {
-					mg_name = string_add(&mg_name, ir[i].c_str());
-					if ( !mg_name_list ) mg_name_list = mg_name;
-					part = particle_add(&part, ++pid);
-					if ( !partlist ) partlist = part;
-					if ( ( j = il.find("rlnImageName") ) >= 0 ) {
-						pfile = ir[j];
-						part->id = pfile.pre('@').integer();
-						pfile = pfile.post('@');
-					}
-					if ( ( j = il.find("rlnCoordinateX") ) >= 0 )
-						part->loc[0] = to_real(ir[j]);
-					if ( ( j = il.find("rlnCoordinateY") ) >= 0 )
-						part->loc[1] = to_real(ir[j]);
-					if ( ( j = il.find("rlnDetectorPixelSize") ) >= 0 )
-						px = to_real(ir[j]);
-					if ( ( j = il.find("rlnMagnification") ) >= 0 )
-						mag = to_real(ir[j]);
-					if ( ( j = il.find("rlnDefocusU") ) >= 0 )
-						part->def = to_real(ir[j]);
-					if ( ( j = il.find("rlnDefocusV") ) >= 0 )
-						part->dev = to_real(ir[j]);
-					if ( ( j = il.find("rlnDefocusAngle") ) >= 0 )
-						part->ast = to_real(ir[j]);
+					if ( ( j = il.find("rlnMicrographOriginalPixelSize") ) >= 0 )
+						mpx = to_real(ir[j]);
+					if ( ( j = il.find("rlnImagePixelSize") ) >= 0 )
+						ppx = to_real(ir[j]);
+					if ( ( j = il.find("rlnImageSize") ) >= 0 )
+						box_size = to_integer(ir[j]);
 					if ( ( j = il.find("rlnVoltage") ) >= 0 )
 						volt = 1e3 * to_real(ir[j]);
 					if ( ( j = il.find("rlnSphericalAberration") ) >= 0 )
@@ -71,73 +55,93 @@ int			relion_to_project(Bstar2& star, Bproject* project)
 						amp = to_real(ir[j]);
 				}
 			}
+			if ( ( i = il.find("rlnMicrographName") ) >= 0 ) {
+				for ( auto ir: il.data() ) {
+					mg_name = ir[i];
+					if ( mg_name.compare(pmg_name) ) {
+						if ( verbose & VERB_FULL )
+							cout << "Micrograph: " << mg_name << endl;
+						field_id = mg_id = Bstring(++nmg, "%d");
+						pmg_name = mg_name;
+						field = field_add(&field, field_id);
+						if ( !project->field ) project->field = field;
+						mg = micrograph_add(&field->mg, mg_id);
+						mg->fmg = mg_name;
+						mg->pixel_size[0] = mg->pixel_size[1] = mpx;
+						mg->box_size[0] = mg->box_size[1] = box_size;
+						mg->box_size[2] = 1;
+						mg->ctf = new CTFparam;
+						mg->ctf->volt(volt);
+						mg->ctf->Cs(Cs);
+						mg->ctf->amp_shift(asin(amp));
+						part = NULL;
+						pid = 0;
+					}
+					part = particle_add(&part, ++pid);
+					npart++;
+					if ( !mg->part ) mg->part = part;
+					if ( ( j = il.find("rlnImageName") ) >= 0 ) {
+						pfile = ir[j];
+						part->id = pfile.pre('@').integer();
+						mg->fpart = pfile.post('@');
+					}
+					if ( ( j = il.find("rlnDetectorPixelSize") ) >= 0 )
+						ppx = to_real(ir[j]);
+					if ( ( j = il.find("rlnCoordinateX") ) >= 0 )
+						part->loc[0] = to_real(ir[j]);
+					if ( ( j = il.find("rlnCoordinateY") ) >= 0 )
+						part->loc[1] = to_real(ir[j]);
+					if ( ( j = il.find("rlnOriginXAngst") ) >= 0 )
+						part->ori[0] = to_real(ir[j]);
+					if ( ( j = il.find("rlnOriginYAngst") ) >= 0 )
+						part->ori[1] = to_real(ir[j]);
+					if ( ( j = il.find("rlnAngleRot") ) >= 0 )
+						euler[2] = to_real(ir[j])*M_PI/180.0;
+					if ( ( j = il.find("rlnAngleTilt") ) >= 0 )
+						euler[1] = to_real(ir[j])*M_PI/180.0;
+					if ( ( j = il.find("rlnAnglePsi") ) >= 0 )
+						euler[0] = to_real(ir[j])*M_PI/180.0;
+					if ( ( j = il.find("rlnMagnification") ) >= 0 )
+						part->mag = to_real(ir[j]);
+					if ( ( j = il.find("rlnDefocusU") ) >= 0 )
+						defU = to_real(ir[j]);
+					if ( ( j = il.find("rlnDefocusV") ) >= 0 )
+						defV = to_real(ir[j]);
+					if ( ( j = il.find("rlnDefocusAngle") ) >= 0 )
+						part->ast = to_real(ir[j])*M_PI/180.0;
+					if ( ( j = il.find("rlnVoltage") ) >= 0 )
+						volt = 1e3 * to_real(ir[j]);
+					if ( ( j = il.find("rlnSphericalAberration") ) >= 0 )
+						Cs = 1e7 * to_real(ir[j]);
+					if ( ( j = il.find("rlnAmplitudeContrast") ) >= 0 )
+						amp = to_real(ir[j]);
+					if ( ( j = il.find("rlnClassNumber") ) >= 0 )
+						part->sel = to_integer(ir[j]);
+					if ( ( j = il.find("rlnGroupNumber") ) >= 0 )
+						part->group = to_integer(ir[j]);
+//					if ( mag ) {
+//						mg->magnification = mag;
+//						mg->pixel_size[0] = mg->pixel_size[1] = 1e4*px/mag;
+//					}
+					part->pixel_size[0] = part->pixel_size[1] = ppx;
+					part->view = euler.view();
+					part->ori = mg->box_size/2 - part->ori/ppx;
+					part->def = (defU + defV)/2;
+					part->dev = fabs(defU - defV)/2;
+					mg->ctf->defocus_average(part->def);
+					mg->ctf->defocus_deviation(part->dev);
+					mg->ctf->astigmatism_angle(part->ast);
+					mg->ctf->zero(1);
+				}
+			}
 		}
 	}
 
-	if ( verbose )
-		cout << "Particles:                      " << pid-1 << endl;
-	
-	// Set up the micrographs
-	for ( i=1, part = partlist, mg_name=mg_name_list; part; part = part->next, ++i ) {
-		defU = part->def;
-		defV = part->dev;
-		part->def = (defU + defV)/2;
-		part->dev = fabs(defU - defV)/2;
-		if ( defU != prev_defU ) {
-			mg_id = Bstring(i, "%04d");
-			mg = micrograph_add(&mg, mg_id);
-			if ( !field->mg ) field->mg = mg;
-			if ( mg_name ) mg->fmg = *mg_name;
-			if ( pfile.length() ) mg->fpart = pfile;
-			mg->sampling = px*1e4;		// Detector pxel size in micron
-			if ( mag ) {
-				mg->magnification = mag;
-				mg->pixel_size[0] = mg->pixel_size[1] = 1e4*px/mag;
-			}
-			mg->ctf = new CTFparam;
-			mg->ctf->volt(volt);
-			mg->ctf->Cs(Cs);
-			mg->ctf->amp_shift(asin(amp));
-			mg->ctf->defocus_average(part->def);
-			mg->ctf->defocus_deviation(part->dev);
-			mg->ctf->astigmatism_angle(part->ast);
-			mg->ctf->zero(1);
-			mg->part = part;
-			if ( prev_part ) prev_part->next = NULL;
-			pid = 1;
-		}
-		part->pixel_size = mg->pixel_size;
-		prev_defU = defU;
-		prev_part = part;
-		if ( mg_name ) mg_name = mg_name->next;
+	if ( verbose ) {
+		cout << "Micrographs:                    " << nmg << endl;
+		cout << "Particles:                      " << npart << endl;
 	}
-	
-	if ( verbose )
-		cout << "Micrographs:                    " << mg_id.integer() << endl;
-	
-	// Reconfigure the particle files
-	Bimage*			p = NULL;
 
-	if ( pfile.length() ) p = read_img(pfile, 0, 0);
-	
-	for ( mg = field->mg; mg; mg = mg->next ) {
-		for ( pid=1, part = mg->part; part; part = part->next, pid++ ) {
-			part->id = pid;
-			if ( p ) {
-				part->ori = p->size()/2;
-				part->pixel_size = p->sampling(0);
-			}
-			if ( part->mag < 0.5 ) part->mag = 1;
-		}
-		if ( p ) {
-			mg->fpart = pfile;
-			mg->pixel_size = p->sampling(0);
-			mg->box_size = p->size();
-		}
-	}
-	
-	if ( p ) delete p;
-	
 	return err;
 }
 
@@ -234,8 +238,10 @@ int			read_project_relion(Bstring& filename, Bproject* project)
 	
 	if ( verbose ) cout << "Reading a Relion file:          " << filename << endl;
 
-	if ( project->comment.length() < 1 )
-		project->comment = star.comment();
+	project->comment = "# Relion file: " + filename + "\n";
+
+	if ( star.comment().size() )
+		project->comment += star.comment();
 
 	return relion_to_project(star, project);
 }
