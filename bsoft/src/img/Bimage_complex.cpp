@@ -496,6 +496,7 @@ int 		Bimage::complex_product(Bimage* p)
 /**
 @brief 	Calculates the product of a complex image with the conjugate of a second.
 @param 	*p			complex image.
+@param 	norm		normalize.
 @return int			error code.
 
 	Complex conjugate product:
@@ -504,7 +505,7 @@ int 		Bimage::complex_product(Bimage* p)
 	No statistics are calculated.
 
 **/
-int 		Bimage::complex_conjugate_product(Bimage* p)
+int 		Bimage::complex_conjugate_product(Bimage* p, int norm)
 {
 	if ( !d.uc ) return -1;
 	
@@ -524,17 +525,21 @@ int 		Bimage::complex_conjugate_product(Bimage* p)
 		sum1 = sum2 = 0;
 		for ( j=0; j<ds; ++j, ++i ) {
 			cv = p->complex(i).conj();
-			sum1 += complex(i).power();
-			sum2 += cv.power();
+			if ( norm ) {
+				sum1 += complex(i).power();
+				sum2 += cv.power();
+			}
 			set(i, complex(i) * cv);
 		}
-		scale = sum1*sum2;
-		if ( scale > 0 ) {
-			scale = 1.0/sqrt(scale);
-			multiply(nn, scale);
-		} else {
-			cerr << "Error in Bimage::complex_conjugate_product: scaling failed!" << endl;
-			return -1;
+		if ( norm ) {
+			scale = sum1*sum2;
+			if ( scale > 0 ) {
+				scale = 1.0/sqrt(scale);
+				multiply(nn, scale);
+			} else {
+				cerr << "Error in Bimage::complex_conjugate_product: 	scaling failed!" << endl;
+				return -1;
+			}
 		}
 	}
 
