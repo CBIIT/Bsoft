@@ -834,7 +834,7 @@ public:
 	int				phase_shift_to_center();
 	int 			complex_multiply(Bimage* p);
 	int 			complex_product(Bimage* p);
-	int 			complex_conjugate_product(Bimage* p);
+	int 			complex_conjugate_product(Bimage* p, int norm=0);
 	Bimage*			complex_conjugate_product_one2many(Bimage* p);
 	int 			complex_apply_mask(Bimage* pmask);
 	int 			complex_apply_negative_mask(Bimage* pmask);
