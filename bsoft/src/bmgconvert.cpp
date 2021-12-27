@@ -6,7 +6,7 @@
 @author James Conway
 @author Juha Huiskonen
 @date	Created: 20061101
-@date	Modified: 20180322
+@date	Modified: 20211223
 
 **/
 
@@ -29,11 +29,11 @@ extern int 	verbose;		// Level of output to the screen
 
 // Function prototypes
 Bproject*	read_project_conv(Bstring* file_list);
-int			write_project_conv(Bstring& filename, Bproject* project, int mg_select, int rec_select);
+int			write_project_conv(Bstring& filename, Bproject* project, int flags);
 int			read_project_dat(Bstring& filename, Bproject* project);
-int			write_project_dat(Bstring& filename, Bproject* project, int mg_select, int rec_select);
+int			write_project_dat(Bstring& filename, Bproject* project, int flags);
 int			read_project_crd(Bstring& filename, Bproject* project);
-int			write_project_crd(Bstring& filename, Bproject* project, int mg_select, int rec_select);
+int			write_project_crd(Bstring& filename, Bproject* project, int flags);
 int			project_modify_parameters(Bproject* project, char flags);
 
 // Usage assistence
@@ -53,13 +53,16 @@ const char* use[] = {
 "Parameters:",
 "-verbose 7               Verbosity of output.",
 "-sampling 1.5,1.5,1      Sampling (A/pixel, one value sets all).",
-"-mgselect 5              Selected micrograph (default all, first micrograph = 1).",
-"-recselect 5             Selected reconstruction (default all, first reconstruction = 1).",
 "-euler                   Convert views to Euler angles.",
 "-omega                   Add or subtract 90 degrees to or from the OMEGA angle.",
 "-magnification           Invert the magnification factor:  1/mag.",
-"-path part               Path for new particles file (default current directory).",
+"-mgpath dir/subdir       Set micrograph file paths.",
+"-framepath dir/subdir    Set micrograph frames file paths.",
+"-pspath dir/subdir       Set power spectrum file paths.",
+"-partpath dir/subdir     Set particle file paths.",
+"-filpath dir/subdir      Set filament file paths.",
 "-extension pif           Set the particle image file format.",
+"-remove                  Do not write non-selected micrographs into the parameter file.",
 " ",
 "Input:",
 "-particles part.mrcs     Input file with a stack of particles (Relion).",
@@ -74,15 +77,18 @@ int			main(int argc, char** argv)
 {
 	// Initializing variables
 	Vector3<double>	sam;				// A/pixel
-	int				mg_select(-1);
-	int				rec_select(-1);
 	int				euler(0);			// Flag to specify Euler angles
 	char			flags(0);			// Flags to modify some input parameters
 	Bstring			partfile;			// Relion stack of particles file
-	Bstring			path;				// Path for new particle files
+	Bstring			mgpath;				// Micrograph file path
+	Bstring			framepath;			// Micrograph frames file path
+	Bstring			pspath;				// Power spectrum file path
+	Bstring			partpath;			// Particle file path
+	Bstring			filpath;			// Filament file path
 	Bstring			partext;			// Particle image file format
 	Bstring			outfile;			// Output parameter file
-	
+	int				write_flags(0);		// Flags to pass to the parameter file writing function
+
 	int				optind;
 	Boption*		option = get_option_list(use, argc, argv, optind);
 	Boption*		curropt;
@@ -91,20 +97,47 @@ int			main(int argc, char** argv)
 			sam = curropt->scale();
 //			if ( ( sampling = curropt->value.real() ) < 0.1 )
 //				cerr << "-sampling: A pixel size must be specified" << endl;
-		if ( curropt->tag == "mgselect" )
-			if ( ( mg_select = curropt->value.integer() ) < 0 )
-				cerr << "-mgselect: A number must be specified" << endl;
-		if ( curropt->tag == "recselect" )
-			if ( ( rec_select = curropt->value.integer() ) < 0 )
-				cerr << "-recselect: A number must be specified" << endl;
 		if ( curropt->tag == "euler" )
 			euler = 1;
 		if ( curropt->tag == "magnification" )
 			flags += 1;
 		if ( curropt->tag == "omega" )
 			flags += 2;
-		if ( curropt->tag == "path" )
-			path = curropt->value;
+		if ( curropt->tag == "mgpath" ) {
+			mgpath = curropt->value;
+			if ( mgpath.length() < 1 )
+				cerr << "-mgpath: The micrograph file path must be specified!" << endl;
+			else
+				if ( mgpath[-1] != '/' ) mgpath += "/";
+		}
+		if ( curropt->tag == "framepath" ) {
+			framepath = curropt->value;
+			if ( framepath.length() < 1 )
+				cerr << "-framepath: The micrograph frames file path must be specified!" << endl;
+			else
+				if ( framepath[-1] != '/' ) framepath += "/";
+		}
+		if ( curropt->tag == "pspath" ) {
+			pspath = curropt->value;
+			if ( pspath.length() < 1 )
+				cerr << "-pspath: The power spectrum file path must be specified!" << endl;
+			else
+				if ( pspath[-1] != '/' ) pspath += "/";
+		}
+		if ( curropt->tag == "partpath" ) {
+			partpath = curropt->value;
+			if ( partpath.length() < 1 )
+				cerr << "-partpath: The particle file path must be specified!" << endl;
+			else
+				if ( partpath[-1] != '/' ) partpath += "/";
+		}
+		if ( curropt->tag == "filpath" ) {
+			filpath = curropt->value;
+			if ( filpath.length() < 1 )
+				cerr << "-filpath: The filament file path must be specified!" << endl;
+			else
+				if ( filpath[-1] != '/' ) filpath += "/";
+		}
 		if ( curropt->tag == "extension" ) {
 			partext = curropt->value;
 			if ( partext.length() < 1 )
@@ -112,6 +145,7 @@ int			main(int argc, char** argv)
 		}
 		if ( curropt->tag == "particles" )
 			partfile = curropt->filename();
+		if ( curropt->tag == "remove" ) write_flags |= 2;
 		if ( curropt->tag == "output" )
 			outfile = curropt->filename();
     }
@@ -135,7 +169,18 @@ int			main(int argc, char** argv)
 		cerr << "Error: No project generated!" << endl;
 		bexit(-1);
 	}
-	
+
+	if ( mgpath.length() )
+		project_set_micrograph_path(project, mgpath);
+	if ( framepath.length() )
+		project_set_frame_path(project, framepath);
+	if ( pspath.length() )
+		project_set_powerspectrum_path(project, pspath);
+	if ( partpath.length() )
+		project_set_particle_path(project, partpath);
+	if ( filpath.length() )
+		project_set_filament_path(project, filpath);
+
 	if ( sam[0] > 0.1 )
 		project_set_mg_pixel_size(project, sam);
 
@@ -145,12 +190,11 @@ int			main(int argc, char** argv)
 	if ( euler ) project->euler_flag = 1;
 	
 	if ( partfile.length() || partext.length() )
-		project_split_particles(project, partfile, path, partext);
+		project_split_particles(project, partfile, partpath, partext);
 	
 	// Write an output parameter file if a name is given
-	if ( outfile.length() ) {
-		write_project_conv(outfile, project, mg_select, rec_select);
-	}
+	if ( outfile.length() )
+		write_project_conv(outfile, project, write_flags);
 	
 	project_kill(project);
 	
@@ -194,7 +238,7 @@ Bproject*	read_project_conv(Bstring* file_list)
 		if ( ext.contains("star") ) {
 			type = file_type(*thisfile);
 			if ( type == Micrograph )
-				err = read_project_star(*thisfile, project);
+				err = read_project_star2(*thisfile, project);
 			else if ( type == MgRelion )
 				err = read_project_relion(*thisfile, project);
 			else
@@ -240,10 +284,10 @@ Bproject*	read_project_conv(Bstring* file_list)
 	return project;
 }
 
-int			write_project_conv(Bstring& filename, Bproject* project, int mg_select, int rec_select)
+int			write_project_conv(Bstring& filename, Bproject* project, int flags)
 {
 	int				err(0);
-	
+
 	if ( filename.empty() ) {
 		cerr << "Error: No micrograph parameter filename!" << endl;
 		return -1;
@@ -259,25 +303,19 @@ int			write_project_conv(Bstring& filename, Bproject* project, int mg_select, in
 	Bstring			ext = filename.extension();
 
 	if ( ext.contains("star") && project->split == 9 ) {
-		err = write_project_star(filename, project, mg_select, rec_select);
+		err = write_project_star2(filename, project, flags & 2, flags & 4);
 		return err;
 	}
 	
 	if ( verbose & VERB_LABEL )
 		cout << "Parameter filename: " << filename << endl;
 
-    if ( ext.contains("star") ) {
-		err = write_project_star(filename, project, mg_select, rec_select);
-	} else if ( ext.contains("xml") ) {
-		err = write_project_xml(filename, project, mg_select, rec_select);
-    } else if ( ext.contains("dat") ) {
-		err = write_project_dat(filename, project, mg_select, rec_select);
+	if ( ext.contains("dat") ) {
+		err = write_project_dat(filename, project, flags);
     } else if ( ext.contains("crd") ) {
-		err = write_project_crd(filename, project, mg_select, rec_select);
+		err = write_project_crd(filename, project, flags);
 	} else {
-		cerr << "Error: Extension " << ext << " not valid for parameter files!" << endl;
-		cerr << "	Parameter file " << filename << " not written." << endl;
-		err = -1;
+		err = write_project(filename, project, flags);
 	}
 	
 	if ( err < 0 )
@@ -310,7 +348,9 @@ int			read_project_dat(Bstring& filename, Bproject* project)
 
 	if ( verbose ) cout << "Reading a DAT file:             " << filename << endl;
 	
-    /*========================
+	project->comment = "# DAT file: " + filename + "\n";
+
+	/*========================
        Read DAT-format file
     ========================*/
 	ifstream		fdat(filename.c_str());
@@ -412,13 +452,13 @@ int			read_project_dat(Bstring& filename, Bproject* project)
 @brief 	Writing micrograph parameters to a DAT file.
 @param 	*filename		file name.
 @param 	*project		project structure.
-@param 	mg_select		flag to select micrograph.
-@param 	rec_select		flag to select reconstruction.
+@param 	flags			write flags to select micrographs.
 @return int				error code (<0 means failure).
 **/
-int			write_project_dat(Bstring& filename, Bproject* project, int mg_select, int rec_select)
+int			write_project_dat(Bstring& filename, Bproject* project, int flags)
 {
 	int					err(0);
+	int 				mg_select(flags & 2);
 	int					i, f, numpart(0);
 	double				def_min, def_max, omega;
 	Euler				euler;
@@ -434,7 +474,7 @@ int			write_project_dat(Bstring& filename, Bproject* project, int mg_select, int
 	if ( project_count_micrographs(project) < 2 ) mg_select = 1;
 
 	for ( i=1, field = project->field; field; field = field->next ) {
-		for ( mg = field->mg; mg; mg = mg->next, i++ ) if ( mg_select < 1 || mg_select == i ) {
+		for ( mg = field->mg; mg; mg = mg->next, i++ )  if ( mg_select < 1 || mg->select > 0 ) {
 			if ( mg_select < 1 ) outname = filename.pre_rev('.') + Bstring(i, "_%06d.") + filename.post_rev('.');
 			for ( part = mg->part; part; part = part->next ) numpart++;
 			ctf = mg->ctf;
@@ -502,7 +542,9 @@ int			read_project_crd(Bstring& filename, Bproject* project)
 	Bstring				part_ext;
 	
 	if ( verbose ) cout << "Reading a CRD file:             " << filename << endl;
-	
+
+	project->comment = "# CRD file: " + filename + "\n";
+
     /*========================
 	 Read CRD-format file
 	 ========================*/
@@ -581,13 +623,13 @@ int			read_project_crd(Bstring& filename, Bproject* project)
 @brief 	Writing micrograph parameters to a CRD file.
 @param 	*filename		file name.
 @param 	*project		project structure.
-@param 	mg_select		flag to select micrograph.
-@param 	rec_select		flag to select reconstruction.
+@param 	flags			write flags to select micrographs.
 @return int				error code (<0 means failure).
 **/
-int			write_project_crd(Bstring& filename, Bproject* project, int mg_select, int rec_select)
+int			write_project_crd(Bstring& filename, Bproject* project, int flags)
 {
 	int					err(0);
+	int 				mg_select(flags & 2);
 	int					i, numpart(0), numbad(0);
 	Bfield*				field = NULL;
 	Bmicrograph*		mg = NULL;
@@ -602,7 +644,7 @@ int			write_project_crd(Bstring& filename, Bproject* project, int mg_select, int
 	if ( project_count_micrographs(project) < 2 ) mg_select = 1;
 	
 	for ( i=1, field = project->field; field; field = field->next ) {
-		for ( mg = field->mg; mg; mg = mg->next, i++ ) if ( mg_select < 1 || mg_select == i ) {
+		for ( mg = field->mg; mg; mg = mg->next, i++ )  if ( mg_select < 1 || mg->select > 0 ) {
 			if ( mg_select < 1 ) outname = filename.pre_rev('.') + Bstring(i, "_%06d.") + filename.post_rev('.');
 			if ( mg->fpart.length() ) {
 				prefix = mg->fpart.pre_rev('.');

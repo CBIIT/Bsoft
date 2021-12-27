@@ -333,7 +333,7 @@ Bplot*		Bimage::fsc(Bimage* p, double hi_res, double sampling_ratio)
 	long			i, j, nn, ncol(n+1);
 //	double			r, fsccut[4] = {0.143, 0.3, 0.5, 0.9};
 	double			rad_scale(real_size()[0]/sampling_ratio);
-	long			maxrad = fspace_maximum_radius(hi_res, sampling_ratio);
+//	long			maxrad = fspace_maximum_radius(hi_res, sampling_ratio);
 	Bstring			title("Resolution"), txt;
 	Bimage*			p1 = NULL;
 	Bimage*			p2 = NULL;
@@ -351,7 +351,8 @@ Bplot*		Bimage::fsc(Bimage* p, double hi_res, double sampling_ratio)
 		p1->complex_to_real();
 		delete p2;
 		p1->origin(0,0,0);
-		p2 = p1->radial(0, maxrad, 1, 1);
+//		p2 = p1->radial(0, maxrad, 1, 1);
+		p2 = p1->fspace_radial_power(hi_res);
 		p2->set(0, 1);
 		for ( i=1; i<p2->sizeX(); ++i ) p2->set(i, (*p2)[i] / sqrt((*pr1)[i] * (*pr2)[i]));
 		delete p1;
