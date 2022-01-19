@@ -6,6 +6,8 @@
 @date	Modified: 20110730
 **/
 
+/* test*/
+
 #include "rwimg.h"
 #include "utilities.h"
 #include "options.h"
