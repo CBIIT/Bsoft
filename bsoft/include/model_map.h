@@ -3,11 +3,12 @@
 @brief	Header file for model to map conversions.
 @author Bernard Heymann
 @date	Created: 20081112
-@date	Modified: 20210105
+@date	Modified: 20220414
 **/
 
 #include "rwmodel.h"
 #include "rwimg.h"
+#include "ctf.h"
 #include "Bgraphseg.h"
 
 /* Function prototypes */
@@ -24,4 +25,6 @@ Bimage*		model_shell_power_spectrum(Bmodel* model, Vector3<long> size,
 int			model_component_symmetry(Bmodel* model, long nangles,
 				long ann_min, long ann_max, long ann_width, 
 				long zmin, long zmax, long zinc, long minorder, long maxorder);
+int			img_electron_scattering(Bmodel* model, Bimage* p,
+				CTFparam& cp, double dose, double stdev, Bstring& atompropfile, int flag);
 

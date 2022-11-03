@@ -3,7 +3,7 @@
 @brief	Library functions useful in all the package
 @author Bernard Heymann
 @date	Created: 19990722
-@date	Modified: 20200610
+@date	Modified: 20220722
 **/
 
 #include <errno.h>
@@ -18,6 +18,7 @@
 // Definition of global variables 
 int 	verbose(0);		// Default: No output to shell
 string	command;		// Command line
+int		thread_limit(1000000);	// Default: Effectively no thread limit
 
 ostream 	&tab(ostream &out)
 {
@@ -208,7 +209,7 @@ size_t		system_processors()
 {
 	size_t		np(1);
 	
-#ifdef OMP_H
+#ifdef HAVE_OMP
 	np = omp_get_num_procs();
 #endif
 #ifdef HAVE_GCD
@@ -601,18 +602,33 @@ void		vax2ieee(unsigned char* v, int sb)
 @param 	angle		input angle.
 @return double		angle between -PI and PI.
 
-Reference:  Derived from CCP4 code
-
 **/
-double		angle_set_negPI_to_PI(double angle) 
+double		angle_set_negPI_to_PI(double angle)
 {
 	if ( !isfinite(angle) ) return 0;
+
+	long 		n(angle/M_PI);
 	
-//	angle = fmod(angle, TWOPI);
-	angle -= TWOPI*(long(angle/TWOPI));
-	while ( angle <= -M_PI ) angle += TWOPI;
-	while ( angle >   M_PI ) angle -= TWOPI;
+	angle -= (n+n%2)*M_PI;
+
+	return angle;
+}
+
+/**
+@brief 	Returns an angle between 0 and 2*PI.
+@param 	angle		input angle.
+@return double		angle between 0 and 2*PI.
+
+**/
+double		angle_set_0_to_TWOPI(double angle)
+{
+	if ( !isfinite(angle) ) return 0;
+
+	long 		n(angle/TWOPI);
 	
+	angle -= n*TWOPI;
+	if ( angle < 0 ) angle += TWOPI;
+
 	return angle;
 }
 

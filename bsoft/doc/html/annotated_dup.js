@@ -25,6 +25,7 @@ var annotated_dup =
     [ "Bfilament", "class_bfilament.html", "class_bfilament" ],
     [ "Bfilnode", "class_bfilnode.html", "class_bfilnode" ],
     [ "Bframe", "class_bframe.html", "class_bframe" ],
+    [ "Bgroup", "class_bgroup.html", "class_bgroup" ],
     [ "Bimage", "class_bimage.html", "class_bimage" ],
     [ "BIORADhead", "struct_b_i_o_r_a_dhead.html", "struct_b_i_o_r_a_dhead" ],
     [ "BitStreamer", "class_bit_streamer.html", "class_bit_streamer" ],
@@ -54,10 +55,10 @@ var annotated_dup =
     [ "Bresidue_type", "struct_bresidue__type.html", "struct_bresidue__type" ],
     [ "Bsecondary", "struct_bsecondary.html", "struct_bsecondary" ],
     [ "Bsimplex", "class_bsimplex.html", "class_bsimplex" ],
-    [ "Bstar", "struct_bstar.html", "struct_bstar" ],
-    [ "Bstar2", "class_bstar2.html", "class_bstar2" ],
+    [ "Bstar", "class_bstar.html", "class_bstar" ],
     [ "Bstar_block", "struct_bstar__block.html", "struct_bstar__block" ],
     [ "Bstar_item", "struct_bstar__item.html", "struct_bstar__item" ],
+    [ "Bstar_old", "struct_bstar__old.html", "struct_bstar__old" ],
     [ "BstarBlock", "class_bstar_block.html", "class_bstar_block" ],
     [ "BstarLoop", "class_bstar_loop.html", "class_bstar_loop" ],
     [ "Bstring", "class_bstring.html", "class_bstring" ],
@@ -140,5 +141,7 @@ var annotated_dup =
     [ "UnitCell", "class_unit_cell.html", "class_unit_cell" ],
     [ "Vector3", "class_vector3.html", "class_vector3" ],
     [ "View", "class_view.html", "class_view" ],
-    [ "View2", "class_view2.html", "class_view2" ]
+    [ "View2", "class_view2.html", "class_view2" ],
+    [ "Zernike", "class_zernike.html", "class_zernike" ],
+    [ "Zernike_Coefficient", "class_zernike___coefficient.html", "class_zernike___coefficient" ]
 ];

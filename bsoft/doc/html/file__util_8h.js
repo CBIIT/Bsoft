@@ -10,8 +10,8 @@ var file__util_8h =
       [ "MgRelion", "file__util_8h.html#a2c794c5c13ab4dd7e65bad031dbe41c3a3b259bba425fec7b5a233496990fd22a", null ]
     ] ],
     [ "detect_and_fix_carriage_return", "file__util_8h.html#a4ba17bb7ea373dddad486b6a30013e2e", null ],
-    [ "file_list", "file__util_8h.html#ad4d6fa0365303d7ddecf8756c82cb6a8", null ],
-    [ "file_list", "file__util_8h.html#a3c3411ced4b9632566ecc66ffa64a72a", null ],
+    [ "file_list", "file__util_8h.html#a53ebd65241c0fc4b19302d5d54332f54", null ],
+    [ "file_list", "file__util_8h.html#a7ab6394d9aeeae9f7e26c62a32d97691", null ],
     [ "file_type", "file__util_8h.html#ae0cfddeda7c972b70f4550fb73e1a465", null ],
     [ "file_type", "file__util_8h.html#af48eade49d3bc298a72d111bbd87d289", null ],
     [ "find_file", "file__util_8h.html#a82aa2847495abb19be494eed22453c89", null ],

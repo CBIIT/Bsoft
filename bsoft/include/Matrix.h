@@ -140,6 +140,39 @@ public:
 		for ( long i=0; i<len; i++ ) mat.d[i] = -mat.d[i];
 		return mat;
 	}
+	Matrix	operator+=(Matrix mat) {
+		return *this + mat;
+	}
+	Matrix	operator+(Matrix mat) {
+		long		i, j;
+		Matrix		numat(m, n);
+		if ( m != mat.m || n != mat.n ) {
+			cerr << "Matrices not the same size!" << endl;
+			return numat;
+		}
+		for ( i=0; i<n; i++ )
+			for ( j=0; j<m; j++ )
+				numat[i][j] = (*this)[i][j] + mat[i][j];
+		return numat;
+	}
+	Matrix	operator-=(Matrix mat) {
+		return *this - mat;
+	}
+	Matrix	operator-(Matrix mat) {
+		long		i, j;
+		Matrix		numat(m, n);
+		if ( m != mat.m || n != mat.n ) {
+			cerr << "Matrices not the same size!" << endl;
+			return numat;
+		}
+		for ( i=0; i<n; i++ )
+			for ( j=0; j<m; j++ )
+				numat[i][j] = (*this)[i][j] - mat[i][j];
+		return numat;
+	}
+	Matrix	operator*=(Matrix mat) {
+		return *this * mat;
+	}
 	Matrix	operator*(Matrix& mat) {
 		long		i, j, k;
 		Matrix		numat(mat.m, n);

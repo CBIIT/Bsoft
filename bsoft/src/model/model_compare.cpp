@@ -72,12 +72,6 @@ double		model_compare(Bmodel* model1, Bmodel* model2)
 	long	n(0), n1(0), n2(0);
 	double			d, dmin, R(0);
 
-//	Vector3<float>	com1 = model_center_of_mass(model1);
-//	Vector3<float>	com2 = model_center_of_mass(model2);
-
-//	for ( comp1 = model1->comp; comp1; comp1 = comp1->next ) comp1->location() -= com1;
-//	for ( comp2 = model2->comp; comp2; comp2 = comp2->next ) comp2->location() -= com2;
-
 	if ( verbose ) {
 		cout << "Comparing " << model1->identifier() << " with " << model2->identifier() << ":" << endl;
 		cout << "Comp1\tComp2\tDmin" << endl;

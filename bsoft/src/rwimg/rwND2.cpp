@@ -214,7 +214,7 @@ int 	readND2(Bimage* p, int readdata, int img_select)
 		for ( auto it: entry_list )
 			cout << it.tag << "\t" << it.pos << "\t" << it.len << endl;
 
-	long			i, j, start, line_size;
+	long			i, j, start, line_size(0);
 	double			px(1);
 	string			param;
 	vector<ImageAttribute>	attr;
@@ -296,6 +296,7 @@ int 	readND2(Bimage* p, int readdata, int img_select)
 	if ( readdata ) {
 		p->data_alloc();
 		unsigned char*	data = p->data_pointer();
+		// Should this be line_size?
 		long			readsize(p->sizeX()*p->channels()*p->data_type_size());
 		for ( auto it: img_pos ) {
 			for ( i=0, j=it.second; i<p->sizeY(); ++i, j+=line_size ) {

@@ -109,7 +109,7 @@ map<string, int>	link_tags()
 **/
 Bmodel*		read_model_star(Bstring* file_list)
 {
-	Bstar2			star;
+	Bstar			star;
 	star.line_length(200);                // Set the output line length
 
 	while ( file_list ) {
@@ -250,7 +250,7 @@ Bmodel*		read_model_star(Bstring* file_list)
 int			write_model_star(Bstring& filename, Bmodel* model, int split)
 {
 	Bstring			id;
- 	Bstar2			star;
+ 	Bstar			star;
 	
 	Bmodel*			mp = NULL;
 	Bcomptype*		comptype = NULL;

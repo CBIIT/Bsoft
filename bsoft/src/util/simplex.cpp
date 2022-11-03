@@ -3,7 +3,7 @@
 @brief	Nelder and Mead downhill simplex method for generalized parameter fitting
 @author Bernard Heymann
 @date	Created: 20000426
-@date	Modified: 20210729
+@date	Modified: 20220301
 
 	Adapted from Numerical Recipes, 2nd edition, Press et al. 1992
 **/
@@ -69,6 +69,7 @@ Bsimplex::Bsimplex(long nv, long np, long nc, long n, vector<double>& ax, vector
 @param 	maxcycles 		maximum number of evaluation cycles to use.
 @param 	tolerance 		absolute tolerance on the R function.
 @fn		(funk)(Bsimplex *)	evaluation function returning an R value.
+@param 	report 			interval to report R values, default 0 (no reporting).
 @return double			final R value (such as a correlation index).
 
 	Downhill simplex method of Nelder and Mead.
@@ -84,7 +85,7 @@ Bsimplex::Bsimplex(long nv, long np, long nc, long n, vector<double>& ax, vector
 Reference: 	Press W.H. et al (1992) Numerical Recipes in C.
 
 **/
-double		Bsimplex::run(long maxcycles, double tolerance, double (funk)(Bsimplex&))
+double		Bsimplex::run(long maxcycles, double tolerance, double (funk)(Bsimplex&), long report)
 {
 	long			i, j, k, npnt(nparam + 1), cycle(0);
 	long			converged(0), ilo(0), inhi(1), ihi(2);
@@ -92,7 +93,7 @@ double		Bsimplex::run(long maxcycles, double tolerance, double (funk)(Bsimplex&)
 	double			irm(1.0L/rand_max);
 	double			r, Rtry, Rsave, reltol(tolerance/10);
 	
-	if ( maxcycles < 100 ) maxcycles = 100;
+	if ( maxcycles < 1 ) maxcycles = 1;
 	
 	random_seed();
 	
@@ -129,7 +130,7 @@ double		Bsimplex::run(long maxcycles, double tolerance, double (funk)(Bsimplex&)
 		}
 	}
 	
-	if ( verbose & VERB_FULL ) {
+	if ( verbose && report ) {
 		cout << "Cycle";
 		for ( j=0; j<nparam; j++ ) cout << "\tp" << j;
 		cout << "\tR" << endl;
@@ -158,7 +159,7 @@ double		Bsimplex::run(long maxcycles, double tolerance, double (funk)(Bsimplex&)
 				for ( j=0; j<nparam; j++ ) {		
 					k = i*nparam+j;
 					r = random()*irm;
-					if ( lo.size() < hi.size() ) { // Stay within limits
+					if ( lo[j] < hi[j] ) { // Stay within limits
 						mp[k] = lo[j] + (hi[j] - lo[j])*(0.25 + 0.5*r);
 					} else {					// If no limits are specified
 						if ( mp[k] == 0 )
@@ -169,12 +170,12 @@ double		Bsimplex::run(long maxcycles, double tolerance, double (funk)(Bsimplex&)
 				}
 			}
 		} else {
-					// Reflect the simplex opposite the highest point
+			// Reflect the simplex opposite the highest point
 			Rtry = amotry(mp, R, ihi, -1.0, funk);
-					// If it is better, try an additional extrapolation
+			// If it is better, try an additional extrapolation
 			if ( Rtry <= R[ilo] )
 				Rtry = amotry(mp, R, ihi, 2.0, funk);
-					// If it is worse, contract around the lowest point
+			// If it is worse, contract around the lowest point
 			else if ( Rtry >= R[inhi] ) {
 				Rsave = R[ihi];
 				Rtry = amotry(mp, R, ihi, 0.5, funk);
@@ -190,10 +191,10 @@ double		Bsimplex::run(long maxcycles, double tolerance, double (funk)(Bsimplex&)
 				}
 			}
 		}
-		if ( verbose & VERB_FULL ) {
-			if ( cycle%1000 == 0 ) {
+		if ( verbose && report ) {
+			if ( cycle%report == 0 ) {
 				cout << cycle;
-				for ( j=0; j<nparam; j++ ) cout << tab << mp[ilo*nparam+j];
+				for ( j=0; j<nparam; j++ ) cout << tab << setw(7) << mp[ilo*nparam+j];
 				cout << tab << R[ilo] << endl;
 			}
 		}
@@ -214,9 +215,9 @@ double		Bsimplex::run(long maxcycles, double tolerance, double (funk)(Bsimplex&)
 	
 	Rsave = R[ilo];
 	
-	if ( verbose & VERB_FULL ) {
+	if ( verbose && report ) {
 		cout << "Simplex cycles used:               " << cycle << endl;
-		cout << "Tolerance:                         " << tolerance << endl << endl;
+		cout << "Tolerance:                         " << setprecision(6) << tolerance << endl << endl;
 	}
 
 	return Rsave;
@@ -248,8 +249,10 @@ double		Bsimplex::amotry(vector<double>& mp, vector<double>& R,
 		for ( i=0; i<npnt; i++ ) psum += mp[i*nparam+j];
 		param[j] = mp[ihi*nparam+j];
 		pnew = psum*fac1 - mp[ihi*nparam+j]*fac2;
-		if ( lo.size() ) if ( pnew < lo[j] ) pnew = param[j];
-		if ( hi.size() ) if ( pnew > hi[j] ) pnew = param[j];
+		if ( lo[j] < hi[j] ) {
+			if ( pnew < lo[j] ) pnew = param[j];
+			if ( pnew > hi[j] ) pnew = param[j];
+		}
 		param[j] = pnew;
 	}
 	

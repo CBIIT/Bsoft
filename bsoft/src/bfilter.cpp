@@ -75,7 +75,8 @@ int 	main(int argc, char **argv)
 	int				setminmax(0);				// Flag to rescale to min and max
 	double			newmin(0), newmax(0); 		// Rescaling to new min and max
 	Vector3<long>	average_kernel;				// Average filter kernel size
-	long			gauss_kernel(0), sigma(0);	// Gaussian kernel size and sigma
+	long			gauss_kernel(0);			// Gaussian kernel size
+	double			sigma(0);					// Gaussian sigma
 	long 			median_kernel(0);			// Median filter kernel size
 	Bstring			dif_file;					// File to calculate difference filter
 	long 			peak_kernel(0);				// Peak filter kernel size
@@ -338,8 +339,11 @@ int 	main(int argc, char **argv)
 	
 		if ( log_sigma > 0 ) p->fspace_weigh_LoG(res_hi, log_sigma);
 	
-		if ( bandpass ) p->fspace_bandpass(res_hi, res_lo, bandpass_width);
-	
+		if ( bandpass ) {
+			if ( bandpass_width < 2 ) p->fspace_bandpass(res_hi, res_lo, bandpass_width);
+			else p->fspace_butterworth_band(res_hi, res_lo, bandpass_width);
+		}
+		
 		if ( frequency ) p->fspace_frequency_filter(frequency, fsigma);
 	
 		if ( freqloc.length() ) p->fspace_gabor_filter(freqloc, fsigma, psigma);

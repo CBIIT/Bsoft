@@ -5,10 +5,12 @@
 #
 # @author	Bernard Heymann
 # @date		Created: 20010516
-# @date		Modified: 20191112
+# @date		Modified: 20220224
 
 set img_load_phase 0
 set img_filter "*"
+#set browser_dir "./"
+set browser_dir ""
 
 ## @brief Menu for opening and closing image files and quiting
 #
@@ -44,8 +46,10 @@ proc setupFileMenu {} {
 set filetypes {
 	{"All files"		*}
 	{"CCP4"		{.map .MAP}		}
-	{"MRC"		{.mrc .MRC .stk .STK .st .ST .ali .ALI .rec .REC}		}
+	{"MRC"		{.mrc .MRC .mrcs .stk .STK .st .ST .ali .ALI .rec .REC}		}
 	{"PIF"		{.pif .PIF}		}
+	{"GRD"		{.grd .GRD}		}
+	{"EER"		{.eer .EER}		}
 	{"EM"		{.em  .EM }		}
 	{"IMAGIC"	{.img .IMG .hed .HED}	}
 	{"SPIDER"	{.spi .SPI}		}
@@ -106,7 +110,7 @@ proc fileDialog { operation } {
 # @param	node		File browser node.
 
 proc openNode {tree node} {
-	global img_filter
+	global img_filter browser_dir
 
     if {[$tree set $node type] ne "directory"} {
 		return
@@ -118,7 +122,7 @@ proc openNode {tree node} {
     foreach f [lsort -dictionary [glob -nocomplain -dir $path *]] {
 #    	set r [string match "./$img_filter" $f]
 #   	puts "$f $r"
-		if [string match "./$img_filter" $f] {
+		if [string match "$browser_dir/$img_filter" $f] {
 			set type [file type $f]
 			set id [$tree insert $node end -text [file tail $f] \
 				-values [list $f $type]]
@@ -154,15 +158,21 @@ proc openNode {tree node} {
 # @param	w			File browser tree.
 
 proc setupFileBrowser { w } {
-	global img_filter
-
-	$w.tree set {} fullpath "./"
+	global img_filter browser_dir
+	
+	$w.tree set {} fullpath $browser_dir
 	$w.tree set {} type "directory"
 	
 	set img_filter [$w.filter.e get]
 	if { $img_filter eq "" } {
 		set img_filter "*"
 		$w.filter.e insert 0 $img_filter
+	}
+
+	set browser_dir [$w.dir.e get]
+	if { $browser_dir eq "" } {
+		set browser_dir "./"
+		$w.dir.e insert 0 $browser_dir
 	}
 
 	openNode $w.tree {}
@@ -194,14 +204,30 @@ proc openFileFromTree { wtree } {
 	}
 }
 
+proc changeBrowserDirectory { w } {
+	global browser_dir
+	
+#	file normalize $browser_dir
 
+	set browser_dir [tk_chooseDirectory \
+        -initialdir $browser_dir -title "Choose a directory"]
+ 
+ 	$w.dir.e delete 0 end
+	$w.dir.e insert 0 $browser_dir
+
+	setupFileBrowser $w
+}
 
 ## @brief	Sets up the file browser window
 #
 # @param	w		Window name.
 
 proc fileBrowserWindow { w } {
-	global img_filter
+	global img_filter browser_dir
+	
+	if { $browser_dir eq "" } {
+		set browser_dir [pwd]
+	}
 
 	catch {destroy $w}
 	toplevel $w
@@ -211,19 +237,28 @@ proc fileBrowserWindow { w } {
 
 	## Buttons
 	ttk::frame $w.buttons
+	ttk::button $w.buttons.dir -text "Change directory" \
+		-command [list changeBrowserDirectory $w]
 	ttk::button $w.buttons.close -text "Close" \
 		-command [list destroy [winfo toplevel $w]]
 	ttk::button $w.buttons.code -text "Refresh" \
 		-command [list setupFileBrowser $w]
-	pack $w.buttons.code $w.buttons.close -side left
+	pack $w.buttons.dir $w.buttons.code $w.buttons.close -side left
 	pack $w.buttons -side bottom -padx 2 -pady 2
 
 	## Filter
-	labelframe $w.filter -text "File filter" -labelanchor nw 
-	ttk::entry $w.filter.e 
+	labelframe $w.filter -text "File filter" -labelanchor nw
+	ttk::entry $w.filter.e
 	$w.filter.e insert 0 $img_filter
 	pack $w.filter.e -side left -expand yes -fill x
 	pack $w.filter -side bottom -fill x -padx 2 -pady 2
+
+	## Directory
+	labelframe $w.dir -text "Directory" -labelanchor nw
+	ttk::entry $w.dir.e
+	$w.dir.e insert 0 $browser_dir
+	pack $w.dir.e -side left -expand yes -fill x
+	pack $w.dir -side bottom -fill x -padx 2 -pady 2
 
 	## Create the tree and set it up
 	ttk::treeview $w.tree -columns {fullpath type size} -displaycolumns {size} \

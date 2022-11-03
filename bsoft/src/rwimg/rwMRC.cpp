@@ -78,7 +78,7 @@ int 	readMRC(Bimage* p, int readdata, int img_select)
 
 	if ( verbose & VERB_PROCESS ) {
 		cout << "Header version:                 " << header->nversion << endl;
-		cout << "Extended header type:           " << exttype << endl;
+		cout << "Extended header type:           " << exttype << " (" << header->nsymbt << ")" << endl;
 	}
 	
     // Determine byte order and swap bytes if from little-endian machine

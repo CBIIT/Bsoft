@@ -1,6 +1,6 @@
 var tcltk__bxtal_8cpp =
 [
-    [ "do_spot", "tcltk__bxtal_8cpp.html#a6ab5c411ec81df12e2b047a2edf9d7ee", null ],
+    [ "do_spot", "tcltk__bxtal_8cpp.html#aea6ac221c225795e7d820840abad0f8e", null ],
     [ "spot_count", "tcltk__bxtal_8cpp.html#a1be489b5ac9f80db036025f20b4cd12a", null ],
     [ "spot_create", "tcltk__bxtal_8cpp.html#a2b54ff2f1c52d7540fce2a7cfeb58376", null ],
     [ "spot_delete", "tcltk__bxtal_8cpp.html#aae7dc07de6c03df4d24299fd0a199bbb", null ],

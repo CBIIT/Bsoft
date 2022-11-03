@@ -145,7 +145,7 @@ int 		write_pointgroup(Bstring& filename, Bsymmetry& sym, View ref_view)
 // Find space group label and operators in a STAR format file
 char* 		read_symop_star(Bstring& filename, int spacegroup, int& nsym)
 {
- 	Bstar2					star;
+ 	Bstar					star;
 	
  	if ( star.read(filename.str()) < 0 )
 		error_show(filename.c_str(), __FILE__, __LINE__);
@@ -255,7 +255,7 @@ int 		write_symop_star(Bstring& filename, int spacegroup, int nsym, char* symop,
 {
 	int				i;
 	Bstring			s;
-	Bstar2			star;
+	Bstar			star;
 
 	star.comment("# Symmetry operators\n\n");
 
@@ -279,7 +279,7 @@ int 		write_symop_star(Bstring& filename, int spacegroup, int nsym, char* symop,
 
 int 		write_pointgroup_star(Bstring& filename, Bsymmetry& sym, View ref_view)
 {
- 	Bstar2			star;
+ 	Bstar			star;
 
 	star.comment("# Symmetry from bsym\n\n");
 

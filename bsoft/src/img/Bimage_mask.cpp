@@ -2140,13 +2140,13 @@ long		Bimage::levelmask_colorize()
 	long				i, cc, nc((long) (max - min + 1));
 	vector<RGB<unsigned char>>	lut(nc);
 
-	for ( auto it = lut.begin(); it != lut.end(); ++it )
-		it->random_color();
-	
 	if ( verbose & VERB_LABEL ) {
 	    cout << "Coloring a multi-level mask:" << endl;
 	    cout << "Levels:                         " << nc << endl << endl;
 	}
+	
+	for ( auto it = lut.begin(); it != lut.end(); ++it )
+		it->random_color();
 	
     RGB<unsigned char>* nudata = new RGB<unsigned char>[datasize];
 	

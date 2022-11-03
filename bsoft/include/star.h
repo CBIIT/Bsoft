@@ -1,7 +1,7 @@
 /**
 @file	star.h
 @author	Bernard Heymann
-@date	20151106 - 20210415
+@date	20151106 - 20220103
 **/
 
 #include <iostream>
@@ -18,7 +18,7 @@
 
 using namespace std;
 
-#ifndef _STAR2_
+#ifndef _STAR_
 
 /**
 @class 	BstarLoop
@@ -60,7 +60,7 @@ public:
 
 		for ( auto s: tg )
 			vs[s.second] = s.first;		// Get the correct order of the tags
-
+/*
 		fstar << endl << "loop_" << endl;
 	
 		for ( auto s: vs )
@@ -73,7 +73,20 @@ public:
 		}
 
 		fstar << endl;
+*/
+		fstar << "\nloop_\n";
 	
+		for ( auto s: vs )
+			fstar << "_" << s << "\n";	// Lead with an underscore
+
+		for ( auto r: d ) {
+			for ( auto s: r )
+				fstar << setw(8) << s << " ";
+			fstar << "\n";
+		}
+
+		fstar << "\n";
+
 		return err;
 	}
 	map<string, int>&	tags() { return tg; }
@@ -182,7 +195,7 @@ public:
 	}
 	int				write(ofstream& fstar) {
 		int						err(0), line_length(80);
-
+/*
 		fstar << endl << "data_" << tg << endl << endl;
 
 		for ( auto ii: it ) {
@@ -197,6 +210,23 @@ public:
 				for ( size_t i = 0; i<s.length(); i += line_length )
 					fstar << s.substr(i, line_length) << endl;
 				fstar << ";" << endl;
+			}
+		}
+*/
+		fstar << "\n" << "data_" << tg << "\n\n";
+
+		for ( auto ii: it ) {
+			fstar << left << "_" << setw(39) << ii.first;	// Lead with an underscore
+			string		s = ii.second;
+			if ( s.length() < line_length ) {
+				if ( s[0] != '"' && s.find_first_of(' ') != string::npos )
+					fstar << " \"" << s << "\"\n";
+				else fstar << " " << s << "\n";
+			} else {
+				fstar << "\n;\n";
+				for ( size_t i = 0; i<s.length(); i += line_length )
+					fstar << s.substr(i, line_length) << "\n";
+				fstar << ";\n";
 			}
 		}
 
@@ -218,7 +248,7 @@ public:
 			return -1;
 		}
 
-		fstar << comment << endl;
+		fstar << comment << "\n";
 
 		write(fstar);
 	
@@ -298,14 +328,14 @@ public:
 	The STAR database is a hierarchy consisting of blocks, each with a set
 	of items.
 ***/
-class Bstar2 {
+class Bstar {
 private:
 	size_t 				lin;	// Length of lines in output file
 	string				com;	// List of comments before 1st data block
 	vector<BstarBlock>	b;		// List of data blocks
 public:
-	Bstar2() { lin = 80; }
-	Bstar2(string filename) { read(filename); }
+	Bstar() { lin = 80; }
+	Bstar(string filename) { read(filename); }
 	/**
 	@brief 	Reads paramaters and data into a STAR data base from a file.
 	@param	filename	a file name.
@@ -366,7 +396,7 @@ public:
 			return -1;
 		}
 
-		fstar << com << endl;
+		fstar << com << "\n";
 
 		for ( auto ib: b )
 			err += ib.write(fstar);
@@ -456,7 +486,7 @@ public:
 		}
 	}
 } ;
-#define _STAR2_
+#define _STAR_
 #endif
 
 

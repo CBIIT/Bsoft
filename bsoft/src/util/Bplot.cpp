@@ -3,11 +3,12 @@
 @brief	Postscript output functions.
 @author Bernard Heymann
 @date	Created: 20010515
-@date	Modified: 20160318
+@date	Modified: 20221004
 **/
  
 #include "Bplot.h"
-#include "utilities.h" 
+#include "string_util.h"
+#include "utilities.h"
 
 // Declaration of global variables
 extern int 	verbose;		// Level of output to the screen
@@ -34,8 +35,8 @@ Bplot::Bplot(Bstring& filename)
 	if ( verbose & VERB_PROCESS )
 		cout << "# Reading plot file:       " << filename << endl;
 
-	ifstream			fps(filename.c_str());
-	if ( fps.fail() ) return;
+	ifstream			fplot(filename.c_str());
+	if ( fplot.fail() ) return;
 
 	char				aline[1024];
 	long				i(0), j;
@@ -43,22 +44,22 @@ Bplot::Bplot(Bstring& filename)
 	Bstring				sline;
 
 	// Title
-	while ( fps.getline(aline, 1024) && strncmp(aline, "%%Title:", 8) ) ;
+	while ( fplot.getline(aline, 1024) && strncmp(aline, "%%Title:", 8) ) ;
 	
 	Bstring				plot_title(aline);
 	plot_title = plot_title.substr(8,plot_title.length());
 
 	// Start of data
-	while ( fps.getline(aline, 1024) && strncmp(aline, "/Data [", 7) ) ;
+	while ( fplot.getline(aline, 1024) && strncmp(aline, "/Data [", 7) ) ;
 
 	// Lables line
-	fps.getline(aline, 1024);
+	fplot.getline(aline, 1024);
 	sline = aline;
 	Bstring*			labels = sline.split();
 	Bstring*			label;
 	
 	// Determine number of rows and columns
-	while ( fps.getline(aline, 1024) && aline[0] != ']' ) {
+	while ( fplot.getline(aline, 1024) && aline[0] != ']' ) {
 		if ( verbose & VERB_DEBUG )
 			cout << "DEBUG Bplot::Bplot: aline = \"" << aline << "\"" << endl;
 		sline = aline;
@@ -91,17 +92,17 @@ Bplot::Bplot(Bstring& filename)
 
 	string_kill(labels);
 	
-	fps.seekg(0);
+	fplot.seekg(0);
 	
 	// Start of data
-	while ( fps.getline(aline, 1024) && strncmp(aline, "/Data [", 7) ) ;
+	while ( fplot.getline(aline, 1024) && strncmp(aline, "/Data [", 7) ) ;
 
 	// Lables line
-	fps.getline(aline, 1024);
+	fplot.getline(aline, 1024);
 
 	// Read the data
 	i = 0;
-	while ( fps.getline(aline, 1024) && aline[0] != ']' ) {
+	while ( fplot.getline(aline, 1024) && aline[0] != ']' ) {
 		if ( verbose & VERB_DEBUG )
 			cout << "DEBUG Bplot::Bplot: aline = \"" << aline << "\"" << endl;
 		sline = aline;
@@ -110,8 +111,74 @@ Bplot::Bplot(Bstring& filename)
 		i++;
 	}
 }
+/*
+@param	skip		number of lines to skip
+@param	type		0=no headers, 1=headers
+*/
+Bplot::Bplot(Bstring& filename, long skip, int type)
+{
+	if ( filename.length() < 1 ) return;
+	
+	if ( verbose & VERB_PROCESS )
+		cout << "# Reading text file:       " << filename << endl;
 
-void		Bplot::resolution_display(double* fsccut, double* dprcut)
+	ifstream			fplot(filename.c_str());
+	if ( fplot.fail() ) return;
+
+	long				i;
+	int					ncol(0), nrow(0);
+	string				s;
+	vector<string>		label;
+	vector<double>		rdata;
+
+	for ( i=0; !fplot.eof() && i<skip; ++i )
+		getline(fplot, s);
+
+	while ( !fplot.eof() ) {
+		getline(fplot, s);
+		vector<string>	vs = split(s);
+		if ( ncol ) {
+			if ( ncol != vs.size() ) break;
+		} else {
+			ncol = vs.size();
+			if ( type ) {
+				label = vs;
+				continue;
+			}
+		}
+		for ( i=0; i<vs.size() && i<ncol; ++i )
+			rdata.push_back(to_real(vs[i]));
+		nrow++;
+	}
+	
+	fplot.close();
+
+	if ( verbose ) {
+		cout << "Plot file:                      " << filename << endl;
+		cout << "Columns:                        " << ncol << endl;
+		cout << "Rows:                           " << nrow << endl;
+		cout << "Labels:                         ";
+	}
+
+	Bstring				plot_title(filename);
+	initialize(1, nrow, ncol);
+	title(plot_title);
+	page(0).title(plot_title);
+	page(0).columns(ncol);
+	for ( i=0; i<ncol; ++i ) {
+		page(0).column(i).number(i);
+		page(0).column(i).label(label[i]);
+		if ( verbose )
+			cout << " " << label[i];
+	}
+	if ( verbose )
+		cout << endl << endl;
+	
+	for ( i=0; i<nrow*ncol; ++i ) data[i] = rdata[i];
+
+}
+
+void		Bplot::resolution_display(vector<double>& fsccut, vector<double>& dprcut)
 {
 	long		i;
 	double		res(999), FSCsum(0), w, IVR;
@@ -143,16 +210,16 @@ void		Bplot::resolution_display(double* fsccut, double* dprcut)
 	else IVR = sqrt(M_PI/FSCsum);
 	IVR /= s[1];
 
-	if ( fsccut || dprcut )
+	if ( fsccut.size() || dprcut.size() )
 		cout << endl << "Resolution estimates:" << endl;
 	
-	if ( fsccut ) for ( i=0; i<4; i++ ) if ( fsccut[i] ) {
+	for ( i=0; i<fsccut.size(); i++ ) if ( fsccut[i] ) {
 		txt = label + Bstring(fsccut[i], "(%g): ") + Bstring(1/cut(1,fsccut[i],-1), "%g A");
 		page(0).add_text(txt);
 		cout << txt << endl;
 	}
 
-	if ( dprcut ) for ( i=0; i<4; i++ ) if ( dprcut[i] ) {
+	for ( i=0; i<dprcut.size(); i++ ) if ( dprcut[i] ) {
 		txt = Bstring(dprcut[i], "DPR(%g): ") + Bstring(1/cut(2,dprcut[i],1), "%g A");
 		page(0).add_text(txt);
 		cout << txt << endl;

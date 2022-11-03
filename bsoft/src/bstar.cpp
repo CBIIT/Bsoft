@@ -15,10 +15,10 @@
 extern int 	verbose;		// Level of output to the screen
 
 
-int 		show_tags(Bstar2& star);
-int 		item_delete_all(Bstar2& star, string& tag);
-int 		item_scale_shift(Bstar2& star, string& tag, double scale, double shift, int flag);
-int 		item_list(Bstar2& star, string& tag);
+int 		show_tags(Bstar& star);
+int 		item_delete_all(Bstar& star, string& tag);
+int 		item_scale_shift(Bstar& star, string& tag, double scale, double shift, int flag);
+int 		item_list(Bstar& star, string& tag);
 
 
 // Usage assistance
@@ -65,7 +65,7 @@ int 		main(int argc, char **argv)
 	string			outstar;				// Output STAR format file
 	
 	// Initialize the STAR database
-	Bstar2			star;
+	Bstar			star;
 	star.line_length(120);				// Set the output line length
 	
 	int				optind;
@@ -177,7 +177,7 @@ int 		main(int argc, char **argv)
 @param	&star 		the STAR database
 @return int 			number of tags.
 **/
-int 		show_tags(Bstar2& star)
+int 		show_tags(Bstar& star)
 {
 	int 			ntags(0);
 	string			tag;
@@ -229,7 +229,7 @@ int 		show_tags(Bstar2& star)
 	and the item pointers are rearranged to fill in the gap.
 
 **/
-int 		item_delete_all(Bstar2& star, string& tag)
+int 		item_delete_all(Bstar& star, string& tag)
 {
 	if ( verbose & VERB_FULL )
 		cout << "Deleting all items associated with tag \"" << tag << "\"" << endl;
@@ -286,7 +286,7 @@ int			string_get_format(string& s, char* format)
 		new_value = old_value*scale + shift.
 
 **/
-int 		item_scale_shift(Bstar2& star, string& tag, double scale, double shift, int flag)
+int 		item_scale_shift(Bstar& star, string& tag, double scale, double shift, int flag)
 {
 	long 			t(flag+1), j, idata, rdata, total(0);
 //	char			format[32];
@@ -345,7 +345,7 @@ int 		item_scale_shift(Bstar2& star, string& tag, double scale, double shift, in
 	delimited array.
 
 **/
-int 		item_list(Bstar2& star, string& tag)
+int 		item_list(Bstar& star, string& tag)
 {
 	long			j;
 	

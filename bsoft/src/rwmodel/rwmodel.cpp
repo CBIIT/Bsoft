@@ -3,16 +3,20 @@
 @brief	Library routines to read and write atomic model parameters
 @author Bernard Heymann
 @date	Created: 20060919
-@date	Modified: 20210126
+@date	Modified: 20220929
 **/
 
 #include "rwmodel.h"
+#include "rwmodel_param.h"
 #include "rwmodel_star.h"
 #include "rwmodel_xml.h"
 #include "rwmodel_cmm.h"
 #include "rwmodel_bild.h"
 #include "rwmodel_mol.h"
+#include "rwmodel_pdb.h"
+#include "rwmodel_cif.h"
 #include "rwmodel_vega.h"
+#include "rwmodel_xyz.h"
 #include "model_links.h"
 #include "file_util.h"
 #include "linked_list.h"
@@ -58,7 +62,7 @@ Bmodel*		read_model(Bstring* file_list, Bstring& paramfile)
 	Bmodel*			model = NULL;
 	Bstring			path;
 
-    if ( ext.contains("star") || ext.contains("cif") )
+    if ( ext.contains("star") )
 		model = read_model_star(file_list);
     else if ( ext.contains("xml") )
 		model = read_model_xml(file_list);
@@ -68,6 +72,12 @@ Bmodel*		read_model(Bstring* file_list, Bstring& paramfile)
 		model = read_model_bild(file_list);
 	else if ( ext.contains("v3d") )
 		model = read_model_vega(file_list);
+	else if ( ext.contains("pdb") || ext.contains("ent") )
+		model = read_model_pdb(file_list, paramfile);
+	else if ( ext.contains("cif") )
+		model = read_model_cif(*file_list, paramfile);
+	else if ( ext.contains("xyz") )
+		model = read_model_xyz(file_list, paramfile);
     else
 		model = read_model_molecule(file_list, paramfile);
 
@@ -81,7 +91,11 @@ Bmodel*		read_model(Bstring* file_list, Bstring& paramfile)
 //		if ( !model->link ) model_list_setup_links(model);
 		path = file_list->pre_rev('/');
 		model_check(model, path);
+		map<string,Bcomptype>	param = read_atom_properties(paramfile);
+		model->update_component_types(param);
 	}
+	
+//	if ( model->type ) model->type->show();
 	
 	return model;
 }
@@ -127,7 +141,7 @@ int			write_model(Bstring& filename, Bmodel* model, int split)
 //	Bstring			path = filename.pre_rev('/');
 //	model_check(model, path);
 	
-    if ( ext.contains("star") || ext.contains("cif") )
+    if ( ext.contains("star") )
 		n = write_model_star(filename, model, split);
     else if ( ext.contains("xml") )
 		n = write_model_xml(filename, model);
@@ -137,6 +151,12 @@ int			write_model(Bstring& filename, Bmodel* model, int split)
 		n = write_model_bild(filename, model);
     else if ( ext.contains("v3d") )
 		n = write_model_vega(filename, model);
+	else if ( ext.contains("pdb") )
+		n = write_model_pdb(filename, model, split);
+	else if ( ext.contains("cif") )
+		n = write_model_cif(filename, model);
+	else if ( ext.contains("xyz") )
+		n = write_model_xyz(filename, model);
     else
 		n = write_model_molecule(filename, model);
 	
@@ -469,19 +489,6 @@ Bmodel*		model_copy(Bmodel* model)
 }
 
 /**
-@brief 	Deallocates memory for one component.
-@param	*comp	component.
-@return int					0.
-**/
-int			component_kill(Bcomponent* comp)
-{
-	comp->type(NULL);
-	delete comp;
-	
-	return 0;
-}
-
-/**
 @brief 	Deallocates memory for a list of components.
 @param	*comp	component list.
 @return int					total number of components.
@@ -494,24 +501,12 @@ int			component_list_kill(Bcomponent* comp)
 	
 	for ( c = comp; c; ) {
 		c2 = c->next;
-		component_kill(c);
+		delete c;
 		c = c2;
 		n++;
 	}
 	
 	return  n;
-}
-
-/**
-@brief 	Deallocates memory for one component type.
-@param	*type		component type.
-@return int					0.
-**/
-int			comp_type_kill(Bcomptype* type)
-{
-	delete type;
-	
-	return 0;
 }
 
 /**
@@ -527,7 +522,7 @@ int			comp_type_list_kill(Bcomptype* type)
 	
 	for ( ct = type; ct; ) {
 		ct2 = ct->next;
-		comp_type_kill(ct);
+		delete ct;
 		ct = ct2;
 		n++;
 	}

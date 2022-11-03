@@ -82,24 +82,25 @@ long		mg_generate_reflections(Bmicrograph* mg, Vector3<double> real_size, double
 	if ( resolution < 2*mg->pixel_size[0] )
 		resolution = 2*mg->pixel_size[0];
 	
-	double				hkl_lim = real_size[0]/resolution;
-	if ( real_size[1] > real_size[0] ) hkl_lim = real_size[1]/resolution;
-	double				hkl_lim2 = hkl_lim*hkl_lim + 0.001;
+	Vector3<double>		lim2 = real_size/resolution + 0.001;
+	double				k_lim = lim2[0];
+	if ( k_lim < lim2[1] ) k_lim = lim2[1];
+	lim2 *= lim2;
+//	double				hkl_lim = real_size[0]/resolution;
+//	if ( real_size[1] > real_size[0] ) hkl_lim = real_size[1]/resolution;
+//	double				hkl_lim2 = hkl_lim*hkl_lim + 0.001;
 	
 	if ( verbose )
 		cout << "Generating reflections to " << resolution << " Å" << endl;
 		
 	long				n(0), h, k, l, hmin, kmin, lmin, hmax, kmax, lmax;
-	double				h2, k2, l2, hlen, klen;
-	Vector3<double>		loc;
+	Vector3<double>		loc, loc2;
 	Bstrucfac*			sf = NULL;
 	
-	hlen = mg->hvec.length();
-	hmax = (long) (hkl_lim/hlen);
+	hmax = (long) (k_lim/mg->hvec.length()+1);
 	hmin = -hmax;
 
-	klen = mg->kvec.length();
-	kmax = (long) (hkl_lim/klen);					
+	kmax = (long) (k_lim/mg->kvec.length()+1);
 	kmin = -kmax;
 	
 	lmin = lmax = 0;
@@ -116,17 +117,11 @@ long		mg_generate_reflections(Bmicrograph* mg, Vector3<double> real_size, double
 	}
 	
 	for ( l=lmin; l<=lmax; l++ ) {
-		l2 = l*l;
 		for ( k=kmin; k<=kmax; k++ ) {
-			k2 = k*klen;
-			k2 *= k2;
 			for ( h=hmin; h<=hmax; h++ ) {
-				h2 = h*hlen;
-				h2 *= h2;
-				if ( h2 + k2 + l2 <= hkl_lim2 ) {
-					loc[0] = h*mg->hvec[0] + k*mg->kvec[0] + l*mg->lvec[0];
-					loc[1] = h*mg->hvec[1] + k*mg->kvec[1] + l*mg->lvec[1];
-					loc[2] = h*mg->hvec[2] + k*mg->kvec[2] + l*mg->lvec[2];
+				loc = mg->hvec * h + mg->kvec * k + mg->lvec * l;
+				loc2 = (loc*loc)/lim2;
+				if ( loc2.length2() < 1 ) {
 					sf = (Bstrucfac *) add_item((char **) &sf, sizeof(Bstrucfac));
 					if ( !mg->sf ) mg->sf = sf;
 					sf->index[0] = h;

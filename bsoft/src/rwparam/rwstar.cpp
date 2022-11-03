@@ -70,7 +70,7 @@ string		clean_line(string s)
 	return s;
 }
 
-int			no_square_brackets(Bstar* star)
+int			no_square_brackets(Bstar_old* star)
 {
 	Bstar_block*	block;
 	Bstar_item* 	item;
@@ -101,20 +101,20 @@ bool		tag_compare(Bstring item_tag, Bstring tag)
 
 /**
 @brief 	Creates a STAR data base.
-@return Bstar*			the new STAR data base.
+@return Bstar_old*			the new STAR data base.
 
 	A STAR structure is allocated.
 	This function should be called before reading a STAR file, or before
 	composing a STAR database for writing.
 
 **/
-Bstar*		init_star()
+Bstar_old*		init_star()
 {
 	if ( verbose & VERB_DEBUG_STAR )
 		cout << "DEBUG init_star: Initializing" << endl;
 	
 	// The main database structure and pointers to the data blocks
-	Bstar*		star = new Bstar;
+	Bstar_old*		star = new Bstar_old;
 	star->split = 0;
 	star->line_length = LINELENGTH;		// Length of line for output
 	star->block = NULL;
@@ -130,7 +130,7 @@ Bstar*		init_star()
 	A STAR data base structure and all of the data blocks and items are freed.
 
 **/
-int			kill_star(Bstar* star)
+int			kill_star(Bstar_old* star)
 {
 	if ( star == NULL ) return 0;
 	
@@ -222,7 +222,7 @@ int 		kill_item(Bstar_item* item)
 	as possible.
 
 **/
-int			read_star(const char* filename, Bstar* star)
+int			read_star(const char* filename, Bstar_old* star)
 {
 	int				err(0);
 	
@@ -237,13 +237,13 @@ int			read_star(const char* filename, Bstar* star)
 	return err;
 }
 
-int			read_star(Bstring& filename, Bstar* star)
+int			read_star(Bstring& filename, Bstar_old* star)
 {
 	Bstring			onefile(filename);
 	return read_star(&onefile, star);
 }
 
-int			read_star(Bstring* file_list, Bstar* star)
+int			read_star(Bstring* file_list, Bstar_old* star)
 {
 	int				err(0);
 	
@@ -664,13 +664,13 @@ Bstar_item* read_loop_items(ifstream* fstar)
 	star->split variable.
 
 **/
-int			write_star(const char* filename, Bstar* star)
+int			write_star(const char* filename, Bstar_old* star)
 {
 	Bstring		thefile(filename);
 	return write_star(thefile, star);
 }
 
-int			write_star(Bstring& filename, Bstar* star)
+int			write_star(Bstring& filename, Bstar_old* star)
 {
 	int				err(0);
 	
@@ -878,7 +878,7 @@ int			write_block(ofstream* fstar, Bstar_block* block, int linelength)
 	a second string for the time.
 
 **/
-int 		star_update_comment(Bstar* star, int n, char** strings)
+int 		star_update_comment(Bstar_old* star, int n, char** strings)
 {
 	time_t		ti = time(NULL);
 	
@@ -905,7 +905,7 @@ int 		star_update_comment(Bstar* star, int n, char** strings)
 @return long 		the number of command lines.
 
 **/
-long		star_list_comments(Bstar* star, long len)
+long		star_list_comments(Bstar_old* star, long len)
 {
 	if ( len < 1 ) len = 10000000000;
 	
@@ -936,7 +936,7 @@ long		star_list_comments(Bstar* star, long len)
 	This is designed to clean up after creating a STAR database.
 
 **/
-int			star_set_string_lengths(Bstar* star)
+int			star_set_string_lengths(Bstar_old* star)
 {
 	Bstar_block*	block;
 	Bstar_item* 	item;
@@ -964,7 +964,7 @@ int			star_set_string_lengths(Bstar* star)
 	If an item with the new tag exists, it is deleted first.
 
 **/
-int 		item_change_tag(Bstar* star, const char* tag, const char* newtag)
+int 		item_change_tag(Bstar_old* star, const char* tag, const char* newtag)
 {
 	Bstar_block*	block;
 	Bstar_item* 	item;
@@ -989,7 +989,7 @@ int 		item_change_tag(Bstar* star, const char* tag, const char* newtag)
 @param	*star 		the STAR database
 @return int 		number of tags.
 **/
-int 		show_tags(Bstar* star)
+int 		show_tags(Bstar_old* star)
 {
 	int 			ntags(0);
 	Bstring			tag;
@@ -1048,7 +1048,7 @@ int			item_index(Bstar_block* block, const char* tag)
 @param	*tag		a STAR tag string.
 @return Bstar_block* the block, NULL if not found.
 **/
-Bstar_block*	block_find_with_tag(Bstar* star, const char* tag)
+Bstar_block*	block_find_with_tag(Bstar_old* star, const char* tag)
 {
 	int				found(0);
 	Bstar_block*	block = NULL;
@@ -1144,7 +1144,7 @@ Bstar_item* item_find_or_make(Bstar_block* block, const char* tag)
 	values associated with a STAR tag defined in a header file.
 
 **/
-long	item_get_number(Bstar* star, const char* tag)
+long	item_get_number(Bstar_old* star, const char* tag)
 {
 	long	number(0);
 	Bstar_block*	block;
@@ -1581,7 +1581,7 @@ int 		item_put_angle_list(Bstar_block* block, const char* tag, char* list,
 	delimited array.
 
 **/
-int 		item_list(Bstar* star, Bstring& tag)
+int 		item_list(Bstar_old* star, Bstring& tag)
 {
 	Bstar_block*	block;
 	Bstar_item* 	item;
@@ -1613,7 +1613,7 @@ int 		item_list(Bstar* star, Bstring& tag)
 	and the item pointers are rearranged to fill in the gap.
 
 **/
-int 		item_delete_all(Bstar* star, const char* tag)
+int 		item_delete_all(Bstar_old* star, const char* tag)
 {
 	Bstar_block*	block;
 	
@@ -1672,7 +1672,7 @@ int 		item_delete_from_block(Bstar_block* block, const char* tag)
 	block pointers are rearranged to fill in the gap.
 
 **/
-int 		block_delete(Bstar* star, Bstring& tag)
+int 		block_delete(Bstar_old* star, Bstring& tag)
 {
 	int				del, ndel(0);
 	Bstar_block*	block, *block2;
@@ -1719,7 +1719,7 @@ int 		block_delete(Bstar* star, Bstring& tag)
 		new_value = old_value*scale + shift.
 
 **/
-int 		item_integer_scale_shift(Bstar* star, Bstring& tag, int iscale, int ishift)
+int 		item_integer_scale_shift(Bstar_old* star, Bstring& tag, int iscale, int ishift)
 {
 	int 			idata, total(0);
 	char			format[32];
@@ -1761,7 +1761,7 @@ int 		item_integer_scale_shift(Bstar* star, Bstring& tag, int iscale, int ishift
 		new_value = old_value*scale + shift.
 
 **/
-int 		item_float_scale_shift(Bstar* star, Bstring& tag, float scale, float shift)
+int 		item_float_scale_shift(Bstar_old* star, Bstring& tag, float scale, float shift)
 {
 	int 			total(0), type, len;
 	float			fdata, maxpre;

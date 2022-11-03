@@ -3,7 +3,7 @@
 @brief	Library routines used for modifying reciprocal space amplitudes
 @author Bernard Heymann
 @date	Created: 19990321
-@date	Modified: 20210727
+@date	Modified: 20220803
 **/
 
 #include "Bimage.h"
@@ -96,7 +96,8 @@ Complex<double>	Bimage::fspace_interpolate(long img_num, Vector3<double> m, FSI_
 	long			ikx(kernel->half_width());
 	long			iky(kernel->half_width());
 	long			ikz(kernel->half_width());
-	double			wyz;
+	double			w;
+//	double			w, vr(0), vi(0);
 
 	if ( x > 1 ) {
 		ikx = ((long) ((m[0] - ix)*kernel->divisions() + 0.5))*kernel->width();
@@ -123,12 +124,12 @@ Complex<double>	Bimage::fspace_interpolate(long img_num, Vector3<double> m, FSI_
 			while ( jy < 0 ) jy += y;
 			while ( jy >= y ) jy -= y;
 			jy = (jz + jy)*x;
-			wyz = (*kernel)[ky]*(*kernel)[kz];
+			w = (*kernel)[ky]*(*kernel)[kz];
 			for ( xx=0, kx=ikx, mx=ix; xx<nx; ++xx, kx++, mx++ ) {
 				jx = mx;
 				while ( jx < 0 ) jx += x;
 				while ( jx >= x ) jx -= x;
-				value += complex(jy + jx) * ((*kernel)[kx]*wyz);
+				value += complex(jy + jx) * ((*kernel)[kx] * w);
 			}
 		}
 	}
@@ -337,12 +338,15 @@ int			Bimage::fspace_amp_one()
 
     long			i, ds(x*y*z*n);
     double			amp;
-	Complex<double>	cv;
+	Complex<double>	cv, cv0;
 
     for ( i=0; i<ds; i++ ) {
 		cv = complex(i);
-		if ( ( amp = cv.amp() ) )
+		amp = cv.amp();
+		if ( amp > 1e-3 )
 			set(i, cv/amp);
+		else
+			set(i, cv0);
 	}
 		
 	if ( old_transform == NoTransform )
@@ -572,11 +576,16 @@ int			Bimage::fspace_bandpass(double res_hi, double res_lo, double width, fft_pl
 					sx2 *= iscale[0];
 					sx2 *= sx2;
 					s = sqrt(sx2 + sy2 + sz2);
-					if ( slo - s > test_width ) edge_lo = 1e300;
-					else edge_lo = exp(a*(slo - s));
-					if ( s - shi > test_width ) edge_hi = 1e300;
-					else edge_hi = exp(a*(s - shi));
-					f = (edge_hi > edge_lo)? 1/(1 + edge_hi): 1/(1 + edge_lo);
+//					if ( slo - s > test_width ) edge_lo = 1e300;
+//					else edge_lo = exp(a*(slo - s));
+//					if ( s - shi > test_width ) edge_hi = 1e300;
+//					else edge_hi = exp(a*(s - shi));
+//					f = (edge_hi > edge_lo)? 1/(1 + edge_hi): 1/(1 + edge_lo);
+					if ( slo - s > test_width ) edge_lo = 0;
+					else edge_lo = 1/(1+exp(a*(slo - s)));
+					if ( s - shi > test_width ) edge_hi = 0;
+					else edge_hi = 1/(1+exp(a*(s - shi)));
+					f = (edge_hi < edge_lo)? edge_hi: edge_lo;
 					set(i, complex(i) * f);
 				}
 			}
@@ -1021,6 +1030,7 @@ int 		Bimage::fspace_weigh(vector<double>& curve, int flag)
 {
 	long			maxrad(curve.size());
 	long			i, nn;
+	double			s;
 	
 	FourierType		old_transform = fouriertype;
 	
@@ -1029,8 +1039,16 @@ int 		Bimage::fspace_weigh(vector<double>& curve, int flag)
 	
 	for ( nn=0; nn<n; nn++ ) {
 		vector<double>	rps = fspace_radial(nn, maxrad, flag);
-		for ( i=0; i<maxrad; i++ )
-			if ( rps[i] ) rps[i] = curve[i]/rps[i];
+		if ( verbose & VERB_PROCESS )
+			cout << "Spatial Frequency (1/A)\tRPS\tScale" << endl;
+		for ( i=0; i<maxrad; i++ ) {
+			if ( rps[i] ) {
+				s = i/real_size()[0];
+				if ( verbose & VERB_PROCESS )
+					cout << s << tab << rps[i] << tab << curve[i] << endl;
+				rps[i] = curve[i]/rps[i];
+			}
+		}
 		fspace_scale(nn, rps);
 	}
 	
@@ -1343,6 +1361,47 @@ int 		Bimage::fspace_weigh_B_factor(double B, double resolution)
 	}
 	
 	fspace_scale(gcurve);
+	
+	return 0;
+}
+
+/**
+@brief 	Calculates a Butterworth band-pass filter profile.
+@param 	res_hi			high resolution limit.
+@param 	reso_lo			low resolution limit.
+@param	order			Buttorworth filter order.
+@return int				0.
+
+	The image is Fourier transformed and weighed with a gaussian curve:
+		Fnew = F*(1/sqrt(1+(s/shi)^n) - 1/sqrt(1+(s/slo)^n))
+
+**/
+int 		Bimage::fspace_butterworth_band(double res_hi, double res_lo, int order)
+{
+	check_resolution(res_hi);
+	
+	//	maxrad is the main limit for the length of all the arrays,
+	//	and is derived from the resolution set in the transform
+	long			maxrad(size().max());
+	double			s, scale(1/real_size()[0]);
+	double			slo = (res_lo)? 1/res_lo: 0;
+	double			shi = 1/res_hi;
+	
+	if ( verbose ) {
+		cout << "Applying a Butterworth band-pass filter:" << endl;
+		cout << "Resolution:                     " << res_hi << " - " << res_lo << " A " << endl;
+		cout << "Butterworth filter order:       " << order << endl << endl;
+	}
+	
+	long			i;
+	vector<double>	bcurve(maxrad);
+	
+	for ( i=0; i<maxrad; i++ ) {
+		s = scale*i;
+		bcurve[i] = 1/sqrt(1+pow(s/shi,order)) - 1/sqrt(1+pow(s/slo,order));
+	}
+	
+	fspace_scale(bcurve);
 	
 	return 0;
 }
@@ -1997,7 +2056,7 @@ double		Bimage::friedel_check()
 	R = sqrt(Rr*Rr + Ri*Ri);
 	
 	if ( verbose & VERB_PROCESS ) {
-		cout << "Friedel symmetry residuals:" << endl;
+		cout << "Friedel symmetry residuals:" << scientific << endl;
 		cout << "Real:                           " << Rr << endl;
 		cout << "Imaginary:                      " << Ri << endl;
 		cout << "Amplitude:                      " << Ra << endl;
@@ -2006,6 +2065,58 @@ double		Bimage::friedel_check()
 	}
 	
 	return R;
+}
+
+//#include "rwimg.h"
+
+/**
+@brief 	Calculates the difference between Friedel pairs.
+@return 0 		.
+
+	The differences between each the complex Friedel-related
+	voxels are calculated and accumulated as squared sums weighted by their
+	average intensities. The residuals are then calculated as
+	root-mean-square-deviations.
+
+**/
+double		Bimage::friedel_difference()
+{
+	simple_to_complex();
+	
+	long			i, j, nn, xx, yy, zz, xf, yf, zf;
+	Complex<double>	v, vf;
+	
+	Bimage*			pm = new Bimage(Long, TSimple, size(), 1);
+
+	for ( nn=0; nn<n; nn++ ) {
+		for ( zz=0; zz<z; ++zz ) {
+			zf = (zz)? z - zz: 0;
+			for ( yy=0; yy<y; ++yy ) {
+				yf = (yy)? y - yy: 0;
+				for ( xx=0; xx<=x/2; ++xx ) {
+					xf = (xx)? x - xx: 0;
+					i = index(xx, yy, zz, nn);
+					j = index(xf, yf, zf, nn);
+					if ( (*pm)[i] < 1 ) {
+						v = complex(i);
+						vf = complex(j);
+//						set(i, v - vf.conj());
+//						set(j, vf - v.conj());
+						set(i, v - vf);
+						set(j, vf - v);
+						pm->add(i, 1);
+						pm->add(j, 1);
+					}
+				}
+			}
+		}
+	}
+	
+//	pm->statistics();
+//	write_img("m.grd", pm, 0);
+//	delete pm;
+	
+	return 0;
 }
 
 /**
@@ -2091,7 +2202,7 @@ int 		Bimage::friedel_apply()
 /**
 @brief 	Calculates the cosine of the phase difference between two images.
 @param 	*p			real space reference image.
-@param	type		0=phase angle, 1=cos(phase angle), 2=scale by amplitude product
+@param	type		0=phase angle difference, 1=phase angle sum, 2=cos(angle), 4=scale by amplitude product
 @param 	res_hi 		upper resolution limit.
 @param 	res_lo 		lower resolution limit.
 @return Bimage* 		phase difference image.
@@ -2106,9 +2217,17 @@ Bimage* 	Bimage::phase_difference(Bimage* p, int type, double res_hi, double res
 	if ( res_lo <= 0 ) res_lo = 1e10;
 	if ( res_lo < res_hi + 1 ) res_lo = res_hi + 1;
 	
-	Bimage* 		ppd = pack_two_in_complex(p);
-	
-	ppd->fft();
+	Bimage* 		p1 = NULL;
+	Bimage* 		p2 = NULL;
+
+	if ( p->compound_type() == TComplex ) {
+		p1 = copy();
+		p2 = p->copy();
+	} else {
+		p1 = pack_two_in_complex(p);
+		p1->fft();
+		p2 = p1->unpack_combined_transform();
+	}
 	
 //	if ( verbose & VERB_FULL )
 	if ( verbose ) {
@@ -2120,70 +2239,76 @@ Bimage* 	Bimage::phase_difference(Bimage* p, int type, double res_hi, double res
 			<< res_hi << " - " << res_lo << endl << endl;
 	}
 	
-	long	   		i, j, xx, yy, zz, nn;
+	long	   		i, xx, yy, zz, nn;
 	long			ix, iy, iz;
 	Vector3<double>	shift;
 	double			smax2 = 1.0/(res_hi*res_hi);
 	double			smin2 = 1.0/(res_lo*res_lo);
 	double			dy, dz, sx2, sy2, sz2, s2, w;
-	Vector3<double>	scale(1.0/ppd->real_size());
+	Vector3<double>	scale(1.0/real_size());
 	Complex<float>	temp1, temp2;
 	
 	float*			dphi = new float[datasize];
 	
 	if ( verbose )
 		cout << "Image\tShift" << endl;
-	for ( nn=0; nn<ppd->images(); nn++ ) {
-		ppd->image[nn].origin(image[nn].origin() - p->image[nn].origin());
-		shift = ppd->image[nn].origin()/ppd->size();
+	for ( i=nn=0; nn<p1->images(); nn++ ) {
+		p1->image[nn].origin(image[nn].origin() - p->image[nn].origin());
+		shift = p1->image[nn].origin()/p1->size();
 		if ( verbose )
 			cout << nn+1 << tab << shift << endl;
-		for ( zz=0; zz<ppd->z; ++zz ) {
+		for ( zz=0; zz<p1->z; ++zz ) {
 			iz = -zz;
-			if ( iz < 0 ) iz += ppd->z;
+			if ( iz < 0 ) iz += p1->z;
 			dz = zz;
-			if ( zz > (ppd->z - 1)/2 ) dz -= ppd->z;
+			if ( zz > (p1->z - 1)/2 ) dz -= p1->z;
 			sz2 = dz*scale[2];
 			sz2 *= sz2;
-			for ( yy=0; yy<ppd->y; ++yy ) {
+			for ( yy=0; yy<p1->y; ++yy ) {
 				iy = -yy;
-				if ( iy < 0 ) iy += ppd->y;
+				if ( iy < 0 ) iy += p1->y;
 				dy = yy;
-				if ( yy > (ppd->y - 1)/2 ) dy -= ppd->y;
+				if ( yy > (p1->y - 1)/2 ) dy -= p1->y;
 				sy2 = dy*scale[1];
 				sy2 *= sy2;
-				for ( xx=0; xx<ppd->x/2+1; ++xx ) {
+				for ( xx=0; xx<p1->x; ++xx, ++i ) {
 					ix = -xx;
-					if ( ix < 0 ) ix += ppd->x;
+					if ( ix < 0 ) ix += p1->x;
 					sx2 = xx*scale[0];
 					sx2 *= sx2;
 					s2 = sx2 + sy2 + sz2;
 					if ( s2 >= smin2 && s2 <= smax2 ) {
-						i = ppd->index(xx,yy,zz,nn);
-						j = ppd->index(ix,iy,iz,nn);
-						temp1 = ppd->complex(i).unpack_first(ppd->complex(j));
-						temp2 = ppd->complex(i).unpack_second(ppd->complex(j));
-						dphi[i] = temp1.phi() - temp2.phi() - TWOPI*(xx*shift[0] + yy*shift[1] + zz*shift[2]);
-						if ( !(type & 1) ) dphi[i] = angle_set_negPI_to_PI(dphi[i]);
-						if ( type & 1 ) dphi[i] = cos(dphi[i]);
-						if ( type & 2 ) {
+//						i = p1->index(xx,yy,zz,nn);
+//						j = p1->index(ix,iy,iz,nn);
+//						temp1 = ppd->complex(i).unpack_first(ppd->complex(j));
+//						temp2 = ppd->complex(i).unpack_second(ppd->complex(j));
+//						temp1 = ppd->complex(i);
+//						temp2 = ppd2->complex(i);
+//						dphi[i] = temp1.phi() - temp2.phi() - TWOPI*(xx*shift[0] + yy*shift[1] + zz*shift[2]);
+						if ( type & 1 ) dphi[i] = p1->complex(i).phi() + p2->complex(i).phi();
+						else dphi[i] = p1->complex(i).phi() - p2->complex(i).phi();
+						if ( type & 2 ) dphi[i] = cos(dphi[i]);
+						else dphi[i] = angle_set_negPI_to_PI(dphi[i]);
+						if ( type & 4 ) {
 							w = temp1.power()*temp2.power();
 							dphi[i] *= w/(w+1);
 						}
-						dphi[j] = dphi[i];
+//						dphi[j] = dphi[i];
 					}
 				}
 			}
 		}
 	}
 	
-	ppd->data_type(Float);
-	ppd->compound_type(TSimple);
-	ppd->channels(1);
-	ppd->fourier_type(NoTransform);
-	ppd->data_assign((unsigned char *) dphi);
+	delete p2;
 	
-	return ppd;
+	p1->data_type(Float);
+	p1->compound_type(TSimple);
+	p1->channels(1);
+	p1->fourier_type(NoTransform);
+	p1->data_assign((unsigned char *) dphi);
+	
+	return p1;
 }
 
 /**
@@ -2219,7 +2344,6 @@ double	 	Bimage::average_phase_difference(Bimage* p, double res_hi, double res_l
 	double			amp, dphi, sum_amp(0), avg_pd(0);
 	
 	for ( nn=0; nn<ppd->images(); nn++ ) {
-//		ppd->image[nn].origin(image[nn].origin() - p->image[nn].origin());
 		ppd->image[nn].origin(image[nn].origin() - p->image[nn].origin());
 		shift = ppd->image[nn].origin()/ppd->size();
 		if ( verbose & VERB_FULL )
@@ -2296,6 +2420,52 @@ int			Bimage::phase_flip(Bimage* pd)
 		if ( (*pd)[i] < 0 ) set(i, -complex(i));
 
 	fft_back();
+	
+	return 0;
+}
+
+/**
+@brief 	Imposes an Ewald sphere weighting on a 3D frequency space volume.
+@param	volt			acceleration voltage (angstrom).
+@param	t				thickness.
+@return int				0.
+**/
+int			Bimage::ewald_sphere(double volt, double t)
+{
+	double			wl = electron_wavelength(volt);
+	
+	long			i, nn, xx, yy, zz;
+	double			u, v, w, wew, theta, phi;
+	Vector3<long>	h(size()/2);
+	Vector3<double>	fspace_scale(1/real_size());
+	
+	if ( verbose ) {
+		cout << "Generating an Ewald sphere weight map:" << endl;
+		cout << "Acceleration voltage:          " << volt << " V" << endl;
+		cout << "Wavelength:                    " << wl << " A" << endl;
+		cout << "Thickness:                     " << t << " A" << endl << endl;
+	}
+	
+	for ( i=nn=0; nn<n; nn++ ) {
+		for ( zz=0; zz<z; ++zz ) {
+			w = (zz < h[2])? zz: zz-z;
+			w *= fspace_scale[2];
+			w = fabs(w);
+			for ( yy=0; yy<y; ++yy ) {
+				v = (yy < h[1])? yy: yy-y;
+				v *= fspace_scale[1];
+				for ( xx=0; xx<x; ++xx, ++i ) {
+					u = (xx < h[0])? xx: xx-x;
+					u *= fspace_scale[0];
+					theta = atan2(sqrt(u*u+v*v), 1.0/wl-w);
+					wew = (1.0/wl)*(1-cos(theta));
+					phi = M_PI*t*(w-wew);
+					if ( phi ) set(i, sin(phi)/phi);
+					else set(i, 1);
+				}
+			}
+		}
+	}
 	
 	return 0;
 }

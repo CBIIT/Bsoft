@@ -3,7 +3,7 @@
 @brief	Header file for general symmetry functions
 @author Bernard Heymann
 @date	Created: 20010420
-@date	Modified: 20210116
+@date	Modified: 20220104
 **/
 
 #include "View.h"
@@ -116,11 +116,19 @@ public:
 	int			operations() { return op.size(); }
 	Bsymop&		operator[](int i) { return op[i]; }
 	vector<Matrix3>	matrices() {
+		long				ns(1), k;
+		Matrix3				mt;
 		vector<Matrix3>		mat;
 		mat.push_back(Matrix3(1));
-		for ( auto it = op.begin(); it != op.end(); ++it )
-			for ( int i = 1; i < it->order(); ++i )
-				mat.push_back(Matrix3(it->axis(), i*M_PI*2.0L/it->order()));
+		for ( auto it = op.begin(); it != op.end(); ++it ) {
+			for ( int i = 1; i < it->order(); ++i ) {
+				mt = Matrix3(it->axis(), i*M_PI*2.0L/it->order());
+				for ( k=0; k<ns; ++k )
+					mat.push_back(mt*mat[k]);
+			}
+			ns *= it->order();
+		}
+//		cout << "Number of matrices = " << mat.size() << endl;
 		return mat;
 	}
 	void		transform(Matrix3& mat) {

@@ -21,9 +21,9 @@ var rwmodel__param_8h =
     [ "model_param_generate", "rwmodel__param_8h.html#ae900f41ca71eb66aa03acc60e21579ed", null ],
     [ "model_param_generate", "rwmodel__param_8h.html#a25b0d81f58e52671f75789521bb1202d", null ],
     [ "model_param_set_type_indices", "rwmodel__param_8h.html#a11558e7b3c08feafe5167c92a96ff242", null ],
-    [ "read_atom_properties", "rwmodel__param_8h.html#aa2354dc926b2b7baaa9ef6aa75831baf", null ],
+    [ "read_atom_properties", "rwmodel__param_8h.html#a2f50b816366fb8dddf5e071767ce09ab", null ],
     [ "read_dynamics_parameters", "rwmodel__param_8h.html#a84dd6f185b8a5b304288409f88aa60ae", null ],
-    [ "read_material_properties", "rwmodel__param_8h.html#a4478aca7214ff83ccde4c51058f17b27", null ],
+    [ "read_material_properties", "rwmodel__param_8h.html#a26649232b5ed6d02b95d889046606d14", null ],
     [ "update_dynamics_parameters", "rwmodel__param_8h.html#a3fcbcbcff9070dfa1a2d4abe6d027aba", null ],
     [ "write_dynamics_parameters", "rwmodel__param_8h.html#a01807d6670aa2ea133625e38a154f6a2", null ],
     [ "write_material_properties", "rwmodel__param_8h.html#a9e68f97fbf05898df750952e412a34bd", null ]

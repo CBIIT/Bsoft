@@ -3,7 +3,7 @@
 @brief	Selection of single particle parameters from multiple files for classification
 @author Bernard Heymann
 @date	Created: 20010319
-@date	Modified: 20210516
+@date	Modified: 20220831
 **/
 
 #include "mg_processing.h"
@@ -15,6 +15,7 @@
 // Function prototypes
 Bproject*	project_multi_merge(Bstring* file_list, int fom_index, int flags);
 int			project_multi_add(Bproject* project, Bstring* file_list, int fom_index);
+Bproject*	project_multi_add_particles(Bstring* file_list);
 long 		project_multi_adjust_FOM(Bproject* project_list, int fom_index);
 long 		project_multi_select_best_FOM(Bproject* project_list, double fom_cut, int fom_index, int fom_def_flag);
 long 		project_multi_selection_stats(Bproject* project_list);

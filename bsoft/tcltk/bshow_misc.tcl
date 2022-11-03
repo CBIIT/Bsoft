@@ -5,7 +5,7 @@
 #
 # @author	Bernard Heymann
 # @date		Created: 20010516
-# @date		Modified: 20210225
+# @date		Modified: 20220728
 
 
 set PI 3.141592654
@@ -31,10 +31,10 @@ set trace_line 0
 set rem_scale 1
 set ori_color "blue"
 set scalebar_color "white"
-set scalebar_width "0"
-set scalebar_height "0"
-set scalebar_x "-10"
-set scalebar_y "-10"
+set scalebar_width 0
+set scalebar_height 0
+set scalebar_x -10
+set scalebar_y -10
 #set show_scalebar 1
 set box_color "yellow"
 set box_select_color "green"
@@ -343,6 +343,7 @@ proc writeSettingsFile { } {
 	global ctf_win_x ctf_win_y
 	global ctf_scale_x ctf_scale_y
 	global ctf_hires ctf_lores
+    global def_start def_end def_inc
 	global cont_update show_rings base_type env_type sub_base
 	global box_size bad_radius
 	global filament_width filament_node_radius boxing_interval helix_rise helix_angle
@@ -422,6 +423,9 @@ proc writeSettingsFile { } {
 	puts $fset "set ctf_win_y $ctf_win_y"
 	puts $fset "set ctf_scale_x $ctf_scale_x"
 	puts $fset "set ctf_scale_y $ctf_scale_y"
+	puts $fset "set def_start $def_start"
+	puts $fset "set def_end $def_end"
+	puts $fset "set def_inc $def_inc"
 	puts $fset "set cont_update $cont_update"
 	puts $fset "set show_rings $show_rings"
 	puts $fset "set base_type $base_type"
@@ -732,6 +736,7 @@ hideTip
 proc updatePixelsize { } {
 	global filename project_item theimg imgtype
 
+	set ps [Bimage get $theimg pixel_size]
 	if [Bmg exists] {
 		set n 1
 #		puts "in updatePixelsize: Item: $project_item"
@@ -780,6 +785,7 @@ proc updatePixelsize { } {
 
 proc updatePixelSizeEntry { } {
 	global theimg
+	global scalebar_width scalebar_height
 	set wc [getControlWindow $theimg]
 	set img_num [$wc.image.scale get]
 	set ps [Bimage get $theimg pixel_size $img_num]
@@ -791,6 +797,11 @@ proc updatePixelSizeEntry { } {
 		$wc.pixel_size.y insert 0 [lindex $ps 1]
 		$wc.pixel_size.z delete 0 end
 		$wc.pixel_size.z insert 0 [lindex $ps 2]
+		if { $scalebar_width < 2 } {
+			set scalebar_width [expr 10*[lindex $ps 0]]
+			set scalebar_height [expr $scalebar_width/5]
+			$wc.scalebar.width config -text $scalebar_width
+		}
 	}
 }
 
@@ -824,7 +835,7 @@ proc setPixelsize { theimg } {
 		if [winfo exists .wctf] { updateCTF }
 	}
 	set ps [Bimage get $theimg pixel_size $img_num]
-	puts "setPixelsize: $ps"
+#	puts "setPixelsize: $ps"
 }
 
 ## @brief Sets the pixel size of the image and micrograph
@@ -842,7 +853,7 @@ proc setAllPixelsizes { theimg } {
 		if [winfo exists .wctf] { updateCTF }
 	}
 	set ps [Bimage get $theimg pixel_size $img_num]
-	puts "setPixelsize: $ps"
+#	puts "setPixelsize: $ps"
 }
 
 ## @brief Updates the image origins from parameters

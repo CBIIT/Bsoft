@@ -5,7 +5,7 @@
 #
 # @author	Bernard Heymann
 # @date		Created: 20020729
-# @date		Modified: 20170712
+# @date		Modified: 20170728
 
 set plot_width 500
 set plot_height 300
@@ -28,6 +28,9 @@ set Cs 2.0
 set amp_fac 0.07
 set ctf_hires 0.5
 set ctf_lores 50
+set def_start 0.1
+set def_end 20.0
+set def_inc 0.1
 
 ## @brief Dialog box to manipulate CTF parameters
 #
@@ -40,6 +43,7 @@ proc CTF { currimg } {
 	global ctf_win_x ctf_win_y
 	global ctf_scale_x ctf_scale_y
     global volt Cs amp_fac base_type env_type ctf_hires ctf_lores
+    global def_start def_end def_inc
 
 	if ![Bimage exists $theimg] {
 		tk_dialog .dialog "No image in memory!" \
@@ -72,7 +76,7 @@ proc CTF { currimg } {
 #	puts [Bmg get $mg_item filename ps]
 	if ![string length [Bmg get $mg_item filename ps]] {
 		Bmg set $mg_item filename $filename ps
-		puts "Power spectrum: $filename"
+#		puts "Power spectrum: $filename"
 	}
 
 	setCTFPixelSize $theimg
@@ -229,9 +233,9 @@ proc CTF { currimg } {
 		entry $w.def.end -width 4
 		label $w.def.inc_tag -text "inc" -bg cyan
 		entry $w.def.inc -width 4
-		$w.def.start insert 0 0.1
-		$w.def.end insert 0 20
-		$w.def.inc insert 0 0.1
+		$w.def.start insert 0 $def_start
+		$w.def.end insert 0 $def_end
+		$w.def.inc insert 0 $def_inc
 		pack $w.def.tag $w.def.start_tag $w.def.start $w.def.end_tag \
 				$w.def.end $w.def.inc_tag $w.def.inc -side left -ipadx 5
 		
@@ -378,13 +382,13 @@ proc setDefocusDeviation { def_dev } {
 	set n [$wc.image.scale get]
 	set mg_item [micrographItem $n]
 	set w .wctf
-	Bmg set $mg_item defocus_deviation [expr 1e4 * [$w.def_dev_scale get]]
+	Bmg set $mg_item astigmatism [expr 1e4 * [$w.def_dev_scale get]] [$w.ast_ang_scale get]
 	updateCTF
 }
 
-## @brief Sets the astigmatism angle
+## @brief Sets the astigmatism
 #
-# @param	ast_ang	 	Astigmatism angle in degrees.
+# @param	ast_ang	 		Astigmatism angle in degrees.
 
 proc setAstigmatismAngle { ast_ang } {
 	global project_item theimg
@@ -392,7 +396,7 @@ proc setAstigmatismAngle { ast_ang } {
 	set n [$wc.image.scale get]
 	set mg_item [micrographItem $n]
 	set w .wctf
-	Bmg set $mg_item astigmatism_angle [$w.ast_ang_scale get]
+	Bmg set $mg_item astigmatism [expr 1e4 * [$w.def_dev_scale get]] [$w.ast_ang_scale get]
 	updateCTF
 }
 
@@ -536,20 +540,25 @@ proc calcR { } {
 	if { $ihi <= $ilo } { set ihi [expr $ilo + 1] }
 	if { $ilo < 1 } { set ilo 1 }
 	if { $ihi >= $nr } { set ihi [expr $nr - 1] }
-	set n 0.0
+#	set n 0.0
+	set v 0.0
 	set R 0.0
 	for {set i $ilo} {$i <= $ihi} {incr i 1} {
+		set p [lindex $rps $i]
 		set c [expr [lindex $base $i] + [lindex $envl $i] * [lindex $ctf $i]]
-		set d [expr [lindex $rps $i] - $c]
+		set d [expr $p - $c]
 		set w 1.0
 #		set w [expr 1.0 - [lindex $ctf $i]]
 		if { $w > 0 } {
 			set R [expr $R + $d * $d * $w]
-			set n [expr $n + $w]
+			set v [expr $v + $p * $p * $w]
+#			set n [expr $n + $w]
 		}
 	}
-	if { $n > 0 } {
-		set R [expr sqrt($R/$n)]
+#	if { $n > 0 }
+#		set R [expr sqrt($R/$n)]
+	if { $v > 0 } {
+		set R [expr sqrt($R/$v)]
 	} else {
 		set R 1000.0
 	}
@@ -561,6 +570,7 @@ proc calcR { } {
 proc autoCTFfit { level } {
 	global project_item theimg
 	global cont_update base_type env_type
+	global def_start def_end def_inc
 	set wc [getControlWindow $theimg]
 	set n [$wc.image.scale get]
 	set mg_item [micrographItem $n]
@@ -633,38 +643,53 @@ proc drawEllipse { theimg } {
 	set ellip2 [expr ( $def_avg + $def_dev ) / ( $def_avg - $def_dev ) ]
 	set fz [expr $def_avg * $invl2Cs]
 	set fz2 [expr $fz * $fz]
-	set nmax [expr int($lambda * $def_avg / (4 * $pixel_size * $pixel_size))]
+#	puts "$def_avg $lambda $Cs $phi"
+	if { $Cs > 0 } {
+		set nmax [expr int(($def_avg * $def_avg) / (2.0 * $lambda * $Cs) + $phi)]
+	} else {
+		set nmax [expr int($lambda * $def_avg / (4.0 * $pixel_size * $pixel_size))]
+	}
 #	puts $nmax
 	if { $nmax > 10 } { set nmax 10 }
+#	if { $nmax < 1 } { set nmax 1 }
 	set astart [expr $PI/2]
 	set aend [expr $astart + $show_rings * $PI + 0.05]
 	set astep [expr $PI/36]
-	for { set n 1 } { $n < $nmax } { incr n 1 } {
-		set r $width
+	for { set n 1 } { $n <= $nmax } { incr n 1 } {
+		set r 0.0
 		set yscale [expr $height*1.0/$width]
-		set t [expr ($n - $phi) * $inv2l3Cs]
-		if { $fz2 > $t } {
-			set r [expr ($scale / $step) * sqrt($fz - sqrt($fz2 - $t))]
+		if { $Cs > 0 } {
+			set t [expr ($n - $phi) * $inv2l3Cs]
+			if { $fz2 > $t } {
+				set r [expr ($scale / $step) * sqrt($fz - sqrt($fz2 - $t))]
+			}
+		} else {
+			set t [expr ($n - $phi) / ($lambda * $def_avg)]
+			if { $t > 0 } {
+				set r [expr ($scale / $step) * sqrt($t)]
+			}
 		}
 #		puts "Pixel distance $r"
-		set a $astart
-		set da [expr $a - $ast_ang]
-		set re [expr $r * sqrt( ($ellip2 + 1) / \
-			(2 * ($ellip2 * cos($da) * cos($da) + sin($da) * sin($da))) ) ]
-		set xl [expr $re*cos($a) + $originx]
-		set yl [expr $re*$yscale*sin($a) + $originy]
-		set yl [expr $scale * $height - $yl]
-		for {set a $astart} {$a <= $aend} {set a [expr $a + $astep]} {
+		if { $r > 0 } {
+			set a $astart
 			set da [expr $a - $ast_ang]
 			set re [expr $r * sqrt( ($ellip2 + 1) / \
 				(2 * ($ellip2 * cos($da) * cos($da) + sin($da) * sin($da))) ) ]
-			set x [expr $re*cos($a) + $originx]
-			set y [expr $re*$yscale*sin($a) + $originy]
-			# y is flipped because the canvas origin is upper left
-			set y [expr $scale * $height - $y]
-			$c create line $xl $yl $x $y -dash 2 -fill yellow -smooth yes -width 1 -tags ellipse
-			set xl $x
-			set yl $y
+			set xl [expr $re*cos($a) + $originx]
+			set yl [expr $re*$yscale*sin($a) + $originy]
+			set yl [expr $scale * $height - $yl - 1]
+			for {set a $astart} {$a <= $aend} {set a [expr $a + $astep]} {
+				set da [expr $a - $ast_ang]
+				set re [expr $r * sqrt( ($ellip2 + 1) / \
+					(2 * ($ellip2 * cos($da) * cos($da) + sin($da) * sin($da))) ) ]
+				set x [expr $re*cos($a) + $originx]
+				set y [expr $re*$yscale*sin($a) + $originy]
+				# y is flipped because the canvas origin is upper left
+				set y [expr $scale * $height - $y - 1]
+				$c create line $xl $yl $x $y -dash 2 -fill yellow -smooth yes -width 1 	-tags ellipse
+				set xl $x
+				set yl $y
+			}
 		}
 	}
 }
@@ -839,6 +864,7 @@ proc getCTFparam { } {
 	set amp_fac [Bmg get $mg_item amp_fac]
 	set defocus [expr 1e-4 * [Bmg get $mg_item defocus]]
 #	puts "Updating CTF parameters: defocus = $defocus"
+#	puts "Updating CTF parameters: Cs = $Cs"
 	set def_dev [expr 1e-4 * [Bmg get $mg_item defocus_deviation]]
 	set ast_ang [Bmg get $mg_item astigmatism_angle]
 	set base_eq [Bmg get $mg_item baseline]
@@ -900,8 +926,9 @@ proc setCTFparam { } {
 	Bmg set $mg_item Cs [expr 1e7 * $Cs]
 	Bmg set $mg_item amp_fac $amp_fac
 	Bmg set $mg_item defocus [expr 1e4 * [$w.def_avg_scale get]]
-	Bmg set $mg_item defocus_deviation [expr 1e4 * [$w.def_dev_scale get]]
-	Bmg set $mg_item astigmatism_angle [$w.ast_ang_scale get]
+#	Bmg set $mg_item defocus_deviation [expr 1e4 * [$w.def_dev_scale get]]
+#	Bmg set $mg_item astigmatism_angle [$w.ast_ang_scale get]
+	Bmg set $mg_item astigmatism [expr 1e4 * [$w.def_dev_scale get]] [$w.ast_ang_scale get]
 	Bmg set $mg_item baseline_type $base_type
 	Bmg set $mg_item baseline [$w.base_eq.entry get]
 	Bmg set $mg_item envelope_type $env_type

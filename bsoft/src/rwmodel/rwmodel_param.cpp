@@ -8,7 +8,6 @@
 
 #include "rwmodel_param.h"
 #include "rwmodel_star.h"
-#include "rwstar.h"
 #include "star.h"
 #include "json.h"
 #include "model_tags.h"
@@ -166,7 +165,7 @@ int			model_param_generate(Bmodparam& md, Bmodel* model)
 					k = comp3->type()->index();
 					Bangletype&	at1 = at[i][j][k];
 					a = v1.angle(v2);
-					if ( at1.angle() < 0.001 || at1.angle() > a ) {
+					if ( a > M_PI/4 && ( at1.angle() < 0.001 || at1.angle() > a ) ) {
 						at1.angle(a);
 						Bangletype&	at2 = at[i][k][j];
 						at2.angle(a);
@@ -219,7 +218,7 @@ int			model_param_set_type_indices(Bmodel* model, Bmodparam& md)
 	return 0;
 }
 
-Bstar2			read_parameter_file(Bstring& filename)
+Bstar			read_parameter_file(Bstring& filename)
 {
 	Bstring			atfile;
 	Bstring			propfile;
@@ -238,7 +237,7 @@ Bstar2			read_parameter_file(Bstring& filename)
 		bexit(-1);
 	}
 	
- 	Bstar2					star;
+ 	Bstar					star;
 	
  	if ( star.read(filename.str()) < 0 )
 		error_show(filename.c_str(), __FILE__, __LINE__);
@@ -249,7 +248,7 @@ Bstar2			read_parameter_file(Bstring& filename)
 	return star;
 }
 
-map<string,Bcomptype> 	read_atom_properties(Bstar2& star)
+map<string,Bcomptype> 	read_atom_properties(Bstar& star)
 {
 	map<string,Bcomptype>	ct;
 
@@ -295,6 +294,7 @@ map<string,Bcomptype> 	read_atom_properties(Bstar2& star)
 				if ( ( k = il.find(ATOM_TYPE_SCAT_C) ) >= 0 ) coef[10] = to_real(ir[k]);
 				c.coefficients(coef);
 				ct[symbol] = c;
+//				c.show();
 			}
 		}
 	}
@@ -304,14 +304,14 @@ map<string,Bcomptype> 	read_atom_properties(Bstar2& star)
 
 map<string,Bcomptype> 	read_atom_properties(Bstring& filename)
 {
-	Bstar2				star = read_parameter_file(filename);
+	Bstar				star = read_parameter_file(filename);
 
 	return read_atom_properties(star);
 }
 
 map<string,Bmaterial> 	read_material_star(Bstring& filename)
 {
-	Bstar2				star = read_parameter_file(filename);
+	Bstar				star = read_parameter_file(filename);
 	
 	map<string,Bmaterial>	material;
 
@@ -457,7 +457,7 @@ map<string,Bmaterial> 	read_material_properties(Bstring& filename)
 int			write_material_star(Bstring& filename, map<string,Bmaterial> material)
 {
 	Bstring			id("Material_parameters");
- 	Bstar2			star;
+ 	Bstar			star;
 	
 	star.line_length(200);
 	
@@ -582,7 +582,7 @@ int			update_dynamics_parameters(Bmodparam& md, Bstring& filename)
 		bexit(-1);
 	}
 	
- 	Bstar2					star;
+ 	Bstar					star;
 	
  	if ( star.read(filename.str()) < 0 ) {
 		error_show(filename.c_str(), __FILE__, __LINE__);
@@ -726,7 +726,7 @@ The only format supported is a STAR format.
 int		 	write_dynamics_parameters(Bstring& filename, Bmodparam& md)
 {
 	Bstring			id("Model_parameters");
- 	Bstar2			star;
+ 	Bstar			star;
 
 	md.comment += command_line_time2();
 	star.comment(md.comment);

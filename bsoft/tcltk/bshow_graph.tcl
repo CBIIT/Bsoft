@@ -18,7 +18,7 @@ set ngauss 0
 #
 
 proc Histogram { } {
-	global helv12 theimg
+	global helv12 theimg filename
 	global gorix goriy gwidth gheight
 	global histplot histfit
 	global color ngauss
@@ -85,7 +85,7 @@ proc Histogram { } {
 		wm deiconify $w
 		raise $w
     }
-    wm title $w "Histogram"
+    wm title $w "Histogram: $filename"
     wm iconname $w "Histogram"
 #	puts "Plotting histogram (bshow_graph)"
 	$h bind point <Any-Enter> { showPoint .whis histplot %x %y }

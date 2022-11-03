@@ -1,10 +1,10 @@
 var tcltk__bmarker_8cpp =
 [
-    [ "do_marker", "tcltk__bmarker_8cpp.html#adbd53bd31ff19b503bfeeafd2fd5e7f8", null ],
+    [ "do_marker", "tcltk__bmarker_8cpp.html#a24c7c117adb0c67bf510a66a38aba8b9", null ],
     [ "do_tomo_findaxis", "tcltk__bmarker_8cpp.html#ad23ce71367220a6a800383add6410902", null ],
     [ "do_tomo_refine", "tcltk__bmarker_8cpp.html#a77553c8a363ac1e7718f64837f97d91b", null ],
     [ "do_tomo_refine_one", "tcltk__bmarker_8cpp.html#ae858b0408e110327b2fafa96ff9ab16a", null ],
-    [ "do_tomo_thickness", "tcltk__bmarker_8cpp.html#a1689c893a2b3a49d9f0e33a443a51fe7", null ],
+    [ "do_tomo_thickness", "tcltk__bmarker_8cpp.html#a6e733753d1d6018a9b838dc0b38e79e8", null ],
     [ "do_tomo_track", "tcltk__bmarker_8cpp.html#a726a3ec0cb65d511803d4fe7f08f7233", null ],
     [ "do_tomo_transfer_seed", "tcltk__bmarker_8cpp.html#afd84e89a03152bf973a22251ec652185", null ],
     [ "marker_accept", "tcltk__bmarker_8cpp.html#ae89360675e9613b0769d7e490b309a93", null ],

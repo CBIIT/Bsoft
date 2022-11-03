@@ -3,7 +3,7 @@
 @brief	Header file for reading and writing atomic model files
 @author Bernard Heymann
 @date	Created: 20060908
-@date	Modified: 20210318
+@date	Modified: 20220323
 **/
 
 #include "rwmodel.h"
@@ -11,6 +11,8 @@
 #include "Bstring.h"
 
 /* Function prototypes */
+long		model_selection_stats(Bmodel* model);
+long 		model_show_selection(Bmodel* model);
 long 		model_select(Bmodel* model, Bstring& comptype);
 long		model_select(Bmodel* model, long number);
 long		model_select_all(Bmodel* model);
@@ -19,7 +21,9 @@ long		model_reset_selection(Bmodel* model);
 long		model_unset_selection(Bmodel* model);
 long		model_invert_selection(Bmodel* model);
 long		model_select_sets(Bmodel* model, int size, int flag);
+long		models_select_within_bounds(Bmodel* model, Vector3<double>& start, Vector3<double>& end);
 long		model_select_number_of_components(Bmodel* model, int ncomp_min, int ncomp_max);
+int			model_select_random(Bmodel* model, long number);
 long		model_select_closed(Bmodel* model, int closure_rule, int val_order);
 long		model_select_fullerene(Bmodel* model);
 long		model_select_non_fullerene(Bmodel* model);
@@ -31,7 +35,6 @@ long 		model_select_in_mask(Bmodel* model, Bimage* pmask);
 long 		model_delete(Bmodel** model);
 long 		model_delete_comp_type(Bmodel* model, Bstring& comptype);
 long 		model_delete_non_selected(Bmodel** model);
-long		model_selection_stats(Bmodel* model);
 long		model_type_from_selection(Bmodel* model, Bstring* comp_type, Bstring& filename);
 long		model_fom_deselect(Bmodel* model, double fom_cutoff);
 long		model_fom_max_fraction_deselect(Bmodel* model, double fom_fraction);

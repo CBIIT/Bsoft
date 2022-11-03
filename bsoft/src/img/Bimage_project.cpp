@@ -3,7 +3,7 @@
 @brief	Functions for projections
 @author Bernard Heymann
 @date	Created: 20010420
-@date	Modified: 20190207
+@date	Modified: 20220620
 **/
 
 #include "Bimage.h"
@@ -199,7 +199,7 @@ Bimage*		Bimage::rotate_project(Matrix3 mat, Vector3<double> translate,
 @brief 	Calculates a set of projections from a 3D density map.
 @param 	*view			linked list of views.
 @param	norm_flag		flag to normalize projection.
-@return Bimage* 		projections as sub-images.
+@return Bimage* 			projections as sub-images.
 
 	A set of projections is calculated according to a list of views.
 
@@ -277,6 +277,7 @@ Bimage* 	Bimage::project(View* view, int norm_flag)
 @param 	mat				3x3 rotation or skewing matrix.
 @param 	resolution		high resolution limit.
 @param 	*kernel			frequency space interpolation kernel.
+@param 	wavelength		for Ewald sphere projection, default zero, ± for front or back curvature.
 @return Bimage*			new 2D central section.
 
 	The orientation of the central section is defined by a rotation matrix
@@ -284,20 +285,24 @@ Bimage* 	Bimage::project(View* view, int norm_flag)
 	The rotation origin is obtained from the map origin.
 
 **/
-Bimage*		Bimage::central_section(Matrix3 mat, double resolution, FSI_Kernel* kernel)
+Bimage*		Bimage::central_section(Matrix3 mat, double resolution, FSI_Kernel* kernel, double wavelength)
 {
 	if ( image->sampling()[0] < 1e-10 ) sampling(1,1,1);
 	if ( resolution < 1e-10 ) resolution = image->sampling()[0];
 	
 	long		 	i, xx, yy;
 	long			hx((x - 1)/2), hy((y - 1)/2);
+	Vector3<double>	inv_scale(1.0/real_size());
 	Vector3<double>	m, iv;
-	double			maxrad(real_size()[0]/resolution), maxrad2(maxrad*maxrad), rx2, ry2;
-	double			zscale(z*1.0L/x);
+	double			maxs2(1.0/(resolution*resolution));
+	double			sx2, sy2, s2;
+	double			d2(wavelength/2.0);
 
 	if ( verbose & VERB_FULL ) {
 		cout << "Calculating a central section:" << endl;
-		cout << "Resolution limit:               " << resolution << " A (" << maxrad << ")" << endl;
+		cout << "Resolution limit:               " << resolution << " A "<< endl;
+		if ( wavelength )
+			cout << "Ewald sphere for wavelength: " << wavelength << " A" << endl;
 		cout << mat << endl << endl;
 	}
 
@@ -310,14 +315,18 @@ Bimage*		Bimage::central_section(Matrix3 mat, double resolution, FSI_Kernel* ker
 	for ( i=yy=0; yy<y; yy++ ) {
 		iv[1] = yy;
 		if ( iv[1] > hy ) iv[1] -= y;
-		ry2 = iv[1]*iv[1];
+		iv[1] *= inv_scale[1];
+		sy2 = iv[1]*iv[1];
 		for ( xx=0; xx<x; xx++, i++ ) {
 			iv[0] = xx;
 			if ( iv[0] > hx ) iv[0] -= x;
-			rx2 = iv[0]*iv[0];
-			if ( rx2 + ry2 <= maxrad2 ) {
+			iv[0] *= inv_scale[0];
+			sx2 = iv[0]*iv[0];
+			s2 = sx2 + sy2;
+			if ( s2 <= maxs2 ) {
+				if ( wavelength ) iv[2] = d2*s2;
 				m = mat * iv;
-				m[2] *= zscale;
+				m *= real_size();
 				proj->set(i, fspace_interpolate(0, m, kernel));
 			}
 		}
@@ -333,14 +342,25 @@ Bimage*		Bimage::central_section(Matrix3 mat, double resolution, FSI_Kernel* ker
 @param 	*view			linked list of views.
 @param 	resolution		high resolution limit.
 @param 	*kernel			frequency space interpolation kernel.
-@return Bimage* 		projections as sub-images.
+@param 	wavelength		for Ewald sphere projection, default zero, ± for front or back curvature.
+@param	back			flag to backtransform the projections.
+@param	conv			conversion type.
+@return Bimage* 			projections as sub-images.
 
 	The map is Fourier transformed and shifted to its phase origin.
-	For each view, a central section is calculated using reciprocal space interpolation.
-	All the projections are phase shifted to a central origin and back-transformed.
+	For each view, a central section or Ewald sphere projection is calculated using reciprocal space interpolation.
+	All the projections are phase shifted to a central origin.
+	The projections may be back-transformed to real space as specified by the back flag.
+	The image is converted as specified by the conversion flag:
+		0	no conversion.
+		1	real.
+		2	imaginary.
+		3	amplitude.
+		4	intensity.
 
 **/
-Bimage*     Bimage::project(View* view, double resolution, FSI_Kernel* kernel)
+Bimage*     Bimage::project(View* view, double resolution, FSI_Kernel* kernel,
+				double wavelength, bool back, ComplexConversion conv)
 {
 	if ( !view ) {
 		error_show("Error in Bimage::project: No views defined for projection!", __FILE__, __LINE__);
@@ -350,7 +370,7 @@ Bimage*     Bimage::project(View* view, double resolution, FSI_Kernel* kernel)
 	if ( verbose & VERB_DEBUG )
 		cout << "DEBUG Bimage::project: transforming and shifting origin" << endl;
 	
-	fft();
+	fft(FFTW_FORWARD, 1);
 
 	phase_shift_to_origin();
 
@@ -366,6 +386,8 @@ Bimage*     Bimage::project(View* view, double resolution, FSI_Kernel* kernel)
 	if ( verbose & VERB_PROCESS ) {
 		cout << "Calculating projections:" << endl;
 		cout << "Number of projections:          " << nviews << endl;
+		cout << "Wavelength:                     " << wavelength << " A" << endl;
+		cout << "Back transform flag:            " << back << endl;
 	}
 
 	Bimage*			proj = new Bimage(Float, TComplex, x, y, 1, nviews);
@@ -380,7 +402,7 @@ Bimage*     Bimage::project(View* view, double resolution, FSI_Kernel* kernel)
 //		if ( verbose & VERB_LABEL )
 //			cout << "Projection " << i+1 << ":" << endl;
 		Matrix3	mat = vlist[i].matrix();
-		Bimage*	psec = central_section(mat, resolution, kernel);
+		Bimage*	psec = central_section(mat, resolution, kernel, wavelength);
 		psec->phase_shift_to_center();
 		proj->replace(i, psec);
 		proj->image[i].view(vlist[i]);
@@ -392,7 +414,7 @@ Bimage*     Bimage::project(View* view, double resolution, FSI_Kernel* kernel)
 //		if ( verbose & VERB_LABEL )
 //			cout << "Projection " << i+1 << ":" << endl;
 		Matrix3	mat = vlist[i].matrix();
-		Bimage*	psec = central_section(mat, resolution, kernel);
+		Bimage*	psec = central_section(mat, resolution, kernel, wavelength);
 		psec->phase_shift_to_center();
 		proj->replace(i, psec);
 		proj->image[i].view(vlist[i]);
@@ -406,8 +428,15 @@ Bimage*     Bimage::project(View* view, double resolution, FSI_Kernel* kernel)
 
 	proj->friedel_check();
 	
-    proj->fft_back();
-	
+	if ( back ) proj->fft(FFTW_BACKWARD, 1, conv);
+/*    if ( back == 1 ) proj->fft_back();
+    else if ( back > 1 ) {
+		proj->fft(FFTW_BACKWARD, 1);
+		proj->fourier_type(NoTransform);
+		if ( back == 2 ) proj->complex_to_intensities();
+		else proj->complex_to_amplitudes();
+    }
+*/
 	proj->statistics();
 	
 	return proj;
@@ -476,6 +505,91 @@ int 		Bimage::back_project(Bimage* p, double resolution, double axis,
 		}
 	}
 	
+	return 0;
+}
+
+/*
+@brief 	Converts to the opposite Ewald sphere encoded in a complex image.
+@return int 		0.
+
+	F(k) = F'(-k)
+
+**/
+int			Bimage::opposite_ewald()
+{
+	if ( compoundtype != TComplex ) {
+		error_show("Error in Bimage::opposite_ewald: Image must be complex!", __FILE__, __LINE__);
+		return -1;
+	}
+	
+	if ( verbose )
+		cout << "Converting to the opposite Ewald sphere" << endl << endl;
+	
+	long			i, j, nn, xx, yy, zz, xf, yf, zf;
+	Complex<double>	v1, v2;
+
+	for ( nn=0; nn<n; nn++ ) {
+		for ( zz=0; zz<z; ++zz ) {
+			zf = (zz)? z - zz: 0;
+			for ( yy=0; yy<y; ++yy ) {
+				yf = (yy)? y - yy: 0;
+				for ( xx=0; xx<(x+1)/2; ++xx ) {
+					if ( xx > 0 || yy<(y+1)/2 ) {
+						xf = (xx)? x - xx: 0;
+						i = index(xx, yy, zz, nn);
+						j = index(xf, yf, zf, nn);
+						v1 = complex(j).conj();
+						v2 = complex(i).conj();
+						set(i, v1);
+						set(j, v2);
+					}
+				}
+			}
+		}
+	}
+		
+	return 0;
+}
+
+/*
+@brief 	Combines the front and back Ewald spheres encoded in a complex image.
+@return int 		0.
+
+	F(k) += F'(-k)
+
+**/
+int			Bimage::combine_ewald()
+{
+	if ( compoundtype != TComplex ) {
+		error_show("Error in Bimage::combine_ewald: Image must be complex!", __FILE__, __LINE__);
+		return -1;
+	}
+	
+	if ( verbose )
+		cout << "Combining Ewald spheres" << endl << endl;
+	
+	long			i, j, nn, xx, yy, zz, xf, yf, zf;
+	Complex<double>	v;
+
+	for ( nn=0; nn<n; nn++ ) {
+		for ( zz=0; zz<z; ++zz ) {
+			zf = (zz)? z - zz: 0;
+			for ( yy=0; yy<y; ++yy ) {
+				yf = (yy)? y - yy: 0;
+				for ( xx=0; xx<(x+1)/2; ++xx ) {
+					if ( xx > 0 || yy<(y+1)/2 ) {
+						xf = (xx)? x - xx: 0;
+						i = index(xx, yy, zz, nn);
+						j = index(xf, yf, zf, nn);
+						v = (complex(i) + complex(j).conj()) * 0.5;
+						set(i, v);
+						set(j, v.conj());
+					}
+				}
+			}
+		}
+	}
+		
 	return 0;
 }
 

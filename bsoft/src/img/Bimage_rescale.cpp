@@ -952,7 +952,7 @@ Bimage*		Bimage::thickness(double reference, double emfp)
 {
 	if ( reference < 1e-30 ) reference = maximum();
 	
-	long		i;
+	long		i, ds(x*y*z*n);
 	double		v;
 	Bimage*		pthick = new Bimage(Float, TSimple, size(), n);
 	pthick->sampling(sampling(0));
@@ -963,7 +963,7 @@ Bimage*		Bimage::thickness(double reference, double emfp)
 		cout << "Reference intensity:            " << reference << endl << endl;
 	}
 	
-	for ( i=0; i<image_size(); ++i ) {
+	for ( i=0; i<ds; ++i ) {
 		v = (*this)[i];
 		if ( v > 0 && v < reference )
 			pthick->set(i, emfp*log(reference/v));

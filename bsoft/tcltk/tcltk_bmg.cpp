@@ -103,6 +103,7 @@ Tcl_Obj*	do_mg_sort(Bproject* project, int objc, Tcl_Obj *CONST objv[]);
 								"defocus <angstrom>"
 								"defocus_deviation <angstrom>"
 								"astigmatism_angle <radians>"
+								"astigmatism <angstrom> <radians>"
 								"volt <volts>"
 								"Cs <angstrom>"
 								"amp_fac <fraction>"
@@ -1184,7 +1185,7 @@ int			do_set(Bproject* project, int objc, Tcl_Obj *CONST objv[])
 	int					update(0);
 	
 	int					i, n(-1), err(0);
-	double				value;
+	double				value, value2;
 	Vector3<int>		box;
 	Vector3<double>		origin, sam(1,1,1), scale;
 	
@@ -1351,7 +1352,7 @@ int			do_set(Bproject* project, int objc, Tcl_Obj *CONST objv[])
 			mg->dose = value;
 		else if ( field ) for ( mg = field->mg; mg; mg = mg->next )
 			mg->dose = value;
-	} else if ( property == "defocus_deviation" ) {
+/*	} else if ( property == "defocus_deviation" ) {
 		Tcl_GetDoubleFromObj(NULL, objv[4], &value);
 		if ( project->select && rec ) {
 			if ( !rec->ctf ) rec->ctf = new CTFparam;
@@ -1359,7 +1360,7 @@ int			do_set(Bproject* project, int objc, Tcl_Obj *CONST objv[])
 		} else if ( mg ) {
 			if ( !mg->ctf ) mg->ctf = new CTFparam;
 			mg->ctf->defocus_deviation(value);
-		}
+		}*/
 	} else if ( property == "defocus" ) {
 		Tcl_GetDoubleFromObj(NULL, objv[4], &value);
 		if ( project->select && rec ) {
@@ -1369,15 +1370,16 @@ int			do_set(Bproject* project, int objc, Tcl_Obj *CONST objv[])
 			if ( !mg->ctf ) mg->ctf = new CTFparam;
 			mg->ctf->defocus_average(value);
 		}
-	} else if ( property == "astigmatism_angle" ) {
+	} else if ( property == "astigmatism" ) {
 		Tcl_GetDoubleFromObj(NULL, objv[4], &value);
-		value *= M_PI/180.0;
+		Tcl_GetDoubleFromObj(NULL, objv[5], &value2);
+		value2 *= M_PI/180.0;
 		if ( project->select && rec ) {
 			if ( !rec->ctf ) rec->ctf = new CTFparam;
-			rec->ctf->astigmatism_angle(value);
+			rec->ctf->astigmatism(value, value2);
 		} else if ( mg ) {
 			if ( !mg->ctf ) mg->ctf = new CTFparam;
-			mg->ctf->astigmatism_angle(value);
+			mg->ctf->astigmatism(value, value2);
 		}
 	} else if ( property == "volt" ) {
 		Tcl_GetDoubleFromObj(NULL, objv[4], &value);
@@ -1841,8 +1843,7 @@ Tcl_Obj*	do_ctf_fit(Bproject* project, int objc, Tcl_Obj *CONST objv[])
 	if ( objc > 8 ) Tcl_GetDoubleFromObj(NULL, objv[8], &def_inc);
 
 	if ( level == 0 || em_ctf->defocus_average() == 0 ) {
-		em_ctf->defocus_deviation(0);
-		em_ctf->astigmatism_angle(0);
+		em_ctf->astigmatism(0,0);
 		img_ctf_find_defocus(p, img_num, *em_ctf, lores, hires, def_start, def_end, def_inc);
 		img_ctf_fit_baseline(p, img_num, *em_ctf, lores, hires);
 		img_ctf_fit_envelope(p, img_num, *em_ctf, lores, hires);

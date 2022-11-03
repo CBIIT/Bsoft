@@ -25,6 +25,7 @@ const char* use[] = {
 "-verbose 7               Verbosity of output.",
 "-datatype u              Force writing of a new data type.",
 "-truncate -0.5,1.2       Truncate data to minimum and maximum before edge operation.",
+"-invert                  Invert density in the image before edge operation.",
 "-size 4000,4000,10       Size of region inside edge (default 90% of image size).",
 //"-origin 2500,1500,5      Edge origin (deprecated).",
 "-start 2500,1500,5       Start of edge (default 5% from image origin).",
@@ -42,6 +43,7 @@ int 		main(int argc, char* argv[])
 	// Initialize variables
 	DataType 		nudatatype(Unknown_Type);	// Conversion to new type
 	double			cutmin(0), cutmax(0);		// Truncation
+	bool 			setinvert(0);				// Flag to invert density
     int     		setedge(0);    	    		// Rectangular edge smoothing
 	Bstring			shape("rectangular");
 	Vector3<long>	size;				// Size of smoothing area
@@ -60,6 +62,8 @@ int 		main(int argc, char* argv[])
 		if ( curropt->tag == "truncate" )
 			if ( curropt->values(cutmin, cutmax) < 2 )
 				cerr << "-truncate: Both min and max must be specified!" << endl;
+		if ( curropt->tag == "invert" )
+			setinvert = 1;
 		if ( curropt->tag == "size" )
  			if ( curropt->values(size[0], size[1], size[2]) < 3 )
 				cerr << "-size: All three dimensions must be specified!" << endl;
@@ -96,7 +100,9 @@ int 		main(int argc, char* argv[])
 	
 	if ( cutmin < cutmax )
 		p->truncate_to_min_max(cutmin, cutmax);
-	
+
+	if ( setinvert ) p->invert();
+
 	if ( !set_start )
 		start = sz * 0.05;
 	

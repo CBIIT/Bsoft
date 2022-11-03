@@ -1026,7 +1026,7 @@ Bimage*		img_prepare_projections(Bstring& tempfile, Bsymmetry& sym, double hires
 		}
 		kernel = new FSI_Kernel(8, 2);
 		views = asymmetric_unit_views(sym, angle, angle, angle, 1);
-		proj = ptemp->project(views, hires, kernel);
+		proj = ptemp->project(views, hires, kernel, 0, 1, Real);
 		delete ptemp;
 		ptemp = proj;
 		if ( views ) kill_list((char *) views, sizeof(View));

@@ -3,7 +3,7 @@
 @brief	Functions for calculating and using power spectra in electron micrographs
 @author Bernard Heymann
 @date	Created: 20000426
-@date	Modified: 20210817
+@date	Modified: 20220113
 **/
 
 #include "Bimage.h"
@@ -44,6 +44,7 @@ int			set_tile_size(Vector3<long>& tile_size, Vector3<long> img_size)
 		2	average all power spectra
 		4	shift the origin to the center
 		8	calculate the logarithm of the power spectrum
+		16	do edge smoothing to get rid of the cross artifact
 
 **/
 int			Bimage::power_spectrum(int flags)
@@ -56,18 +57,63 @@ int			Bimage::power_spectrum(int flags)
 	color_to_simple();
 	change_type(Float);
 	
-	if ( verbose & VERB_FULL ) {
+	if ( verbose & VERB_PROCESS ) {
 		cout << "Calculating a power spectrum:" << endl;
-		cout << "Flags:                           " << flags << endl;
-		cout << "Tiles:                           " << n << endl;
+		cout << "Flags:                          " << flags << endl;
+		cout << "Tiles:                          " << n << endl << endl;
 	}
 	
-//	if ( flags & 1 ) rescale_to_avg_std(0, 1);
+	Bimage*		pe = NULL;
 	
+	if ( flags & 16 )
+		pe = extract_edge_difference();
+	else {
+		Vector3<double>		start(1,1,0);
+		Vector3<long> 		rect(size()-start*2);
+		edge(0, rect, start, 1, FILL_AVERAGE);
+	}
+
 	if ( fft() )
 		return error_show("Bimage::power_spectrum", __FILE__, __LINE__);
-	
+
 	if ( flags & 1 ) zero_fourier_origin();
+
+	if ( flags & 16 ) {		// Very slow! 3D does not seem to work
+		if ( verbose & VERB_PROCESS )
+			cout << "Decomposing for edge smoothing" << endl;
+			
+		pe->fft();
+		pe->zero_fourier_origin();
+
+		long		i, nn, xx, yy, zz;
+		double		cx = TWOPI/(double)x;
+		double		cy = TWOPI/(double)y;
+		double		cz = TWOPI/(double)z;
+		
+		vector<double>	dx(x);
+		vector<double>	dy(y);
+		vector<double>	dz(z,0);
+		
+		for ( xx=0; xx<x; ++xx ) dx[xx] = cos(cx*xx);
+		for ( yy=0; yy<y; ++yy ) dy[yy] = cos(cy*yy);
+		if ( z > 1 ) for ( zz=0; zz<z; ++zz ) dz[zz] = cos(cz*zz);
+	
+		for ( nn=0; nn<n; ++nn ) {
+//			cout << n << endl;
+			for ( i=nn*x*y*z, zz=0; zz<y; ++zz ) {
+ 				for ( yy=0; yy<y; ++yy ) {
+					for ( xx=0; xx<x; ++xx, ++i ) {
+   						if ( z == 1 )
+							set(i, complex(i) - pe->complex(i) * (0.5/(2.0-dx[xx]-dy[yy])));
+						else
+							set(i, complex(i) - pe->complex(i) * (0.5/(3.0-dx[xx]-dy[yy]-dz[zz])));
+					}
+				}
+			}
+		}
+	
+		delete pe;
+	}
 	
 	complex_to_intensities();
 	
@@ -132,9 +178,13 @@ Bimage*		Bimage::powerspectrum_tiled(long img_num, Vector3<long> tile_size, int 
 	
 	if ( verbose & VERB_DEBUG ) {
 		cout << "DEBUG Bimage::powerspectrum_tiled: img_num=" << img_num << endl;
+		cout << "DEBUG Bimage::powerspectrum_tiled: ext_size=" << ext_size << endl;
 		cout << "DEBUG Bimage::powerspectrum_tiled: start=" << start << endl;
 		cout << "DEBUG Bimage::powerspectrum_tiled: tile_size=" << tile_size << endl;
 	}
+	
+	if ( verbose & VERB_PROCESS )
+		cout << "Tile size:                      " << tile_size << endl << endl;
 	
 	// If a single image assume a micrograph that needs to be tiled
 	Bimage* 		pex = extract_tiles(img_num, start, ext_size, tile_size, step_size, 0);
@@ -143,6 +193,21 @@ Bimage*		Bimage::powerspectrum_tiled(long img_num, Vector3<long> tile_size, int 
 	
 	return pex;
 }
+
+Bimage*		Bimage::powerspectrum_tiled_exact(long img_num, Vector3<long> tile_size, int flags)
+{
+	Vector3<long> 	start, ext_size(size()), step_size;
+
+	if ( verbose & VERB_PROCESS )
+		cout << "Tile size:                      " << tile_size << endl << endl;
+	
+	Bimage* 		pex = extract_tiles(img_num, start, ext_size, tile_size, step_size, 0);
+	
+	pex->power_spectrum(flags);
+	
+	return pex;
+}
+
 
 /**
 @brief 	Prepares a tiled powerspectrum from a tilted image for determining CTF parameters.
@@ -485,7 +550,7 @@ vector<double>	Bimage::powerspectrum_isotropy(long n, double& lores, double& hir
 	y_var /= na;
 	y_var -= y_avg*y_avg;
 	
-	cout << "avg=" << y_avg << " var=" << y_var << endl;
+//	cout << "avg=" << y_avg << " var=" << y_var << endl;
 
 	Bsimplex		simp(1, 3, 0, na, vx, vy);
 	
@@ -524,3 +589,68 @@ vector<double>	Bimage::powerspectrum_isotropy(long n, double& lores, double& hir
 	
 	return fit;
 }
+
+/*
+int			Bimage::powerspectrum_edge_smoothed(int flags)
+{
+	if ( verbose & VERB_DEBUG ) {
+		cout << "DEBUG Bimage::power_spectrum: flags=" << flags << endl;
+		cout << "DEBUG Bimage::power_spectrum: tiles=" << n << endl;
+	}
+	
+	color_to_simple();
+	change_type(Float);
+	
+	if ( verbose & VERB_FULL ) {
+		cout << "Calculating a power spectrum:" << endl;
+		cout << "Flags:                           " << flags << endl;
+		cout << "Tiles:                           " << n << endl;
+	}
+
+	Bimage*		pe = extract_edge_difference();
+
+	if ( fft() )
+		return error_show("Bimage::power_spectrum", __FILE__, __LINE__);
+
+	if ( flags & 1 ) zero_fourier_origin();
+
+	pe->fft();
+	pe->zero_fourier_origin();
+
+	long		i, nn, xx, yy;
+	double		dx, dy, v;
+	double		cx = TWOPI/(double)x;
+	double		cy = TWOPI/(double)y;
+	
+	for ( nn=0; nn<n; ++nn ) {
+		for ( i=nn*x*y*z, yy=0; yy<y; ++yy ) {
+   			dy = cos(cy*yy);
+			for ( xx=0; xx<x; ++xx, ++i ) {
+   				dx = cos(cx*xx);
+				set(i, complex(i) - pe->complex(i) * (0.5/(2.0-dx-dy)));
+			}
+		}
+	}
+	
+	delete pe;
+
+	complex_to_intensities();
+	
+	fourier_type(NoTransform);
+
+	if ( flags & 2 ) average_images();
+//	cout << "number of images = " << images() << endl;
+	
+	statistics();
+	
+	origin(0,0,0);
+	
+	show_maximum((complex(1)).power());
+	
+	if ( flags & 4 ) center_wrap();
+	
+	if ( flags & 8 ) logarithm();			// Get logarithm of intensities
+	
+	return 0;
+}
+*/

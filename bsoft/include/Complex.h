@@ -2,7 +2,8 @@
 @file	Complex.h
 @brief	Class for complex numbers
 @author Bernard Heymann
-@date	Created: 20050405  	    Modified: 20130618
+@date	Created: 20050405
+@date	Modified: 20220717
 **/
 
 #include <cmath>
@@ -11,6 +12,24 @@ using namespace std;
 
 #ifndef _Complex_
 #define _Complex_
+
+#include "TrigLUT.h"
+extern TrigLUT		cos_lut;
+extern TrigLUT		sin_lut;
+extern TrigLUT		atan2_lut;
+
+/**
+@enum 	ComplexConversion
+@brief 	Sets a flag to do specific conversions from a complex image.
+**/
+enum ComplexConversion {
+	NoConversion = 0, 	// No conversion
+	Real = 1,			// Convert to real part
+	Imaginary = 2,		// Convert to imaginary part
+	Amplitude = 3,		// Convert to amplitudes
+	Intensity = 4		// Convert to intensities
+} ;
+
 #undef Complex		// Complex is defined in X.h
 /************************************************************************
 @Object: class Complex
@@ -103,13 +122,17 @@ public:
 	double	power() { return (double)re*re + (double)im*im; }
 	double	amp() { return sqrt((double)re*re + (double)im*im); }
 	double	phi() { return atan2((double)im, (double)re); }
+	double	phi_lut() { return atan2_lut((double)im, (double)re); }
 	Complex conj() { return Complex<Type>(re, -im); }
 	void	set(const double a, const double p) { re = a*cos(p); im = a*sin(p); }
+	void	lut(const double a, const double p) { re = a*cos_lut(p); im = a*sin_lut(p); }
 	void	real(const Type d) { re = d; }
 	void	imag(const Type d) { im = d; }
 	void	amp(const double d) { Type r = d/amp(); re *= r; im *= r; }
-	void	phi(const double d) { Type a = amp(); re = a*cos(d); im = a*sin(d); }
+	void	phi(const double d) { Type a = amp(); set(a,d); }
+	void	phi_lut(const double d) { Type a = amp(); lut(a,d); }
 	void	shift_phi(const double d) { Complex c((Type)cos(d), (Type)sin(d)); *this *= c; }
+	void	shift_phi_lut(const double d) { Complex c((Type)cos_lut(d), (Type)sin_lut(d)); *this *= c; }
 	Complex	unpack_first(Complex c) {
 		return Complex<Type>(0.5L*(re + c.re), 0.5L*(im - c.im));
 	}
@@ -124,6 +147,12 @@ ostream& operator<<(ostream& output, Complex<Type>& c) {
 	output.precision(4);
 	output << "{" << c.real() << "," << c.imag() << "}";
 	return output;
+}
+
+template <typename Type>
+inline Complex<Type>	complex_polar(Type a, Type p)
+{
+	return Complex<Type>(a*cos_lut(p), a*sin_lut(p));
 }
 
 template <typename Type>

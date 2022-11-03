@@ -268,14 +268,23 @@ vector<double>	moving_polynomial(long order, vector<double>& x, long window)
 	return m;
 }
 
+/**
+@brief 	Calculates a moving fit of the local gradient in an array of data.
+@param 	&x				the array.
+@param 	window			sliding window length.
+@return vector<double>	the moving gradient fit array.
+
+	All data points within a sliding window are fit to a line.
+	The window moves over the ends of the array and fits only the
+	available points.
+
+**/
 vector<double>	moving_gradient(vector<double>& x, long window)
 {
-	vector<double>	m;
-
 	long			number(x.size());
 	long			hw(window/2), i, is, i1, i2, w;
 	double			coeff[2], v[window];
-	m.resize(number, 0);
+	vector<double>	m(number, 0);
 
 	for ( i=0; i<window; i++ ) v[i] = i;
 
@@ -293,14 +302,23 @@ vector<double>	moving_gradient(vector<double>& x, long window)
 	return m;
 }
 
+/**
+@brief 	Calculates a moving fit of the local curvature in an array of data.
+@param 	&x				the array.
+@param 	window			sliding window length.
+@return vector<double>	the moving curvature fit array.
+
+	All data points within a sliding window are fit to a third-order polynomial.
+	The window moves over the ends of the array and fits only the
+	available points.
+
+**/
 vector<double>	moving_curvature(vector<double>& x, long window)
 {
-	vector<double>	m;
-
 	long			number(x.size());
 	long			hw(window/2), i, is, i1, i2, w;
 	double			coeff[3], v[window];
-	m.resize(number, 0);
+	vector<double>	m(number, 0);
 
 	for ( i=0; i<window; i++ ) v[i] = i;
 

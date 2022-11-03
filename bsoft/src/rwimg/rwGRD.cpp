@@ -110,10 +110,15 @@ int 	readGRD(Bimage *p, int readdata, int img_select)
 		int 	extent = GRDSIZE;	// Swap whole header
     	for ( i=0; i<extent; i+=4 ) swapbytes(b+i, 4);
     }
-    
+
 	// Map the parameters
-	p->size(header->nx, header->ny, header->nz);
 	p->images(header->nn);
+	if ( img_select > -1 ) {
+		p->images(1);
+		if ( img_select >= header->nn ) img_select = header->nn - 1;
+	}
+
+	p->size(header->nx, header->ny, header->nz);
 	p->channels(header->channels);
 	p->sampling(header->ux, header->uy, header->uz);
 	
@@ -142,6 +147,8 @@ int 	readGRD(Bimage *p, int readdata, int img_select)
 		}
 	} else {
 		p->compound_type(CompoundType(header->mode/100));
+		if ( p->compound_type() == TComplex )
+			p->fourier_type(Standard);
 		p->data_type(DataType(header->mode%100));
 	}
 	
@@ -185,9 +192,8 @@ int 	readGRD(Bimage *p, int readdata, int img_select)
 	p->symmetry(header->symmetry);
 	p->label(header->label);
 	
-	if ( img_select < 0 ) img_select = 0;
-
 	long			readsize = p->alloc_size();
+	if ( img_select < 0 ) img_select = 0;
 		
 	if ( readdata ) {
 		p->data_alloc();

@@ -23,7 +23,7 @@ var tcltk__bbox_8cpp =
     [ "box_select_max", "tcltk__bbox_8cpp.html#afda5cce25024a399574473f652295dc6", null ],
     [ "box_select_min", "tcltk__bbox_8cpp.html#abe6b20c63e115f3a4eec768c9a3f2d4c", null ],
     [ "box_update_template", "tcltk__bbox_8cpp.html#abcc4842a4d507b7f00f94feb83600e22", null ],
-    [ "do_box", "tcltk__bbox_8cpp.html#aaccdc90206d279f29d0559438a656bbb", null ],
+    [ "do_box", "tcltk__bbox_8cpp.html#a6dcf559d69f66d01b353fae9c2f94354", null ],
     [ "imglist", "tcltk__bbox_8cpp.html#a3628124083d8f4fbc4ffd16e5b6202bf", null ],
     [ "imgtemp", "tcltk__bbox_8cpp.html#ab2b23c1e2af77bb1c5afba4ca7f92d37", null ],
     [ "verbose", "tcltk__bbox_8cpp.html#a0b2caeb4b6f130be43e5a2f0267dd453", null ]

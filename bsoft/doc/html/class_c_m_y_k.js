@@ -10,6 +10,6 @@ var class_c_m_y_k =
     [ "k", "class_c_m_y_k.html#ad13ef52ecf4eb57fde77c42d3f045942", null ],
     [ "m", "class_c_m_y_k.html#a34c7c69c142eee8a46f6178d4a5be248", null ],
     [ "operator=", "class_c_m_y_k.html#af0403dea08cb5a7999200a4b80d87e48", null ],
-    [ "operator[]", "class_c_m_y_k.html#ad1e92de6968e216f62be166580f20464", null ],
+    [ "operator[]", "class_c_m_y_k.html#a7d9e90e2e9a91756561f5715a6e35cb8", null ],
     [ "y", "class_c_m_y_k.html#aeafce21ffc14dc18e6d590f2c71e2fdf", null ]
 ];

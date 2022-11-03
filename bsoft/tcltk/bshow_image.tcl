@@ -960,18 +960,18 @@ proc PowerSpectrum { } {
 	if { $tilez > $nz } { set tilez $nz }
 	
 	set tilesize "$tilex $tiley $tilez"
-	set cs 2.0
+	set Cs 2.0
 	set volt 300
 
 	if [Bmg exists] {
 		set defocus [ expr 1e-4 * [Bmg get $project_item defocus] ]
 		set tilt_axis [Bmg get $project_item axis]
 		set tilt_angle [Bmg get $project_item tilt]
-		set cs [expr 1e-7 * [Bmg get $project_item Cs] ]
+		set Cs [expr 1e-7 * [Bmg get $project_item Cs] ]
 		set volt [expr 1e-3 * [Bmg get $project_item volt] ]
 	}
 	
-#	puts "$cs $volt"
+#	puts "$Cs $volt"
 	
 	set w .wps
 	catch {destroy $w}
@@ -994,7 +994,7 @@ proc PowerSpectrum { } {
 	setupEntry $w.tilt.angle "Tilt angle" double $tilt_angle "Micrograph tilt angle in degrees"
 	setupEntry $w.tilt.offset "Offset from origin" double $tilt_offset "Tilt axis offset from the micrograph origin"
 	setupEntry $w.tilt.defocus "Defocus" double $defocus "Estimate/guess of defocus"
-	setupEntry $w.tilt.cs "Spherical aberration" double $cs "Cs in mm"
+	setupEntry $w.tilt.cs "Spherical aberration" double $Cs "Cs in mm"
 	setupEntry $w.tilt.volt "Acceleration voltage" double $volt "Acceleration voltage in kV"
 	pack $w.tilt.axis $w.tilt.angle $w.tilt.offset $w.tilt.defocus \
 		$w.tilt.cs $w.tilt.volt -side top -expand 1
@@ -1056,6 +1056,6 @@ proc calcPowerSpec {w} {
 	set window_scale $scale
 	.scale.scale set $scale
 	set ps [Bimage get $theimg pixel_size 0]
-	puts "Power spectrum pixel size: $ps"
+#	puts "Power spectrum pixel size: $ps"
 }
 

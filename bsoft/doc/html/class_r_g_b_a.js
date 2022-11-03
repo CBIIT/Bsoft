@@ -17,7 +17,7 @@ var class_r_g_b_a =
     [ "operator/", "class_r_g_b_a.html#aeee43e91381042c75ae9eadf3a0816cd", null ],
     [ "operator=", "class_r_g_b_a.html#a4178aa3f9c0d2df2aeba403ce5515ddb", null ],
     [ "operator=", "class_r_g_b_a.html#a9a28d9f3505cbc5157eebbe76b720612", null ],
-    [ "operator[]", "class_r_g_b_a.html#a1ac240653c8b9a64fca30b1ee3d9e44b", null ],
+    [ "operator[]", "class_r_g_b_a.html#a2c58df30bbda604d67ded34dee6405ba", null ],
     [ "r", "class_r_g_b_a.html#a3ee8103158903bd2845804a8dc521e43", null ],
     [ "red", "class_r_g_b_a.html#a560c992bf1e3b7d99f14538ca12bca4a", null ],
     [ "spectrum", "class_r_g_b_a.html#ada09c1a8dd349a8c92b068e9b10ba6d9", null ]

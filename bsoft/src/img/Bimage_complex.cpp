@@ -3,7 +3,7 @@
 @brief	Routines to convert complex data sets
 @author Bernard Heymann
 @date	Created: 19990424
-@date	Modified: 20180207
+@date	Modified: 20220715
 **/
 	
 #include "Bimage.h"
@@ -45,6 +45,37 @@ void		Bimage::simple_to_complex()
 }
 
 /**
+@brief Two sub-images converted to a complex image.
+
+**/
+void		Bimage::two_to_complex()
+{
+	if ( compoundtype == TComplex ) return;
+	
+	if ( compoundtype != TSimple ) {
+		cerr << "Error: Conversion from compound types to complex type not supported!" << endl;
+		exit(-1);
+	}
+	
+	if ( verbose )
+		cout << "Converting from two images to a complex image" << endl << endl;
+	
+	long			i, j, is(x*y*z);
+	Complex<float>*	cdata = new Complex<float>[is];
+	
+	for ( i=0, j=is; i<is; ++i, ++j ) cdata[i] = Complex<float>((*this)[i], (*this)[j]);
+	
+	data_type(Float);
+	compoundtype = TComplex;
+	n = 1;
+	c = 2;
+	
+	data_assign((unsigned char *) cdata);
+	
+	statistics();
+}
+
+/**
 @brief A multi-channel image is converted to a set of complex images.
 
 	The input image channels are written into the real part of the complex image.
@@ -66,10 +97,6 @@ void		Bimage::multi_channel_to_complex()
 		for ( j=0; j<isz; ++j )
 			for ( cc=0, k=nn*isz+j; cc<c; ++cc, ++i, k+=isz )
 				cdata[k] = (*this)[i];
-//	for ( nn=k=0; nn<n; nn++ ) {
-//		for ( j=0; j<imgsize; j++ ) {
-//			for ( cc=0, m=nn*imgsize+j; cc<c; cc++, k+=tsize, m+=imgsize ) {
-//				memcpy(nudata+m*tsize, d.uc+k, tsize);
 
 	Bsub_image*		nusub = new Bsub_image[n*c];
 	
@@ -89,6 +116,52 @@ void		Bimage::multi_channel_to_complex()
 	data_assign((unsigned char *) cdata);
 	
 	statistics();
+}
+
+/**
+@brief 	A complex image is split into two simple images.
+@return	Bimage*		new image with the imaginary part.
+
+	The imaginary part is written into the new image.
+	The complex image is replaced by its real part.
+
+**/
+Bimage*		Bimage::complex_split()
+{
+	if ( compoundtype != TComplex ) {
+		cerr << "Error in complex_split: The image must be complex!" << endl;
+		bexit(-1);
+	}
+	
+	Bimage*			pim = copy_header();
+	pim->compound_type(TSimple);
+	pim->channels(1);
+	pim->data_alloc();
+	
+	long			ds(x*y*z*n);
+	
+	for ( long j=0; j<ds; ++j )
+		pim->set(j, complex(j).imag());
+	
+	complex_to_real();
+
+	pim->statistics();
+
+	return pim;
+}
+
+/**
+@brief A phase image is converted to a complex image.
+
+**/
+void		Bimage::phase_to_complex()
+{
+	simple_to_complex();
+	
+	long			ds(x*y*z*n);
+	
+	for ( long j=0; j<ds; j++ )
+		set(j, Complex<double>(cos((*this)[j]), sin((*this)[j])));
 }
 
 /**
@@ -209,10 +282,11 @@ void		Bimage::complex_to_phases()
 {
 	if ( compoundtype != TComplex ) return;
 	
-	long				j, ds(x*y*z*n);
+	long			j, ds(x*y*z*n);
 	float*			fdata = new float[ds];
 	
 	for ( j=0; j<ds; j++ ) fdata[j] = (complex(j)).phi();
+//	for ( j=0; j<ds; j++ ) fdata[j] = (complex(j)).phi_lut();
 	
 	data_type(Float);
 	compoundtype = TSimple;
@@ -289,6 +363,48 @@ double 		Bimage::complex_normalize()
 	statistics();
 	
 	return pwr;
+}
+
+/**
+@brief 	Inverts a complex image.
+@return int			0.
+
+	The image is scaled by the remaining total power, i.e., the sum of the intensities.
+
+**/
+int 		Bimage::complex_invert()
+{
+	if ( compoundtype != TComplex ) return 0;
+	
+	for ( long i=0; i<data_size(); ++i )
+		set(i, -complex(i));
+	
+	statistics();
+	
+	return 0;
+}
+
+/**
+@brief 	Converts a complex image to a simple image.
+@param 	conv		a flag for converting the complex image.
+@return int			0.
+
+**/
+int 		Bimage::complex_convert(ComplexConversion conv)
+{
+	if ( compoundtype != TComplex ) return 0;
+	
+	switch ( conv ) {
+		case NoConversion: break;
+		case Real: complex_to_real(); break;
+		case Imaginary: complex_to_imaginary(); break;
+		case Amplitude: complex_to_amplitudes(); break;
+		case Intensity: complex_to_intensities(); break;
+	}
+	
+	if ( conv ) fourier_type(NoTransform);
+	
+	return 0;
 }
 
 /**
@@ -501,6 +617,9 @@ int 		Bimage::complex_product(Bimage* p)
 
 	Complex conjugate product:
 		(a + ib)*(c - id) = (a*c + b*d) + i(b*c - a*d).
+	Normalization is determined by the norm flag:
+		1	square root of the power sum product of the two images
+		2	the power sum of the first image
 	Requirement: The two images must be the same size.
 	No statistics are calculated.
 
@@ -518,7 +637,7 @@ int 		Bimage::complex_conjugate_product(Bimage* p, int norm)
 		cout << "Calculating the complex conjugate product" << endl << endl;
 	
 	long				i, j, nn, ds(x*y*z);
-	double				sum1(0), sum2(0), scale;
+	double				sum1(0), sum2(0), scale(0);
 	Complex<double>		cv;
 	
     for ( i=nn=0; nn<n; ++nn ) {
@@ -532,9 +651,14 @@ int 		Bimage::complex_conjugate_product(Bimage* p, int norm)
 			set(i, complex(i) * cv);
 		}
 		if ( norm ) {
-			scale = sum1*sum2;
+			if ( norm == 1 ) {
+				scale = sum1*sum2;
+				if ( scale > 0 ) scale = 1.0/sqrt(scale);
+			} else if ( norm == 2 ) {
+				scale = sum1;
+				if ( scale > 0 ) scale = 1.0/scale;
+			}
 			if ( scale > 0 ) {
-				scale = 1.0/sqrt(scale);
 				multiply(nn, scale);
 			} else {
 				cerr << "Error in Bimage::complex_conjugate_product: 	scaling failed!" << endl;
@@ -993,11 +1117,11 @@ int 		Bimage::combined_complex_product(Bimage* pmask)
 	the product is backtransformed into the cross-correlation map.
 
 **/
-int 		Bimage::combined_complex_product(double hires, double lores)
+/*int 		Bimage::combined_complex_product(double hires, double lores)
 {
 	return combined_complex_product(hires, lores, NULL);
 }
-
+*/
 /**
 @brief 	Calculates the complex conjugate product of a complex image resulting from combining and Fourier transforming two real space images.
 @param 	hires		high resolution limit.
@@ -1082,9 +1206,9 @@ int 		Bimage::combined_complex_product(double hires, double lores, Bimage* pmask
 						if ( yy > h[1] ) use = 0;
 						if ( yy == iy && zz > h[2] ) use = 0;
 					}
-					i = index(xx, yy, zz, nn);
-					j = index(ix, iy, iz, nn);
 					if ( use ) {
+						i = index(xx, yy, zz, nn);
+						j = index(ix, iy, iz, nn);
 						if ( s2hi > 0 ) {
 							sx2 = xx;
 							if ( xx > h[0] ) sx2 -= (double)x;
@@ -1099,6 +1223,13 @@ int 		Bimage::combined_complex_product(double hires, double lores, Bimage* pmask
 							temp2 = complex(i).unpack_second(complex(j));
 							set(i, temp1 * temp2.conj());
 							set(j, complex(i).conj());
+// Alternative calculation
+//							temp1 = complex(i);
+//							temp2 = complex(j);
+//							temp.real((temp1.re()*temp2.im() + temp1.im()*temp2.re()));
+//							temp.imag(temp1.power() - temp2.power());
+//							set(i, temp);
+//							set(j, temp.conj());
 							sum1 += temp1.power();
 							sum2 += temp2.power();
 						} else {
@@ -1131,6 +1262,130 @@ int 		Bimage::combined_complex_product(double hires, double lores, Bimage* pmask
 	
 	if ( err ) {
 		error_show("Error in Bimage::combined_complex_product", __FILE__, __LINE__);
+		cerr << "Number of scaling errors: " << err << " (" << n << ")" << endl;
+	}
+	
+	return err;
+}
+
+/**
+@brief 	Calculates the phase product of a complex image resulting from combining and Fourier transforming two real space images.
+@param 	hires		high resolution limit.
+@param 	lores		low resolution limit.
+@param 	*pmask		binary mask (only 0 and 1), NULL if not desired.
+@return int			error code.
+
+	Requirement: Fourier transform of two images packed into one complex
+		data block with the function Bimage::pack_two_in_complex and then
+		transformed with the function Bimage::fft.
+	The Friedel relationships in transforms from real space images are
+	exploited to transform two images simultaneously and then extract
+	the individual transforms from the complex data set.
+	This function extracts the individual transforms and calculates the
+	phase product .
+	The result is scaled by the size, yielding the phase the correlation coefficient when
+	the product is backtransformed into the phasecorrelation map.
+
+**/
+int			Bimage::combined_phase_product(double hires, double lores, Bimage* pmask)
+{
+	if ( !d.uc ) return -1;
+	
+	if ( compound_type() != TComplex ) return -1;
+	
+	change_type(Float);
+	
+	int 			use;
+	long	 		i, j, nn, xx, yy, zz, xh(x/2 + 1);
+	long	 		ix, iy, iz;
+	double			sx2(0), sy2(0), sz2(0), s2;
+	
+	if ( lores > 0 && lores < hires ) swap(lores, hires);
+	double			s2hi = (hires > 0)? 1/(hires*hires): 0;
+	double			s2lo = (lores > 0)? 1/(lores*lores): 0;
+
+	Vector3<double>	iscale(1.0/real_size());
+	Vector3<long>	h(size()/2);
+	
+	if ( verbose & VERB_FULL ) {
+		cout << "Calculating the complex phase product:" << endl;
+		cout << "Resolution range:               ";
+		if ( hires > 0 ) cout << 1/sqrt(s2hi) << " - ";
+		else cout << "0 - ";
+		if ( lores > 0 ) cout << 1/sqrt(s2lo) << " A" << endl;
+		else cout << "inf A" << endl;
+		if ( pmask ) cout << "Mask:                   " << pmask->file_name() << endl;
+	}
+	
+	double			sd(1e-30);
+	Complex<double>	temp1, temp2, temp, cv(0,0);
+	
+	if ( verbose & VERB_DEBUG )
+		cout << "DEBUG Bimage::combined_complex_product: F0 = " << complex(0).real() << " " << complex(0).imag() << endl;
+	
+	int				err(0);
+	double			tvs = getwalltime(), tvf;
+	
+    for ( nn=0; nn<n; nn++ ) {
+		for ( zz=0; zz<z; zz++ ) {
+			iz = (zz>0)? z - zz: 0;
+			if ( s2hi > 0 ) {
+				sz2 = zz;
+				if ( zz > h[2] ) sz2 -= (double)z;
+				sz2 *= iscale[2];
+				sz2 *= sz2;
+			}
+			for ( yy=0; yy<y; yy++ ) {
+				iy = (yy>0)? y - yy: 0;
+				if ( s2hi > 0 ) {
+					sy2 = yy;
+					if ( yy > h[1] ) sy2 -= (double)y;
+					sy2 *= iscale[1];
+					sy2 *= sy2;
+				}
+				for ( xx=0; xx<xh; xx++ ) {
+					ix = (xx>0)? x - xx: 0;
+					use = 1;
+					if ( xx == ix ) {
+						if ( yy > h[1] ) use = 0;
+						if ( yy == iy && zz > h[2] ) use = 0;
+					}
+					if ( use ) {
+						i = index(xx, yy, zz, nn);
+						j = index(ix, iy, iz, nn);
+						if ( s2hi > 0 ) {
+							sx2 = xx;
+							if ( xx > h[0] ) sx2 -= (double)x;
+							sx2 *= iscale[0];
+							sx2 *= sx2;
+							s2 = sx2 + sy2 + sz2;
+							if ( s2 < s2lo || s2 > s2hi ) use = 0;
+						}
+						if ( pmask && (*pmask)[i] <= 0 ) use = 0;
+						if ( use ) {
+							temp1 = complex(i).unpack_first(complex(j));
+							temp2 = complex(i).unpack_second(complex(j));
+							temp = temp1 * temp2.conj();
+							set(i, temp/(temp.amp()+sd));
+							set(j, complex(i).conj());
+						} else {
+							set(i, cv);
+							set(j, cv);
+						}
+					}
+				}
+			}
+		}
+		multiply(nn, 0.5L/size().volume());
+	}
+
+	if ( verbose & VERB_TIME ) {
+		tvf = getwalltime();
+		cout << "CC(BP) time: " << tvf - tvs << endl;
+	}
+	
+	if ( err ) {
+		error_show("Error in Bimage::combined_phase_product", __FILE__, __LINE__);
 		cerr << "Number of scaling errors: " << err << " (" << n << ")" << endl;
 	}
 	
@@ -1432,22 +1687,26 @@ double		Bimage::merge_amplitudes_and_phases(Bimage* pref, double res_hi, double 
 **/
 Bimage*		Bimage::intensities_phase_colored(double scale)
 {
-	if ( compound_type() != TComplex ) return NULL;
+	if ( compound_type() != TComplex ) {
+		cerr << "Error: The image should be complex!" << endl;
+		return NULL;
+	}
 	
 	change_type(Float);
 	
 	statistics();
 	
-	if ( verbose & VERB_PROCESS ) {
-	    cout << "Generating a phase-colored power spectrum" << endl;
-	} else if ( verbose & VERB_LABEL )
-	    cout << "Generating a phase-colored power spectrum" << endl;
-	
     long				i, ds(x*y*z*n);
-	double			amp_ratio;
+	double				amp_ratio;
 	
 	if ( scale <= 0 ) scale = 1/(avg + std);
 	else scale /= avg + std;
+	
+	if ( verbose & VERB_PROCESS ) {
+	    cout << "Generating a phase-colored power spectrum" << endl;
+	    cout << "Scale:                          " << scale << endl << endl;
+	} else if ( verbose & VERB_LABEL )
+	    cout << "Generating a phase-colored power spectrum" << endl;
 	
 	scale *= 255;
 	
@@ -1463,6 +1722,7 @@ Bimage*		Bimage::intensities_phase_colored(double scale)
 		if ( amp_ratio > 0 ) {
 			if ( amp_ratio > 255 ) amp_ratio = 255;
 			rgb.phase((complex(i)).phi(), amp_ratio);
+//			rgb.phase((complex(i)).phi_lut(), amp_ratio);
 			ps->set(i, rgb);
 		}
 	}

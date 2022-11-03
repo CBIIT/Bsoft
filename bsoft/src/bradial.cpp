@@ -3,7 +3,7 @@
 @brief	Polar images and radial averages
 @author Bernard Heymann
 @date	Created: 20000620
-@date	Modified: 20210611
+@date	Modified: 20220614
 **/
 
 #include "rwimg.h"
@@ -15,6 +15,8 @@
 
 // Declaration of global variables
 extern int 	verbose;		// Level of output to the screen
+
+Bplot*		plot_radial_powerspectrum(Bimage* p, double resolution, int ps_flags);
 
 // Usage assistance
 const char* use[] = {
@@ -330,42 +332,8 @@ int 		main(int argc, char **argv)
 		prad = NULL;
 		if ( ps_flags & 2 ) p->average_images();
 		if ( ps_flags & 8 ) p->logarithm();
-		if ( psfile.length() ) {
-			title = "Radial power spectrum";
-			n = p->images() + 1;
-			nx = p->sizeX();
-			plot = new Bplot(1, nx, n);
-			plot->title(title);
-			plot->page(0).title(title);
-			plot->page(0).columns(n);
-			for ( i=0; i<n; i++ ) plot->page(0).column(i).number(i);
-			plot->page(0).column(0).label("s(1/A)");
-			plot->page(0).column(0).axis(1);
-			plot->page(0).axis(1).min(0);
-			plot->page(0).axis(1).max(1/resolution);
-			for ( i=1; i<n; i++ ) {
-				plot->page(0).column(i).type(2);
-				plot->page(0).column(i).label(Bstring(i, "%d"));
-				plot->page(0).column(i).axis(3);
-				if ( n > 2 ) color.spectrum(i,1,n-1);
-				plot->page(0).column(i).color(color.r(),color.g(),color.b());
-			}
-			if ( ps_flags & 8 ) {
-				plot->page(0).axis(3).flags(2);
-				plot->page(0).axis(3).label("log Power");
-			} else {
-				plot->page(0).axis(3).min(0);
-//				plot->page(0).axis(3).max(p->maximum());
-//				plot->page(0).axis(3).max((*p)[1]);
-				f = (*p)[1];
-				for ( i=1; i<nx; ++i )
-					if ( f < (*p)[i] ) f = (*p)[i];
-				plot->page(0).axis(3).max(f);
-				plot->page(0).axis(3).label("Power");
-			}
-			for ( i=0; i<nx; i++ ) (*plot)[i] = p->sampling(0)[0]*i;
-			for ( i=0, k=nx; i<nx*p->images(); i++, k++ ) (*plot)[k] = (*p)[i];
-		}
+		if ( psfile.length() )
+			plot = plot_radial_powerspectrum(p, resolution, ps_flags);
 	} else if ( expand_size.volume() > 0 ) {
 		pmap = p->radial_to_full(expand_size, origin);
 		delete p;
@@ -409,5 +377,58 @@ int 		main(int argc, char **argv)
 		timer_report(ti);
 	
 	bexit(0);
+}
+
+Bplot*		plot_radial_powerspectrum(Bimage* p, double resolution, int ps_flags)
+{
+	long			i, j, k;
+	double			f;
+	Bstring			title("Radial power spectrum");
+	long			n = p->images() + 1;
+	long			nx = p->sizeX();
+	RGB<float>		color;
+
+	Bplot*			plot = new Bplot(1, nx, n);
+	plot->title(title);
+	plot->page(0).title(title);
+	plot->page(0).columns(n);
+	for ( i=0; i<n; i++ ) plot->page(0).column(i).number(i);
+	plot->page(0).column(0).label("SpatialFrequency(1/A)");
+	plot->page(0).column(0).axis(1);
+	plot->page(0).axis(1).min(0);
+	plot->page(0).axis(1).max(1/resolution);
+	for ( i=1; i<n; i++ ) {
+		plot->page(0).column(i).type(2);
+		plot->page(0).column(i).label(Bstring(i, "%d"));
+		plot->page(0).column(i).axis(3);
+		if ( n > 2 ) color.spectrum(i,1,n-1);
+		plot->page(0).column(i).color(color.r(),color.g(),color.b());
+	}
+	if ( ps_flags & 8 ) {
+		plot->page(0).axis(3).flags(2);
+		plot->page(0).axis(3).label("log Power");
+	} else {
+		plot->page(0).axis(3).min(0);
+		f = (*p)[1];
+		for ( i=1; i<nx; ++i )
+			if ( f < (*p)[i] ) f = (*p)[i];
+		plot->page(0).axis(3).max(f);
+		plot->page(0).axis(3).label("Power");
+	}
+	for ( i=0; i<nx; i++ ) (*plot)[i] = p->sampling(0)[0]*i;
+	for ( i=0, k=nx; i<nx*p->images(); i++, k++ ) (*plot)[k] = (*p)[i];
+	
+	if ( verbose & VERB_PROCESS ) {
+		cout << "Spatial Frequency (1/A)";
+		for ( k=1; k<=p->images(); ++k ) cout << tab << k;
+		cout << scientific << endl;
+		for ( i=0; i<nx; ++i ) {
+			cout << (*plot)[i];
+			for ( j=nx+i, k=0; k<p->images(); ++k, j+=nx ) cout << tab << (*plot)[j];
+			cout << endl;
+		}
+	}
+		
+	return plot;
 }
 

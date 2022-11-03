@@ -1,11 +1,12 @@
 
 # Functions for Bsoft configuration
 # Bernard Heymann
-# 20030818 - 20210624
+# 20030818 - 20220927
 
 developer_resources()
 {
 	# Determine the system and developer resources
+	MACH=`uname -m`
 	SYS=`uname -s | cut -f1 -d"-"`
 	OSVER=`uname -v`
 	SDK=""
@@ -19,7 +20,7 @@ developer_resources()
 
 	# Determine the available compiler
 	gv=`gcc 2>&1 | cut -f1 -d":"`
-	if [[ $gv == "clang" ]]; then
+	if [[ $gv =~ "clang" ]]; then
 		CC='clang'
 		CXX='clang++'
 	elif [[ $gv =~ llvm-gcc ]]; then
@@ -59,6 +60,13 @@ check_dependencies()
 			LIBPNG=`find $DIR $DEPTH -name 'libpng*'`
 		fi
 
+		if [ ! -d "$TCLSRC" ]; then
+			TCLSRC=`find $DIR $DEPTH -name 'tcl*'`
+		fi
+
+		if [ ! -d "$TKSRC" ]; then
+			TKSRC=`find $DIR $DEPTH -name 'tk*'`
+		fi
 	done
 
 	# Required
@@ -92,15 +100,20 @@ check_dependencies()
 	HAVE_JPEG=0
 	
 	# Tcl/Tk
+#	echo "TKSRC=$TKSRC"
 	if [[ $SYS =~ Darwin ]]; then
-#		if [ -e /Library/Frameworks/Tk.framework ]; then
-#			TCL=/Library/Frameworks/Tcl.framework
-#			TK=/Library/Frameworks/Tk.framework
-#		else
-			TCL=$SDK/System/Library/Frameworks/Tcl.framework
-			TK=$SDK/System/Library/Frameworks/Tk.framework
-#		fi
-        TCLINC=$TCL/Headers
+		if [ -e /Library/Frameworks/Tk.framework ]; then
+			TKFW=/Library/Frameworks
+		else
+			TKFW=$SDK/System/Library/Frameworks
+			if [[ `uname -r` > 20 ]]; then
+				echo "Warning: Tcl/Tk 8.5 is deprecated on Mac OS!"
+				echo "Tcl/Tk 8.6 need to be compiled and installed."
+			fi
+		fi
+		TCL=$TKFW/Tcl.framework
+		TK=$TKFW/Tk.framework
+		TCLINC=$TCL/Headers
 		TKINC=$TK/Headers
 	elif [[ $SYS =~ Linux ]]; then
 		TCL=/usr
@@ -111,13 +124,20 @@ check_dependencies()
 			TCLINC=/usr/include/tcl
 			TKINC=/usr/include/tk
 		fi
+	else
+		echo "System $SYS not supported!"
+		exit
 	fi
 
 	if [ -e $TKINC/tk.h ]; then
 		echo "# Tcl/Tk      found"
 		HAVE_TK=1
+	elif [ -e $TKSRC/generic/tk.h ]; then
+		echo "# Tcl/Tk      found"
+		HAVE_TK=1
 	else
 		echo "# No Tcl/Tk library found! Bshow will not be compiled!"
+		echo "Tcl/Tk 8.6 need to be compiled and installed."
 		echo "# Looking for: $TKINC/tk.h"
 		TKO=""
 	fi
@@ -156,6 +176,7 @@ show_configuration()
 	echo "Date:	$today"
 	echo
 
+	echo "Machine:		$MACH"
 	echo "System:		$OSVER"
 	echo "C compiler:	$CC"
 	echo "C++ compiler:	$CXX"
@@ -169,8 +190,14 @@ show_configuration()
 	echo "	TIFF:  $LIBTIFF"
 	echo "	JPEG:  $LIBJPEG"
 	echo "	PNG:   $LIBPNG"
-    echo "  Tcl:   $TCL"
-    echo "  Tk:    $TK"
+	if [ -d "$TCLSRC" ]; then
+    	echo "	Tcl source:   $TCLSRC"
+	fi
+	echo "	Tcl:   $TCL"
+	if [ -d "$TKSRC" ]; then
+    	echo "	Tk source:   $TKSRC"
+	fi
+	echo "	Tk:    $TK"
 	echo "--------------------------------------------------------------------------"
 	echo
 }

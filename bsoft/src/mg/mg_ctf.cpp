@@ -3,7 +3,7 @@
 @brief	Functions for CTF (contrast transfer function) processing
 @author Bernard Heymann
 @date	Created: 19970715
-@date	Modified: 20210817
+@date	Modified: 20220805
 **/
 
 #include "rwimg.h"
@@ -12,7 +12,7 @@
 #include "ps_plot.h" 
 #include "ps_ctf_plot.h" 
 #include "mg_processing.h"
-//#include "matrix_linear.h"
+#include "zernike.h"
 #include "utilities.h"
 #include "timer.h"
 
@@ -22,7 +22,107 @@
 extern int 	verbose;		// Level of output to the screen
 
 /**
-@brief 	Calculates a CTF complex image.
+@brief 	Calculates an aberration image.
+@param 	cp				CTF & aberration parameters.
+@param 	flip			Flip phases of even aberrations.
+@param 	wiener			Wiener factor (fraction), if 0, flip phases.
+@param 	size			new image size.
+@param 	sam				new image pixel size.
+@param 	lores			low resolution limit.
+@param 	hires			high resolution limit.
+@return Bimage*			new complex CTF function image.
+
+	Functions:
+		angle = atan(y/x)
+		s2 = x*x + y*y
+		defocus_average = (defocus_max + defocus_min)/2
+		defocus_deviation = (defocus_max - defocus_min)/2
+		defocus = defocus_average + defocus_deviation*cos(2*(angle - astigmatism_angle))
+		phase = 0.5*PI*lambda*lambda*lambda*Cs*s2*s2 - PI*lambda*defocus*s2 - amp_shift;
+		CTF = sin(phase)
+	Note: Defocus is positive for underfocus and negative for overfocus.
+
+**/
+Bimage*		img_ctf_calculate(CTFparam& cp, bool flip, double wiener,
+				Vector3<long> size, Vector3<double> sam, double lores, double hires)
+{
+	if ( lores < 0 ) lores = 0;
+	if ( hires <= 0 ) hires = sam[0];
+	if ( lores > 0 && lores < hires ) swap(lores, hires);
+	if ( size[2] == 1 ) sam[2] = 1;
+	
+//	if ( cp.aberration_weights().size() < 1 )
+//		cp.convert_CTF_to_aberration_weights();
+
+	double			shi(1/hires);
+	double			slo = (lores > 0)? 1/lores: 0;
+	double			shi2(shi*shi), slo2(slo*slo);
+	
+	Bimage*			p = new Bimage(Float, TComplex, size, 1);
+	if ( sam.volume() > 0 ) p->sampling(sam);
+	
+	long 			i, x, y, z;
+	double			wiener1(wiener+1), sx, sy, sz, s2, a, dphi, w;
+	Complex<double>	cv(1,0);
+	Vector3<double>	freq_scale(1.0L/p->real_size());
+	Vector3<double>	h((p->size() - 1)/2);
+	
+	if ( verbose & ( VERB_LABEL | VERB_PROCESS ) ) {
+		cout << "Calculating a CTF function:" << endl;
+	}
+	if ( verbose & VERB_PROCESS ) {
+		cp.show();
+		cout << "Resolution range:               " << hires << " - ";
+		if ( lores > 0 ) cout << lores << " A" << endl;
+		else cout << "inf A" << endl;
+		cout << "Frequency range:                " << slo << " - " << shi << " 1/A" << endl;
+		double		rel_size = cp.lambda()*cp.defocus_average()/(sam[0]*sam[1]);
+		if ( rel_size > 500 ) {
+			cerr << "Warning: The oscillations are too high and create artifacts!" << endl;
+			cerr << tab << "Either decrease the defocus below " << 1e-4*500*sam[0]*sam[1]/cp.lambda() << " um" << endl;
+			cerr << tab << "or increase the pixel size above " << sqrt(cp.lambda()*cp.defocus_average()/500) << " Å" << endl << endl;
+		}
+	}
+	
+		for ( i=z=0; z<p->sizeZ(); z++ ) {
+			sz = z;
+			if ( z > h[2] ) sz -= p->sizeZ();
+			sz *= freq_scale[2];
+			for ( y=0; y<p->sizeY(); y++ ) {
+				sy = y;
+				if ( y > h[1] ) sy -= p->sizeY();
+				sy *= freq_scale[1];
+				for ( x=0; x<p->sizeX(); x++, i++ ) {
+					sx = x;
+					if ( x > h[0] ) sx -= p->sizeX();
+					sx *= freq_scale[0];
+					s2 = sx*sx + sy*sy + sz*sz;
+					if ( s2 >= slo2 && s2 <= shi2 ) {
+						a = atan2(sy,sx);
+						dphi = cp.calculate_aberration_even(s2, a);
+						w = sinl(dphi);
+						if ( flip )
+							w = (w < 0)? -1: 1;
+						else if ( wiener )
+							w = wiener1*w/(w*w + wiener);
+						cv = cp.aberration_odd_complex(s2, a);
+						p->set(i, cv.conj() * w);
+					}
+				}
+			}
+		}
+	
+//	p->complex_to_real();
+//	p->statistics();
+	
+//	write_img("c.grd", p, 0);
+//	bexit(0);
+	
+	return p;
+}
+
+/**
+@brief 	Calculates a CTF image.
 @param 	cp				CTF parameters.
 @param 	action			type of CTF calculated (1-8).
 @param 	wiener			Wiener factor (fraction).
@@ -53,6 +153,7 @@ Bimage*		img_ctf_calculate(CTFparam cp, int action, double wiener, Vector3<long>
 	if ( hires <= 0 ) hires = sam[0];
 	if ( lores > 0 && lores < hires ) swap(lores, hires);
 	if ( size[2] == 1 ) sam[2] = 1;
+	if ( action > 2 && wiener < 0.01 ) wiener = 0.2;
 
 	double			shi(1/hires);
 	double			slo = (lores > 0)? 1/lores: 0;
@@ -61,7 +162,7 @@ Bimage*		img_ctf_calculate(CTFparam cp, int action, double wiener, Vector3<long>
 	if ( sam.volume() > 0 ) p->sampling(sam);
 	
 	long 			i, x, y, z, sign;
-	double			sx, sy, sz, s, s2, w, ctf_fac, base(0), env(0), ctf_env;
+	double			sx, sy, sz, s, s2, w, wiener1(1+wiener), ctf_fac, base(0), env(0), ctf_env;
 	Vector3<double>	freq_scale(1.0L/p->real_size());
 	Vector3<double>	h((p->size() - 1)/2);
 //	cout << h << endl;
@@ -99,10 +200,10 @@ Bimage*		img_ctf_calculate(CTFparam cp, int action, double wiener, Vector3<long>
 			cout << "Noise:                          " << base_eq << endl;
 		}
 		cout << endl;
-		double		rel_size = cp.lambda()*cp.defocus_average()/(sam[0]*sam[0]);
+		double		rel_size = cp.lambda()*cp.defocus_average()/(sam[0]*sam[1]);
 		if ( rel_size > 500 ) {
 			cerr << "Warning: The oscillations are too high and create artifacts!" << endl;
-			cerr << tab << "Either decrease the defocus below " << 1e-4*500*sam[0]*sam[0]/cp.lambda() << " um" << endl;
+			cerr << tab << "Either decrease the defocus below " << 1e-4*500*sam[0]*sam[1]/cp.lambda() << " um" << endl;
 			cerr << tab << "or increase the pixel size above " << sqrt(cp.lambda()*cp.defocus_average()/500) << " Å" << endl << endl;
 		}
 	}
@@ -131,7 +232,7 @@ Bimage*		img_ctf_calculate(CTFparam cp, int action, double wiener, Vector3<long>
 							case 1: w = sign; break;			// Flip the phase
 							case 2: w = ctf_fac; break;			// Apply the CTF
 							case 3:
-								w = ctf_fac/(ctf_fac*ctf_fac + wiener);
+								w = wiener1*ctf_fac/(ctf_fac*ctf_fac + wiener);
 								break; // Spider method
 							case 4:
 								if ( base > 0 ) {
@@ -141,10 +242,10 @@ Bimage*		img_ctf_calculate(CTFparam cp, int action, double wiener, Vector3<long>
 								}
 								break; // Wiener filter method
 							case 5:
-								w = ctf_fac/(ctf_fac*ctf_fac*base + wiener);
+								w = wiener1*ctf_fac/(ctf_fac*ctf_fac*base + wiener);
 								break; // Baseline enhancement
 							case 6:
-								w = 1/(ctf_fac*base + sign*wiener);
+								w = wiener1/(ctf_fac*base + sign*wiener);
 								break; // Baseline enhancement
 							case 7:
 								if ( base > 0 ) w = sign/sqrt(base);
@@ -166,6 +267,322 @@ Bimage*		img_ctf_calculate(CTFparam cp, int action, double wiener, Vector3<long>
 	return p;
 }
 
+/**
+@brief 	Calculates an aberration image.
+@param 	cp				CTF & aberration parameters.
+@param 	def_min			Minimum defocus.
+@param 	def_max			Maximum defocus.
+@param 	def_inc			Defocus increment.
+@param 	size			new image size.
+@param 	sam				new image pixel size.
+@param 	lores			low resolution limit.
+@param 	hires			high resolution limit.
+@return Bimage*			new complex CTF function image.
+
+	Functions:
+		angle = atan(y/x)
+		s2 = x*x + y*y
+		defocus_average = (defocus_max + defocus_min)/2
+		defocus_deviation = (defocus_max - defocus_min)/2
+		defocus = defocus_average + defocus_deviation*cos(2*(angle - astigmatism_angle))
+		phase = 0.5*PI*lambda*lambda*lambda*Cs*s2*s2 - PI*lambda*defocus*s2 - amp_shift;
+		CTF = sin(phase)
+	Note: Defocus is positive for underfocus and negative for overfocus.
+
+**/
+Bimage*		img_ctf_gradient(CTFparam& cp, double def_min, double def_max, double def_inc,
+				Vector3<long> size, Vector3<double> sam, double lores, double hires)
+{
+	if ( lores < 0 ) lores = 0;
+	if ( hires <= 0 ) hires = sam[0];
+	if ( lores > 0 && lores < hires ) swap(lores, hires);
+	if ( size[2] == 1 ) sam[2] = 1;
+	
+	cp.defocus_average((def_min+def_max)/2);
+	
+	double			shi(1/hires);
+	double			slo = (lores > 0)? 1/lores: 0;
+	double			shi2(shi*shi), slo2(slo*slo);
+	
+	Bimage*			p = new Bimage(Float, TComplex, size, 1);
+	if ( sam.volume() > 0 ) p->sampling(sam);
+	
+	long 			i, x, y, z, n(0);
+	double			d, sx, sy, sz, s2, a, dphi;
+	Complex<double>	cv(1,0);
+	Vector3<double>	freq_scale(1.0L/p->real_size());
+	Vector3<double>	h((p->size() - 1)/2);
+	
+	if ( verbose & ( VERB_LABEL | VERB_PROCESS ) ) {
+		cout << "Calculating a CTF gradient function:" << endl;
+	}
+	if ( verbose & VERB_PROCESS ) {
+		cp.show();
+		cout << "Defocus min, max, inc:          " << def_min << " - " << def_max << " ∆ " << def_inc << endl;
+		cout << "First sinc node:                " << sqrt((def_max-def_min)*cp.lambda()/2) << " A" << endl;
+		cout << "Resolution range:               " << hires << " - ";
+		if ( lores > 0 ) cout << lores << " A" << endl;
+		else cout << "inf A" << endl;
+		cout << "Frequency range:                " << slo << " - " << shi << " 1/A" << endl;
+		double		rel_size = cp.lambda()*cp.defocus_average()/(sam[0]*sam[1]);
+		if ( rel_size > 500 ) {
+			cerr << "Warning: The oscillations are too high and create artifacts!" << endl;
+			cerr << tab << "Either decrease the defocus below " << 1e-4*500*sam[0]*sam[1]/cp.lambda() << " um" << endl;
+			cerr << tab << "or increase the pixel size above " << sqrt(cp.lambda()*cp.defocus_average()/500) << " Å" << endl << endl;
+		}
+	}
+	
+	for ( d = def_min, n=0; d <= def_max; d += def_inc, ++n ) {
+		cp.defocus_average(d);
+		for ( i=z=0; z<p->sizeZ(); z++ ) {
+			sz = z;
+			if ( z > h[2] ) sz -= p->sizeZ();
+			sz *= freq_scale[2];
+			for ( y=0; y<p->sizeY(); y++ ) {
+				sy = y;
+				if ( y > h[1] ) sy -= p->sizeY();
+				sy *= freq_scale[1];
+				for ( x=0; x<p->sizeX(); x++, i++ ) {
+					sx = x;
+					if ( x > h[0] ) sx -= p->sizeX();
+					sx *= freq_scale[0];
+					s2 = sx*sx + sy*sy + sz*sz;
+					if ( s2 >= slo2 && s2 <= shi2 ) {
+						a = atan2(sy,sx);
+						dphi = cp.calculate_aberration_even(s2, a);
+						cv = cp.aberration_odd_complex(s2, a);
+						p->add(i, cv.conj() * sinl(dphi));
+					}
+				}
+			}
+		}
+	}
+	
+	p->multiply(1.0L/n);
+	
+//	p->complex_to_real();
+//	p->statistics();
+	
+//	write_img("c.grd", p, 0);
+//	bexit(0);
+	
+	return p;
+}
+
+
+double		aberration(long n, long m, double s, double p)
+{
+	if ( n == 0 ) return 1;
+	if ( n > 4 ) return 0;
+	
+	double		s2;
+	if ( n > 1 ) s2 = s*s;
+	if ( n == 2 ) s = s2;
+	else if ( n == 3 ) s *= s2;
+	else if ( n == 4 ) s = s2*s2;
+
+	if ( m == 0 ) return s;
+	if ( m < 0 ) return s * sin(-m*p);
+	else return s * cos(m*p);
+}
+
+vector<double>	aberration_terms(map<pair<long,long>,double>& wa, double u, double v)
+{
+	vector<double>		t;
+	double				s = sqrt(u*u + v*v);
+	double				p = atan2(v,u);
+
+	for ( auto w: wa ) t.push_back(aberration(w.first.first, w.first.second, s, p));
+
+	return t;
+}
+
+vector<double>	aberration_terms(long nt, double u, double v)
+{
+	long				i, m, n;
+	vector<double>		t(nt,0);
+	double				s = sqrt(u*u + v*v);
+	double				p = atan2(v,u);
+
+	for ( i=n=0; n<5 && i<t.size(); ++n )
+		for ( m=-n; m<=n; m+=2 )
+			t[i++] = aberration(n, m, s, p);
+
+	return t;
+}
+
+vector<double>	aberration_even_terms(long nt, double u, double v)
+{
+	long				i, m, n;
+	vector<double>		t(nt,0);
+	double				s = sqrt(u*u + v*v);
+	double				p = atan2(v,u);
+
+	for ( i=n=0; n<5 && i<t.size(); n+=2 )
+		for ( m=-n; m<=n; m+=2 )
+			t[i++] = aberration(n, m, s, p);
+
+	return t;
+}
+
+vector<double>	aberration_odd_terms(long nt, double u, double v)
+{
+	long				i, m, n;
+	vector<double>		t(nt,0);
+	double				s = sqrt(u*u + v*v);
+	double				p = atan2(v,u);
+
+	for ( i=0, n=1; n<5 && i<t.size(); n+=2 )
+		for ( m=-n; m<=n; m+=2 )
+			t[i++] = aberration(n, m, s, p);
+
+	return t;
+}
+
+map<pair<long,long>,double>	aberration_weights(vector<double> v, int flag)
+{
+	long			nt(15);
+	if ( flag == 1 ) nt = 6;
+	else if ( flag == 2 ) nt = 9;
+
+	long			t = (flag<1)? 1: 2;
+	long			i, n(flag&1), m;
+	
+	map<pair<long,long>,double>	w;
+		
+	for ( i=0; n<5 && i<v.size() && i<nt; n+=t ) {
+		for ( m=-n; m<=n; m+=2 ) {
+			w[{n,m}] = v[i++];
+			if ( verbose & VERB_FULL )
+				cout << i << "\t" << n << "\t" << m << "\t" << w[{n,m}] << endl;
+		}
+	}
+	
+	return w;
+}
+
+string		aberration_weight_string(map<pair<long,long>,double>& weights)
+{
+	string		ws;
+	for ( auto w: weights ) ws += "," + to_string(w.second);
+	ws[0] = '[';
+	ws += ']';
+	return ws;
+}
+
+/*
+	flag	0=all(15), 1=odd(6), 2=even(9)
+*/
+int			img_aberration_basis(Bimage* p, int flag)
+{
+	if ( verbose & VERB_PROCESS ) {
+		cout << "Creating an aberration basis ";
+		if ( flag == 1 ) cout << "for odd weights";
+		if ( flag == 2 ) cout << "for even weights";
+		cout << endl << endl;
+	}
+		
+	long			at = (flag<1)? 1: 2;
+	long			an, am, i, xx, yy;
+	double			phi;
+	Vector3<double>	s;
+	
+	for ( i=0, an=(flag==1); an<5; an+=at ) {
+		for ( am=-an; am<=an; am+=2 ) {
+			for ( yy=0; yy<p->sizeY(); ++yy ) {
+				s[1] = (double(yy) - p->image->origin()[1])/p->sizeY();
+				if ( s[1] >= 0.5 ) s[1] -= 1;
+				s[1] /= p->image->sampling()[1];
+				for ( xx=0; xx<p->sizeX(); ++xx, ++i ) {
+					s[0] = (double(xx) - p->image->origin()[0])/p->sizeX();
+					if ( s[0] >= 0.5 ) s[0] -= 1;
+					s[0] /= p->image->sampling()[0];
+					phi = atan2(s[1],s[0]);
+					p->set(i, aberration(an, am, s.length(), phi));
+				}
+			}
+		}
+	}
+	
+	return 0;
+}
+
+int			img_create_aberration(Bimage* p, map<pair<long,long>,double>& weights, int flag)
+{
+	vector<map<pair<long,long>,double>>	wa;
+	
+	wa.push_back(weights);
+
+	img_create_aberration(p, wa, flag);
+
+	return 0;
+}
+
+int			img_create_aberration(Bimage* p, vector<map<pair<long,long>,double>>& weights, int flag)
+{
+	if ( verbose & VERB_PROCESS ) {
+		cout << "Creating " << weights.size() << " images with aberration weights" << endl;
+//		cout << "m\tn\tw" << endl;
+//		for ( auto w1: weights )
+//			cout << w1.first.first << tab << w1.first.second << tab << w1.second << endl;
+//		cout << endl;
+	}
+	
+	long			i, xx, yy, zz, nn;
+	double			v, phi, sf;
+	Vector3<double>	s;
+	map<pair<long,long>,double> w;
+	
+	for ( i=nn=0; nn<p->images(); ++nn ) {
+		w = weights[nn];
+		for ( zz=0; zz<p->sizeZ(); ++zz ) {
+			s[2] = (double(zz) - p->image[nn].origin()[2])/p->sizeZ();
+			if ( s[2] >= 0.5 ) s[2] -= 1;
+			s[2] /= p->image->sampling()[2];
+			for ( yy=0; yy<p->sizeY(); ++yy ) {
+				s[1] = (double(yy) - p->image[nn].origin()[1])/p->sizeY();
+				if ( s[1] >= 0.5 ) s[1] -= 1;
+				s[1] /= p->image->sampling()[1];
+				for ( xx=0; xx<p->sizeX(); ++xx, ++i ) {
+					s[0] = (double(xx) - p->image[nn].origin()[0])/p->sizeX();
+					if ( s[0] >= 0.5 ) s[0] -= 1;
+					s[0] /= p->image->sampling()[0];
+					sf = s.length();
+					phi = atan2(s[1],s[0]);
+					v = 0;
+					for ( auto w1: w ) {
+						if ( flag ) {
+							if ( w1.first.first%2 == flag%2 )
+								v += w1.second * aberration(w1.first.first,w1.first.second,sf,phi);
+						} else {
+							v += w1.second * aberration(w1.first.first,w1.first.second,sf,phi);
+						}
+					}
+					v = angle_set_negPI_to_PI(v);
+//					v = sin(v);
+					if ( flag == 4 ) p->set(i, -cos(2*v));
+					else p->set(i, v);
+				}
+			}
+		}
+	}
+	
+	return 0;
+}
+
+int			img_create_aberration(Bimage* p, CTFparam cp, int flag)
+{
+	return img_create_aberration(p, cp.aberration_weights(), flag);
+}
+
+int			img_create_aberration(Bimage* p, map<string,CTFparam>& cpa, int flag)
+{
+	vector<map<pair<long,long>,double>>	wa;
+	
+	for ( auto cp: cpa ) wa.push_back(cp.second.aberration_weights());
+	
+	return img_create_aberration(p, wa, flag);
+}
 /**
 @brief 	Calculates a wave aberration function.
 @param 	cp				CTF parameters.
@@ -230,11 +647,12 @@ Bimage*		img_wave_aberration(CTFparam cp, Vector3<long> size, Vector3<double> sa
 /**
 @brief 	Applies or corrects for the contrast transfer function (CTF).
 @param 	*p				image (modified).
-@param 	*em_ctf			CTF parameter structure.
+@param 	em_ctf			CTF parameter structure.
 @param 	action			action to be taken.
 @param 	wiener			Wiener factor (fraction).
 @param 	lores			low resolution limit.
 @param 	hires			high resolution limit.
+@param 	invert			phase flip to invert contrast.
 @return int				0, <0 on error.
 
 	The actions for this funtion are:
@@ -247,7 +665,7 @@ Bimage*		img_wave_aberration(CTFparam cp, Vector3<long> size, Vector3<double> sa
 
 **/
 int 		img_ctf_apply(Bimage* p, CTFparam em_ctf, int action, double wiener,
-				double lores, double hires)
+				double lores, double hires, bool invert)
 {
 	if ( action < 1 || action > 10 ) return 0;
 	
@@ -255,9 +673,10 @@ int 		img_ctf_apply(Bimage* p, CTFparam em_ctf, int action, double wiener,
 
 	Bimage*			pctf = img_ctf_calculate(em_ctf, action, wiener, p->size(), 
 						p->sampling(0), lores, hires);
-	pctf->invert();
 	
-//	write_img("pctf.pif", pctf, 0);
+	if ( invert ) pctf->invert();
+	
+//	write_img("pctf.grd", pctf, 0);
 //	bexit(-1);
 	
 	int				back_transform(0);
@@ -266,7 +685,7 @@ int 		img_ctf_apply(Bimage* p, CTFparam em_ctf, int action, double wiener,
 		back_transform = 1;
 	}
 
-//	write_img("p.pif", p);
+//	write_img("p.grd", p, 0);
 	
 	long 			i, j, nn;
 	
@@ -274,11 +693,11 @@ int 		img_ctf_apply(Bimage* p, CTFparam em_ctf, int action, double wiener,
 		for ( i=0; i<p->image_size(); i++, j++ )
 			p->set(j, p->complex(j) * (*pctf)[i]);
 
-//	write_img("pf.pif", p);
+//	write_img("pf.grd", p, 0);
 	
 	delete pctf;
 	
-	if ( back_transform ) p->fft(FFTW_BACKWARD);
+	if ( back_transform ) p->fft(FFTW_BACKWARD, 1, Real);
 
 //	p->statistics();	// fft includes statistics
 	
@@ -286,7 +705,7 @@ int 		img_ctf_apply(Bimage* p, CTFparam em_ctf, int action, double wiener,
 }
 
 int 		img_ctf_apply(Bimage* p, CTFparam em_ctf, int action, double wiener,
-				double lores, double hires, fft_plan planf_2D, fft_plan planb_2D)
+				double lores, double hires, bool invert, fft_plan planf_2D, fft_plan planb_2D)
 {
 	if ( action < 1 || action > 10 ) return 0;
 
@@ -294,7 +713,8 @@ int 		img_ctf_apply(Bimage* p, CTFparam em_ctf, int action, double wiener,
 
 	Bimage*			pctf = img_ctf_calculate(em_ctf, action, wiener, p->size(), 
 						p->sampling(0), lores, hires);
-	pctf->invert();
+	
+	if ( invert ) pctf->invert();
 	
 	int				back_transform(0);
 	if ( p->fourier_type() == NoTransform ) {
@@ -324,8 +744,74 @@ int 		img_ctf_apply(Bimage* p, CTFparam em_ctf, int action, double wiener,
 	return 0;
 }
 
+/**
+@brief 	Applies or corrects for the contrast transfer function (CTF).
+@param 	*p				image (modified).
+@param 	cp				CTF & aberration parameters.
+@param 	flip			Flip phases of even aberrations.
+@param 	wiener			Wiener factor (fraction), if 0, flip phases.
+@param 	lores			low resolution limit.
+@param 	hires			high resolution limit.
+@return int				0, <0 on error.
+
+**/
+int 		img_ctf_apply_complex(Bimage* p, CTFparam& cp, bool flip,
+				double wiener, double lores, double hires)
+{
+	Bimage*			pctf = img_ctf_calculate(cp, flip, wiener,
+						p->size(), p->sampling(0), lores, hires);
+	
+	long 			i, j, nn;
+	
+	for ( nn=j=0; nn<p->images(); nn++ )
+		for ( i=0; i<p->image_size(); i++, j++ )
+			p->set(j, p->complex(j) * pctf->complex(i));
+
+	delete pctf;
+	
+	return 0;
+}
+
+int			img_apply_phase_aberration(Bimage* p, CTFparam em_ctf)
+{
+	long 			i, n, x, y, z;
+	double			sx, sy, sz, s2;
+	Vector3<double>	freq_scale(1.0/p->real_size());
+	Vector3<double>	h((p->sizeX() - 1)/2, (p->sizeY() - 1)/2, (p->sizeZ() - 1)/2);
+	Complex<double>	cv;
+
+	if ( verbose & VERB_PROCESS ) {
+		cout << "Applying phase aberration" << endl;
+		cout << endl;
+	}
+	
+	for ( i=n=0; n<p->images(); n++ ) {
+		for ( z=0; z<p->sizeZ(); z++ ) {
+			sz = z;
+			if ( z > h[2] ) sz -= p->sizeZ();
+			sz *= freq_scale[2];
+			for ( y=0; y<p->sizeY(); y++ ) {
+				sy = y;
+				if ( y > h[1] ) sy -= p->sizeY();
+				sy *= freq_scale[1];
+				for ( x=0; x<p->sizeX(); x++, i++ ) {
+					sx = x;
+					if ( x > h[0] ) sx -= p->sizeX();
+					sx *= freq_scale[0];
+					s2 = sx*sx + sy*sy + sz*sz;
+					cv = em_ctf.aberration_odd_complex(s2, atan2(sy,sx));
+					p->set(i, p->complex(i) * cv.conj());
+				}
+			}
+		}
+	}
+	
+	return 0;
+}
+
+
 int			img_ttf_apply_one(Bimage* p, long nn, CTFparam ctf, int action, 
-				double wiener, double def, double res_lo, double res_hi, 
+				double wiener, double def, double res_lo, double res_hi, bool invert,
 				Vector3<long> psize, fft_plan planf, fft_plan planb)
 {
 	verbose = 1;
@@ -340,7 +826,7 @@ int			img_ttf_apply_one(Bimage* p, long nn, CTFparam ctf, int action,
 
 	pt->pad(psize);
 	
-	img_ctf_apply(pt, ctf, action, wiener, res_lo, res_hi, planf, planb);
+	img_ctf_apply(pt, ctf, action, wiener, res_lo, res_hi, invert, planf, planb);
 	
 	pt->resize(oldsize, translate);
 	
@@ -358,19 +844,21 @@ int			img_ttf_apply_one(Bimage* p, long nn, CTFparam ctf, int action,
 @param 	defocus			defocus.
 @param 	res_lo			low resolution limit (angstrom).
 @param 	res_hi			high resolution limit (angstrom).
-@param	planf_2D       	2D forward fourier transform plan.
+@param 	invert			phase flip to invert contrast.
+@param	planf_2D       		2D forward fourier transform plan.
 @param 	planb_2D		2D backward fourier transform plan.
 @return int				error code.
 
 **/
-int			img_ctf_apply_to_proj(Bimage* proj, CTFparam em_ctf, double defocus, double res_lo, double res_hi, fft_plan planf_2D, fft_plan planb_2D)
+int			img_ctf_apply_to_proj(Bimage* proj, CTFparam em_ctf, double defocus,
+				double res_lo, double res_hi, bool invert, fft_plan planf_2D, fft_plan planb_2D)
 {
 	if ( verbose & VERB_DEBUG )
 		cout << "DEBUG img_ctf_apply_to_proj: def_avg=" << em_ctf.defocus_average() << endl;
 
 	if ( defocus > 0 ) em_ctf.defocus_average(defocus);
 	
-	img_ctf_apply(proj, em_ctf, 2, 0, res_lo, res_hi, planf_2D, planb_2D);
+	img_ctf_apply(proj, em_ctf, 2, 0, res_lo, res_hi, invert, planf_2D, planb_2D);
 
 	return 0;
 }
@@ -386,6 +874,7 @@ int			img_ctf_apply_to_proj(Bimage* proj, CTFparam em_ctf, double defocus, doubl
 @param 	axis			tilt axis angle (radians).
 @param 	res_lo			high resolution limit.
 @param 	res_hi			low resolution limit.
+@param 	invert			phase flip to invert contrast.
 @return int				0, <0 on error.
 
 	The actions for this funtion are:
@@ -398,7 +887,7 @@ int			img_ctf_apply_to_proj(Bimage* proj, CTFparam em_ctf, double defocus, doubl
 
 **/
 int			img_ttf_apply(Bimage* p, CTFparam ctf, int action, double wiener,
-				Vector3<long> tile_size, double tilt, double axis, double res_lo, double res_hi)
+				Vector3<long> tile_size, double tilt, double axis, double res_lo, double res_hi, int invert)
 {
 	if ( res_lo > 0 && res_lo < res_hi ) swap(res_lo, res_hi);
 	
@@ -479,12 +968,12 @@ int			img_ttf_apply(Bimage* p, CTFparam ctf, int action, double wiener,
 
 #ifdef HAVE_GCD
 	dispatch_apply(pt->images(), dispatch_get_global_queue(0, 0), ^(size_t i){
-		img_ttf_apply_one(pt, i, ctf, action, wiener, d[i], res_lo, res_hi, psize, planf, planb);
+		img_ttf_apply_one(pt, i, ctf, action, wiener, d[i], res_lo, res_hi, invert, psize, planf, planb);
 	});
 #else
 #pragma omp parallel for
 	for ( long i=0; i<pt->images(); i++ )
-		img_ttf_apply_one(pt, i, ctf, action, wiener, d[i], res_lo, res_hi, psize, planf, planb);
+		img_ttf_apply_one(pt, i, ctf, action, wiener, d[i], res_lo, res_hi, invert, psize, planf, planb);
 #endif
 
 	fft_destroy_plan(planf);
@@ -623,7 +1112,7 @@ Bimage*		mg_ctf_prepare(Bmicrograph* mg, int action, double lores, double hires,
 //	cout << "ps sampling = " << ps->image->sampling() << endl;
 	
 	if ( action == 12 || action == 13 )
-		mg->wri = img_ctf_fit(p, 0, *mg->ctf, lores, hires, def_start, def_end, def_inc, (flags & 8));
+		mg->wri = img_ctf_fit(p, 0, *mg->ctf, lores, hires, def_start, def_end, def_inc, flags);
 
 	return p;
 }
@@ -702,7 +1191,7 @@ int 		rec_ctf_prepare(Breconstruction* rec, int action, double lores, double hir
 	}
 	
 	if ( action == 12 || action == 13 )
-		rec->fom = img_ctf_fit(p, 0, *rec->ctf, lores, hires, def_start, def_end, def_inc, (flags & 8));
+		rec->fom = img_ctf_fit(p, 0, *rec->ctf, lores, hires, def_start, def_end, def_inc, flags);
 
 	delete p;
 
@@ -721,7 +1210,7 @@ int 		rec_ctf_prepare(Breconstruction* rec, int action, double lores, double hir
 @param	def_inc		defocus search increment (default 1e3).
 @param 	&path		new power spectrum directory for output.
 @param 	&newname	new file name for output.
-@param 	flags		1=use mg or rec, 2=filter, 4=background, 8=astigmatism, 16=frames
+@param 	flags		1=use mg or rec, 2=filter, 4=background, 8=astigmatism, 16=frames, 32=aberration fit
 @return int			0, <0 on error.
 
 	The default is to use the particle file. If the particle file is not
@@ -839,7 +1328,10 @@ int 		part_ctf(Bparticle* partlist, int action, double lores, double hires,
 		cout << "DEBUG part_ctf: partlist=" << partlist << endl;
 	
 	Bparticle*			part = partlist;
-	if ( !part ) return -1;
+	if ( !part ) {
+		cerr << "Warning in part_ctf: No particles!" << endl;
+		return -1;
+	}
 	
 	Bmicrograph*		mg = part->mg;
 	Breconstruction*	rec = part->rec;
@@ -848,6 +1340,7 @@ int 		part_ctf(Bparticle* partlist, int action, double lores, double hires,
 		cout << "DEBUG part_ctf: mg=" << mg << " rec=" << rec << endl;
 	
 	int					fn_flag(0);	// particle file flag: 0=mg, 1=part
+	bool				invert(flags&INVERT);
 	long				npart(0);
 	Vector3<double>		pixel_size;
 	Bstring				filename, insert("_ctf."), ext;
@@ -876,15 +1369,13 @@ int 		part_ctf(Bparticle* partlist, int action, double lores, double hires,
 	}
 	
 	if ( !filename.length() ) {
-		if ( verbose & VERB_FULL )
-			cerr << "Warning: no particle file specified!" << endl;
+		cerr << "Warning: no particle file specified!" << endl;
 		return -1;
 	}
 
 	p = read_img(filename, 0, -1);
 	if ( !p ) {
-		if ( verbose & VERB_FULL )
-			cerr << "Warning: particle file " << filename << " not read!" << endl;
+		cerr << "Warning: particle file " << filename << " not read!" << endl;
 		return -1;
 	}
 
@@ -932,8 +1423,9 @@ int 		part_ctf(Bparticle* partlist, int action, double lores, double hires,
 		else if ( mg )
 			part_ctf.defocus_average(mg->ctf->defocus_average() +
 				fabs(cosax*part->loc[0] - sinax*part->loc[1])*sintilt);
-		if ( part->dev ) part_ctf.defocus_deviation(part->dev);
-		if ( part->ast ) part_ctf.astigmatism_angle(part->ast);
+//		if ( part->dev ) part_ctf.defocus_deviation(part->dev);
+//		if ( part->ast ) part_ctf.astigmatism_angle(part->ast);
+		if ( part->dev ) part_ctf.astigmatism(part->dev, part->ast);
 		part->pixel_size = pixel_size;
 		
 		if ( part->fpart.length() ) filename = part->fpart;
@@ -947,9 +1439,9 @@ int 		part_ctf(Bparticle* partlist, int action, double lores, double hires,
 		if ( verbose & VERB_LABEL )
 			cout << "Processing image " << p->file_name() << " (" << part->id << ")" << endl;
 		
-		img_ctf_apply(p, part_ctf, action, wiener, lores, hires);
+		img_ctf_apply(p, part_ctf, action, wiener, lores, hires, invert);
 		
-		if ( flags & 4 ) p->correct_background();
+//		if ( flags & 4 ) p->correct_background();
 		p->change_type(nudatatype);
 		
 //		if ( nimg == 1 ) insert = Bstring(part->id, "_%04d.");
@@ -989,6 +1481,8 @@ int 		mg_ctf(Bmicrograph* mg, Bimage* pmg, int action, double lores, double hire
 {
 	if ( !mg->ctf ) mg->ctf = new CTFparam;
 	
+	bool			invert(flags&INVERT);
+	
 	Bstring			filename(mg->fmg), insert("_ctf."), ext("pif");
 	
 	if ( !filename.length() ) {
@@ -1024,15 +1518,15 @@ int 		mg_ctf(Bmicrograph* mg, Bimage* pmg, int action, double lores, double hire
 		if ( verbose )
 			cout << p->file_name() << " (" << mg->img_num << ") " << mg->tilt_angle*180.0/M_PI << endl;
 		img_ttf_apply(p, *(mg->ctf), action, wiener,
-				tile_size, mg->tilt_angle, mg->tilt_axis, lores, hires);
+				tile_size, mg->tilt_angle, mg->tilt_axis, lores, hires, invert);
 	} else {
 		if ( verbose )
 			cout << p->file_name() << " (" << mg->img_num << ")" << endl;
-		img_ctf_apply(p, *(mg->ctf), action, wiener, lores, hires);
+		img_ctf_apply(p, *(mg->ctf), action, wiener, lores, hires, invert);
 	}
 	
 	
-	if ( flags & 4 ) p->correct_background();
+//	if ( flags & 4 ) p->correct_background();
 	p->change_type(nudatatype);
 	
 	if ( pmg ) {
@@ -1063,6 +1557,8 @@ int 		rec_ctf(Breconstruction* rec, int action, double lores, double hires, doub
 {
 	if ( !rec->ctf ) rec->ctf = new CTFparam;
 	
+	bool			invert(flags&INVERT);
+	
 	Bstring			filename(rec->frec), insert("_ctf."), ext;
 	
 	if ( !filename.length() ) {
@@ -1092,7 +1588,7 @@ int 		rec_ctf(Breconstruction* rec, int action, double lores, double hires, doub
 	if ( flags & 2 )
 		p->filter_extremes();
 	
-	img_ctf_apply(p, *(rec->ctf), action, wiener, lores, hires);
+	img_ctf_apply(p, *(rec->ctf), action, wiener, lores, hires, invert);
 
 	if ( newname.length() ) filename = newname;
 	else filename = filename.pre_rev('.') + insert + filename.post_rev('.');
@@ -1100,7 +1596,7 @@ int 		rec_ctf(Breconstruction* rec, int action, double lores, double hires, doub
 	rec->frec = filename;
 	
 	if ( p ) {
-		if ( flags & 4 ) p->correct_background();
+//		if ( flags & 4 ) p->correct_background();
 		if ( verbose & VERB_DEBUG )
 			cout << "DEBUG rec_ctf: Writing file " << filename << endl;
 		p->change_type(nudatatype);
@@ -1123,7 +1619,7 @@ int 		rec_ctf(Breconstruction* rec, int action, double lores, double hires, doub
 @param 	datatype		corrected particle file data type.
 @param 	&partpath		corrected particle file path.
 @param 	&newname		new file name for output.
-@param 	flags			1=use mg or rec, 2=filter, 4=background, 8=astigmatism, 16=use frmaes
+@param 	flags			1=use mg or rec, 2=filter, 4=background, 8=astigmatism, 16=use frames, 32=invert
 @return int				0, <0 on error.
 
 	The default is to use the particle file. If the particle file is not
@@ -1692,8 +2188,9 @@ int			project_set_defocus(Bproject* project, double def_avg,
 			if ( !mg->ctf ) mg->ctf = new CTFparam;
 			mg->ctf->defocus_average(def_avg);
 			if ( def_dev ) {
-				mg->ctf->defocus_deviation(def_dev);
-				mg->ctf->astigmatism_angle(ast_angle);
+//				mg->ctf->defocus_deviation(def_dev);
+//				mg->ctf->astigmatism_angle(ast_angle);
+				mg->ctf->astigmatism(def_dev, ast_angle);
 			}
 			n++;
 		}
@@ -1706,8 +2203,9 @@ int			project_set_defocus(Bproject* project, double def_avg,
 		if ( !rec->ctf ) rec->ctf = new CTFparam;
 		rec->ctf->defocus_average(def_avg);
 		if ( def_dev ) {
-			rec->ctf->defocus_deviation(def_dev);
-			rec->ctf->astigmatism_angle(ast_angle);
+//			rec->ctf->defocus_deviation(def_dev);
+//			rec->ctf->astigmatism_angle(ast_angle);
+			rec->ctf->astigmatism(def_dev, ast_angle);
 		}
 		n++;
 	}
@@ -1739,22 +2237,24 @@ int			project_set_astigmatism(Bproject* project, double def_dev, double ast_angl
 	for ( field = project->field; field; field = field->next ) {
 		for ( mg = field->mg; mg; mg = mg->next ) {
 			if ( !mg->ctf ) mg->ctf = new CTFparam;
-			mg->ctf->defocus_deviation(def_dev);
-			mg->ctf->astigmatism_angle(ast_angle);
+//			mg->ctf->defocus_deviation(def_dev);
+//			mg->ctf->astigmatism_angle(ast_angle);
+			mg->ctf->astigmatism(def_dev, ast_angle);
 		}
 	}
 	
 	for ( rec = project->rec; rec; rec = rec->next ) {
 		if ( !rec->ctf ) rec->ctf = new CTFparam;
-		rec->ctf->defocus_deviation(def_dev);
-		rec->ctf->astigmatism_angle(ast_angle);
+//		rec->ctf->defocus_deviation(def_dev);
+//		rec->ctf->astigmatism_angle(ast_angle);
+		rec->ctf->astigmatism(def_dev, ast_angle);
 	}
 	
 	return 0;
 }
 
 /**
-@brief 	Sets the acceleration voltage of all the micrographs.
+@brief 	Updates the CTF parameters of all the micrographs.
 @param 	*project 		project parameter structure.
 @param 	jsctf			JSON parameters to be updated.
 @return int				0.
@@ -2141,6 +2641,162 @@ int			project_set_baseline(Bproject* project, int type, double* coeff)
 }
 
 /**
+@brief 	Retrieves unique optics groups as CTF parameters.
+@param 	*project 			project parameter structure.
+@return map<string,CTFparam>	list of CTF instances.
+**/
+map<string,CTFparam>	project_ctf_optics_groups(Bproject* project)
+{
+	map<string,CTFparam>	cp;
+
+	if ( !project ) return cp;
+	
+	Bfield*				field;
+	Bmicrograph*		mg;
+
+	for ( field = project->field; field; field = field->next )
+		for ( mg = field->mg; mg; mg = mg->next )
+			if ( mg->ctf )
+				cp[mg->ctf->identifier()] = *mg->ctf;
+	
+	if ( verbose )
+		cout << "Optics groups found:            " << cp.size() << endl << endl;
+	
+	return cp;
+}
+
+/**
+@brief 	Updates the aberration weights for all optics groups.
+@param 	*project 		project parameter structure.
+@param 	&cpa	 		list of CTF parameters for the optics groups.
+@param	flag			0=replace, 1=add
+@return long				number of optics groups not found.
+**/
+long		project_update_ctf_aberration(Bproject* project, map<string,CTFparam>& cpa, int flag)
+{
+	if ( !project ) return 0;
+	
+	bool				found(0);
+	long				nf(0);
+	Bfield*				field;
+	Bmicrograph*		mg;
+	CTFparam			cp = cpa.begin()->second;
+
+	for ( field = project->field; field; field = field->next ) {
+		for ( mg = field->mg; mg; mg = mg->next ) {
+			if ( mg->ctf ) {
+				found = 0;
+				for ( auto& g: cpa ) {
+					if ( g.first == mg->ctf->identifier() ) {
+						cp = g.second;
+						found = 1;
+						if ( flag ) mg->ctf->update_aberration_weights(cp.aberration_weights());
+						else mg->ctf->aberration_weights(cp.aberration_weights());
+						if ( verbose & VERB_FULL ) {
+							cout << mg->id << tab << cp.identifier() << tab << cp.select() << endl;
+//							cout << cp.aberration_weight_string() << endl;
+							cout << mg->ctf->aberration_weight_string() << endl;
+						}
+						break;
+					}
+				}
+				if ( !found ) nf++;
+			} else {
+				mg->ctf = new CTFparam;
+				mg->ctf->update(cp);
+				nf++;
+			}
+		}
+	}
+	
+	if ( verbose )
+		cout << "Optics groups not found:    " << nf << endl << endl;
+	
+	return nf;
+}
+
+/**
+@brief 	Updates the aberration weights for all optics groups.
+@param 	*project 		project parameter structure.
+@return int				0.
+**/
+/*int			project_convert_CTF_to_aberration_weights(Bproject* project)
+{
+	if ( !project ) return 0;
+	
+	Bfield*				field;
+	Bmicrograph*		mg;
+
+	for ( field = project->field; field; field = field->next )
+		for ( mg = field->mg; mg; mg = mg->next )
+			if ( mg->ctf )
+				mg->ctf->convert_CTF_to_aberration_weights();
+	
+	return 0;
+}
+*/
+/**
+@brief 	Compares the aberration parameters from two projects.
+@param 	*project 		project parameter structure.
+@param 	*project2 		second project parameter structure.
+@return int				0.
+**/
+int			project_aberration_compare(Bproject* project, Bproject* project2)
+{
+	map<string,CTFparam>	cpa = project_ctf_optics_groups(project);
+	map<string,CTFparam>	cpa2 = project_ctf_optics_groups(project2);
+	
+	if ( verbose ) {
+		cout << "Comparing two sets of optics groups:" << endl;
+		cout << "Parameter file 1:                      " << project->filename << endl;
+		cout << "Parameter file 2:                      " << project2->filename << endl;
+		cout << "Number of optics groups:               " << cpa.size() << endl;
+	}
+	
+	if ( cpa.size() != cpa2.size() ) {
+		cerr << "Error in project_aberration_compare: The number of optics groups must be the same!" << endl;
+		cerr << "Number of optics groups in the second file: " << cpa2.size() << endl;
+		return -1;
+	}
+	
+	for ( auto cp: cpa ) {
+		auto wa = cp.second.aberration_weights();
+		auto wa2 = cpa2[cp.first].aberration_weights();
+		cout << "Optics group: " << cp.first << ":" << endl;
+		cout << "n\tm\tw1\tw2\tw1-w2" << endl;
+		for ( auto w: wa )
+			cout << w.first.first << tab << w.first.second << tab << w.second << tab
+				<< wa2[w.first] << tab << w.second - wa2[w.first] << endl;
+	}
+	
+	return 0;
+}
+
+/**
+@brief 	Deletes the aberration parameters of all the micrographs.
+@param 	*project 		project parameter structure.
+@param	which			0=all, 1=odd, 2=even.
+@return int				0.
+**/
+int			project_delete_aberration(Bproject* project, int which)
+{
+	if ( !project ) return 0;
+	
+	Bfield*				field;
+	Bmicrograph*		mg;
+	Breconstruction*	rec;
+
+	for ( field = project->field; field; field = field->next )
+		for ( mg = field->mg; mg; mg = mg->next )
+			if ( mg->ctf ) mg->ctf->delete_aberration(which);
+	
+	for ( rec = project->rec; rec; rec = rec->next )
+		if ( rec->ctf ) rec->ctf->delete_aberration(which);
+	
+	return 0;
+}
+
+/**
 @brief 	Updates the first zero from the defocus average for all the micrographs.
 @param 	*project 		project parameter structure.
 @return int						0.
@@ -2204,6 +2860,80 @@ int			project_plot_ctf(Bproject* project, Bstring& filename)
 		}
 	}
 	
+	return 0;
+}
+
+/**
+@brief 	Calculates CTF parameter statistics.
+@param 	*project 		project parameter structure.
+@return long				number of micrographs.
+**/
+long		project_ctf_statistics(Bproject* project)
+{
+	if ( !project ) return 0;
+	
+	long				nmg(0), n, m, i;
+	double				v, va, defmin(1e30), defmax(0);
+	Bfield*				field;
+	Bmicrograph*		mg;
+	CTFparam			cpa, cps;
+	map<pair<long,long>,double> wm, wa, ws;
+	
+	for ( field = project->field; field; field = field->next ) {
+		for ( mg = field->mg; mg; mg = mg->next ) if ( mg->ctf ) {
+			v = mg->ctf->defocus_average()*1e-4;
+			if ( defmin > v ) defmin = v;
+			if ( defmax < v ) defmax = v;
+			cpa.defocus_average(cpa.defocus_average()+v);
+			cps.defocus_average(cps.defocus_average()+v*v);
+			v = mg->ctf->defocus_deviation()*1e-4;
+//			cpa.defocus_deviation(cpa.defocus_deviation()+v);
+//			cps.defocus_deviation(cps.defocus_deviation()+v*v);
+//			cout << v << tab << cpa.defocus_deviation() << tab << cps.defocus_deviation() << endl;
+			va = mg->ctf->astigmatism_angle()*180/M_PI;
+			cpa.astigmatism(cpa.defocus_deviation()+v, cpa.astigmatism_angle()+va);
+			cps.astigmatism(cps.defocus_deviation()+v*v, cps.astigmatism_angle()+va*va);
+			wm = mg->ctf->aberration_weights();
+			for ( auto w: wm ) {
+				wa[w.first] += w.second;
+				ws[w.first] += w.second*w.second;
+			}
+			nmg++;
+		}
+	}
+	
+	cpa.defocus_average(cpa.defocus_average()/nmg);
+	cps.defocus_average(sqrt(cps.defocus_average()/nmg-cpa.defocus_average()*cpa.defocus_average()));
+	
+//	cpa.defocus_deviation(cpa.defocus_deviation()/nmg);
+//	cps.defocus_deviation(sqrt(cps.defocus_deviation()/nmg-cpa.defocus_deviation()*cpa.defocus_deviation()));
+	
+//	cpa.astigmatism_angle(cpa.astigmatism_angle()/nmg);
+//	cps.astigmatism_angle(sqrt(cps.astigmatism_angle()/nmg-cpa.astigmatism_angle()*cpa.astigmatism_angle()));
+	
+	cpa.astigmatism(cpa.defocus_deviation()/nmg, cpa.astigmatism_angle()/nmg);
+	cps.astigmatism(cps.defocus_deviation()/nmg, cps.astigmatism_angle()/nmg);
+
+	cout << "Number of micrographs:          " << nmg << endl;
+	cout << "Defocus range:                  " << defmin << " - " << defmax << " um" << endl;
+	cout << "Defocus average:                " << cpa.defocus_average() << " um ("
+		<< cps.defocus_average() << ")" << endl;
+	cout << "Defocus deviation:              " << cpa.defocus_deviation() << " um ("
+		<< cps.defocus_deviation() << ")" << endl;
+	cout << "Astigmatism angle:              " << cpa.astigmatism_angle() << " degrees ("
+		<< cps.astigmatism_angle() << ")" << endl;
+	cout << "Aberration weights:" << endl;
+	cout << "n\tm\tavg\tvar" << endl;
+	for ( i=n=0; n<5 && i<wa.size(); ++n ) {
+		for ( m=-n; m<=n; m+=2 ) {
+			wa[{n,m}] /= nmg;
+			ws[{n,m}] /= nmg;
+			ws[{n,m}] -= wa[{n,m}] * wa[{n,m}];
+			ws[{n,m}] = sqrt(ws[{n,m}]);
+			cout << n << tab << m << tab << wa[{n,m}] << tab << ws[{n,m}] << endl;
+		}
+	}
+
 	return 0;
 }
 

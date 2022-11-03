@@ -9,7 +9,7 @@ var class_quaternion =
     [ "Quaternion", "class_quaternion.html#a30fc2e4d7583fa32522e5fa1fa835a6e", null ],
     [ "Quaternion", "class_quaternion.html#a7251bb94da677a58b53d2c7c4123a057", null ],
     [ "angle", "class_quaternion.html#aa947609ffab2610d3fbdde8b073a5568", null ],
-    [ "axis", "class_quaternion.html#aec4a908fffea6b5192586b7ab7b568ce", null ],
+    [ "axis", "class_quaternion.html#a809c4784fbd303a531e0ec4a3e66fb4d", null ],
     [ "conj", "class_quaternion.html#a878ec5715266f1ed46abcbb0b49f36e9", null ],
     [ "inverse", "class_quaternion.html#a5928af21cd48bf0a788cdaca8ccc8615", null ],
     [ "invert", "class_quaternion.html#a25bae2279f5d2423a53606e04b44fb0f", null ],
@@ -26,7 +26,7 @@ var class_quaternion =
     [ "operator/", "class_quaternion.html#aa6d2ee0e65cbf3259e7755d069d09407", null ],
     [ "operator/=", "class_quaternion.html#af6185ddd1987e4a673fa6307dfce7b1a", null ],
     [ "operator=", "class_quaternion.html#ab41d6a3635b5e59b860a89f7025050f5", null ],
-    [ "operator[]", "class_quaternion.html#a10d0009b3f5ed41bf681fa90093f6151", null ],
+    [ "operator[]", "class_quaternion.html#a127073d8803475f65818d47b58ae16d3", null ],
     [ "rotate", "class_quaternion.html#a8024b37be5b1f0f13349557dcfdb5a88", null ],
     [ "scalar", "class_quaternion.html#a6d5f8f513510769cc83e08cea9ed93d3", null ]
 ];

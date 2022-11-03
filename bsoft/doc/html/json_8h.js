@@ -11,6 +11,6 @@ var json_8h =
       [ "JSarray", "json_8h.html#a81d24fbbef6e43123b14733e399dfe68acce6f2aa33dcd7dcccc8523a5e138a8b", null ],
       [ "JSnull", "json_8h.html#a81d24fbbef6e43123b14733e399dfe68a2612e7176740483fbef8a6a6d071720a", null ]
     ] ],
-    [ "operator<<", "json_8h.html#ae2bca449dafbbebfa930c19957da1073", null ],
-    [ "operator<<", "json_8h.html#a4cfb9c9ca0cc8c8061681ad5c8c4a543", null ]
+    [ "operator<<", "json_8h.html#aeb16c4129acd7b803954714ae7921ff2", null ],
+    [ "operator<<", "json_8h.html#a8bd8082d2d46e9dfb8fa2c32a8252473", null ]
 ];

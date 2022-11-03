@@ -3,13 +3,14 @@
 @brief	Header file for sequence utilities 
 @author Bernard Heymann 
 @date	Created: 20001029
-@date	Modified: 20190603
+@date	Modified: 20220713
 **/
  
 #include "Bstring.h"
 #include "rwmolecule.h"
 
 // Function prototypes 
+int			seq_from_residues(Bmolgroup* molgroup);
 int			seq_show(Bmolgroup* molgroup);
 int			seq_mass(Bmolgroup* molgroup);
 vector<double>	seq_elements(Bmolgroup* molgroup, Bstring& paramfile);

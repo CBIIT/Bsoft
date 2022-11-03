@@ -1,14 +1,20 @@
 /**
 @file	mol_tags.h
 @brief	All STAR file format tags for molecules and molecular parameters
-@author Bernard Heymann
+@author 	Bernard Heymann
 @date	Created: 20000419
-@date	Modified: 20190603
+@date	Modified: 20220929
 **/
 
 // Do not change the constant names because they are referenced in code
 // Changes in the tag strings will not affect program execution
 //  but old data files will be uninterpretable
+
+// Entry identifier
+#define ENTRY_ID				"pdbx_database_status.entry_id"
+
+// Molecules/chains
+#define MOL_ID					"struct_asym.id"
 
 // Crystallographic unit cell
 #define	CELL_A					"cell.length_a"
@@ -77,6 +83,26 @@
 #define ATOM_BFACTOR 			"atom_site.B_iso_or_equiv" 
 #define ATOM_CHARGE 			"atom_site.charge" 
 #define ATOM_FOOTNOTE_ID 		"atom_site.footnote_id"
+
+// Helix range parameters
+#define HELIX_ID				"struct_conf.pdbx_PDB_helix_id"
+#define HELIX_CHAIN				"struct_conf.beg_label_asym_id"
+#define HELIX_RESIDUE1			"struct_conf.beg_label_comp_id"
+#define HELIX_RESIDUE2			"struct_conf.end_label_comp_id"
+#define HELIX_RESNUM1			"struct_conf.beg_label_seq_id"
+#define HELIX_RESNUM2			"struct_conf.end_label_seq_id"
+
+// Sheet range parameters
+#define SHEET_ID				"struct_sheet_range.sheet_id"
+#define SHEET_STRAND_ID			"struct_sheet_range.id"
+#define SHEET_CHAIN				"struct_sheet_range.beg_label_asym_id"
+#define SHEET_RESIDUE1			"struct_sheet_range.beg_label_comp_id"
+#define SHEET_RESIDUE2			"struct_sheet_range.end_label_comp_id"
+#define SHEET_RESNUM1			"struct_sheet_range.beg_label_seq_id"
+#define SHEET_RESNUM2			"struct_sheet_range.end_label_seq_id"
+#define SHEET_ORDER_ID			"struct_sheet_order.sheet_id"
+#define SHEET_ORDER_STRAND_ID	"struct_sheet_order.range_id_2"
+#define SHEET_ORDER_SENSE		"struct_sheet_order.sense"
 
 // Protein residue properties
 #define RESPROP_CODON			"residue_property.codon"

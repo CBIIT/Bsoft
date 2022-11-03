@@ -1,9 +1,9 @@
 var scatter_8cpp =
 [
-    [ "all_elements", "scatter_8cpp.html#aef8a592eb74de783c73a3a893b7a69cd", null ],
-    [ "calculate_scattering_curve", "scatter_8cpp.html#af4d3260a4b036ce817cd4228959e060e", null ],
-    [ "calculate_scattering_curves", "scatter_8cpp.html#a9d68af13d60cec12f9c5fa5a44a40f96", null ],
-    [ "calculate_scattering_curves", "scatter_8cpp.html#ae204f4c89a34c8e0f1c71801528d5e53", null ],
+    [ "all_elements", "scatter_8cpp.html#acaeba4c5eac618c10f324171311312e0", null ],
+    [ "calculate_scattering_curve", "scatter_8cpp.html#a78024d62474fbfc1b79edc25f91e5189", null ],
+    [ "calculate_scattering_curves", "scatter_8cpp.html#a2e602abd0e4fee85fd1850c06e8c195c", null ],
+    [ "calculate_scattering_curves", "scatter_8cpp.html#a911f3587ab1f950dbb3851b9a81790e8", null ],
     [ "cross_section", "scatter_8cpp.html#a3f44f2dd6850fdb9dd708a0c8419af27", null ],
     [ "cross_section_half_maximal_frequency", "scatter_8cpp.html#ae52a580e43424e059875a71bd8903b85", null ],
     [ "cross_section_half_maximal_frequency", "scatter_8cpp.html#ab06d027654fe8c11692dcf087ff77a74", null ],
@@ -27,7 +27,7 @@ var scatter_8cpp =
     [ "scatter_curve_integral", "scatter_8cpp.html#a239df0be03092e5ecd070689e8c9fc56", null ],
     [ "signal_integrated", "scatter_8cpp.html#a2c4814a6af47f04d0bc2065f2188d03a", null ],
     [ "signal_integrated_new", "scatter_8cpp.html#aeda720e54f495604410689f729a500f1", null ],
-    [ "signal_intensity", "scatter_8cpp.html#ae919efab6aeb3f3295ca75e62eb7b063", null ],
+    [ "signal_intensity", "scatter_8cpp.html#a3c20b590469a94f059d0b9b32d4439ed", null ],
     [ "signal_intensity", "scatter_8cpp.html#abea29ac90a53108ecb181bcbe177ea0d", null ],
     [ "write_scattering_curves", "scatter_8cpp.html#a96a78513215696f59337cc56eb92f911", null ],
     [ "string_is_empty", "scatter_8cpp.html#adeeef9c94ab043ee0d1eca1006158096", null ],

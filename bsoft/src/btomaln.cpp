@@ -42,7 +42,7 @@ const char* use[] = {
 "-shiftlimit 155.5        Limit on micrograph shift search in pixels (default 25% of micrograph width).",
 "-origin 110,50,44        Origin for tilt axis (default 0,0,0).",
 "-edge 23,12              Smooth the edge to a given width, with gaussian decay of a given width.",
-"-fill 127                Fill value for particles extending beyond image (default background).",
+//"-fill 127                Fill value for particles extending beyond image (default background).",
 " ",
 "Output:",
 "-output file.star        Output parameter file.",
@@ -70,8 +70,8 @@ int			main(int argc, char** argv)
 	double			shift_limit(-1);		// Micrograph shift search limit
 	Vector3<double>	origin;					// Tilt axis origin
 	double			edge_width(0), gauss_width(0);	// Edge parameters
-	int 			fill_type(FILL_BACKGROUND);
-	double			fill(0);
+//	int 			fill_type(FILL_BACKGROUND);
+//	double			fill(0);
 	int				read_flags(32);			// Flags to pass to the parameter file reading function
 	Bstring			paramfile;				// Output parameter file
 	Bstring			imgfile;				// Output multi-image file
@@ -118,8 +118,8 @@ int			main(int argc, char** argv)
 		if ( curropt->tag == "edge" )
     	    if ( curropt->values(edge_width, gauss_width) < 1 )
 				cerr << "-edge: An edge width must be specified." << endl;
-		if ( curropt->tag == "fill" )
-			fill = curropt->fill(fill_type);
+//		if ( curropt->tag == "fill" )
+//			fill = curropt->fill(fill_type);
 		if ( curropt->tag == "output" )
 			paramfile = curropt->filename();
 		if ( curropt->tag == "image" )

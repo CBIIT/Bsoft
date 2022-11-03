@@ -3,7 +3,7 @@
 @brief	Selection of single particle parameters from multiple files for classification
 @author Bernard Heymann
 @date	Created: 20010319
-@date	Modified: 20210516
+@date	Modified: 20220831
 **/
 
 #include "mg_processing.h"
@@ -315,6 +315,145 @@ long		project_multi_add(Bproject* project, Bstring* file_list, int fom_index)
 	}
 	
 	return nsel;
+}
+
+/**
+@brief 	Adds particles from a list of projects to the first one.
+@param 	*file_list			linked list of parameter file names.
+@return Bproject*				project with renumbered particles.
+
+	The particles from other files are added to existing ones in the first file.
+	Where project component ID's correspond the particles are added,
+	otherwise new components are added.
+	Particles are renumbered and the references to old particle files removed.
+
+**/
+Bproject*	project_multi_add_particles(Bstring* file_list)
+{
+	long				nmg(0), nrec(0);
+	Bproject*			project = NULL;
+	Bstring*			filename;
+	Bfield*				field = NULL;
+	Bmicrograph*		mg = NULL;
+	Breconstruction*	rec = NULL;
+	Bparticle*			part = NULL;
+	Bproject*			project2 = NULL;
+	Bfield*				field2 = NULL;
+	Bmicrograph*		mg2 = NULL;
+	Breconstruction*	rec2 = NULL;
+	
+	if ( verbose ) {
+		cout << "Adding particles from other parameter files" << endl;
+		cout << endl;
+	}
+
+	for ( filename = file_list; filename; filename = filename->next ) {
+		project2 = read_project(*filename);
+		if ( !project ) {
+			project = project2;
+		} else {
+			for ( field2 = project2->field; field2;  ) {	// Field to be merged
+				// Find the same field
+				for ( field = project->field; field && field->id != field2->id; field = field->next ) ;
+				if ( !field ) {
+					if ( project->field ) {
+						for ( field = project->field; field->next; field = field->next ) ;
+						field->next = field2;
+					} else {
+						project->field = field2;
+					}
+					field = field2;
+					field2 = field2->next;
+					field->next = NULL;
+				} else {
+					for ( mg2 = field2->mg; mg2;  ) {
+						// Find the same micrograph
+						for ( mg = field->mg; mg && mg->id != mg2->id; mg = mg->next ) ;
+						if ( !mg ) {
+							mg2->fpart = 0;
+							if ( field->mg ) {
+								for ( mg = field->mg; mg->next; mg = mg->next ) ;
+								mg->next = mg2;
+							} else {
+								field->mg = mg2;
+							}
+							mg = mg2;
+							mg2 = mg2->next;
+							mg->next = NULL;
+						} else {
+							mg->fpart = 0;
+							if ( mg->part ) {
+								for ( part = mg->part; part->next; part = part->next ) ;
+								part->next = mg2->part;
+							} else {
+								mg->part = mg2->part;
+							}
+							mg2->part = NULL;
+							mg = mg2;
+							mg2 = mg2->next;
+							micrograph_kill(mg);
+							nmg++;
+						}
+					}
+					field2->mg = NULL;
+					field = field2;
+					field2 = field2->next;
+					field_kill(field);
+				}
+			}
+			project2->field = NULL;
+			for ( rec2 = project2->rec; rec2;  ) {
+				// Find the same reconstruction
+				for ( rec = project->rec; rec && rec2->id != rec->id; rec = rec->next ) ;
+				if ( rec ) {
+					rec->fpart = 0;
+					if ( rec->part ) {
+						for ( part = rec->part; part->next; part = part->next ) ;
+						part->next = rec2->part;
+					} else {
+						rec->part = rec2->part;
+					}
+					rec2->part = NULL;
+					rec = rec2;
+					rec2 = rec2->next;
+					reconstruction_kill(rec);
+					nrec++;
+				} else {
+					rec2->fpart = 0;
+					if ( project->rec ) {
+						for ( rec = project->rec; rec->next; rec = rec->next ) ;
+						rec->next = rec2;
+					} else {
+						project->rec = rec2;
+					}
+					rec = rec2;
+					rec2 = rec2->next;
+					rec->next = NULL;
+				}
+			}
+			project2->rec = NULL;
+			project_kill(project2);
+		}
+	}
+
+	project_renumber_particles(project);
+
+	long			npart(0), nsel(0);
+	double			percentage(0);
+	npart += project_count_mg_particles(project);
+	nsel += project_count_mg_part_selected(project);
+	npart += project_count_rec_particles(project);
+	nsel += project_count_rec_part_selected(project);
+	
+	if ( npart ) percentage = nsel*100.0/npart;
+
+	if ( verbose ) {
+		cout << "Micrographs updated:            " << nmg << endl;
+		cout << "Reconstructions updated:        " << nrec << endl;
+		cout << "Number of particles selected:   " << nsel << " (" << percentage << " %)" << endl << endl;
+	}
+	
+	return project;
 }
 
 /**

@@ -1,17 +1,21 @@
 #!/bin/sh
 
 # Bernard Heymann                                  
-# 20170512 - 20180305
+# 20170512 - 20220922
 
 version=`cat bsoft/BVERSION`
+mach=`uname -m`
 comp_loc="/Users/bernard/b20"
 bin_loc="/Users/bernard/b20install"
 inst_loc="/usr/local/bsoft"
+
+dmg="Bsoft_${version}_${mach}.dmg"
 
 echo Bsoft version:		$version
 echo Compile location:	$comp_loc
 echo Binary location:	$bin_loc
 echo Install location:	$inst_loc
+echo DMG name:			$dmg
 
 pkgbuild --identifier ws.bsoft.bsoft --version $version --scripts $bin_loc/Scripts --install-location $inst_loc --root $bin_loc bsoft.pkg
 
@@ -23,7 +27,7 @@ productbuild --synthesize --product breq.plist --version $version --package bsof
 
 productbuild --distribution bdist.plist --package-path bsoft.pkg --package-path bshow.pkg --package-path brun.pkg bsoft2.pkg
 
-hdiutil create -srcfolder bsoft2.pkg -ov Bsoft2.dmg
+hdiutil create -srcfolder bsoft2.pkg -ov $dmg
 
 
 

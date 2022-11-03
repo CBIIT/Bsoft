@@ -3,7 +3,7 @@
 @brief	Methods for the image class
 @author Bernard Heymann
 @date	Created: 20110603
-@date 	Modified: 20211109
+@date 	Modified: 20220105
 **/
 
 #include "Bimage.h"
@@ -643,17 +643,35 @@ void		Bimage::check_sampling()
 @brief Checks that the resolution falls within reasonable limits.
 @param &resolution	resolution (modified).
 
-	The resolution is set to between half the real size and the Nyquist frequency.
+	The resolution is set to between the real size and the sampling.
 
 **/
 void		Bimage::check_resolution(double& resolution)
 {
+	if ( resolution > real_size()[0] ) {
+		resolution = real_size()[0];
+		return;
+	}
+
+	double			invsum2(0), rm;
 	Vector3<double>	u(image->sampling());
-	if ( x > 1 && resolution < 2*u[0] ) resolution = 2*u[0];
-	if ( y > 1 && resolution < 2*u[1] ) resolution = 2*u[1];
-	if ( z > 1 && resolution < 2*u[2] ) resolution = 2*u[2];
-	if ( resolution > real_size()[0]/2.0 ) resolution = real_size()[0]/2.0;
+	
+	if ( x > 1 ) invsum2 += 1/(u[0]*u[0]);
+	if ( y > 1 ) invsum2 += 1/(u[1]*u[1]);
+	if ( z > 1 ) invsum2 += 1/(u[2]*u[2]);
+	rm = 2/sqrt(invsum2);
+	if ( resolution < rm ) resolution = rm;
 }
+/*
+void		Bimage::check_resolution(double& resolution)
+{
+	Vector3<double>	u(image->sampling());
+	if ( x > 1 && resolution < u[0] ) resolution = u[0];
+	if ( y > 1 && resolution < u[1] ) resolution = u[1];
+	if ( z > 1 && resolution < u[2] ) resolution = u[2];
+	if ( resolution > real_size()[0] ) resolution = real_size()[0];
+}
+*/
 
 /**
 @brief Check if this image has the same number of channels and data type as another.
@@ -1951,47 +1969,12 @@ void		Bimage::change_type(DataType nutype)
 }
 
 /**
-@brief 	Splits the channels into individual images.
+@brief 	Splits the channels into individual sub-images.
 @return Bimage*			new image.
 
 	The channels are converted to successive sets of images.
 
 **/
-/*void		Bimage::split_channels()
-{
-	long			nn, cc, j, m, k;
-	long			tsize = data_type_size();
-	long			imgsize = x*y*z;
-	unsigned char*	nudata = new unsigned char[alloc_size()];
-
-	for ( nn=k=0; nn<n; nn++ ) {
-		for ( j=0; j<imgsize; j++ ) {
-			for ( cc=0, m=nn*imgsize+j; cc<c; cc++, k+=tsize, m+=imgsize ) {
-				memcpy(nudata+m*tsize, d.uc+k, tsize);
-			}
-		}
-	}
-
-	data_assign(nudata);
-	
-	Bsub_image*		nusub = new Bsub_image[n*c];
-	
-	if ( image ) {
-		for ( nn=j=0; nn<n; nn++ )
-			for ( cc=0; cc<c; cc++, j++ )
-				nusub[j] = image[nn];
-		delete[] image;
-	}
-
-	image = nusub;
-	
-	compoundtype = TSimple;
-	n *= c;
-	c = 1;
-
-	statistics();
-}
-*/
 Bimage*		Bimage::split_channels()
 {
 	Bimage*			pnu = copy_header(n*c);
@@ -2007,6 +1990,35 @@ Bimage*		Bimage::split_channels()
 				pnu->set(k, (*this)[i]);
 
 	pnu->statistics();
+	
+	return pnu;
+}
+
+/**
+@brief 	Splits the channels into individual images in a linked list.
+@return Bimage*			new image.
+
+	Each channels is converted to a separate image in the list.
+
+**/
+Bimage*		Bimage::split_channels_to_images()
+{
+	Bimage*			pnu = copy_header(n);
+	pnu->compound_type(TSimple);
+	pnu->channels(1);
+	pnu->data_alloc();
+	
+	Bimage*			p1 = pnu;
+	
+	long			i, j, k, nn, cc, imgsize(x*y*z);
+
+	for ( cc=0; cc<c; ++cc ) {
+		if ( cc ) p1 = p1->next = p1->copy();
+		for ( nn=k=0, i=cc; nn<n; ++nn )
+			for ( j=0; j<imgsize; ++j, ++k, i+=c )
+				p1->set(k, (*this)[i]);
+		p1->statistics();
+	}
 	
 	return pnu;
 }
@@ -2651,7 +2663,7 @@ int			Bimage::subimage_information()
 
 	cout << "Image\tSampling\t\tOrigin\t\t\tView" << endl;
 	for ( nn=0; nn<n; nn++ )
-		cout << nn+1 << tab << setprecision(2) <<
+		cout << nn+1 << tab << setprecision(3) <<
 			image[nn].sampling() << tab << setprecision(2) <<
 			image[nn].origin() << tab << setprecision(4) <<
 			image[nn].view().vector3() << tab <<
@@ -2740,24 +2752,30 @@ int			Bimage::moments(long max_order, long nn)
 /**
 @brief 	Prints out header information associated with a tag string.
 @param	tag			tag string.
+
+Recognized tags:
+	size, ch(annel), x, y, z, im(age), sam(pling), ori(gen), view,
+	min(imum), max(imum), av(erage), st(andard deviation), var(iance), stat(istics),
+	text, json
+	
 **/
 void		Bimage::get(Bstring tag)
 {
 	if ( tag == "size" ) cout << size() << endl;
-	else if ( tag == "channels" ) cout << c << endl;
+	else if ( tag.contains("ch") ) cout << c << endl;
 	else if ( tag == "x" ) cout << x << endl;
 	else if ( tag == "y" ) cout << y << endl;
 	else if ( tag == "z" ) cout << z << endl;
-	else if ( tag == "images" ) cout << n << endl;
-	else if ( tag == "sampling" || tag == "pixelsize" ) cout << sampling(0) << endl;
-	else if ( tag == "origin" ) cout << image->origin() << endl;
+	else if ( tag.contains("im") ) cout << n << endl;
+	else if ( tag.contains("sam") || tag.contains("pix") ) cout << sampling(0) << endl;
+	else if ( tag.contains("ori") ) cout << image->origin() << endl;
 	else if ( tag == "view" ) cout << image->view() << endl;
-	else if ( tag == "min" ) cout << min << endl;
-	else if ( tag == "max" ) cout << max << endl;
-	else if ( tag == "avg" ) cout << avg << endl;
-	else if ( tag == "std" ) cout << std << endl;
-	else if ( tag == "var" ) cout << std*std << endl;
-	else if ( tag == "stat" ) cout << min << tab << max << tab << avg << tab << std << endl;
+	else if ( tag.contains("min") ) cout << min << endl;
+	else if ( tag.contains("max") ) cout << max << endl;
+	else if ( tag.contains("av") ) cout << avg << endl;
+	else if ( tag.contains("st") ) cout << std << endl;
+	else if ( tag.contains("var") ) cout << std*std << endl;
+	else if ( tag.contains("stat") ) cout << min << tab << max << tab << avg << tab << std << endl;
 	else if ( tag == "text" ) cout << label() << endl;
 	else if ( tag == "json" ) cout << metadata << endl;
 }
@@ -3029,7 +3047,7 @@ long		Bimage::kernel_max(long idx, long ksize)
 }
 
 /**
-@brief 	Finds the highest value in a kernel.
+@brief 	Calculates the average value in a kernel.
 @param 	idx		index in multi-image.
 @param 	ksize	kernel edge half size.
 @param 	tmin	miminum to exclude.
@@ -3065,6 +3083,35 @@ double		Bimage::kernel_average(long idx, long ksize, double tmin, double tmax)
 	else avg_val = (tmin + tmax)/2;
 	
 	return avg_val;
+}
+
+/**
+@brief 	Calculates the sum in a kernel.
+@param 	idx		index in multi-image.
+@param 	ksize	kernel edge half size.
+@return double 	sum.
+**/
+double		Bimage::kernel_sum(long idx, long ksize)
+{
+	
+	long			i, xx, yy, zz, nn(idx/(x*y*z));
+	double			sum(0);
+	
+	//calculate the bounds on the kernel
+	Vector3<long>	lo = kernel_low(idx, ksize);
+	Vector3<long>	hi = kernel_high(idx, ksize);
+	
+	// Loop through the kernel
+	for ( zz=lo[2]; zz<=hi[2]; zz++ ) {
+		for ( yy=lo[1]; yy<=hi[1]; yy++ ) {
+			for ( xx=lo[0]; xx<=hi[0]; xx++ ) {
+				i = index(0,xx,yy,zz,nn);
+				sum += (*this)[i];
+			}
+		}
+	}
+	
+	return sum;
 }
 
 /**
@@ -3475,11 +3522,28 @@ void 		Bimage::reslice(Bstring order)
 }
 
 /**
-@brief Adds a constant value to an image.
+@brief 	Converts to absolute values.
+**/
+void		Bimage::absolute()
+{
+	if ( verbose & VERB_FULL )
+		cout << "Converting to absolute values" << endl << endl;
+	
+	for ( long j=0; j<datasize; j++ )
+		set(j, fabs((*this)[j]));
+	
+	statistics();
+}
+
+/**
+@brief	Adds a constant value to an image.
 @param 	v		constant to be added.
 **/
 void		Bimage::add(double v)
 {
+	if ( verbose & VERB_FULL )
+		cout << setprecision(6) << "Adding " << v << endl << endl;
+	
 	double			v1;
 	
 	for ( long j=0; j<datasize; j++ ) {
@@ -3487,24 +3551,51 @@ void		Bimage::add(double v)
 		set(j, v1);
 	}
 	
+	for ( long nn=0; nn<n; nn++ )
+		image[nn].background(background(nn) + v);
+
 	statistics();
 }
 
 /**
-@brief Multiplies an image with a constant value.
+@brief	Adds a constant value to a phase image and wraps as necssary.
+@param 	v		constant to be added.
+**/
+void		Bimage::phase_add(double v)
+{
+	if ( verbose & VERB_FULL )
+		cout << setprecision(6) << "Adding " << v << " to phase image" << endl << endl;
+	
+	double			v1;
+	
+	for ( long j=0; j<datasize; j++ ) {
+		v1 = angle_set_negPI_to_PI((*this)[j] + v);
+		set(j, v1);
+	}
+	
+	for ( long nn=0; nn<n; nn++ )
+		image[nn].background(angle_set_negPI_to_PI(background(nn) + v));
+
+	statistics();
+}
+
+/**
+@brief	Multiplies an image with a constant value.
 @param 	v		constant multiplier.
 **/
 void		Bimage::multiply(double v)
 {
-	long			j, nn;
+	if ( verbose & VERB_FULL )
+		cout << setprecision(6) << "Multiplying with " << v << endl << endl;
+	
 	double			v1;
 	
-	for ( j=0; j<datasize; j++ ) {
+	for ( long j=0; j<datasize; j++ ) {
 		v1 = (*this)[j] * v;
 		set(j, v1);
 	}
 
-	for ( nn=0; nn<n; nn++ )
+	for ( long nn=0; nn<n; nn++ )
 		image[nn].background(background(nn) * v);
 
 	statistics();
@@ -3517,6 +3608,9 @@ void		Bimage::multiply(double v)
 **/
 void		Bimage::multiply(long nn, double v)
 {
+	if ( verbose & VERB_FULL )
+		cout << setprecision(6) << "Multiplying with " << v << endl << endl;
+	
 	long			i, j, imgsize(c*x*y*z);
 	double			v1;
 	
@@ -3524,6 +3618,8 @@ void		Bimage::multiply(long nn, double v)
 		v1 = (*this)[j] * v;
 		set(j, v1);
 	}
+	
+	image[nn].background(background(nn) * v);
 	
 	statistics();
 }
@@ -3534,11 +3630,134 @@ void		Bimage::multiply(long nn, double v)
 **/
 void		Bimage::power(double v)
 {
+	if ( verbose & VERB_PROCESS )
+		cout << "Raising to power " << v << endl << endl;
+	
 	double			v1;
 	
 	for ( long j=0; j<datasize; j++ ) {
 		v1 = pow((*this)[j], v);
 		set(j, v1);
+	}
+	
+	statistics();
+}
+
+/**
+@brief Calculates the sine of a phase image.
+
+	The values must be in radians.
+	
+**/
+void		Bimage::sine()
+{
+	if ( verbose & VERB_PROCESS )
+		cout << "Calculating a sine image" << endl << endl;
+	
+	for ( long j=0; j<datasize; ++j )
+		set(j, sinl((*this)[j]));
+	
+	statistics();
+}
+
+/**
+@brief Calculates the arcsine of an image.
+
+	The values are truncated to be within [-1,1].
+	
+**/
+void		Bimage::arcsine()
+{
+	if ( verbose & VERB_PROCESS )
+		cout << "Calculating an arcsine image" << endl << endl;
+	
+	double		v;
+	
+	for ( long j=0; j<datasize; ++j ) {
+		v = (*this)[j];
+		if ( v < -1 ) v = -1;
+		else if ( v > 1 ) v = 1;
+		set(j, asinl(v));
+	}
+	
+	statistics();
+}
+
+/**
+@brief Calculates the cosine of a phase image.
+
+	The values must be in radians.
+	
+**/
+void		Bimage::cosine()
+{
+	if ( verbose & VERB_PROCESS )
+		cout << "Calculating a cosine image" << endl << endl;
+	
+	for ( long j=0; j<datasize; ++j )
+		set(j, cosl((*this)[j]));
+	
+	statistics();
+}
+
+/**
+@brief Calculates the arccosine of an image.
+
+	The values are truncated to be within [-1,1].
+	
+**/
+void		Bimage::arccosine()
+{
+	if ( verbose & VERB_PROCESS )
+		cout << "Calculating an arcsine image" << endl << endl;
+	
+	double		v;
+	
+	for ( long j=0; j<datasize; ++j ) {
+		v = (*this)[j];
+		if ( v < -1 ) v = -1;
+		else if ( v > 1 ) v = 1;
+		set(j, acosl(v));
+	}
+	
+	statistics();
+}
+
+/**
+@brief Calculates the tangent of a phase image.
+
+	The values must be in radians.
+	
+**/
+void		Bimage::tangent()
+{
+	if ( verbose & VERB_PROCESS )
+		cout << "Calculating a tangent image" << endl << endl;
+	
+	for ( long j=0; j<datasize; ++j )
+		set(j, tanl((*this)[j]));
+	
+	statistics();
+}
+
+/**
+@brief Calculates the arctangent of an image.
+
+	The values are truncated to be within [-1,1].
+	
+**/
+void		Bimage::arctangent()
+{
+	if ( verbose & VERB_PROCESS )
+		cout << "Calculating an arctangent image" << endl << endl;
+	
+	double		v;
+	
+	for ( long j=0; j<datasize; ++j ) {
+		v = (*this)[j];
+		if ( v < -1 ) v = -1;
+		else if ( v > 1 ) v = 1;
+		set(j, atanl(v));
 	}
 	
 	statistics();
@@ -3755,6 +3974,9 @@ void		Bimage::add(long nn, Bimage* p)
 	long			i, j, imgsize(c*image_size());
 	double			v1;
 	
+	if ( verbose & VERB_FULL )
+		cout << "Adding to image " << nn << endl << endl;
+	
 	for ( i=0, j=nn*imgsize; i<imgsize; i++, j++ ) {
 		v1 = (*this)[j] + (*p)[i];
 		set(j, v1);
@@ -3778,6 +4000,9 @@ void		Bimage::add(Bimage* p, double scale, double shift)
 		error_show("Bimage::add", __FILE__, __LINE__);
 		return;
 	}
+	
+	if ( verbose & VERB_FULL )
+		cout << "Adding images" << endl << endl;
 	
 	double			v1;
 	
@@ -3804,6 +4029,9 @@ void		Bimage::add(long nn, Bimage* p, double scale, double shift)
 	long			i, j, imgsize(c*image_size());
 	double			v1;
 	
+	if ( verbose & VERB_FULL )
+		cout << "Adding image " << nn << endl << endl;
+	
 	for ( i=0, j=nn*imgsize; i<imgsize; i++, j++ ) {
 		v1 = (*this)[j] + (*p)[i] * scale + shift;
 		set(j, v1);
@@ -3828,6 +4056,9 @@ void		Bimage::multiply(Bimage* p, double scale, double shift)
 		return;
 	}
 	
+	if ( verbose & VERB_FULL )
+		cout << "Multiplying images" << endl << endl;
+	
 	double			v1;
 	
 	for ( long j=0; j<datasize; j++ ) {
@@ -3849,6 +4080,9 @@ void		Bimage::multiply(Bimage* p, double scale, double shift)
 void		Bimage::multiply(long nn, Bimage* p)
 {
 	if ( nn >= n ) return;
+	
+	if ( verbose & VERB_FULL )
+		cout << "Multiplying image " << nn << endl << endl;
 	
 	long			imgsize(x*y*z*c), i(nn*imgsize), j(0), k(0);
 	
@@ -3902,7 +4136,8 @@ void		Bimage::divide(Bimage* p, double scale, double shift)
 {
 	double			minval = p->min*scale + shift;
 
-	if ( !check_if_same_size(p) ) {
+	if ( size() != p->size() || n != p->n ) {
+		check_if_same_size(p);
 		error_show("Bimage::divide", __FILE__, __LINE__);
 		return;
 	}
@@ -3926,6 +4161,12 @@ void		Bimage::divide(Bimage* p, double scale, double shift)
 			div =  (*p)[j] * scale + shift;
 			if ( div < minval ) div = minval;
 			set(j, (*this)[j]/div);
+		}
+	} else if ( p->compound_type() != TComplex ) {
+		for ( j=0; j<datasize; j++ ) {
+			div =  (*p)[j] * scale + shift;
+			if ( div < minval ) div = minval;
+			set(j, complex(j)/div);
 		}
 	} else {
 		for ( j=0; j<datasize; j++ ) {
@@ -4063,6 +4304,30 @@ void		Bimage::smallest(Bimage* p)
 	for ( long j=0; j<datasize; j++ ) {
 		v1 = (*p)[j];
     	if ( (*this)[j] > v1 ) set(j, v1);
+    }
+	
+	statistics();
+}
+
+/**
+@brief 	Calculates the inverse tangent from two images.
+@param 	*p		denominator (x) image.
+
+**/
+void		Bimage::arctangent(Bimage* p)
+{
+	if ( !check_if_same_size(p) ) {
+		error_show("Bimage::arctangent", __FILE__, __LINE__);
+		return;
+	}
+
+    if ( verbose & VERB_PROCESS )
+		cout << "Calculating the inverse tangent" << endl;
+	
+	double		v1;
+	for ( long j=0; j<datasize; j++ ) {
+		v1 = atan2((*this)[j], (*p)[j]);
+    	set(j, angle_set_negPI_to_PI(v1));
     }
 	
 	statistics();

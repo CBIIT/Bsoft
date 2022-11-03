@@ -3,7 +3,7 @@
 @brief	Reads and writes micrograph XML files
 @author Bernard Heymann
 @date	Created: 20050920
-@date	Modified: 20200202
+@date	Modified: 20220110
 **/
 
 #ifdef HAVE_XML
@@ -15,6 +15,7 @@
 #include "rwmg.h"
 #include "file_util.h"
 #include "linked_list.h"
+#include "string_util.h"
 #include "utilities.h"
 
 // Declaration of global variables
@@ -269,19 +270,36 @@ CTFparam*		ctf_from_xml(xmlNodePtr node)
 {
 	if ( !xml_check_for_node(node, CTF_DEF_AVG) ) return NULL;
 	
-	Bstring				s;
-	CTFparam*			ctf = new CTFparam;
+	Bstring			s;
+	vector<double>	v;
+	CTFparam*		ctf = new CTFparam;
 	
+	ctf->identifier(xml_get_string(node, CTF_ID));
+	if ( xml_find_node(node, CTF_SELECT) )
+		ctf->select(xml_get_integer(node, CTF_SELECT));
+	if ( xml_find_node(node, CTF_FOM) )
+		ctf->fom(xml_get_real(node, CTF_FOM));
 	ctf->volt(xml_get_real(node, CTF_VOLTAGE));
 	if ( xml_find_node(node, CTF_AMP_SHIFT) )
 		ctf->amp_shift(xml_get_real(node, CTF_AMP_SHIFT));
 	else
 		ctf->amp_shift(asin(xml_get_real(node, CTF_AMP)));
 	ctf->defocus_average(xml_get_real(node, CTF_DEF_AVG));
-	ctf->defocus_deviation(xml_get_real(node, CTF_DEF_DEV));
-	ctf->astigmatism_angle(xml_get_real(node, CTF_AST_ANG) * M_PI/180.0);
+//	ctf->defocus_deviation(xml_get_real(node, CTF_DEF_DEV));
+//	ctf->astigmatism_angle(xml_get_real(node, CTF_AST_ANG) * M_PI/180.0);
+	ctf->astigmatism(xml_get_real(node, CTF_DEF_DEV), xml_get_real(node, CTF_AST_ANG) * M_PI/180.0);
 	ctf->Cs(xml_get_real(node, CTF_CS));
 	ctf->Cc(xml_get_real(node, CTF_CC));
+	ctf->beam_tiltX(xml_get_real(node, CTF_TILT_X));
+	ctf->beam_tiltY(xml_get_real(node, CTF_TILT_Y));
+	if ( xml_find_node(node, CTF_ABERRATION_ODD) ) {
+		v = parse_real_vector(xml_get_string(node, CTF_ABERRATION_ODD).substr(1));
+		ctf->aberration_odd_update(v);
+	}
+	if ( xml_find_node(node, CTF_ABERRATION_EVEN) ) {
+		v = parse_real_vector(xml_get_string(node, CTF_ABERRATION_EVEN).substr(1));
+		ctf->aberration_even_update(v);
+	}
 	ctf->alpha(xml_get_real(node, CTF_ALPHA));
 	ctf->dE(xml_get_real(node, CTF_DE));
 	ctf->zero(1);
@@ -699,10 +717,24 @@ int			ctf_to_xml(CTFparam* ctf, xmlNodePtr parent)
 	if ( !ctf ) return -1;
 	
 	Bstring		s;
+	string		zs;
 	
+	xmlNewChild(parent, NULL, BAD_CAST CTF_ID, BAD_CAST ctf->identifier().c_str());
+	xml_set_integer(parent, CTF_SELECT, ctf->select(), "%g");
+	xml_set_real(parent, CTF_FOM, ctf->fom(), "%g");
 	xml_set_real(parent, CTF_VOLTAGE, ctf->volt(), "%g");
 	xml_set_real(parent, CTF_CS, ctf->Cs(), "%g");
 	xml_set_real(parent, CTF_CC, ctf->Cc(), "%g");
+	xml_set_real(parent, CTF_TILT_X, ctf->beam_tiltX(), "%g");
+	xml_set_real(parent, CTF_TILT_Y, ctf->beam_tiltY(), "%g");
+	if ( ctf->aberration_odd().size() ) {
+		zs = "[" + concatenate(ctf->aberration_odd()) + "]";
+		xmlNewChild(parent, NULL, BAD_CAST CTF_ABERRATION_ODD, BAD_CAST zs.c_str());
+	}
+	if ( ctf->aberration_even().size() ) {
+		zs = "[" + concatenate(ctf->aberration_even_difference()) + "]";
+		xmlNewChild(parent, NULL, BAD_CAST CTF_ABERRATION_EVEN, BAD_CAST zs.c_str());
+	}
 	xml_set_real(parent, CTF_ALPHA, ctf->alpha(), "%g");
 	xml_set_real(parent, CTF_DE, ctf->dE(), "%g");
 	xml_set_real(parent, CTF_AMP_SHIFT, ctf->amp_shift(), "%g");

@@ -6,6 +6,6 @@ var rwmodel__bild_8h =
     [ "model_to_bild_polygons", "rwmodel__bild_8h.html#a35269022e5a7c8023d82b72a632f39c5", null ],
     [ "model_to_bild_view_polygons", "rwmodel__bild_8h.html#af6738624ffd062eb05a425684928a8d1", null ],
     [ "model_to_bild_view_sphere", "rwmodel__bild_8h.html#abdb2fe00ab1a841720f4eb92aee04ff2", null ],
-    [ "read_model_bild", "rwmodel__bild_8h.html#a4860aaca357985b9d9efce7a48ad70ee", null ],
+    [ "read_model_bild", "rwmodel__bild_8h.html#a7bdea0677bbb3ecdc07daa5405f3e823", null ],
     [ "write_model_bild", "rwmodel__bild_8h.html#aee5f32ef4b7ede2128e09c96be9aed97", null ]
 ];

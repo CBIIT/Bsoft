@@ -12,7 +12,6 @@
 #include "rwmg.h"
 #include "rwimg.h"
 #include "mdoc.h"
-#include "linked_list.h"
 
 // Declaration of global variables
 extern int 	verbose;		// Level of output to the screen
@@ -165,6 +164,7 @@ int			read_project_serialem(Bstring& filename, Bproject* project, int flag)
 				cout << "Origin:                         " << mg->origin << endl;
 				cout << "Tilt angle:                     " << mg->tilt_angle*180.0/M_PI << endl;
 				cout << "Intensity:                      " << mg->intensity << endl;
+//				mg->ctf->show();
 			}
 			delete p;
 		} if ( obj.exists("T") ) {

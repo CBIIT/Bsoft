@@ -3,7 +3,7 @@
 @brief	Library routines used for atomic coordinates
 @author Bernard Heymann
 @date	Created: 19980214
-@date	Modified: 20210512
+@date	Modified: 20220713
 **/
 
 #include "rwmolecule.h"
@@ -91,8 +91,11 @@ int  		molgroup_Bfactors(Bmolgroup* molgroup)
 **/
 int 		molgroup_print_sequence(Bmolgroup* molgroup)
 {
-	Bmolecule*	mol;
-	
+	Bmolecule*	mol = molgroup->mol;
+
+	if ( mol->seq.length() < 1 )
+		seq_from_residues(molgroup);
+
 	if ( verbose & VERB_LABEL )
 		cout << "Sequence:" << endl;
 	
@@ -947,7 +950,7 @@ JSvalue		molgroup_elements(Bmolgroup* molgroup)
 				if ( comp.exists(atom->el) )
 					comp[atom->el] += 1;
 				else
-					comp[atom->el] = 0;
+					comp[atom->el] = 1;
 
 //	cout << comp << endl;
 	

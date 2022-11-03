@@ -4,8 +4,8 @@ var mol__transform_8cpp =
     [ "mol_coor_shift", "mol__transform_8cpp.html#ad07e5ad7550178c31c758603c902dfad", null ],
     [ "mol_coor_transform", "mol__transform_8cpp.html#a41e21d41f6b67133eda5930d6b80db04", null ],
     [ "mol_rotate", "mol__transform_8cpp.html#a724794d812c6c85c937a28508cf46139", null ],
-    [ "mol_rotate_from_view", "mol__transform_8cpp.html#a487e33323267bff073e1873f4c4aa737", null ],
-    [ "mol_rotate_to_view", "mol__transform_8cpp.html#a462078e766017433d25e5f8f3f95843e", null ],
+    [ "mol_rotate_from_view", "mol__transform_8cpp.html#a0589542f387a335bfdfa2b86b6a5aa44", null ],
+    [ "mol_rotate_to_view", "mol__transform_8cpp.html#a2ffc4df8d6e80949ca9632ff792846d3", null ],
     [ "mol_shift_to_center_of_mass", "mol__transform_8cpp.html#a1a1b9c67228b22776271e8f0fc5fb492", null ],
     [ "molgroup_coor_invert", "mol__transform_8cpp.html#a1a290c799205cbd444942e0f98756c37", null ],
     [ "molgroup_coor_rotate", "mol__transform_8cpp.html#aec20d4605c772d663b49a298065deffb", null ],
@@ -17,8 +17,8 @@ var mol__transform_8cpp =
     [ "molgroup_place_at_coordinates", "mol__transform_8cpp.html#a094b8da5eef01414cb311f401bbe99d9", null ],
     [ "molgroup_resolve_pbc", "mol__transform_8cpp.html#ac1b38cd84e20ec579079eae1c32e6d9e", null ],
     [ "molgroup_rotate", "mol__transform_8cpp.html#a1442bc1132377e536c527a5e8f5f8fe8", null ],
-    [ "molgroup_rotate_from_view", "mol__transform_8cpp.html#a89041692099534f3ba6744c0400cd12d", null ],
-    [ "molgroup_rotate_to_view", "mol__transform_8cpp.html#a23594aa95d09279b14e3ec55f1f1e31e", null ],
+    [ "molgroup_rotate_from_view", "mol__transform_8cpp.html#a659ee82c2b129d41277a13b705430975", null ],
+    [ "molgroup_rotate_to_view", "mol__transform_8cpp.html#ade67b0b012fc89be000884b757178909", null ],
     [ "molgroup_shift_to_center_of_mass", "mol__transform_8cpp.html#a506c6c1e60a2e4684ab1f63f5152a3de", null ],
     [ "verbose", "mol__transform_8cpp.html#a0b2caeb4b6f130be43e5a2f0267dd453", null ]
 ];

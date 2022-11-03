@@ -3,14 +3,14 @@
 @brief	A program to determine and correct for the CTF (contrast transfer function) in electron micrographs.
 @author Bernard Heymann
 @date	Created: 19970715
-@date	Modified: 20210817
+@date	Modified: 20220813
 **/
 
 #include "rwimg.h"
 #include "mg_ctf.h"
 #include "mg_ctf_fit.h"
 #include "mg_ctf_sim.h"
-#include "ps_ctf_plot.h" 
+#include "ps_ctf_plot.h"
 #include "ps_micrograph.h" 
 #include "mg_processing.h"
 #include "mg_tomography.h"
@@ -34,6 +34,7 @@ const char* use[] = {
 "-action correct          Action: 1=flip, 2=apply, 3=correct, 4=wienerfilter,",
 "                         5=baseline, 6=baseline2, 7=baseflip, 8=basecorrect,",
 "                         11=prepare, 12=fit, 13=prepfit (default 0=none).",
+"-contrast                Inverts contrast by negating the CTF.",
 "-invertaxis              Inverts the tilt axis to correct for improper setup.",
 "-filter                  Filter extremes before doing anything with the image.",
 "-background              Correct background after applying CTF (default not).",
@@ -42,6 +43,8 @@ const char* use[] = {
 "-toparticle              Transfer micrograph CTF parameters to particle records (default not).",
 "-ctf 512,512,2           Generate a CTF image of this size with flag: 1=center, 2=power, 3=both.",
 "-simulate                Simulate a tilted CTF for each x or y-line.",
+//"-noaberration odd        Delete aberration weights (all, odd or even).",
+"-statistics              Display CTF parameter statistics.",
 " ",
 "Parameters:",
 "-verbose 7               Verbosity of output.",
@@ -54,13 +57,14 @@ const char* use[] = {
 "-frames                  Use micrograph frames file given in parameter file instead of particle file.",
 "-sampling 1.5,1.5,1.5    Sampling (angstrom/pixel, a single value sets all three).",
 "-resolution 27.5,125.3   Resolution limits for CTF determination and application (default 0.1,1e6).",
-"-wiener 0.15             Wiener factor for CTF correction (default 0.2).",
+"-wiener 0.15             Wiener factor for CTF correction (default 0).",
 " ",
 #include "use_ctf.inc"
 " ",
 "Imaging parameters:",
 "-Defocus 1.2,1.0,47      Defocus average & deviation, and astigmatism angle (default 2 um, 0 um, 0).",
 "-Astigmatism 0.3,-34     Set defocus deviation and astigmatism angle (um, degrees).",
+"-gradient 1.2,1.4,0.05   Calculate a defocus gradient function: min, max, increment (um).",
 "-axis 74.7               Tilt axis angle relative to x-axis (default 0 or from parameter file).",
 "-tilt 15                 Tilt angle (default from parameter file).",
 "-basetype 2              Baseline type: (default 1)",
@@ -152,19 +156,16 @@ int 		main(int argc, char **argv)
 	double			resolution_hi(0);		// High resolution limit
 	int 			action(0); 				// Default no CTF operation
 	int				ctf_flag(0);			// Flag for CTF image: bit 1 = center, bit 2 = power
-	double			wiener(0.2);			// Wiener for CTF correction
+	double			wiener(0);				// Wiener for CTF correction
 	double			def_avg(2e4);			// In angstrom
 	double			def_dev(0);				// In angstrom
+	double			def_grad_min(0), def_grad_max(0), def_grad_inc(0);	// In angstrom
 	double			ast_angle(-1);	 		// Used to limit astigmatism
 	double			tilt_axis(0);			// Tilt axis angle in radians
 	double			tilt_angle(0);			// Tilt angle start in radians
 	int				isotropy(0);			// Flag to assess isotropy
-//	double			volts(120000);	 		// In volts
-//	double			amp_fac(0.07);			// Amplitude fraction
-//	double			Cs(2e7);				// Spherical aberration (angstrom)
-//	double			Cc(2e7);				// Chromatic aberration (angstrom)
-//	double			alpha(0.0001);			// Beam source size (radians)
-//	double			energy_spread(1);		// Effective energy spread (eV)
+//	int				noab(0);				// Flag to delete aberration weights
+	int				stats(0);				// Flag to display CTF parameter statistics
 	int				basetype(1);			// Baseline type: 1=poly, 2=double_gauss, 3=EMAN
 	double			base[5] = {1,0,0,0,0};	// Baseline coefficients
 	int				envtype(4);				// Envelope type: 1=gauss, 2=gauss+, 3=double_gauss, 4=double_gauss+
@@ -173,7 +174,7 @@ int 		main(int argc, char **argv)
 	int				setDefocus(0);			// Flags
 	int				setbase(0);
 	int				setenv(0);
-	int				flags(0);				// Flags for using mg (1), filter extremes (2), background (4), astigmatism (8), use frames (16)
+	int				flags(0);				// Flags for using mg (1), filter extremes (2), background (4), astigmatism (8), use frames (16), invert contrast (32)
 	int				fitastig(0);			// Flag to fit astigmatism individually (1) or global (2)
 	int				simulate(0);			// Flag to simulate a tilted micrograph
 	Vector3<long>	size(1,1,1);			// Size of CTF output file
@@ -222,16 +223,26 @@ int 		main(int argc, char **argv)
 			flags |= 17;
 		if ( curropt->tag == "filter" )
 	        flags |= 2;
-		if ( curropt->tag == "background" )
-			flags |= 4;
+//		if ( curropt->tag == "background" )
+//			flags |= 4;
+		if ( curropt->tag == "contrast" )
+			flags |= INVERT;
 		if ( curropt->tag == "fitastigmatism" ) {
 			fitastig = curropt->value.integer();
 			if ( fitastig == 1 ) flags |= 8;
+			else if ( fitastig == 3 ) flags |= 32;
 		}
 		if ( curropt->tag == "isotropy" )
 			isotropy = 1;
 		if ( curropt->tag == "simulate" )
 			simulate = 1;
+/*		if ( curropt->tag == "noaberration" ) {
+			if ( curropt->value[0] == 'o' ) noab = 1;
+			if ( curropt->value[0] == 'e' ) noab = 2;
+			if ( curropt->value[0] == 'a' ) noab = 3;
+		}*/
+		if ( curropt->tag == "statistics" )
+			stats = 1;
 		if ( curropt->tag == "mgpath" ) {
 			mgpath = curropt->value;
 			if ( mgpath.length() < 1 )
@@ -275,21 +286,34 @@ int 		main(int argc, char **argv)
 			}
 		}
 		if ( curropt->tag == "Defocus" ) {
-			if ( curropt->values(def_avg, def_dev, ast_angle) < 1 )
+//			if ( curropt->values(def_avg, def_dev, ast_angle) < 1 )
+			if ( curropt->real_units(def_avg, def_dev, ast_angle) < 1 )
 				cerr << "-Defocus: At least the defocus average must be specified!" << endl;
 			else {
-				if ( fabs(def_avg) < 20 ) def_avg *= 1e4;	// Assume um
-				if ( fabs(def_dev) < 10 ) def_dev *= 1e4;	// Assume um
+//				if ( fabs(def_avg) < 20 ) def_avg *= 1e4;	// Assume um
+//				if ( fabs(def_dev) < 10 ) def_dev *= 1e4;	// Assume um
 				ast_angle *= M_PI/180;				// Assume degrees
 				setDefocus = 1;
 			}
 		}
 		if ( curropt->tag == "Astigmatism" ) {
-			if ( curropt->values(def_dev, ast_angle) < 1 )
+//			if ( curropt->values(def_dev, ast_angle) < 1 )
+			if ( curropt->real_units(def_dev, ast_angle) < 1 )
 				cerr << "-Astigmatism: A defocus value must be specified!" << endl;
 			else {
-				if ( def_dev < 1e3 ) def_dev *= 1e4;			// Assume um
+//				if ( def_dev < 1e3 ) def_dev *= 1e4;			// Assume um
 				ast_angle *= M_PI/180.0;						// Assume degrees
+			}
+		}
+		if ( curropt->tag == "gradient" ) {
+			if ( curropt->values(def_grad_min, def_grad_max, def_grad_inc) < 3 )
+				cerr << "-gradient: All three values must be specified!" << endl;
+			else {
+				if ( def_grad_min < 10 ) {			// Assume um
+					def_grad_min *= 1e4;
+					def_grad_max *= 1e4;
+					def_grad_inc *= 1e4;
+				}
 			}
 		}
 #include "ctf.inc"
@@ -325,7 +349,7 @@ int 		main(int argc, char **argv)
 			else
 				setenv = 2;
 		}
-		if ( curropt->tag == "Range" ) {
+/*		if ( curropt->tag == "Range" ) {
 			if ( curropt->values(def_start, def_end, def_inc) < 1 )
 				cerr << "-Range: At least two values must be specified!" << endl;
 			else {
@@ -333,7 +357,10 @@ int 		main(int argc, char **argv)
 				if ( def_end < 100 ) def_end *= 1e4;		// Assume um
 				if ( def_inc < 10 ) def_inc *= 1e4;			// Assume um
 			}
-		}
+		}*/
+		if ( curropt->tag == "Range" )
+			if ( curropt->real_units(def_start, def_end, def_inc) < 2 )
+				cerr << "-Range: At least two values must be specified!" << endl;
 		if ( curropt->tag == "json" )
 			jsin = curropt->filename();
 		if ( curropt->tag == "jsonout" )
@@ -366,12 +393,13 @@ int 		main(int argc, char **argv)
 	option_kill(option);
 	
 	double			ti = timer_start();
-
+	
 	if ( jsin.length() ) jsctf = JSparser(jsin.c_str()).parse();
 	CTFparam		cp = ctf_from_json(jsctf);
 	cp.defocus_average(def_avg);
-	cp.defocus_deviation(def_dev);
-	cp.astigmatism_angle(ast_angle);
+	cp.astigmatism(def_dev, ast_angle);
+
+//			ctf_to_json(cp).write("test.json");
 
 	if ( pszeroesfile.length() ) if ( pszeroesfile.contains(".ps") )
 		ps_ctf_defocus_zeroes(pszeroesfile, cp.volt(), cp.Cs(), cp.amp_shift());
@@ -402,11 +430,19 @@ int 		main(int argc, char **argv)
 		}
 		if ( size.volume() > 1 ) {
 			if ( action < 1 ) action = 2;	// Only CTF function - no baseline or envelope
-			if ( wave_aberration )
+			if ( def_grad_inc ) {
+				p = img_ctf_gradient(cp, def_grad_min, def_grad_max, def_grad_inc,
+						size, sam, resolution_lo, resolution_hi);
+			} else if ( wave_aberration ) {
 				p = img_wave_aberration(cp, size, sam);
-			else
-				p = img_ctf_calculate(cp, action, wiener, size, 
+			} else if ( action > 2 ) {
+				p = img_ctf_calculate(cp, action, wiener, size,
 						sam, resolution_lo, resolution_hi);
+			} else {
+				p = img_ctf_calculate(cp, (action==1), wiener, size,
+						sam, resolution_lo, resolution_hi);
+			}
+			p->complex_to_real();
 			if ( ctf_flag & 1 ) p->center_wrap();
 			if ( ctf_flag & 2 ) p->square();
 			p->change_type(nudatatype);
@@ -432,6 +468,15 @@ int 		main(int argc, char **argv)
 			project = read_project(file_list);
 			string_kill(file_list);
 			if ( project_count_mg_particles(project) < 1 ) flags |= 1;
+//			if ( noab ) project_delete_aberration(project, noab);
+			if ( project->field->mg->ctf ) {
+//				cp = *project->field->mg->ctf;
+				cp.update(project->field->mg->ctf);
+				cp.show();
+				cp.show_baseline();
+				cp.show_envelope();
+				jsctf = ctf_to_json(cp);
+			}
 		} else {
 			filename =  argv[optind++];
 			if ( simulate && fabs(tilt_angle) > 0.001 ) {
@@ -446,8 +491,10 @@ int 		main(int argc, char **argv)
 			if ( !p ) bexit(-1);
 			if ( nudatatype == Unknown_Type )
 				nudatatype = p->data_type();
+//			img_ctf_fit_prepare(p, 10);
 			project = new Bproject;
-			basename = (Bstring(p->file_name())).base();
+//			basename = (Bstring(p->file_name())).base();
+			basename = filename.base();
 			if ( p->sizeZ() < 2 ) {	// Create a micrograph record
 				field = field_add(&project->field, basename);
 				mg = micrograph_add(&field->mg, basename);
@@ -458,15 +505,19 @@ int 		main(int argc, char **argv)
 				mg->tilt_axis = tilt_axis;
 				mg->origin = p->image->origin();
 				if ( action == 12 ) {
-					mg->fps = p->file_name();
+//					mg->fps = p->file_name();
+					mg->fps = filename;
 				} else if ( p->images() > 1 ) {
-					mg->fpart = p->file_name();
+//					mg->fpart = p->file_name();
+					mg->fpart = filename;
 					for ( i=1; i<=p->images(); i++ ) {
 						part = particle_add(&part, i);
 						if ( !mg->part ) mg->part = part;
+						part->mg = mg;
 					}
 				} else {
-					mg->fmg = p->file_name();
+//					mg->fmg = p->file_name();
+					mg->fmg = filename;
 					flags |= 1;
 				}
 			} else {	// Create a reconstruction record
@@ -477,13 +528,15 @@ int 		main(int argc, char **argv)
 				rec->voxel_size = p->sampling(0);
 				rec->origin = p->image->origin();
 				if ( p->images() > 1 ) {
-					rec->fpart = p->file_name();
+//					rec->fpart = p->file_name();
+					rec->fpart = filename;
 					for ( i=1; i<=p->images(); i++ ) {
 						part = particle_add(&part, i);
 						if ( !rec->part ) rec->part = part;
 					}
 				} else {
-					rec->frec = p->file_name();
+//					rec->frec = p->file_name();
+					rec->frec = filename;
 					flags |= 1;
 				}
 			}
@@ -498,6 +551,8 @@ int 		main(int argc, char **argv)
 	
 	if ( project == NULL )  {
 		cerr << "Error: No input file read!" << endl;
+		if ( jsout.length() )
+			ctf_to_json(cp).write(jsout.c_str());
 		bexit(-1);
 	}
 
@@ -583,6 +638,8 @@ int 		main(int argc, char **argv)
 			cerr << "Error: Failed to calculate an average power spectrum!" << endl;
 		}
 	}
+	
+	if ( stats ) project_ctf_statistics(project);
 	
  	if ( ps && psaverage.length() )
     	write_img(psaverage, ps, 0);

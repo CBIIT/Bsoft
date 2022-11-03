@@ -24,7 +24,7 @@ extern int 	verbose;		// Level of output to the screen
 **/
 long		read_mol_star(Bstring& filename, Bmolgroup *molgroup)
 {
- 	Bstar2			star;
+ 	Bstar			star;
 	
 	if ( verbose & VERB_DEBUG )
 		cout << "DEBUG read_mol_star: filename=" << filename << endl;
@@ -135,7 +135,7 @@ long 		write_mol_star(Bstring& filename, Bmolgroup *molgroup)
  	if ( verbose & VERB_DEBUG )
 		cout << "DEBUG write_mol_star: filename=" << filename << endl;
 
- 	Bstar2			star;
+ 	Bstar			star;
 
 	star.comment(molgroup->comment.str());
 	star.line_length(120);

@@ -1,6 +1,6 @@
 var class_bmaterial =
 [
-    [ "composition", "class_bmaterial.html#a8d93fc7c5593f192b9e469105a9e151a", null ],
+    [ "composition", "class_bmaterial.html#af4dc3739b2dfac3301f2f8ce41738641", null ],
     [ "dalton_per_angstrom3", "class_bmaterial.html#ab82e455946679e2b2e86fded59340eea", null ],
     [ "density", "class_bmaterial.html#a2946994fcdde5711d3a053d0ec8ecaf0", null ],
     [ "density", "class_bmaterial.html#a313d1674143ffd1ca6239d048a1983f6", null ],
@@ -11,7 +11,7 @@ var class_bmaterial =
     [ "mass", "class_bmaterial.html#a5d62a53a90914a9ae5954fd2f6d6363f", null ],
     [ "number", "class_bmaterial.html#af3ff5fff3b37e01b38ca0f123673180f", null ],
     [ "number_per_angstrom3", "class_bmaterial.html#ae12d9e4d3c11a2ec1e746e49c4cbc512", null ],
-    [ "operator[]", "class_bmaterial.html#a6e669e04ffd457c3c6ae1255ca92eb22", null ],
+    [ "operator[]", "class_bmaterial.html#a13961fef4a1440bea92410ddf09a6ecb", null ],
     [ "select", "class_bmaterial.html#ad3c5fd5818c032d79e46fda5f45d0d20", null ],
     [ "select", "class_bmaterial.html#a4e3dd8b4ee32a93be24200a0fe2b2c77", null ],
     [ "show", "class_bmaterial.html#ac05b5f10ebe45760a1dcbf6fecad20f3", null ],

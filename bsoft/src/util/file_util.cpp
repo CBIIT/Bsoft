@@ -70,7 +70,10 @@ Bstring		find_file(Bstring filename, Bstring path, int flag)
 	long		i;
 	Bstring		foundfile = test_access(filename);
 	Bstring		testfile, testpath;
-	
+
+	if ( foundfile.empty() && path.length() )
+		foundfile = test_access(path + filename);
+
 	if ( foundfile.length() ) {
 		return foundfile;
 	} else if ( filename.contains("://") ) {
@@ -101,9 +104,10 @@ Bstring		find_file(Bstring filename, Bstring path, int flag)
 		if ( verbose && ( flag & 8 ) )
 			cerr << "Warning: File " << filename << " not found!" << endl;
 		if ( flag & 16 ) {
-			foundfile = filename;
 			if ( verbose && ( flag & 8 ) )
 				cerr << tab << " deleting file name!" << endl;
+		} else {
+			foundfile = filename;
 		}
 	}
 	

@@ -3,7 +3,7 @@
 @brief	Library routines used for editing image contents
 @author Bernard Heymann
 @date	Created: 19980520
-@date	Modified: 20210105
+@date	Modified: 20220120
 **/
 
 #include "Bimage.h"
@@ -68,7 +68,7 @@ double		shell_edge(Vector3<double> d, double mind, double maxd)
 	
 	double			ld(d.length());
 	
-	if ( mind < 0.001 && ld < 0.001 ) return 1;
+	if ( mind < 0.001 && ld < 0.001 ) return 1; // At origin
 	
 	mind = ld - mind ;
 	maxd -= ld;
@@ -88,6 +88,7 @@ double		shell_edge(Vector3<double> d, double mind, double maxd)
 @param 	width		gaussian width of smoothing function.
 @param 	fill_type	FILL_AVERAGE, FILL_BACKGROUND, FILL_USER.
 @param 	fill		fill value.
+@param 	wrap		wrap around boundaries (default not).
 @return int			0.
 
 	The edge of the area is smoothed with a function:
@@ -103,12 +104,12 @@ double		shell_edge(Vector3<double> d, double mind, double maxd)
 
 **/
 int			Bimage::shape(int type, Vector3<long> rect, Vector3<double> start,
-				double width, int fill_type, double fill)
+				double width, int fill_type, double fill, bool wrap)
 {
 	long 			nn;
 	
 	for ( nn=0; nn<n; nn++ )
-		shape(nn, type, rect, start, width, fill_type, fill);
+		shape(nn, type, rect, start, width, fill_type, fill, wrap);
 	
 	return 0;
 }
@@ -122,6 +123,7 @@ int			Bimage::shape(int type, Vector3<long> rect, Vector3<double> start,
 @param 	width		gaussian width of smoothing function.
 @param 	fill_type	FILL_AVERAGE, FILL_BACKGROUND, FILL_USER.
 @param 	fill		fill value.
+@param 	wrap		wrap around boundaries (default not).
 @return int			0.
 
 	The edge of the area is smoothed with a function:
@@ -137,7 +139,7 @@ int			Bimage::shape(int type, Vector3<long> rect, Vector3<double> start,
 
 **/
 int			Bimage::shape(long nn, int type, Vector3<long> rect, Vector3<double> start,
-				double width, int fill_type, double fill)
+				double width, int fill_type, double fill, bool wrap)
 {
 	if ( fabs(width) < 0.001 ) {
 		if ( width < 0 ) width = -0.001;
@@ -155,36 +157,52 @@ int			Bimage::shape(long nn, int type, Vector3<long> rect, Vector3<double> start
 		rect[2] = z;
 	}
 
-    long     			i, xx, yy, zz, cc;
+    long     			i, xx, yy, zz, ix, iy, iz, cc;
     double   			f(0), edge(3*width), a(-GOLDEN/width);
 	Vector3<double>   	d, hr(rect/2);
-    Vector3<double>   	cx(start[0] + (rect[0] - 1)/2.0, start[1] + (rect[1] - 1)/2.0, start[2] + (rect[2] - 1)/2.0);
+//    Vector3<double>   	cx(start[0] + (rect[0] - 1)/2.0, start[1] + (rect[1] - 1)/2.0, start[2] + (rect[2] - 1)/2.0);
+	Vector3<double>   	cx(start + hr);
 	Vector3<long> 		lo(start - edge);
 	Vector3<long> 		hi(start + rect + edge);
 
 	hr = hr.max(1);
-	lo = lo.max(0);
-	if ( hi[0] >= x ) hi[0] = x - 1;
-	if ( hi[1] >= y ) hi[1] = y - 1;
-	if ( hi[2] >= z ) hi[2] = z - 1;
-	
+	if ( z < 2 ) hi[2] = 0;
+
+	if ( !wrap ) {
+		lo = lo.max(0);
+		if ( hi[0] >= x ) hi[0] = x - 1;
+		if ( hi[1] >= y ) hi[1] = y - 1;
+		if ( hi[2] >= z ) hi[2] = z - 1;
+	}
+
 //	cout << hr << endl;
+//	cout << cx << endl;
+//	cout << lo << endl;
+//	cout << hi << endl;
 	
 	if ( verbose & VERB_PROCESS ) {
 	    cout << "Filling a shape:" << endl;
 		cout << "Shape:                          " << type << endl;
     	cout << "Start:                          " << setprecision(3) << start << endl;
     	cout << "Size:                           " << rect << endl;
-    	cout << "Width and fill value:           " << width << " " << fill << endl << endl;
+    	cout << "Width and fill value:           " << width << " " << fill << endl;
+    	if ( wrap ) cout << "Wrapping" << endl;
+    	cout << endl;
 	}
 	
 	
-	for ( zz=lo[2]; zz<=hi[2]; ++zz ) {
-		d[2] = zz - cx[2];
-		for ( yy=lo[1]; yy<=hi[1]; ++yy ) {
-			d[1] = yy - cx[1];
-			for ( xx=lo[0]; xx<=hi[0]; ++xx ) {
-				d[0] = xx - cx[0];
+	for ( iz=lo[2]; iz<=hi[2]; ++iz ) {
+		zz = (iz<0)? iz+z: iz;
+		if ( zz >= z ) zz -= z;
+		d[2] = iz - cx[2];
+		for ( iy=lo[1]; iy<=hi[1]; ++iy ) {
+			yy = (iy<0)? iy+y: iy;
+			if ( yy >= y ) yy -= y;
+			d[1] = iy - cx[1];
+			for ( ix=lo[0]; ix<=hi[0]; ++ix ) {
+				xx = (ix<0)? ix+x: ix;
+				if ( xx >= x ) xx -= x;
+				d[0] = ix - cx[0];
 				if ( type == 0 )
 					f = rectangle_edge(d, hr);
 				else if ( type == 1 )
@@ -447,6 +465,60 @@ int			Bimage::edge(long nn, int type, Vector3<long> rect, Vector3<double> start,
 }
 
 /**
+@brief 	Extracts all the edge pixels into a new image.
+@return Bimage*		edge image.
+
+**/
+Bimage*		Bimage::extract_edge_difference()
+{
+	Bimage*			pedge = new Bimage(Float, TSimple, size(), n);
+	long			i, j, xx, yy, zz, nn;
+	long			is(x*y*z), ds(n*is);
+	double			d;
+	
+	if ( verbose & VERB_PROCESS )
+		cout << "Extracting an edge difference image" << endl << endl;
+	
+	for ( nn=0; nn<ds; nn+=is ) {
+		if ( z < 2 ) {
+			for ( xx=0, i=nn, j=nn+x*(y-1); xx<x; ++xx, ++i, ++j ) {
+				d = (*this)[i] - (*this)[j];
+				pedge->add(i, d);
+				pedge->add(j, -d);
+			}
+			for ( yy=0, i=nn, j=nn+x-1; yy<x*y; yy+=x, i+=x, j+=x ) {
+				d = (*this)[i] - (*this)[j];
+				pedge->add(i, d);
+				pedge->add(j, -d);
+			}
+		} else {
+			for ( yy=0, i=nn, j=nn+x*y*(z-1); yy<y; ++yy ) {
+				for ( xx=0; xx<x; ++xx, ++i, ++j ) {
+					d = (*this)[i] - (*this)[j];
+					pedge->add(i, d);
+					pedge->add(j, -d);
+				}
+			}
+			for ( zz=0; zz<z; ++zz ) {
+//				cout << zz << endl;
+				for ( xx=0, i=nn+zz*x*y, j=i+(y-1)*x; xx<x; ++xx, ++i, ++j ) {
+					d = (*this)[i] - (*this)[j];
+					pedge->add(i, d);
+					pedge->add(j, -d);
+				}
+				for ( yy=0, i=nn+x*y*zz, j=i+x-1; yy<y; ++yy, i+=x, j+=x ) {
+					d = (*this)[i] - (*this)[j];
+					pedge->add(i, d);
+					pedge->add(j, -d);
+				}
+			}
+		}
+	}
+	
+	return pedge;
+}
+
+/**
 @brief 	Apply Hanning taper window to the image.
 @param 	fill		value of edge voxels.
 @return int			0.
@@ -501,6 +573,7 @@ int			Bimage::hanning_taper(double fill)
 @param 	width		gaussian width of smoothing function.
 @param 	fill_type	FILL_AVERAGE, FILL_BACKGROUND, FILL_USER.
 @param 	fill		fill value.
+@param 	wrap		wrap around boundaries (default not).
 @return int			0.
 
 	All voxels within a sphere at a given location and with a given radius 
@@ -510,14 +583,14 @@ int			Bimage::hanning_taper(double fill)
 
 **/
 int			Bimage::sphere(Vector3<double> center, double radius,
-				double width, int fill_type, double fill)
+				double width, int fill_type, double fill, bool wrap)
 {
 	Vector3<long>		rect((long) (2*radius+0.5), (long) (2*radius+0.5), (long) (2*radius+0.5));
 	rect = rect.min(size());
 	
 	center -= rect/2;
 	
-	return shape(1, rect, center, width, fill_type, fill);
+	return shape(1, rect, center, width, fill_type, fill, wrap);
 }
 
 /**
@@ -528,6 +601,7 @@ int			Bimage::sphere(Vector3<double> center, double radius,
 @param 	width		gaussian width of smoothing function.
 @param 	fill_type	FILL_AVERAGE, FILL_BACKGROUND, FILL_USER.
 @param 	fill		fill value.
+@param 	wrap		wrap around boundaries (default not).
 @return int			0.
 
 	All voxels within a cylinder at a given location are set to a given fill value.
@@ -537,7 +611,7 @@ int			Bimage::sphere(Vector3<double> center, double radius,
 
 **/
 int			Bimage::cylinder(Vector3<double> center, double radius,
-				double height, double width, int fill_type, double fill)
+				double height, double width, int fill_type, double fill, bool wrap)
 {
 	Vector3<long>		cyl(long(2*radius+0.5), long(2*radius+0.5), long(height+0.5));
 	cyl = cyl.min(size());
@@ -546,7 +620,7 @@ int			Bimage::cylinder(Vector3<double> center, double radius,
 	center[1] -= radius;
 	center[2] -= height/2;
 	
-	return shape(2, cyl, center, width, fill_type, fill);
+	return shape(2, cyl, center, width, fill_type, fill, wrap);
 }
 
 /**
@@ -555,6 +629,7 @@ int			Bimage::cylinder(Vector3<double> center, double radius,
 @param 	center		center of sphere.
 @param 	sigma		Gaussian sigma value.
 @param 	amp			amplitude.
+@param 	wrap		wrap around boundaries.
 @return int			0.
 
 	All voxels within a sphere at a given location and with a given radius 
@@ -563,7 +638,7 @@ int			Bimage::cylinder(Vector3<double> center, double radius,
 	The default center is {0,0,0}.
 
 **/
-int			Bimage::gaussian_sphere(long nn, Vector3<double> center, double sigma, double amp)
+int			Bimage::gaussian_sphere(long nn, Vector3<double> center, double sigma, double amp, bool wrap)
 {
 	if ( sigma < 1 ) sigma = 1;
 	if ( amp == 0 ) amp = 1;
@@ -572,21 +647,30 @@ int			Bimage::gaussian_sphere(long nn, Vector3<double> center, double sigma, dou
 		cout << "Calculating a Gaussian sphere:" << endl;
 		cout << "Center:                         " << center << endl;
 		cout << "Sigma:                          " << sigma << endl;
-		cout << "Amplitude:                      " << amp << endl << endl;
+		cout << "Amplitude:                      " << amp << endl;
+		if ( wrap ) cout << "Wrapping" << endl;
+		cout << endl;
 	}
 	
     long     			i, xx, yy, zz, cc;
 	double				x2, y2, z2, d2, v;
 	double				fac(-0.5/(sigma*sigma));
+	Vector3<double>		h(size()/2);
 	
     for ( i=zz=0; zz<z; ++zz ) {
 		z2 = zz - center[2];
+		if ( wrap )
+			if ( fabs(z2) > h[2] ) z2 -= z;
 		z2 *= z2;
 		for ( yy=0; yy<y; ++yy ) {
 			y2 = yy - center[1];
+			if ( wrap )
+				if ( fabs(y2) > h[1] ) y2 -= y;
 			y2 *= y2;
 			for ( xx=0; xx<x; ++xx ) {
 				x2 = xx - center[0];
+				if ( wrap )
+					if ( fabs(x2) > h[0] ) x2 -= x;
 				x2 *= x2;
 				d2 = x2 + y2 + z2;
 				v = amp*exp(fac*d2);
@@ -709,6 +793,33 @@ int			Bimage::shell(long nn, Vector3<double> center, double minrad,
 }
 
 /**
+@brief 	Fills a shell within an image with a uniform value.
+@param 	center		center of shell.
+@param 	minrad		minimum radius of shell.
+@param 	maxrad		maximum radius of shell.
+@param 	width		gaussian width of smoothing function.
+@param 	fill_type	FILL_AVERAGE, FILL_BACKGROUND, FILL_USER.
+@param 	fill		fill value.
+@return int			0.
+
+	All voxels within a shell at a given location and within given radii
+	are set to a given fill value.
+	The new data replaces the old data.
+	The default center is {0,0,0}.
+
+**/
+int			Bimage::shell_wrap(Vector3<double> center, double minrad,
+				double maxrad, double width, int fill_type, double fill)
+{
+	long 			nn;
+	
+	for ( nn=0; nn<n; nn++ )
+		shell_wrap(nn, center, minrad, maxrad, width, fill_type, fill);
+	
+	return 0;
+}
+
+/**
 @brief 	Fills a shell within an image with a uniform value with wrapping.
 @param 	nn			sub-image.
 @param 	center		center of shell.
@@ -747,6 +858,10 @@ int			Bimage::shell_wrap(long nn, Vector3<double> center, double minrad,
 	Vector3<long> 		hi(center + mrw);
 	Vector3<double>		d;
 	
+	if ( x == 1 ) lo[0] = hi[0] = 0;
+	if ( y == 1 ) lo[1] = hi[1] = 0;
+	if ( z == 1 ) lo[2] = hi[2] = 0;
+	
 	if ( verbose & VERB_PROCESS ) {
 		cout << "Filling shell with wrapping:" << endl;
 		cout << "Center:                         " << center << endl;
@@ -756,6 +871,8 @@ int			Bimage::shell_wrap(long nn, Vector3<double> center, double minrad,
 	
 //	lo = center - (maxrad + 3*width);
 //	hi = center + (maxrad + 3*width);
+	
+//	cout << lo << tab << hi << endl;
 	
     for ( zz=lo[2]; zz<=hi[2]; ++zz ) {
 		d[2] = zz - center[2];
@@ -776,7 +893,9 @@ int			Bimage::shell_wrap(long nn, Vector3<double> center, double minrad,
 				f *= a;
 				if ( f > 50 ) edge = 1e30;
 				else edge = exp(f);
-				i = index(ix, iy, iz, nn);
+				i = index(0, ix, iy, iz, nn);
+				if ( i < 0 || i > image_size() )
+					cerr << "error: " << i << endl;
 				for ( cc=0; cc<c; cc++, ++i )
 					set(i, ((*this)[i] + fill*edge)/(1+edge));
 			}

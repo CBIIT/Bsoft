@@ -1,15 +1,17 @@
 /**
 @file	mg_particles.cpp
-@brief	Calculates centers of single particle images.
+@brief	Analyzes and manipulates single particle images.
 @author Bernard Heymann
 @date	Created: 20080424
-@date	Modified: 20200401
+@date	Modified: 20220531
 **/
 
 #include "mg_processing.h"
 #include "mg_particles.h"
+#include "mg_particle_select.h"
 #include "mg_select.h"
 #include "mg_img_proc.h"
+#include "mg_ctf.h"
 #include "rwimg.h"
 #include "matrix_linear.h"
 #include "file_util.h"
@@ -24,11 +26,11 @@ extern int 	verbose;		// Level of output to the screen
 
 /**
 @brief 	Aligns single particle images based on orientation parameters.
-@param 	*project 	micrograph processing parameter structure.
-@param 	part_select	selection number from the selection column.
-@param 	nuavg		rescale to new average.
-@param 	nustd		rescale to new standard deviation.
-@return	int					0.
+@param 	*project 		micrograph processing parameter structure.
+@param 	part_select		selection number from the selection column.
+@param 	nuavg			rescale to new average.
+@param 	nustd			rescale to new standard deviation.
+@return	int				0.
 
 	Each selected particle image is rotated and shifted.
 
@@ -126,11 +128,11 @@ int			project_align_particles(Bproject* project, int part_select,
 
 /**
 @brief 	Centers single particle images based on the parametric center.  
-@param 	*project 	micrograph processing parameter structure.
-@param 	part_select	selection number from the selection column.
-@param 	nuavg		rescale to new average.
-@param 	nustd		rescale to new standard deviation.
-@return	int					0.
+@param 	*project 		micrograph processing parameter structure.
+@param 	part_select		selection number from the selection column.
+@param 	nuavg			rescale to new average.
+@param 	nustd			rescale to new standard deviation.
+@return	int				0.
 
 	Each particle image is shifted to center the origin.
 
@@ -248,12 +250,12 @@ int			project_center_particles(Bproject* project, int part_select,
 
 /**
 @brief 	Calculates centers of single particle images by cross-correlation with a reference.  
-@param 	*project 	micrograph processing parameter structure.
-@param 	*pref		reference image.
-@param 	part_select	selection number from the selection column.
-@param 	hires		high resolution limit.
-@param 	lores		low resolution limit.
-@return	int					0.
+@param 	*project 		micrograph processing parameter structure.
+@param 	*pref			reference image.
+@param 	part_select		selection number from the selection column.
+@param 	hires			high resolution limit.
+@param 	lores			low resolution limit.
+@return	int				0.
 
 	Each particle image shift is determined by cross correlation with
 	the reference image.
@@ -343,7 +345,7 @@ long		project_find_part_centers_in_mgs(Bproject* project,
 @param 	hires			high resolution limit.
 @param 	lores			low resolution limit.
 @param 	filter_flag		flag to filter extremes in particles.
-@return long			number of particles.
+@return long				number of particles.
 
 	An image processing parameter structure loaded with micrograph
 	information is used to extract particle images from the micrograph
@@ -395,12 +397,12 @@ long		mg_find_part_centers(Bmicrograph* mg,
 
 /**
 @brief 	Calculates centers of single particle images.  
-@param 	*project 	image processing parameter structure.
-@param 	max_iter	maximum number of iterations.
-@param 	part_select	selection number from the selection column.
-@param 	hires		high resolution limit.
-@param 	lores		low resolution limit.
-@return	Bimage*		final image composite reference.
+@param 	*project 		image processing parameter structure.
+@param 	max_iter		maximum number of iterations.
+@param 	part_select		selection number from the selection column.
+@param 	hires			high resolution limit.
+@param 	lores			low resolution limit.
+@return	Bimage*			final image composite reference.
 
 	A composite image is generated from the selected particles and radially
 	symmetrized. Each image shift is then determined by cross correlation.
@@ -572,7 +574,7 @@ long		particles_mask(Bmicrograph* mg, Bimage* pmask, Bstring& partpath)
 @param 	*project 	image processing parameter structure.
 @param 	*pmask	 	3D volume mask to be projected.
 @param 	&partpath	new path to particle files.
-@return	long		number of particles masked.
+@return	long			number of particles masked.
 
 	A 3D mask is projected into each particle view and the particle image masked.
 
@@ -641,7 +643,7 @@ long		project_mask_particles(Bproject* project, Bimage* pmask, Bstring& partpath
 @brief 	Compares the coordinates of particles between two files.  
 @param 	*project 	project parameter structure.
 @param 	*projcomp 	comparable project parameter structure.
-@return	long		number of common particles.
+@return	long			number of common particles.
 
 	The coordinates of particles in one parameter file is compared to
 	that of a reference parameter file.
@@ -796,7 +798,7 @@ double		project_tilt_from_particle_defocus(Bproject* project)
 @param 	*project 	project parameter structure.
 @param 	axis	 	tilt axis angle (radians).
 @param 	tilt	 	tilt angle (radians).
-@return	long		number of selected particles.
+@return	long			number of selected particles.
 
 
 **/
@@ -825,3 +827,1076 @@ long		project_set_particle_defocus_from_tilt(Bproject* project, double axis, dou
 	return npart;
 }
 
+Bimage*		particle_correlation_sum(Bparticle* part, Bimage* pref, double hires, FSI_Kernel* kernel, fft_plan planf)
+{
+	if ( !kernel ) {
+		error_show("Error in project_correlation_sum: No kernel defined for projection!", __FILE__, __LINE__);
+		return NULL;
+	}
+	
+	if ( pref->fourier_type() != Standard ) {
+		pref->fft();
+		pref->phase_shift_to_origin();
+	}
+
+	bool			invert(0);
+	long			ndone(0);
+	double			wl(0);
+	Matrix3			mat;
+	Bmicrograph*	mg = part->mg;
+	Bimage*			psec;
+	Bimage*			psec2;
+	Bimage*			ppart;
+
+	//			if ( mg->ctf ) wl = mg->ctf->lambda();
+
+	Bimage*			psum = new Bimage(Float, TComplex, pref->sizeX(), pref->sizeY(), 1, 1);
+	psum->sampling(part->pixel_size);
+	psum->origin(psum->size()/2);
+
+	psum->next = new Bimage(Float, TSimple, pref->sizeX(), pref->sizeY(), 1, 1);
+
+	for ( ; part; part = part->next ) if ( part->sel > 0 ) {
+		ppart = read_img(mg->fpart, 1, part->id-1);
+		ppart->sampling(part->pixel_size);
+		ppart->origin(part->ori);
+		ppart->view(part->view);
+		ppart->fft(planf);
+		ppart->phase_shift_to_origin();
+		mat = part->view.matrix();
+		part->ori[2] = 0;
+//		cout << mat << part->ori << endl;
+		psec = pref->central_section(mat, hires, kernel, wl);
+		if ( mg->ctf ) {
+			if ( part->def > 0 ) mg->ctf->defocus_average(part->def);
+			img_ctf_apply(psec, *mg->ctf, 2, 0.1, 0, hires, invert);
+		}
+		psec2 = psec->copy();
+		psec2->complex_to_intensities();
+		psec->complex_conjugate_product(ppart, 0);
+		psum->add(psec);
+		psum->next->add(psec2);
+		delete ppart;
+		delete psec;
+		delete psec2;
+		ndone++;
+	}
+	
+	psum->image->select(ndone);
+
+	return psum;
+}
+
+/**
+@brief 	Correlates each particle with the CTF applied reference projection and sum the correlations.
+@param 	*project 	project parameter structure.
+@param	*pref		reference map.
+@param 	hires	 	high resolution limit (angstrom).
+@param 	*kernel	 	frequency space interpolation kernel lookup table.
+@return	Bimage*		sum of cross-correlations.
+
+
+**/
+Bimage*		project_correlation_sum(Bproject* project, Bimage* pref, double hires, FSI_Kernel* kernel)
+{
+	if ( !kernel ) {
+		error_show("Error in project_correlation_sum: No kernel defined for projection!", __FILE__, __LINE__);
+		return NULL;
+	}
+	
+	long			nsel = project_count_mg_part_selected(project);
+	
+	if ( verbose ) {
+		cout << "Cross-correlating particles with CTF-applied reference projections:" << endl;
+		cout << "Reference map:                  " << pref->file_name() << endl;
+		cout << "Resolution limit:               " << hires << " A" << endl;
+		cout << "Selected particles:             " << nsel << endl;
+	}
+	
+	if ( pref->fourier_type() != Standard ) {
+		if ( verbose )
+			cout << "Transforming the reference map" << endl;
+		pref->fft();
+	}
+
+	pref->phase_shift_to_origin();
+
+	long			nmg(0), nogrp(0);
+	Matrix3			mat;
+	Bparticle*		part = part_find_first(project);
+	
+	if ( verbose )
+		cout << "Setting up the micrograph array" << endl;
+	Bmicrograph**	mgarr = project_micrograph_array(project, nmg);
+	
+	map<string,long>	optgrp;
+	for ( long i=0; i<nmg; ++i )
+		if ( mgarr[i]->ctf )
+			if ( optgrp.find(mgarr[i]->ctf->identifier()) == optgrp.end() )
+				optgrp[mgarr[i]->ctf->identifier()] = 0;
+
+	for ( auto& g: optgrp ) g.second = nogrp++;	// Ensure the order is encoded properly
+	
+	if ( nogrp < 1 ) nogrp = 1;
+	
+	Bimage*			psum = new Bimage(Float, TComplex, pref->sizeX(), pref->sizeY(), 1, nogrp);
+	psum->sampling(part->pixel_size);
+	psum->origin(psum->size()/2);
+	
+	psum->next = new Bimage(Float, TSimple, pref->sizeX(), pref->sizeY(), 1, nogrp);
+	psum->next->fill(1);
+
+	fft_plan		planf = fft_setup_plan(psum->size(), FFTW_FORWARD, 1);
+	
+#ifdef HAVE_GCD
+	__block	long	ndone(0);
+	dispatch_queue_t 	myq = dispatch_queue_create(NULL, NULL);
+	dispatch_apply(nmg, dispatch_get_global_queue(0, 0), ^(size_t i){
+		long		n(0);
+		if ( mgarr[i]->ctf ) n = optgrp.at(mgarr[i]->ctf->identifier());
+		Bimage*		p1 = particle_correlation_sum(mgarr[i]->part, pref, hires, kernel, planf);
+		dispatch_sync(myq, ^{
+			cout << mgarr[i]->id << tab << mgarr[i]->ctf->identifier() << tab << n << tab << p1->image->select() << endl;
+			ndone += p1->image->select();
+			psum->add(n, p1);
+			psum->next->add(n, p1->next);
+			psum->image[n].select(psum->image[n].select() + p1->image->select());
+			delete p1;
+			if ( verbose & VERB_RESULT )
+				cerr << "Complete:                       " << setprecision(3)
+					<< ndone*100.0/nsel << " %    \r" << flush;
+		});
+	});
+#else
+	long			ndone(0);
+#pragma omp parallel for
+	for ( long i=0; i<nmg; ++i ) {
+		long		n(0);
+		if ( mgarr[i]->ctf ) n = optgrp[mgarr[i]->ctf->identifier()];
+		Bimage*		p1 = particle_correlation_sum(mgarr[i]->part, pref, hires, kernel, planf);
+	#pragma omp critical
+		{
+			cout << mgarr[i]->id << tab << mgarr[i]->ctf->identifier() << tab << n << tab << p1->image->select() << endl;
+			ndone += p1->image->select();
+			psum->add(n, p1);
+			psum->next->add(n, p1->next);
+			psum->image[n].select(psum->image[n].select() + p1->image->select());
+			delete p1;
+			if ( verbose & VERB_RESULT )
+				cerr << "Complete:                       " << setprecision(3)
+					<< ndone*100.0/nsel << " %    \r" << flush;
+		}
+	}
+#endif
+	
+	fft_destroy_plan(planf);
+
+	if ( verbose & VERB_RESULT )
+		cerr << endl;
+
+	if ( verbose ) {
+		cout << "Group\tParticles" << endl;
+//		for ( long n=0; n<optgrp.size(); ++n )
+//			cout << optgrp[n].first << tab << psum->image[n].select() << endl;
+		for ( auto g: optgrp )
+			cout << g.first << tab << psum->image[g.second].select() << endl;
+		cout << endl;
+	}
+
+	psum->divide(psum->next);
+
+	delete[] mgarr;
+	delete psum->next;
+	psum->next = NULL;
+
+	return psum;
+}
+
+int			img_add_aberration_terms(Bimage* psum, Bimage* psec, Bimage* ppart, CTFparam& cp)
+{
+	long 			i, j, n, x, y, z;
+	double			sx, sy, sz, s2, phi, pwr;
+	Complex<double>	cv, ca;
+	Vector3<double>	freq_scale(1.0/psum->real_size());
+	Vector3<double>	h((psum->sizeX() - 1)/2, (psum->sizeY() - 1)/2, (psum->sizeZ() - 1)/2);
+
+	if ( verbose & VERB_DEBUG ) {
+		cout << "Calculating aberration terms" << endl;
+		cout << endl;
+	}
+	
+	for ( i=j=n=0; n<psum->images(); n++ ) {
+		for ( z=0; z<psum->sizeZ(); z++ ) {
+			sz = z;
+			if ( z > h[2] ) sz -= psum->sizeZ();
+			sz *= freq_scale[2];
+			for ( y=0; y<psum->sizeY(); y++ ) {
+				sy = y;
+				if ( y > h[1] ) sy -= psum->sizeY();
+				sy *= freq_scale[1];
+				for ( x=0; x<psum->sizeX(); x++, i++ ) {
+					sx = x;
+					if ( x > h[0] ) sx -= psum->sizeX();
+					sx *= freq_scale[0];
+					s2 = sx*sx + sy*sy + sz*sz;
+					phi = atan2(sy,sx);
+					ca = cp.calculate_complex(s2, phi);
+					cv = psec->complex(i);
+					pwr = cv.power();
+					cv *= ppart->complex(i).conj();
+					psum->add(j++, cv.real() * ca.imag());			// (S*P')re * sin g
+					psum->add(j++, cv.imag() * ca.imag());			// (S*P')im * sin g
+					psum->add(j++, cv.real() * ca.real());			// (S*P')re * cos g
+					psum->add(j++, pwr * ca.real() * ca.real());	// S2 * cos2 g
+					psum->add(j++, pwr * ca.real() * ca.imag());	// S2 * cos g * sin g
+					psum->add(j++, pwr * ca.imag() * ca.imag());	// S2 * sin2 g
+				}
+			}
+		}
+	}
+
+	return 0;
+}
+
+
+Bimage*		particle_aberration_sum(Bparticle* part, Bimage* pref, double hires, FSI_Kernel* kernel, fft_plan planf)
+{
+	if ( !kernel ) {
+		error_show("Error in project_correlation_sum: No kernel defined for projection!", __FILE__, __LINE__);
+		return NULL;
+	}
+	
+	if ( pref->fourier_type() != Standard ) {
+		pref->fft();
+		pref->phase_shift_to_origin();
+	}
+
+	long			ndone(0);
+	double			wl(0);
+	Matrix3			mat;
+	Bmicrograph*	mg = part->mg;
+	Bimage*			psec;
+	Bimage*			ppart;
+	
+	if ( !mg->ctf ) {
+		cerr << "Error: The CTF parameters must be defined for micrograph " << mg->id << endl;
+		bexit(-1);
+	}
+
+	wl = mg->ctf->lambda();
+
+	Bimage*			psum = new Bimage(Float, 6, pref->sizeX(), pref->sizeY(), 1, 1);
+	psum->sampling(part->pixel_size);
+
+	for ( ; part; part = part->next ) if ( part->sel > 0 ) {
+		if ( part->def > 0 ) mg->ctf->defocus_average(part->def);
+		ppart = read_img(mg->fpart, 1, part->id-1);
+		ppart->sampling(part->pixel_size);
+		ppart->origin(part->ori);
+		ppart->view(part->view);
+		ppart->fft(planf);
+		ppart->phase_shift_to_origin();
+		mat = part->view.matrix();
+		part->ori[2] = 0;
+//		cout << mat << part->ori << endl;
+		psec = pref->central_section(mat, hires, kernel, wl);
+		img_add_aberration_terms(psum, psec, ppart, *mg->ctf);
+		delete ppart;
+		delete psec;
+		ndone++;
+	}
+	
+	psum->image->select(ndone);
+
+	return psum;
+}
+
+int			img_check_contrast(Bimage* psum)
+{
+	int				contrast(0);
+	long			j, xx, yy, zz;
+	
+	for ( zz=0; zz<3 && zz<psum->sizeZ(); ++zz ) {
+		for ( yy=0; yy<3 && yy<psum->sizeY(); ++yy ) {
+			for ( xx=0; xx<3 && xx<psum->sizeX(); ++xx ) {
+				j = psum->index(0, xx, yy, zz, 0);
+				if ( fabs(atan2((*psum)[j+2],(*psum)[j])) < M_PI_2 ) contrast += 1;
+				else contrast -= 1;
+			}
+		}
+	}
+	
+	if ( contrast < 0 ) contrast = -1;
+	else contrast = 1;
+	
+	if ( verbose )
+		cout << "Contrast check:                " << contrast << endl;
+
+	return contrast;
+}
+
+Bimage*		img_calculate_phase_differences(Bimage* psum)
+{
+	long			i, j, k, n;
+	double			ae, ao;
+	vector<double>	t(2);
+	Matrix			r(2,2);
+
+	int				contrast = img_check_contrast(psum);
+	
+	if ( verbose )
+		cout << "Calculating phase difference maps" << endl;
+
+	Bimage*			pphi = new Bimage(Float, TComplex, psum->size(), psum->images());
+	pphi->sampling(psum->sampling(0));
+
+	for ( n=i=j=0; n<pphi->images(); ++n ) {
+		for ( k=0; k<pphi->image_size(); ++i, ++k, j+=psum->channels() ) {
+			t[0] = (*psum)[j+2];
+			t[1] = (*psum)[j];
+			r[0][0] = (*psum)[j+3];
+			r[0][1] = r[1][0] = (*psum)[j+4];
+			r[1][1] = (*psum)[j+5];
+			r.singular_value_decomposition(t);
+			ae = atan2(contrast*t[0],contrast*t[1]);
+			ao = atan2(contrast*(*psum)[j+1],contrast*(*psum)[j]);
+			pphi->set(i, Complex<double>(ae, ao));
+		}
+	}
+	
+	pphi->statistics();
+
+	return pphi;
+}
+
+/**
+@brief 	Calculates the aberration phase difference from a set of particles.
+@param 	*project 	project parameter structure.
+@param	*pref		reference map.
+@param 	hires	 	high resolution limit (angstrom).
+@param 	*kernel	 	frequency space interpolation kernel lookup table.
+@return	Bimage*		aberration phase differences as a complex image.
+
+	Uses the method as described in Zivanov et al (2020).
+	The return image is complex with the even and odd phase differences
+	in real and imaginary parts, respectively.
+
+**/
+Bimage*		project_aberration_phase_difference(Bproject* project, Bimage* pref, double hires, FSI_Kernel* kernel)
+{
+	if ( !kernel ) {
+		error_show("Error in project_correlation_sum: No kernel defined for projection!", __FILE__, __LINE__);
+		return NULL;
+	}
+	
+	long			nsel = project_count_mg_part_selected(project);
+	
+	if ( verbose ) {
+		cout << "Calculating phase difference between particles and CTF-applied reference projections:" << endl;
+		cout << "Reference map:                  " << pref->file_name() << endl;
+		cout << "Resolution limit:               " << hires << " A" << endl;
+		cout << "Selected particles:             " << nsel << endl;
+	}
+	
+	if ( pref->fourier_type() != Standard ) {
+		if ( verbose )
+			cout << "Transforming the reference map" << endl;
+		pref->fft();
+	}
+
+	pref->phase_shift_to_origin();
+
+	long			nmg(0), nogrp(0);
+	Matrix3			mat;
+	Bparticle*		part = part_find_first(project);
+	
+	part_select_micrographs_with_selected_particles(project);
+	
+	if ( verbose )
+		cout << "Setting up the micrograph array" << endl;
+	Bmicrograph**	mgarr = project_micrograph_array(project, nmg);
+	
+	map<string,long>	optgrp;
+	for ( long i=0; i<nmg; ++i )
+		if ( mgarr[i]->ctf )
+			if ( optgrp.find(mgarr[i]->ctf->identifier()) == optgrp.end() )
+				optgrp[mgarr[i]->ctf->identifier()] = 0;
+
+	for ( auto& g: optgrp ) g.second = nogrp++;	// Ensure the order is encoded properly
+	
+	if ( nogrp < 1 ) nogrp = 1;
+	
+	Bimage*			psum = new Bimage(Float, 6, pref->sizeX(), pref->sizeY(), 1, nogrp);
+	psum->sampling(part->pixel_size);
+
+	fft_plan		planf = fft_setup_plan(psum->size(), FFTW_FORWARD, 1);
+	
+#ifdef HAVE_GCD
+	__block	long	ndone(0);
+	dispatch_queue_t 	myq = dispatch_queue_create(NULL, NULL);
+	dispatch_apply(nmg, dispatch_get_global_queue(0, 0), ^(size_t i){
+		long		n(0);
+		if ( mgarr[i]->ctf ) n = optgrp.at(mgarr[i]->ctf->identifier());
+		Bimage*		p1 = particle_aberration_sum(mgarr[i]->part, pref, hires, kernel, planf);
+		dispatch_sync(myq, ^{
+//			cout << mgarr[i]->id << tab << mgarr[i]->ctf->identifier() << tab << n << tab << p1->image->select() << endl;
+			ndone += p1->image->select();
+			psum->add(n, p1);
+			psum->image[n].select(psum->image[n].select() + p1->image->select());
+			delete p1;
+			if ( verbose & VERB_RESULT )
+				cerr << "Complete:                       " << setprecision(3)
+					<< ndone*100.0/nsel << " %    \r" << flush;
+		});
+	});
+#else
+	long			ndone(0);
+#pragma omp parallel for
+	for ( long i=0; i<nmg; ++i ) {
+		long		n(0);
+		if ( mgarr[i]->ctf ) n = optgrp[mgarr[i]->ctf->identifier()];
+		Bimage*		p1 = particle_aberration_sum(mgarr[i]->part, pref, hires, kernel, planf);
+	#pragma omp critical
+		{
+//			cout << mgarr[i]->id << tab << mgarr[i]->ctf->identifier() << tab << n << tab << p1->image->select() << endl;
+			ndone += p1->image->select();
+			psum->add(n, p1);
+			psum->image[n].select(psum->image[n].select() + p1->image->select());
+			delete p1;
+			if ( verbose & VERB_RESULT )
+				cerr << "Complete:                       " << setprecision(3)
+					<< ndone*100.0/nsel << " %    \r" << flush;
+		}
+	}
+#endif
+	
+	fft_destroy_plan(planf);
+
+	if ( verbose & VERB_RESULT )
+		cerr << endl;
+
+	if ( verbose ) {
+		cout << "#\tGroup\tParticles" << endl;
+		for ( auto g: optgrp )
+			cout << g.second << tab << g.first << tab << psum->image[g.second].select() << endl;
+		cout << endl;
+	}
+
+	Bimage*		pphi = img_calculate_phase_differences(psum);
+
+	delete[] mgarr;
+	delete psum;
+
+	return pphi;
+}
+
+int			img_add_ewald_terms(Bimage* psum, Bimage* psec, Bimage* ppart, CTFparam& cp)
+{
+	long 			i, j, n, x, y, z, ix, iy, iz;
+	double			sx, sy, sz, s2, phi;
+	Complex<double>	cv, cup, clo, ca, csum, cdif;
+	Vector3<double>	freq_scale(1.0/psum->real_size());
+	Vector3<double>	h((psum->sizeX() - 1)/2, (psum->sizeY() - 1)/2, (psum->sizeZ() - 1)/2);
+
+	if ( verbose & VERB_DEBUG ) {
+		cout << "Calculating aberration terms" << endl;
+		cout << endl;
+	}
+	
+	for ( i=j=n=0; n<psum->images(); n++ ) {
+		for ( z=iz=0; z<psum->sizeZ(); z++ ) {
+			if ( z ) iz = psum->sizeZ() - z;
+			sz = z;
+			if ( z > h[2] ) sz -= psum->sizeZ();
+			sz *= freq_scale[2];
+			for ( y=iy=0; y<psum->sizeY(); y++ ) {
+				if ( y ) iy = psum->sizeY() - y;
+				sy = y;
+				if ( y > h[1] ) sy -= psum->sizeY();
+				sy *= freq_scale[1];
+				for ( x=ix=0; x<psum->sizeX(); x++, i++ ) {
+					if ( x ) ix = psum->sizeX() - x;
+					sx = x;
+					if ( x > h[0] ) sx -= psum->sizeX();
+					sx *= freq_scale[0];
+					s2 = sx*sx + sy*sy + sz*sz;
+					phi = atan2(sy,sx);
+					cv = ppart->complex(i).conj();
+					ca = cp.calculate_complex(s2, phi);
+					cup = psec->complex(i);
+					clo = psec->complex(psec->index(ix,iy,iz,n)).conj();
+					csum = (cup + clo)*ca.imag();
+					cdif = (cup - clo)*ca.real();
+					psum->add(j++, csum.real() * cv.real() + csum.imag() * cv.imag());	// (Fs*F')re * sin g
+					psum->add(j++, cdif.real() * cv.real() + cdif.imag() * cv.imag());	// (Fd*F')re * cos g
+					psum->add(j++, csum.power());										// |Fs * sin g|2
+					psum->add(j++, csum.real() * cdif.real() + csum.imag() * cdif.imag());	// (Fs*Fd')re * sin g * cos g
+					psum->add(j++, cdif.power());										// |Fd * cos g|2
+				}
+			}
+		}
+	}
+
+	return 0;
+}
+
+int			img_add_ewald_terms_new(Bimage* psum, Bimage* psec, Bimage* ppart, CTFparam& cp)
+{
+	long 			i, j, k, m, n, x, y, z, ix, iy, iz;
+	double			sx, sy, sz, s2, phi;
+	Complex<double>	cv, cup, clo, ca, csum, cdif;
+	vector<Complex<double>>	ct(4);
+	Vector3<double>	freq_scale(1.0/psum->real_size());
+	Vector3<double>	h((psum->sizeX() - 1)/2, (psum->sizeY() - 1)/2, (psum->sizeZ() - 1)/2);
+
+	if ( verbose & VERB_DEBUG ) {
+		cout << "Calculating aberration terms" << endl;
+		cout << endl;
+	}
+	
+	for ( i=j=n=0; n<psum->images(); n++ ) {
+		for ( z=iz=0; z<psum->sizeZ(); z++ ) {
+			if ( z ) iz = psum->sizeZ() - z;
+			sz = z;
+			if ( z > h[2] ) sz -= psum->sizeZ();
+			sz *= freq_scale[2];
+			for ( y=iy=0; y<psum->sizeY(); y++ ) {
+				if ( y ) iy = psum->sizeY() - y;
+				sy = y;
+				if ( y > h[1] ) sy -= psum->sizeY();
+				sy *= freq_scale[1];
+				for ( x=ix=0; x<psum->sizeX(); x++, i++ ) {
+					if ( x ) ix = psum->sizeX() - x;
+					sx = x;
+					if ( x > h[0] ) sx -= psum->sizeX();
+					sx *= freq_scale[0];
+					s2 = sx*sx + sy*sy + sz*sz;
+					phi = atan2(sy,sx);
+					cv = ppart->complex(i);
+					ca = cp.calculate_complex(s2, phi);
+					cup = psec->complex(i);
+//					clo = psec->complex(psec->index(ix,iy,iz,n));
+					clo = psec->complex(psec->index(ix,iy,iz,n)).conj();
+					csum = cup + clo;
+					cdif = cup - clo;
+					ct[0] = csum*ca.imag();
+					ct[1] = csum*ca.real();
+					ct[2] = cdif*ca.real();
+					ct[3] = cdif*ca.imag();
+					for ( k=0; k<4; ++k )
+						psum->add(j++, ct[k].real() * cv.real() + ct[k].imag() * cv.imag());
+					for ( k=0; k<4; ++k )
+						for ( m=k; m<4; ++m )
+							psum->add(j++, ct[k].real() * ct[m].real() + ct[k].imag() * ct[m].imag());
+				}
+			}
+		}
+	}
+
+	return 0;
+}
+
+Bimage*		particle_ewald_sum(Bparticle* part, Bimage* pref, double hires, FSI_Kernel* kernel, fft_plan planf)
+{
+	if ( !kernel ) {
+		error_show("Error in project_correlation_sum: No kernel defined for projection!", __FILE__, __LINE__);
+		return NULL;
+	}
+	
+	if ( pref->fourier_type() != Standard ) {
+		pref->fft();
+		pref->phase_shift_to_origin();
+	}
+
+	long			ndone(0);
+	Matrix3			mat;
+	Bmicrograph*	mg = part->mg;
+	Bimage*			psec;
+	Bimage*			ppart;
+	
+	if ( !mg->ctf ) {
+		cerr << "Error: The CTF parameters must be defined for micrograph " << mg->id << endl;
+		bexit(-1);
+	}
+
+	double			wl = mg->ctf->lambda();
+
+	Bimage*			psum = new Bimage(Float, 5, pref->sizeX(), pref->sizeY(), 1, 1);
+//	Bimage*			psum = new Bimage(Float, 14, pref->sizeX(), pref->sizeY(), 1, 1);
+	psum->sampling(part->pixel_size);
+
+	for ( ; part; part = part->next ) if ( part->sel > 0 ) {
+		if ( part->def > 0 ) mg->ctf->defocus_average(part->def);
+		ppart = read_img(mg->fpart, 1, part->id-1);
+		ppart->sampling(part->pixel_size);
+		ppart->origin(part->ori);
+		ppart->view(part->view);
+		ppart->fft(planf);
+		ppart->phase_shift_to_origin();
+		mat = part->view.matrix();
+		part->ori[2] = 0;
+//		cout << mat << part->ori << endl;
+		psec = pref->central_section(mat, hires, kernel, wl);
+		img_add_ewald_terms(psum, psec, ppart, *mg->ctf);
+		delete ppart;
+		delete psec;
+		ndone++;
+	}
+	
+	psum->image->select(ndone);
+
+	return psum;
+}
+
+Bimage*		img_calculate_ewald_phase(Bimage* psum)
+{
+	long			i, j, k, n;
+	vector<double>	t(2);
+	Matrix			r(2,2);
+	
+//	Bimage*		pphi = new Bimage(Float, TComplex, psum->size(), psum->images());
+	Bimage*		pphi = new Bimage(Float, TSimple, psum->size(), psum->images());
+	pphi->sampling(psum->sampling(0));
+
+	for ( n=i=j=0; n<pphi->images(); ++n ) {
+		for ( k=0; k<pphi->image_size(); ++i, ++k ) {
+			t[0] = 2 * (*psum)[j++];
+			t[1] = 2 * (*psum)[j++];
+			r[0][0] = (*psum)[j++];
+			r[0][1] = r[1][0] = (*psum)[j++];
+			r[1][1] = (*psum)[j++];
+			r.singular_value_decomposition(t);
+//			pphi->set(i, Complex<double>(-t[0],-t[1]));
+			pphi->set(i, angle_set_negPI_to_PI(atan2(t[0],t[1])));
+		}
+	}
+	
+	pphi->statistics();
+	
+	return pphi;
+}
+
+Bimage*		img_calculate_ewald_phase_old2(Bimage* psum)
+{
+	long			i, j, ii, jj, k, n;
+//	double			geven, gewald;
+	vector<double>	t(4);
+	Matrix			r(4,4);
+	
+//	Bimage*		pphi = new Bimage(Float, TComplex, psum->size(), psum->images());
+	Bimage*		pphi = new Bimage(Float, 4, psum->size(), psum->images());
+	pphi->sampling(psum->sampling(0));
+
+	for ( n=i=j=0; n<pphi->images(); ++n ) {
+		for ( k=0; k<pphi->image_size(); ++k ) {
+			for ( ii=0; ii<4; ++ii )
+				t[ii] = 2 * (*psum)[j++];
+			for ( ii=0; ii<4; ++ii )
+				for ( jj=ii; jj<4; ++jj )
+					r[ii][jj] = r[jj][ii] = (*psum)[j++];
+			r.singular_value_decomposition(t);
+//			geven = atan2(t[1],t[0]);
+//			gewald = atan2(t[2],t[0]);
+//			pphi->set(i, Complex<double>(geven,gewald));
+			t[3] = -t[3];
+			for ( ii=0; ii<4; ++ii )
+				pphi->set(i++, -t[ii]);
+		}
+	}
+	
+	pphi->statistics();
+	
+	return pphi;
+}
+
+Bimage*		img_calculate_ewald_phase_new(Bimage* psum)
+{
+	long			i, j, ii, jj, k, n;
+	double			geven, gewald, v;
+	vector<double>	t(4);
+	Matrix			r(4,4);
+	
+	Bimage*		pphi = new Bimage(Float, TComplex, psum->size(), psum->images());
+//	Bimage*		pphi = new Bimage(Float, 4, psum->size(), psum->images());
+	pphi->sampling(psum->sampling(0));
+
+	for ( n=i=j=0; n<pphi->images(); ++n ) {
+		for ( k=0; k<pphi->image_size(); ++k ) {
+			for ( ii=0; ii<4; ++ii )
+				t[ii] = 2 * (*psum)[j++];
+			for ( ii=0; ii<4; ++ii )
+				for ( jj=ii; jj<4; ++jj )
+					r[ii][jj] = r[jj][ii] = (*psum)[j++];
+			r.singular_value_decomposition(t);
+			geven = angle_set_negPI_to_PI(atan2(-t[1],-t[0]));
+			v = cos(geven);
+/*			if ( fabs(v) > 0.5 ) {
+				gewald = angle_set_negPI_to_PI(asin(-t[2]/v));
+			} else {
+				v = sin(geven);
+				gewald = angle_set_negPI_to_PI(asin(t[3]/v));
+			}*/
+			if ( fabs(v) > 0.5 ) {
+				gewald = angle_set_negPI_to_PI(acos(-t[0]/v));
+			} else {
+				v = sin(geven);
+				gewald = angle_set_negPI_to_PI(acos(-t[1]/v));
+			}
+			pphi->set(i++, Complex<double>(geven,gewald));
+		}
+	}
+	
+	pphi->statistics();
+	
+	return pphi;
+}
+
+/**
+@brief 	Calculates the ewald phase from a set of particles.
+@param 	*project 	project parameter structure.
+@param	*pref		reference map.
+@param 	hires	 	high resolution limit (angstrom).
+@param 	*kernel	 	frequency space interpolation kernel lookup table.
+@return	Bimage*		aberration phase differences as a complex image.
+
+	The return image is complex with the even and odd phase differences
+	in real and imaginary parts, respectively.
+
+**/
+Bimage*		project_ewald_phase(Bproject* project, Bimage* pref, double hires, FSI_Kernel* kernel)
+{
+	if ( !kernel ) {
+		error_show("Error in project_correlation_sum: No kernel defined for projection!", __FILE__, __LINE__);
+		return NULL;
+	}
+	
+	long			nsel = project_count_mg_part_selected(project);
+	
+	if ( verbose ) {
+		cout << "Calculating the Ewald phase from the difference between particles and CTF-applied reference projections:" << endl;
+		cout << "Reference map:                  " << pref->file_name() << endl;
+		cout << "Resolution limit:               " << hires << " A" << endl;
+		cout << "Selected particles:             " << nsel << endl;
+	}
+	
+	if ( pref->fourier_type() != Standard ) {
+		if ( verbose )
+			cout << "Transforming the reference map" << endl;
+		pref->fft();
+	}
+
+	pref->phase_shift_to_origin();
+
+	long			nmg(0), nogrp(0);
+	Matrix3			mat;
+	Bparticle*		part = part_find_first(project);
+	
+	part_select_micrographs_with_selected_particles(project);
+	
+	if ( verbose )
+		cout << "Setting up the micrograph array" << endl;
+	Bmicrograph**	mgarr = project_micrograph_array(project, nmg);
+	
+	map<string,long>	optgrp;
+	for ( long i=0; i<nmg; ++i )
+		if ( mgarr[i]->ctf )
+			if ( optgrp.find(mgarr[i]->ctf->identifier()) == optgrp.end() )
+				optgrp[mgarr[i]->ctf->identifier()] = 0;
+
+	for ( auto& g: optgrp ) g.second = nogrp++;	// Ensure the order is encoded properly
+	
+	if ( nogrp < 1 ) nogrp = 1;
+	
+	Bimage*			psum = new Bimage(Float, 5, pref->sizeX(), pref->sizeY(), 1, nogrp);
+//	Bimage*			psum = new Bimage(Float, 14, pref->sizeX(), pref->sizeY(), 1, nogrp);
+	psum->sampling(part->pixel_size);
+
+	fft_plan		planf = fft_setup_plan(psum->size(), FFTW_FORWARD, 1);
+	
+#ifdef HAVE_GCD
+	__block	long	ndone(0);
+	dispatch_queue_t 	myq = dispatch_queue_create(NULL, NULL);
+	dispatch_apply(nmg, dispatch_get_global_queue(0, 0), ^(size_t i){
+		long		n(0);
+		if ( mgarr[i]->ctf ) n = optgrp.at(mgarr[i]->ctf->identifier());
+		Bimage*		p1 = particle_ewald_sum(mgarr[i]->part, pref, hires, kernel, planf);
+		dispatch_sync(myq, ^{
+//			cout << mgarr[i]->id << tab << mgarr[i]->ctf->identifier() << tab << n << tab << p1->image->select() << endl;
+			ndone += p1->image->select();
+			psum->add(n, p1);
+			psum->image[n].select(psum->image[n].select() + p1->image->select());
+			delete p1;
+			if ( verbose & VERB_RESULT )
+				cerr << "Complete:                       " << setprecision(3)
+					<< ndone*100.0/nsel << " %    \r" << flush;
+		});
+	});
+#else
+	long			ndone(0);
+#pragma omp parallel for
+	for ( long i=0; i<nmg; ++i ) {
+		long		n(0);
+		if ( mgarr[i]->ctf ) n = optgrp[mgarr[i]->ctf->identifier()];
+		Bimage*		p1 = particle_ewald_sum(mgarr[i]->part, pref, hires, kernel, planf);
+	#pragma omp critical
+		{
+//			cout << mgarr[i]->id << tab << mgarr[i]->ctf->identifier() << tab << n << tab << p1->image->select() << endl;
+			ndone += p1->image->select();
+			psum->add(n, p1);
+			psum->image[n].select(psum->image[n].select() + p1->image->select());
+			delete p1;
+			if ( verbose & VERB_RESULT )
+				cerr << "Complete:                       " << setprecision(3)
+					<< ndone*100.0/nsel << " %    \r" << flush;
+		}
+	}
+#endif
+	
+	fft_destroy_plan(planf);
+
+	if ( verbose & VERB_RESULT )
+		cerr << endl;
+
+	if ( verbose ) {
+		cout << "#\tGroup\tParticles" << endl;
+		for ( auto g: optgrp )
+			cout << g.second << tab << g.first << tab << psum->image[g.second].select() << endl;
+		cout << endl;
+	}
+	
+//	write_img("t.grd", psum, 0);
+
+	Bimage*		pphi = img_calculate_ewald_phase(psum);
+
+	delete[] mgarr;
+	delete psum;
+
+	return pphi;
+}
+
+int			img_add_correlation_terms(Bimage* psum, Bimage* psec, Bimage* ppart, double hires)
+{
+	if ( hires <= psec->image->sampling()[0] ) hires = 2*psec->image->sampling()[0];
+	
+	long 			i, j, n, x, y, z;
+	double			sx, sy, sz, s2;
+	double			s2max(1/(hires*hires));
+	Complex<double>	cv, cr, ca;
+	Vector3<double>	freq_scale(1.0/psum->real_size());
+	Vector3<double>	h((psum->sizeX() - 1)/2, (psum->sizeY() - 1)/2, (psum->sizeZ() - 1)/2);
+
+	if ( verbose & VERB_DEBUG ) {
+		cout << "DEBUG img_add_correlation_terms: Calculating correlation terms" << endl;
+		cout << endl;
+	}
+	
+	for ( i=j=n=0; n<psum->images(); n++ ) {
+		for ( z=0; z<psum->sizeZ(); z++ ) {
+			sz = z;
+			if ( z > h[2] ) sz -= psum->sizeZ();
+			sz *= freq_scale[2];
+			for ( y=0; y<psum->sizeY(); y++ ) {
+				sy = y;
+				if ( y > h[1] ) sy -= psum->sizeY();
+				sy *= freq_scale[1];
+				for ( x=0; x<psum->sizeX(); x++, i++ ) {
+					sx = x;
+					if ( x > h[0] ) sx -= psum->sizeX();
+					sx *= freq_scale[0];
+					s2 = sx*sx + sy*sy + sz*sz;
+					if ( s2 <= s2max ) {
+						cv = ppart->complex(i);
+						cr = psec->complex(i);
+						psum->add(j++, cr.real() * cv.real() + cr.imag() * cv.imag());	// (Fs*F')re
+						psum->add(j++, cv.power());										// |F|2
+						psum->add(j++, cr.power());										// |Fs|2
+					} else {
+						j += 3;
+					}
+				}
+			}
+		}
+	}
+
+	return 0;
+}
+
+Bimage*		particle_ewald_correlation(Bparticle* part, Bimage* pref, double hires, FSI_Kernel* kernel, fft_plan planf)
+{
+	if ( !kernel ) {
+		error_show("Error in project_correlation_sum: No kernel defined for projection!", __FILE__, __LINE__);
+		return NULL;
+	}
+	
+	if ( pref->fourier_type() != Standard ) {
+		pref->fft();
+		pref->phase_shift_to_origin();
+	}
+
+	bool			invert(0);
+	long			ndone(0);
+	Matrix3			mat;
+	Bmicrograph*	mg = part->mg;
+	Bimage*			psec;
+	Bimage*			ppart;
+/*
+	if ( !mg->ctf ) {
+		cerr << "Error: The CTF parameters must be defined for micrograph " << mg->id << endl;
+		bexit(-1);
+	}
+*/
+	Bimage*			psum = new Bimage(Float, 3, pref->sizeX(), pref->sizeY(), 1, 1);
+	psum->sampling(part->pixel_size);
+
+	for ( ; part; part = part->next ) if ( part->sel > 0 ) {
+		ppart = read_img(mg->fpart, 1, part->id-1);
+		ppart->sampling(part->pixel_size);
+		ppart->origin(part->ori);
+		ppart->view(part->view);
+		ppart->fft(planf);
+		ppart->phase_shift_to_origin();
+		mat = part->view.matrix();
+//		part->ori[2] = 0;
+//		cout << mat << part->ori << endl;
+		psec = pref->central_section(mat, hires, kernel, 0);
+		if ( mg->ctf ) {
+			if ( part->def > 0 )
+				mg->ctf->defocus_average(part->def);
+			if ( mg->ctf->defocus_average() > 0 )
+				img_ctf_apply(psec, *mg->ctf, 2, 0.1, 0, hires, invert);
+		}
+		img_add_correlation_terms(psum, psec, ppart, hires);
+		delete ppart;
+		delete psec;
+		ndone++;
+	}
+	
+	psum->image->select(ndone);
+
+	return psum;
+}
+
+Bimage*		img_calculate_ewald_correlation(Bimage* psum)
+{
+	long			i, j, k, n;
+	double			cor, div;
+	
+	Bimage*			pcor = new Bimage(Float, TSimple, psum->size(), psum->images());
+	pcor->sampling(psum->sampling(0));
+
+	for ( n=i=j=0; n<pcor->images(); ++n ) {
+		for ( k=0; k<pcor->image_size(); ++i, ++k ) {
+			cor = (*psum)[j++];
+			div = (*psum)[j++];
+			div *= (*psum)[j++];
+			if ( div )
+				pcor->set(i, cor/sqrt(div));
+		}
+	}
+	
+	pcor->statistics();
+	
+	return pcor;
+}
+
+
+/**
+@brief 	Calculates the correlation between particle images  and the corresponding central sections.
+@param 	*project 	project parameter structure.
+@param	*pref		reference map.
+@param 	hires	 	high resolution limit (angstrom).
+@param 	*kernel	 	frequency space interpolation kernel lookup table.
+@return	Bimage*		correlation images.
+
+	The return image is the equivalent of FRC.
+
+**/
+Bimage*		project_ewald_correlation(Bproject* project, Bimage* pref, double hires, FSI_Kernel* kernel)
+{
+	if ( !kernel ) {
+		error_show("Error in project_ewald_correlation: No kernel defined for projection!", __FILE__, __LINE__);
+		return NULL;
+	}
+	
+	if ( hires < pref->image->sampling()[0] ) hires = 2*pref->image->sampling()[0];
+	
+	long			nsel = project_count_mg_part_selected(project);
+	
+	long			set_size(nsel/system_processors()+1);
+	if ( set_size < 1 ) set_size = 1;
+
+	long			nset = part_select_sets(project, set_size, 0);
+
+	if ( verbose ) {
+		cout << "Calculating the correlation between particles and CTF-applied reference projections:" << endl;
+		cout << "Reference map:                  " << pref->file_name() << endl;
+		cout << "Resolution limit:               " << hires << " A" << endl;
+		cout << "Selected particles:             " << nsel << endl;
+		cout << "Number of sets:                 " << nset << endl;
+		cout << "Set size:                       " << set_size << endl;
+	}
+	
+	if ( pref->fourier_type() != Standard ) {
+		if ( verbose )
+			cout << "Transforming the reference map" << endl;
+		pref->fft();
+	}
+
+	pref->phase_shift_to_origin();
+
+	Bimage*			psum = new Bimage(Float, 3, pref->sizeX(), pref->sizeY(), 1, 1);
+	psum->sampling(pref->image->sampling()[0], pref->image->sampling()[1], 1);
+
+	fft_plan		planf = fft_setup_plan(psum->size(), FFTW_FORWARD, 1);
+
+	if ( verbose )
+		cout << "Starting analysis" << endl;
+		
+#ifdef HAVE_GCD
+	__block	long	ndone(0);
+	dispatch_queue_t 	myq = dispatch_queue_create(NULL, NULL);
+	dispatch_apply(nset, dispatch_get_global_queue(0, 0), ^(size_t i){
+		Bparticle*	partlist = project_selected_partlist(project, i+1, 0);
+		Bimage*		p1 = particle_ewald_correlation(partlist, pref, hires, kernel, planf);
+		particle_kill(partlist);
+		dispatch_sync(myq, ^{
+			ndone += p1->image->select();
+			psum->add(0, p1);
+			psum->image[0].select(psum->image[0].select() + p1->image->select());
+			delete p1;
+			if ( verbose & VERB_RESULT )
+				cerr << "Complete:                       " << setprecision(3)
+					<< ndone*100.0/nsel << " %    \r" << flush;
+		});
+	});
+#else
+	long			ndone(0);
+#pragma omp parallel for
+	for ( long i=0; i<nset; i++ ) {
+		Bparticle*	partlist = project_selected_partlist(project, i+1, 0);
+		Bimage*		p1 = particle_ewald_correlation(partlist, pref, hires, kernel, planf);
+		particle_kill(partlist);
+	#pragma omp critical
+		{
+			ndone += p1->image->select();
+			psum->add(0, p1);
+			psum->image[0].select(psum->image[0].select() + p1->image->select());
+			delete p1;
+			if ( verbose & VERB_RESULT )
+				cerr << "Complete:                       " << setprecision(3)
+					<< ndone*100.0/nsel << " %    \r" << flush;
+		}
+	}
+#endif
+
+	fft_destroy_plan(planf);
+
+	if ( verbose & VERB_RESULT )
+		cerr << endl;
+
+	Bimage*		pphi = img_calculate_ewald_correlation(psum);
+
+	delete psum;
+
+	return pphi;
+}

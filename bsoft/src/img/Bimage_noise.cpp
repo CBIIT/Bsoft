@@ -3,7 +3,7 @@
 @brief	Functions for generating noise images
 @author Bernard Heymann
 @date	Created: 19990703
-@date	Modified: 20150725
+@date	Modified: 20220517
 **/
 
 #include "Bimage.h"
@@ -19,8 +19,7 @@ extern int 	verbose;		// Level of output to the screen
 @param 	rmax 	maximum density value.
 @return int		0.
 
-	An image with a given datatype, number of subimages, and size is
-	generated with densities distributed uniformly in the range of the
+	The image is populated with densities distributed uniformly in the range of the
 	given minimum and maximum:
 		density = random_value*(max - min) + min
 	where random_value is between 0 and 1.
@@ -59,8 +58,7 @@ int 		Bimage::noise_uniform(double rmin, double rmax)
 @param 	rstd 		standard deviation.
 @return int		0.
 
-	An image with a given datatype, number of subimages, and size is
-	generated with densities with a gaussian distribution with a given
+	The image is populated with densities with a gaussian distribution with a given
 	average and standard deviation:
 		density = average + std_dev*sqrt(-2*log(random_value))*
 						cos(2*PI*random_value);
@@ -142,8 +140,7 @@ int			Bimage::noise_poisson(double ravg)
 @param 	rstd 	standard deviation.
 @return int		0.
 
-	An image with a given datatype, number of subimages, and size is
-	generated with densities with a logistical differential distribution 
+	The image is populated with densities with a logistical differential distribution
 	with a given average and standard deviation:
 		density = average + (std_dev/golden)*ln(1/random_value - 1)
 	where random_value is between 0 and 1 and:
@@ -225,5 +222,37 @@ int			Bimage::noise_spectral(double alpha)
 	
 	statistics();
 	
+	return 0;
+}
+
+/**
+@brief 	Generates an image based on a uniform random distribution of distances.
+@param	number		number of hits to place
+@return int			0.
+
+	The image is populated with single hits at distances with a uniform random distrubution
+	within the image boundaries.
+	Statistics are calculated before returning.
+
+**/
+int 		Bimage::noise_uniform_distance(long number)
+{
+	if ( verbose & VERB_PROCESS ) {
+		cout << "Generating a random image with a uniform distance distribution:" << endl;
+	}
+		
+	long			i;
+	Vector3<double>	ori;
+	Vector3<long>	loc;
+	
+	random_seed();
+	
+	for ( i=0; i<number; ++i ) {
+		loc = vector3_random(ori, size());
+		add(index(loc, 0), 1);
+	}
+	
+	statistics();
+
 	return 0;
 }

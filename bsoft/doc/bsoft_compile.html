@@ -16,6 +16,7 @@
 	
 	<p>The preferred way to install Bsoft 2 is through already 
 	compiled binary distributions for Linux or Mac OS X.
+	Note that the current Mac OSX systems require an updated Tcl/Tk (see below).
 	For other Unix flavors, the source code needs to be compiled.</p>
     <br/>
 	<p><font color="FF0000">Note: There is a bug on Ubuntu that prevents proper compilation 
@@ -29,7 +30,7 @@
 	with some tweaks in the compiler scripts:</p>
     <ul>
       <li>Linux (i386/i686, x86_64, PowerPC, Alpha, Itanium)</li>
-      <li>Darwin or MacOSX (PowerPC, Intel)</li>
+      <li>Darwin or MacOSX (PowerPC, Intel, ARM64)</li>
       <li>IRIX64 (SGI)</li>
       <li>Solaris (Sun)</li>
       <li>AIX (IBM)</li>
@@ -58,6 +59,8 @@
       <li>Mac OS X 10.12 (Sierra): Xcode 8</li>
       <li>Mac OS X 10.13 (High Sierra): Xcode 9</li>
       <li>Mac OS X 10.15 (Catalina): Xcode 12</li>
+      <li>Mac OS X 11 (Big Sur): Xcode 13</li>
+      <li>Mac OS X 12 (Monterey): Xcode 14</li>
     </ul>
     <br/>
     <h3>The Z library:</h3>
@@ -85,6 +88,23 @@
 	be a version suitable for installation under VMS, but try at your own 
 	risk. Make sure the commands &quot;tcl&quot; and &quot;wish&quot; are 
 	in your executable path.</p>
+
+	<h4>Mac OSX:</h4>
+    <p>The version of system Tcl/Tk for Mac OSX is stuck at 8.5.9, which does not work any more.
+    Download the Tcl/Tk 8.6 version from https://www.tcl.tk/software/tcltk/download.html (Both tcl and tk).
+    Unpack the distributions.
+    Change to the macosx subdirectory in each and run the following commands (tcl first):
+	<pre>
+    	./configure
+    	make
+    	sudo make install
+	</pre>
+	This should install the frameworks as /Library/Frameworks/Tcl.framework and /Library/Frameworks/Tk.framework,
+	and set up the links to the version 8.6 tclsh and wish executables. Check the version with:
+	<pre>
+		echo 'puts $tk_version; exit' | wish
+	</pre>
+	</p>
 
 	<h4>Fedora:</h4>
 	<pre>
@@ -145,7 +165,7 @@
 <br/>
 <br/>
 <div id="footer">
-  Bernard Heymann  20210720
+  Bernard Heymann  20221103
 </div>
 </body>
 </html>

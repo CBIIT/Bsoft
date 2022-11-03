@@ -3,7 +3,7 @@
 @brief	3D reconstruction by backprojection
 @author Bernard Heymann
 @date	Created: 20010414
-@date	Modified: 20150814
+@date	Modified: 20220722
 **/
 
 #include "rwimg.h"
@@ -17,6 +17,7 @@
 
 // Declaration of global variables
 extern int 	verbose;		// Level of output to the screen
+extern int	thread_limit;	// Thread limit
 
 // Usage assistance
 const char* use[] = {
@@ -33,7 +34,7 @@ const char* use[] = {
 "-classes 1,3-5           Class selection: can be all, selected, or any combination of numbers (default selected).",
 "-fullmap                 Output one full map per class (default if -halfmaps not used).",
 "-halfmaps                Output 2 maps from half sets.",
-"-threads 2               Threads per class (default 1, must be even for -halfmaps).",
+"-threads 2               Total number of threads (default 1, must be even for -halfmaps).",
 " ",
 "Parameters:",
 "-verbose 7               Verbosity of output.",
@@ -64,11 +65,12 @@ int 		main(int argc, char **argv)
 	int 			smooth_oval(0);			// Flag for oval smoothing
 	Bstring			classes("select");		// Class selection string
 	long 			nmaps(0); 				// Number of maps per class
-	long 			nthreads(1); 			// Number of threads per map
 	long			imap(0);				// Select one of multiple maps to reconstruct
 	Bstring			outfile;				// Output parameter file
 	Bstring			reconsfile;				// Output reconstruction file
 	
+	thread_limit = 1;		// Default number of threads
+
 	int				optind;
 	Boption*		option = get_option_list(use, argc, argv, optind);
 	Boption*		curropt;
@@ -99,9 +101,6 @@ int 		main(int argc, char **argv)
 			classes = curropt->value;
 		if ( curropt->tag == "fullmap" ) nmaps += 1;
 		if ( curropt->tag == "halfmaps" ) nmaps += 2;
-		if ( curropt->tag == "threads" )
-			if ( ( nthreads = curropt->value.integer() ) < 1 )
-				cerr << "-threads: A number of threads must be specified!" << endl;
  		if ( curropt->tag == "reconstruction" )
 			reconsfile = curropt->filename();
 		if ( curropt->tag == "output" )
@@ -114,7 +113,7 @@ int 		main(int argc, char **argv)
 	if ( nmaps < 1 ) nmaps = 1;
 	if ( !nmaps%2 ) nmaps = 2;
 	if ( nmaps > 3 ) nmaps = 3;
-	if ( nmaps & 2 && nthreads%2 ) nthreads++;
+	if ( nmaps & 2 && thread_limit%2 ) thread_limit++;
 	
 	// Read all the parameter files
 	Bstring*			file_list = NULL;
@@ -132,20 +131,15 @@ int 		main(int argc, char **argv)
 		bexit(-1);
 	}
 	
-	if ( sam[0] > 0 ) {
-		if ( sam[0] < 0.1 ) sam = Vector3<double>(1,1,1);
-		project_set_mg_pixel_size(project, sam);
-	}
-
 	if ( verbose ) {
 		cout << "3D backprojection:" << endl;
 	}
 	
 	long				nclasses(1);
 	
-	nclasses = project_configure_for_reconstruction(project, classes, nmaps, nthreads);
+	nclasses = project_configure_for_reconstruction(project, classes, nmaps, thread_limit);
 	
-	long				ntotal = nclasses*nthreads;
+	long				ntotal = nclasses*thread_limit;
 	
 	long				i;
 	Bimage**			pacc = new Bimage*[ntotal];
@@ -158,7 +152,7 @@ int 		main(int argc, char **argv)
 
 	Vector3<long>		ms;
 	if ( map_size.volume() <= 0 ) {
-		ms = project_set_reconstruction_size(project, scale, 0);
+		ms = project_set_reconstruction_size(project, sam, scale, 0);
 		map_size = {ms[0], ms[1], ms[2]};
 	}
 
@@ -200,7 +194,7 @@ int 		main(int argc, char **argv)
 	// Accumulate partial reconstructions
 #ifdef HAVE_GCD
 	dispatch_apply(nclasses*nmaps, dispatch_get_global_queue(0, 0), ^(size_t i){
-		prec[i] = img_backprojection_accumulate(pacc, i, nmaps, nthreads);
+		prec[i] = img_backprojection_accumulate(pacc, i, nmaps, thread_limit);
 		if ( sym.point() > 101 ) prec[i]->symmetrize(sym, 1);
 		if ( smooth_oval ) prec[i]->edge(1, map_size, start, 5, FILL_USER, 0);
 		if ( nustd > 0 ) prec[i]->rescale_to_avg_std(nuavg, nustd);
@@ -209,7 +203,7 @@ int 		main(int argc, char **argv)
 #else
 #pragma omp parallel for
 	for ( i=0; i<nclasses*nmaps; i++ ) {
-		prec[i] = img_backprojection_accumulate(pacc, i, nmaps, nthreads);
+		prec[i] = img_backprojection_accumulate(pacc, i, nmaps, thread_limit);
 		if ( sym.point() > 101 ) prec[i]->symmetrize(sym, 1);
 		if ( smooth_oval ) prec[i]->edge(1, map_size, start, 5, FILL_USER, 0);
 		if ( nustd > 0 ) prec[i]->rescale_to_avg_std(nuavg, nustd);

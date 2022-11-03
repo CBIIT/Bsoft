@@ -3,7 +3,7 @@
 @brief	Determines orientation angles and x,y origins of single particle images 
 @author	Bernard Heymann and David M. Belnap
 @date	Created: 20010403
-@date	Modified: 20190826 (BH)
+@date	Modified: 20220906 (BH)
 **/
 
 #include "mg_orient.h"
@@ -21,6 +21,7 @@
 
 // Declaration of global variables
 extern int 	verbose;		// Level of output to the screen
+extern int	thread_limit;	// Thread limit
 
 // Usage assistance
 const char* use[] = {
@@ -36,9 +37,10 @@ const char* use[] = {
 "                         2,ccc: polar power spectrum with all cross correlation (slow).",
 "                         3,ori: origin determination by cross correlation.",
 "-CTF                     Apply CTF to projections (default not).",
+"-contrast                Invert contrast for comparisons (default not).",
 "-all                     Reset selection to all particles before other selections (default not).",
 "-side 15                 Generate side view projections within the given angle from the equator.",
-"-bin 2                   Binning by given kernel size (default 1).",
+"-bin 2,1                 Bin particles and reference by the given kernel size (default 1,1).",
 "-prepare 45,12           Prepare a set of particle images as 2D references (number and first image).",
 " ",
 "Parameters:",
@@ -87,7 +89,8 @@ int			main(int argc, char** argv)
 	double			theta_step(M_PI_4);			// Angular step size for theta
 	double			phi_step(M_PI_4);			// Angular step size for phi
 	double			side_ang(-1);				// Side view variation angle
-	int				bin(0);						// Data compression by binning
+	int				bin(0);						// Data compression by binning - particles
+	int				refbin(0);					// Data compression by binning - reference
 	long			fref(0), nref(0);			// First and number of reference images to prepare
 	Vector3<double>	sam;		    			// Units for the three axes (A/pixel)
 	double 			res_lo(10000);				// Resolution limits for orientation finding
@@ -102,7 +105,6 @@ int			main(int argc, char** argv)
 	double 			FOM_cut(0); 				// Threshold to accept orientations
 	int				mode(0);					// Only polar power spectrum
 	int				transform_output(0);		// Flag to output transformed images
-	long			nthreads(1);				// Number of threads to run
 #ifdef HAVE_GCD
 	int				nothreads(0);				// Flag to turn off threads
 #endif
@@ -111,6 +113,8 @@ int			main(int argc, char** argv)
 	Bstring			ref_filename;				// Input 3D map or projection file name
 	Bstring			mask_filename;				// Mask to be applied to projections and particles
 	Bstring			twoD_recons_name;			// Output 2D reconstruction file
+
+	thread_limit = 1;		// Default number of threads
 
 	int				i, optind;
 	Boption*		option = get_option_list(use, argc, argv, optind);
@@ -139,11 +143,13 @@ int			main(int argc, char** argv)
 				side_ang *= M_PI/180.0;
 		}
 		if ( curropt->tag == "bin" ) {
-			if ( ( bin = curropt->value.integer() ) < 1 )
+			if ( curropt->values(bin, refbin) < 1 )
 				cerr << "-bin: An integer must be specified!" << endl;
 			else {
 				if ( bin < 2 ) bin = 0;
 				if ( bin > 4 ) bin = 4;
+				if ( refbin < 2 ) refbin = 0;
+				if ( refbin > 4 ) refbin = 4;
 			}
 		}
 		if ( curropt->tag == "prepare" )
@@ -186,11 +192,6 @@ int			main(int argc, char** argv)
 		if ( curropt->tag == "fom" )
 			if ( ( FOM_cut = curropt->value.real() ) < 0.0001 )
 				cerr << "-fom: A FOM threshold must be specified!" << endl;
-		if ( curropt->tag == "threads" ) {
-			if ( curropt->value[0] == 'm' ) nthreads = 1000;
-			else if ( ( nthreads = curropt->value.integer() ) < 1 )
-				cerr << "-threads: A number of threads must be specified!" << endl;
-		}
 #ifdef HAVE_GCD
 		if ( curropt->tag == "nothreads" ) nothreads = 1;
 #endif
@@ -207,7 +208,8 @@ int			main(int argc, char** argv)
 			flags |= mode;
 		}
 		if ( curropt->tag == "oriented" ) transform_output = 1;
-		if ( curropt->tag == "log" ) flags |= PART_LOG; //part_log = 1;
+		if ( curropt->tag == "contrast" ) flags |= INVERT;
+		if ( curropt->tag == "log" ) flags |= PART_LOG;
 		if ( curropt->tag == "ppx" ) flags |= WRITE_PPX | CHECK_PPX;
 		if ( curropt->tag == "output" )
 			outfile = curropt->filename();
@@ -254,16 +256,11 @@ int			main(int argc, char** argv)
 	Bimage*			proj = NULL;
 	if ( ref_filename.length() )
 		proj = img_prepare_projections(ref_filename, mask_filename,
-						bin, sym, theta_step, phi_step, side_ang);
+						refbin, sym, theta_step, phi_step, side_ang);
 	else if ( nref )
 		proj = project_prepare_2D_references(project, fref, nref, bin, flags & APPLY_CTF);
 
 	ref_filename = 0;
-	
-//	if ( !proj ) {
-//		cerr << "Warning: No projections generated!" << endl;
-//		bexit(-1);
-//	}
 	
 	project->fom_tag[0] = FOM;
 	project->fom_tag[1] = FOM_CV;
@@ -295,25 +292,21 @@ int			main(int argc, char** argv)
 		}
 	}
 	
-	delete proj;
+	if ( proj ) delete proj;
 	mask_filename = 0;
 	
 	if ( FOM_cut > 0 ) part_deselect(project, 0, FOM_cut);
 	
 	Bimage* 		prec = NULL;
-	Bparticle* 		part = NULL;
 	if ( twoD_recons_name.length() ) {
 		if ( transform_output )
-			prec = project_reconstruct_2D(project, transform_output);
+			prec = project_reconstruct_2D(project, twoD_recons_name, transform_output);
 		else
-			prec = project_reconstruct_2D_fast(project);
+			prec = project_reconstruct_2D_fast(project, twoD_recons_name);
 		if ( prec ) {
 			write_img(twoD_recons_name, prec, 0);
 			delete prec;
 		}
-		for ( part = project->class_avg; part; part = part->next )
-			part->fpart = twoD_recons_name;
-		twoD_recons_name = 0;
 	} else if ( verbose > VERB_RESULT ) {
 		project_show_class_averages(project);
 	}

@@ -66,7 +66,7 @@ int 		write_genetic_code(Bstring& filename, Bstring& gc)
 
 Bstring		read_gencode_star(Bstring& propfile)
 {
- 	Bstar2			star;
+ 	Bstar			star;
 	
  	if ( star.read(propfile.str()) < 0 )
 		error_show(propfile.c_str(), __FILE__, __LINE__);

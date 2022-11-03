@@ -6,7 +6,7 @@
 @author James Conway
 @author Juha Huiskonen
 @date	Created: 20061101
-@date	Modified: 20211223
+@date	Modified: 20220311
 
 **/
 
@@ -29,7 +29,7 @@ extern int 	verbose;		// Level of output to the screen
 
 // Function prototypes
 Bproject*	read_project_conv(Bstring* file_list);
-int			write_project_conv(Bstring& filename, Bproject* project, int flags);
+int			write_project_conv(Bstring& filename, Bproject* project, FileType type, int flags);
 int			read_project_dat(Bstring& filename, Bproject* project);
 int			write_project_dat(Bstring& filename, Bproject* project, int flags);
 int			read_project_crd(Bstring& filename, Bproject* project);
@@ -63,6 +63,7 @@ const char* use[] = {
 "-filpath dir/subdir      Set filament file paths.",
 "-extension pif           Set the particle image file format.",
 "-remove                  Do not write non-selected micrographs into the parameter file.",
+"-type relion             Output a Relion STAR file.",
 " ",
 "Input:",
 "-particles part.mrcs     Input file with a stack of particles (Relion).",
@@ -87,6 +88,7 @@ int			main(int argc, char** argv)
 	Bstring			filpath;			// Filament file path
 	Bstring			partext;			// Particle image file format
 	Bstring			outfile;			// Output parameter file
+	FileType 		type(Micrograph);	// File type for output
 	int				write_flags(0);		// Flags to pass to the parameter file writing function
 
 	int				optind;
@@ -145,6 +147,7 @@ int			main(int argc, char** argv)
 		}
 		if ( curropt->tag == "particles" )
 			partfile = curropt->filename();
+		if ( curropt->tag == "type" ) if ( curropt->value[0] == 'r' ) type = MgRelion;
 		if ( curropt->tag == "remove" ) write_flags |= 2;
 		if ( curropt->tag == "output" )
 			outfile = curropt->filename();
@@ -194,7 +197,7 @@ int			main(int argc, char** argv)
 	
 	// Write an output parameter file if a name is given
 	if ( outfile.length() )
-		write_project_conv(outfile, project, write_flags);
+		write_project_conv(outfile, project, type, write_flags);
 	
 	project_kill(project);
 	
@@ -238,7 +241,7 @@ Bproject*	read_project_conv(Bstring* file_list)
 		if ( ext.contains("star") ) {
 			type = file_type(*thisfile);
 			if ( type == Micrograph )
-				err = read_project_star2(*thisfile, project);
+				err = read_project_star(*thisfile, project, 1);
 			else if ( type == MgRelion )
 				err = read_project_relion(*thisfile, project);
 			else
@@ -255,14 +258,10 @@ Bproject*	read_project_conv(Bstring* file_list)
 		if ( !err ) {
 			if ( !field ) field = project->field;
 			else field = field->next;
-			if ( field ) {
-				if ( !mg ) mg = field->mg;
-				else mg = mg->next;
-//				if ( mg ) field_resolve_file_access(field, mg, *thisfile);
-			}
+			if ( field ) field_resolve_file_access(field, mg, *thisfile, 8);
 			if ( !rec ) rec = project->rec;
 			else rec = rec->next;
-//			if ( rec ) reconstruction_resolve_file_access(rec, *thisfile);
+			if ( rec ) reconstruction_resolve_file_access(rec, *thisfile, 8);
 		} else {
 			cerr << "	Parameter file " << *thisfile << " not read." << endl;
 		}
@@ -284,7 +283,7 @@ Bproject*	read_project_conv(Bstring* file_list)
 	return project;
 }
 
-int			write_project_conv(Bstring& filename, Bproject* project, int flags)
+int			write_project_conv(Bstring& filename, Bproject* project, FileType type, int flags)
 {
 	int				err(0);
 
@@ -302,11 +301,6 @@ int			write_project_conv(Bstring& filename, Bproject* project, int flags)
 	
 	Bstring			ext = filename.extension();
 
-	if ( ext.contains("star") && project->split == 9 ) {
-		err = write_project_star2(filename, project, flags & 2, flags & 4);
-		return err;
-	}
-	
 	if ( verbose & VERB_LABEL )
 		cout << "Parameter filename: " << filename << endl;
 
@@ -314,6 +308,14 @@ int			write_project_conv(Bstring& filename, Bproject* project, int flags)
 		err = write_project_dat(filename, project, flags);
     } else if ( ext.contains("crd") ) {
 		err = write_project_crd(filename, project, flags);
+	} else if ( ext.contains("star") ) {
+		if ( type == MgRelion ) {
+			err = write_project_relion(filename, project, flags & 2, flags & 4);
+		} else if ( project->split == 9 ) {
+			err = write_project_star(filename, project, flags & 2, flags & 4);
+		} else {
+			err = write_project(filename, project, flags);
+		}
 	} else {
 		err = write_project(filename, project, flags);
 	}
@@ -412,8 +414,7 @@ int			read_project_dat(Bstring& filename, Bproject* project)
 	ctf->volt(volt);
 	ctf->amp_shift(asin(amp));
 	ctf->defocus_average(def);
-	ctf->defocus_deviation(dev);
-	ctf->astigmatism_angle(ast*M_PI/180.0);
+	ctf->astigmatism(dev, ast*M_PI/180.0);
 	ctf->Cs(cs);
 	
     char				line[DATLINELENGTH];

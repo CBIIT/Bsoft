@@ -7,7 +7,7 @@ var class_blinktype =
     [ "distance", "class_blinktype.html#a4dd513f60e3c659e2687eed8f11648d9", null ],
     [ "FOM", "class_blinktype.html#aab4e45f1fe8374edd5b4762ef5948c5a", null ],
     [ "FOM", "class_blinktype.html#a6fed938de8e31f2202c8c7c887022af6", null ],
-    [ "identifier", "class_blinktype.html#a08f675f0fc3208188362f41d96623a2b", null ],
+    [ "identifier", "class_blinktype.html#a8adafc79c2d9f81e6fd51892085cdcd9", null ],
     [ "identifier", "class_blinktype.html#a6e431bdaf7bc840b99dcf068d8186ec2", null ],
     [ "Kdistance", "class_blinktype.html#a74b74dff6e79c58a371aac3d12eae311", null ],
     [ "Kdistance", "class_blinktype.html#aa6170eaf8654f1c4834ef03f572983ff", null ],

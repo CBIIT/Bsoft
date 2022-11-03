@@ -35,7 +35,7 @@ Bimage*		Bimage::align_progressive(long nref, Bimage* pmask,
 
 	long			i, nn;
 	double			cc(0), shift_avg(0), cc_avg(0);
-	Vector3<double>	shift, shift_prev;
+	Vector3<double>	shift;
 	Bimage*			pref = extract(nref);
 	Bimage*			p1;
 	
@@ -57,7 +57,6 @@ Bimage*		Bimage::align_progressive(long nref, Bimage* pmask,
 		delete p1;
 //		shift_avg += shift.length();
 		cc_avg += cc;
-		shift_prev = shift;
 		if ( verbose )
 			cout << nn+1 << tab << shift << tab << cc << endl;
 	}
@@ -80,6 +79,101 @@ Bimage*		Bimage::align_progressive(long nref, Bimage* pmask,
 	return pref;
 }
 
+/**
+@brief 	Aligns and sums a set of sub-images using a progressive algorithm.
+@param 	nref		reference sub-image.
+@param 	*pmask		cross-correlation mask.
+@param 	hi_res		high resolution limit.
+@param 	lo_res		low resolution limit.
+@param 	shift_limit	limit on extent of search for shift.
+@param 	planf		plan for forward Fourier transform.
+@param 	planb		plan for backward Fourier transform.
+@return Bimage*		summed reference image.
+
+	The images are aligned against the reference images with progressive
+	addition to reference to decrease noise.
+
+**/
+Bimage*		Bimage::align_local(long nref, Bimage* pmask,
+				double hi_res, double lo_res, double shift_limit,
+				fft_plan planf, fft_plan planb)
+{
+	if ( nref < 0 || nref >= n ) nref = 0;
+
+	long			nn;
+	double			shift_avg(0), cc_avg(0);
+	Vector3<double>	shift;
+	Bimage*			p1;
+	
+	if ( verbose ) {
+		cout << "Local alignment:" << endl;
+		cout << "Image\tShift\t\t\tCC" << endl;
+	}
+	
+#ifdef HAVE_GCD
+	__block	vector<Vector3<double>>  sh(n);
+	sh[0] = Vector3<double>(0,0,0);
+	dispatch_apply(n-1, dispatch_get_global_queue(0, 0), ^(size_t nn){
+		double			cc(0);
+		Bimage*			p1 = extract(nn);
+		Bimage*			p2 = extract(nn+1);
+		sh[nn+1] = p2->find_shift(p1, pmask, hi_res, lo_res, shift_limit, 0, 1, planf, planb, cc);
+		image[nn+1].FOM(cc);
+		delete p1;
+		delete p2;
+	});
+#else
+	vector<Vector3<double>>  	sh(n);
+	sh[0] = Vector3<double>(0,0,0);
+#pragma omp parallel for
+	for ( nn=1; nn<n; ++nn ) {
+		double			cc(0);
+		Bimage*			p1 = extract(nn-1);
+		Bimage*			p2 = extract(nn);
+		sh[nn] = p2->find_shift(p1, pmask, hi_res, lo_res, shift_limit, 0, 1, planf, planb, cc);
+		image[nn].FOM(cc);
+		delete p1;
+		delete p2;
+	}
+#endif
+
+	for ( nn=1; nn<n; ++nn )
+		sh[nn] += sh[nn-1];
+
+	for ( nn=0; nn<n; ++nn )
+		sh[nn] -= sh[nref];
+
+	Bimage*			pref = extract(nref);
+	pref->origin(pref->size()/2);
+
+	for ( nn=0; nn<n; ++nn ) {
+		image[nn].origin(sh[nn] + pref->image->origin());
+		shift = -sh[nn];
+		if ( nn != nref ) {
+			p1 = extract(nn);
+			p1->shift_wrap(shift);
+			pref->add(p1);
+			delete p1;
+		}
+		shift_avg += shift.length();
+		cc_avg += image[nn].FOM();
+		if ( verbose )
+			cout << nn+1 << tab << shift << tab << image[nn].FOM() << endl;
+	}
+
+	shift_avg /= n-1;
+	cc_avg /= n-1;
+	pref->show_scale(shift_avg);
+	pref->image->FOM(cc_avg);
+
+	if ( verbose ) {
+		cout << "Shift average:                 " << shift_avg << endl;
+		cout << "CC average:                    " << cc_avg << endl;
+	}
+	
+	return pref;
+}
+
 Vector3<double>	Bimage::find_shift_in_transform(long nn, Bimage* pref, double shift_limit)
 {
 	Bimage*			p1 = extract(nn);
@@ -89,7 +183,7 @@ Vector3<double>	Bimage::find_shift_in_transform(long nn, Bimage* pref, double sh
 //	double			cc(0), ccmax(0);
 //	Vector3<double>	shift, bestshift;
 	
-	p1->complex_conjugate_product(pref);
+	p1->complex_conjugate_product(pref, 1);
 /*
 		for ( k=-1; k<2; ++k ) {
 			shift[1] = k;
@@ -238,6 +332,7 @@ vector<Vector3<double>>	interpolate_shifts(Vector3<double>* sh, long nimg, long 
 @param 	edge_width		width of smoothing edge.
 @param 	gauss_width		decay coefficient for smoothing edge.
 @param 	aln_bin			3-value vector indicating binning level.
+@param 	mode			flag to select initial alignment: 0=progressive, 1=local.
 @return vector<Vector3<double>>	vector of shifts.
 
 	The images are first aligned using a progressive algorith starting with 
@@ -249,7 +344,7 @@ vector<Vector3<double>>	interpolate_shifts(Vector3<double>* sh, long nimg, long 
 **/
 vector<Vector3<double>>	Bimage::align(long ref_num, long window, long step, Bimage* pmask,
 				double hi_res, double lo_res, double shift_limit, 
-				double edge_width, double gauss_width, Vector3<long> aln_bin)
+				double edge_width, double gauss_width, Vector3<long> aln_bin, int mode)
 {	
 	if ( ref_num < 0 || ref_num >= n ) ref_num = 0;
 	
@@ -282,8 +377,12 @@ vector<Vector3<double>>	Bimage::align(long ref_num, long window, long step, Bima
 	fft_plan		planf = pt->fft_setup(FFTW_FORWARD, 0);
 	fft_plan		planb = pt->fft_setup(FFTW_BACKWARD, 0);
 
-	Bimage*			pref = pt->align_progressive(ref_num,  
-						pmask, hi_res, lo_res, shift_limit, planf, planb);
+	Bimage*			pref = NULL;
+	if ( mode == 0 )
+		pref = pt->align_progressive(ref_num, pmask, hi_res, lo_res, shift_limit, planf, planb);
+	else
+		pref = pt->align_local(ref_num, pmask, hi_res, lo_res, shift_limit, planf, planb);
+	
 	double			cc_avg(0), cc_avg_old(0), shift_avg, shift_avg_old(0);
 	shift_avg = pref->show_scale() * aln_bin[0];
 	cc_avg = pref->image->FOM();
@@ -766,13 +865,14 @@ double		mtf_gaussian_R(Bsimplex& simp)
 	vector<double>&	f = simp.dependent_values();
 	vector<double>&	x = simp.independent_values();
 	
-	for ( i=0; i<simp.points(); i++ ) {
+	for ( i=1; i<simp.points(); i++ ) {
 		s2 = x[i]*x[i];
 		df = f[i] - (simp.parameter(0) + simp.parameter(1)*exp(invsig2*s2));
 		R += df*df;
 	}
 	
 	R = sqrt(R/i);
+	R /= simp.dependent_variance();
 			
 	return R;
 }
@@ -791,6 +891,7 @@ double		coincidence_loss_R(Bsimplex& simp)
 	}
 	
 	R /= i;
+	R /= simp.dependent_variance();
 	
 	return R;
 }
@@ -801,6 +902,8 @@ double		fit_mtf(Bimage* prad, long nimg, double& off, double& amp, double& sig)
 	long			i;
 	vector<double>	s(prad->sizeX(),0), f(prad->sizeX(),0);
 	
+//	cout << "sampling=" << prad->sampling(0)[0] << endl;
+	
 	for ( i=0; i<prad->sizeX(); ++i ) {
 		s[i] = i*prad->sampling(0)[0];
 		f[i] = ((*pradpow)[i] - (*prad)[i]/nimg);
@@ -809,22 +912,25 @@ double		fit_mtf(Bimage* prad, long nimg, double& off, double& amp, double& sig)
 	
 //	cout << f.back() << tab << f[1] << endl;
 	off = f.back();
-	amp = f[1] - off;
-	sig = prad->real_size()[0]/2;
+	amp = f[5];
+	sig = s.back()/2;
 	
 	if ( verbose )
 		cout << "Fitting mass transfer function:" << endl;
-//	cout << "Power:        " << power << endl;
-//	cout << "Suppression:  " << supr << endl;
-//	cout << "Pixel width:  " << pxsig << endl;
-
+	if ( verbose & VERB_FULL ) {
+		cout << "Starting values:" << endl;
+		cout << "Offset:                        " << off << endl;
+		cout << "Amplitude:                     " << amp << endl;
+		cout << "Sigma:                         " << sig << " 1/Å" << endl;
+	}
+	
 	Bsimplex			simp(1, 3, 0, s.size(), s, f);
 
 	simp.parameter(0, off/2);
 	simp.parameter(1, amp);
 	simp.parameter(2, sig);
 	simp.limits(0, 0, 2*off);
-	simp.limits(1, -off, amp + off);
+	simp.limits(1, -off, 5*amp);
 	simp.limits(2, s[1], s.back());
 	
 	double			R = simp.run(10000, 1e-5, mtf_gaussian_R);
@@ -864,10 +970,13 @@ double		fit_coincidence_loss(Bimage* prad, long nimg, double& power, double& sup
 	
 	if ( verbose )
 		cout << "Fitting coincidence loss:" << endl;
-//	cout << "Power:        " << power << endl;
-//	cout << "Suppression:  " << supr << endl;
-//	cout << "Pixel width:  " << pxsig << endl;
-
+	if ( verbose & VERB_FULL ) {
+		cout << "Starting values:" << endl;
+		cout << "Power:        " << power << endl;
+		cout << "Suppression:  " << supr << endl;
+		cout << "Pixel width:  " << pxsig << endl;
+	}
+	
 	Bsimplex			simp(1, 3, 0, s.size(), s, f);
 
 	simp.parameter(0, power);

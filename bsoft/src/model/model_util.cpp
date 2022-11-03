@@ -3,7 +3,7 @@
 @brief	Library routines used for model processing
 @author Bernard Heymann
 @date	Created: 20060908
-@date	Modified: 20210414
+@date	Modified: 20220419
 **/
 
 #include "model_util.h"
@@ -30,8 +30,6 @@ extern int 	verbose;		// Level of output to the screen
 @param 	modfunc			function to be called.
 @return long			aggregate number returned by function.
 
-	The function called process only one model.
-
 **/
 long		models_process(Bmodel* model, long (modfunc)(Bmodel*))
 {
@@ -53,8 +51,6 @@ long		models_process(Bmodel* model, long (modfunc)(Bmodel*))
 @param 	i				an argument.
 @fn 	(modfunc)(Bmodel*)	function to be called.
 @return long			aggregate number returned by function.
-
-	The function called process only one model.
 
 **/
 long		models_process(Bmodel* model, long i, long (modfunc)(Bmodel*, long))
@@ -78,8 +74,6 @@ long		models_process(Bmodel* model, long i, long (modfunc)(Bmodel*, long))
 @fn 	(modfunc)(Bmodel*)	function to be called.
 @return long			aggregate number returned by function.
 
-	The function called process only one model.
-
 **/
 long		models_process(Bmodel* model, double d, long (modfunc)(Bmodel*, double))
 {
@@ -102,8 +96,6 @@ long		models_process(Bmodel* model, double d, long (modfunc)(Bmodel*, double))
 @fn 	(modfunc)(Bmodel*)	function to be called.
 @return long			aggregate number returned by function.
 
-	The function called process only one model.
-
 **/
 long		models_process(Bmodel* model, Bstring& str, long (modfunc)(Bmodel*, Bstring& str))
 {
@@ -125,8 +117,6 @@ long		models_process(Bmodel* model, Bstring& str, long (modfunc)(Bmodel*, Bstrin
 @param 	&str			an argument.
 @fn 	(modfunc)(Bmodel*)	function to be called.
 @return long			aggregate number returned by function.
-
-	The function called process only one model.
 
 **/
 long		models_process(Bmodel* model, string& str, long (modfunc)(Bmodel*, string& str))
@@ -510,6 +500,35 @@ Vector3<double>	model_center_of_mass(Bmodel* model)
 	}
 	
 	com /= n;
+	
+	return com;
+}
+
+/**
+@brief 	Calculates the center-of-mass of a list of models.
+@param 	*model			model parameters.
+@return Vector3<double>	center-of-mass.
+
+**/
+Vector3<double>	models_center_of_coordinates(Bmodel* model)
+{
+	Vector3<double>	com;
+
+	if ( !model ) return com;
+	if ( !model->select() ) return com;
+	
+	long		ncomp(0);
+	Bmodel* 	mp;
+	Bcomponent*	comp;
+	
+	for ( mp = model; mp; mp = mp->next ) if ( mp->select() ) {
+		for ( comp = mp->comp; comp; comp = comp->next ) if ( comp->select() ) {
+			com += comp->location();
+			ncomp++;
+		}
+	}
+	
+	com /= ncomp;
 	
 	return com;
 }
@@ -1119,6 +1138,28 @@ Vector3<double>	component_plane(vector<Bcomponent*>& comparray, double& offset)
 	return normal;
 }
 
+/**
+@brief	Calculates the bounds of a list of models.
+@param 	*model	 	model list.
+@return vector<Vector3<double>>	minimum and maximum bounds.
+
+**/
+vector<Vector3<double>>	models_calculate_bounds(Bmodel* model)
+{
+	vector<Vector3<double>> bounds;
+	Vector3<double>			mn(1e30,1e30,1e30), mx(-1e30,-1e30,-1e30);
+	Bmodel*					mp;
+	
+	for ( mp = model; mp; mp = mp->next ) if ( mp->select() ) {
+		mp->calculate_bounds();
+		mn = mn.min(mp->minimum());
+		mx = mx.max(mp->maximum());
+	}
+	
+	bounds.push_back(mn);
+	bounds.push_back(mx);
+	return bounds;
+}
 
 /**
 @brief	Generates lists of atoms based on a grid.
@@ -1177,4 +1218,65 @@ vector<vector<Bcomponent*>>	model_component_grid(Bmodel* model, Vector3<long>& s
 	return grid;
 }
 
+/**
+@brief	Generates an array of pointers to model components.
+@param 	*model 				model.
+@return vector<Bcomponent*>	array of pointers to components.
+**/
+vector<Bcomponent*>	models_get_component_array(Bmodel* model)
+{
+	Bmodel*				mp;
+	Bcomponent*			comp;
+	vector<Bcomponent*>	carr;
 
+    for ( mp = model; mp; mp = mp->next ) if ( mp->select() )
+		for( comp = mp->comp; comp; comp = comp->next ) if ( comp->select() )
+			carr.push_back(comp);
+
+	return carr;
+}
+
+/**
+@brief	Splits the components of models into slices.
+@param 	*model 				model.
+@param 	bottom 				minimum coordinate in z.
+@param 	top 					maximum coordinate in z.
+@param 	thickness 			slice thickness.
+@return vector<vector<Bcomponent*>>	sets of arrays of pointers to components.
+**/
+vector<vector<Bcomponent*>>	model_split_into_slices(Bmodel* model, double bottom, double top, double thickness)
+{
+	long			i, n((top - bottom)/thickness);
+	vector<vector<Bcomponent*>>	comp_slice(n);
+	
+	if ( verbose ) {
+		cout << "Splitting model into slices:" << endl;
+		cout << "Bottom:                      " << bottom << " A" << endl;
+		cout << "Top:                         " << top << " A" << endl;
+		cout << "Slice thickness:             " << thickness << " A" << endl;
+		cout << "Number of slices:            " << n << endl;
+	}
+	
+	Bmodel*			mp;
+	Bcomponent*		comp;
+
+	for ( mp = model; mp; mp = mp->next ) if ( mp->select() ) {
+		for ( comp = mp->comp; comp; comp = comp->next ) if ( comp->select() ) {
+			i = (comp->location()[2] - bottom)/thickness;
+			if ( i>=0 && i<n )
+				comp_slice[i].push_back(comp);
+		}
+	}
+	
+	if ( verbose ) {
+		long		ncomp(0);
+		cout << "Slice\tComponents" << endl;
+		for ( i=0; i<n; ++i ) {
+			ncomp += comp_slice[i].size();
+			cout << i+1 << tab << comp_slice[i].size() << endl;
+		}
+		cout << "Total number of components:  " << ncomp << endl << endl;
+	}
+	
+	return comp_slice;
+}

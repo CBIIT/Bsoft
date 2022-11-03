@@ -2,7 +2,7 @@
 
 # Bsoft configure script
 # Bernard Heymann
-# 20131205 - 20210624
+# 20131205 - 20220921
 
 # --------------------------------------------------------------------------
 # Main directories that can be changed
@@ -99,7 +99,7 @@ tgzfile=bsoft${today}.tgz
 # System-specific settings
 if [[ $SYS =~ Darwin ]]; then
 	#ARCH='-arch i386 -arch x86_64'
-	ARCH='-arch x86_64'
+	#ARCH='-arch x86_64'
 	LIBBSOFT=lib/libbsoft.dylib
 	DYNFLAGS="-all_load -dynamiclib"
 	RPATH='@loader_path/../lib'
@@ -147,6 +147,10 @@ if [ -e $FFTW3INC ]; then
 #	FFTW3INC=$LIBFFTW/include
 	INCLUDES="$INCLUDES -I$FFTW3INC"
 	LIBLIST="$LIBLIST $LIBFFTW/lib/libfftw3f.a"
+else
+    echo "# FFTW not properly configured!"
+    echo "Library: $LIBFFTW"
+    echo "Include: $FFTW3INC"
 fi
 #echo "INCLUDES = $INCLUDES"
 
@@ -197,7 +201,9 @@ INCLUDES="$INCLUDES -I$TCLINC -I$TKINC"
 if [[ $SYS =~ Darwin ]]; then
 	LIBTCLTK=$BDIR/lib/libbshow.dylib
 	CFLAGS="$CFLAGS $DEPREC"
-	TKLDFLAGS="$DYNFLAGS $ARCH -framework Tcl -framework Tk -lbsoft $LIBPATH/libbshow.dylib"
+	TKFW=/Library/Frameworks
+	echo "Tcl/Tk: $TKFW"
+	TKLDFLAGS="$DYNFLAGS $ARCH -F$TKFW -framework Tcl -framework Tk -lbsoft $LIBPATH/libbshow.dylib"
 elif [[ $SYS =~ Linux ]]; then
 	LIBTCLTK=$BDIR/lib/libbshow.so
 	TKLDFLAGS="$DYNFLAGS $ARCH $LIBPATH"
@@ -251,6 +257,7 @@ echo "LIBBSOFT=$LIBBSOFT" >> $mk
 echo "LIBTCLTK=$LIBTCLTK" >> $mk
 echo "LIBDIR=$LIBDIR" >> $mk
 echo "TKO=$TKO" >> $mk
+echo "TKFW=$TKFW" >> $mk
 echo >> $mk
 
 echo "# Sources, objects and executables" >> $mk
@@ -305,19 +312,22 @@ echo '	cd $(BINSTALL)/bin && ln -vfs ../tcltk/bshow bshow && ln -vfs ../tcltk/br
 if [[ $SYS =~ Darwin ]]; then
 	echo '	cp macinstall $(BINSTALL)' >> $mk
 	echo '	cd $(BINSTALL)/bin && ln -vfs ../tcltk/bshowX bshowX && ln -vfs ../tcltk/brunX brunX' >> $mk
-	echo '	cp -r $(BDIR)/Bshow.app $(BINSTALL)' >> $mk
-	echo '	cp -r $(BDIR)/Brun.app $(BINSTALL)' >> $mk
+	echo '	cp -rf $(BDIR)/Bshow.app $(BINSTALL)' >> $mk
+	echo '	cp -rf $(BDIR)/Brun.app $(BINSTALL)' >> $mk
 fi
 echo '	cp -r $(BDIR)/doc $(BINSTALL)' >> $mk
 echo >> $mk
 
 echo 'clean:' >> $mk
 echo '	rm */*.o src/*/*.o bin/* lib/*' >> $mk
-echo '	rm -f */blevel* */bmaskmod* src/rwparam/rwmodel_param.cpp' >> $mk
+echo '	rm -f */blevel* */bmaskmod*' >> $mk
+echo '	rm -f src/rwparam/rwmodel_param.* src/rwparam/rwmgSTAR2.*' >> $mk
 echo >> $mk
 
 echo 'tar:' >> $mk
 echo '	tar cfv $(TARFILE) include/*.h tcltk/*.h $(LIB_SOURCES) $(TK_SOURCES) $(EXE_SOURCES)' >> $mk
 echo '	gzip -c $(TARFILE) > $(TGZFILE)' >> $mk
 echo >> $mk
+
+ls -l $mk
 

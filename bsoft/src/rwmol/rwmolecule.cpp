@@ -3,7 +3,7 @@
 @brief	Library routines to read and write molecule file, including sequences and coordinates
 @author Bernard Heymann
 @date	Created: 19980822
-@date	Modified: 20180226
+@date	Modified: 20220427
 **/
 
 #include "rwmolecule.h"
@@ -82,20 +82,20 @@ Bmolecule*	molecule_add(Bmolecule** mol, char* name)
 Bmolecule*	molecule_add(Bmolecule** mol, Bstring& name)
 {
 	Bmolecule* 		this_mol = *mol;
-	Bmolecule* 		new_mol = new Bmolecule;
-	memset(new_mol, 0, sizeof(Bmolecule));
+	Bmolecule* 		nu_mol = new Bmolecule;
+	memset(nu_mol, 0, sizeof(Bmolecule));
 	
-	if ( name.length() ) new_mol->id = name;
-	new_mol->sel = 1;
+	if ( name.length() ) nu_mol->id = name;
+	nu_mol->sel = 1;
 	
 	if ( !this_mol )
-		*mol = new_mol;
+		*mol = nu_mol;
 	else {
 		while ( this_mol->next ) this_mol = this_mol->next;
-		this_mol->next = new_mol;
+		this_mol->next = nu_mol;
 	}
 	
-	return new_mol;
+	return nu_mol;
 }
 
 /**
@@ -119,22 +119,22 @@ Bresidue*	residue_add(Bresidue** res, const char* type)
 Bresidue*	residue_add(Bresidue** res, Bstring& type)
 {
 	Bresidue* 		this_res = *res;
-	Bresidue* 		new_res = new Bresidue;
-	memset(new_res, 0, sizeof(Bresidue));
+	Bresidue* 		nu_res = new Bresidue;
+	memset(nu_res, 0, sizeof(Bresidue));
 	
 	if ( type.length() ) {
-		if ( type.contains("***") ) strcpy(new_res->type, "UNK");
-		else strncpy(new_res->type, type.c_str(), 6);
+		if ( type.contains("***") ) strcpy(nu_res->type, "UNK");
+		else strncpy(nu_res->type, type.c_str(), 6);
 	}
 	
 	if ( !this_res )
-		*res = new_res;
+		*res = nu_res;
 	else {
 		while ( this_res->next ) this_res = this_res->next;
-		this_res->next = new_res;
+		this_res->next = nu_res;
 	}
 	
-	return new_res;
+	return nu_res;
 }
 
 /**
@@ -158,26 +158,50 @@ Batom*		atom_add(Batom** atom, const char* type)
 Batom*		atom_add(Batom** atom, Bstring& type)
 {
 	Batom* 		this_atom = *atom;
-	Batom* 		new_atom = new Batom;
-	memset(new_atom, 0, sizeof(Batom));
+	Batom* 		nu_atom = new Batom;
+	memset(nu_atom, 0, sizeof(Batom));
 	
-	atom_clean_type(new_atom, type.c_str());
+	atom_clean_type(nu_atom, type.c_str());
 
-	new_atom->q = 1;
-	new_atom->mass = 1;
-	new_atom->sel = 1;
+	nu_atom->q = 1;
+	nu_atom->mass = 1;
+	nu_atom->sel = 1;
 	
 	if ( verbose & VERB_DEBUG )
-		cout << "DEBUG atom_add: type=" << new_atom->type << " el=" << new_atom->el << endl;
+		cout << "DEBUG atom_add: type=" << nu_atom->type << " el=" << nu_atom->el << endl;
 	
 	if ( !this_atom )
-		*atom = new_atom;
+		*atom = nu_atom;
 	else {
 		while ( this_atom->next ) this_atom = this_atom->next;
-		this_atom->next = new_atom;
+		this_atom->next = nu_atom;
 	}
 	
-	return new_atom;
+	return nu_atom;
+}
+
+Batom*		atom_copy(Batom* atom)
+{
+	Batom* 		nu_atom = new Batom;
+	
+	nu_atom->next = NULL;	 		// Next atom in linked list
+    nu_atom->num = atom->num;    	// Atom number
+    memcpy(nu_atom->el, atom->el, 4);		// Element
+    memcpy(nu_atom->type, atom->type, 8);	// Atom type
+	nu_atom->tnum = atom->tnum;		// Atom type number (for reference purposes)
+    nu_atom->coord = atom->coord;	// Coordinates
+    nu_atom->q = atom->q;			// Occupancy
+    nu_atom->b = atom->b;    		// Temperature factor
+    nu_atom->mass = atom->mass;		// Atom mass
+    nu_atom->chrg = atom->chrg;		// Charge on atom
+    nu_atom->sel = atom->sel;    	// Select flag - extra
+	nu_atom->vel = atom->vel;		// Velocities (for molecular dynamics)
+	nu_atom->F = atom->F;			// Force vector (for molecular dynamics)
+
+	if ( verbose & VERB_DEBUG )
+		cout << "DEBUG atom_copy: type=" << nu_atom->type << " el=" << nu_atom->el << endl;
+	
+	return nu_atom;
 }
 
 /**
@@ -276,25 +300,25 @@ Bbond*		bond_add(Bbond** bond, Batom* atom1, Batom* atom2, double l, double k)
 	if ( k < 1e-10 ) k = 1;
 	
 	Bbond* 			this_bond = *bond;
-	Bbond* 			new_bond = new Bbond;
-	memset(new_bond, 0, sizeof(Bbond));
+	Bbond* 			nu_bond = new Bbond;
+	memset(nu_bond, 0, sizeof(Bbond));
 	
-	new_bond->atom1 = atom1;
-	new_bond->atom2 = atom2;
-	new_bond->l = l;
-	new_bond->k = k;
+	nu_bond->atom1 = atom1;
+	nu_bond->atom2 = atom2;
+	nu_bond->l = l;
+	nu_bond->k = k;
 	
 	if ( verbose & VERB_DEBUG )
 		cout << "DEBUG bond_add: strength=" << k << endl;
 	
 	if ( !this_bond )
-		*bond = new_bond;
+		*bond = nu_bond;
 	else {
 		while ( this_bond->next ) this_bond = this_bond->next;
-		this_bond->next = new_bond;
+		this_bond->next = nu_bond;
 	}
 	
-	return new_bond;
+	return nu_bond;
 }
 
 /**
@@ -316,31 +340,31 @@ Bbond*		bond_add(Bbond** bond, Batom* atom1, Batom* atom2, double l, double k)
 Bangle*		angle_add(Bangle** angle, Batom* atom1, Batom* atom2, Batom* atom3, double a, double k)
 {
 	Bangle* 		this_angle = *angle;
-	Bangle* 		new_angle = new Bangle;
-	memset(new_angle, 0, sizeof(Bangle));
+	Bangle* 		nu_angle = new Bangle;
+	memset(nu_angle, 0, sizeof(Bangle));
 	
 	Vector3<double>	d1 = atom1->coord - atom2->coord;
 	Vector3<double>	d2 = atom3->coord - atom2->coord;
 	
 	if ( a < 0.1 ) a = d1.angle(d2);
 				
-	new_angle->atom1 = atom1;
-	new_angle->atom2 = atom2;
-	new_angle->atom3 = atom3;
-	new_angle->a = a;
-	new_angle->k = k;
+	nu_angle->atom1 = atom1;
+	nu_angle->atom2 = atom2;
+	nu_angle->atom3 = atom3;
+	nu_angle->a = a;
+	nu_angle->k = k;
 	
 	if ( verbose & VERB_DEBUG )
 		cout << "DEBUG angle_add: size=" << a << " strength=" << k << endl;
 	
 	if ( !this_angle )
-		*angle = new_angle;
+		*angle = nu_angle;
 	else {
 		while ( this_angle->next ) this_angle = this_angle->next;
-		this_angle->next = new_angle;
+		this_angle->next = nu_angle;
 	}
 	
-	return new_angle;
+	return nu_angle;
 }
 
 /**
@@ -604,55 +628,58 @@ Bmolecule* 	molecule_copy(Bmolecule* mol)
 {
 	if ( mol == NULL ) return NULL;
 	
-	Bmolecule* 		new_mol = new Bmolecule;
-	memset(new_mol, 0, sizeof(Bmolecule));
+	Bmolecule* 		nu_mol = new Bmolecule;
+	memset(nu_mol, 0, sizeof(Bmolecule));
 
-	new_mol->num = mol->num;				// Molecule number
-	new_mol->id = mol->id;					// Molecule identifier
-	new_mol->nres = mol->nres;				// Number of residues
-	new_mol->nbase = mol->nbase;			// Number of bases
-	new_mol->first_codon = mol->first_codon;	// First amino acid codon in NA sequence
-	new_mol->seq = mol->seq;				// Protein sequence
-	new_mol->naseq = mol->naseq;			// Nucleic acid sequence
-	new_mol->min = mol->min;				// Coordinate minima
-	new_mol->max = mol->max;				// Coordinate maxima
-	new_mol->Bmin = mol->Bmin;				// B-factor statistics
-	new_mol->Bmax = mol->Bmax;
-	new_mol->Bave = mol->Bave;
-	new_mol->Bstd = mol->Bstd;
-	new_mol->sel = mol->sel;				// Selection flag
-	new_mol->fom = mol->fom;				// Figure-of-merit
+	nu_mol->num = mol->num;				// Molecule number
+	nu_mol->id = mol->id;					// Molecule identifier
+	nu_mol->nres = mol->nres;				// Number of residues
+	nu_mol->nbase = mol->nbase;			// Number of bases
+	nu_mol->first_codon = mol->first_codon;	// First amino acid codon in NA sequence
+	nu_mol->seq = mol->seq;				// Protein sequence
+	nu_mol->naseq = mol->naseq;			// Nucleic acid sequence
+	nu_mol->min = mol->min;				// Coordinate minima
+	nu_mol->max = mol->max;				// Coordinate maxima
+	nu_mol->Bmin = mol->Bmin;				// B-factor statistics
+	nu_mol->Bmax = mol->Bmax;
+	nu_mol->Bave = mol->Bave;
+	nu_mol->Bstd = mol->Bstd;
+	nu_mol->sel = mol->sel;				// Selection flag
+	nu_mol->fom = mol->fom;				// Figure-of-merit
 	
-	Bsecondary	*sec, *new_sec;
-	Bresidue	*res, *new_res;
-	Batom		*atom, *new_atom;
+	Bsecondary	*sec, *nu_sec;
+	Bresidue	*res, *nu_res;
+	Batom		*atom, *nu_atom;
 	
 	for ( res = mol->res; res; res = res->next ) {
-		new_res = residue_add(&new_mol->res, res->type);
-		new_res->num = res->num;					// Residue number
-		strncpy(new_res->insert, res->insert, 2);	// Insertion code
-		strncpy(new_res->type, res->type, 6);		// Residue type
+		nu_res = residue_add(&nu_mol->res, res->type);
+		nu_res->num = res->num;					// Residue number
+		strncpy(nu_res->insert, res->insert, 2);	// Insertion code
+		strncpy(nu_res->type, res->type, 6);		// Residue type
+		nu_atom = NULL;
 		for ( atom = res->atom; atom; atom = atom->next ) {
-			new_atom = atom_add(&new_res->atom, atom->type);
-			memcpy(new_atom, atom, sizeof(Batom));
-			new_atom->next = NULL;
+//			nu_atom = atom_add(&nu_res->atom, atom->type);
+//			memcpy(nu_atom, atom, sizeof(Batom));
+//			nu_atom->next = NULL;
+			if ( nu_res->atom ) nu_atom = nu_atom->next = atom_copy(atom);
+			else nu_res->atom = nu_atom = atom_copy(atom);
 		}
 	}
 	
 	for ( sec = mol->sec; sec; sec = sec->next ) {
-		new_sec = (Bsecondary *) add_item((char **) &new_mol->sec, sizeof(Bsecondary));
-		memcpy(new_sec, sec, sizeof(Bsecondary));
-		new_sec->next = NULL;
-		for ( res=mol->res, new_res=new_mol->res; res; res=res->next, new_res=new_res->next ) {
-			if ( sec->first == res ) new_sec->first = new_res;
-			if ( sec->last == res ) new_sec->last = new_res;
+		nu_sec = (Bsecondary *) add_item((char **) &nu_mol->sec, sizeof(Bsecondary));
+		memcpy(nu_sec, sec, sizeof(Bsecondary));
+		nu_sec->next = NULL;
+		for ( res=mol->res, nu_res=nu_mol->res; res; res=res->next, nu_res=nu_res->next ) {
+			if ( sec->first == res ) nu_sec->first = nu_res;
+			if ( sec->last == res ) nu_sec->last = nu_res;
 		}
 	}
 	
 	if ( verbose & VERB_DEBUG )
-		cout << "DEBUG molecule_copy: new_mol->id = " << new_mol->id << endl;
+		cout << "DEBUG molecule_copy: nu_mol->id = " << nu_mol->id << endl;
 	
-	return new_mol;
+	return nu_mol;
 }
 
 /**
@@ -670,15 +697,15 @@ Bmolecule* 	mol_copy_and_add_to_molgroup(Bmolgroup* molgroup, Bmolecule* mol)
 	if ( molgroup == NULL ) return NULL;
 	if ( mol == NULL ) return NULL;
 	
-	Bmolecule*	new_mol = molecule_copy(mol);
+	Bmolecule*	nu_mol = molecule_copy(mol);
 
-	char		molid = 'A';
-	char		notset(1);
+//	char		molid = 'A';
+//	char		notset(1);
 	
 	if ( molgroup->mol ) {
 		for ( mol=molgroup->mol; mol->next; mol=mol->next ) ;
-		mol->next = new_mol;
-		if ( new_mol->id[0] != ' ' ) {
+		mol->next = nu_mol;
+/*		if ( nu_mol->id[0] != ' ' ) {
 			molid--;
 			while ( notset ) {
 				notset = 0;
@@ -687,15 +714,15 @@ Bmolecule* 	mol_copy_and_add_to_molgroup(Bmolgroup* molgroup, Bmolecule* mol)
 					if ( mol->id[0] == molid ) notset = 1;
 			}
 			if ( molid < 'A' || molid > 'Z' ) molid = 'A';
-			new_mol->id[0] = molid;
-		}
+			nu_mol->id[0] = molid;
+		}*/
 	} else
-		molgroup->mol = new_mol;
+		molgroup->mol = nu_mol;
 	
 	if ( verbose & VERB_DEBUG )
-		cout << "DEBUG mol_copy_and_add_to_molgroup: new_mol->id = " << new_mol->id << endl;
+		cout << "DEBUG mol_copy_and_add_to_molgroup: nu_mol->id = " << nu_mol->id << endl;
 	
-	return new_mol;
+	return nu_mol;
 }
 
 /**
@@ -1471,17 +1498,17 @@ long 		mol_stats(Bmolecule* mol)
 int 		molecule_update_comment(Bmolgroup* molgroup, int n, char** strings)
 {
 	int			i; 
-	Bstring		new_comment("");
+	Bstring		nu_comment("");
 	Bmolgroup*	mg;
 	
 	for ( i=0; i<n; i++ )
-		new_comment = new_comment + strings[i] + " ";
+		nu_comment = nu_comment + strings[i] + " ";
 	
 	if ( verbose & VERB_DEBUG )
-		cout << "DEBUG molecule_update_comment: " << new_comment << endl;
+		cout << "DEBUG molecule_update_comment: " << nu_comment << endl;
 	 
 	for ( mg = molgroup; mg; mg = mg->next ) 
-		mg->comment = new_comment;
+		mg->comment = nu_comment;
 
 	return molgroup->comment.length();
 }

@@ -3,7 +3,7 @@
 @brief	Aligns two images.
 @author Bernard Heymann
 @date	Created: 20021111
-@date	Modified: 20160603
+@date	Modified: 20220701
 **/
 
 #include "rwimg.h"
@@ -22,13 +22,16 @@ Transform	img_align(Bimage* p1, Bimage* p2, Vector3<long> tile_size,
 // Usage assistance
 const char* use[] = {
 " ",
-"Usage: balign [options] input1.img input2.img output.img",
-"--------------------------------------------------------",
+"Usage: balign [options] input*.img",
+"----------------------------------",
+"Aligning images to each other.",
+"Micrograph mode (option -micrographs):",
 "The second input image is aligned to the first, transformed and output.",
 "(Note: This program is intended to align very large micrograph images).",
 " ",
 "Actions:",
 "-add                     Add input images after transforming the second.",
+//"-micrographs             Align two micrographs including rotation.",
 "-filterextremes          Filter micrograph extremes before aligning.",
 " ",
 "Parameters:",
@@ -39,26 +42,32 @@ const char* use[] = {
 "-resolution 30,500       High and low resolution limits for cross-correlation (default 0.1,1000).",
 "-maxshift 55             Maximum allowed shift (default 1/4 of tile).",
 " ",
+"Output:",
+"-output sum.mrc          Output sum of the transformed images.",
+" ",
 NULL
 };
 
 int			main(int argc, char* argv[])
 {
 	// Initialize all settings
+	int				flag(1);			// Mode flag
+	int 			add(0);
+	int				filter_flag(0);
+	int 			refine_flag(1);
 	DataType 		nudatatype(Unknown_Type);	// Conversion to new type
 	Vector3<double>	sam;				// Units for the three axes (A/pixel)
-	int 			add(0);
 	Vector3<long> 	tile_size(512,512,1);
 	double			res_hi(0.1);
 	double			res_lo(1000);
 	double			max_shift(0);
-	int				filter_flag(0);
-	int 			refine_flag(1);
+	Bstring			outfile;			// Default output image file name
 	    
 	int				optind;
 	Boption*		option = get_option_list(use, argc, argv, optind);
 	Boption*		curropt;
 	for ( curropt = option; curropt; curropt = curropt->next ) {
+		if ( curropt->tag == "micrographs" ) flag = 1;
 		if ( curropt->tag == "datatype" )
 			nudatatype = curropt->datatype();
 		if ( curropt->tag == "sampling" )
@@ -77,6 +86,8 @@ int			main(int argc, char* argv[])
 		if ( curropt->tag == "maxshift" )
     	    if ( ( max_shift = curropt->value.real() ) < 1 )
 				cerr << "-maxshift: A maximum shift in pixels must be specified." << endl;
+		if ( curropt->tag == "output" )
+        	outfile = curropt->filename();
     }
 	option_kill(option);
 
@@ -84,41 +95,42 @@ int			main(int argc, char* argv[])
 	
     // Read the input files
 	int 		dataflag(0);
-	if ( optind < argc - 1 ) dataflag = 1;
-	Bimage*		p1 = read_img(argv[optind++], dataflag, -1);
-	if ( p1 == NULL ) {
+	if ( outfile.length() ) dataflag = 1;
+	Bimage*		p = read_img(argv[optind++], dataflag, -1);
+	if ( p == NULL ) {
 		cerr << "Error: No input file read!" << endl;
 		bexit(-1);
 	}
+
+	if ( sam.volume() ) p->sampling(sam);
+
+	Bimage*		p2 = p;
 	
-    Bimage* 	p2 = read_img(argv[optind++], dataflag, -1);
-	if ( p2 == NULL ) {
-		cerr << "Error: No input file read!" << endl;
-		bexit(-1);
+	while ( optind < argc ) {
+		p2->next = read_img(argv[optind++], dataflag, -1);
+		p2 = p2->next;
+		if ( p2 == NULL ) {
+			cerr << "Error: No input file read!" << endl;
+			bexit(-1);
+		}
+		if ( sam.volume() ) p2->sampling(sam);
 	}
 	
-	if ( sam.volume() ) {
-		p1->sampling(sam);
-		p2->sampling(sam);
+	if ( flag ) {
+		p2 = p->next;
+		Transform		t = img_align(p, p2, tile_size, res_lo, res_hi, max_shift, filter_flag, refine_flag);
+		p2->transform(t.scale, t.origin, t.trans, Matrix3(t.axis, t.angle), FILL_USER, p2->average());
 	}
-	
-	Transform		t = img_align(p1, p2, tile_size, res_lo, res_hi, max_shift, filter_flag, refine_flag);
 
-	p2->transform(t.scale, t.origin, t.trans, Matrix3(t.axis, t.angle), FILL_USER, p2->average());
-
-	Bimage*			p = NULL;
-	if ( add ) p = *p1 + *p2;
-	if ( !p ) p = p2;
+	if ( add ) p2 = *p + *p2;
 
     // Write an output file if a file name is given
-    if ( argc > optind && strspn(argv[optind],"-") != 1 ) {
-		p->change_type(nudatatype);
-    	write_img(argv[optind], p, 0);
+    if ( outfile.length() ) {
+		p2->change_type(nudatatype);
+    	write_img(outfile, p2, 0);
 	}
 	
-	if ( p != p2 ) delete p;
-	delete p1;
-	delete p2;
+	delete p;
 	
 	if ( verbose & VERB_TIME )
 		timer_report(ti);

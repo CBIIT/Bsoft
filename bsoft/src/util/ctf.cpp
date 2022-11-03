@@ -3,10 +3,11 @@
 @brief	Functions to manage CTF (contrast transfer function) parameters
 @author Bernard Heymann
 @date	Created: 20000426
-@date	Modified: 20210531
+@date	Modified: 20220322
 **/
 
 #include "ctf.h"
+#include "string_util.h"
 #include "utilities.h"
 
 // Declaration of global variables
@@ -21,17 +22,21 @@ int			CTFparam::update(CTFparam& ctf)
 {
 	int			i;
 	
+	if ( ctf.identifier().length() ) id = ctf.identifier();	// Optics group
+	sel = ctf.sel;										// Optics group number
 	if ( ctf.volt() ) volt(ctf.volt());					// Acceleration voltage (volts)
 	if ( ctf.focal_length() ) fl = ctf.focal_length();	// Focal length (angstrom)
 	if ( ctf.objective_aperture() ) oa = ctf.objective_aperture();		// Objective aperture (angstrom)
-	if ( ctf.Cs() ) Cs(ctf.Cs());						// Spherical aberation (angstrom)
+//	if ( ctf.Cs() ) Cs(ctf.Cs());						// Spherical aberation (angstrom)
 	if ( ctf.Cc() ) cc = ctf.Cc();						// Chromatic aberation (angstrom)
+	if ( ctf.beam_tiltX() ) tx = ctf.beam_tiltX();	// Beam tilt (radian)
+	if ( ctf.beam_tiltY() ) ty = ctf.beam_tiltY();	// Beam tilt (radian)
 	if ( ctf.alpha() ) a = ctf.alpha();					// Illumination half-angle (radians)
 	if ( ctf.dE() ) de = ctf.dE();						// Energy spread (eV)
-	if ( ctf.amp_shift() ) amp_shift(ctf.amp_shift());	// CTF amplitude phase shift (radians)
-	if ( ctf.defocus_average() ) def_avg = ctf.defocus_average();		// CTF defocus average (angstrom)
-	if ( ctf.defocus_deviation() ) def_dev = ctf.defocus_deviation();	// CTF defocus deviation (angstrom)
-	if ( ctf.astigmatism_angle() ) ast_ang = ctf.astigmatism_angle();	// CTF astigmatism angle (radians)
+//	if ( ctf.amp_shift() ) amp_shift(ctf.amp_shift());	// CTF amplitude phase shift (radians)
+//	if ( ctf.defocus_average() ) def_avg = ctf.defocus_average();		// CTF defocus average (angstrom)
+//	if ( ctf.defocus_deviation() ) def_dev = ctf.defocus_deviation();	// CTF defocus deviation (angstrom)
+//	if ( ctf.astigmatism_angle() ) ast_ang = ctf.astigmatism_angle();	// CTF astigmatism angle (radians)
 	if ( ctf.baseline_type() ) {					// Baseline equation
 		bt = ctf.baseline_type();
 		for ( i=0; i<NCTFPARAM; i++ ) base[i] = ctf.baseline(i);
@@ -40,9 +45,13 @@ int			CTFparam::update(CTFparam& ctf)
 		et = ctf.envelope_type();
 		for ( i=0; i<NCTFPARAM; i++ ) env[i] = ctf.envelope(i);
 	}
-	
+//	if ( ctf.aberration_even().size() ) we = ctf.aberration_even();
+//	if ( ctf.aberration_odd().size() ) wo = ctf.aberration_odd();
+	if ( ctf.abw.size() ) abw = ctf.abw;
+	if ( ctf.f ) f = ctf.f;							// Figure-of-merit
+//	ew = ctf.ew;									// Ewald sphere
+
 	update_terms();
-	zero(1);
 	
 	return 0;
 }
@@ -70,7 +79,7 @@ vector<double>	CTFparam::calculate(int nrad, int npsi, double step_size)
 {
 	vector<double>	ctf;
 
-	if ( check_defocus() || check_Cs() ) {
+	if ( check_defocus() ) {
 		cerr << "in CTFparam::calculate" << endl;
 		return ctf;
 	}
@@ -78,19 +87,21 @@ vector<double>	CTFparam::calculate(int nrad, int npsi, double step_size)
 	if ( npsi < 1 ) npsi = 1;
 	
 	int 		i, j, k;
-	double		s2, dphi, defocus;
-	double		dpsi = M_PI*2.0/npsi;
+	double		s2, ang;
+	double		dpsi(M_PI*2.0/npsi);
 	
 	ctf.resize(nrad*npsi);
 	
-	defocus = def_avg;
+//	defocus = def_avg;
 	for ( j=k=0; j<npsi; j++ ) {
-		if ( npsi > 1 ) defocus = def_avg + def_dev*cos(2*(j*dpsi-ast_ang));
+		ang = j*dpsi;
+//		if ( npsi > 1 ) defocus = def_avg + def_dev*cos(2*(j*dpsi-ast_ang));
 		for ( i=0; i<nrad; i++, k++ ) {
 			s2 = i*step_size;
 			s2 *= s2;
-			dphi = (t1*s2 - t2*defocus)*s2 - ac;
-			ctf[k] = sin(dphi);
+//			dphi = (t1*s2 + t2*defocus)*s2 - ac;
+//			ctf[k] = sin(dphi);
+			ctf[k] = calculate(s2, ang);
 //			cout << k << tab << ctf[i] << endl;
 		}
 	}
@@ -114,7 +125,7 @@ vector<double>	CTFparam::calculate(int nrad, int npsi, double step_size)
 	The array returned start with the first zero at index 0.
 
 **/
-vector<double>	CTFparam::zeroes(double max_s)
+/*vector<double>	CTFparam::zeroes(double max_s)
 {
 	vector<double>	zero;
 
@@ -126,28 +137,30 @@ vector<double>	CTFparam::zeroes(double max_s)
 	long		i;
 	double		t, sm2(max_s*max_s);
     double		l = lambda();
-    double		lf = l*def_avg;
-	double		ps = ac/M_PI;
-	double		l3Cs = l*l*l*cs/2.0;
+	double		ps = abw[{0,0}]/M_PI;
+	double		df = defocus_average();
+    double		lf = l*df;
+//	double		l3Cs = l*l*l*cs/2.0;
+	double		l3Cs = abw[{4,0}]/M_PI;
 	
 //	cout << l*def_avg*sm2 << tab << l3Cs*sm2*sm2 << tab << ps << endl;
 	
-	long		nzero = (long) (l*def_avg*sm2 - l3Cs*sm2*sm2 + ps);
+	long		nzero = (long) (lf*sm2 - l3Cs*sm2*sm2 + ps);
 	
 	if ( nzero < 1 ) nzero = 1;
 	
 	if ( verbose & VERB_DEBUG )
-		cout << "DEBUG CTFparam::zeroes: " << nzero << tab << max_s << tab << cs << endl;
+		cout << "DEBUG CTFparam::zeroes: " << nzero << tab << max_s << tab << Cs() << endl;
 
 	zero.resize(nzero);
 	
-	if ( cs < 1e3 ) {
+	if ( abw[{4,0}] < 1 ) {
 		for ( i=0; i<nzero; i++ ) {
 			t = double(i)+1.0-ps;
 			zero[i] = sqrt(t/lf);
 		}
 	} else {
-		double		fz = def_avg/(l*l*cs), fz2 = fz*fz;
+		double		fz = df/(l*l*Cs()), fz2 = fz*fz;
 		for ( i=0; i<nzero; i++ ) {
 			t = (i+1.0-ps)/l3Cs;
 			if ( fz2 > t )
@@ -163,6 +176,106 @@ vector<double>	CTFparam::zeroes(double max_s)
 	
 	return zero;
 }
+*/
+vector<double>	CTFparam::zeroes(double max_s)
+{
+	vector<double>	zero;
+
+	if ( check_defocus() ) {
+		cerr << "in CTFparam::zeroes" << endl;
+		return zero;
+	}
+	
+	long		i;
+	double		t, z;
+
+	if ( abw[{4,0}] < 1 ) {
+		for ( i=0; i<100; i++ ) {
+			t = abw[{0,0}] - M_PI*double(i+1);
+			z = sqrt(t/abw[{2,0}]);
+			if ( z <= max_s ) zero.push_back(z);
+			else break;
+		}
+	} else {
+		double		fz = -0.5*abw[{2,0}]/abw[{4,0}], fz2 = fz*fz;
+//		cout << "fz = " << fz << endl;
+		for ( i=0; i<100; i++ ) {
+			t = (abw[{0,0}] - M_PI*double(i+1))/abw[{4,0}];
+//			cout << i << tab << t << endl;
+			if ( fz2 > t )
+				z = sqrt(fz - sqrt(fz2 + t));
+			else
+				break;
+			if ( !isfinite(z) )
+				break;
+			if ( z <= max_s )
+				zero.push_back(z);
+			else
+				break;
+		}
+	}
+
+	long		nzero(zero.size());
+
+	if ( nzero < 1 ) {
+		cerr << "Error in CTFparam::zeroes: No zeroes calculated!" << endl;
+	}
+	
+	if ( verbose & VERB_DEBUG )
+		cout << "DEBUG CTFparam::zeroes: " << nzero << tab << max_s << endl;
+
+	if ( verbose & VERB_DEBUG )
+		for ( i=0; i<nzero; i++ ) cout << i+1 << tab << zero[i] << tab << 1.0/zero[i] << endl;
+	
+	return zero;
+}
+/*
+vector<double>	CTFparam::zeroes(double max_s)
+{
+	vector<double>	zero;
+
+	if ( check_defocus() ) {
+		cerr << "in CTFparam::zeroes" << endl;
+		return zero;
+	}
+	
+	long		i;
+	double		t, sm2(max_s*max_s);
+	
+	long		nzero = (long) ((abw[{0,0}] - abw[{2,0}]*sm2 - abw[{4,0}]*sm2*sm2)/M_PI);
+
+	if ( nzero < 1 ) nzero = 1;
+	
+	if ( verbose & VERB_DEBUG )
+		cout << "DEBUG CTFparam::zeroes: " << nzero << tab << max_s << endl;
+
+	zero.resize(nzero);
+	
+	if ( abw[{4,0}] < 1 ) {
+		for ( i=0; i<nzero; i++ ) {
+			t = abw[{0,0}] - M_PI*double(i+1);
+			zero[i] = sqrt(t/abw[{2,0}]);
+		}
+	} else {
+		double		fz = -0.5*abw[{2,0}]/abw[{4,0}], fz2 = fz*fz;
+//		cout << "fz = " << fz << endl;
+		for ( i=0; i<nzero; i++ ) {
+			t = (abw[{0,0}] - M_PI*double(i+1))/abw[{4,0}];
+//			cout << i << tab << t << endl;
+			if ( fz2 > t )
+				zero[i] = sqrt(fz - sqrt(fz2 + t));
+			else
+				zero[i] = -1;
+			if ( !isfinite(zero[i]) ) zero[i] = 0.0001;
+		}
+	}
+
+	if ( verbose & VERB_DEBUG )
+		for ( i=0; i<nzero; i++ ) cout << i+1 << tab << zero[i] << tab << 1.0/zero[i] << endl;
+	
+	return zero;
+}
+*/
 
 /**
 @brief 	Calculates the maxima of a CTF curve on the spatial frequency scale.
@@ -280,8 +393,10 @@ Bstring		CTFparam::envelope_equation()
 **/
 int			CTFparam::parse_baseline_equation(Bstring base_eq)
 {
+//	cout << "Base eq = " << base_eq << endl;
+
 	base_eq = base_eq.remove('\"');
-	
+		
 	int 		n(0);
 		
 	if ( base_eq.contains("s4") ) {				// Polynomial
@@ -368,6 +483,31 @@ int			CTFparam::parse_envelope_equation(Bstring env_eq)
 
 /**
 @brief 	Calculates the envelope curve based on partial coherence.
+@param 	s			spatial frequency.
+@return double		amplitude.
+
+The curve is calculated at frequency s as:
+	Epc(s) = exp(-(pi*alpha*(Cs*lamda^2*s^2 - def)*s)^2)
+where
+	Cs: Spherical aberation (~2e7 A)
+	alpha: Beam spread/source size (~0.1 mrad)
+	def: Defocus (~1e4 A)
+	lamda: electron wavelength (~0.03 A)
+
+References:
+	Zhu et al. (1997) JSB 118, 197-219.
+**/
+double		CTFparam::partial_coherence(double s)
+{
+    double			Csl2(Cs()*wl*wl);
+	double			pal(M_PI*a*wl);
+	double			arg = pal*(Csl2*s*s - defocus_average())*s;
+	
+	return exp(-arg*arg);
+}
+
+/**
+@brief 	Calculates the envelope curve based on partial coherence.
 @param 	n				number of spatial frequency steps.
 @param 	freq_step		size of spatial frequency step.
 @return vector<double>		curve.
@@ -386,17 +526,43 @@ References:
 vector<double>	CTFparam::envelope_partial_coherence(long n, double freq_step)
 {
 	long			i;
-    double			l = lambda(), Csl2(cs*l*l);
+    double			l = lambda(), Csl2(Cs()*l*l);
 	double			s, arg, pal(M_PI*a);
 	vector<double>	curve(n);
 	
 	for ( i=0; i<n; i++ ) {
 		s = i*freq_step;
-		arg = pal*(Csl2*s*s - def_avg)*s;
+		arg = pal*(Csl2*s*s - defocus_average())*s;
 		curve[i] = exp(-arg*arg);
 	}
 	
 	return curve;
+}
+
+/**
+@brief 	Calculates the envelope curve based on energy spread.
+@param 	s2			spatial frequency squared.
+@return double		amplitude.
+
+The curve is calculated at frequency s as:
+	Ees(s) = exp(-0.5*(pi*lambda*Cc*(dE/V)*s^2)^2)
+where
+	Cc: Chromatic aberation (~2e7 A)
+	dE: Energy spread (~1 eV)
+	V: Acceleration voltage (~1e5 V)
+	lamda: electron wavelength (~0.03 A)
+
+References:
+	Freitag et al. (2005) Ultramicroscopy 102, 209-14.
+	Zhu et al. (1997) JSB 118, 197-219.
+**/
+double		CTFparam::energy_spread(double s2)
+{
+//	double			fac(1.0/(16*log(2.0)));
+	double			fac(0.5);
+    double			arg = M_PI*wl*cc*de*s2/av;
+	
+	return exp(-fac*arg*arg);
 }
 
 /**
@@ -436,6 +602,26 @@ vector<double>	CTFparam::envelope_energy_spread(long n, double freq_step)
 }
 
 /**
+@brief 	Calculates the envelope curve based on partial coherence and energy spread.
+@param 	s2			spatial frequency squared.
+@return double		amplitude.
+
+References:
+	Freitag et al. (2005) Ultramicroscopy 102, 209-14.
+	Zhu et al. (1997) JSB 118, 197-219.
+**/
+double	CTFparam::partial_coherence_and_energy_spread(double s2)
+{
+	double			s(sqrt(s2));
+	double			pc = M_PI*a*wl*(Cs()*wl*wl*s2 - defocus_average())*s;
+//	double			fac(1.0/(16*log(2.0)));
+	double			fac(0.5);
+    double			es = M_PI*wl*cc*de*s2/av;
+	
+	return exp(-pc*pc-fac*es*es);
+}
+
+/**
 @brief 	Converts microscope parameters to a JSON object list.
 @param 	&cp			microscope parsmeter structure.
 @return JSvalue		JSON object list.
@@ -444,6 +630,7 @@ JSvalue		ctf_to_json(CTFparam& cp)
 {
 	JSvalue		js(JSobject);
 	
+	js["Optics_group"] = cp.identifier();
 	js["Volt"] = cp.volt();
 	js["Wavelength"] = cp.lambda();
 	js["Focal_length"] = cp.focal_length();
@@ -456,7 +643,9 @@ JSvalue		ctf_to_json(CTFparam& cp)
 	js["Amplitude_phase"] = cp.amp_shift();
 	js["Defocus_average"] = cp.defocus_average();
 	js["Defocus_deviation"] = cp.defocus_deviation();
-	js["Astigmatism_angle"] = cp.astigmatism_angle();
+	js["Astigmatism_angle"] = cp.astigmatism_angle()*180.0/M_PI;
+	js["Aberration_even"] = "[" + concatenate(cp.aberration_even_difference()) + "]";
+	js["Aberration_odd"] = "[" + concatenate(cp.aberration_odd()) + "]";
 	
 	return js;
 }
@@ -484,20 +673,6 @@ CTFparam	ctf_from_json(JSvalue& js)
 	CTFparam		cp;
 	ctf_update_from_json(cp, js);
 	
-/*	if ( js.exists("Volt") ) cp.volt(js["Volt"].real());
-//	if ( js.exists("Wavelength") ) cp.lambda(js["Wavelength"].real());
-	if ( js.exists("Focal_length") ) cp.focal_length(js["Focal_length"].real());
-	if ( js.exists("Objective_aperture") ) cp.objective_aperture(js["Objective_aperture"].real());
-	if ( js.exists("Slit_width") ) cp.slit_width(js["Slit_width"].real());
-	if ( js.exists("Cs") ) cp.Cs(js["Cs"].real());
-	if ( js.exists("Cc") ) cp.Cc(js["Cc"].real());
-	if ( js.exists("Beam_convergence") ) cp.alpha(js["Beam_convergence"].real());
-	if ( js.exists("Energy_spread") ) cp.dE(js["Energy_spread"].real());
-	if ( js.exists("Amplitude_phase") ) cp.amp_shift(js["Amplitude_phase"].real());
-	if ( js.exists("Defocus_average") ) cp.defocus_average(js["Defocus_average"].real());
-	if ( js.exists("Defocus_deviation") ) cp.defocus_deviation(js["Defocus_deviation"].real());
-	if ( js.exists("Astigmatism_angle") ) cp.astigmatism_angle(js["Astigmatism_angle"].real());
-*/
 	return cp;
 }
 
@@ -509,8 +684,8 @@ CTFparam	ctf_from_json(JSvalue& js)
 **/
 int			ctf_update_from_json(CTFparam &cp, JSvalue &js)
 {
+	if ( js.exists("Optics_group") ) cp.identifier(js["Optics_group"].value());
 	if ( js.exists("Volt") ) cp.volt(js["Volt"].real());
-//	if ( js.exists("Wavelength") ) cp.lambda(js["Wavelength"].real());
 	if ( js.exists("Focal_length") ) cp.focal_length(js["Focal_length"].real());
 	if ( js.exists("Objective_aperture") ) cp.objective_aperture(js["Objective_aperture"].real());
 	if ( js.exists("Slit_width") ) cp.slit_width(js["Slit_width"].real());
@@ -520,8 +695,17 @@ int			ctf_update_from_json(CTFparam &cp, JSvalue &js)
 	if ( js.exists("Energy_spread") ) cp.dE(js["Energy_spread"].real());
 	if ( js.exists("Amplitude_phase") ) cp.amp_shift(js["Amplitude_phase"].real());
 	if ( js.exists("Defocus_average") ) cp.defocus_average(js["Defocus_average"].real());
-	if ( js.exists("Defocus_deviation") ) cp.defocus_deviation(js["Defocus_deviation"].real());
-	if ( js.exists("Astigmatism_angle") ) cp.astigmatism_angle(js["Astigmatism_angle"].real());
+	if ( js.exists("Defocus_deviation") && js.exists("Astigmatism_angle") )
+		cp.astigmatism(js["Defocus_deviation"].real(), js["Astigmatism_angle"].real()*M_PI/180.0);
+	if ( js.exists("Aberration_even") ) {
+		vector<double>	v = parse_real_vector(js["Aberration_even"].value().substr(1));
+		cp.aberration_even_update(v);
+	}
+	if ( js.exists("Aberration_odd") ) {
+		vector<double>	v = parse_real_vector(js["Aberration_odd"].value().substr(1));
+		cp.aberration_odd(v);
+	}
+//	cout << js["Cs"].real() << tab << cp.Cs() << endl;
 
 	return 0;
 }
@@ -662,7 +846,7 @@ vector<double>	defocus_range_profile(CTFparam& ctf, double freq_step, double def
 }
 
 /**
-@brief 	Calculates an integrated defocus weighting factor for a raneg of defocus values.
+@brief 	Calculates an integrated defocus weighting factor for a range of defocus values.
 @param 	&ctf			CTF parameters.
 @param 	def_min			minimum defocus.
 @param 	def_max			maximum defocus.

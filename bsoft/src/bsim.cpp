@@ -3,7 +3,7 @@
 @brief	A tool to generate a project with random orientations for a molecule and to simulate TEM images from given orientations.
 @author Bernard Heymann
 @date	Created: 20030805
-@date 	Modified: 20041021
+@date 	Modified: 20220322
 **/
 
 #include "mg_processing.h"
@@ -32,7 +32,7 @@ const char* use[] = {
 " ",
 "Actions:",
 "-generate 10,3,50        Generate a project, specifying number of fields, number of",
-"                         micrographs per field and number particles per micrograph.",
+"                         micrographs per field and number of particles per micrograph.",
 "-symmetry C5             Generates images based on a grid in the asymmetric unit.",
 "-coordinates file.pdb    Input coordinate file, generate simulated images in project.",
 "-image                   Generate a final image and parameter file (default not).",
@@ -50,12 +50,6 @@ const char* use[] = {
 "                         Use with the -symmetry option (default 10,10).",
 "-Pixelsize 5.5           Set the particle pixel size (default 1 angstrom/pixel).",
 "-electrondose 35.5       Set the electron dose (default 20 electrons/angstrom).",
-"-Cs 2.0                  Set the spherical aberration, Cs (default 2 mm).",
-"-Cc 2.0                  Set the chromatic aberration, Cc (default 2.0 mm).",
-"-alpha 0.15              Set the illumination half-angle (default 0.1 milliradians).",
-"-energyspread 2e-5       Set the effective energy spread (default 1e-5).",
-"-Volt 100                Set the acceleration voltage (default 120 kV).",
-"-Amplitude 0.07          Set the amplitude contrast (fraction, default 0.07).",
 "-Defocus 0.5,3.4         Defocus range (required to apply CTF).",
 "-fieldbasename field     Field-of-view base name (default field).",
 "-fieldnumber 5           Field starting number (default 1).",
@@ -63,6 +57,8 @@ const char* use[] = {
 "-mgnumber 23             Micrograph starting number (default 1).",
 "-partbasename part       Particle base name (default part).",
 "-partnumber 158          Particle starting number (default 1).",
+" ",
+#include "use_ctf.inc"
 " ",
 "Parameters for simulation:",
 "-fieldname field         Field-of-view name (for selecting a specific field).",
@@ -95,19 +91,12 @@ int 		main(int argc, char **argv)
 	double			img_origin(0);			// Particle image origin
 	Vector3<double>	pixel_size;				// Take pixel size from input files
 	double			dose(20);				// Electron dose
-	double			Cs(2e7);				// Spherical aberration
-	double			Cc(2e7);				// Chromatic aberration (angstrom)
-	double			Volts(120000);			// Acceleration voltage
-	double			Amp(0.07);				// Amplitude contrast contribution
 	double			def_min(0), def_max(0);	// Defocus range (angstrom) default none
-//	DataType 		datatype = Float;		// Default data type for projection
 	int				pottype(0);				// Reciprocal space potential calculation
 	Vector3<long>	size;					// Simulated box size
 	double			thickness(10);			// Slice thickness in angstrom
 	double			resolution(0);			// High resolution limit
 	double			Bfactor(0);				// Overall temperature factor
-	double			alpha(0.0001);			// Illumination half-angle (radians)
-	double			energy_spread(1e-5);	// Effective energy spread
 	int				image_flag(0);			// Flag to generate the final image and parameter file
 	int				poisson(0);				// No poisson noise added
 	double			gauss(1e10);			// Gaussian signal-to-noise ratio, > 1000 means no noise
@@ -126,7 +115,10 @@ int 		main(int argc, char **argv)
 	Bstring			waterfile;				// Input solvent coordinate file
 	Bstring			paramfile;				// Use default parameter file for atomic properties
 	Bstring			outfile;				// Output parameter file
-	
+
+	double			v;
+	JSvalue			jsctf(JSobject);
+
 	int				i, optind;
 	Boption*		option = get_option_list(use, argc, argv, optind);
 	Boption*		curropt;
@@ -158,42 +150,7 @@ int 		main(int argc, char **argv)
 		if ( curropt->tag == "electrondose" )
 			if ( ( dose = curropt->value.real() ) < 1e-30 )
 				cerr << "-electrondose: The electron dose must be specified!" << endl;
-		if ( curropt->tag == "Cs" ) {
-			if ( ( Cs = curropt->value.real() ) < 1e-30 )
-				cerr << "-Cs: A Cs value must be specified!" << endl;
-			else if ( Cs < 1e3 ) Cs *= 1e7;						// Assume mm
-		}
-		if ( curropt->tag == "Cc" ) {
-			if ( ( Cc = curropt->value.real() ) < 1e-30 )
-				cerr << "-Cc: A Cc value must be specified!" << endl;
-			else if ( Cc < 1e3 ) Cc *= 1e7;			// Assume mm
-		}
-		if ( curropt->tag == "alpha" ) {
-			if ( ( alpha = curropt->value.real() ) < 1e-30 )
-				cerr << "-alpha: The illumination half-angle must be specified!" << endl;
-			else {
-				if ( alpha > 0.01 ) alpha /= 1000;	// Assume milliradians
-				if ( alpha < 0 ) alpha = 0.0001;
-			}
-		}
-		if ( curropt->tag == "energyspread" ) {
-			if ( ( energy_spread = curropt->value.real() ) < 1e-30 )
-				cerr << "-energyspread: A energy spread must be specified!" << endl;
-			else {
-				if ( energy_spread > 0.001 ) energy_spread /= 1e5;	// Assume eV
-				if ( energy_spread < 0 ) energy_spread = 0;
-			}
-		}
-		if ( curropt->tag == "Volt" ) {
-			if ( ( Volts = curropt->value.real() ) < 1e-30 )
-				cerr << "-Volt: A voltage must be specified!" << endl;
-			else if ( Volts < 1e3 ) Volts *= 1e3;				// Assume kilovolts
-		}
-		if ( curropt->tag == "Amplitude" ) {
-			if ( ( Amp = curropt->value.real() ) < 1e-30 )
-				cerr << "-Amplitude: A fraction must be specified!" << endl;
-			else if ( Amp > 1 ) Amp /= 100;						// Assume percentage
-		}
+#include "ctf.inc"
 		if ( curropt->tag == "Defocus" ) {
 			if ( curropt->values(def_min, def_max) < 1 )
 				cerr << "-Defocus: Both defocus minimum and maximum must be specified!" << endl;
@@ -203,8 +160,6 @@ int 		main(int argc, char **argv)
 				def_max *= 1e4;
 			}
 		}
-//		if ( curropt->tag == "datatype" )
-//			datatype = curropt->datatype();
 		if ( curropt->tag == "type" ) {
 			pottype = 0;
 			if ( curropt->value.contains("rea") ) pottype = 1;
@@ -276,6 +231,8 @@ int 		main(int argc, char **argv)
     
 	double			ti = timer_start();
 	
+	CTFparam		cp = ctf_from_json(jsctf);
+
 	// Read all the parameter files
 	Bstring*		file_list = NULL;
 	Bproject*		project = NULL;
@@ -290,11 +247,10 @@ int 		main(int argc, char **argv)
 	if ( !project ) {
 		if ( symmetry_string.length() > 0 ) {
 			project = project_generate_asu(symmetry_string, pixel_size, img_origin,
-				theta_step, phi_step, Volts, Cs, Cc, alpha, energy_spread, Amp, 
-				def_min, dose, mgbase, partbase);
+				theta_step, phi_step, cp, def_min, dose, mgbase, partbase);
 		} else if ( genfield*genmg*genpart > 0 ) {
 			project = project_generate(genfield, genmg, genpart, pixel_size, img_origin,
-				Volts, Cs, Cc, alpha, energy_spread, Amp, def_min, def_max, dose, 
+				cp, def_min, def_max, dose,
 				tsigma, fieldbase, mgbase, partbase, fieldnumber, mgnumber, partnumber);
 		}
 	}

@@ -280,9 +280,12 @@ int 		main(int argc, char **argv)
 	if ( rect_length*rect_width > 0 )
 		pmask->mask_rectangle(rect_length, rect_width, rect_angle, wrap);
 	
-	if ( rad_max )
-		pmask->mask_shell(origin, rad_min, rad_max);
-	
+	if ( rad_max ) {
+		if ( wrap )
+			pmask->mask_shell_wrap(origin, rad_min, rad_max);
+		else
+			pmask->mask_shell(origin, rad_min, rad_max);
+	}
 	if ( band.size() && band[0] )
 		pmask->mask_fspace_banded(band);
 	

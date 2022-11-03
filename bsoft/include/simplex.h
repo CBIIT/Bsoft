@@ -3,7 +3,7 @@
 @brief	Nelder and Mead downhill simplex method for generalized parameter fitting
 @author Bernard Heymann
 @date	Created: 20000426
-@date	Modified: 20210729
+@date	Modified: 20220119
 
 	Adapted from Numerical Recipes, 2nd edition, Press et al. 1992
 	The function "funk" is user-defined and references the "Bsimplex" structure.
@@ -35,8 +35,6 @@
 		c			nconstant.
 		x			npoint*nvar.
 		fx			npoint.
-	x or fx can be recast as a different pointer, as long as it is handled
-	by the user before calling kill_simplex.
 **/
 #ifndef _Bsimplex_
 class Bsimplex {
@@ -78,6 +76,7 @@ public:
 	void		parameters(long n, vector<double>& p) {
 		for ( int i=0; i<nparam && i<n; i++ ) param[i] = p[i];
 	}
+	vector<double>	parameter_vector() { return param; }
 	void		parameter(long i, double p) { param[i] = p; }
 	double		parameter(long i) { return param[i]; }
 	void		limit_low(long i, double v) { lo[i] = v; }
@@ -97,7 +96,8 @@ public:
 		if ( yvar <= 0 ) calculate_dependent_variance();
 		return yvar;
 	}
-	double		run(long maxcycles, double tolerance, double (funk)(Bsimplex&));
+	double		R(double (funk)(Bsimplex&)) { return (funk)(*this); }
+	double		run(long maxcycles, double tolerance, double (funk)(Bsimplex&), long report=0);
 	double		amotry(vector<double>& mp, vector<double>& R,
 		long ihi, double fac, double (funk)(Bsimplex&));
 	void		show() {

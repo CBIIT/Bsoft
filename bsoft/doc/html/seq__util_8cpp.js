@@ -5,7 +5,7 @@ var seq__util_8cpp =
     [ "getcode1", "seq__util_8cpp.html#a0fa4f20db9d3f89205ccdf014ca6c296", null ],
     [ "getcode3", "seq__util_8cpp.html#ac6a6db39c8a191ff819caff2760782ff", null ],
     [ "seq_complement_all", "seq__util_8cpp.html#a2da82fee1baa352a4facf527843b46be", null ],
-    [ "seq_elements", "seq__util_8cpp.html#a0ab11bf252009cd080b568ee6ec4b2e4", null ],
+    [ "seq_elements", "seq__util_8cpp.html#a203a967f8e21203aa8a78bceeeb14047", null ],
     [ "seq_find_dna", "seq__util_8cpp.html#abb216e011307a3a5910a636775281c34", null ],
     [ "seq_find_protein", "seq__util_8cpp.html#a80fdf0bcc3bf2bbad13c328a87eb2fb7", null ],
     [ "seq_find_protein_in_dna", "seq__util_8cpp.html#af198e989e08420c1c646b7d0a18be328", null ],

@@ -3,7 +3,7 @@
 @brief	Functions to handle general options 
 @author Bernard Heymann 
 @date	Created: 20010613
-@date	Modified: 20200504
+@date	Modified: 20220722
 **/
  
 #include "options.h" 
@@ -14,7 +14,8 @@
 // Declaration of global variables
 extern int 		verbose;		// Level of output to the shell
 extern string	command;		// Command line
- 
+extern int		thread_limit;	// Thread limit
+
 /**
 @brief 	Parses command line arguments based on a template.
 @param 	*use[]			usage list of strings, the template.
@@ -56,6 +57,11 @@ Boption*	get_option_list(const char* use[], int argc, char* argv[], int& optind)
 		if ( strncmp(argv[i], "-verbose", strlen(argv[i])) == 0 && i<argc-1 ) {
 			if ( argv[i+1][0] != '-' )
 				verbose = get_option_verbose(argv[i+1]);
+		}
+		if ( strncmp(argv[i], "-threads", strlen(argv[i])) == 0 ) {
+			thread_limit = atoi(argv[++i]);
+			if ( thread_limit < 1 )
+				cerr << "Error: At least one thread must be specified!" << endl;
 		}
 		if ( strncmp(argv[i], "-help", 5) == 0 ) {
 			usage(use, 1);

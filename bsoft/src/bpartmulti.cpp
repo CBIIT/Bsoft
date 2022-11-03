@@ -3,7 +3,7 @@
 @brief	Selection of single particle parameters from multiple files for classification
 @author Bernard Heymann
 @date	Created: 20010319
-@date	Modified: 20210516
+@date	Modified: 20220831
 **/
 
 #include "rwmg.h"
@@ -35,6 +35,7 @@ const char* use[] = {
 "                         rmsd (RMSD between first 2), msd or var (variance).",
 "-adjust                  Adjust FOM averages to that of first project.",
 "-merge                   Merge multiple files, keeping selected particle parameters.",
+"-add                     Add particles from multiple files.",
 "-divide 3                Divide the project into a number of subsets of fields.",
 "-Compare                 Compare selections.",
 "-Statistics              Do selection statistics.",
@@ -62,7 +63,8 @@ int			main(int argc, char** argv)
 	// Initializing variables
 	int				flags(0);				// Flags to process reconstructions (bit 1), use template (bit 2), reset selections (bit 3)
 	Bstring			selection_type;
-	int				merge(0);				// Flag to merge files
+	bool			merge(0);				// Flag to merge files
+	bool			add(0);					// Flag to add particles from multiple files
 	int				divide(0);				// Number of output project subsets
 	Bstring			symmetry_string;		// No symmetry specified
 	Bstring			symmetry_asu;			// Point group to set views to the asymmetric unit
@@ -88,7 +90,9 @@ int			main(int argc, char** argv)
 		if ( curropt->tag == "setasu" )
 			symmetry_asu = curropt->symmetry_string();
 		if ( curropt->tag == "merge" )
-			merge = 1;
+			merge = true;
+		if ( curropt->tag == "add" )
+			add = true;
 		if ( curropt->tag == "divide" )
 			if ( ( divide = curropt->value.integer() ) < 2 )
 				cerr << "-divide: A number of subsets must be specified!" << endl;
@@ -156,7 +160,7 @@ int			main(int argc, char** argv)
 	Bstring*		file_list = NULL;
 	int 			np = 0;
 	
-	if ( merge ) {
+	if ( merge || add ) {
 		if ( masterfile.length() ) {
 			flags |= 2;
 			string_add(&file_list, masterfile);
@@ -166,7 +170,10 @@ int			main(int argc, char** argv)
 			cerr << "Error: No parameter or image files specified!" << endl;
 			bexit(-1);
 		}
-		first_project = project_multi_merge(file_list, fom_index, flags);
+		if ( merge )
+			first_project = project_multi_merge(file_list, fom_index, flags);
+		else
+			first_project = project_multi_add_particles(file_list);
 		string_kill(file_list);
 		if ( flags & 4 ) part_reset_selection(first_project);
 	} else {

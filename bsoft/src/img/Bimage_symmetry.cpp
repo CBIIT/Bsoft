@@ -974,21 +974,21 @@ int			Bimage::replicate_asymmetric_unit(Bsymmetry& sym)
 	change_type(Float);
 	
 	View			ref = view_symmetry_reference(sym);
-	
+	Vector3<double>	vr(ref.vector3());
+
 	if ( verbose & VERB_PROCESS ) {
 		cout << "Replicating an asymmetric unit:" << endl;
 		cout << "Symmetry:                       " << sym.label() << endl;
-		cout << "Reference vector:               " << ref << endl << endl;
+		cout << "Reference vector:               " << vr << endl << endl;
 	}
 	
 	if ( sym.point() < 102 ) return 0;
 	
 	long			i, j, cc, nn, xx, yy, zz, nsym(0);
 	double			da, minda;
-	Vector3<double>	vr(ref.vector3());
 	Vector3<double>	v, vt, va;
-//	Matrix3*		m = symmetry_get_all_matrices(sym, nsym);
 	vector<Matrix3>	m = sym.matrices();
+//	vector<Matrix3>	m = symmetry_get_all_matrices(sym);
 	nsym = m.size();
 
 	float*			nudata = new float[datasize];
@@ -1003,6 +1003,7 @@ int			Bimage::replicate_asymmetric_unit(Bsymmetry& sym)
 					minda = 1e30;
 					for ( j=0; j<nsym; j++ ) {
 						vt = m[j]*v;
+//						vt = m[j].transpose()*v;
 						da = vt.angle(vr);
 						if ( minda > da ) {
 							minda = da;
@@ -1016,8 +1017,6 @@ int			Bimage::replicate_asymmetric_unit(Bsymmetry& sym)
 			}
 		}
 	}
-	
-//	delete[] m;
 	
 	data_assign((unsigned char *) nudata);
 	

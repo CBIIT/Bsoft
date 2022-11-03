@@ -202,6 +202,7 @@ Bimage*		Bimage::transform(long nn, Vector3<long> nusize, Vector3<double> scale,
 //					cout << old << endl;
 				for ( cc=0; cc<c; cc++, i++ )
 					pt->add(i, interpolate(cc, old, nn, fill));
+//					pt->add(i, interpolate_wrap(cc, old, nn));
 			}
 		}
 	}

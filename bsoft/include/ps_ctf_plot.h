@@ -7,6 +7,7 @@
 **/
  
 #include "ctf.h"
+#include "Bplot.h"
 
 // Function prototypes
 int			ps_show_ctf_param(Bplot* plot, CTFparam& em_ctf);

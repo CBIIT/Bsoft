@@ -7,5 +7,5 @@ var model__compare_8h =
     [ "model_distance_matrix", "model__compare_8h.html#ab301af02ed616345a55843209c898621", null ],
     [ "model_distance_matrix", "model__compare_8h.html#ae80d4946f0add73436060f9af488edef", null ],
     [ "model_maxnum_components", "model__compare_8h.html#a17ade38978bad2dd5edbb0617b554155", null ],
-    [ "models_consensus", "model__compare_8h.html#aaff25d0fb973abcae1da88336f802dc1", null ]
+    [ "models_consensus", "model__compare_8h.html#a61f81524e74f21cc674bf894a2dc0115", null ]
 ];

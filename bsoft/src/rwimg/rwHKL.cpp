@@ -58,22 +58,22 @@ int 	readHKL(Bimage* p, int readdata)
     int		ik(0); 	    	    	// Find the K index header item
     int		il(0); 	    	    	// Find the L index header item
     int		iamp(0);	    	    // Find AMP, PHI, FOM and FREE columns
- 	int 	isigamp(0);
+// 	int 	isigamp(0);
 	int		iphi(0);
-    int 	isigphi(0);
+//	int 	isigphi(0);
     int		ifom(0);
-	int		ifre(0);
+//	int		ifre(0);
 
 	for ( one=header, i=0; one && i<m; one=one->next, i++ ) {
 		if ( *one == "H" || *one == "IH" ) ih = i;
 		if ( *one == "K" || *one == "IK" ) ik = i;
 		if ( *one == "L" || *one == "IL" ) il = i;
 		if ( one->contains("AMP") ) iamp = i;
-		if ( one->contains("SIGAMP") ) isigamp = i;
+//		if ( one->contains("SIGAMP") ) isigamp = i;
 		if ( one->contains("PH") ) iphi = i;
-		if ( one->contains("SIGPH") ) isigphi = i;
+//		if ( one->contains("SIGPH") ) isigphi = i;
 		if ( one->contains("FOM") ) ifom = i;
-		if ( one->contains("FRE") ) ifre = i;
+//		if ( one->contains("FRE") ) ifre = i;
 	}
 
  	if ( verbose & VERB_PROCESS ) {

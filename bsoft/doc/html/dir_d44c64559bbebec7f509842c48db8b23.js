@@ -150,9 +150,11 @@ var dir_d44c64559bbebec7f509842c48db8b23 =
     [ "rwMIFF.h", "rw_m_i_f_f_8h.html", "rw_m_i_f_f_8h" ],
     [ "rwmodel.h", "rwmodel_8h.html", "rwmodel_8h" ],
     [ "rwmodel_bild.h", "rwmodel__bild_8h.html", "rwmodel__bild_8h" ],
+    [ "rwmodel_cif.h", "rwmodel__cif_8h.html", "rwmodel__cif_8h" ],
     [ "rwmodel_cmm.h", "rwmodel__cmm_8h.html", "rwmodel__cmm_8h" ],
     [ "rwmodel_mol.h", "rwmodel__mol_8h.html", "rwmodel__mol_8h" ],
     [ "rwmodel_param.h", "rwmodel__param_8h.html", "rwmodel__param_8h" ],
+    [ "rwmodel_pdb.h", "rwmodel__pdb_8h.html", "rwmodel__pdb_8h" ],
     [ "rwmodel_star.h", "rwmodel__star_8h.html", "rwmodel__star_8h" ],
     [ "rwmodel_vega.h", "rwmodel__vega_8h.html", "rwmodel__vega_8h" ],
     [ "rwmodel_xml.h", "rwmodel__xml_8h.html", "rwmodel__xml_8h" ],
@@ -203,5 +205,9 @@ var dir_d44c64559bbebec7f509842c48db8b23 =
     [ "Vector3.h", "_vector3_8h.html", "_vector3_8h" ],
     [ "versions.h", "versions_8h.html", "versions_8h" ],
     [ "View.h", "_view_8h.html", "_view_8h" ],
-    [ "View2.h", "_view2_8h.html", "_view2_8h" ]
+    [ "View2.h", "_view2_8h.html", "_view2_8h" ],
+    [ "zernike.h", "zernike_8h.html", [
+      [ "Zernike_Coefficient", "class_zernike___coefficient.html", "class_zernike___coefficient" ],
+      [ "Zernike", "class_zernike.html", "class_zernike" ]
+    ] ]
 ];

@@ -1518,9 +1518,9 @@ int			do_fft(Bimage* p, int objc, Tcl_Obj *CONST objv[])
 	if ( objc > 3 ) Tcl_GetIntFromObj(NULL, objv[3], &dir);
 
 	if ( dir > 0 ) {
-		if ( p->compound_type() == TComplex ) p->fft(FFTW_BACKWARD);
+		if ( p->compound_type() == TComplex ) p->fft(FFTW_BACKWARD, 1);
 	} else if ( dir < 0 ) {
-		if ( p->compound_type() == TSimple ) p->fft(FFTW_FORWARD);
+		if ( p->compound_type() == TSimple ) p->fft(FFTW_FORWARD, 1);
 	}
 	
 	p->statistics();

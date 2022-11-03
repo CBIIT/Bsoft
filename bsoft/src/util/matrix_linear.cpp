@@ -3,7 +3,7 @@
 @brief	Solving sets of linear equations through matrix algebra
 @author Bernard Heymann 
 @date	Created: 20000501
-@date	Modified: 20190201
+@date	Modified: 20220216
 **/
  
 #include "Matrix.h" 
@@ -300,3 +300,234 @@ Vector3<double>	fit_plane(Matrix a, vector<double> b)
 
 	return normal;
 }
+
+/**
+@brief 	Solves for fitting a conic through a model.
+@param 	v				set of xy coordinates.
+@return vector<double>		6 coefficients.
+
+	The conic is defined as:
+		0 = c0 + c1*x + c2*y + c3*x2 + c4*x*y + c5*y2
+
+**/
+vector<double>	fit_conic(vector<Vector3<double>> v)
+{
+	long				i, j, nt(6), np(v.size());
+	double				avg(0);
+	vector<double>		c(nt,0);
+	Matrix				M(nt,nt);
+	
+	for ( auto p: v ) {
+//		cout << p << endl;
+		avg += p.length();
+		c[0] = 1;
+		c[1] = p[0];
+		c[2] = p[1];
+		c[3] = p[0]*p[0];
+		c[4] = p[0]*p[1];
+		c[5] = p[1]*p[1];
+//		for ( i=0; i<nt; ++i ) c[i] /= np*np;
+		for ( i=0; i<nt; ++i )
+			for ( j=0; j<nt; ++j )
+				M[i][j] += c[i]*c[j];
+	}
+	avg /= v.size();
+	
+	cout << M << endl;
+	
+	M.LU_decomposition();
+//	M.singular_value_decomposition();
+
+	cout << M << endl;
+
+	double				scale(-avg*avg/M[0][0]);
+	for ( i=0; i<nt; ++i ) c[i] = scale * M[i][i];
+
+	double				d, R(0);
+	for ( auto p: v ) {
+		d = c[0] + c[1]*p[0] + c[2]*p[1] + c[3]*p[0]*p[0] + c[4]*p[0]*p[1] + c[5]*p[1]*p[1];
+		R += d*d;
+	}
+	
+	R = sqrt(R/np);
+	
+	cout << "Coefficients:" << endl;
+	for ( i=0; i<nt; ++i ) cout << i << tab << c[i] << endl;
+	cout << "R = " << R << endl;
+	
+	return c;
+}
+
+/**
+@brief 	Solves for fitting a conic through a model.
+@param 	v				set of xy coordinates.
+@return vector<double>		6 coefficients.
+
+	The conic is defined as:
+		0 = c0 + c1*x + c2*y + c3*x2 + c4*x*y + c5*y2
+
+**/
+vector<double>	fit_ellipse(vector<Vector3<double>> v)
+{
+	long				i, j, nt(6), np(v.size());
+	double				davg(0);
+	vector<double>		c(nt,0), dl(3,0), dq(3,0);
+	Matrix				Sl(3,3), Sm(3,3), Sq(3,3), T(3,3), C(3,3), M(3,3);
+	
+	C[0][2] = C[2][0] = 0.5;
+	C[1][1] = -1;
+
+//	cout << C << endl;
+
+	for ( auto p: v ) {
+		davg += p.length();
+//		cout << p << endl;
+		dl[0] = 1;
+		dl[1] = p[0];
+		dl[2] = p[1];
+		dq[0] = p[0]*p[0];
+		dq[1] = p[0]*p[1];
+		dq[2] = p[1]*p[1];
+		for ( i=0; i<3; ++i ) {
+			for ( j=0; j<3; ++j ) {
+				Sl[i][j] += dl[i]*dl[j];
+				Sm[i][j] += dl[i]*dq[j];
+				Sq[i][j] += dq[i]*dq[j];
+			}
+		}
+	}
+	davg /= np;
+/*
+	cout << "Average distance = " << davg << endl;
+	cout << Sl << endl;
+	cout << Sm << endl;
+	cout << Sq << endl;
+*/
+	Sl.singular_value_decomposition();
+
+//	cout << "Sl-1" << endl << Sl << endl;
+
+	Matrix		Smt = Sm.transpose();
+	T = -Sl * Sm;
+	
+//	cout << "T" << endl << T << endl;
+	
+	M = Sq + Smt * T;
+	
+	M *= C;
+
+//	cout << "M" << endl << M << endl;
+	
+	vector<double>		d = M.jacobi_rotation();
+	M.eigen_sort(d);
+
+//	cout << "M-1" << M << endl;
+//	for ( i=0; i<3; ++i ) cout << tab << d[i];
+//	cout << endl;
+	
+	double				dm(1e30), dif, R(0);
+	for ( i=j=0; i<3; ++i ) if ( d[i] > 0 && dm > d[i] ) {
+		dm = d[i];
+		j = i;
+	}
+
+	for ( i=0; i<3; ++i ) c[i+3] = d[i] = M[i][j];
+	
+	d = T * d;
+//	for ( i=0; i<3; ++i ) cout << tab << d[i];
+//	cout << endl;
+
+	for ( i=0; i<3; ++i ) c[i] = d[i];
+
+	double				scale(-davg*davg/c[0]);
+	for ( i=0; i<6; ++i ) c[i] *= scale;
+
+	for ( auto p: v ) {
+		dif = c[0] + c[1]*p[0] + c[2]*p[1] + c[3]*p[0]*p[0] + c[4]*p[0]*p[1] + c[5]*p[1]*p[1];
+		R += dif*dif;
+	}
+	
+	R = sqrt(R/np);
+	
+	if ( verbose ) {
+		cout << "Coefficients:" << endl;
+		for ( i=0; i<nt; ++i ) cout << i << tab << c[i] << endl;
+		cout << "R: " << R << endl << endl;
+	}
+	
+	return c;
+}
+
+/**
+@brief 	Solves for fitting a conic through a model.
+@param 	v				set of xy coordinates.
+@return vector<double>		6 coefficients.
+
+	The conic is defined as:
+		0 = c0 + c1*x + c2*y + c3*x2 + c4*x*y + c5*y2
+
+**/
+vector<double>	fit_ellipse2(vector<Vector3<double>> v)
+{
+	long				i, j, nt(4), np(v.size());
+	double				davg(0);
+	vector<double>		c(nt,0);
+	Matrix				M(nt,nt);
+
+	for ( auto p: v )
+		davg += p.length();
+	davg /= np;
+
+	for ( auto p: v ) {
+		p /= davg;
+		c[0] = 1;
+		c[1] = p[0]*p[0];
+		c[2] = p[0]*p[1];
+		c[3] = p[1]*p[1];
+//		for ( i=0; i<nt; ++i ) c[i] /= np;
+		for ( i=0; i<nt; ++i )
+			for ( j=0; j<nt; ++j )
+				M[i][j] += c[i]*c[j];
+	}
+	
+	cout << "Average distance = " << davg << endl;
+	
+	cout << "M" << endl << M << endl;
+	
+	M.singular_value_decomposition();
+
+	cout << "M-1" << M << endl;
+/*	for ( i=0; i<3; ++i ) cout << tab << d[i];
+	cout << endl;
+
+	double				dm(1e30), dif, R(0);
+	for ( i=j=0; i<3; ++i ) if ( d[i] > 0 && dm > d[i] ) {
+		dm = d[i];
+		j = i;
+	}
+
+	for ( i=0; i<3; ++i ) c[i+3] = d[i] = M[i][j];
+	
+	d = T * d;
+	for ( i=0; i<3; ++i ) cout << tab << d[i];
+	cout << endl;
+
+	for ( i=0; i<3; ++i ) c[i] = d[i];
+
+	double				scale(-davg*davg/c[0]);
+	for ( i=0; i<6; ++i ) c[i] *= scale;
+
+	for ( auto p: v ) {
+		dif = c[0] + c[1]*p[0] + c[2]*p[1] + c[3]*p[0]*p[0] + c[4]*p[0]*p[1] + c[5]*p[1]*p[1];
+		R += dif*dif;
+	}
+	
+	R = sqrt(R/np);
+	
+	cout << "Coefficients:" << endl;
+	for ( i=0; i<nt; ++i ) cout << i << tab << c[i] << endl;
+	cout << "R = " << R << endl;
+*/
+	return c;
+}
+

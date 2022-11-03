@@ -3,7 +3,7 @@
 @brief	Header file for reading and writing atomic model files
 @author Bernard Heymann
 @date	Created: 20060919
-@date	Modified: 20210221
+@date	Modified: 20220929
 **/
 
 #include "View2.h"
@@ -28,6 +28,7 @@ class Bcomptype {
 private:
 	void	initialize() {
 		next = NULL;
+		id = "?";
 		ind = 0;
 		fmod = "?";
 		num = 0;
@@ -38,6 +39,7 @@ private:
 		rad = 1;
 		fom = 0;
 		sel = 1;
+		for ( int i=0; i<11; ++i ) coef[i] = 0;
 	}
 public:
 	Bcomptype*		next;			// Next component type in list
@@ -73,6 +75,9 @@ public:
 		rad = ct->rad;
 		fom = ct->fom;
 		sel = ct->sel;
+		coefficients(ct->coefficients());
+//		cout << "In Bcomptype:" << endl;
+//		show();
 	}
 	void			identifier(string s) { id = s; }
 	void			identifier(Bstring s) { id = s.str(); }
@@ -163,8 +168,15 @@ public:
 	void		update(Bcomptype& ct) {
 		id = ct.id;
 		ind = ct.ind;
+		fmod = ct.fmod;
+		num = ct.num;
+		cnt = ct.cnt;
 		mas = ct.mas;
 		chrg = ct.chrg;
+		lrad = ct.lrad;
+		rad = ct.rad;
+		fom = ct.fom;
+		sel = ct.sel;
 		coefficients(ct.coefficients());
 	}
 	bool			check() {
@@ -172,6 +184,21 @@ public:
 		if ( fmod.empty() ) fmod = "?";
 		if ( mas < 1 ) mas = 1;
 		return 1;
+	}
+	void			show() {
+		cout << "Identity:                       " << id << endl;
+		cout << "Index:                          " << ind << endl;
+		cout << "File name:                      " << fmod << endl;
+		cout << "Number:                         " << num << endl;
+		cout << "Count:                          " << cnt << endl;
+		cout << "Mass:                           " << mas << endl;
+		cout << "Charge:                         " << chrg << endl;
+		cout << "Link radius:                    " << lrad << endl;
+		cout << "Radius:                         " << rad << endl;
+		cout << "FOM:                            " << fom << endl;
+		cout << "Select:                         " << sel << endl;
+		cout << "Coefficients:" << endl;
+		for ( int i=0; i<11; ++i ) cout << i+1 << tab << coef[i] << endl;
 	}
 } ;
 
@@ -290,6 +317,7 @@ private:
 		rad = 1;
 		rgba = RGBA<float>(1,1,1,1);
 		den = 1;
+		chrg = 0;
 		fom = 0;
 		sel = 1;
 	}
@@ -297,6 +325,7 @@ public:
 	Bcomponent*			next;			// Next component in list
 private:
 	string				id;				// Component identifier
+	string				dsc;			// Additional description
 	Bcomptype*			typ;			// Component type pointer
 	Vector3<float>		loc;			// Location coordinates (angstroms)
 	View2<float>		viw; 			// View: 3-value unit vector and angle (radians)
@@ -305,6 +334,7 @@ private:
 	float				rad;			// Display radius
 	RGBA<float>			rgba;			// RGBA color
 	float				den;			// Component density or intensity
+	float				chrg;			// Component charge
 	float				fom;			// Figure-of-merit
 	int					sel;			// Selection flag
 public:
@@ -331,6 +361,9 @@ public:
 	void			identifier(string s) { id = s; }
 	void			identifier(Bstring s) { id = s.str(); }
 	string&			identifier() { return id; }
+	void			description(string s) { dsc = s; }
+	void			description(Bstring s) { dsc = s.str(); }
+	string&			description() { return dsc; }
 	void			type(Bcomptype* t) { typ = t; }
 	Bcomptype*		type() { return typ; }
 	void			location(Vector3<double> v) { loc = v; }
@@ -351,6 +384,8 @@ public:
 	RGBA<float>&	color() { return rgba; }
 	void			density(double d) { den = d; }
 	double			density() { return den; }
+	void			charge(double d) { chrg = d; }
+	double			charge() { return chrg; }
 	void			FOM(double d) { fom = d; }
 	double			FOM() { return fom; }
 	void			select(long i) { sel = i; }
@@ -642,6 +677,41 @@ public:
 } ;
 
 /************************************************************************
+@Object: class Bgroup
+@Description:
+	Componet group parameter structure.
+@Features:
+	Grouping of components into substructures for each model.
+*************************************************************************/
+class Bgroup {
+public:
+	Bgroup*			next;			// Next group in list
+private:
+	string			id;				// Group identifier
+	string			gtp;			// Group type identifier
+	string			tp;				// Type identifier
+	string			dsc;			// Additional description
+	string			sq;				// Sequence
+public:
+	Bgroup(string s) { next = NULL; id = s; }
+	void			identifier(string s) { id = s; }
+	string&			identifier() { return id; }
+	void			group_type(string s) { gtp = s; }
+	string&			group_type() { return gtp; }
+	void			type(string s) { tp = s; }
+	string&			type() { return tp; }
+	void			description(string s) { dsc = s; }
+	string&			description() { return dsc; }
+	void			sequence(string s) { sq = s; }
+	string&			sequence() { return sq; }
+	Bgroup*			add(string s) {
+		Bgroup* 		g(this);
+		while ( g->next ) g = g->next;
+		return g->next = new Bgroup(s);
+	}
+} ;
+
+/************************************************************************
 @Object: class Bmodel
 @Description:
 	Model parameter structure.
@@ -662,6 +732,7 @@ private:
 		comp = NULL;
 		link = NULL;
 		poly = NULL;
+		group = NULL;
 	}
 public:
 	Bmodel*			next;			// Next model in list
@@ -683,6 +754,7 @@ public:
 	Bcomponent*		comp;			// Component list
 	Blink*			link;			// Link list
 	Bpolygon*		poly;			// Polygon list
+	Bgroup*			group;			// Component group list
 	Bmodel() { initialize(); }
 	Bmodel(string s) { initialize(); id = s; }
 	Bmodel(Bstring s) { initialize(); id = s.str(); }
@@ -709,6 +781,27 @@ public:
 	void			select(long i) { sel = i; }
 	long			select() { return sel; }
 	long			select_increment() { return sel++; }
+	long			select_all() {
+		long		n(0);
+		for ( Bcomponent* c = comp; c; c = c->next ) {
+			c->select(1);
+			n++;
+		}
+		return n;
+	}
+	void			deselect_all() {
+		for ( Bcomponent* c = comp; c; c = c->next )
+			c->select(0);
+	}
+	// Deselects outside bounds
+	long			select_within_bounds(Vector3<double>& start, Vector3<double>& end) {
+		long			nsel(0);
+		for ( Bcomponent* c = comp; c; c = c->next ) if ( c->select() ) {
+			if ( ( c->location() >= start ) && ( c->location() <= end ) ) nsel++;
+			else c->select(0);
+		}
+		return nsel;
+	}
 	Vector3<double>	minimum() { return min; }
 	Vector3<double>	maximum() { return max; }
 	Bmodel*			add(string s) {
@@ -725,6 +818,11 @@ public:
 		Bmodel* 		m(this);
 		while ( m->next ) m = m->next;
 		return m->next = model;
+	}
+	Bmodel*			find(string s) {
+		Bmodel* 		m(this);
+		while ( m && m->id != s ) m = m->next;
+		return m;
 	}
 	Bmodel*			copy() {
 		Bmodel*			m = new Bmodel(id);
@@ -862,10 +960,12 @@ public:
 		return n;
 	}
 	Bcomptype*		add_type(string s) {
+		if ( find_type(s) ) return find_type(s);
 		if ( type ) return type->add(s);
 		return type = new Bcomptype(s);
 	}
 	Bcomptype*		add_type(Bstring s) {
+		if ( find_type(s.str()) ) return find_type(s.str());
 		if ( type ) return type->add(s.str());
 		return type = new Bcomptype(s.str());
 	}
@@ -878,8 +978,16 @@ public:
 		return type = new Bcomptype(fn, img_num);
 	}
 	Bcomptype*		add_type(string s, string fn, long img_num) {
+		if ( find_type(s) ) return find_type(s);
 		if ( type ) return type->add(s, fn, img_num);
 		return type = new Bcomptype(s, fn, img_num);
+	}
+	Bcomptype*		add_type(Bcomptype* ct) {
+//		cout << "In add_type:" << endl;
+//		ct->show();
+		if ( find_type(ct->identifier()) ) return find_type(ct->identifier());
+		if ( type ) return type->add(ct);
+		return type = new Bcomptype(ct);
 	}
 	Bcomptype*		find_type(string s) {
 		if ( type ) return type->find(s);
@@ -899,6 +1007,10 @@ public:
 		for ( Bcomptype* ct = type; ct; ct = ct->next )
 			if ( types.find(ct->identifier()) != types.end() )
 				ct->update(types[ct->identifier()]);
+	}
+	Bgroup*		add_group(string s) {
+		if ( group ) return group->add(s);
+		return group = new Bgroup(s);
 	}
 	long			link_count() { return link->count(); }
 	long			polygon_count() { return poly->count(); }
@@ -925,8 +1037,8 @@ public:
 		max = -min;
 		Bcomponent*		c;
 		for ( c = comp; c; c = c->next ) if ( c->select() ) {
-			min = min.min(comp->location());
-			max = max.max(comp->location());
+			min = min.min(c->location());
+			max = max.max(c->location());
 		}
 	}
 	Vector3<double>	center_of_coordinates() {
@@ -971,6 +1083,12 @@ public:
 		for ( Blink* l = link; l; l = l->next )
 			cout << l->comp[0]->identifier() << tab << l->comp[1]->identifier() << endl;
 	}
+	vector<Bcomponent*>	component_array() {
+		vector<Bcomponent*>	carr;
+		for( Bcomponent* c = comp; c; c = c->next ) if ( c->select() )
+			carr.push_back(comp);
+		return carr;
+	}
 } ;
 
 #define _Bmodel_
@@ -993,9 +1111,7 @@ int			model_set_type(Bmodel* model, Bstring& set_type);
 int			model_change_type(Bmodel* model, Bstring& change_type);
 int			model_check(Bmodel* model, Bstring path);
 Bmodel*		model_list_copy(Bmodel* model);
-int			component_kill(Bcomponent* comp);
 int			component_list_kill(Bcomponent* comp);
-int			comp_type_kill(Bcomptype* type);
 int			comp_type_list_kill(Bcomptype* type);
 int			model_link_list_kill(Bmodel* model);
 int			link_kill(Blink** link_list, Bcomponent* comp, int i);

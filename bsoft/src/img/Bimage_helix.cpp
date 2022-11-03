@@ -1830,7 +1830,7 @@ Bimage*		Bimage::filament_from_projections(double hi_res, int flag)
 		view[3] = angle;
 		p->fft();
 		p->phase_shift_to_origin();
-		pf->fspace_pack_2D(p, view.matrix(), hi_res, 0, scale, 1, 0);
+		pf->fspace_pack_2D(p, view.matrix(), hi_res, 0, scale, 0, 1, 0);
 		delete p;
 	}
 

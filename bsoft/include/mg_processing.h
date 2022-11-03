@@ -3,7 +3,7 @@
 @brief	Header file for micrograph processing
 @author Bernard Heymann
 @date	Created: 20000426
-@date	Modified: 20210728
+@date	Modified: 20220813
 **/
 
 #include "ctf.h"
@@ -19,6 +19,7 @@
 #define	MODE_SCC		1
 #define	MODE_CCC		2
 #define	MODE			3
+#define	INVERT			4
 #define	FULL_ASU		8
 #define	MULTI_FILE		16
 #define	APPLY_CTF		32

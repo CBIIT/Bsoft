@@ -6,46 +6,71 @@
 # Example:
 #		macinstall /Applications
 # Bernard Heymann
-# 20030818 - 20200816
+# 20030818 - 20220927
 
 APP="/Applications"
 if [[ -d $1 ]]; then APP=$1; fi
 
 set CURR = `pwd`
 
+# Must be in the Bsoft directory from which programs will be executed
 BSOFT=`dirname $0`
 if [[ -z $BSOFT ]]; then BSOFT=`pwd`; fi
 if [ "$BSOFT" = "." ]; then BSOFT=`pwd`; fi
 
-rm -f Bshow.app/Contents/Resources/Scripts/AppMain.tcl
-rm -f Brun.app/Contents/Resources/Scripts/AppMain.tcl
-
 echo ""
 echo Bsoft home: $BSOFT
 
-# Tcl/Tk applications that can be run from the Finder or the Dock
-TKVERSION=`echo 'puts $tk_version; exit' | wish`
-echo ""
-echo "TK version: $TKVERSION"
+# Clean up current contents
+rm -f Bshow.app/Contents/Resources/Scripts/AppMain.tcl
+rm -f Brun.app/Contents/Resources/Scripts/AppMain.tcl
+rm -f Bshow.app/Contents/MacOS/Wish*
+rm -f Brun.app/Contents/MacOS/Wish*
+
+TCL=""
+TK=""
+if [[ -d /Library/Frameworks/Tk.framework ]]; then
+	TCL="/Library/Frameworks/Tcl.framework"
+	TK="/Library/Frameworks/Tk.framework"
+else
+	echo "Need to install Tcl/Tk 8.6!"
+	exit
+fi
+
+if [[ -d $TK ]]; then
+	cd ${BSOFT}/Bshow.app/Contents/MacOS
+	ln -sfv $TK/Resources/Wish.app/Contents/MacOS/Wish .
+	cd ${BSOFT}/Brun.app/Contents/MacOS
+	ln -sfv $TK/Resources/Wish.app/Contents/MacOS/Wish .
+fi
+
+# Remove old versions
+rm -rf ${APP}/Bshow.app
+rm -rf ${APP}/Brun.app
+
 echo Installing Bshow and Brun in ${APP}
-cp -r Bshow.app ${APP}
-cp -r Brun.app ${APP}
+cp -r ${BSOFT}/Bshow.app ${APP}
+cp -r ${BSOFT}/Brun.app ${APP}
 
 cd ${APP}/Bshow.app/Contents
 sed s\z/usr/local/bsoftz${BSOFT}zg Info.plist > t.t
 mv t.t Info.plist
 
 cd ${APP}/Bshow.app/Contents/Resources/Scripts
-rm -f AppMain.tcl
-ln -s ${BSOFT}/tcltk/bshow AppMain.tcl
+ln -sfv ${BSOFT}/tcltk/bshow AppMain.tcl
 
 cd ${APP}/Brun.app/Contents
 sed s\z/usr/local/bsoftz${BSOFT}zg Info.plist > t.t
 mv t.t Info.plist
 
 cd ${APP}/Brun.app/Contents/Resources/Scripts
-rm -f AppMain.tcl
-ln -s ${BSOFT}/tcltk/brun AppMain.tcl
+ln -sfv ${BSOFT}/tcltk/brun AppMain.tcl
+
+TKVERSION=`echo 'puts $tk_version; exit' | wish`
+echo ""
+echo "TK version: $TKVERSION"
+echo "TK framework: $TK"
+echo "Wish path: $WISH"
 
 cd ${CURR}
 echo ""

@@ -3,7 +3,7 @@
 @brief	Functions for calculating electron scattering profiles
 @author Bernard Heymann
 @date	Created: 20190521
-@date	Modified: 20210311
+@date	Modified: 20210514
 **/
 
 #include "scatter.h"
@@ -107,7 +107,7 @@ JSvalue			js_composition(string s)
 }
 
 /**
-@brief 	Calculates an elastic electron scattering profile for an component type.
+@brief 	Calculates an elastic electron scattering profile for a component type.
 @param 	&ct				component type.
 @param 	ds 				frequency space sampling increment.
 @param 	scut 			maximum spacial frequency.
@@ -119,9 +119,9 @@ vector<double>		calculate_scattering_curve(Bcomptype& ct,
 	if ( ds < 1e-10 ) ds = 0.01;
 	
 	long			i, j, k, imax(scut/ds + 0.5);
-	double			s2, ds2(ds*ds/4);
+	double			s2, ds2(ds*ds);
     
-    // Calculate the atomic scattering profiles
+    // Calculate the atomic scattering profile
 	if ( verbose & VERB_DEBUG )
 		cout << "DEBUG calculate_scattering_curve: z = " << ct.index() << endl;
 		
@@ -198,6 +198,70 @@ double		scatter_curve_integral(Bcomptype& ct)
 //	cout << ct->el << tab << cs << endl;
 	
 	return cs;
+}
+
+/**
+@brief 	Calculates the atomic potential for elastic electron scattering for a component type.
+@param 	&ct				component type.
+@param 	dr 				radius increment.
+@param 	rmax 			maximum radius.
+@return vector<double>		array with potential profile.
+**/
+vector<double>		calculate_potential_curve(Bcomptype& ct, double dr, double rmax)
+{
+	if ( dr < 1e-10 ) dr = 0.001;
+	if ( rmax < 2 ) rmax = 2;
+	
+	long			i, j, k, imax(rmax/dr + 0.5);
+	double			r2, dr2(dr*dr);
+    
+    // Calculate the atomic potential profile
+	if ( verbose & VERB_DEBUG )
+		cout << "DEBUG calculate_potential_curve: z = " << ct.index() << endl;
+		
+	vector<double>	pot;
+	vector<double>	coef(ct.coefficients());
+
+	for ( j=0, k=5; j<5; ++j, ++k ) {
+		coef[j] *= sqrt(M_PI/coef[k]);
+		coef[k] = M_PI*M_PI/coef[k];
+	}
+
+	for ( i=0; i<imax; ++i ) {
+		r2 = i*i*dr2;
+		pot.push_back(coef[10]);
+		for ( j=0, k=5; j<5; ++j, ++k )
+			pot[i] += coef[j]*exp(-coef[k]*r2);
+	}
+		
+	return pot;
+}
+
+/**
+@brief 	Calculates potential profiles for a subset of component types.
+@param	&el				elements to calculate curves for.
+@param 	&types			component type.
+@param 	dr 				radius increment.
+@param 	rmax 			maximum radius.
+@return map<string, vector<double>>	array with potential profile.
+**/
+map<string, vector<double>>		calculate_potential_curves(JSvalue& el,
+				map<string,Bcomptype>& types, double dr, double rmax)
+{
+	if ( el.size() < 1 ) el = js_all_elements(types);
+	
+	map<string, vector<double>>	pot;
+	
+	for ( auto ct: types ) {
+		if ( el.exists(ct.first) ) {
+			if ( verbose & VERB_FULL )
+				cout << "Calculating potential curve for " << ct.first << endl;
+			vector<double>	pot1 = calculate_potential_curve(ct.second, dr, rmax);
+			pot[ct.first] = pot1;
+		}
+	}
+		
+	return pot;
 }
 
 /**
@@ -693,18 +757,18 @@ vector<double>	signal_intensity(Bmaterial& material, double thick_step, double t
 @param 	&paramfile	file with scattering coefficients.
 @param 	&outfile	file to write curves to.
 @param 	&selection	element selection.
+@param 	resolution	resolution limit.
 @return int			0.
 
 	The scattering coefficients are obtained from an input parameter file.
 
 **/
-int			write_scattering_curves(Bstring& paramfile, Bstring& outfile, Bstring& selection)
+int			write_scattering_curves(Bstring& paramfile, Bstring& outfile, Bstring& selection, double resolution)
 {
+	if ( resolution < 0.1 || resolution > 2 ) resolution = 2;
 	
 	long			i, j, nscat(100);
-	double			s2;
-	double			scut(1.0), ds(scut/nscat);
-    double			ds2(ds*ds/4);
+	double			scut(1.0/resolution), ds(scut/nscat);
     
  	map<string,Bcomptype> 	types = read_atom_properties(paramfile);
 
@@ -755,11 +819,90 @@ int			write_scattering_curves(Bstring& paramfile, Bstring& outfile, Bstring& sel
 			fd << tab << ct.second.identifier() << "(" << ct.second.index() << ")";
 	fd << endl;
 	for ( i=0; i<nscat; i++ ) {
-		s2 = i*i*ds2;
-		fd << sqrt(s2);
+		fd << ds*i;
 		for ( auto ct: types )
 			if ( el.exists(ct.first) )
 				fd << tab << scat[ct.first][i];
+		fd << endl;
+	}
+	fd << endl;
+	
+	fd.close();
+	
+	return 0;
+}
+
+/**
+@brief 	Calculates and writes atomic scattering profiles to a file.
+@param 	&paramfile	file with scattering coefficients.
+@param 	&outfile	file to write curves to.
+@param 	&selection	element selection.
+@param 	radius		maximum radius.
+@return int			0.
+
+	The scattering coefficients are obtained from an input parameter file.
+
+**/
+int			write_potential_curves(Bstring& paramfile, Bstring& outfile, Bstring& selection, double radius)
+{
+	if ( radius < 0.1 || radius > 10 ) radius = 10;
+	
+	long			i, j, nrad(100);
+	double			dr(radius/nrad);
+    
+ 	map<string,Bcomptype> 	types = read_atom_properties(paramfile);
+
+	vector<string>	vs;
+    if ( selection.length() < 1 ) vs = all_elements(types);
+    else vs = split(selection.str(), ',');
+
+    JSvalue			el = js_composition(vs);
+	
+	map<string, vector<double>>	pot = calculate_potential_curves(el, types, dr, radius);
+
+	ofstream		fd(outfile.c_str());
+	if ( fd.fail() ) return -1;
+
+	if ( verbose ) {
+		cout << "Writing potential curves to:    " << outfile << endl;
+		cout << "Elemental selection:            " << selection << endl << endl;
+	}
+	
+	fd << "Scattering coefficients:" << endl;
+	for ( auto ct: types )
+		if ( el.exists(ct.first) )
+			fd << tab << ct.second.identifier() << "(" << ct.second.index() << ")";
+	fd << endl;
+	for ( j=0; j<5; j++ ) {
+		fd << "a" << j+1;
+		for ( auto ct: types )
+			if ( el.exists(ct.first) )
+				fd << tab << ct.second.coefficients()[j];
+		fd << endl;
+	}
+	for ( j=0; j<5; j++ ) {
+		fd << "b" << j+1;
+		for ( auto ct: types )
+			if ( el.exists(ct.first) )
+				fd << tab << ct.second.coefficients()[j+5];
+		fd << endl;
+	}
+	fd << "c";
+	for ( auto ct: types )
+		if ( el.exists(ct.first) )
+			fd << tab << ct.second.coefficients()[10];
+	fd << endl;
+	
+	fd << "Potential curves:" << endl << "s";
+	for ( auto ct: types )
+		if ( el.exists(ct.first) )
+			fd << tab << ct.second.identifier() << "(" << ct.second.index() << ")";
+	fd << endl;
+	for ( i=0; i<nrad; i++ ) {
+		fd << dr*i;
+		for ( auto ct: types )
+			if ( el.exists(ct.first) )
+				fd << tab << pot[ct.first][i];
 		fd << endl;
 	}
 	fd << endl;

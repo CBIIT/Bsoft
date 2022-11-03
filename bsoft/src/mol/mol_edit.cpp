@@ -186,18 +186,23 @@ Bmolgroup**	molgroup_split_into_slices(Bmolgroup* molgroup, double slice_thickne
 		slice_atom[i] = NULL;
 	}
 	
-	if ( verbose )
-		cout << "System split into " << nslices << " slices" << endl << endl;
+	if ( verbose ) {
+		cout << "Splitting molecule group:" << endl;
+		cout << "Number of slices:               " << nslices << endl;
+		cout << "Slice thickness:                " << slice_thickness << " A" << endl << endl;
+	}
 	
 	for ( i=0; i<nslices; i++ ) {
 		snprintf(molname, 20, "%d", i+1);
 		slice_molgroup[i] = molgroup_init();
 		slice_mol = molecule_add(&slice_molgroup[i]->mol, molname);
 		slice_res[i] = residue_add(&slice_mol->res, restype);
-		slice_molgroup[i]->comment += molgroup->comment;
+//		slice_molgroup[i]->comment += molgroup->comment;
 	}
 	
 	for ( mol = molgroup->mol; mol; mol = mol->next ) {
+		if ( verbose & VERB_PROCESS )
+			cout << "Splitting molecule " << mol->id << endl;
 		for( res = mol->res; res; res = res->next ) {
 			for ( atom = res->atom; atom; atom = atom->next ) {
 				i = (int) ((atom->coord[2] - min)/slice_thickness);
@@ -206,12 +211,16 @@ Bmolgroup**	molgroup_split_into_slices(Bmolgroup* molgroup, double slice_thickne
 					cerr << "Index out of range: " << i << endl;
 					return NULL;
 				}
-				if ( slice_atom[i] )
-					slice_atom[i] = atom_add(&slice_atom[i], atom->type);
+//				if ( slice_atom[i] )
+//					slice_atom[i] = atom_add(&slice_atom[i], atom->type);
+//				else
+//					slice_atom[i] = atom_add(&slice_res[i]->atom, atom->type);
+//				memcpy(slice_atom[i], atom, sizeof(Batom));
+				if ( slice_res[i]->atom )
+					slice_atom[i] = slice_atom[i]->next = atom_copy(atom);
 				else
-					slice_atom[i] = atom_add(&slice_res[i]->atom, atom->type);
-				memcpy(slice_atom[i], atom, sizeof(Batom));
-				slice_atom[i]->next = NULL;
+					slice_res[i]->atom = slice_atom[i] = atom_copy(atom);
+//				slice_atom[i]->next = NULL;
 			}
 		}
 	}

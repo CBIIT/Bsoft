@@ -3,7 +3,7 @@
 @brief	Header file for reading reflection files
 @author Bernard Heymann
 @date	Created: 19980822
-@date	Modified: 20170509
+@date	Modified: 20220427
 **/
 
 #include "UnitCell.h"
@@ -201,6 +201,7 @@ Bresidue*	residue_add(Bresidue** res, const char* type);
 Bresidue*	residue_add(Bresidue** res, Bstring& type);
 Batom*		atom_add(Batom** atom, const char* type);
 Batom*		atom_add(Batom** atom, Bstring& type);
+Batom*		atom_copy(Batom* atom);
 long		residue_count(Bmolgroup* molgroup);
 long		atom_count(Bmolgroup* molgroup);
 int			atom_clean_type(Batom* atom, const char* type);

@@ -6,9 +6,9 @@ var bmgconvert_8cpp =
     [ "read_project_conv", "bmgconvert_8cpp.html#a7fa3babd67b2eb49c5589b93438dd5c3", null ],
     [ "read_project_crd", "bmgconvert_8cpp.html#a4a6737cf47b7350287908f6fba761a71", null ],
     [ "read_project_dat", "bmgconvert_8cpp.html#a1acd010b99af35b50dd257f30cdf74cc", null ],
-    [ "write_project_conv", "bmgconvert_8cpp.html#af63b7bf2ac00cc8596bdbabadd7efca4", null ],
-    [ "write_project_crd", "bmgconvert_8cpp.html#ad1a554a14702e4e0efb7f5b956243bc9", null ],
-    [ "write_project_dat", "bmgconvert_8cpp.html#a67154acf5ca14a6c7e8bbbf183a89370", null ],
+    [ "write_project_conv", "bmgconvert_8cpp.html#a57f358108c130271ef66e9620a4fc48b", null ],
+    [ "write_project_crd", "bmgconvert_8cpp.html#a3bd4188a3cca307dbd1d923e0c0e2267", null ],
+    [ "write_project_dat", "bmgconvert_8cpp.html#a91a5632f1acc547481ca8c971b8d73e4", null ],
     [ "use", "bmgconvert_8cpp.html#a4de0ad4c7190962494815c0fa7f948df", null ],
     [ "verbose", "bmgconvert_8cpp.html#a0b2caeb4b6f130be43e5a2f0267dd453", null ]
 ];

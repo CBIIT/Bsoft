@@ -14,7 +14,6 @@
 #include "ctf.h"
 #include "scatter.h"
 #include "json.h"
-//#include "linked_list.h"
 #include "file_util.h"
 #include "options.h"
 #include "utilities.h"
@@ -65,20 +64,21 @@ const char* use[] = {
 " ",
 "Parameters:",
 "-verbose 1               Verbosity of output.",
-"-Volt 100                Acceleration voltage (default 300 kV).",
-"-aperture 100            Aperture size (default 100 µm).",
-"-focallength 2.5         Focal length (default 3.5 mm).",
-"-slitwidth 25            Energy filter slit width (default 0 eV - no filter).",
 "-thickness 1500          Specimen thickness (angstrom).",
 "-mass 234m               Molecular weight (k=kDa, m=MDa).",
 "-radius 284              Particle radius (angstrom).",
 "-dose 25                 Electron dose (electrons/pixel).",
 "-defocus 1.2,3.5,0.1     Defocus range an steps (µm).",
 " ",
+#include "use_ctf.inc"
+" ",
 "Input:",
 "-atoms atomprop.star     Input atom properties file.",
 "-residues resprop.star   Input residue properties file.",
 "-properties matter.star  Input material density and composition file.",
+" ",
+"Output:",
+"-curves outfile.txt      File for scattering curve output (use with -elements option).",
 " ",
 NULL
 };
@@ -88,16 +88,16 @@ int		main(int argc, char** argv)
 {
 	// Initialize variables
 	bool			halfmax(0);			// Flag to calculate half-maximal frequency
-	double			volts(300000);	 	// In volts
-	double			aperture(1e6);		// Aperture size in angstrom
+//	double			volts(300000);	 	// In volts
+//	double			aperture(1e6);		// Aperture size in angstrom
 	vector<double>	apser;				// Series of apertures
 	vector<double>	angser;				// Series of collection angels
 	Bstring			material_str;		// Material string (name or coordinate file)
 	Bstring			elements;			// Elements
 	Bstring			count_str;			// String with element counts
 	double			density(0);			// Material density (g/cm3)
-	double			focal(3.5e7);		// Focal length in angstrom
-	double			slit(0);			// Energy filter slit width
+//	double			focal(3.5e7);		// Focal length in angstrom
+//	double			slit(0);			// Energy filter slit width
 	Bstring			atom_select("all");	// Selection
 	double			thickness(0);		// Specimen thickness
 	double			mass(0);			// Molecular weight
@@ -108,6 +108,10 @@ int		main(int argc, char** argv)
 	Bstring 		respropfile;		// Residue properties file
 	Bstring 		propfile("material.star");	// Material density and composition file
 	Bstring			paramfile;
+	Bstring			curvefile;			// Output file for scattering curves
+
+	double			v;
+	JSvalue			jsctf(JSobject);
 
 	int				optind;
 	Boption*		option = get_option_list(use, argc, argv, optind);
@@ -127,7 +131,8 @@ int		main(int argc, char** argv)
 		if ( curropt->tag == "density" )
 			if ( ( density = curropt->value.real() ) < 0.01 )
 				cerr << "-density: A density must be specified!" << endl;
-		if ( curropt->tag == "Volt" ) {
+#include "ctf.inc"
+/*		if ( curropt->tag == "Volt" ) {
 			if ( ( volts = curropt->value.real() ) < 1 )
 				cerr << "-Volt: A voltage must be specified!" << endl;
 			else
@@ -149,12 +154,13 @@ int		main(int argc, char** argv)
 		}
 		if ( curropt->tag == "slitwidth" )
 			if ( ( slit = curropt->value.real() ) < 1 )
-				cerr << "-slitwidth: A slit width must be specified!" << endl;
+				cerr << "-slitwidth: A slit width must be specified!" << endl;*/
 		if ( curropt->tag == "thickness" )
 			if ( ( thickness = curropt->value.real() ) < 1 )
 				cerr << "-thickness: A specimen thickness must be specified!" << endl;
 		if ( curropt->tag == "mass" )
-			mass = get_option_mass(curropt->value);
+//			mass = get_option_mass(curropt->value);
+			mass = curropt->real_units();
 		if ( curropt->tag == "radius" )
 			if ( ( radius = curropt->value.real() ) < 1 )
 				cerr << "-radius: A particle radius must be specified!" << endl;
@@ -177,6 +183,8 @@ int		main(int argc, char** argv)
 			respropfile = curropt->filename();
 		if ( curropt->tag == "properties" )
 			propfile = curropt->filename();
+		if ( curropt->tag == "curves" )
+			curvefile = curropt->filename();
     }
 	option_kill(option);
 	
@@ -191,6 +199,11 @@ int		main(int argc, char** argv)
 		cout << elements << tab << el.size() << endl;
 	}
 */
+
+	CTFparam			cp = ctf_from_json(jsctf);
+	cp.defocus_average(def_min);
+//	cp.defocus_deviation(def_dev);
+//	cp.astigmatism_angle(ast_angle);
 
 	map<string,Bcomptype>	atompar = read_atom_properties(atompropfile);
 	
@@ -224,6 +237,9 @@ int		main(int argc, char** argv)
 			if ( i < cnt.size() ) comp[el[i]].component_count(cnt[i]);
 			else comp[el[i]].component_count(1);
 		}
+		if ( curvefile.length() )
+			write_scattering_curves(atompropfile, curvefile, elements, 1);
+//			write_potential_curves(atompropfile, curvefile, elements, 3);
 	} else {
 		material = protein_material_default();
 	}
@@ -251,32 +267,22 @@ int		main(int argc, char** argv)
 	if ( verbose )
 		material.show();
 
-	CTFparam		ctf(volts, 2.7, 0.07);
-	ctf.objective_aperture(aperture);
-	ctf.focal_length(focal);
-	ctf.slit_width(slit);
-	ctf.Cs(2.7);
-	ctf.amp_shift(0.07);
-
-	double			scut = ctf.frequency_cutoff();
+//	double			scut = cp.frequency_cutoff();
 
 	if ( elements.length() ) {
 		if ( halfmax )
 			cross_section_half_maximal_frequencies(material);
 		else
-			cross_sections(material, ctf);
+			cross_sections(material, cp);
 		bexit(0);
 	}
 	
 	if ( verbose ) {
 		cout << "General parameters:" << endl;
-		cout << "Acceleration voltage:           " << 1e-3*volts << " kV" << endl;
-		cout << "Beta:                           " << beta(volts) << endl;
-		cout << "Aperture:                       " << 1e-4*aperture << " µm" << endl;
-		cout << "Focal length:                   " << 1e-7*focal << " mm" << endl;
-		cout << "Slit width:                     " << slit << " eV" << endl;
-		cout << "Frequency cutoff:               " << scut << " /A (" <<
-			1/scut << " A)" << endl;
+		cp.show();
+		cout << "Beta:                           " << beta(cp.volt()) << endl;
+//		cout << "Frequency cutoff:               " << scut << " /A (" <<
+//			1/scut << " A)" << endl;
 		cout << "Specimen density:               " << material.density(1) << " Da/A3" << endl;
 		cout << "Specimen thickness:             " << thickness << " A" << endl;
 		cout << "Dose/fluence:                   " << dose << " e/px" << endl;
@@ -289,10 +295,10 @@ int		main(int argc, char** argv)
 
 	Bmaterial	ice = material_ice(atompar);
 	
-	double		def_fac = defocus_factor(ctf, def_min, def_max, def_step);
-	double		intensity = signal_intensity(ice, thickness, ctf);
-	double		emfp = effective_mean_free_path(ice, ctf);
-	double		snre = particle_snr(material, mass, radius, thickness, ctf);
+	double		def_fac = defocus_factor(cp, def_min, def_max, def_step);
+	double		intensity = signal_intensity(ice, thickness, cp);
+	double		emfp = effective_mean_free_path(ice, cp);
+	double		snre = particle_snr(material, mass, radius, thickness, cp);
 	
 	if ( dose ) {
 		cout << "Total intensity:                " << dose << " e/px" << endl;
@@ -305,10 +311,10 @@ int		main(int argc, char** argv)
 //	ice_intensity(100, thickness, atompar, ctf);
 	
 	if ( apser.size() )
-		aperture_series(thickness, ice, ctf, apser);
+		aperture_series(thickness, ice, cp, apser);
 
 	if ( angser.size() )
-		collection_angle_series(thickness, ice, ctf, angser);
+		collection_angle_series(thickness, ice, cp, angser);
 
 //	Bplot*		plot = particle_spectral_signal(protcomp, mass,
 //		radius, thickness, atompar, ctf);
@@ -420,7 +426,7 @@ int			cross_sections(vector<string>& el, map<string,Bcomptype>& atompar, CTFpara
 	
 //	long			nscat(0), i, j, t;
 //	double			ds(0.01), f, sci, cs, csi, csa, csin;
-	double			sci, cs, csi, csa, csin;
+	double			sci, cs, csin;
 	
 	double			lambda = electron_wavelength(ctf.volt());
 	double			scut(ctf.frequency_cutoff());
@@ -444,8 +450,8 @@ int			cross_sections(vector<string>& el, map<string,Bcomptype>& atompar, CTFpara
 			Bcomptype&	at = atompar[el1];
 			sci = scatter_curve_integral(at);
 			cs = elastic_cross_section(at, ctf.volt());
-			csi = elastic_cross_section_integrated(at, ctf);
-			csa = cs*scut*scut/(0.44*0.44 + scut*scut);	// Only for carbon
+//			csi = elastic_cross_section_integrated(at, ctf);
+//			csa = cs*scut*scut/(0.44*0.44 + scut*scut);	// Only for carbon
 			csin = inelastic_cross_section_langmore(at.index(), ctf.volt());
 //			cout << at->el << tab << at->z << tab << cs << tab << csi << tab << csa << tab << csin << endl;
 			cout << at.identifier() << tab << at.index() << tab << sci << tab
@@ -462,7 +468,8 @@ int			cross_sections(Bmaterial& material, CTFparam& ctf)
 {
 	map<string,Bcomptype>&	comp = material.composition();
 	
-	double			sci, cs, csi, csa, csin;
+//	double			sci, cs, csi, csa, csin;
+	double			sci, cs, csin;
 	double			lambda = electron_wavelength(ctf.volt());
 	double			scut(ctf.frequency_cutoff());
 	double			b2 = beta2(ctf.volt());
@@ -483,8 +490,8 @@ int			cross_sections(Bmaterial& material, CTFparam& ctf)
 		Bcomptype&	ct = el1.second;
 		sci = scatter_curve_integral(ct);
 		cs = elastic_cross_section(ct, ctf.volt());
-		csi = elastic_cross_section_integrated(ct, ctf);
-		csa = cs*scut*scut/(0.44*0.44 + scut*scut);	// Only for carbon
+//		csi = elastic_cross_section_integrated(ct, ctf);
+//		csa = cs*scut*scut/(0.44*0.44 + scut*scut);	// Only for carbon
 		csin = inelastic_cross_section_langmore(ct.index(), ctf.volt());
 //		cout << at->el << tab << at->z << tab << cs << tab << csi << tab << csa << tab << csin << endl;
 		cout << ct.identifier() << tab << ct.index() << tab << sci << tab
@@ -681,3 +688,4 @@ Bplot*		particle_spectral_signal(Bmaterial& material, double mass,
 
 	return plot;
 }
+

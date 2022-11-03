@@ -78,7 +78,7 @@ double		timer_report(double lasttime)
 	double 		difftime = getwalltime() - lasttime;
 	
 	if ( verbose & VERB_DEBUG )
-		cout << "DEBUG timer_report: lasttime = " << difftime << endl;
+		cout << "DEBUG timer_report: difftime = " << difftime << endl;
 	
 	if ( verbose & VERB_TIME )
 		cout << "Time elapsed: " << difftime << " s" << endl;

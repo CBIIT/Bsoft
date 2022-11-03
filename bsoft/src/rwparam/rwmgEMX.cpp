@@ -15,7 +15,6 @@
 #include "mg_tomography.h"
 #include "rwmg.h"
 #include "file_util.h"
-#include "linked_list.h"
 #include "utilities.h"
 
 #define	CONV_SWITCH	0	// Bad convention if 1
@@ -406,8 +405,9 @@ int			emx_to_project(xmlDocPtr doc, Bproject* project, Bstring& filename)
 				if ( defU < 100 ) defU *= 1e3;
 				if ( defV < 100 ) defV *= 1e3;
 				mg->ctf->defocus_average((defU + defV)/2);
-				mg->ctf->defocus_deviation(fabs(defU - defV)/2);
-				mg->ctf->astigmatism_angle(xml_get_real(node, "defocusUAngle") * M_PI/180.0);
+//				mg->ctf->defocus_deviation(fabs(defU - defV)/2);
+//				mg->ctf->astigmatism_angle(xml_get_real(node, "defocusUAngle") * M_PI/180.0);
+				mg->ctf->astigmatism(fabs(defU - defV)/2, xml_get_real(node, "defocusUAngle") * M_PI/180.0);
 			}
 			prev_mg_file = mg_file;
 		} else if ( !xmlStrcmp(node->name, BAD_CAST "particle") ) {

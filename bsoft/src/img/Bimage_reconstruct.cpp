@@ -89,23 +89,88 @@ int			Bimage::fspace_2D_interpolate(Complex<float> cv, Vector3<double> m,
 
 /**
 @brief 	Packs a 2D Fourier transform into a 3D reciprocal space volume.  
-@param 	*p			2D particle image transform.
-@param 	mat			rotation matrix.
-@param 	hi_res		high resolution limit.
-@param 	lo_res		low resolution limit (infinite if 0).
-@param 	scale		scale of reconstruction and particle magnification.
-@param 	part_weight	weight of particle (usually 1).
-@param 	interp_type	interpolation type (0=nearest neighbor, 1=weighted nearest neigbor, 2=trilinear).
-@return int			0, <0 on error.
+@param 	*p				2D particle image transform.
+@param 	mat				rotation matrix.
+@param 	hi_res			high resolution limit.
+@param 	lo_res			low resolution limit (infinite if 0).
+@param 	scale			scale of reconstruction and particle magnification.
+@param	ewald_wavelength	Ewald sphere wavelength, if 0, not applied.
+@param 	part_weight		weight of particle (usually 1).
+@param 	interp_type		interpolation type (0=nearest neighbor, 1=weighted nearest neigbor, 2=trilinear).
+@return int				0, <0 on error.
 
 	The rotation matrix is used to determine the plane in reciprocal space
 	to which the 2D transform data is added. The map is assumed to be cubic
 	and the 2D transform square. The orientation parameters must be written
-	into the image structure. 
+	into the image structure.
+	The Ewald sphere offset is stored in the third scale element.
+	Positive or negative for the corresponding sphere, or zero
+	if not applied.
 
 **/
+
 int			Bimage::fspace_pack_2D(Bimage* p, Matrix3 mat, double hi_res, 
-				double lo_res, Vector3<double> scale, double part_weight, int interp_type)
+				double lo_res, Vector3<double> scale, double ewald_wavelength,
+				double part_weight, int interp_type)
+{
+	if ( hi_res < 0.5 ) hi_res = 0.5;	// Limit on resolution!
+	double			mins2 = (lo_res)? 1.0/lo_res: 0;
+	double			maxs2 = 1.0/hi_res;
+//	max_rad_sq += 1;		// Add one pixel width additional interpolation to be removed later
+	mins2 *= mins2;
+	maxs2 *= maxs2;
+	
+	if ( verbose & VERB_DEBUG ) {
+		cout << "DEBUG Bimage::fspace_pack_2D: sampling=" << setprecision(4) << sampling(0) << endl;
+		cout << "DEBUG Bimage::fspace_pack_2D: hi_res=" << hi_res << " maxs2=" << maxs2 << endl;
+	}
+	
+	long 			i, xx, yy;
+	long			hx = (p->x - 1)/2, hy = (p->y - 1)/2;
+	double			s2, d, w;
+	double			ew(ewald_wavelength/2);
+	Vector3<double>	m, s;
+	Vector3<double>	invscale(scale/p->real_size());
+//	Vector3<double> mscale(real_size()/scale);
+	Vector3<double> mscale(real_size());
+	
+//	cout << setprecision(4) << p->real_size() << tab << invscale << tab << mscale << endl;
+		
+	if ( verbose & VERB_FULL )
+		cout << "Packing an image into reciprocal space up to " << hi_res << " A resolution" << endl;
+
+	if ( verbose & VERB_DEBUG )
+		cout << setprecision(4) << mat << endl;
+		
+	for ( yy=i=0; yy<p->y; ++yy ) {
+		s[1] = yy;
+		if ( yy > hy ) s[1] -= (double)p->y;
+		s[1] *= invscale[1];
+		for ( xx=0; xx<p->x; ++xx, ++i ) {
+			s[0] = xx;
+			if ( xx > hx ) s[0] -= (double)p->x;
+			s[0] *= invscale[0];
+			s2 = s[0]*s[0] + s[1]*s[1];
+			if ( s2 >= mins2 && s2 <= maxs2 ) {
+				// Ewald sphere offset: s[2] = ±(lambda/2) * s2
+				if ( ew ) s[2] = ew * s2;
+				m = mat * s;
+				m *= mscale;
+				w = part_weight;
+				d = (maxs2 - s2)*mscale[2];
+				if ( d < 1 ) w *= sqrt(d);
+				fspace_2D_interpolate(p->complex(i), m,
+					w, interp_type);
+			}
+		}
+	}
+	
+	return 0;
+}
+/*
+int			Bimage::fspace_pack_2D(Bimage* p, Matrix3 mat, double hi_res,
+				double lo_res, Vector3<double> scale, double ewald_wavelength,
+				double part_weight, int interp_type)
 {
 	double			min_rad_sq = (lo_res)? sampling(0)[0]/lo_res: 0;
 	double			max_rad_sq = (hi_res)? sampling(0)[0]/hi_res: 0.5;
@@ -122,7 +187,7 @@ int			Bimage::fspace_pack_2D(Bimage* p, Matrix3 mat, double hi_res,
 	Vector3<double>	m, iv;
 	Vector3<double> vscale(x/(scale[0]*p->x), y/(scale[1]*p->y), 1);
 	
-	mat[2] *= z*1.0/x;	 
+	mat[2] *= z*1.0/x;
 	
 	if ( verbose & VERB_FULL )
 		cout << "Packing an image into reciprocal space up to " << hi_res << " A resolution" << endl;
@@ -140,6 +205,8 @@ int			Bimage::fspace_pack_2D(Bimage* p, Matrix3 mat, double hi_res,
 			iv[0] *= vscale[0];
 			d = iv.length2();
 			if ( d >= min_rad_sq && d <= max_rad_sq ) {
+				// Ewald sphere offset: iv[2] = lambda/(2D) * d
+//				iv[2] = scale[2] * d;
 				d = max_rad_sq - d;
 				m = mat * iv;
 				w = part_weight;
@@ -152,18 +219,20 @@ int			Bimage::fspace_pack_2D(Bimage* p, Matrix3 mat, double hi_res,
 	
 	return 0;
 }
+*/
 
 /**
 @brief 	Packs a 2D Fourier transform into a 3D reciprocal space volume.  
-@param 	*p			2D particle image transform.
-@param 	asu_view	view of asymmetric unit.
-@param 	*sym		point group symmetry.
-@param 	hi_res		high resolution limit.
-@param 	lo_res		low resolution limit (infinite if 0).
-@param 	scale		scale of reconstruction and particle magnification.
-@param 	part_weight	weight of particle (usually 1).
-@param 	interp_type	interpolation type (0=nearest neighbor, 1=weighted nearest neigbor, 2=trilinear).
-@return int			0, <0 on error.
+@param 	*p				2D particle image transform.
+@param 	asu_view		view of asymmetric unit.
+@param 	*sym			point group symmetry.
+@param 	hi_res			high resolution limit.
+@param 	lo_res			low resolution limit (infinite if 0).
+@param 	scale			scale of reconstruction and particle magnification.
+@param	ewald_wavelength	Ewald sphere wavelength, if 0, not applied.
+@param 	part_weight		weight of particle (usually 1).
+@param 	interp_type		interpolation type (0=nearest neighbor, 1=weighted nearest neigbor, 2=trilinear).
+@return int				0, <0 on error.
 
 	The rotation matrix is used to determine the plane in reciprocal space
 	to which the 2D transform data is added. The map is assumed to be cubic
@@ -172,7 +241,7 @@ int			Bimage::fspace_pack_2D(Bimage* p, Matrix3 mat, double hi_res,
 
 **/
 int			Bimage::fspace_pack_2D(Bimage* p, View asu_view, Bsymmetry& sym, double hi_res, 
-				double lo_res, Vector3<double> scale, double part_weight, int interp_type)
+				double lo_res, Vector3<double> scale, double ewald_wavelength, double part_weight, int interp_type)
 {
 	View*			v;
 	View*			view = symmetry_get_all_views(sym, asu_view);
@@ -184,7 +253,7 @@ int			Bimage::fspace_pack_2D(Bimage* p, View asu_view, Bsymmetry& sym, double hi
 	}
 	
 	for ( v=view; v; v=v->next )
-		fspace_pack_2D(p, v->matrix(), hi_res, lo_res, scale, part_weight, interp_type);
+		fspace_pack_2D(p, v->matrix(), hi_res, lo_res, scale, ewald_wavelength, part_weight, interp_type);
 	
 	kill_list((char *) view, sizeof(View));
 	

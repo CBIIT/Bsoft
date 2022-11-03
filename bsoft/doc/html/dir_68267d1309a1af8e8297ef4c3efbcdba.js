@@ -154,6 +154,7 @@ var dir_68267d1309a1af8e8297ef4c3efbcdba =
     [ "bwater.cpp", "bwater_8cpp.html", "bwater_8cpp" ],
     [ "bxb.cpp", "bxb_8cpp.html", "bxb_8cpp" ],
     [ "bxml.cpp", "bxml_8cpp.html", "bxml_8cpp" ],
+    [ "bzernike.cpp", "bzernike_8cpp.html", "bzernike_8cpp" ],
     [ "bzfft.cpp", "bzfft_8cpp.html", "bzfft_8cpp" ],
     [ "dcount.cpp", "dcount_8cpp.html", "dcount_8cpp" ],
     [ "dhand.cpp", "dhand_8cpp.html", "dhand_8cpp" ],

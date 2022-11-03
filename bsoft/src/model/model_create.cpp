@@ -3,7 +3,7 @@
 @brief	A tool to expand models.
 @author Bernard Heymann
 @date	Created: 20090714
-@date	Modified: 20210310
+@date	Modified: 20220210
 **/
 
 #include "rwmodel.h"
@@ -59,6 +59,53 @@ Bcomponent*	model_add_component(Bmodel* model, Bstring &id, Bstring &type, Vecto
 	comp = mp->add_component(cid);
 	comp->location(loc);
 	comp->type(ct);
+	
+	return comp;
+}
+
+/**
+@brief 	Adds a set of components to a model.
+@param 	*model			model list.
+@param 	&id				model identifier.
+@param 	&type			component type.
+@param 	loc				component locations.
+@return Bcomponent*		last new component.
+
+	The component is added to the model indicated by the ID, the type and
+	the location given.
+
+**/
+Bcomponent*	model_add_components(Bmodel* model, Bstring &id, Bstring &type, vector<Vector3<double>> loc)
+{
+	if ( !model ) return NULL;
+	
+	Bmodel*			mp = model;
+	
+	if ( id.length() ) {
+		for ( mp = model; mp; mp = mp->next )
+			if ( mp->identifier() == id.str() ) break;
+		if ( !mp ) mp = model;
+	}
+
+	if ( type.length() < 1 ) {
+		if ( model->type ) type = model->type->identifier();
+		else type = "VER";
+	}
+
+	Bcomptype*		ct = model->add_type(type);
+	
+	long			n;
+	Bcomponent*		comp = NULL;
+
+	for ( n=0, comp = mp->comp; comp; comp = comp->next ) n++;
+
+	string			cid = to_string(++n);
+	
+	for ( auto p: loc ) {
+		comp = mp->add_component(cid);
+		comp->location(p);
+		comp->type(ct);
+	}
 	
 	return comp;
 }

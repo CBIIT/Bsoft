@@ -3,7 +3,7 @@
 @brief	A program to operate on image pairs
 @author Bernard Heymann
 @date	Created: 19990219
-@date	Modified: 20200108
+@date	Modified: 20220209
 **/
 
 #include "rwimg.h"
@@ -37,6 +37,7 @@ const char* use[] = {
 "-correlate corr.img      Correlate two images and generate a correlation image.",
 "-Histomatch 20           Match histogram of image 2 to image 1, output modified image 2.",
 "-blend 7                 Blend from image 1 to image 2, output a new multi-image file.",
+"-arctangent              Calculate the invers tangent of two images.",
 " ",
 "Parameters:",
 "-verbose 7               Verbosity of output.",
@@ -63,6 +64,7 @@ int			main(int argc, char* argv[])
 	int 			setsmallest(0);
 	int				setvar(0);
 	int 			setlinear(0);
+	int				setatan(0);
 	double 			excl_voxels(0);			// Percentage voxels to excl_voxels from linear fit
 	int				setcc(0);
 	int				radiusflag(0);
@@ -147,7 +149,8 @@ int			main(int argc, char* argv[])
 		if ( curropt->tag == "blend" )
         	if ( ( blend_number = curropt->value.integer() ) < 1 )
 				cerr << "-blend: A number of images must be specified!" << endl;
- 		if ( curropt->tag == "correlate" )
+ 		if ( curropt->tag == "arctangent" ) setatan = 1;
+		if ( curropt->tag == "correlate" )
 			corrfile = curropt->filename();
  		if ( curropt->tag == "Mask" )
 			maskfile = curropt->filename();
@@ -222,8 +225,12 @@ int			main(int argc, char* argv[])
 	if ( setadd )	    		// Add two images
     	p1->add(p2);
     	
-	if ( setmultiply )	    	// Multiply two images
-    	p1->multiply(p2);
+	if ( setmultiply ) {    	// Multiply two images
+		if ( p1->compound_type() == TComplex && p2->compound_type() == TSimple )
+			p1->complex_multiply(p2);
+		else
+	    	p1->multiply(p2);
+	}
 	
 	if ( setdivide ) {	    	// Divide the first image by the second image
 		if ( p2->images() == 1 ) p1->divide_one(p2);
@@ -236,6 +243,9 @@ int			main(int argc, char* argv[])
 	if ( setsmallest )	    	// Smallest of two images
     	p1->smallest(p2);
 	
+	if ( setatan )
+		p1->arctangent(p2);
+		
 	int				n;
 	double			cc(0);
 	Vector3<double>	origin(p1->image->origin());

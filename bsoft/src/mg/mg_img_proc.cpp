@@ -643,7 +643,7 @@ Bparticle*		particles_from_image(Bimage* p)
 	
 	for ( j=pid=0; j<p->images(); j++ ) {
 		part = particle_add(&partlist, ++pid);
-		part->pixel_size = p->sampling(j)[0];
+		part->pixel_size = p->sampling(j);
 		part->ori = p->image[j].origin();
 		if ( fabs(part->ori[0] - p->sizeX()/2) > p->sizeX()/4 ) part->ori[0] = p->sizeX()/2;
 		if ( fabs(part->ori[1] - p->sizeY()/2) > p->sizeY()/4 ) part->ori[1] = p->sizeY()/2;
@@ -853,7 +853,7 @@ Breconstruction*	reconstruction_create_from_image(Bimage* p, Bstring type)
 @brief 	Gets the average of a micrograph and sets the dose.
 @param 	*mg			micrograph parameter structure.
 @param	*p			image.
-@param 	flag		flag to force calculation of statistics of not available.
+@param 	flag		1=force calculation of statistics of not available; 2=check Poisson
 @return double		intensity.
 
 	The micrograph image header is read.
@@ -877,7 +877,7 @@ double		micrograph_intensity(Bmicrograph* mg, Bimage* p, int flag)
 	
 	mg->intensity = p->average();
 	
-	p->poisson_statistics_check();
+	if ( flag&2 ) p->poisson_statistics_check();
 	
 	if ( mg->dose <= 0 )
 		mg->dose = p->images()*p->average()*p->average()/(p->sampling(0)[0]*p->sampling(0)[1]*p->standard_deviation()*p->standard_deviation());

@@ -1,7 +1,7 @@
 var rwsymop_8cpp =
 [
-    [ "read_symat", "rwsymop_8cpp.html#a53a51e074d2e72f676765259611a0b7b", null ],
-    [ "read_symop", "rwsymop_8cpp.html#adf20e3d188d4bb1a1f114a43c3998ecc", null ],
+    [ "read_symat", "rwsymop_8cpp.html#a642a0ca196ddf10bb88e83962f0d6419", null ],
+    [ "read_symop", "rwsymop_8cpp.html#a7c71e792214fffcb74e1166a3a09e167", null ],
     [ "read_symop_lib", "rwsymop_8cpp.html#a81c8d88a3914df8f5205b6305057fb8d", null ],
     [ "read_symop_star", "rwsymop_8cpp.html#adc8b5e0b4f6e027cf97dfd62c320bf63", null ],
     [ "sym_matrices_from_text_list", "rwsymop_8cpp.html#a3cf4bfcf4b680f25d04f3bce0c9cb642", null ],

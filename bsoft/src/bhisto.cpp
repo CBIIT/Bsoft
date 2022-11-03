@@ -3,10 +3,12 @@
 @brief	Image histograms
 @author Bernard Heymann
 @date	Created: 19990321
-@date	Modified: 20210202
+@date	Modified: 20221004
 **/
 
 #include "rwimg.h"
+#include "histogram.h"
+#include "ps_plot.h"
 #include "utilities.h"
 #include "options.h"
 #include "timer.h"
@@ -37,6 +39,9 @@ const char* use[] = {
 "-select 1                Select an image (default all).",
 "-sampling 2,3.5,1        Sampling (angstrom/voxel, a single value sets all three).",
 " ",
+"Input:",
+"-Histogram histo.ps      Postscript input file name (instead of image).",
+" ",
 "Output:",
 "-Postscript histo.ps     Postscript output file name.",
 " ",
@@ -55,6 +60,8 @@ int 		main(int argc, char **argv)
 	int				percentiles(0);			// Calculate the percentiles for an image
 	int				multi(0);				// Number of histogram clusters
 	Vector3<double>	sam;					// Units for the three axes (A/pixel)
+	Bstring			hisfile;				// Postscript input file
+	long			hiscol(0);				// Data/histogram column in file
 	Bstring			psfile;					// Postscript output file
 	
 	int				optind;
@@ -92,6 +99,11 @@ int 		main(int argc, char **argv)
 				cerr << "-select: An image number must be specified!" << endl;
 		if ( curropt->tag == "sampling" )
         	sam = curropt->scale();
+		if ( curropt->tag == "Histogram" ) {
+			hisfile = curropt->filename();
+			if ( curropt->value.contains(",") )
+				hiscol = curropt->value.post(',').integer();
+		}
 		if ( curropt->tag == "Postscript" )
 			psfile = curropt->filename();
     }
@@ -99,53 +111,71 @@ int 		main(int argc, char **argv)
 	
 	double		ti = timer_start();
 	
-	// Read image file
-	int 		dataflag(0);
-	if ( bins || counts || percentiles || optind < argc - 1 ) dataflag = 1;
-	Bimage*		p = read_img(argv[optind++], dataflag, setimg);
-	if ( p == NULL )  {
-		cerr << "Error: No input file read!" << endl;
-		bexit(-1);
-	}
-	
-	if ( sam.volume() ) p->sampling(sam);
-	
 	Bplot*			plot = NULL;
 	
-    if ( bins ) {
-		if ( setfit.length() ) {
-			if ( setfit[0] == 'g' ) {
-				plot = p->histogram_gauss_plot(bins, fitprm);
-			} else if ( setfit[0] == 'p' ) {
-				plot = p->histogram_poisson_fit(bins, 1);
-	 		} else if ( setfit[0] == 'o' ) {
-				plot = p->histogram_otsu_variance(bins);
-	 		} else if ( setfit[0] == 'c' ) {
-				plot = p->histogram_counts(3);
-			} else {
-				cerr << "Incorrect fitting specification: " << setfit << endl;
-			}
-		} else if ( multi > 1 ) {
-			p->histogram_multi_thresholds(bins, multi);
+	if ( hisfile.length() ) {
+		// Read a Postscript or text file with histogram data
+		Bstring			ext = hisfile.extension();
+		if ( ext == "ps" ) {
+			plot = new Bplot(hisfile);
 		} else {
-			plot = p->histogram(bins);
+			plot = new Bplot(hisfile, 0, 1);
 		}
-	} else if ( counts ) {
-		plot = p->histogram_counts(3);
-	} else if ( percentiles ) {
-		plot = p->percentiles();
-	}
+		if ( bins ) {
+			Bplot*		nu_plot = plot_convert_to_histogram(plot, bins, hiscol);
+			delete plot;
+			plot = nu_plot;
+		}
+		if ( setfit.length() && setfit[0] == 'g' )
+			plot_histogram_fit(plot, fitprm);
+	} else {
+		// Read image file
+		int 		dataflag(0);
+		if ( bins || counts || percentiles || optind < argc - 1 ) dataflag = 1;
+		Bimage*		p = read_img(argv[optind++], dataflag, setimg);
+		if ( p == NULL )  {
+			cerr << "Error: No input file read!" << endl;
+			bexit(-1);
+		}
+		if ( sam.volume() ) p->sampling(sam);
 
+    	if ( bins ) {
+			if ( setfit.length() ) {
+				if ( setfit[0] == 'g' ) {
+					plot = p->histogram_gauss_plot(bins, fitprm);
+				} else if ( setfit[0] == 'p' ) {
+					plot = p->histogram_poisson_fit(bins, 1);
+		 		} else if ( setfit[0] == 'o' ) {
+					plot = p->histogram_otsu_variance(bins);
+		 		} else if ( setfit[0] == 'c' ) {
+					plot = p->histogram_counts(3);
+				} else {
+					cerr << "Incorrect fitting specification: " << setfit << endl;
+				}
+			} else if ( multi > 1 ) {
+				p->histogram_multi_thresholds(bins, multi);
+			} else {
+				plot = p->histogram(bins);
+			}
+		} else if ( counts ) {
+			plot = p->histogram_counts(3);
+		} else if ( percentiles ) {
+			plot = p->percentiles();
+		}
+    	
+    	// Write an output file if a file name is given
+    	if ( optind < argc ) {
+			p->change_type(nudatatype);
+    		write_img(argv[optind], p, 0);
+		}
+		
+		delete p;
+	}
+	
 	if ( psfile.length() && plot )
 		ps_plot(psfile, plot);
 	
-	if ( optind < argc ) {
-		p->change_type(nudatatype);
-		write_img(argv[optind], p, 0);
-	}
-	
 	if ( plot ) delete plot;
-	delete p;
 	
 	if ( verbose & VERB_TIME )
 		timer_report(ti);

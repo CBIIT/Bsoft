@@ -3,13 +3,15 @@
 @brief	Multi-slice simulation of the electron imaging process.
 @author Bernard Heymann
 @date	Created: 20030118
-@date	Modified: 20160604
+@date	Modified: 20221024
 **/
 
 #include "rwmolecule.h"
 #include "rwimg.h"
 #include "mg_multislice.h"
 #include "mg_ctf.h"
+#include "model_map.h"
+#include "model_util.h"
 #include "molecule_to_map.h"
 #include "mol_util.h"
 #include "Matrix.h"
@@ -31,11 +33,11 @@ const char* use[] = {
 "or in reciprocal space (slow but more accurate), both using atomic electron scattering curves.",
 " ",
 "Actions:",
-"-Volt 100                Set the acceleration voltage (required to calculate exit wave and final image).",
 "-Defocus 1.2,1.0,47      Defocus average & deviation, and astigmatism angle (required to apply CTF).",
 "-poisson                 Add poisson noise.",
 "-gaussian 0.2            Add gaussian noise with the given signal-to-noise ratio.",
 "-MTF 17.5                Set the MTF decay constant (required to impose MTF).",
+"-exit                    Calculate exit wave and final image.",
 " ",
 "Parameters:",
 "-verbose 7               Verbosity of output.",
@@ -45,14 +47,11 @@ const char* use[] = {
 "-sampling 1,1.3,1.1      Sampling in angstrom/voxel (default 1,1,1).",
 "-thickness 20            Slice thickness in angstrom (default 10).",
 "-resolution 8.5          Resolution limits (default Nyquest frequency).",
-"-Cs 2.0                  Set the spherical aberration, Cs (default 2.0 mm).",
-"-Cc 2.0                  Set the chromatic aberration, Cc (default 2.0 mm).",
-"-Amplitude 0.07          Set the amplitude contrast (default 0.07).",
-"-alpha 0.5               Set the source size (default 0.1 milliradians).",
-"-energyspread 2e-5       Set the effective energy spread (default 1e-5).",
 "-electrondose 35.5       Set the electron dose (default 20 angstrom/pixel).",
 "-Bfactor 24.5            Set the overall temperature factor (default 0).",
 "-type real               Type of potential calculation (default reciprocal, other gauss).",
+" ",
+#include "use_ctf.inc"
 " ",
 "Input:",
 "-parameters param.star   Parameter file name for electron scattering curves(default atom_prop.star).",
@@ -69,21 +68,16 @@ int 		main(int argc, char **argv)
 	// Initialize variables
 	DataType 		nudatatype(Float);			// Default data type for projection
 	Vector3<long>	size = {1024,1024,1};		// Simulated projection size
-	Vector3<double>	origin;			// Coordinate origin placement
-//	int				set_origin(0);				// Flag to set origin
+	Vector3<double>	ori;						// Coordinate origin placement
+	int				set_origin(0);				// Flag to set origin
 	Vector3<double>	sam = {1,1,1};				// Sampling in angstrom
 	int				set_sampling(0);			// Flag to set sampling
+	int				exit_wave(0);				// Flag to calculate exit wave
 	double			thickness(10);				// Slice thickness in angstrom
 	double			resolution(0);				// High resolution limit
 	double			def_avg(0);					// Defocus average (angstrom)
 	double			def_dev(0);					// Defocus deviation (angstrom)
 	double			ast_angle(-1);	 			// Astigmatism angle
-	double			volt(0); 					// Acceleration voltage (volt)
-	double			amp_fac(0.07);				// Amplitude contrast contribution
-	double			Cs(2e7);					// Spherical aberration (angstrom)
-	double			Cc(2e7);					// Chromatic aberration (angstrom)
-	double			alpha(0.0001);				// Beam source size (radians)
-	double			energy_spread(1e-5);		// Effective energy spread
 	int				poisson(0);					// No poisson noise added
 	double			gauss(1e10);				// Gaussian signal-to-noise ratio, > 1000 means no noise
 	double			dose(20);					// Electron dose
@@ -95,18 +89,26 @@ int 		main(int argc, char **argv)
 	Bstring			exitwavefile;				// Exit wave filename
 	Bstring			paramfile;					// Use default parameter file for atomic properties
 
+	double			v;
+	JSvalue			jsctf(JSobject);
+
 	int				optind;
 	Boption*		option = get_option_list(use, argc, argv, optind);
 	Boption*		curropt;
 	for ( curropt = option; curropt; curropt = curropt->next ) {
+		if ( curropt->tag == "exit" ) exit_wave = 1;
 		if ( curropt->tag == "datatype" )
 			nudatatype = curropt->datatype();
 		if ( curropt->tag == "size" )
 			size = curropt->size();
 		if ( curropt->tag == "origin" ) {
-			origin = curropt->origin();
-//			set_origin = 1;
-        }
+			if ( curropt->value[0] == 'c' ) {
+				set_origin = 2;
+			} else {
+				ori = curropt->origin();
+				set_origin = 1;
+			}
+		}
 		if ( curropt->tag == "sampling" ) {
 			sam = curropt->scale();
 			set_sampling = 1;
@@ -126,46 +128,7 @@ int 		main(int argc, char **argv)
 				ast_angle *= M_PI/180;				// Assume degrees
 			}
 		}
-		if ( curropt->tag == "Cs" ) {
-			if ( ( Cs = curropt->value.real() ) < 0.001 )
-				cerr << "-Cs: A Cs value must be specified!" << endl;
-			else if ( Cs < 1e3 ) Cs *= 1e7;			// Assume mm
-		}
-		if ( curropt->tag == "Cc" ) {
-			if ( ( Cc = curropt->value.real() ) < 0.001 )
-				cerr << "-Cc: A Cc value must be specified!" << endl;
-			else if ( Cc < 1e3 ) Cc *= 1e7;			// Assume mm
-		}
-		if ( curropt->tag == "Volt" ) {
-			if ( ( volt = curropt->value.real() ) < 0.001 )
-				cerr << "-Volt: A voltage must be specified!" << endl;
-			else
-				if ( volt < 1e3 ) volt *= 1e3;		// Assume kilovolts
-		}
-		if ( curropt->tag == "Amplitude" ) {
-			if ( ( amp_fac = curropt->value.real() ) < 0 )
-				cerr << "-Amplitude: A fraction must be specified!" << endl;
-			else {
-				if ( amp_fac > 1 ) amp_fac /= 100;	// Assume percentage
-				if ( amp_fac < 0 ) amp_fac = 0;
-			}
-		}
-		if ( curropt->tag == "alpha" ) {
-			if ( ( alpha = curropt->value.real() ) < 0.001 )
-				cerr << "-alpha: A beam source size or divergence must be specified!" << endl;
-			else {
-				if ( alpha > 0.01 ) alpha /= 1000;	// Assume milliradians
-				if ( alpha < 0 ) alpha = 0;
-			}
-		}
-		if ( curropt->tag == "energyspread" ) {
-			if ( ( energy_spread = curropt->value.real() ) < 0.001 )
-				cerr << "-energyspread: A energy spread must be specified!" << endl;
-			else {
-				if ( energy_spread > 0.001 ) energy_spread /= 1e5;	// Assume eV
-				if ( energy_spread < 0 ) energy_spread = 0;
-			}
-		}
+#include "ctf.inc"
 		if ( curropt->tag == "electrondose" )
 			if ( ( dose = curropt->value.real() ) < 0.001 )
 				cerr << "-electrondose: The electron dose must be specified!" << endl;
@@ -195,21 +158,57 @@ int 		main(int argc, char **argv)
 	option_kill(option);
 	
 	double			ti = timer_start();
-	
+
+	CTFparam		cp = ctf_from_json(jsctf);
+	cp.defocus_average(def_avg);
+	cp.astigmatism(def_dev, ast_angle);
+
 	// Read the atomic structure file
 	Bstring			filename(argv[optind]);
-	Bmolgroup*		molgroup = read_molecule(filename, atom_select, paramfile);
+	Bmolgroup*		molgroup = NULL;
+//	Bmolgroup*		molgroup = read_molecule(filename, atom_select, paramfile);
+	Bmodel*			model = read_model(filename, paramfile);
 	
 	Bimage*			p = NULL; 
 	Bimage*			ppot = NULL; 
 	Bimage*			pgrate = NULL; 
-	Bimage*			pwav = NULL; 
+	Bimage*			pwav = NULL;
+	
+	if ( set_origin == 2 ) ori = size/2;
+	ori[2] = 0;
+
 	if ( molgroup ) {
-		ppot = img_calc_potential(molgroup, size, origin, sam, thickness,
+		ppot = img_calc_potential(molgroup, size, ori, sam, thickness,
 			resolution, Bfactor, paramfile, pottype);
 		if ( potentialfile.length() ) {
 			pgrate = ppot->copy();
 			ppot->complex_to_real();
+			if ( verbose )
+				cout << "Writing the atomic potential image(s)" << endl;
+			ppot->change_type(nudatatype);
+			write_img(potentialfile, ppot, 0);
+			delete ppot;
+		} else {
+			pgrate = ppot;
+		}
+		optind++;
+	} else if ( model ) {
+		long					nslices(size[2]);
+		sam[2] = thickness;
+		if ( size[2] < 2 ) nslices = size[1]*sam[2]/thickness;
+		ppot = new Bimage(Float, TComplex, size[0], size[1], 1, nslices);
+		ppot->origin(ori);
+		ppot->sampling(sam);
+		ppot->fourier_type(Standard);
+		img_electron_scattering(model, ppot, cp, 0, 0, paramfile, 0);
+		ppot->phase_shift(ori);
+		ppot->fft(FFTW_BACKWARD, 2);	// Full normalization 
+		ppot->fourier_type(NoTransform);
+		ppot->multiply(POTPREFAC);
+		if ( potentialfile.length() ) {
+			pgrate = ppot->copy();
+			ppot->complex_to_real();
+//			ppot->complex_to_intensities();
 			if ( verbose )
 				cout << "Writing the atomic potential image(s)" << endl;
 			ppot->change_type(nudatatype);
@@ -233,10 +232,13 @@ int 		main(int argc, char **argv)
 	p = pgrate;
 
 	double			dose_per_pixel = dose*p->sampling(0)[0]*p->sampling(0)[1];
-	if ( volt ) {
-		img_calc_phase_grating(pgrate, volt);
-		
-		p = img_calc_multi_slice(pgrate, thickness, volt, resolution);
+	if ( exit_wave ) {
+		img_calc_phase_grating(pgrate, cp.volt());
+
+//			write_img("pg.mrc", pgrate, 0);
+
+		p = img_calc_multi_slice(pgrate, thickness, cp.volt());
+//		p = img_calc_multi_slice_correct(pgrate, thickness, cp.volt());
 	
 		
 		if ( exitwavefile.length() ) {
@@ -250,12 +252,15 @@ int 		main(int argc, char **argv)
 			delete pwav;
 		}
 		
+//		if ( def_avg )
+//			img_apply_complex_CTF(p, def_avg, def_dev, ast_angle, volt, Cs, Cc, sin(amp_fac), alpha, energy_spread);
 		if ( def_avg )
-			img_apply_complex_CTF(p, def_avg, def_dev, ast_angle, volt, Cs, Cc, sin(amp_fac), alpha, energy_spread);
+			img_apply_complex_CTF(p, cp);
 		
 		p->fft(FFTW_BACKWARD, 2);
 		if ( p->compound_type() == TComplex ) p->complex_to_intensities();
-		p->rescale(dose_per_pixel, 0);
+		p->fourier_type(NoTransform);
+//		p->rescale(dose_per_pixel, 0);
 		
 		// The inherent SNR is calculated as the ratio of the image variance to the dose
 		// where the dose gives the expected variance of the correlated poisson noise
@@ -273,8 +278,8 @@ int 		main(int argc, char **argv)
 	}
 	
 	if ( optind < argc ) {
-		if ( p->fourier_type() > NoTransform ) p->fft(FFTW_BACKWARD, 0);
-		if ( p->compound_type() == TComplex ) p->complex_to_intensities();
+		if ( p->fourier_type() > NoTransform ) p->fft(FFTW_BACKWARD, 1, Intensity);
+//		if ( p->compound_type() == TComplex ) p->complex_to_intensities();
 		p->change_type(nudatatype);
 		if ( verbose )
 			cout << "Writing the simulated projection image" << endl;

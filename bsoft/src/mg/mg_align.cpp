@@ -1197,6 +1197,8 @@ double		mg_align_frames(Bmicrograph* mg, long ref_num, long window, long step,
 {
 	if ( bin < 1 ) bin = 1;
 	
+	int				mode(flag&16);
+	
 	Bimage*			p = read_img(mg->fframe, bin, -1);
 	Bstring			ext(mg->fframe.extension());
 	if ( ext.contains("eer") ) bin = 1;
@@ -1240,7 +1242,7 @@ double		mg_align_frames(Bmicrograph* mg, long ref_num, long window, long step,
 	if ( hi_res > 3*p->image->sampling()[0] ) aln_bin = Vector3<long>(2,2,1);
 	
 	vector<Vector3<double>>	sh = p->align(ref_num, window, step, pmask, hi_res, lo_res, shift_limit,
-						edge_width, gauss_width, aln_bin);
+						edge_width, gauss_width, aln_bin, mode);
 
 	long			i;
 	double			d, cc_avg(0), shift_avg(0), shift_var(0);
@@ -1307,6 +1309,7 @@ double		mg_align_frames(Bmicrograph* mg, long ref_num, long window, long step,
 	2	weigh by accumulated dose.
 	4	write aligned frames with insert "_aln".
 	8	write aligned frame sum with insert "_sum".
+	16	initial alignment: local rather than progressive.
 
 **/
 double		project_align_frames(Bproject* project, int ref_img, long window, long step,
@@ -1336,6 +1339,10 @@ double		project_align_frames(Bproject* project, int ref_img, long window, long s
 			cout << "Gain reference file:            " << pgr->file_name() << endl;
 		if ( pmask )
 			cout << "Using mask file:                " << pmask->file_name() << endl;
+		if ( flag&16 )
+			cout << "Initial alignment mode:         local" << endl;
+		else
+			cout << "Initial alignment mode:         progressive" << endl;
 		cout << endl;
 	}
 
@@ -1414,11 +1421,14 @@ double		field_align_series(Bfield* field, int ref_img, Bimage* pgr, Bimage* pmas
 	}
 
 	for ( nmg=0, mg = field->mg; mg; mg = mg->next ) nmg++;
-//	int*			numsel = new int[nmg];
-//	select_numbers(subset, nmg, numsel);
 	vector<int>		numsel = select_numbers(subset, nmg);
 	
 	for ( i=nsel=0; i<nmg; i++ ) if ( numsel[i] ) nsel++;
+	
+	if ( nsel < 2 ) {
+		cerr << "Error: There are less than two micrographs in the field-of-view!" << endl;
+		return 0;
+	}
 	
 	Bmicrograph**	mg_arr = new Bmicrograph*[nsel];
 
@@ -1488,15 +1498,12 @@ double		field_align_series(Bfield* field, int ref_img, Bimage* pgr, Bimage* pmas
 	if ( verbose & VERB_RESULT )
 		cout << "Average shift per micrograph:    " << da << endl;
 
-//	delete[] numsel;
-	
 	field->fom = da;
 
-	Bstring			ext = mg->fmg.extension();
-	if ( ext.contains("dm") ) ext = "mrc";
-	if ( ext.contains("tif") ) ext = "mrc";
-
 	if ( flag & 4 ) {
+		Bstring			ext = mg->fmg.extension();
+		if ( ext.contains("dm") ) ext = "mrc";
+		if ( ext.contains("tif") ) ext = "mrc";
 		DataType		dt(Float);
 		Bstring			label("Written by bseries");
 		Bstring			favg = field->mg->fmg.base() + "_avg." + ext;
@@ -2145,7 +2152,7 @@ double		fit_dose_tolerance(vector<double>& s, vector<double>& c, double f);
 */
 
 #include <fstream>
-Bstring		progsnr_file;
+Bstring		progsnr_file, pssnr_curves;
 
 double		fit_individual_progressive_snr(Bplot* plot, vector<double>& minima, long nimg, double dose_per_subset)
 {
@@ -2157,9 +2164,15 @@ double		fit_individual_progressive_snr(Bplot* plot, vector<double>& minima, long
 
     ofstream		ftxt(progsnr_file.str());
     if ( ftxt.fail() ) return -1;
+    ofstream		fcurves(pssnr_curves.str());
+    if ( fcurves.fail() ) return -1;
+    
+    vector<vector<double>>	curves;
 
 	for ( i=0; i<nimg; ++i )
 		x[i] = dose_per_subset*(i+1);
+		
+	curves.push_back(x);
 
 	ftxt << "s\tResolution\tSNR0\tCd\t1/Cd\tR\t#" << setprecision(3) << endl;
 	if ( verbose )
@@ -2177,6 +2190,7 @@ double		fit_individual_progressive_snr(Bplot* plot, vector<double>& minima, long
 		if ( nv ) {
 			for ( j=0; j<v.size(); ++j ) v[j] /= nv;
 			R = fit_progressive_snr(x, v, snr, cd);
+			curves.push_back(v);
 //			for ( j=0; j<v.size(); ++j ) {
 //				snrc = snr*cd*(1-exp(-x[j]/cd));
 //				cout << x[j] << tab << v[j] << tab << snrc << endl;
@@ -2213,7 +2227,18 @@ double		fit_individual_progressive_snr(Bplot* plot, vector<double>& minima, long
 	}
 */
 
+	fcurves << "Dose (e/A2)";
+	for ( j=1; j<curves.size(); ++j ) fcurves << tab << j;
+	fcurves << endl;
+	for ( i=0; i<x.size(); ++i ) {
+		fcurves << curves[0][i];
+		for ( j=1; j<curves.size(); ++j )
+			fcurves << tab << curves[j][i];
+		fcurves << endl;
+	}
+
 	ftxt.close();
+	fcurves.close();
 	
 	return R;
 }
@@ -2286,23 +2311,23 @@ double		fit_full_progressive_snr(Bplot* plot, vector<double>& minima, long nimg,
 
 	R = fit_progressive_snr2(x, v, snr, cd);
 	
-	cout << "SNR0 = " << snr << endl;
-	cout << "c = " << cd << endl;
-	cout << "R = " << R << endl;
-
-	if ( verbose )
+	if ( verbose ) {
+		cout << "SNR0 = " << snr << endl;
+		cout << "c = " << cd << endl;
+		cout << "R = " << R << endl;
 		cout << "s\tResolution\tDose\tSNR]\tSNRcalc" << setprecision(3) << endl;
-	for ( i=k=0, k1=v.size(); i<minima.size(); ++i ) {
-		for ( j=0; j<nimg; ++j, ++k, ++k1 ) {
-			snrc = snr/(cd*x[k])*(1-exp(-cd*x[k]*x[k1]));
-			cout << x[k] << tab << 1/x[k] << tab << x[k1] << tab << v[k] << tab << snrc << endl;
+		for ( i=k=0, k1=v.size(); i<minima.size(); ++i ) {
+			for ( j=0; j<nimg; ++j, ++k, ++k1 ) {
+				snrc = snr/(cd*x[k])*(1-exp(-cd*x[k]*x[k1]));
+				cout << x[k] << tab << 1/x[k] << tab << x[k1] << tab << v[k] << tab << snrc << endl;
+			}
 		}
 	}
 
 	return R;
 }
 
-int		img_filter_spikes(Bimage* p)
+int		img_filter_spikes(Bimage* p, double ratio)
 {
 	long			i, ns(0), ds(p->image_size()*p->images());
 	double			v, va;
@@ -2314,7 +2339,7 @@ int		img_filter_spikes(Bimage* p)
 		if ( va <= 0 ) va = 1e-6;
 		cv = p->complex(i);
 		v = cv.power();
-		if ( v > 100*va ) {
+		if ( v > ratio*va ) {
 			p->set(i, cv*va/v);
 			ns++;
 		}
@@ -2366,7 +2391,7 @@ int			mg_frames_snr(Bmicrograph* mg, double res_hi, long window, Bstring& subset
 	
 //	psum->sum_images();
 	
-	if ( flag & 4 ) img_filter_spikes(psum);
+	if ( flag & 4 ) img_filter_spikes(psum, 100);
 	
 //	write_img("tt.mrc", psum, 0);
 	
@@ -2416,6 +2441,7 @@ int			mg_frames_snr(Bmicrograph* mg, double res_hi, long window, Bstring& subset
 	}
 
 	progsnr_file = mg->fframe.base() + "_progssnr.txt";
+	pssnr_curves = mg->fframe.base() + "_pssnr_curves.txt";
 	fit_individual_progressive_snr(plot, minima, psum->images(), dose_per_subset);
 
 //	fit_full_progressive_snr(plot, minima, psum->images(), dose_per_subset);

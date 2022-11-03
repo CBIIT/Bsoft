@@ -191,7 +191,7 @@ int			atom_type_kill(Batomtype* atype)
 
 Batomtype* 	read_atom_prop_star(Bstring& filename)
 {
- 	Bstar2			star;
+ 	Bstar			star;
 	
  	if ( star.read(filename.c_str()) < 0 ) {
 		error_show(filename.c_str(), __FILE__, __LINE__);
@@ -276,7 +276,7 @@ int 			write_atom_prop_star(Bstring& filename, Batomtype* at_first)
 		return -1;
 	}
 
- 	Bstar2			star;
+ 	Bstar			star;
 	BstarBlock&		block = star.add_block("Atomic_parameters");
 	BstarLoop&		loop = block.add_loop();
 

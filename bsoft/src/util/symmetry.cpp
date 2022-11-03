@@ -352,6 +352,7 @@ vector<Matrix3>	symmetry_get_all_matrices(Bsymmetry& sym)
 	if ( verbose & VERB_FULL ) {
 		cout << "Getting all the symmetric matrices:" << endl;
 		cout << "Symmetry:                       " << sym.label() << endl;
+		cout << "Number of matrices:             " << mat.size() << endl;
 	}
 	
 	if ( verbose & VERB_FULL ) {
@@ -369,12 +370,14 @@ vector<Matrix3>	symmetry_get_all_matrices(Bsymmetry& sym)
 @param 	&sym		symmetry structure.
 @param 	theta_step	angular step size from primary symmetry axis (radians).
 @param 	phi_step	angular step size around primary symmetry axis (radians).
-@param 	flag		flag for generating a full asymmetric unit (default 0=half).
+@param 	flag		flag: 0=half, 1=full, 2=no in-plane.
 @return View* 		a linked list of views.
 
 	A set of views is calculated with tesselation within each asymmetric
 	unit such that the views are well-distributed.
-	If the full flag is set, both halves of the asymmetric unit are covered.
+ 	Flag bits:
+		1: both halves of the asymmetric unit are covered.
+ 		2: no in-plane rotations are applied.
 
 **/
 View* 		asymmetric_unit_views(Bsymmetry& sym, double theta_step, double phi_step, int flag)

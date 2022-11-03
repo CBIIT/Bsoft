@@ -228,11 +228,15 @@ int			molgroup_apply_symmetry_from_pdb(Bmolgroup* molgroup, Bstring& filename)
 	
     fpdb.close();
 	
-	Bmolecule		*mol, *new_mol;
+	Bmolecule		*mol, *newmol;
 	Bresidue		*res;
 	Batom			*atom;
 	int				nmol(0), m;
-	for ( mol = molgroup->mol; mol; mol = mol->next ) nmol++;
+	
+	for ( nmol=0, mol = molgroup->mol; mol; mol = mol->next ) {
+		nmol++;
+		newmol = mol;
+	}
 	
 	if ( verbose & VERB_PROCESS )
 		cout << "Extracting " << n << " matrices from " << filename << " and applying:" << endl;
@@ -244,8 +248,10 @@ int			molgroup_apply_symmetry_from_pdb(Bmolgroup* molgroup, Bstring& filename)
 			cout << "Shift:                          " << trans[i] << endl;
 		}
 		for ( m=0, mol = molgroup->mol; m<nmol; mol = mol->next, m++ ) {
-			new_mol = mol_copy_and_add_to_molgroup(molgroup, mol);
-			for( res = new_mol->res; res; res = res->next ) {
+//			newmol = mol_copy_and_add_to_molgroup(molgroup, mol);
+			newmol->next = molecule_copy(mol);
+			newmol = newmol->next;
+			for( res = newmol->res; res; res = res->next ) {
 				for ( atom = res->atom; atom; atom = atom->next ) {
 					atom->coord = mat[i] * atom->coord;
 					atom->coord += trans[i];
@@ -298,11 +304,15 @@ int			molgroup_apply_matrices_from_pdb(Bmolgroup* molgroup, Bstring& filename)
 	
     fpdb.close();
 
-	Bmolecule		*mol, *new_mol;
+	Bmolecule		*mol, *newmol;
 	Bresidue		*res;
 	Batom			*atom;
 	int				nmol(0), m;
-	for ( mol = molgroup->mol; mol; mol = mol->next ) nmol++;
+	
+	for ( nmol=0, mol = molgroup->mol; mol; mol = mol->next ) {
+		nmol++;
+		newmol = mol;
+	}
 	
 	if ( verbose & VERB_PROCESS )
 		cout << "Extracting " << n << " matrices from " << filename << " and applying:" << endl;
@@ -314,8 +324,10 @@ int			molgroup_apply_matrices_from_pdb(Bmolgroup* molgroup, Bstring& filename)
 			cout << "Shift:                          " << trans[i] << endl;
 		}
 		for ( m=0, mol = molgroup->mol; m<nmol; mol = mol->next, m++ ) {
-			new_mol = mol_copy_and_add_to_molgroup(molgroup, mol);
-			for( res = new_mol->res; res; res = res->next ) {
+//			newmol = mol_copy_and_add_to_molgroup(molgroup, mol);
+			newmol->next = molecule_copy(mol);
+			newmol = newmol->next;
+			for( res = newmol->res; res; res = res->next ) {
 				for ( atom = res->atom; atom; atom = atom->next ) {
 					atom->coord = mat[i] * atom->coord;
 					atom->coord += trans[i];
@@ -974,22 +986,27 @@ int 		molgroup_generate_crystal(Bmolgroup* molgroup, UnitCell uc, Vector3<int> n
 	Bresidue		*res, *newres;
 	Batom			*atom, *newatom;
 	
-	for ( nmol=0, mol = molgroup->mol; mol; mol = mol->next ) nmol++;
+	for ( nmol=0, mol = molgroup->mol; mol; mol = mol->next ) {
+		nmol++;
+		newmol = mol;
+	}
 	
 	if ( verbose ) {
 		cout << "Generating new unit cells for " << nmol << " molecules:" << endl;
 		cout << "Number:                         " << number << " = " << (int)number.volume() << endl;
+		cout << mat << endl;
 	}
 	
 	for ( z=0; z<number[2]; z++ ) {
 		for ( y=0; y<number[1]; y++ ) {
 			for ( x=0; x<number[0]; x++ ) {
-				if ( verbose )
-					cout << "Generating unit cell:           " << x << " " << y << " " << z << endl;
 				d = Vector3<double>(x,y,z);
 				d = mat * d;
-				if ( x+y+z > 0 ) for ( i=0, mol = molgroup->mol; i<nmol; mol = mol->next, i++ ) { 
-					newmol = mol_copy_and_add_to_molgroup(molgroup, mol);
+				if ( verbose & VERB_FULL )
+					cout << "Generating unit cell:           " << x << " " << y << " " << z << tab << d << endl;
+				if ( x+y+z > 0 ) for ( i=0, mol = molgroup->mol; i<nmol; mol = mol->next, i++ ) {
+					newmol->next = molecule_copy(mol);
+					newmol = newmol->next;
 					for ( res = mol->res, newres = newmol->res; res; res = res->next, newres = newres->next ) {
 						for ( atom = res->atom, newatom = newres->atom; atom; atom = atom->next, newatom = newatom->next ) {
 							newatom->coord = atom->coord + d;

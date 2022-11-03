@@ -17,7 +17,7 @@ var class_unit_cell =
     [ "degrees_to_radians", "class_unit_cell.html#a5141aa0d4c86494329260e0cf184932d", null ],
     [ "gamma", "class_unit_cell.html#a86888d5e3cd289f173ad00086e4e9741", null ],
     [ "gamma", "class_unit_cell.html#a3e5876d61ea048451d0f679f341b04c4", null ],
-    [ "operator[]", "class_unit_cell.html#a4544ee8f773d20ae516c0f1e1008f31b", null ],
+    [ "operator[]", "class_unit_cell.html#adba527ae5b4caaa864c4b912956b1d6c", null ],
     [ "radians_to_degrees", "class_unit_cell.html#a58539a8e394693941c4fd0ec98f85508", null ],
     [ "set_angle_range", "class_unit_cell.html#adf8c0908f6b207c9e584a3420d08071b", null ],
     [ "size", "class_unit_cell.html#a40224b13002c56fb8ec40a14c3176e3e", null ],

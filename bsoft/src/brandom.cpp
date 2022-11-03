@@ -3,7 +3,7 @@
 @brief	Program to generate random images
 @author Bernard Heymann
 @date	Created: 19990703
-@date	Modified: 20150725
+@date	Modified: 20220517
 **/
 
 #include "rwimg.h"
@@ -26,7 +26,7 @@ const char* use[] = {
 " ",
 "Actions:",
 "-type gauss              Distribution type (default: uniform, ",
-"                         others: gaussian, poisson, logistical, spectral).",
+"                         others: gaussian, poisson, logistical, spectral, distance).",
 "-rescale -0.1,5.2        Rescale output data to average and standard deviation.",
 " ",
 "Parameters:",
@@ -87,6 +87,7 @@ int 	main(int argc, char **argv)
 			else if ( curropt->value[0] == 'p' ) rand_type = 2;
 			else if ( curropt->value[0] == 'l' ) rand_type = 3;
 			else if ( curropt->value[0] == 's' ) rand_type = 4;
+			else if ( curropt->value[0] == 'd' ) rand_type = 5;
 			else
 				cerr << "-type: Type " << curropt->value << " not supported! Default to uniform distribution" << endl;
 		}
@@ -174,6 +175,9 @@ int 	main(int argc, char **argv)
 		case 4:
 			pran->noise_spectral(alpha);
 			break;
+		case 5:
+			pran->noise_uniform_distance(avg*pran->size().volume());
+			break;
 		default:
 			pran->noise_uniform(min, max);
 			break;
@@ -185,7 +189,7 @@ int 	main(int argc, char **argv)
 			else fg = (M_PI*4.0/3.0)*foreground_radius*foreground_radius*foreground_radius;
 		}
 		if ( fg > size.volume() ) fg = size.volume();
-		scale = sqrt(size.volume()/(snr*fg));
+		scale = sqrt(size.volume()/(snr*fg)) * p->standard_deviation()/pran->standard_deviation();
 		p->add(pran, scale, -avg);
 		delete pran;
 		pran = p;

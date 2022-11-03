@@ -11,6 +11,6 @@ var math__util_8h =
     [ "number_of_combinations", "math__util_8h.html#a8b9a449a7c73665653c53e8a611f1b64", null ],
     [ "partition", "math__util_8h.html#aac98ca45f1111aa90f282a43c08b2416", null ],
     [ "partition", "math__util_8h.html#ae08e883616c016c794dd48f4c8844a8a", null ],
-    [ "prime_factors", "math__util_8h.html#aa834c8621784ec9a55bb926a6f9855fb", null ],
+    [ "prime_factors", "math__util_8h.html#ad7e91c9a32a70a89117e0694e14282ec", null ],
     [ "smallest_prime", "math__util_8h.html#a0ef20e14605490f07837761bd514fe14", null ]
 ];

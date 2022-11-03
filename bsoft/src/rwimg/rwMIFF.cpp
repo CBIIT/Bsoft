@@ -67,6 +67,8 @@ int 	readMIFF(Bimage* p, int readdata, int img_select)
 			if ( ( tag = strstr( header, "colors" ) ) )
 				sscanf( tag, "colors=%d", &colors );
 			if ( ( tag = strstr( header, "compression=RunlengthEncoded" ) ) ) rle = 1;
+			if ( rle )
+				cerr << "Warning: RLE for MIFF files not supported!" << endl;
 			switch ( depth ) {
 				case 8: p->data_type(UCharacter); break;
 				case 16: p->data_type(UShort); break;

@@ -117,7 +117,7 @@ vector<Bimage*>	mg_tomo_res_reconstruct(Bproject* project, int micrograph_id, do
 
 	if ( action )
 		img_ttf_apply(p, *(mg_res->ctf), action, wiener,
-			tile_size, mg_res->tilt_angle, mg_res->tilt_axis, 0, 0);
+			tile_size, mg_res->tilt_angle, mg_res->tilt_axis, 0, 0, 0);
 	
 	// Do transformation if not already done
 	if ( p->compound_type() == TSimple ) {
@@ -183,7 +183,7 @@ vector<Bimage*>	mg_tomo_res_reconstruct(Bproject* project, int micrograph_id, do
 
 		if ( action )
 			img_ttf_apply(pt, *(mg->ctf), action, wiener,
-				tile_size, mg->tilt_angle, mg->tilt_axis, 0, 0);
+				tile_size, mg->tilt_angle, mg->tilt_axis, 0, 0, 0);
 		
 		if ( pt->compound_type() == TSimple ) {
 			pt->pad(ft_size, FILL_AVERAGE, pt->average());

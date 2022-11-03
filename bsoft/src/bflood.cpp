@@ -36,7 +36,7 @@ const char* use[] = {
 "Actions for seeding:",
 "-peaks 12,1.4,1,1        Find peaks within a kernel size, above a threshold,",
 "                         with optional flooding and wrapping.",
-"-threshold 3.4           Segment at a threshold,",
+"-threshold 3.4           Segment at a threshold.",
 //"-addmodel                Add input model components as additional regions.",
 " ",
 "Actions for flooding:",

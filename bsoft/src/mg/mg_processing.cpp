@@ -1222,13 +1222,13 @@ Bmicrograph**	project_micrograph_array(Bproject* project, long &nmg)
 	Bmicrograph*	mg;
 
 	for ( nmg=0, field=project->field; field; field=field->next )
-		for ( mg = field->mg; mg; mg = mg->next ) if ( mg->select)
+		for ( mg = field->mg; mg; mg = mg->next ) if ( mg->select )
 			nmg++;
 
 	Bmicrograph**	mgarr = new Bmicrograph*[nmg];
 	
 	for ( nmg=0, field=project->field; field; field=field->next )
-		for ( mg = field->mg; mg; mg = mg->next ) if ( mg->select)
+		for ( mg = field->mg; mg; mg = mg->next ) if ( mg->select )
 			mgarr[nmg++] = mg;
 
 	return mgarr;

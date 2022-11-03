@@ -61,23 +61,32 @@ Bimage*		Bimage::extract(long n1, long n2)
 @brief Extracts a region of one sub-image into new image structure.
 @param 	nn			image number to extract.
 @param 	coords		extraction start.
-@param 	size		extraction size.
+@param 	ext_size	extraction size.
 @param 	fill_type	FILL_AVERAGE, FILL_BACKGROUND, FILL_USER.
 @param 	fill		fill value.
 @return Bimage*		the new image structure, NULL if copy failed.
 **/
-Bimage*		Bimage::extract(long nn, Vector3<long> coords, Vector3<long> size,
+Bimage*		Bimage::extract(long nn, Vector3<long> coords, Vector3<long> ext_size,
 						int fill_type, double fill)
 {
 	long			i, j, xx, yy, zz, cc;
 	long			oldx, oldy, oldz;
 	
 	Bimage*			img = copy_header(1);
-	img->size(size);
+	img->size(ext_size);
 	img->data_alloc();
 
 	if ( fill_type == FILL_AVERAGE ) fill = avg;
-	if ( fill_type == FILL_BACKGROUND ) fill = background(nn);
+	if ( fill_type == FILL_BACKGROUND ) {
+		if ( fabs(background(nn)) < 1e-20  ) calculate_background(nn);
+		fill = background(nn);
+	}
+	
+	if ( verbose & VERB_DEBUG ) {
+		cout << "DEBUG Bimage::extract: image size = " << size() << endl;
+		cout << "DEBUG Bimage::extract: extraction size = " << img->size() << endl;
+		cout << "DEBUG Bimage::extract: fill = " << fill << endl;
+	}
 
 	for ( zz=0, oldz=coords[2]; zz<img->z; zz++, oldz++ ) {
 		for ( yy=0, oldy=coords[1]; yy<img->y; yy++, oldy++ ) {
@@ -86,7 +95,9 @@ Bimage*		Bimage::extract(long nn, Vector3<long> coords, Vector3<long> size,
 				if ( within_boundaries(oldx, oldy, oldz) ) {
 					j = index(oldx, oldy, oldz, nn);
 					for ( cc=0; cc<c; cc++, i++, j++ ) img->set(i, (*this)[j]);
-				} else img->set(i, fill);
+				} else {
+					for ( cc=0; cc<c; cc++, i++ ) img->set(i, fill);
+				}
 			}
 		}
 	}
@@ -124,11 +135,11 @@ Bimage*		Bimage::extract(long nn, Vector3<double> loc, Vector3<long> size,
 		cout << "DEBUG Bimage::extract: size=" << size << endl;
 	
 	for ( i=zz=0; zz<img->z; zz++ ) {
-		v[2] = zz - ori[2];
+		v[2] = double(zz) - ori[2];
 		for ( yy=0; yy<img->y; yy++ ) {
-			v[1] = yy - ori[1];
+			v[1] = double(yy) - ori[1];
 			for ( xx=0; xx<img->x; xx++ ) {
-				v[0] = xx - ori[0];
+				v[0] = double(xx) - ori[0];
 				vold = (mat * v) + loc;
 				for ( cc=0; cc<c; cc++, i++ )
 					img->set(i, interpolate(cc, vold, nn, background(nn)));
@@ -278,18 +289,22 @@ vector<Vector3<long>>	Bimage::tile_coordinates(Vector3<long>& start,
 	if ( region[1] > y - start[1] ) region[1] = y - start[1];
 	if ( region[2] > z - start[2] ) region[2] = z - start[2];
 	
-	tile_size = tile_size.min(region);
+	if ( !exceed ) {
+		region -= tile_size - 1;
+		region = region.max(tile_size);
+	}
+
+//	tile_size = tile_size.min(region);
 	
 	if ( step_size[0] <= 0 ) step_size[0] = tile_size[0];
 	if ( step_size[1] <= 0 ) step_size[1] = tile_size[1];
 	if ( step_size[2] <= 0 ) step_size[2] = tile_size[2];
 	
-	if ( !exceed ) region -= tile_size - 1;
-
 //	calculate_background();
 	
 	// Count the number of tiles to be extracted
 	long			ntiles(0);
+	Vector3<long>	tile_pattern((region+step_size-1)/step_size);
 	for ( zz=0; zz<region[2]; zz+=step_size[2] )
 		for ( yy=0; yy<region[1]; yy+=step_size[1] )
 			for ( xx=0; xx<region[0]; xx+=step_size[0] )
@@ -307,6 +322,7 @@ vector<Vector3<long>>	Bimage::tile_coordinates(Vector3<long>& start,
 		cout << "Start:                          " << start << endl;
 		cout << "Tile size:                      " << tile_size << endl;
 		cout << "Step size:                      " << step_size << endl;
+		cout << "Tile pattern:                   " << tile_pattern << endl;
 		cout << endl;
 	}
 	
@@ -340,10 +356,11 @@ vector<Vector3<long>>	Bimage::tile_coordinates(Vector3<long> tile_size, Vector3<
 	if ( step_size[1] <= 0 ) step_size[1] = tile_size[1];
 	if ( step_size[2] <= 0 ) step_size[2] = tile_size[2];
 	
-	Vector3<long>	nt((size() - tile_size)/step_size + 2);
+	Vector3<long>	nt((size() - 1)/step_size + 1);
 	nt = nt.min(size());
 	
 	Vector3<long>	of(size() - (tile_size + step_size*(nt - 1))), pof;
+	if ( verbose & VERB_FULL )
 		cout << step_size << tab << of << endl;
 	
 	while ( of.length() > 1 && of != pof ) {
@@ -405,7 +422,7 @@ Bimage*		Bimage::extract_tiles(long nn, vector<Vector3<long>>& coords, Vector3<l
 		return NULL;
 	}
 	
-	tile_size = tile_size.min(size());
+//	tile_size = tile_size.min(size());
 	
 	if ( nn >= n ) nn = n - 1;
 	
@@ -413,10 +430,10 @@ Bimage*		Bimage::extract_tiles(long nn, vector<Vector3<long>>& coords, Vector3<l
 	Bimage*			pex = copy_header(ntiles);
 	
 	pex->size(tile_size);
-	pex->page_size(size());
+	pex->page_size(pex->size());
 	
 	pex->data_alloc();
-	pex->fill(avg);
+//	pex->fill(avg);
 	
 	if ( verbose & VERB_FULL ) {
 		cout << "Extracting " << pex->images() << " tiles using coordinates:" << endl;
@@ -596,7 +613,7 @@ Bimage*		Bimage::extract_tile_stack(Vector3<long> coords, Vector3<long> tile_siz
 @brief 	Extracts a set of tiles at specified positions from an image into a new image.
 @param 	coords 			coordinates for the tile origins.
 @param 	tile_size		3-vector size of extracted image.
-@return vector<Bimage*>	extracted stacks of tiles.
+@return Bimage**			extracted stacks of tiles.
 
 	Stacks of tiles of specified size are extracted from all the sub-images
 	in an image structure, using given coordinates for the tiles.
@@ -848,6 +865,100 @@ Bimage*		Bimage::orthogonal_slices(long nn, Vector3<long> voxel,
     return porth;
 }
 
+/**
+@brief 	Extracts orthogonal views around a voxel and create a montage.
+@param 	voxel		voxel of intersection.
+@param 	ext_size	size of slices to extract.
+@param 	pad			padding size.
+@param 	fill_type	FILL_AVERAGE, FILL_BACKGROUND, FILL_USER.
+@param 	fill		fill value.
+@return Bimage*		extracted slice for 2D and 3 slices for 3D.
+
+	Only the desired region is extracted from the original image.
+	The fill value is taken from the image background.
+
+**/
+Bimage*		Bimage::orthogonal_montage(Vector3<long> voxel, Vector3<long> ext_size, int pad, int fill_type, double fill)
+{
+	if ( voxel[0] < 0 || voxel[1] < 0 || voxel[2] < 0 ) return NULL;
+	if ( voxel[0] >= x || voxel[1] >= y || voxel[2] >= z ) return NULL;
+	
+	if ( ext_size.volume() < 1 ) ext_size = size();
+	
+	bool 				xf, yf;
+	long				i, j, iy, iz, xx, yy, zz, cc, nn;
+	long				xo, yo, zo;
+	
+	Vector3<long>		start(voxel - (ext_size * 0.5));
+	Vector3<long>		end(start + ext_size);
+	Vector3<double>		ori;
+	
+	if ( verbose & VERB_PROCESS ) {
+		cout << "Extracting orthogonal views:" << endl;
+		cout << "Voxel:                          " << voxel << endl;
+		cout << "Start:                          " << start << endl;
+		cout << "End:                            " << end << endl;
+		cout << "Padding:                        " << pad << endl;
+		cout << endl;
+	}
+
+    Bimage*     		porth = new Bimage(datatype, compoundtype, ext_size[0] + ext_size[2] + pad,
+    						ext_size[1] + ext_size[2] + pad, 1, n);
+    						
+	for ( nn=0; nn<n; ++nn ) {
+		if ( fill_type == FILL_BACKGROUND ) fill = image[nn].background();
+		else if ( fill_type == FILL_AVERAGE ) fill = image[nn].average();
+//		cout << "Fill: " << fill << endl;
+		porth->background(nn, background(nn));
+		porth->sampling(sampling(nn));
+		ori = image[nn].origin();
+		ori[1] += ext_size[2] + pad;
+		porth->image[nn].origin(ori);
+		xo = voxel[0];
+		yo = voxel[1];
+		zo = voxel[2];
+		iz = nn*porth->sizeY();
+		// xy slice
+		for ( yy=0; yy<porth->y; ++yy ) {
+			iy = (iz + yy)*porth->x;
+			yf = 0;
+			if ( yy < ext_size[2] ) {
+				yo = voxel[1];
+				zz = yy;
+				zo = (long) (zz + start[2]);
+				if ( zo >= 0 && zo < z ) yf = 1;
+			} else if ( yy >= ext_size[2] + pad ) {
+				zo = voxel[2];
+				yo = (long) (yy + start[1] - ext_size[2] - pad);
+				if ( yo >= 0 && yo < y ) yf = 1;
+			}
+			for ( xx=0; xx<porth->x; ++xx ) {
+				i = (iy + xx)*porth->c;
+				xf = 0;
+				if ( xx < ext_size[0] ) {
+					xo = (long) (xx + start[0]);
+					if ( xo >= 0 && xo < x ) xf = 1;
+				} else if ( xx >= ext_size[0] + pad ) {
+					xo = voxel[0];
+					zz = xx - ext_size[0] - pad;
+					zo = (long) (zz + start[2]);
+					if ( zo >= 0 && zo < z && yy >= ext_size[2] ) xf = 1;
+				}
+				j = index(xo, yo, zo, nn);
+				for ( cc=0; cc<porth->c; ++cc, ++i, ++j ) {
+					if ( xf && yf ) porth->set(i, (*this)[j]);
+					else porth->set(i, fill);
+				}
+			}
+		}
+    }
+
+	porth->statistics();
+	
+    return porth;
+}
+
+
 int			Bimage::extract_show_chunk(Bimage* pshow, int aflag, long i, long len)
 {
 	long				nn(sn);
@@ -870,7 +981,6 @@ int			Bimage::extract_show_chunk(Bimage* pshow, int aflag, long i, long len)
 	double				iscale(1.0/scale), shift = (scale < 1)? (iscale - 1)/2: 0;
 	
 	cc = (pshow->c < c)? c: pshow->c;
-// 	double*				value = new double[cc];
  	vector<double>		value(cc,0);
 	double				dispval[4] = {0,0,0,0};
     double				dscale = 255.0/(smax - smin);

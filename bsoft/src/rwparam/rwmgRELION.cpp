@@ -3,14 +3,14 @@
 @brief	Library routines to read and write micrograph parameters in RELION STAR format
 @author Bernard Heymann
 @date	Created: 20061101
-@date	Modified: 20211223
+@date	Modified: 20220323
 **/
 
 #include "mg_processing.h"
 #include "star.h"
 #include "mg_tags.h"
 #include "rwimg.h"
-#include "linked_list.h"
+#include "string_util.h"
 #include "utilities.h"
 
 #include <sys/stat.h>
@@ -19,28 +19,43 @@
 // Declaration of global variables
 extern int 	verbose;		// Level of output to the screen
 
-int			relion_to_project(Bstar2& star, Bproject* project)
+int			relion_to_project(Bstar& star, Bproject* project)
 {
-	int				err(0);
-	long			i, j, pid(0), box_size(0);
-	long			nmg(0), npart(0);
-	Bstring			pfile;
-	double			mpx(1), ppx(1), defU(0), defV(0);
-	double			volt(12e4), Cs(2e7), amp(0.07);
-	Euler			euler;
+	int					err(0);
+	long				i, j, pid(0), box_size(0);
+	long				ogrp(0), nogrp(0);
+	long				nmg(0), npart(0);
+	Bstring				pfile;
+	double				mpx(1), ppx(1), defU(0), defV(0);
+	Vector3<double>		shift, shift_ang;
+	Euler				euler;
+	vector<double>		magx, magy, v;
+	CTFparam			cp;
+	vector<CTFparam>	cpa;
 
-	Bstring			field_id("1"), mg_id("1");
-	Bfield*			field = NULL;
-	Bmicrograph*	mg = NULL;
-	Bparticle*		part = NULL;
-	string			mg_name, pmg_name;
+	Bstring				field_id("1"), mg_id("1");
+	Bfield*				field = NULL;
+	Bmicrograph*		mg = NULL;
+	Bparticle*			part = NULL;
+	string				mg_name, pmg_name;
 
 	for ( auto ib: star.blocks() ) {
 		if ( verbose )
 			cout << "Reading block: " << ib.tag() << endl;
 		for ( auto il: ib.loops() ) {
-			if ( ( i = il.find("rlnOpticsGroup") ) >= 0 ) {
+			if ( verbose )
+				cout << "Loop data size: " << il.data().size() << endl;
+			if ( ( i = il.find("rlnOpticsGroupName") ) >= 0 ) {
 				for ( auto ir: il.data() ) {
+					nogrp++;
+					if ( ( j = il.find("rlnOpticsGroupName") ) >= 0 )
+						cp.identifier(ir[j]);
+					else
+						cp.identifier(to_string(nogrp));
+					if ( verbose & VERB_DEBUG )
+						cout << "DEBUG relion_to_project: optics_group: " << cp.identifier() << endl;
+					if ( ( j = il.find("rlnOpticsGroup") ) >= 0 )
+						cp.select(to_integer(ir[j]));
 					if ( ( j = il.find("rlnMicrographOriginalPixelSize") ) >= 0 )
 						mpx = to_real(ir[j]);
 					if ( ( j = il.find("rlnImagePixelSize") ) >= 0 )
@@ -48,16 +63,43 @@ int			relion_to_project(Bstar2& star, Bproject* project)
 					if ( ( j = il.find("rlnImageSize") ) >= 0 )
 						box_size = to_integer(ir[j]);
 					if ( ( j = il.find("rlnVoltage") ) >= 0 )
-						volt = 1e3 * to_real(ir[j]);
+						cp.volt(1e3 * to_real(ir[j]));
 					if ( ( j = il.find("rlnSphericalAberration") ) >= 0 )
-						Cs = 1e7 * to_real(ir[j]);
+						cp.Cs(1e7 * to_real(ir[j]));
 					if ( ( j = il.find("rlnAmplitudeContrast") ) >= 0 )
-						amp = to_real(ir[j]);
+						cp.amp_shift(asin(to_real(ir[j])));	// Not sure if this is correct
+					if ( ( j = il.find("rlnBeamTiltX") ) >= 0 )
+						cp.beam_tiltX(to_real(ir[j]));
+					if ( ( j = il.find("rlnBeamTiltY") ) >= 0 )
+						cp.beam_tiltY(to_real(ir[j]));
+					if ( ( j = il.find("rlnMagMat00") ) >= 0 )
+						magx.push_back(to_real(ir[j]));
+					if ( ( j = il.find("rlnMagMat11") ) >= 0 )
+						magy.push_back(to_real(ir[j]));
+					if ( ( j = il.find("rlnOddZernike") ) >= 0 ) {
+						v = parse_real_vector(ir[j].substr(1));
+						cp.add_zernike_odd(v);
+					}
+					if ( ( j = il.find("rlnEvenZernike") ) >= 0 ) {
+						v = parse_real_vector(ir[j].substr(1));
+						cp.add_zernike_even(v);
+//						for ( auto d: cp.aberration_even() ) cout << tab << d;
+//						cout << endl;
+					}
+					cpa.push_back(cp);
+					if ( verbose & VERB_PROCESS ) {
+						cout << "Optics group:           " << nogrp << endl;
+						cp.show();
+					}
 				}
 			}
 			if ( ( i = il.find("rlnMicrographName") ) >= 0 ) {
 				for ( auto ir: il.data() ) {
 					mg_name = ir[i];
+					if ( verbose & VERB_DEBUG )
+						cout << "DEBUG relion_to_project: micrograph: " << mg_name << endl;
+					if ( ( j = il.find("rlnOpticsGroup") ) >= 0 )
+						ogrp = to_integer(ir[j]);
 					if ( mg_name.compare(pmg_name) ) {
 						if ( verbose & VERB_FULL )
 							cout << "Micrograph: " << mg_name << endl;
@@ -71,9 +113,11 @@ int			relion_to_project(Bstar2& star, Bproject* project)
 						mg->box_size[0] = mg->box_size[1] = box_size;
 						mg->box_size[2] = 1;
 						mg->ctf = new CTFparam;
-						mg->ctf->volt(volt);
-						mg->ctf->Cs(Cs);
-						mg->ctf->amp_shift(asin(amp));
+						if ( nogrp && ogrp <= nogrp ) {
+							mg->ctf->update(cpa[ogrp-1]);
+							if ( verbose & VERB_FULL )
+								cout << nmg << tab << ogrp << endl;
+						}
 						part = NULL;
 						pid = 0;
 					}
@@ -91,46 +135,62 @@ int			relion_to_project(Bstar2& star, Bproject* project)
 						part->loc[0] = to_real(ir[j]);
 					if ( ( j = il.find("rlnCoordinateY") ) >= 0 )
 						part->loc[1] = to_real(ir[j]);
+					if ( ( j = il.find("rlnOriginX") ) >= 0 )
+						shift[0] = to_real(ir[j]);
+					if ( ( j = il.find("rlnOriginY") ) >= 0 )
+						shift[1] = to_real(ir[j]);
 					if ( ( j = il.find("rlnOriginXAngst") ) >= 0 )
-						part->ori[0] = to_real(ir[j]);
+						shift_ang[0] = to_real(ir[j]);
 					if ( ( j = il.find("rlnOriginYAngst") ) >= 0 )
-						part->ori[1] = to_real(ir[j]);
-					if ( ( j = il.find("rlnAngleRot") ) >= 0 )
-						euler[2] = to_real(ir[j])*M_PI/180.0;
-					if ( ( j = il.find("rlnAngleTilt") ) >= 0 )
-						euler[1] = to_real(ir[j])*M_PI/180.0;
+						shift_ang[1] = to_real(ir[j]);
 					if ( ( j = il.find("rlnAnglePsi") ) >= 0 )
 						euler[0] = to_real(ir[j])*M_PI/180.0;
+					if ( ( j = il.find("rlnAngleTilt") ) >= 0 )
+						euler[1] = to_real(ir[j])*M_PI/180.0;
+					if ( ( j = il.find("rlnAngleRot") ) >= 0 )
+						euler[2] = to_real(ir[j])*M_PI/180.0;	// Correct euler conversion: tested 20211224
 					if ( ( j = il.find("rlnMagnification") ) >= 0 )
-						part->mag = to_real(ir[j]);
+						part->mag = to_real(ir[j]);		// Deprecated in favor of anisotropic pixel size
 					if ( ( j = il.find("rlnDefocusU") ) >= 0 )
-						defU = to_real(ir[j]);
+						defU = to_real(ir[j]);			// Minimum defocus in angstrom
 					if ( ( j = il.find("rlnDefocusV") ) >= 0 )
-						defV = to_real(ir[j]);
+						defV = to_real(ir[j]);			// Maximum defocus in angstrom
 					if ( ( j = il.find("rlnDefocusAngle") ) >= 0 )
-						part->ast = to_real(ir[j])*M_PI/180.0;
+						part->ast = to_real(ir[j])*M_PI/180.0;	// Angle could be off by π/2
 					if ( ( j = il.find("rlnVoltage") ) >= 0 )
-						volt = 1e3 * to_real(ir[j]);
+						mg->ctf->volt(1e3 * to_real(ir[j]));
 					if ( ( j = il.find("rlnSphericalAberration") ) >= 0 )
-						Cs = 1e7 * to_real(ir[j]);
+						mg->ctf->Cs(1e7 * to_real(ir[j]));
 					if ( ( j = il.find("rlnAmplitudeContrast") ) >= 0 )
-						amp = to_real(ir[j]);
+						mg->ctf->amp_shift(asin(to_real(ir[j])));	// Not sure if this is correct
+					if ( ( j = il.find("rlnMaxValueProbDistribution") ) >= 0 )
+						part->fom[0] = to_real(ir[j]);		// I assume this is a good FOM
 					if ( ( j = il.find("rlnClassNumber") ) >= 0 )
 						part->sel = to_integer(ir[j]);
 					if ( ( j = il.find("rlnGroupNumber") ) >= 0 )
 						part->group = to_integer(ir[j]);
-//					if ( mag ) {
-//						mg->magnification = mag;
-//						mg->pixel_size[0] = mg->pixel_size[1] = 1e4*px/mag;
-//					}
-					part->pixel_size[0] = part->pixel_size[1] = ppx;
+					if ( ( j = il.find("rlnCtfFigureOfMerit") ) >= 0 )
+						mg->ctf->fom(to_real(ir[j]));
+					if ( nogrp && ogrp <= nogrp ) {
+						if ( magx.size() == nogrp ) {
+							part->pixel_size[0] = ppx / magx[ogrp-1];	// Correct direction: tested 20211229
+							part->pixel_size[1] = ppx / magy[ogrp-1];
+						} else {
+							part->pixel_size[0] = part->pixel_size[1] = ppx;
+						}
+					} else {
+						part->pixel_size[0] = part->pixel_size[1] = ppx;
+					}
+					if ( ( j = il.find("rlnOriginX") ) >= 0 )
+						part->ori = -shift + mg->box_size/2;
+					else
+						part->ori = -shift_ang/ppx + mg->box_size/2;
 					part->view = euler.view();
-					part->ori = mg->box_size/2 - part->ori/ppx;
 					part->def = (defU + defV)/2;
 					part->dev = fabs(defU - defV)/2;
+					part->ast = angle_set_negPI_to_PI(part->ast);
 					mg->ctf->defocus_average(part->def);
-					mg->ctf->defocus_deviation(part->dev);
-					mg->ctf->astigmatism_angle(part->ast);
+					mg->ctf->astigmatism(part->dev, part->ast);
 					mg->ctf->zero(1);
 				}
 			}
@@ -138,6 +198,7 @@ int			relion_to_project(Bstar2& star, Bproject* project)
 	}
 
 	if ( verbose ) {
+		cout << "Optics groups:                  " << nogrp << endl;
 		cout << "Micrographs:                    " << nmg << endl;
 		cout << "Particles:                      " << npart << endl;
 	}
@@ -186,31 +247,150 @@ _rlnCtfFigureOfMerit #20
  6975.412944   852.888919            4     1.220089   165.000000 000001@Extract/job174/Micrographs/20171002_1000_A012_G000_H1000_D001.mrcs MotionCorr/job161/Micrographs/20171002_1000_A012_G000_H1000_D001.mrc   300.000000 23997.070312 23977.537109    59.369221     2.700000     0.000000     1.000000     0.000000     0.070000 10000.000000     1.980000     7.167600    -0.004115 
 
 */
-int 		project_to_relion(Bproject* project, Bstar2& star, int mg_select, int rec_select)
+int 		project_to_relion(Bproject* project, Bstar& star, int mg_select, int rec_select)
 {
 	int				err(0);
-	long 			nfield(0), nmg(0);
-	Bfield*			field;
-	Bmicrograph*	mg;
-	Bparticle*		part;
-	
-	BstarBlock&		block = star.add_block("1");
+	bool			found(0);
+	long 			nt(0), i(0), nfield(0), nmg(0), npart(0), ogrp(0), nogrp(0);
+	Bfield*			field = project->field;
+	Bmicrograph*	mg = field->mg;
+	Bparticle*		part = mg->part;
+	CTFparam		cp = *mg->ctf;
+	vector<string>	cpid;
+
+	BstarBlock&		block = star.add_block("optics");
+	if ( verbose )
+		cout << "Writing block: " << block.tag() << endl;
 	BstarLoop&		loop = block.add_loop();
-	loop.tags()["rlnCoordinateX"] = 0;
-	loop.tags()["rlnCoordinateY"] = 1;
+	loop.tags()["rlnOpticsGroupName"] = nt++;
+	loop.tags()["rlnOpticsGroup"] = nt++;
+//	loop.tags()["rlnMtfFileName"] = nt++;
+	loop.tags()["rlnMicrographOriginalPixelSize"] = nt++;
+	loop.tags()["rlnVoltage"] = nt++;
+	loop.tags()["rlnSphericalAberration"] = nt++;
+	loop.tags()["rlnAmplitudeContrast"] = nt++;
+	loop.tags()["rlnImagePixelSize"] = nt++;
+	loop.tags()["rlnImageSize"] = nt++;
+	loop.tags()["rlnImageDimensionality"] = nt++;
+	loop.tags()["rlnBeamTiltX"] = nt++;
+	loop.tags()["rlnBeamTiltY"] = nt++;
+	loop.tags()["rlnOddZernike"] = nt++;
+	loop.tags()["rlnEvenZernike"] = nt++;
+//	loop.tags()["rlnCtfDataAreCtfPremultiplied"] = nt++;
+//	loop.tags()["rlnMagMat00"] = nt++;
+//	loop.tags()["rlnMagMat01"] = nt++;
+//	loop.tags()["rlnMagMat10"] = nt++;
+//	loop.tags()["rlnMagMat11"] = nt++;
+//	cout << "Tags: " << nt << endl;
+
+	for ( field=project->field; field; field=field->next ) if ( mg_select < 1 || field->select > 0 ) {
+		for ( mg=field->mg; mg; mg=mg->next ) if ( mg_select < 1 || mg->select > 0 ) {
+			cp = *mg->ctf;
+//			cp.show();
+			found = 0;
+			for ( auto it: cpid ) if ( it == cp.identifier() ) found = 1;
+			if ( !found ) {
+				cpid.push_back(cp.identifier());
+				nogrp++;
+				i=0;
+				vector<string>&	vs = loop.add_row(nt);
+				vs[i++] = cp.identifier();
+				vs[i++] = to_string(++ogrp);
+				vs[i++] = to_string(mg->pixel_size[0]);
+				vs[i++] = to_string(1e-3*cp.volt());
+				vs[i++] = to_string(1e-7*cp.Cs());
+				vs[i++] = to_string(sin(cp.amp_shift()));
+				vs[i++] = to_string(part->pixel_size[0]);
+				vs[i++] = to_string(mg->box_size[0]);
+				vs[i++] = "2";
+				vs[i++] = to_string(cp.beam_tiltX());
+				vs[i++] = to_string(cp.beam_tiltY());
+				vs[i++] = "[" + concatenate(cp.zernike_odd()) + "]";
+				vs[i++] = "[" + concatenate(cp.aberration_even_difference()) + "]";
+				//	cout << "Values: " << i << endl;
+				if ( i != nt )
+					cerr << "Error: The number of values (" << i << " must equal the number of tags (" << nt << ")!" << endl;
+			}
+		}
+	}
+	
+//	cout << "Optics groups:" << endl;
+//	for ( auto it: cpid ) cout << it << endl;
+	
+	BstarBlock&		block2 = star.add_block("particles");
+	if ( verbose )
+		cout << "Writing block: " << block2.tag() << endl;
+	BstarLoop&		loop2 = block2.add_loop();
+	nt = 0;
+	loop2.tags()["rlnCoordinateX"] = nt++;
+	loop2.tags()["rlnCoordinateY"] = nt++;
+//	loop2.tags()["rlnAutopickFigureOfMerit"] = nt++;
+	loop2.tags()["rlnClassNumber"] = nt++;
+	loop2.tags()["rlnAnglePsi"] = nt++;
+	loop2.tags()["rlnImageName"] = nt++;
+	loop2.tags()["rlnMicrographName"] = nt++;
+	loop2.tags()["rlnOpticsGroup"] = nt++;
+//	loop2.tags()["rlnCtfMaxResolution"] = nt++;
+	loop2.tags()["rlnCtfFigureOfMerit"] = nt++;
+	loop2.tags()["rlnDefocusU"] = nt++;
+	loop2.tags()["rlnDefocusV"] = nt++;
+	loop2.tags()["rlnDefocusAngle"] = nt++;
+//	loop2.tags()["rlnCtfBfactor"] = nt++;
+//	loop2.tags()["rlnCtfScalefactor"] = nt++;
+//	loop2.tags()["rlnPhaseShift"] = nt++;
+	loop2.tags()["rlnAngleRot"] = nt++;
+	loop2.tags()["rlnAngleTilt"] = nt++;
+	loop2.tags()["rlnOriginXAngst"] = nt++;
+	loop2.tags()["rlnOriginYAngst"] = nt++;
+//	loop2.tags()["rlnNormCorrection"] = nt++;
+//	loop2.tags()["rlnLogLikeliContribution"] = nt++;
+	loop2.tags()["rlnMaxValueProbDistribution"] = nt++;
+//	loop2.tags()["rlnNrOfSignificantSamples"] = nt++;
+	loop2.tags()["rlnGroupNumber"] = nt++;
+//	loop2.tags()["rlnRandomSubset"] = nt++;
+//	cout << "Tags: " << nt << endl;
 
 	for ( field=project->field; field; field=field->next ) if ( mg_select < 1 || field->select > 0 ) {
 		for ( mg=field->mg; mg; mg=mg->next ) if ( mg_select < 1 || mg->select > 0 ) {
 			if ( verbose & VERB_FULL )
 				cout << "Writing field \"" << field->id << "\", micrograph \"" << mg->id << "\"" << endl;
+			cp = *mg->ctf;
+			for ( i=0; i<cpid.size(); ++i ) if ( cpid[i] == cp.identifier() ) ogrp = i+1;
 			for ( part = mg->part; part; part = part->next ) {
-				vector<string>&	vs = loop.add_row(2);
-				vs[0] = to_string(part->loc[0]);
-				vs[1] = to_string(part->loc[1]);
+				Euler	euler(part->view);
+				vector<string>&	vs = loop2.add_row(nt);
+				i = 0;
+				vs[i++] = to_string(part->loc[0]);
+				vs[i++] = to_string(part->loc[1]);
+				vs[i++] = to_string(part->sel);
+				vs[i++] = to_string(euler.psi()*180.0/M_PI);
+				vs[i++] = mg->fpart.str();
+				vs[i++] = mg->fmg.str();
+				vs[i++] = to_string(cp.select());
+				vs[i++] = to_string(cp.fom());
+				vs[i++] = to_string(part->def - part->dev);
+				vs[i++] = to_string(part->def + part->dev);
+				vs[i++] = to_string(part->ast*180.0/M_PI);
+				vs[i++] = to_string(euler.phi()*180.0/M_PI);
+				vs[i++] = to_string(euler.theta()*180.0/M_PI);
+				vs[i++] = to_string(part->ori[0]*part->pixel_size[0]);
+				vs[i++] = to_string(part->ori[1]*part->pixel_size[1]);
+				vs[i++] = to_string(part->fom[0]);
+				vs[i++] = to_string(part->group);
+				npart++;
+//				cout << "Values: " << i << endl;
+				if ( i != nt )
+					cerr << "Error: The number of values (" << i << " must equal the number of tags (" << nt << ")!" << endl;
 			}
 			nmg++;
 		}
 		nfield++;
+	}
+	
+	if ( verbose ) {
+		cout << "Optics groups:                  " << nogrp << endl;
+		cout << "Micrographs:                    " << nmg << endl;
+		cout << "Particles:                      " << npart << endl;
 	}
 
 	return err;
@@ -225,7 +405,7 @@ int 		project_to_relion(Bproject* project, Bstar2& star, int mg_select, int rec_
 **/
 int			read_project_relion(Bstring& filename, Bproject* project)
 {
- 	Bstar2		star;
+ 	Bstar		star;
 	star.line_length(200);                // Set the output line length
 	
  	if ( star.read(filename.str()) < 0 )
@@ -256,7 +436,7 @@ int			read_project_relion(Bstring& filename, Bproject* project)
 **/
 int			write_project_relion(Bstring& filename, Bproject* project, int mg_select, int rec_select)
 {
- 	Bstar2		star;
+ 	Bstar		star;
 	star.line_length(200);                // Set the output line length
 
 	if ( verbose ) cout << "Writing a Relion file:          " << filename << endl;

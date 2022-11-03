@@ -218,7 +218,8 @@ int 	main(int argc, char **argv)
 			astr = curropt->value;
 			associate_type = astr.pre(',');
 			astr = astr.post(',');
-			associate_mass = get_option_mass(astr);
+//			associate_mass = get_option_mass(astr);
+			associate_mass = curropt->real_unit(astr);
 			astr = 0;
 		}
 		if ( curropt->tag == "settype" )

@@ -11,7 +11,7 @@ var class_bstring =
     [ "~Bstring", "class_bstring.html#a895b0d4855a04a76974d9384028af888", null ],
     [ "alnum", "class_bstring.html#ac23f0540879545971158df680a967b3d", null ],
     [ "base", "class_bstring.html#a0aeaec8263244afc8ef393de872f850c", null ],
-    [ "c_str", "class_bstring.html#a06bd53725640b94250b6cf73e362cecb", null ],
+    [ "c_str", "class_bstring.html#a98cf1b8a60c488675697517d376db848", null ],
     [ "canonical", "class_bstring.html#a5f75511fac0763464caf49088e89a8ce", null ],
     [ "common", "class_bstring.html#a492bd833283b47d8a13944a1cc122861", null ],
     [ "compare", "class_bstring.html#afb9267a87b84d9ac62aa2ab5b41efb67", null ],

@@ -3,16 +3,19 @@
 @brief	Function to generate a map from a model.
 @author Bernard Heymann
 @date	Created: 20081112
-@date	Modified: 20210205
+@date	Modified: 20220419
 **/
 
 #include "rwmodel.h"
+#include "rwmodel_param.h"
 #include "model_links.h"
 #include "model_transform.h"
 #include "model_extract_build.h"
+#include "model_mol.h"
+#include "model_util.h"
 #include "rwimg.h"
-#include "mg_orient.h"
 #include "img_combine.h"
+#include "scatter.h"
 #include "utilities.h"
 
 // Declaration of global variables
@@ -774,3 +777,340 @@ int			model_component_symmetry(Bmodel* model, long nangles,
 
 	return 0;
 }
+
+/*
+	The new structure factors are added to the input image.
+*/
+int			scatter_one(Bcomponent* comp, Bimage* p,
+				vector<double>& scurve, CTFparam cp, double ds, double scut, int flag)
+{
+	bool			ab(flag&1), ew(flag&2);
+	long			i, t, xx, yy;
+	double			ids(1/ds), s, s2, sc2(scut*scut), sx, sy, sx2, sy2;
+	double			f1, f, phi, pilz(0);
+	Vector3<long>	h((p->size()+1)/2);
+	
+//	if ( ab ) cp.defocus_average(cp.defocus_average() + comp->location()[2]);
+
+	if ( ew ) pilz = M_PI*cp.lambda()*comp->location()[2];	// Ewald sphere phase shift prefactor
+
+	for ( i=yy=0; yy<p->sizeY(); ++yy ) {
+		sy = ( yy < h[1] )? yy: yy - p->sizeY();
+		sy /= p->real_size()[1];
+		sy2 = sy*sy;
+		for ( xx=0; xx<p->sizeX(); ++xx, ++i ) {
+			sx = ( xx < h[0] )? xx: xx - p->sizeX();
+			sx /= p->real_size()[0];
+			sx2 = sx*sx;
+			s2 = sx2 + sy2;
+			if ( s2 <= sc2 ) {
+				s = ids*sqrt(s2);		// Sampling relative to the scattering curve
+				t = long(s);
+				f1 = s - t;				// Fraction for interpolation
+				f = comp->density()*((1-f1)*scurve[t] + f1*scurve[t+1]);		// Amplitude
+				phi = MIN2PI*(sx*comp->location()[0] + sy*comp->location()[1]);	// Phase shift
+				if ( pilz ) phi -= pilz*s2;					// Ewald sphere phase shift
+//				if ( ab ) f *= cp.calculate(s2, atan2(sy,sx));		// Aberrations (CTF)
+				if ( ab ) phi += M_PI_2 + cp.delta_phi(s2, atan2(sy,sx));		// Aberrations (CTF)
+//				p->add(i, Complex<float>(f*cosl(phi), f*sinl(phi)));
+				p->add(i, complex_polar(f, phi));
+			}
+		}
+	}
+
+	return 1;
+}
+
+/*
+	The input image is not modified
+*/
+Bimage*		scatter_one_img(Bcomponent* comp, Bimage* p,
+				vector<double>& scurve, CTFparam cp, double ds, double scut, int flag)
+{
+	Bimage*			pone = new Bimage(Float, TComplex, p->size(), 1);
+
+	scatter_one(comp, pone, scurve, cp, ds, scut, flag);
+
+	return pone;
+}
+
+
+Bimage*		scatter_to_img(const vector<Bcomponent*>& carr, long ib, long ie, Bimage* p,
+				map<string, vector<double>>& scat, CTFparam& cp, double ds, double scut, int flag)
+{
+	long			ic;
+	Bcomponent*		comp;
+	string			cel;
+
+	Bimage*			pone = new Bimage(Float, TComplex, p->size(), 1);
+
+	for ( ic=ib; ic<ie; ++ic ) {
+		comp = carr[ic];
+		
+		cel = component_element(comp);
+		
+		if ( scat.find(cel) == scat.end() ) {
+			cerr << "Warning: Scattering curve for element " << cel << " not found!" << endl;
+		} else {
+			vector<double>&	scurve = scat.at(cel);
+			
+			scatter_one(comp, pone, scurve, cp, ds, scut, flag);
+		}
+	}
+
+	return pone;
+}
+
+Bimage*		scatter_slice_to_img(const vector<Bcomponent*>& carr, Bimage* p,
+				map<string, vector<double>>& scat, CTFparam& cp, double ds, double scut, int flag)
+{
+	Bimage*			pone = new Bimage(Float, TComplex, p->size(), 1);
+
+	if ( verbose & VERB_DEBUG ) {
+		cout << "Scattering curves: " << scat.size() << endl;
+		for ( auto it = scat.begin(); it != scat.end(); ++it )
+			cout << it->first << endl;
+	}
+
+	for ( auto comp: carr ) {
+		string		cel = component_element(comp);
+		
+		if ( scat.find(cel) == scat.end() ) {
+			cerr << "Warning: Scattering curve for element " << cel << " not found!" << endl;
+		} else {
+			vector<double>&	scurve = scat.at(cel);
+			
+			scatter_one(comp, pone, scurve, cp, ds, scut, flag);
+		}
+	}
+
+	return pone;
+}
+
+
+
+int			img_add(Bimage* ps, vector<Complex<float>>& v)
+{
+	for ( long i=0; i<ps->data_size(); ++i )
+		ps->add(i, v[i]);
+
+	return 0;
+}
+
+int			img_add_fast_old(Bimage* ps, Bimage* p)
+{
+	for ( long i=0; i<ps->data_size(); ++i )
+		ps->add(i, (*p)[i]);
+
+	return 0;
+}
+
+int			img_add_fast(Bimage* ps, Bimage* p)
+{
+	float*		fds = (float *) ps->data_pointer();
+	float*		fd = (float *) p->data_pointer();
+	
+	for ( long i=0; i<ps->data_size(); ++i, ++fd, ++fds )
+		*fds += *fd;
+
+	return 0;
+}
+
+int			img_electron_scattering(Bmodel* model, Bimage* p,
+				CTFparam& cp, double dose, double stdev, map<string, vector<double>>& scat, double ds, double scut, int flag)
+{
+	if ( dose && stdev ) model_random_displace_number(model, dose, stdev);
+
+	vector<Bcomponent*>	carr = models_get_component_array(model);
+	long				ncomp(carr.size());
+
+#ifdef HAVE_GCD
+	__block long		nd(0);
+	dispatch_queue_t 	myq = dispatch_queue_create(NULL, NULL);
+	dispatch_apply(ncomp, dispatch_get_global_queue(0, 0), ^(size_t i){
+		string				cel = component_element(carr[i]);
+		if ( scat.find(cel) == scat.end() ) {
+			cerr << "Warning: Scattering curve for element " << cel << " not found!" << endl;
+		} else {
+			vector<double>	scurve = scat.at(cel);
+//			__block vector<Complex<float>>	v = scatter_one(carr[i], p, scurve, cp, ds, scut, flag);
+			Bimage*			pone = scatter_one_img(carr[i], p, scurve, cp, ds, scut, flag);
+			dispatch_sync(myq, ^{
+//				img_add(p, v);
+				img_add_fast(p, pone);
+				nd++;
+				cout << " " << nd << "/" << ncomp << "\r" << flush;
+			});
+		}
+	});
+#else
+	long			nd(0);
+#pragma omp parallel for
+	for ( long i=0; i<ncomp; ++i ) {
+		string				cel = component_element(carr[i]);
+		if ( scat.find(cel) == scat.end() ) {
+			cerr << "Warning: Scattering curve for element " << cel << " not found!" << endl;
+		} else {
+			vector<double>	scurve = scat.at(cel);
+//			vector<Complex<float>>	v = scatter_one(carr[i], p, scurve, cp, ds, scut, flag);
+			Bimage*			pone = scatter_one_img(carr[i], p, scurve, cp, ds, scut, flag);
+#pragma omp critical
+			{
+//				img_add(p, v);
+				img_add_fast(p, pone);
+				nd++;
+				cout << " " << nd << "/" << ncomp << "\r" << flush;
+			}
+			delete pone;
+		}
+	}
+#endif
+
+	return 0;
+}
+
+int			img_electron_scattering_chunks(Bmodel* model, Bimage* p,
+				CTFparam& cp, double dose, double stdev, map<string, vector<double>>& scat, double ds, double scut, int flag)
+{
+	if ( dose && stdev ) model_random_displace_number(model, dose, stdev);
+
+	vector<Bcomponent*>	carr = models_get_component_array(model);
+	long				ncomp(carr.size());
+	long				nc(100), n(ncomp/nc+1);
+	
+	cout << ncomp << tab << nc << tab << n << endl;
+
+#ifdef HAVE_GCD
+	__block long		nd(0);
+	dispatch_queue_t 	myq = dispatch_queue_create(NULL, NULL);
+	dispatch_apply(nc, dispatch_get_global_queue(0, 0), ^(size_t i){
+		long			j = ((i+1)*n<ncomp)? (i+1)*n: ncomp;
+		Bimage*			pone = scatter_to_img(carr, i*n, j, p, scat, cp, ds, scut, flag);
+		dispatch_sync(myq, ^{
+			img_add_fast(p, pone);
+			nd += j-i*n;
+			cout << " " << nd << "/" << ncomp << "\r" << flush;
+		});
+	});
+#else
+	long				nd(0);
+#pragma omp parallel for
+	for ( long i=0; i<ncomp; i+=n ) {
+		long			j = (i+n<ncomp)? i+n: ncomp;
+		Bimage*			pone = scatter_to_img(carr, i, j, p, scat, cp, ds, scut, flag);
+#pragma omp critical
+		{
+			img_add_fast(p, pone);
+			nd += j-i;
+			cout << " " << nd << "/" << ncomp << "\r" << flush;
+		}
+		delete pone;
+	}
+#endif
+
+	return 0;
+}
+
+/*
+	Takes the input number of sub-images as the number of slices
+*/
+int			img_electron_scattering_slices(Bmodel* model, Bimage* p, CTFparam& cp, 
+				map<string, vector<double>>& scat, double ds, double scut, int flag)
+{
+	vector<Vector3<double>>	bounds = models_calculate_bounds(model);
+	double				thickness(p->image->sampling()[2]);
+	double				bottom(bounds[0][2]);
+	double				top(p->images()*thickness + bottom);
+	vector<vector<Bcomponent*>>	comp_slice = model_split_into_slices(model, bottom, top, thickness);
+
+#ifdef HAVE_GCD
+	__block long		nd(0);
+	dispatch_queue_t 	myq = dispatch_queue_create(NULL, NULL);
+	dispatch_apply(p->images(), dispatch_get_global_queue(0, 0), ^(size_t i){
+		Bimage*			pone = scatter_slice_to_img(comp_slice[i], p, scat, cp, ds, scut, flag);
+		dispatch_sync(myq, ^{
+			p->replace(i, pone);
+			nd++;
+			cout << " " << nd << "/" << p->images() << "\r" << flush;
+		});
+		delete pone;
+	});
+#else
+	long				nd(0);
+#pragma omp parallel for
+	for ( long i=0; i<p->images(); ++i ) {
+		Bimage*			pone = scatter_slice_to_img(comp_slice[i], p, scat, cp, ds, scut, flag);
+#pragma omp critical
+		{
+			p->replace(i, pone);
+			nd++;
+			cout << " " << nd << "/" << p->images() << "\r" << flush;
+		}
+		delete pone;
+	}
+#endif
+
+	return 0;
+}
+
+
+
+int			img_electron_scattering(Bmodel* model, Bimage* p,
+				CTFparam& cp, double dose, double stdev, Bstring& atompropfile, int flag)
+{
+	if ( dose ) (*p)["dose"] = dose;	// Dose per frame
+
+	double			scut = cp.frequency_cutoff();
+	
+//	if ( scut > 0.5/p->sampling(0)[0] ) scut = 0.5/p->sampling(0)[0];
+
+	double			ds(0.01), smax(5);
+	
+	map<string,Bcomptype>	atompar = read_atom_properties(atompropfile);
+	
+	JSvalue			el = model_elements(model, atompar);
+	
+	if ( verbose ) {
+		cout << "Calculating structure factors:" << endl;
+		cout << "Atomic properties file:         " << atompropfile << endl;
+		cout << "Size:                           " << p->size() << tab << p->images() << endl;
+		cout << "Dose:                           " << dose << " e/frame (" << stdev << ")" << endl;
+		cout << "Frequency cutoff:               " << scut << " (" << 1/scut << " A)" << endl;
+		cout << "Aberration flag:                " << (flag&1) << endl;
+		cout << "Ewald sphere flag:              " << (flag&2) << endl;
+		cp.show();
+		cout << endl;
+	}
+	
+	map<string, vector<double>>	scat = calculate_scattering_curves(el, atompar, ds, smax);
+	
+	if ( verbose & VERB_DEBUG ) {
+		cout << "Scattering curves: " << scat.size() << endl;
+		for ( auto it = scat.begin(); it != scat.end(); ++it )
+			cout << it->first << endl;
+	}
+	
+	Bimage*			p1;
+	double			lambda = cp.lambda();
+	double			b2 = beta2(cp.volt());
+	double			scale = lambda/sqrt(1 - b2);
+	scale *= 1/p->real_size().volume();
+	
+	if ( dose ) {
+		for ( long nn=0; nn<p->images(); ++nn ) {
+			if ( verbose )
+				cout << "Calculating image " << nn+1 << endl;
+			p1 = p->extract(nn);
+			img_electron_scattering(model, p1, cp, dose, stdev, scat, ds, scut, flag);
+			p->replace(nn, p1);
+		}
+		if ( verbose )
+			cout << endl;
+		p->multiply(scale);
+	} else {
+		img_electron_scattering_slices(model, p, cp, scat, ds, scut, flag);
+	}
+
+	return 0;
+}
+

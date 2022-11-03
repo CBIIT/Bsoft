@@ -3,7 +3,7 @@
 @brief	Program for calculating cross-correlations
 @author Bernard Heymann
 @date	Created: 19980805
-@date 	Modified: 20150828
+@date 	Modified: 20220801
 **/
 
 #include "rwimg.h"
@@ -20,13 +20,20 @@ const char* use[] = {
 " ",
 "Usage: bcc [options] file.spi file.mrc",
 "--------------------------------------",
-"Calculates cross-correlation using fast Fourier transforms.",
+"Calculates various comparisons using fast Fourier transforms.",
+"Actions:",
+"	auto-correlation.",
+"	centering by correlation with a phase-inverted image.",
+"	cross-correlation with a reference image.",
+"	phase-correlation with a reference image.",
+"	cross-correlation and cross-validation with a reference image.",
 " ",
 "Actions:",
-"-Autocorrelate           Auto-correlate, output auto-correlation map.",
-"-Crosscorrelate file.mrc Cross-correlate with reference file.mrc, output shifted image.",
-"-Validate file.mrc       Cross-correlate and cross-validate with reference file.mrc, output shifted image.",
-"-Center                  Find center by cross-correlation with an inverted copy.",
+"-action phase            Type: auto, center, cross, phase, valid.",
+//"-Autocorrelate           Auto-correlate, output auto-correlation map.",
+//"-Crosscorrelate          Cross-correlate with reference file.mrc, output shifted image.",
+//"-Validate                Cross-correlate and cross-validate with reference file.mrc, output shifted image.",
+//"-Center                  Find center by cross-correlation with an inverted copy.",
 "-halfshift               Shift correlation map by half the size to put the origin in the middle.",
 " ",
 "Parameters:",
@@ -40,6 +47,7 @@ const char* use[] = {
 //"-wrap                    Turn wrapping on (default off).",
 " ",
 "Input:",
+"-Reference ref.mrc       Reference file for cross-correlation.",
 "-Mask mask.tif           Reciprocal space mask to use for cross-correlation.",
 " ",
 "Output:",
@@ -51,20 +59,21 @@ NULL
 int 	main(int argc, char **argv)
 {
     // Initialize variables
+    int				type(0);				// 0=none; 1=AC; 2=center; 3=CC; 4=PC; 5=Validate
 	DataType 		nudatatype(Unknown_Type);	// Conversion to new type
-    int				findcenter(0);				// Flag to find image center
-    int 			setauto(0);					// Flag to do auto-correlation
-	int				halfshift(0);				// Flag to shift origin to middle
-	double			search_limit(-1);			// Search limit in cross-correlation map
-    Bstring			reffile;					// File for cross-correlation
-    Bstring			valfile;					// File for cross-validation
-    Bstring			ccfile;						// Cross-correlation map output file
-    Bstring			maskfile;					// Mask to use for cross-correlation
+//    int				findcenter(0);			// Flag to find image center
+//    int 			setauto(0);				// Flag to do auto-correlation
+	int				halfshift(0);			// Flag to shift origin to middle
+	double			search_limit(-1);		// Search limit in cross-correlation map
+    Bstring			reffile;				// File for cross-correlation
+//    Bstring			valfile;				// File for cross-validation
+    Bstring			ccfile;					// Cross-correlation map output file
+    Bstring			maskfile;				// Mask to use for cross-correlation
     
-	Vector3<double>	origin;			// Origin
-	int				set_origin(0);				// Flag for setting the origin
-	Vector3<double>	sam;				// Sampling
-//	int 			setwrap(0);					// Wrapping flag
+	Vector3<double>	origin;					// Origin
+	int				set_origin(0);			// Flag for setting the origin
+	Vector3<double>	sam;					// Sampling
+//	int 			setwrap(0);				// Wrapping flag
     
 	double			hires(0), lores(0);		// Limiting resolution range (hires must be > 0 to be set)
 
@@ -72,12 +81,21 @@ int 	main(int argc, char **argv)
 	Boption*		option = get_option_list(use, argc, argv, optind);
 	Boption*		curropt;
 	for ( curropt = option; curropt; curropt = curropt->next ) {
+		if ( curropt->tag == "action" ) {
+			if ( curropt->value[0] == 'a' ) type = 1;
+			if ( curropt->value[0] == 'c' ) {
+				if ( curropt->value[1] == 'e' )type = 2;
+			 	else type = 3;
+			}
+			if ( curropt->value[0] == 'p' ) type = 4;
+			if ( curropt->value[0] == 'v' ) type = 5;
+		}
 		if ( curropt->tag == "datatype" )
 			nudatatype = curropt->datatype();
- 		if ( curropt->tag == "Autocorrelate" )
-       		setauto = 1;
- 		if ( curropt->tag == "Center" )
-       		findcenter = 1;
+// 		if ( curropt->tag == "Autocorrelate" )
+//       		setauto = 1;
+// 		if ( curropt->tag == "Center" )
+//       		findcenter = 1;
  		if ( curropt->tag == "halfshift" ) halfshift = 1;
  		if ( curropt->tag == "resolution" )
 			if ( curropt->values(hires, lores) < 1 )
@@ -97,18 +115,25 @@ int 	main(int argc, char **argv)
 				cerr << "-limit: A search limit must be specified" << endl;
 //		if ( curropt->tag == "wrap" )
 //			setwrap = 1;
-		if ( curropt->tag == "Map" )
-			ccfile = curropt->filename();
- 		if ( curropt->tag == "Crosscorrelate" )
+// 		if ( curropt->tag == "Crosscorrelate" ) type = 0;
+//			reffile = curropt->filename();
+ //		if ( curropt->tag == "Validate" )
+//			valfile = curropt->filename();
+ 		if ( curropt->tag == "Reference" )
 			reffile = curropt->filename();
- 		if ( curropt->tag == "Validate" )
-			valfile = curropt->filename();
  		if ( curropt->tag == "Mask" )
 			maskfile = curropt->filename();
+		if ( curropt->tag == "Map" )
+			ccfile = curropt->filename();
     }
 	option_kill(option);
 
 	double			ti = timer_start();
+	
+	if ( type > 2 && reffile.length() < 1 ) {
+		cerr << "Error: A reference file must be specified for this action!" << endl;
+		bexit(-1);
+	}
 	
 	// Allocate memory for the structure factors and image parameters
     Bimage*	 		p = NULL;
@@ -122,6 +147,16 @@ int 	main(int argc, char **argv)
 		bexit(-1);
 	}
 	
+    if ( reffile.length() ) {
+    	pref = read_img(reffile, 1, -1);
+		if ( !pref ) bexit(-1);
+	}
+	
+	if ( maskfile.length() ) {
+		pmask = read_img(maskfile, 1, -1);
+		if ( !pmask ) bexit(-1);
+	}
+
 	if ( nudatatype == Unknown_Type )
 		nudatatype = p->data_type();
 	else if ( nudatatype > p->data_type() )
@@ -134,18 +169,17 @@ int 	main(int argc, char **argv)
 		else p->origin(origin);
 	}
 
-	if ( maskfile.length() )
-		pmask = read_img(maskfile, 1, -1);
 	
 	if ( search_limit < 0 ) search_limit = p->sizeX()/4.0;
 	
     // Do cross correlation or a simple Fourier transform
 	long   			n;
 	double			v, ccavg(0), ccstd(0);
-    if ( reffile.length() ) {
-    	pref = read_img(reffile, 1, -1);
-		if ( !pref ) bexit(-1);
-		pcc = p->cross_correlate(pref, hires, lores, pmask);
+    if ( type == 3 || type == 4 ) {
+		if ( type == 3 )
+			pcc = p->cross_correlate(pref, hires, lores, pmask);
+		else
+			pcc = p->phase_correlate(pref, hires, lores, pmask);
 //		pcc = p->cross_correlate_fspace(pref, hires, lores, search_limit);
 //		origin = pref->image->origin();
 //		cout << "origin=" << pcc->image->origin() << endl;
@@ -176,9 +210,7 @@ int 	main(int argc, char **argv)
 		}
 		delete pref;
 		if ( optind < argc ) p->center_wrap();
-    } else if ( valfile.length() ) {
-    	pref = read_img(valfile, 1, -1);
-		if ( !pref ) bexit(-1);
+    } else if ( type == 5 ) {
 		pcc = p->cross_correlate_validate(pref, pmask);
 //		origin = pref->image->origin();
 		pcc->find_peak(search_limit, 0);
@@ -196,14 +228,14 @@ int 	main(int argc, char **argv)
 			cout << endl;
 		}
 		if ( optind < argc ) p->center_wrap();
-	} else if ( setauto ) {
+	} else if ( type == 1 ) {
 		p->auto_correlate(hires, lores);
 		if ( halfshift ) {
 			p->origin(0,0,0);
 			p->center_wrap();
 		}
 		pcc = p;
-	} else if ( findcenter ) {
+	} else if ( type == 2 ) {
 		p->find_center(pmask, hires, lores, search_limit, 0, 1);
 		if ( halfshift ) p->center_wrap();
 		pcc = p;

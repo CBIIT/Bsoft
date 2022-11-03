@@ -1,9 +1,9 @@
 /**
 @file	brefine.cpp
 @brief	Reciprocal space refinement of orientation parameters of particle images.
-@author  Bernard Heymann
+@author Bernard Heymann
 @date	Created: 20070115
-@date	Modified: 20190207
+@date	Modified: 20220813
 **/
 
 #include "mg_processing.h"
@@ -17,6 +17,7 @@
 
 // Declaration of global variables
 extern int 	verbose;		// Level of output to the screen
+extern int	thread_limit;	// Thread limit
 
 // Usage assistance
 const char* use[] = {
@@ -28,6 +29,7 @@ const char* use[] = {
 " ",
 "Actions:",
 "-all                     Reset selection to all particles before other selections (default not).",
+"-contrast                Invert contrast for comparisons (default not).",
 "-symmetry C5             Search for the best symmetry-related orientations.",
 "-magnification 0.01      Turns on magnification refinement: Maximum adjustment (default 0).",
 "-defocus 0.002           Turns on defocus refinement: Standard deviation for Monte Carlo,",
@@ -88,7 +90,6 @@ int			main(int argc, char** argv)
 	double 			hi_res(0), lo_res(0); 		// Must be set > 0 to limit resolution
 	int				kernel_width(8);			// Interpolation kernel width
 	int				kernel_power(2);			// Interpolation kernel power
-	int				nthreads(1);				// Number of threads to run
 	int				nothreads(0);				// Flag to turn off threads
 	Bstring			symmetry_string;			// No symmetry specified
 	int				flags(0);					// Flags for processing options
@@ -96,6 +97,8 @@ int			main(int argc, char** argv)
 	Bstring			maskfile;					// Mask to be applied to particles
 	Bstring			fscfile;					// FSC curve
 	Bstring			outfile;					// Output parameter file
+
+	thread_limit = 1;		// Default number of threads
 
 	int				optind;
 	Boption*		option = get_option_list(use, argc, argv, optind);
@@ -158,12 +161,8 @@ int			main(int argc, char** argv)
 		if ( curropt->tag == "step" )
 			if ( curropt->values(shift_step, shift_accuracy) < 1 )
 				cerr << "-step: A shift step size must be specified!" << endl;
-		if ( curropt->tag == "threads" ) {
-			if ( curropt->value[0] == 'm' ) nthreads = 1000;
-			else if ( ( nthreads = curropt->value.integer() ) < 1 )
-				cerr << "-threads: A number of threads must be specified!" << endl;
-		}
 		if ( curropt->tag == "nothreads" ) nothreads = 1;
+		if ( curropt->tag == "contrast" ) flags |= INVERT;
 		if ( curropt->tag == "ppx" ) flags |= WRITE_PPX | CHECK_PPX;
 		if ( curropt->tag == "reference" )
 			reffile = curropt->filename();

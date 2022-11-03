@@ -1,9 +1,9 @@
 /**
 @file	Bimage_resolution.cpp
 @brief	Library routines to estimate resolution 
-@author Bernard Heymann
+@author 	Bernard Heymann
 @date	Created: 20000611
-@date	Modified: 20171122
+@date	Modified: 20220324
 **/
 
 #include "Bimage.h"
@@ -91,6 +91,7 @@ Bimage*		Bimage::resolution_prepare(Bimage* p, fft_plan plan)
 **/
 Bplot*		Bimage::fsc_dpr(double hi_res, double sampling_ratio, int flag)
 {
+	check_resolution(hi_res);
 	if ( sampling_ratio <= 0 ) sampling_ratio = 1;
 	
 	// The frequency scaling is linked to the different dimensions of the
@@ -99,8 +100,8 @@ Bplot*		Bimage::fsc_dpr(double hi_res, double sampling_ratio, int flag)
 	// in reciprocal space for the longest dimension.
 	Vector3<double>	freq_scale(1/real_size());
 	double			rad_scale = real_size()[0]/sampling_ratio;
-	if ( hi_res < 2*sampling(0).max() ) hi_res = 2*sampling(0).max();
-	if ( hi_res > real_size().max()/2.0 ) hi_res = real_size().max()/2.0;
+//	if ( hi_res < 2*sampling(0)[0] ) hi_res = 2*sampling(0)[0];
+//	if ( hi_res > real_size().max()/2.0 ) hi_res = real_size().max()/2.0;
 	
 	long			maxrad = (long) (2 + rad_scale/hi_res);
 
@@ -118,16 +119,13 @@ Bplot*		Bimage::fsc_dpr(double hi_res, double sampling_ratio, int flag)
 		cout << "Sampling ratio:                 " << sampling_ratio << endl << endl;
 	}
 	
-	double*			F1 = new double[maxrad]; 
-	double*			F2 = new double[maxrad]; 
-	double*			Fsum = new double[maxrad];
-	double*			FSC = new double[maxrad];
-	double*			DPR = new double[maxrad];
+	vector<double>	F1(maxrad,0);
+	vector<double>	F2(maxrad,0);
+	vector<double>	Fsum(maxrad,0);
+	vector<double>	FSC(maxrad,0);
+	vector<double>	DPR(maxrad,0);
 	
-	for ( i=0; i<maxrad; i++ )
-		F1[i] = F2[i] = Fsum[i] = FSC[i] = DPR[i] = 0;
-	
-	for ( zz=0; zz<z; zz++ ) { 
+	for ( zz=0; zz<z; zz++ ) {
 		rz = zz; 
 		if ( rz > (z - 1)/2 ) rz -= z;
 		rz *= freq_scale[2];
@@ -177,6 +175,9 @@ Bplot*		Bimage::fsc_dpr(double hi_res, double sampling_ratio, int flag)
 		}
 	}
 
+	if ( verbose & VERB_DEBUG )
+		cout << "DEBUG Bimage::fsc_dpr: Creating plot" << endl;
+
 	int			ncol(3);
 	if ( flag ) ncol = 2;
 	
@@ -218,13 +219,17 @@ Bplot*		Bimage::fsc_dpr(double hi_res, double sampling_ratio, int flag)
 		plot->page(0).axis(4).inc(10);
 		plot->page(0).axis(4).label("DPR");
 	}
-	
+
+	if ( verbose & VERB_DEBUG )
+		cout << "DEBUG Bimage::fsc_dpr: transferring data, maxrad=" << maxrad << endl;
+
 	(*plot)[0] = 0;
 	(*plot)[maxrad] = 1; 
 	for ( i=1; i<maxrad; i++ ) {
 //		cout << i << tab << F1[i] << tab << F2[i] << tab << FSC[i] << tab << endl;
 		if ( F1[i]*F2[i] > SMALLFLOAT ) FSC[i] /= sqrt(F1[i]*F2[i]);
-		if ( FSC[i] < SMALLFLOAT ) FSC[i] = 0;
+//		if ( FSC[i] < SMALLFLOAT ) FSC[i] = 0;
+		if ( FSC[i] < -1 ) FSC[i] = -1;
 		if ( FSC[i] > 1 ) FSC[i] = 1;
 		if ( Fsum[i] > SMALLFLOAT ) DPR[i] = sqrt(DPR[i]/Fsum[i]);
 		else DPR[i] = 0;
@@ -233,29 +238,29 @@ Bplot*		Bimage::fsc_dpr(double hi_res, double sampling_ratio, int flag)
 		if ( ncol > 2 ) (*plot)[2*maxrad+i] = DPR[i]*180.0/M_PI;
 	}
 	
-	delete[] F1; 
-	delete[] F2;	
-	delete[] Fsum;
-	delete[] FSC;
-	delete[] DPR;
+	if ( verbose & VERB_DEBUG )
+		cout << "DEBUG Bimage::fsc_dpr: Plot done" << endl;
 
-	return plot; 
+	return plot;
 }
 
-Bplot*		Bimage::fsc(double hi_res, double sampling_ratio)
+Bplot*		Bimage::fsc(double hi_res, double sampling_ratio, vector<double>& fsccut)
 {
+	check_resolution(hi_res);
+
 	if ( verbose ) {
 		cout << "Determining resolution for " << n << " images" << endl;
 		cout << "Resolution limit:               " << hi_res << endl;
 		cout << "Sampling ratio:                 " << sampling_ratio << endl << endl;
 	}
 	
-	long		i, j, nn, ncol(n+1);
-	double		r, fsccut[4] = {0.143, 0.3, 0.5, 0.9};
-	Bstring		title("Resolution"), txt;
-	Bimage*		p1 = NULL;
-	Bplot*		plot = NULL;
-	Bplot*		plot1 = NULL;
+	long			i, j, nn, ncol(n+1);
+	double			r;
+//	vector<double> 	fsccut{0.143, 0.3, 0.5, 0.9};
+	Bstring			title("Resolution"), txt;
+	Bimage*			p1 = NULL;
+	Bplot*			plot = NULL;
+	Bplot*			plot1 = NULL;
 	
 	if ( verbose ) {
 		cout << "Image";
@@ -324,6 +329,8 @@ Bplot*		Bimage::fsc(double hi_res, double sampling_ratio)
 
 Bplot*		Bimage::fsc(Bimage* p, double hi_res, double sampling_ratio)
 {
+	check_resolution(hi_res);
+	
 	if ( verbose ) {
 		cout << "Determining resolution for " << n << " images" << endl;
 		cout << "Resolution limit:               " << hi_res << endl;
@@ -331,9 +338,7 @@ Bplot*		Bimage::fsc(Bimage* p, double hi_res, double sampling_ratio)
 	}
 	
 	long			i, j, nn, ncol(n+1);
-//	double			r, fsccut[4] = {0.143, 0.3, 0.5, 0.9};
 	double			rad_scale(real_size()[0]/sampling_ratio);
-//	long			maxrad = fspace_maximum_radius(hi_res, sampling_ratio);
 	Bstring			title("Resolution"), txt;
 	Bimage*			p1 = NULL;
 	Bimage*			p2 = NULL;
@@ -345,14 +350,14 @@ Bplot*		Bimage::fsc(Bimage* p, double hi_res, double sampling_ratio)
 
 		p1 = extract(nn);
 		p2 = p->extract(nn);
-		pr1 = p1->fspace_radial_power(hi_res);
-		pr2 = p2->fspace_radial_power(hi_res);
+		pr1 = p1->fspace_radial_power(hi_res, sampling_ratio);
+		pr2 = p2->fspace_radial_power(hi_res, sampling_ratio);
 		p1->complex_conjugate_product(p2);
 		p1->complex_to_real();
 		delete p2;
 		p1->origin(0,0,0);
 //		p2 = p1->radial(0, maxrad, 1, 1);
-		p2 = p1->fspace_radial_power(hi_res);
+		p2 = p1->fspace_radial_power(hi_res, sampling_ratio);
 		p2->set(0, 1);
 		for ( i=1; i<p2->sizeX(); ++i ) p2->set(i, (*p2)[i] / sqrt((*pr1)[i] * (*pr2)[i]));
 		delete p1;
@@ -367,7 +372,8 @@ Bplot*		Bimage::fsc(Bimage* p, double hi_res, double sampling_ratio)
 		}
 
 		for ( i=0, j=(nn+1)*plot->rows(); i<plot->rows(); ++i, ++j )
-			if ( (*p2)[i] > 0 ) (*plot)[j] = (*p2)[i];
+			if ( isfinite((*p2)[i]) ) (*plot)[j] = (*p2)[i];
+			else (*plot)[j] = 0;
 	
 		delete p2;
 
@@ -385,7 +391,7 @@ Bplot*		Bimage::fsc(Bimage* p, double hi_res, double sampling_ratio)
 		plot->page(nn).column(1).axis(3);
 		plot->page(nn).column(1).color(0,0,0);
 		plot->page(nn).axis(1).min(0);
-		plot->page(nn).axis(1).max(1/hi_res);
+		plot->page(nn).axis(1).max(1.0/hi_res);
 		plot->page(nn).axis(1).inc(0.1/hi_res);
 		plot->page(nn).axis(1).flags(1);
 		plot->page(nn).axis(1).label("Resolution (A)");
@@ -515,6 +521,8 @@ Bimage*		Bimage::fsc_shell(Bimage* p, double hi_res, double* cutoff,
 double*		Bimage::fsc_local_voxel(Bimage* p, double hi_res, int size,
 					int pad, int taper, double* cutoff, fft_plan plan, long i)
 {
+	check_resolution(hi_res);
+
 	long			nn(0), xx, yy, zz, cc;
 	int 			fill_type(FILL_AVERAGE);   	// Fill type for resizing
 	double			sampling_ratio(1);			// Sampling ratio in reciprocal space
@@ -594,9 +602,11 @@ Bimage*		Bimage::fsc_local(Bimage* p, Bimage* pmask, double hi_res, double* cuto
 				int mask_level, int size, int pad, Vector3<long> vedge, 
 				int step, int taper, double fill)
 {
+	check_resolution(hi_res);
+
 	int				dovox;
 	long   			xx, yy, zz, i, nmap(0), nvox(0);
-	long			ft_size(size), imgsize(image_size());
+	long			ft_size(size), slice_size(x*y), imgsize(image_size());
 	
 	if ( vedge[0] < 0 ) vedge = Vector3<long>(size/2, size/2 ,size/2);
 
@@ -667,7 +677,7 @@ Bimage*		Bimage::fsc_local(Bimage* p, Bimage* pmask, double hi_res, double* cuto
 		for ( i=nvox=0; i<datasize; i++ ) if ( (*pmask)[i] ) nvox++;
 		cout << "Boxes to calculate:             " << nvox << endl << endl;
 	}
-	
+/*
 #ifdef HAVE_GCD
 	__block	long		ndone(0);
 	dispatch_queue_t 	myq = dispatch_queue_create(NULL, NULL);
@@ -696,6 +706,51 @@ Bimage*		Bimage::fsc_local(Bimage* p, Bimage* pmask, double hi_res, double* cuto
 	#pragma omp critical
 		{
 			ndone++;
+			if ( verbose )
+					cerr << "Complete:                       " << setprecision(3)
+							<< ndone*100.0/nvox << " %    \r" << flush;
+		}
+	}
+#endif
+*/
+
+#ifdef HAVE_GCD
+	__block	long		ndone(0);
+	dispatch_queue_t 	myq = dispatch_queue_create(NULL, NULL);
+	dispatch_apply(z, dispatch_get_global_queue(0, 0), ^(size_t zz){
+		long			i, k;
+		for ( i=0, k=zz*slice_size; i<slice_size; ++i, ++k ) {
+			if ( (*pmask)[k] ) {
+				double*		res_est = fsc_local_voxel(p, hi_res,
+								size, pad, taper, cutoff, plan, k);
+				for ( long j=0; j<nmap; ++j ) pr->set(k + j*imgsize, res_est[j]);
+				delete[] res_est;
+				ndone++;
+			}
+		}
+		if ( verbose ) {
+			dispatch_sync(myq, ^{
+				cerr << "Complete:                       " << setprecision(3)
+						<< ndone*100.0/nvox << " %    \r" << flush;
+			});
+		}
+	});
+#else
+	long				ndone(0);
+#pragma omp parallel for
+	for ( long zz=0; zz<z; zz++ ) {
+		long			i, k;
+		for ( i=0, k=zz*slice_size; i<slice_size; ++i, ++k ) {
+			if ( (*pmask)[k] ) {
+				double*		res_est = fsc_local_voxel(p, hi_res,
+							size, pad, taper, cutoff, plan, k);
+				for ( long j=0; j<nmap; ++j ) pr->set(k + j*imgsize, res_est[j]);
+				delete[] res_est;
+				ndone++;
+			}
+		}
+	#pragma omp critical
+		{
 			if ( verbose )
 					cerr << "Complete:                       " << setprecision(3)
 							<< ndone*100.0/nvox << " %    \r" << flush;

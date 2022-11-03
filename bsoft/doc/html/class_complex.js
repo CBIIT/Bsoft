@@ -26,7 +26,7 @@ var class_complex =
     [ "operator/=", "class_complex.html#a401011609a495a99281947e66e5780b2", null ],
     [ "operator=", "class_complex.html#a0c262198114632ba811e663525a3b221", null ],
     [ "operator=", "class_complex.html#a9b06e3a29cd015b54871f8f7bb67f6b2", null ],
-    [ "operator[]", "class_complex.html#a5329bb846729651b83dc507034433f66", null ],
+    [ "operator[]", "class_complex.html#a5779833e37c1c279840b7dd2bef1ad07", null ],
     [ "phi", "class_complex.html#ad896bb110e045f2bd0ef9960a049b1e7", null ],
     [ "phi", "class_complex.html#ace600479d486aff5f9980e217ac85617", null ],
     [ "power", "class_complex.html#af412c150996a6cd8d4fdffb555906a6a", null ],

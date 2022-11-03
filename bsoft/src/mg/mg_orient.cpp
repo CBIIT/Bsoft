@@ -3,7 +3,7 @@
 @brief	Determines orientation angles and x,y origins of single particle images 
 @author	Bernard Heymann and David M. Belnap
 @date	Created: 20010403
-@date	Modified: 20200218 (BH)
+@date	Modified: 20220813 (BH)
 **/
 
 #include "mg_orient.h"
@@ -68,17 +68,26 @@ Bimage*		project_prepare_2D_references(Bproject* project, long first,
 	if ( bin < 1 ) bin = 1;
 	if ( bin > 4 ) bin = 4;
 
+	bool			invert(0);
+
+	Bimage*			p = NULL;
+
 	Bparticle*		part = part_find_first(project);
+
+	if ( !part ) {
+		cerr << "Error in project_prepare_2D_references: No particles found!" << endl;
+		return p;
+	}
+
 	Bmicrograph*	mg = part->mg;
 	Bfield*			field = project->field;
-	Bimage*			p = NULL;
 	Vector3<double>	pixel_size(part->pixel_size);
 
 	if ( part->fpart.length() ) p = read_img(part->fpart, 1, 0);
 	else p = read_img(mg->fpart, 1, part->id - 1);
 	
 	if ( pixel_size[0] < 0.01 ) pixel_size = p->sampling(0);
-	if ( pixel_size[0] < 0.01 ) pixel_size = mg->pixel_size;
+	if ( pixel_size[0] < 0.01 ) pixel_size = part->pixel_size;
 	
 	Bimage*			pref = new Bimage(Float, TSimple, p->size(), number);
 	pref->sampling(pixel_size);
@@ -109,7 +118,7 @@ Bimage*		project_prepare_2D_references(Bproject* project, long first,
 				p->change_type(Float);
 				p->sampling(pixel_size);
 				if ( ctf_action && mg->ctf )
-					img_ctf_apply(p, *mg->ctf, ctf_action, wiener, 0, 0);
+					img_ctf_apply(p, *mg->ctf, ctf_action, wiener, 0, 0, invert);
 				p->rescale_to_avg_std(0, 1);
 				p->shift_background(0);
 				if ( part->ori[0] > 0 && part->ori[1] > 0 ) p->origin(part->ori);
@@ -242,7 +251,7 @@ Bimage*		img_prepare_projections(Bstring& filename, Bstring& mask_file,
 			cerr << "Not enough memory to run!" << endl;
 			bexit(-1);
 		}
-		proj = pref->project(views, pref->sampling(0)[0], kernel);
+		proj = pref->project(views, pref->sampling(0)[0], kernel, 0, 1, Real);
 		if ( pmask ) proj->multiply(pmask);
 		kill_list((char *) views, sizeof(View));
 		delete pref;
@@ -339,7 +348,7 @@ int 		project_determine_orientations(Bproject* project, Bimage* proj, Bstring& m
 //	Bfield*			field = project->field;
 
 	Bparticle*		part = part_find_first(project);
-	Bmicrograph*	mg = part->mg;
+//	Bmicrograph*	mg = part->mg;
 
 	if ( !part ) {
 		cerr << "Error in project_determine_orientations: No particles found!" << endl;
@@ -353,7 +362,7 @@ int 		project_determine_orientations(Bproject* project, Bimage* proj, Bstring& m
 	if ( bin > 4 ) bin = 4;
 	edge_radius /= bin;
 	
-	Vector3<double>	pixel_size = mg->pixel_size*bin;
+	Vector3<double>	pixel_size = part->pixel_size*bin;
 	
 	// Read the reference (model) projections, convert to floating point and clean up
 	long 			i, nproj(0), npix(0);
@@ -372,10 +381,10 @@ int 		project_determine_orientations(Bproject* project, Bimage* proj, Bstring& m
 
 	// Set resolution limits
 	if ( res_lo < res_hi ) swap(res_hi, res_lo);
-	if ( res_lo > proj->sizeX()*mg->pixel_size[0] )
-		res_lo = proj->sizeX()*mg->pixel_size[0];
-	if ( res_hi > proj->sizeX()*mg->pixel_size[0]/2 )
-		res_hi = proj->sizeX()*mg->pixel_size[0]/2;
+	if ( res_lo > proj->sizeX()*part->pixel_size[0] )
+		res_lo = proj->sizeX()*part->pixel_size[0];
+	if ( res_hi > proj->sizeX()*part->pixel_size[0]/2 )
+		res_hi = proj->sizeX()*part->pixel_size[0]/2;
 	if ( res_lo < 4*pixel_size[0] ) res_lo = 4*pixel_size[0];
 	if ( res_hi < 2*pixel_size[0] ) res_hi = 2*pixel_size[0];
 	
@@ -550,6 +559,7 @@ int 		part_determine_orientation(Bparticle* part, Bimage* proj, Bimage* part_mas
 	int				mode = flags & MODE;
 	int				ctf_apply = (flags & APPLY_CTF)? 1: 0;
 	int				part_log = (flags & PART_LOG)? 1: 0;
+	bool			invert(flags & INVERT);
 
 	long 			k, imax(0), nproj(proj->images());
 	double			cc_best(-1e37), cc_min, cc_max, cc_avg, cc_std, cc_cut;
@@ -563,7 +573,7 @@ int 		part_determine_orientation(Bparticle* part, Bimage* proj, Bimage* part_mas
 	if ( !mg )
 		return error_show("part_determine_orientation", __FILE__, __LINE__);
 
-	Vector3<double>	pixel_size = mg->pixel_size*bin;
+	Vector3<double>	pixel_size = part->pixel_size*bin;
 	ofstream		flog;
 	Bstring			log_name;
 	long			edge_size = (long) (2*edge_radius);
@@ -632,7 +642,7 @@ int 		part_determine_orientation(Bparticle* part, Bimage* proj, Bimage* part_mas
 		proj1->sampling(pixel_size);
 //		cout << "Projection sampling = " << proj1->sampling(0) << endl;
 		if ( ctf_apply && mg->ctf )
-			img_ctf_apply_to_proj(proj1, *(mg->ctf), part->def, 1e6, res_hi, planf_2D, planb_2D);
+			img_ctf_apply_to_proj(proj1, *(mg->ctf), part->def, 1e6, res_hi, invert, planf_2D, planb_2D);
 		p->image->view(part->view);
 		cc[k] = p->align2D_pps(proj1, res_hi, res_lo, shift_limit, angle_limit, planf_2D, planb_2D);
 		angle[k] = p->image->view_angle();
@@ -702,7 +712,7 @@ int 		part_determine_orientation(Bparticle* part, Bimage* proj, Bimage* part_mas
 			return error_show("Error in part_determine_orientation", __FILE__, __LINE__);
 		proj1->sampling(pixel_size);
 		if ( ctf_apply && mg->ctf )
-			img_ctf_apply_to_proj(proj1, *(mg->ctf), part->def, 1e6, res_hi, planf_2D, planb_2D);
+			img_ctf_apply_to_proj(proj1, *(mg->ctf), part->def, 1e6, res_hi, invert, planf_2D, planb_2D);
 		p->image->view(part->view);
 		p->image->view_angle(angle[k]);
 		p->image->origin(ox[k], oy[k], 0);
@@ -750,7 +760,7 @@ int 		part_determine_orientation(Bparticle* part, Bimage* proj, Bimage* part_mas
 			return error_show("Error in part_determine_orientation", __FILE__, __LINE__);
 		proj1->sampling(pixel_size);
 		if ( ctf_apply && mg->ctf )
-			img_ctf_apply_to_proj(proj1, *(mg->ctf), part->def, 1e6, res_hi, planf_2D, planb_2D);
+			img_ctf_apply_to_proj(proj1, *(mg->ctf), part->def, 1e6, res_hi, invert, planf_2D, planb_2D);
 		p->image->view_angle(angle[imax]);
 		p->image->origin(ox[imax], oy[imax], 0);
 		p->origin(0, ox[imax], oy[imax], 0.0);
@@ -793,6 +803,8 @@ Bparticle	part_compare(Bimage* p, Bimage* proj, Bimage* prs_mask,
 	double shift_limit, double angle_limit, double edge_radius, int flags,
 	fft_plan planf_1D, fft_plan planb_1D, fft_plan planf_2D, fft_plan planb_2D)
 {
+	bool			invert(flags & INVERT);
+
 	Bimage*			pcopy = p->copy();
 	Bparticle		part;
 
@@ -807,8 +819,8 @@ Bparticle	part_compare(Bimage* p, Bimage* proj, Bimage* prs_mask,
 	
 	proj1->sampling(p->sampling(0));
 	
-	if ( ctf )
-		img_ctf_apply_to_proj(proj1, *ctf, ctf->defocus_average(), 1e6, res_hi, planf_2D, planb_2D);
+	if ( ctf && (flags & APPLY_CTF) )
+		img_ctf_apply_to_proj(proj1, *ctf, ctf->defocus_average(), 1e6, res_hi, invert, planf_2D, planb_2D);
 	
 	part.fom[0] = pcopy->align2D_pps(proj1, res_hi, res_lo, shift_limit, angle_limit, planf_2D, planb_2D);
 	
@@ -851,6 +863,7 @@ int 		part_determine_orientation2(Bparticle* part, Bimage* proj, Bimage* part_ma
 		
 	int				ctf_apply = (flags & APPLY_CTF)? 1: 0;
 	int				part_log = (flags & PART_LOG)? 1: 0;
+	bool			invert(flags & INVERT);
 
 	long 			k, imax(0), nproj(proj->images());
 	
@@ -971,7 +984,7 @@ int 		part_determine_orientation2(Bparticle* part, Bimage* proj, Bimage* part_ma
 			return error_show("Error in part_determine_orientation", __FILE__, __LINE__);
 		proj1->sampling(pixel_size);
 		if ( ctf_apply && mg->ctf )
-			img_ctf_apply_to_proj(proj1, *(mg->ctf), part->def, 1e6, res_hi, planf_2D, planb_2D);
+			img_ctf_apply_to_proj(proj1, *(mg->ctf), part->def, 1e6, res_hi, invert, planf_2D, planb_2D);
 		p->image->origin(part->ori);
 		p->image->view(part->view);
 //		p->image->view_angle(angle[imax]);
@@ -1265,7 +1278,7 @@ int 		project_determine_origins(Bproject* project, Bimage* proj, int bin,
 	if ( bin < 1 ) bin = 1;
 	if ( bin > 4 ) bin = 4;
 
-	Vector3<double>	pixel_size = mg->pixel_size*bin;
+	Vector3<double>	pixel_size = part->pixel_size*bin;
 	
 	// Read the reference (model) projections, convert to floating point and clean up
 	long 			i, nproj(0), npart(0), npix(0), vmin(0);

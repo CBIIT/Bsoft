@@ -11,7 +11,7 @@
 // Constants
 #define LINELENGTH			80		// Length of line for output
 
-#ifndef _STAR_
+#ifndef _STAR_OLD_
 /************************************************************************
 @Object: enum StarType
 @Description:
@@ -62,7 +62,7 @@ struct Bstar_block {
 } ;
 
 /************************************************************************
-@Object: struct Bstar
+@Object: struct Bstar_old
 @Description:
 	Overall STAR structure to hold all data blocks and options for I/O..
 @Features:
@@ -75,40 +75,40 @@ struct Bstar_block {
 	The STAR database is a hierarchy consisting of blocks, each with a set
 	of items.
 *************************************************************************/
-struct Bstar {
+struct Bstar_old {
 	int 			split;			// Flag to indicate writing each data block in its own file
 	int 			line_length;	// Length of lines in output file
 	Bstring			comment;		// List of comments before 1st data block
 	Bstar_block*	block;			// Pointer to first block
 } ;
-#define _STAR_
+#define _STAR_OLD_
 #endif
 
 // Function prototypes
-Bstar*		init_star();
-int			kill_star(Bstar* star);
+Bstar_old*		init_star();
+int			kill_star(Bstar_old* star);
 int 		kill_block(Bstar_block* block);
 int 		kill_item(Bstar_item* item);
-int			read_star(const char* filename, Bstar* star);
-int			read_star(Bstring& filename, Bstar* star);
-int			read_star(Bstring* file_list, Bstar* star);
+int			read_star(const char* filename, Bstar_old* star);
+int			read_star(Bstring& filename, Bstar_old* star);
+int			read_star(Bstring* file_list, Bstar_old* star);
 Bstar_block* read_block(ifstream* fstar, char* aptr, Bstring& filename);
 Bstar_item* read_single_item(ifstream* fstar, char* aline);
 Bstar_item* read_loop_items(ifstream* fstar);
-int			write_star(const char* filename, Bstar* star);
-int			write_star(Bstring& filename, Bstar* star);
+int			write_star(const char* filename, Bstar_old* star);
+int			write_star(Bstring& filename, Bstar_old* star);
 int			write_block(ofstream* fstar, Bstar_block* block, int linelength);
-int 		star_update_comment(Bstar* star, int n, char** strings);
-long		star_list_comments(Bstar* star, long len);
-int			star_set_string_lengths(Bstar* star);
-int 		item_change_tag(Bstar* star, const char* tag, const char* newtag);
-int 		show_tags(Bstar* star);
+int 		star_update_comment(Bstar_old* star, int n, char** strings);
+long		star_list_comments(Bstar_old* star, long len);
+int			star_set_string_lengths(Bstar_old* star);
+int 		item_change_tag(Bstar_old* star, const char* tag, const char* newtag);
+int 		show_tags(Bstar_old* star);
 int			item_index(Bstar_block* block, const char* tag);
-Bstar_block*	block_find_with_tag(Bstar* star, const char* tag);
+Bstar_block*	block_find_with_tag(Bstar_old* star, const char* tag);
 //Bstar_item* item_find(Bstar_block* block, const char* tag);
 Bstar_item* item_find(Bstar_block* block, Bstring tag);
 Bstar_item* item_find_or_make(Bstar_block* block, const char* tag);
-long		item_get_number(Bstar* star, const char* tag);
+long		item_get_number(Bstar_old* star, const char* tag);
 long		item_get_number_for_block(Bstar_block* block, const char* tag);
 char* 		item_get_string(Bstar_block* block, const char* tag);
 int 		item_copy_string(char* string, Bstar_block* block, const char* tag);
@@ -125,12 +125,12 @@ int 		item_put_float_array(Bstar_block* block, const char* tag, int number,
 				float* value, const char* format);
 int 		item_put_angle_list(Bstar_block* block, const char* tag, char* list, 
 				size_t offset, const char* format);
-int 		item_list(Bstar* star, Bstring& tag);
-int 		item_delete_all(Bstar* star, const char* tag);
+int 		item_list(Bstar_old* star, Bstring& tag);
+int 		item_delete_all(Bstar_old* star, const char* tag);
 int 		item_delete_from_block(Bstar_block* block, const char* tag);
-int 		block_delete(Bstar* star, Bstring& tag);
-int 		item_integer_scale_shift(Bstar* star, Bstring& tag, int iscale, int ishift);
-int 		item_float_scale_shift(Bstar* star, Bstring& tag, float scale, float shift);
+int 		block_delete(Bstar_old* star, Bstring& tag);
+int 		item_integer_scale_shift(Bstar_old* star, Bstring& tag, int iscale, int ishift);
+int 		item_float_scale_shift(Bstar_old* star, Bstring& tag, float scale, float shift);
 int 		loop_set_identifier(Bstar_block* block, int loop, int n, ...);
 int			item_get_format(Bstar_item* item, char* format);
 

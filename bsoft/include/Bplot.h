@@ -3,7 +3,7 @@
 @brief	Header file for postscript output functions.
 @author Bernard Heymann 
 @date	Created: 20010515
-@date	Modified: 20200723
+@date	Modified: 20221101
 **/
  
 #include "Bstring.h"
@@ -51,7 +51,8 @@ private:
 	double		cl[3];		// Color
 	void		initialize() {
 		num=0; lab=0;
-		tp=ax=0; mn=mx=es=0;
+		tp=ax=0;
+		mn=mx=es=0;
 		cl[0]=cl[1]=cl[2]=0;
 	}
 public:
@@ -85,18 +86,20 @@ private:
 	Bstring		tit;		// Page title
 	long		num;		// Page number
 	long		nc;			// Number of columns
-	Bcolumn*	col;		// Columns
+//	Bcolumn*	col;		// Columns
+	vector<Bcolumn>	col;	// Columns
 	Baxis		ax[5];		// Axes: x, x2, y, y2, v
 	Bstring*	txt;		// Set of strings to be plotted at the bottom
 	void		initialize() {
 		tit = 0; txt = NULL; num = 0; nc = 0;
-		col = NULL;
+//		col = NULL;
 		axes();
 	}
 public:
 	Bpage() { initialize(); }
 	Bpage(long n, long ncol) { initialize(); num = n; columns(ncol); }
 //	~Bpage() { tit = 0; delete[] col; col = NULL; }
+	~Bpage() { tit = 0; col.clear(); }
 	Bstring&	title() { return tit; }
 	void		title(const Bstring& t) { tit = t; }
 	void		title(const char* t) { tit = t; }
@@ -104,9 +107,15 @@ public:
 	long		number() { return num; }
 	void		columns(long ncol) {
 		nc = ncol;
-		col = new Bcolumn[nc];
+//		for ( long i=0; i<nc; ++i ) col.push_back(Bcolumn());
+//		col = new Bcolumn[nc];
+		col.resize(nc);
 	}
 	long		columns() { return nc; }
+	void		add_columns(long ncol) {
+		nc += ncol;
+		col.resize(nc);
+	}
 	Bcolumn&	column(long i) {
 		if ( i<nc ) return col[i];
 		cerr << "Error: The column requested, " << i << " for page " << num <<
@@ -121,7 +130,8 @@ public:
 	Bstring*	text() { return txt; }
 	void		add_text(Bstring& s) { string_add(&txt, s); }
 	void		limits() {
-		if ( !col ) return;
+//		if ( !col ) return;
+		if ( col.size() < 1 ) return;
 		long		c, i;
 		for ( c=0; c<nc; c++ ) {
 			i = col[c].axis();
@@ -176,6 +186,7 @@ public:
 		initialize(npage, nrow, ncol);
 	}
 	Bplot(Bstring& filename);
+	Bplot(Bstring& filename, long skip, int type);
 	~Bplot() {
 		tit = 0;
 		delete[] pg; pg = NULL;
@@ -221,6 +232,13 @@ public:
 		}
 	}
 	double*		data_pointer() { return data; }
+	void		add_columns(int num) {
+		int			old_nc = nc;
+		double*		old_data = data;
+		nc += num;
+		data = new double[nc*nr];
+		for ( long i=0; i<nr*old_nc; ++i ) data[i] = old_data[i];
+	}
 	void		limits() {
 		if ( !pg ) return;
 		long		i, j, n, c;
@@ -283,7 +301,7 @@ public:
 		}
 		ftsv.close();
 	}
-	void		resolution_display(double* fsccut=NULL, double* dprcut=NULL);
+	void		resolution_display(vector<double>& fsccut, vector<double>& dprcut);
 } ;
 
 ostream& operator<<(ostream& output, Bplot* plot);

@@ -2,6 +2,6 @@ var star_8h =
 [
     [ "BstarLoop", "class_bstar_loop.html", "class_bstar_loop" ],
     [ "BstarBlock", "class_bstar_block.html", "class_bstar_block" ],
-    [ "Bstar2", "class_bstar2.html", "class_bstar2" ],
-    [ "_STAR2_", "star_8h.html#a79ea62b8282692d1056716ce9c289754", null ]
+    [ "Bstar", "class_bstar.html", "class_bstar" ],
+    [ "_STAR_", "star_8h.html#ab149357b9241e00615ab6b7e812e8cfd", null ]
 ];

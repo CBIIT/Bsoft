@@ -42,7 +42,7 @@ const char* use[] = {
 "-Mask mask.tif           Mask to limit segmentation.",
 " ",
 "Output:",
-"-mask mask.tif           Multi-level mask with segemented regions.",
+"-mask mask.tif           Multi-level mask with segmented regions.",
 " ",
 NULL
 };
@@ -152,7 +152,7 @@ int 	main(int argc, char* argv[])
 		if ( mask_invert ) pmm->mask_invert();
 	}
 	
-	if ( colorize ) pmm->levelmask_colorize();
+	if ( pmm && colorize ) pmm->levelmask_colorize();
 	
 	// Write an output file if a file name is given
     if ( optind < argc )

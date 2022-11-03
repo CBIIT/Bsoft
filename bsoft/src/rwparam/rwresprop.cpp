@@ -239,7 +239,7 @@ Bresidue_type*  residue_type_add(Bresidue_type** rtype, char c)
 
 Bresidue_type* 	read_residue_prop_star(Bstring& filename)
 {
- 	Bstar2			star;
+ 	Bstar			star;
 	
  	if ( star.read(filename.str()) < 0 )
 		error_show(filename.c_str(), __FILE__, __LINE__);
@@ -299,7 +299,7 @@ Bresidue_type* 	read_residue_prop_star(Bstring& filename)
 int 	write_residue_prop_star(Bstring& filename, Bresidue_type* rt)
 {
 	string			id("Residue_properties");
-	Bstar2			star;
+	Bstar			star;
 	Bresidue_type*	t = NULL;
 
 	star.comment("# Residue properties\n\n");

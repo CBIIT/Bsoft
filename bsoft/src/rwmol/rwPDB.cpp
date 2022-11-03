@@ -41,7 +41,7 @@ int 	readPDB(Bstring& filename, Bmolgroup *molgroup)
 	}
     
     int				readflag, linenum(0);
-    int				i, nmol(0), natom(0), nsec(0);
+    int				i, nmol(0), natom(0), nsec(0), nr(0);
     int				resnum, resnum2, prev_resnum = -10000;
     int				atomnum, ba, helixclass;
 	char			chain, insert, prev_insert = ' ';
@@ -153,6 +153,7 @@ int 	readPDB(Bstring& filename, Bmolgroup *molgroup)
 				if ( strncmp(aline, "HETATM", 6) == 0 ) atom->sel = 2;
 				al[atomnum] = atom;		/* Atom list */
 				if ( natom <= atomnum ) natom = atomnum + 1;
+				nr++;
 			}
 		}
 		if ( strncmp(aline, "CONECT", 6) == 0 ) {   // Assumed to always be after all ATOM records
@@ -171,6 +172,9 @@ int 	readPDB(Bstring& filename, Bmolgroup *molgroup)
 			}
 		}
 	}
+	
+	if ( verbose & VERB_DEBUG )
+		cout << "DEBUG readPDB: atoms read = " << nr << endl;
 
 	delete[] al;
 	
@@ -306,6 +310,8 @@ int 	readPDB(Bstring& filename, Bmolgroup *molgroup)
 	
 	fpdb.close();
 	
+	molgroup_stats(molgroup);
+
 	if ( verbose & VERB_DEBUG ) {
     	cout << "DEBUG readPDB: Number of molecules  = " << nmol << endl; 
 		cout << "DEBUG readPDB: Secondary structures = " << nsec << endl;
@@ -364,12 +370,12 @@ int 	writePDB(Bstring& filename, Bmolgroup *molgroup)
 	time_t			t = time(NULL);
 	tm*				ltm = localtime(&t);
 	char			stm[16];
-	strftime(stm, sizeof(stm), "%d-%b-%y", ltm);
+	strftime(stm, sizeof(stm), "%d-%b-%y ", ltm);
 	Bstring			title = command_line();
 //	fpdb << left << setw(50) << "HEADER    Written by Bsoft" << asctime(localtime(&t));
 //	fpdb << left << setw(50) << "HEADER    Written by Bsoft" <<
 //		ltm->tm_mday << "-" << ltm->tm_mon << "-" << ltm->tm_year << endl;
-	fpdb << left << setw(50) << "HEADER    Written by Bsoft" << stm << endl;
+	fpdb << left << setw(50) << "HEADER    Written by Bsoft" << stm << molgroup->id << endl;
 	fpdb << "TITLE     " << title << endl;
 //	if ( molgroup->comment.length() )
 //		fpdb << "REMARK " << molgroup->comment << endl;
@@ -543,7 +549,9 @@ int 	writePDB(Bstring& filename, Bmolgroup *molgroup)
 	fpdb << "END" << endl;
 	    
     fpdb.close();
-    
+
+//	molgroup_stats(molgroup);
+
 	if ( verbose & VERB_DEBUG )
 		cout << "DEBUG writePDB: File " << filename << " closed" << endl;
 	

@@ -912,8 +912,8 @@ double 		Bimage::mass_threshold(long img_num, double mol_weight, double rho)
     }
     
     if ( volume > real_size().volume() ) {
-		cerr << "Error: The image volume is smaller than the molecular volume!" << endl << endl;
-		bexit(-1);
+		cerr << "Warning: The image volume is smaller than the molecular volume!" << endl << endl;
+		return 0;
     }
 	
 	if ( verbose )
@@ -1557,6 +1557,9 @@ int			Bimage::superpixels_update(Bimage* pmask, vector<long> vstep,
 				double colorweight, vector<Bsuperpixel>& seg)
 {
 	long				nseg(seg.size());
+	
+	if ( verbose & VERB_DEBUG )
+		cout << "DEBUG superpixels_update" << endl;
 
 #ifdef HAVE_GCD
 	dispatch_apply(nseg, dispatch_get_global_queue(0, 0), ^(size_t i){
@@ -1590,7 +1593,7 @@ int			img_assign_pixel(long i, Bimage* p, Bimage* pmask, double wd,
 
 	vector<double>	val = p->values(i);
 	
-//	cout << i << endl;
+//	cout << i << tab << j << tab << coor3 << endl;
 
 	for ( k=-1, m=j; k<NNEIGHBOR;  ) {
 		scoor = seg[m].coordinates() - coor3;
@@ -1612,6 +1615,9 @@ int			img_assign_segments(Bimage* p, Bimage* pmask, vector<long> vstep,
 {
 	long			i, nc(0);	
 	double			dr(volume(vstep)), wd(1.0L/dr);
+	
+	if ( verbose & VERB_DEBUG )
+		cout << "DEBUG: img_assign_segments" << endl;
 
 	Bimage*			pmc = pmask->copy();
 	
@@ -1733,6 +1739,9 @@ long		segments_setup_neighbors(vector<Bsuperpixel>& seg, long step)
 	long			i, j, nn(0);
 	double			dmax(1.9*step);
 
+	if ( verbose & VERB_DEBUG )
+		cout << "DEBUG segments_setup_neighbors: step=" << step << endl;
+
 	for ( i=0; i<nseg; ++i ) seg[i].clear_neighbors();
 
 #ifdef HAVE_GCD
@@ -1819,7 +1828,7 @@ vector<Bsuperpixel>	Bimage::superpixels_from_mask(long cc, long step)
 vector<Bsuperpixel>	Bimage::superpixels(long step, double colorweight, long iterations, double stop)
 {
 	Bimage*			pmask = tile_mask(step);
-	
+
 	long			i, nc(image_size()), ncp(0), nstop(image_size()*stop/100);
 	
 	if ( verbose ) {
@@ -1839,7 +1848,7 @@ vector<Bsuperpixel>	Bimage::superpixels(long step, double colorweight, long iter
 
 	superpixels_update(pmask, vstep, colorweight, seg);
 
-//	write_img("t.tif", pmask);
+//	write_img("t.tif", pmask, 0);
 
 	time_t			t = time(NULL);
 	
@@ -1899,11 +1908,14 @@ vector<Bsuperpixel>	Bimage::superpixels(long step, double colorweight, long iter
 	vector<Bsuperpixel>	seg = pmask->superpixels_from_mask(c, step);
 
 	long			i, bin(1);
+	double			w = ( z > 1 )? 1.0/8.0: 1.0/4.0;
 	vector<long>	vstep = {step,step,step}, vbstep(3);
 	for ( i=0; i<3; ++i ) vstep[i] *= 2;
 	if ( vstep[2] > z ) vstep[2] = z;
 
 	superpixels_update(pmask, vstep, colorweight, seg);
+
+//	write_img("t.tif", pmask, 0);
 
 	time_t			t = time(NULL);
 
@@ -1916,10 +1928,13 @@ vector<Bsuperpixel>	Bimage::superpixels(long step, double colorweight, long iter
 		pm->next = pm->bin_copy(2);
 		pb = pb->next;
 		pm = pm->next;
+		pm->multiply(w);
 	}
 
+	write_img("t.tif", pm, 0);
+
 	long			nc, ncp(0), nstop(pb->image_size()*stop/100);
-	long			bstep = step/bin;
+	long			bstep(step/bin);
 	for ( i=0; i<3; ++i ) vbstep[i] = vstep[i]/bin;
 	if ( vbstep[2] < 1 ) vbstep[2] = 1;
 	for ( auto it = seg.begin(); it != seg.end(); ++it )

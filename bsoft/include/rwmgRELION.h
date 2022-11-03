@@ -7,7 +7,6 @@
 **/
 
 #include "mg_processing.h"
-#include "rwstar.h"
 
 // Function prototypes
 int			read_project_relion(Bstring& filename, Bproject* project);

@@ -115,7 +115,12 @@ int 	main(int argc, char **argv)
 				vori = p->image[img_num].origin();
 			voxel = Vector3<long>(vori[0], vori[1], vori[2]);
 		}
-		p3 = p->orthogonal_slices(img_num, voxel, size);
+		if ( montage_cols ) {
+			p3 = p->orthogonal_slices(img_num, voxel, size);
+		} else {
+			p3 = p->orthogonal_montage(voxel, size, pad, fill_type, fill);
+			pad = 0;
+		}
 		delete p;
 		p = p3;
 	

@@ -10,7 +10,6 @@ var dir_5cff5ebabf0008b7b580a164f8978e8c =
     [ "rwmgRELION.cpp", "rwmg_r_e_l_i_o_n_8cpp.html", "rwmg_r_e_l_i_o_n_8cpp" ],
     [ "rwmgSerialEM.cpp", "rwmg_serial_e_m_8cpp.html", "rwmg_serial_e_m_8cpp" ],
     [ "rwmgSTAR.cpp", "rwmg_s_t_a_r_8cpp.html", "rwmg_s_t_a_r_8cpp" ],
-    [ "rwmgSTAR2.cpp", "rwmg_s_t_a_r2_8cpp.html", "rwmg_s_t_a_r2_8cpp" ],
     [ "rwmgXML.cpp", "rwmg_x_m_l_8cpp.html", "rwmg_x_m_l_8cpp" ],
     [ "rwresprop.cpp", "rwresprop_8cpp.html", "rwresprop_8cpp" ],
     [ "rwstar.cpp", "rwstar_8cpp.html", "rwstar_8cpp" ],

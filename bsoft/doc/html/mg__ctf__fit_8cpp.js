@@ -22,8 +22,8 @@ var mg__ctf__fit_8cpp =
     [ "img_ctf_fit_baseline", "mg__ctf__fit_8cpp.html#a804fa46726d940f0c0ed88f2da0a6825", null ],
     [ "img_ctf_fit_envelope", "mg__ctf__fit_8cpp.html#ac0cc671d77d351f03aa631bb40927eca", null ],
     [ "img_ctf_fit_residual", "mg__ctf__fit_8cpp.html#ab3f850c2617d06151a1ef4d67e65c62d", null ],
-    [ "img_ctf_radial_average", "mg__ctf__fit_8cpp.html#a17fa37bc462141fb9a71bbe253d45a85", null ],
-    [ "img_ctf_radial_subtract_baseline", "mg__ctf__fit_8cpp.html#adf9cb442600ceb5e0e77b3e424971a04", null ],
+    [ "img_ctf_radial_average", "mg__ctf__fit_8cpp.html#a9f8dba604710ff1a72c85cd134229659", null ],
+    [ "img_ctf_radial_subtract_baseline", "mg__ctf__fit_8cpp.html#a9945bb5b29f4ead121dbd51a08fea589", null ],
     [ "img_water_ring_index", "mg__ctf__fit_8cpp.html#a2ac841c36d48f32c91f0439f905d9ceb", null ],
     [ "img_water_ring_index", "mg__ctf__fit_8cpp.html#ac2220d1b5ffa128bfeeedffbb5fa5dfc", null ],
     [ "verbose", "mg__ctf__fit_8cpp.html#a0b2caeb4b6f130be43e5a2f0267dd453", null ]

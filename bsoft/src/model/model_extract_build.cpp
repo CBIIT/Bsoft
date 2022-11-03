@@ -352,11 +352,11 @@ int			model_refine_components(Bmodel* model, Bstring* ct_names, Bimage* ptemp,
 				if ( ct->select() < 0 ) {
 					if ( ct == model->type ) {
 						model->type = ct2 = ct->next;
-						comp_type_kill(ct);
+						delete ct;
 						ct = ct2;
 					} else {
 						ct2->next = ct->next;
-						comp_type_kill(ct);
+						delete ct;
 						ct = ct2->next;
 					}
 				} else {

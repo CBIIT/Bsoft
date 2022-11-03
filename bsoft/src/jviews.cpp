@@ -23,7 +23,6 @@
 	can be visualized in Chimera)
 **/
 
-#include "rwstar.h"
 #include "rwmg.h"
 #include "utilities.h"
 #include "options.h"

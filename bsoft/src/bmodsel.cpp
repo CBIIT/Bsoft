@@ -256,7 +256,8 @@ int 	main(int argc, char **argv)
 	if ( reset ) models_process(model, model_reset_selection);
 	
 	model_selection_stats(model);
-
+	model_show_selection(model);
+	
 	// Write an output parameter format file if a name is given
     if ( outfile.length() && model ) {
 		write_model(outfile, model);

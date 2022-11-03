@@ -83,7 +83,7 @@ Bmd*		md_init_with_types()
 Bmd*		read_md_parameters(Bstring& filename)
 {
 	int				i;
-	Bstar*          star = init_star();
+	Bstar_old*          star = init_star();
 	star->line_length = 160;                // Set the output line length
 
 	if ( read_star(filename.c_str(), star) != 0 ) return NULL;
@@ -241,7 +241,7 @@ int			write_md_parameters(Bstring& filename, Bmd* md)
 {
 	int				natom, nbond, nangle, loop, err(0);
 	Bstring			comment("Bsoft molecular dynamics parameter file\n");
-	Bstar*          star = init_star();
+	Bstar_old*          star = init_star();
 	Bstar_block*	block = NULL;
 	star->line_length = 160;                // Set the output line length
 	star->comment += comment;

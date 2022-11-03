@@ -1,8 +1,8 @@
 var rwresprop_8cpp =
 [
     [ "resprop", "structresprop.html", "structresprop" ],
-    [ "get_residue_matrix", "rwresprop_8cpp.html#aba09db586847121bd20eefa4abe085ad", null ],
-    [ "get_residue_properties", "rwresprop_8cpp.html#a42c9985c5db6edd823ce180e258dfef8", null ],
+    [ "get_residue_matrix", "rwresprop_8cpp.html#a06a40360127294c14ba61a9c3f8ee435", null ],
+    [ "get_residue_properties", "rwresprop_8cpp.html#a43ba02f443f0d5671b680e3c550a037d", null ],
     [ "read_residue_mat_star", "rwresprop_8cpp.html#a9776e6539e0970fcd9755b3e1a49170c", null ],
     [ "read_residue_prop_star", "rwresprop_8cpp.html#a912c04ecc24e2b709cbd72f7d2c333b9", null ],
     [ "read_residue_properties", "rwresprop_8cpp.html#a21fd3ebda7034af68f1004dfd13eec47", null ],

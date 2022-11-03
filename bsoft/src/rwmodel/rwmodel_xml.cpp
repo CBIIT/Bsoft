@@ -59,6 +59,8 @@ Bmodel*		read_model_xml(Bstring* file_list)
 	}
 	
 	for ( thisfile = file_list; thisfile; thisfile = thisfile->next ) {
+		if ( verbose )
+			cout << "Reading file:                   " << *thisfile << endl;
 		detect_and_fix_carriage_return(thisfile->c_str());
 		doc = xmlParseFile(thisfile->c_str());
 		if ( doc == NULL ) return  NULL;

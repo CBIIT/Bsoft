@@ -3,7 +3,7 @@
 @brief	Sequence utility functions 
 @author Bernard Heymann
 @date	Created: 20001029
-@date	Modified: 20190613
+@date	Modified: 20220713
 **/
  
 #include "rwgencode.h"
@@ -71,7 +71,33 @@ const map<char, string> res_code = {
         {'Y', "TYR"}, 
         {'Z', "GLX"}, 
         {'X', "UNK"}
-} ; 
+} ;
+
+/**
+@brief 	Obtain sequences from residues.
+@param 	*molgroup		set of molecules.
+@return int				0
+**/
+int			seq_from_residues(Bmolgroup* molgroup)
+{
+	long			maxnum;
+	Bstring			seq;
+	Bmolecule*		mol;
+	Bresidue*		res;
+	
+	for ( mol = molgroup->mol; mol; mol = mol->next ) {
+		if ( mol->res ) {
+			for ( maxnum=mol->nres, res = mol->res; res; res = res->next )
+				if ( maxnum < res->num ) maxnum = res->num;
+			mol->seq = Bstring('-', maxnum);
+			mol->nres = 0;
+			for ( res = mol->res; res; res = res->next, mol->nres++ )
+				mol->seq[res->num-1] = getcode1(res->type);
+		}
+	}
+	
+	return 0;
+}
 
 /**
 @brief 	Shows all molecular sequences.
@@ -96,7 +122,6 @@ int			seq_show(Bmolgroup* molgroup)
 		if ( mol->res ) {
 			for ( maxnum=mol->nres, res = mol->res; res; res = res->next )
 				if ( maxnum < res->num ) maxnum = res->num;
-//			seq = Bstring(maxnum, '-');
 			seq = Bstring('-', maxnum);
 			for ( res = mol->res; res; res = res->next )
 				seq[res->num-1] = getcode1(res->type);
@@ -106,7 +131,6 @@ int			seq_show(Bmolgroup* molgroup)
 		if ( mol->sec ) {
 			for ( maxnum=0, sec=mol->sec; sec; sec=sec->next )
 				if ( maxnum < sec->last->num ) maxnum = sec->last->num;
-//			seq = Bstring(maxnum, ' ');
 			seq = Bstring('-', maxnum);
 			for ( sec=mol->sec; sec; sec=sec->next ) {
 				if ( sec->type < Strand )

@@ -3,7 +3,7 @@
 @brief	Calculate resolution estimates and Fourier shell statistics
 @author Bernard Heymann
 @date	Created: 20000612
-@date	Modified: 20170105
+@date	Modified: 20220324
 **/
 
 #include "rwimg.h"
@@ -53,12 +53,12 @@ int			main(int argc, char* argv[])
 	// Initialize all settings
 	double			nuavg(0), nustd(0); 		// Rescaling to average and stdev
 	long			var_kernel(0);				// Local variance kernel to generate mask
-	Vector3<double>	sam;    			// Pixel size
+	Vector3<double>	sam;    					// Pixel size
 	double			hi_res(0);					// Resolution limit for output
 	double			aligned_res(0);				// Resolution limit for alignment
-	double			fsccut[4] = {0.3,0,0,0};	// FSC cutoff values
-	double			dprcut[4] = {0,0,0,0};		// DPR cutoff values
-	double			sampling_ratio(1);			// Sampling ratio in reciprocal space
+	vector<double>	fsccut{0.3,0,0,0};			// FSC cutoff values
+	vector<double>	dprcut{0,0,0,0};			// DPR cutoff values
+	double			sampling_ratio(1);			// Sampling ratio in frequency space
 	Bstring			map_file;					// Reference map
 	Bstring			ps_file;					// Output postscript file
 	Bstring			xml_file;					// Output XML file
@@ -126,47 +126,57 @@ int			main(int argc, char* argv[])
 		bexit(-1);
 	}
 	
-	if ( nustd ) {
-		p->rescale_to_avg_std(nuavg, nustd);
-		pr->rescale_to_avg_std(nuavg, nustd);
-	}
-		
-	Bimage*			pmask = NULL;
-	if ( real_mask_file.length() ) {
-		pmask = read_img(real_mask_file, 1, 0);
-	} else if ( var_kernel > 1 ) {
-		pmask = pr->variance_mask(var_kernel);
-		pmask->filter_average(11);
-		write_img("mask.pif", pmask, 0);
-	}
-	
-	if ( pmask ) {
-		p->multiply(pmask);
-		pr->multiply(pmask);
-	}
-
-	Bimage*			pc = p->resolution_prepare(pr);
-	delete p;
-	delete pr;
-	
 	Bplot*			plot = NULL;
+		
+	if ( p->compound_type() == TSimple ) {
 	
-	if ( pc->images() == 1 ) {
-		plot = pc->fsc_dpr(hi_res, sampling_ratio, (dprcut[0] == 0));
+		if ( nustd ) {
+			p->rescale_to_avg_std(nuavg, nustd);
+			pr->rescale_to_avg_std(nuavg, nustd);
+		}
+		
+		Bimage*			pmask = NULL;
+		if ( real_mask_file.length() ) {
+			pmask = read_img(real_mask_file, 1, 0);
+		} else if ( var_kernel > 1 ) {
+			pmask = pr->variance_mask(var_kernel);
+			pmask->filter_average(11);
+			write_img("mask.pif", pmask, 0);
+		}
+		
+		if ( pmask ) {
+			p->multiply(pmask);
+			pr->multiply(pmask);
+			delete pmask;
+		}
+
+		Bimage*			pc = p->resolution_prepare(pr);
+		delete p;
+		delete pr;
+		
+		if ( pc->images() == 1 ) {
+			plot = pc->fsc_dpr(hi_res, sampling_ratio, (dprcut[0] == 0));
+			plot->resolution_display(fsccut, dprcut);
+		} else {
+			plot = pc->fsc(hi_res, sampling_ratio, fsccut);
+		}
+		
+		delete pc;
+		
+	} else if ( p->compound_type() == TComplex ) {
+	
+		plot = p->fsc(pr, hi_res, sampling_ratio);
 		plot->resolution_display(fsccut, dprcut);
-	} else {
-		plot = pc->fsc(hi_res, sampling_ratio);
+		
+		delete p;
+		delete pr;
 	}
 	
-	delete pc;
-
 	if ( ps_file.length() ) ps_plot(ps_file, plot);
 	if ( xml_file.length() ) xml_write_fsc(xml_file, plot);
 	if ( tsv_file.length() ) plot->write_tsv(tsv_file);
 	delete plot;
 	
-	delete pmask;
-
 #ifdef HAVE_GCD
 	fftwf_cleanup_threads();
 #endif

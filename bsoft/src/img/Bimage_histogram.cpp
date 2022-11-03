@@ -7,7 +7,7 @@
 **/
 
 #include "Bimage.h"
-#include "simplex.h"
+#include "histogram.h"
 #include "cluster.h"
 #include "moving_average.h"
 #include "matrix_linear.h"
@@ -755,93 +755,6 @@ vector<double>	Bimage::otsu_variance(vector<long> h)
     return v;
 }
 
-
-double		find_maximum_sigma(Matrix& H, long i, long level, long depth, double sum, double& maxsum, vector<double>& t)
-{
-	if ( level >= depth ) {
-		sum += H[i+1][H.rows()-1];
-//		cout << tab << i << tab << sum << endl;
-		return sum;
-	}
-	
-	long		j, k(0);
-	double		thissum(0), thismax(0);
-
-	level++;
-
-	for ( j=i+1; j<H.rows(); ++j ) {
-//		cout << tab << j << tab << H[i+1][j];
-		thissum = find_maximum_sigma(H, j, level, depth, sum + H[i+1][j], maxsum, t);
-		if ( thismax <= thissum ) {
-			thismax = thissum;
-			k = j;
-//			cout << tab << level << tab << j << tab << thismax << endl;
-		}
-	}
-	
-	if ( maxsum <= thismax ) {
-		maxsum = thismax;
-		t[level-1] = k;
-	}
-
-	return thismax;
-}
-
-/**
-@brief 	Calculates multiple thresholds from a histogram.
-@param 	h				histogram.
-@param 	number			number of clusters (one more than thresholds).
-@return vector<double> 		thresholds.
-
-	Reference: PS.Liao, TS.Chen, and PC. Chung,
-           Journal of Information Science and Engineering, vol 17, 713-727 (2001)
-**/
-vector<double>	histogram_thresholds(vector<long> h, long number)
-{
-	long			i, j, bins(h.size());
-
-	// Set up matrices
-	Matrix			P(bins,bins);
-	Matrix			S(bins,bins);
-	Matrix			H(bins,bins);
-	
-	// Diagonals
-	for ( i=0; i<bins; ++i ) {
-		P[i][i] = h[i];
-		S[i][i] = h[i] * i;
-	}
-	
-	// Second rows
-	for ( i=1, j=2; i<bins-1; ++i, ++j ) {
-		P[1][j] = P[1][i] + h[j];
-		S[1][j] = S[1][i] + j*h[j];
-	}
-	
-	// Propagate sums
-	for ( i=2; i<bins; ++i ) {
-		for ( j=i+1; j<bins; ++j ) {
-			P[i][j] = P[1][j] - P[1][i-1];
-			S[i][j] = S[1][j] - S[1][i-1];
-		}
-	}
-	
-	// H
-	for ( i=1; i<bins; ++i )
-		for ( j=i+1; j<bins; ++j )
-			if ( P[i][j] ) H[i][j] = S[i][j]*S[i][j]/P[i][j];
-	
-	long				depth(number-1);
-	double				maxsum(0);
-	vector<double>		t(depth,0);
-	
-	find_maximum_sigma(H, 0, 0, depth, 0, maxsum, t);
-	
-	if ( verbose )
-		cout << "Best FOM:                        " << maxsum << endl << endl;
-	
-	return t;
-}
-
 /**
 @brief 	Calculates multiple thresholds from a histogram.
 @param 	bins			number bins in histogram.
@@ -869,34 +782,6 @@ vector<double>	Bimage::histogram_multi_thresholds(long bins, long number)
 	return t;
 }
 
-
-double		simplex_gauss_R(Bsimplex& simp)
-{
-	long			i, j, ng(simp.constant(0));
-	double			v, df, R(0);
-	vector<double>	amp(ng), pos(ng), invsig(ng);
-	for ( i=j=0; i<ng; ++i ) {
-		amp[i] = simp.parameter(j++);
-		pos[i] = simp.parameter(j++);
-		invsig[i] = 1/simp.parameter(j++);
-	}
-	vector<double>&	f = simp.dependent_values();
-	vector<double>&	x = simp.independent_values();
-	
-	for ( i=0; i<simp.points(); i++ ) {
-		for ( j=0, df=0; j<ng; j++ ) {
-			v = (x[i] - pos[j])*invsig[j];
-			df += amp[j]*exp(-0.5*v*v);
-		}
-		df -= f[i];
-		R += df*df;
-	}
-	
-	R = sqrt(R/i);
-			
-	return R;
-}
-
 /**
 @brief 	Fits a gaussian function to a histogram of an image.
 @param 	bins			number of bins in the histogram.
@@ -918,6 +803,7 @@ vector<double>	Bimage::histogram_gauss_fit(long bins, long ngauss)
 	double			scale, offset;
 	vector<long>	histo = histogram(bins, scale, offset);
 	
+	// Attempting to find peaks by K-means clustering
 	vector<long>	sel = k_means(datasize, (float *)data_pointer(), ngauss);
 	
 	for ( j=0; j<ngauss; j++ ) havg[j] = hstd[j] = w[j] = 0;
@@ -995,7 +881,7 @@ vector<double>	Bimage::histogram_gauss_fit(long bins, long ngauss)
 //		cout << tab << simp.parameter(i) << endl;
 	}
 
-	double			R = simp.run(1000, 0.0001, simplex_gauss_R);
+	double			R = simp.run(1000, 0.0001, histogram_gaussian_R);
 
 	vector<double>	gauss;
 	for ( j=0; j<3*ngauss; j++ ) gauss.push_back(simp.parameter(j));
@@ -1028,6 +914,7 @@ vector<double>	Bimage::histogram_gauss_fit2(long bins, long ngauss)
 	if ( w < 5 ) w = 5;
 	double			damp(3/scale);
 	
+	// Attempting to find peaks based on the gradient change
 	mh = moving_gradient(mh, w);
 	
 	vector<double>	mx(ngauss);
@@ -1083,7 +970,7 @@ vector<double>	Bimage::histogram_gauss_fit2(long bins, long ngauss)
 //		cout << tab << simp.parameter(i) << endl;
 	}
 
-	double			R = simp.run(5000, 1e-6, simplex_gauss_R);
+	double			R = simp.run(5000, 1e-6, histogram_gaussian_R);
 	R = bins*R/datasize;
 	
 	vector<double>	gauss;

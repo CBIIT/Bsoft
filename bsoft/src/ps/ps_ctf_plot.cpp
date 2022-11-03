@@ -3,10 +3,10 @@
 @brief	Postscript output functions for calculating CTF parameters.
 @author Bernard Heymann
 @date	Created: 20010515
-@date	Modified: 20210531
+@date	Modified: 20220221
 **/
  
-#include "ps_plot.h" 
+#include "ps_plot.h"
 #include "ps_ctf_plot.h" 
 #include "moving_average.h"
 #include "utilities.h" 
@@ -272,14 +272,20 @@ int 		ps_ctf_defocus_zeroes(Bstring& filename, double volts, double Cs, double a
 	plot->page(0).axis(1).label("Defocus (um)");
 	plot->page(0).axis(3).label("Zero (A)");
 
+	cp.show();
+
 	for ( j=0, defocus=0; j<nx; defocus+=100, j++ ) {
 		cp.defocus_average(defocus);
-		(*plot)[j] = defocus/10000.0;
+//		cp.show();
+//		cout << defocus;
+		(*plot)[j] = defocus/1e4;
 		for ( i=1; i<=nzero; i++ ) {
 			zero = cp.zero(i);
+//			cout << tab << zero;
 			if ( zero > y_max ) y_max = zero;
 			(*plot)[i*nx+j] = zero;
 		}
+//		cout << endl;
 	}
 
 	y_max = 10*ceil(y_max/10);
@@ -291,7 +297,7 @@ int 		ps_ctf_defocus_zeroes(Bstring& filename, double volts, double Cs, double a
 	plot->page(0).add_text(label);
 	label = "Spherical aberration coefficient: " + Bstring(Cs/1e7, "%.2g") + " mm";
 	plot->page(0).add_text(label);
-	label = "Amplitude phase shift:               " + Bstring(amp_shift*180.0/M_PI, "%.3g");
+	label = "Amplitude phase shift:               " + Bstring(amp_shift*180.0/M_PI, "%.3g") + " degrees";
 	plot->page(0).add_text(label);
 
 	ps_plot(filename, plot);

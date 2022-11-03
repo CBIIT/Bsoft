@@ -1,8 +1,8 @@
 var _electron_counted_frames_decompressor_8cpp =
 [
-    [ "electronSetterDelta", "structelectron_setter_delta.html", null ],
-    [ "electronAdderDelta", "structelectron_adder_delta.html", null ],
-    [ "electronAdderBSpline", "structelectron_adder_b_spline.html", null ],
+    [ "electronSetterDelta< upBits >", "structelectron_setter_delta.html", null ],
+    [ "electronAdderDelta< upBits >", "structelectron_adder_delta.html", null ],
+    [ "electronAdderBSpline< upBits >", "structelectron_adder_b_spline.html", null ],
     [ "COMPRESSIONMODE", "_electron_counted_frames_decompressor_8cpp.html#a39b2972f4b08c94267862b664c54967b", null ],
     [ "footerCheckResult", "_electron_counted_frames_decompressor_8cpp.html#a9e36d55524a9931a8f4e67f2604b5364", [
       [ "footerOK", "_electron_counted_frames_decompressor_8cpp.html#a9e36d55524a9931a8f4e67f2604b5364a9a713233e12c7dbaf1fa66101577fd11", null ],

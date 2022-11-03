@@ -1,8 +1,8 @@
 		if ( curropt->tag == "Volt" ) {
-			if ( ( v = curropt->value.real() ) < 1 )
+			if ( ( v = curropt->real_units() ) < 1 )
 				cerr << "-Volt: A voltage must be specified!" << endl;
 			else {
-				if ( v < 1e3 ) v *= 1e3;	// Assume kilovolts
+//				if ( v < 1e3 ) v *= 1e3;	// Assume kilovolts
 				jsctf["Volt"] = v;
 			}
 		}
@@ -16,15 +16,15 @@
 			}
 		}
 		if ( curropt->tag == "Cs" ) {
-			v = curropt->value.real();
-			if ( fabs(v) < 10 ) v *= 1e7;			// Assume mm
+			v = curropt->real_units();
+//			if ( fabs(v) < 10 ) v *= 1e7;			// Assume mm
 			jsctf["Cs"] = v;
 		}
 		if ( curropt->tag == "Cc" ) {
-			if ( ( v = curropt->value.real() ) < 0.1 )
+			if ( ( v = curropt->real_units() ) < 0.1 )
 				cerr << "-Cc: A Cc value must be specified!" << endl;
 			else {
-				if ( v < 1e3 ) v *= 1e7;			// Assume mm
+//				if ( v < 1e3 ) v *= 1e7;			// Assume mm
 				jsctf["Cc"] = v;
 			}
 		}
@@ -45,18 +45,18 @@
 			}
 		}
 		if ( curropt->tag == "aperture" ) {
-			if ( ( v = curropt->value.real() ) < 1 )
+			if ( ( v = curropt->real_units() ) < 1 )
 				cerr << "-aperture: An aperture diameter must be specified!" << endl;
 			else {
-				if ( v < 1e4 ) v *= 1e4;	// Assume µm
+//				if ( v < 1e4 ) v *= 1e4;	// Assume µm
 				jsctf["Objective_aperture"] = v;
 			}
 		}
 		if ( curropt->tag == "focallength" ) {
-			if ( ( v = curropt->value.real() ) < 1 )
+			if ( ( v = curropt->real_units() ) < 1 )
 				cerr << "-focallength: A focal length must be specified!" << endl;
 			else {
-				if ( v < 1e3 ) v *= 1e7;	// Assume mm
+//				if ( v < 1e3 ) v *= 1e7;	// Assume mm
 				jsctf["Focal_length"] = v;
 			}
 		}

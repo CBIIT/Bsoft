@@ -3,7 +3,7 @@
 @brief	General FFT for n-dimensional data
 @author Bernard Heymann
 @date	Created: 19980805
-@date 	Modified: 20210817
+@date 	Modified: 20220805
 Implementing the FFTW library
 **/
 
@@ -26,9 +26,14 @@ const char* use[] = {
 "Fast Fourier transforms to and from image and reflection formats.",
 " ",
 "Actions:",
-"-inverse                 Backward transform (default forward).",
+"-back                    Back transform to real space (default forward).",
+"-inverse                 Back transform to real space (default forward).",
+"-zft                     Only transform z columns.",
+"-convert real            Convert the complex transform: real, imag, Amp, Int (default not).",
 "-phaseshift              Shift phase by half of the size.",
 "-powerspectrum           Calculate powerspectrum estimate (can be used with the -tile option).",
+"-tile 1024,1024,1        Size of tiles for calculating a transform or power spectrum.",
+//"-edgesmooth              Smooth the edge to get rid of any cross.",
 "-average                 Average multiple power spectra (can be used with the -tile option).",
 "-logarithm               Calculate the logarithm of the power spectrum.",
 "-color 1.5               Generate a phase-coloured power spectrum: amplitude scaling.",
@@ -49,7 +54,6 @@ const char* use[] = {
 "-sampling 2,3.5,1        Sampling (angstrom/voxel, a single value sets all three).",
 "-unitcell 100,100,100,90,90,90 Unit cell parameters.",
 "-symmetry 1              Space group.",
-"-tile 1024,1024,1        Size of tiles for calculating a power spectrum.",
 " ",
 //"Output:",
 //"-Postscript out.ps       Postscript output for radial logarithm of power spectrum (only with -logarithm option).",
@@ -62,6 +66,8 @@ int 	main(int argc, char **argv)
     // Initialize variables
 	DataType 		nudatatype(Unknown_Type);	// Conversion to new type
     fft_direction	setdir(FFTW_FORWARD);		// Forward transform
+    ComplexConversion	conv(NoConversion);		// Conversion from complex transform
+    bool			setz(0);					// Only transform z columns
 	int				phase_shift(0);				// Flag to shift phase by half the size
 	int				setpower(0);				// Flag to calculate a power spectrum
 	int				power_flags(0);				// Power spectrum flags
@@ -98,9 +104,14 @@ int 	main(int argc, char **argv)
 	for ( curropt = option; curropt; curropt = curropt->next ) {
 		if ( curropt->tag == "datatype" )
 			nudatatype = curropt->datatype();
+		if ( curropt->tag == "back" ) setdir = FFTW_BACKWARD;
 		if ( curropt->tag == "inverse" ) setdir = FFTW_BACKWARD;
+		if ( curropt->tag == "zft" ) setz = 1;
+		if ( curropt->tag == "convert" )
+			conv = curropt->complex_conversion();
 		if ( curropt->tag == "phaseshift" ) phase_shift = 1;
 		if ( curropt->tag == "powerspectrum" ) setpower = 1;
+		if ( curropt->tag == "edgesmooth" ) power_flags |= 16;
 		if ( curropt->tag == "average" ) power_flags |= 2;
 		if ( curropt->tag == "logarithm" ) { power_flags |= 8; }
 		if ( curropt->tag == "halfshift" ) { power_flags |= 4; halfshift = 1; }
@@ -212,8 +223,7 @@ int 	main(int argc, char **argv)
 	
 	if ( setpower ) {
 		if ( tile_size.volume() > 0 ) {
-			power_flags |= 2;
-			pnu = p->powerspectrum_tiled(0, tile_size, power_flags);
+			pnu = p->powerspectrum_tiled_exact(0, tile_size, power_flags);
 			if ( pnu ) {
 				delete p;
 				p = pnu;
@@ -221,13 +231,25 @@ int 	main(int argc, char **argv)
 		} else {
 			p->power_spectrum(power_flags);
 		}
-		p->information();
+		if ( verbose & VERB_FULL )
+			p->information();
 		p->powerspectrum_isotropy(0, lores, hires);
 	} else {
 		if ( phase_shift && p->fourier_type() == Standard )
 			p->phase_shift_to_center();
-		if ( p->fft(setdir) )
-			return error_show("bfft", __FILE__, __LINE__);
+		if ( tile_size.volume() > 0 ) {
+			if ( p->fft(setdir, tile_size, 1) )
+				return error_show("bfft", __FILE__, __LINE__);
+			p->complex_convert(conv);
+		} else if ( setz ) {
+			if ( p->fftz(setdir, 1) )
+				return error_show("bfft", __FILE__, __LINE__);
+			p->complex_convert(conv);
+		} else {
+			if ( p->fft(setdir, 1) )
+				return error_show("bfft", __FILE__, __LINE__);
+			p->complex_convert(conv);
+		}
 		if ( phase_shift && p->fourier_type() == Standard )
 			p->phase_shift_to_center();
 	}
@@ -353,3 +375,4 @@ int 		img_fft_times(int ndim, int minsize, int maxsize, int opt)
 
 	return 0;
 }
+

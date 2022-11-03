@@ -3,7 +3,7 @@
 @brief	Select particles
 @author Bernard Heymann
 @date	Created: 20000426
-@date	Modified: 20200517
+@date	Modified: 20220623
 **/
 
 #include "mg_processing.h"
@@ -17,6 +17,7 @@ long		part_reset_selection(Bproject* project, int flag=0);
 long		part_unset_selection(Bproject* project);
 long		part_invert_selection(Bproject* project);
 long		part_select_micrograph(Bproject* project, Bstring& mgselect);
+long		part_select_micrographs_with_selected_particles(Bproject* project);
 long		part_consolidate_selection(Bproject* project, int number);
 long		part_set_selection(Bproject* project, int number);
 long		part_set_sequential(Bproject* project);
@@ -48,6 +49,8 @@ long		part_select_to_group(Bproject* project);
 long		part_select_group(Bproject* project, int group);
 long		part_select_sets(Bproject* project, int size, int flag);
 long		part_select_frames(Bproject* project, int frame_start, int frame_end);
+Bparticle* 	project_selected_partlist(Bproject* project,
+				int num_select, int bootstrap);
 long 		part_filament_direction(Bproject* project, double minpct);
 long 		part_filament_direction(Bproject* project, Bproject* project2, double minpct);
 long 		part_view_select(Bproject* project, View view, double angle);

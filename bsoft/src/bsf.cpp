@@ -161,7 +161,7 @@ int 	main(int argc, char **argv)
 	double		ti = timer_start();
 		
 	if ( outfile.length() )
-		write_scattering_curves(paramfile, outfile, curves);
+		write_scattering_curves(paramfile, outfile, curves, resolution);
 	
 	Bmolgroup*		molgroup = NULL;
 	Bimage* 		p = NULL;

@@ -203,7 +203,7 @@ double		img_reconstruct_one(Bimage* p, Vector3<long> size, Bsymmetry& sym,
 	
 	Bimage*			prec = new Bimage(Float, TComplex, size, 1);
 	
-	prec->fspace_pack_2D(p, view, sym, hi_res, lo_res, vscale, 1, 0);
+	prec->fspace_pack_2D(p, view, sym, hi_res, lo_res, vscale, 0, 1, 0);
 
 	prec->fspace_reconstruction_weigh();
 
@@ -234,7 +234,7 @@ double		img_reconstruct_one_v3(Bimage* p, Vector3<long> size, Bsymmetry& sym,
 	
 	Bimage*			prec = new Bimage(Float, TComplex, size, 1);
 	
-	prec->fspace_pack_2D(p, view, sym, hi_res, lo_res, vscale, 1, 0);
+	prec->fspace_pack_2D(p, view, sym, hi_res, lo_res, vscale, 0, 1, 0);
 
 	float*			power = (float *) prec->next->data_pointer();
 	float* 			weight = (float *) prec->next->next->data_pointer();
@@ -267,7 +267,7 @@ double		img_reconstruct_one_v2(Bimage* p, Vector3<long> size, Bsymmetry& sym,
 	
 	Bimage*			prec = new Bimage(Float, TComplex, size, 1);
 	
-	prec->fspace_pack_2D(p, view, sym, hi_res, lo_res, vscale, 1, 0);
+	prec->fspace_pack_2D(p, view, sym, hi_res, lo_res, vscale, 0, 1, 0);
 
 //	prec->fspace_reconstruction_weigh();
 
@@ -299,12 +299,12 @@ double		img_reconstruct_one_v1(Bimage* p, Vector3<long> size, Bsymmetry& sym,
 				View view, double hi_res, double lo_res, double scale)
 {
 	long 			i, n;
-	double 			pwr(0), avg(0), w(0), fom(0);
+	double 			pwr(0), avg(0), fom(0);
 	Vector3<double>	vscale(scale, scale, scale);
 	
 	Bimage*			prec = new Bimage(Float, TComplex, size, 1);
 	
-	prec->fspace_pack_2D(p, view, sym, hi_res, lo_res, vscale, 1, 0);
+	prec->fspace_pack_2D(p, view, sym, hi_res, lo_res, vscale, 0, 1, 0);
 
 	prec->fspace_reconstruction_weigh();
 
@@ -315,7 +315,7 @@ double		img_reconstruct_one_v1(Bimage* p, Vector3<long> size, Bsymmetry& sym,
 		if ( weight[i] > 1.5 ) {
 			avg += prec->complex(i).power();
 			pwr += power[i];
-			w += weight[i];
+//			w += weight[i];
 //			fom += power[i] - prec->complex(i).power();
 			n++;
 		}
@@ -472,7 +472,7 @@ double		part_find_maximum_power(Bparticle* part,
 	p->sampling(mg->pixel_size);
 
 	if ( mg->ctf && ctf_action )
-		img_ctf_apply(p, em_ctf, ctf_action, wiener, 0, hi_res);
+		img_ctf_apply(p, em_ctf, ctf_action, wiener, 0, hi_res, 0);
 
 	part->fom[0] = img_find_maximum_power(p, size, sym, theta_step, 
 			phi_step, alpha_step, hi_res, lo_res, part_scale, pad_factor);

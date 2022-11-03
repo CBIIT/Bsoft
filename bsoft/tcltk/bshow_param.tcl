@@ -671,6 +671,7 @@ proc createMgParam { } {
 	set ps [Bimage get $theimg pixel_size 0]
 	Bmg set $project_item origin [lindex $ori 0] [lindex $ori 1] [lindex $ori 2]
 	Bmg set $project_item pixel_size [lindex $ps 0] [lindex $ps 1] [lindex $ps 2]
+#	Bmg set $project_item defocus 2e4
 #	puts "Pixel size: $ps"
 #	Bimage set $theimg label $project_item
 }

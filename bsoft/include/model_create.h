@@ -3,7 +3,7 @@
 @brief	Library routines used for model creation
 @author Bernard Heymann
 @date	Created: 20090714
-@date	Modified: 20210319
+@date	Modified: 20220210
 **/
 
 #include "rwmodel.h"
@@ -11,6 +11,7 @@
 
 // Function prototypes
 Bcomponent*	model_add_component(Bmodel* model, Bstring &id, Bstring &type, Vector3<double> loc);
+Bcomponent*	model_add_components(Bmodel* model, Bstring &id, Bstring &type, vector<Vector3<double>> loc);
 Bmodel*		model_platonic(Bsymmetry& sym, double radius);
 Bmodel*		model_helix(double radius, double helix_rise, double helix_angle, long ncomp);
 Bmodel*		model_random(long ncomp, double comp_radius, double max_radius);

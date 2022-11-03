@@ -3,7 +3,7 @@
 @brief	Mathematics utility functions
 @author Bernard Heymann 
 @date	Created: 20030414
-@date	Modified: 20151203
+@date	Modified: 20220524
 **/
 
 #include "math_util.h" 
@@ -14,7 +14,7 @@ extern int 	verbose;		// Level of output to the screen
 
 /**
 @brief 	Truncates a value to a specified number of decimal places.
-@param 	value	value to be truncated.
+@param 	value		value to be truncated.
 @param 	places		number of decimal places.
 @return int 			0.
 **/
@@ -49,8 +49,21 @@ double		bround(double value, int places)
 }
 
 /**
+@brief 	Returns the normalized cardinal sine.
+@param 	d		value.
+@return double 	sinc value.
+**/
+double		sinc(double d)
+{
+	if ( d ) return sin(M_PI*d)/(M_PI*d);
+	else return 1;
+}
+
+/**
 
 @brief 	Calculates the factorial of n.
+@param 	n			integer.
+@return double		factorial of n, <0 on error.
 
 	All values of n less than 1 returns 1.
 	An exact calculation is done for 1 < n <= 50.
@@ -60,8 +73,6 @@ double		bround(double value, int places)
 	The largest relative error is for 170: 1.22378e-13.
 Reference: 	Press W.H. et al (1992) Numerical Recipes in C.
 
-@param 	n			integer.
-@return double			factorial of n, <0 on error.
 **/
 double		factorial(int n)
 {
@@ -143,7 +154,7 @@ int			partition(vector<double>& a, int n, int k)
 @brief 	Finds all the prime factor for the input number.
 @param 	number		integer.
 @param 	&n			number of prime factors.
-@return long*		array of prime factors (can be NULL).
+@return long*			array of prime factors (can be NULL).
 
 	Calculates the prime factors from the smallest to the largest.
 Reference: 	Press W.H. et al (1992) Numerical Recipes in C.

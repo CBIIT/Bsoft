@@ -3,7 +3,7 @@
 @brief	A tool to create and edit models.
 @author Bernard Heymann
 @date	Created: 20090714
-@date	Modified: 20180314
+@date	Modified: 20220210
 **/
 
 #include "rwmodel.h"
@@ -59,7 +59,7 @@ const char* use[] = {
 "-id model1               Set model identifier.",
 "-settype VER             Set all component types.",
 "-changetype VER,KRN      Change component type name.",
-"-add -56,3.45,-123       Add a component (define model with -id and type with -settype).",
+"-add -56,3.45,-123       Add a component (define model with -id and type with -settype, can be repeated).",
 "-associate TRS,trs.pdb   Associate a component type with a file name.",
 "-linklength 56.3         Generate links with this maximum length.",
 "-rdf 1.2                 Calculate the radial distribution function with the given sampling (angstrom).",
@@ -121,8 +121,7 @@ int 		main(int argc, char **argv)
 	Bstring			associate_file;				// Component type file name
 	Vector3<double>	shift;						// Translate
 	Bstring			peakmap;					// Map with peaks to generate a new model
-	int				newcomp(0);					// Flag to indicate new component
-	Vector3<double>	newloc;						// New component location
+	vector<Vector3<double>>	newloc;				// New component locations
 	double			linklength(0);				// Link length for generating links
 	double			rdf_interval(0);			// Calculate RDF at this sampling (0=not)
 	double			consolidate(0);				// Cutoff to consider components the same
@@ -212,12 +211,12 @@ int 		main(int argc, char **argv)
 		}
 		if ( curropt->tag == "peaks" )
 			peakmap = curropt->filename();
-		if ( curropt->tag == "add" ) {
-			if ( curropt->values(newloc[0], newloc[1], newloc[2]) < 3 )
-				cerr << "-add: Three coordinates must be specified!" << endl;
-			else
-				newcomp = 1;
-		}
+//		if ( curropt->tag == "add" ) {
+//			Vector3<double>	v = curropt->vector3();
+//			newloc.push_back(v);
+//		}
+		if ( curropt->tag == "add" )
+			newloc.push_back(curropt->vector3());
 		if ( curropt->tag == "translate" ) {
 			shift = curropt->vector3();
         	if ( shift.length() < 0.1 )
@@ -365,7 +364,7 @@ int 		main(int argc, char **argv)
 	
 	if ( all ) models_process(model, model_reset_selection);
 	
-	if ( newcomp ) model_add_component(model, model_id, set_type, newloc);
+	if ( newloc.size() ) model_add_components(model, model_id, set_type, newloc);
 
 	if ( change_type.length() ) model_change_type(model, change_type);
 	

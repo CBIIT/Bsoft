@@ -41,6 +41,7 @@ const char* use[] = {
 "Parameters for alignment:",
 "-frames                  Flag to align micrograph frames.",
 "-counts                  Flag to rescale images based on their counts histogram.",
+"-mode local              Flag for initial alignment: progressive or local.",
 "-resolution 900,300      High and low resolution limits for cross-correlation (default 0.1,1000 angstrom).",
 "-bin 3                   Binning by the given kernel size to speed up alignment.",
 "-shiftlimit 3.5          Limit on origin shift relative to nominal center (default 10% of box edge size).",
@@ -68,7 +69,7 @@ int			main(int argc, char** argv)
 	int				ref_img(-1);				// Reference image for alignment, <0 means don't align
 	int				window(1), step(1);			// Moving sum window for alignment
 	int				frames(0);					// Flag to align micrograph frames
-	int				flags(0);					// Flags: 1=rescale based on histogram; 2=weigh by dose; 4=write aligned frames; 8=write frame sum
+	int				flags(0);					// Flags: 1=rescale based on histogram; 2=weigh by dose; 4=write aligned frames; 8=write frame sum; 16=local
 	double			sampling_ratio(1);			// For SNR estimation
 	double			snr_window(0);				// Summing window for SNR estimation
 	int				snr_prog(0);				// Flag for progressive summing
@@ -79,8 +80,8 @@ int			main(int argc, char** argv)
 	double			shift_limit(-1);			// Maximum shift from nominal image origin
 	Vector3<double>	origin;						// Tilt axis origin
 	double			edge_width(0), gauss_width(0);	// Edge parameters
-	int 			fill_type(FILL_BACKGROUND);
-	double			fill(0);
+//	int 			fill_type(FILL_BACKGROUND);
+//	double			fill(0);
 	long		 	bin(1);						// Binning before alignment and analysis
 	Bstring			subset;						// Subset of micrographs to average
 	JSvalue			dose_frac(JSobject);		// Container for dose fractionation parameters
@@ -113,6 +114,8 @@ int			main(int argc, char** argv)
 			frames = 1;
 		if ( curropt->tag == "counts" )
 			flags |= 1;
+		if ( curropt->tag == "mode" )
+			if ( curropt->value[0] == 'l' ) flags |= 16;
 #include "dose.inc"
 		if ( curropt->tag == "resolution" ) {
     	    if ( curropt->values(hi_res, lo_res) < 1 )
@@ -131,8 +134,8 @@ int			main(int argc, char** argv)
 		if ( curropt->tag == "edge" )
     	    if ( curropt->values(edge_width, gauss_width) < 1 )
 				cerr << "-edge: An edge width must be specified." << endl;
-		if ( curropt->tag == "fill" )
-			fill = curropt->fill(fill_type);
+//		if ( curropt->tag == "fill" )
+//			fill = curropt->fill(fill_type);
 		if ( curropt->tag == "bin" )
 			if ( ( bin = curropt->value.integer() ) < 1 )
 				cerr << "-bin: An ineteger greater than zero must be specified!" << endl;
@@ -196,7 +199,7 @@ int			main(int argc, char** argv)
 		else
 			project_align_series(project, ref_img, pgr, pmask, origin, hi_res, lo_res,
 				shift_limit, edge_width, gauss_width, bin, subset, flags);
-		delete pgr;
+		if ( pgr ) delete pgr;
 		pgr = NULL;
 	}
 	

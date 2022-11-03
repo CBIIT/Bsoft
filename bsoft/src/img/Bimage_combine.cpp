@@ -696,3 +696,24 @@ int 		Bimage::histomatch(Bimage* p, long bins)
 	return 0;
 }
 
+/**
+@brief 	Replaces values for >x/2 with the given image.
+@param 	*p			second image.
+@return int 			0, <0 if error.
+
+**/
+int 		Bimage::replace_half(Bimage* p)
+{
+	long 		nn, xx, cc, i, j, yz(y*z);
+	
+	for ( nn=0; nn<n; ++nn )
+		for ( j=0; j<yz; ++j )
+			for ( xx=x/2, i=((nn*yz + j)*x + xx)*c; xx<x; ++xx )
+				for ( cc=0; cc<c; ++cc, ++i )
+					set(i, (*p)[i]);
+	
+	statistics();
+	
+	return 0;
+}
+

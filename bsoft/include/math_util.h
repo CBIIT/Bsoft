@@ -3,7 +3,7 @@
 @brief	Header file for general utilities 
 @author Bernard Heymann 
 @date	Created: 19990722
-@date	Modified: 20151203
+@date	Modified: 20220524
 **/
 
 #include <stdlib.h>
@@ -18,6 +18,7 @@
 // Function prototypes 
 double		bfloor(double value, int places);
 double		bround(double value, int places);
+double		sinc(double d);
 double		factorial(int n);
 double		number_of_combinations(int n, int r);
 int			partition(vector<double>& a, int n, int k);

@@ -32,7 +32,7 @@ var tcltk__bmodel_8cpp =
     [ "do_get", "tcltk__bmodel_8cpp.html#a5c70a93b4231e6802a6566eaa5e9907b", null ],
     [ "do_link", "tcltk__bmodel_8cpp.html#a8feb8f605403ddef53cafbae4de89c9e", null ],
     [ "do_set", "tcltk__bmodel_8cpp.html#a53b8632b6acb34df54a53bc95d4baff5", null ],
-    [ "draw_components", "tcltk__bmodel_8cpp.html#aa50dca3d82629c3c9956a9c875837d5e", null ],
+    [ "draw_components", "tcltk__bmodel_8cpp.html#aa4e0d2c631dd197f618f447d9d3091b6", null ],
     [ "link_count", "tcltk__bmodel_8cpp.html#a400714a1ec5c45f11a131c8bff1ebee2", null ],
     [ "link_count_selected", "tcltk__bmodel_8cpp.html#a3c4cd1b61001ce0a097945588ff389f2", null ],
     [ "link_create", "tcltk__bmodel_8cpp.html#aaf8c2b55ab14b537558f0cee7f57eb26", null ],

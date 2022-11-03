@@ -5,7 +5,7 @@
 #
 # @author	Bernard Heymann
 # @date		Created: 20010516
-# @date		Modified: 20191017
+# @date		Modified: 20220406
 
 set show_boxes 1
 set show_bad 1
@@ -244,12 +244,15 @@ proc setBoxSize { } {
 
 proc boxSelect { x y } {
 	if ![winfo exists .wbox] { return }
-	global project_item
+	global project_item theimg
 	global box_selected
 	global tool
+	set wc [getControlWindow $theimg]
+	set img_num [$wc.image.scale get]
+	set mg_item [micrographItem $img_num]
 	setBoxSize
 	set loc [imageCoordinatesFromCanvas $x $y]
-	set id [Bmg box $project_item select [lindex $loc 0] [lindex $loc 1] [lindex $loc 2]]
+	set id [Bmg box $mg_item select [lindex $loc 0] [lindex $loc 1] [lindex $loc 2]]
 	boxDrawOldNew $id
 	return $id
 }
@@ -262,15 +265,18 @@ proc boxSelect { x y } {
 
 proc boxCreateSelect { x y t } {
 	if ![winfo exists .wbox] { return }
-	global project_item
+	global project_item theimg
 	global box_selected part_sel
 	global tool
+	set wc [getControlWindow $theimg]
+	set img_num [$wc.image.scale get]
+	set mg_item [micrographItem $img_num]
 	setBoxSize
 	set loc [imageCoordinatesFromCanvas $x $y]
-	set id [Bmg box $project_item select [lindex $loc 0] [lindex $loc 1] [lindex $loc 2]]
+	set id [Bmg box $mg_item select [lindex $loc 0] [lindex $loc 1] [lindex $loc 2]]
 #	puts "selected ID = $id"
 	if { $id == 0 && $tool == "box" } {
-		set id [Bmg box $project_item create [lindex $loc 0] [lindex $loc 1] [lindex $loc 2] $t $part_sel]
+		set id [Bmg box $mg_item create [lindex $loc 0] [lindex $loc 1] [lindex $loc 2] $t $part_sel]
 #		puts "created ID = $id"
 	}
 	boxDrawOldNew $id
@@ -306,6 +312,8 @@ proc boxMove { x y } {
 	if { $box_selected == 0 } { return }
 	set c [getImageCanvas $theimg]
 	set wc [getControlWindow $theimg]
+	set img_num [$wc.image.scale get]
+	set mg_item [micrographItem $img_num]
 	set scale [$wc.scale.scale get]
 	set ix [expr [$c canvasx $x] / $scale ]
 	set iy [expr [$c canvasy $y] / $scale ]
@@ -314,7 +322,7 @@ proc boxMove { x y } {
 	set px $ix
 	set py $iy
 #	puts "Moving $dx $dy"
-	Bmg box $project_item move $box_selected $dx $dy
+	Bmg box $mg_item move $box_selected $dx $dy
 	boxesDrawAll
 }
 
@@ -377,10 +385,10 @@ proc boxDraw { id } {
 		set cymax [expr $yr + $oval_radius_y + $scale_1 ]
 		set idtag [format "box%d" $id]
    		if { [string compare $box_color_mode "FOM"] == 0 } {
-			set fom [Bmg box $project_item fom $id]
+			set fom [Bmg box $mg_item fom $id]
 			set color [spectrum $fom $fom_min $fom_max]
    		} elseif { [string compare $box_color_mode "Selection"] == 0 } {
-			set sel [Bmg box $project_item select $id]
+			set sel [Bmg box $mg_item select $id]
 			set color [spectrum $sel $sel_min $sel_max]
 		} elseif { [lsearch $box_selected $id] >= 0 } {
 			set color $box_select_color;
@@ -417,7 +425,9 @@ proc boxesDrawAll { } {
 	global imgtype fom_cutoff
 	global show_boxes show_bad
 	set c [getImageCanvas $theimg]
-#	set wc [getControlWindow $theimg]
+	set wc [getControlWindow $theimg]
+	set n [$wc.image.scale get]
+	set mg_item [micrographItem $n]
 #	puts "Drawing boxes for $theimg: $project_item"
 	$c delete box bad
 	if { [string compare $imgtype "mg"] && [string compare $imgtype "rec"] } { return }
@@ -426,14 +436,14 @@ proc boxesDrawAll { } {
 	updateBoxCounts
 	if { $show_boxes } {
 #		puts "Getting box IDs for cutoff = $fom_cutoff"
-		set ids [Bmg box $project_item ids $fom_cutoff]
+		set ids [Bmg box $mg_item ids $fom_cutoff]
 		foreach id $ids {
 			boxDraw $id
 		}
 	}
 #	puts "Boxes drawn"
 	if { $show_bad } {
-		set ids [Bmg box $project_item ids bad]
+		set ids [Bmg box $mg_item ids bad]
 		foreach id $ids {
 			boxDraw $id
 		}
@@ -453,12 +463,13 @@ proc boxDelete { x y } {
 	global boxes_selected
 	global auto_renum
 	set wc [getControlWindow $theimg]
-	set n [$wc.image.scale get]
+	set img_num [$wc.image.scale get]
+	set mg_item [micrographItem $img_num]
 	set id [boxSelect $x $y]
 #	puts "ID to be deleted = $id"
 	if { $id != 0 } {
-		Bmg box $project_item delete $id
-		if { $auto_renum } { Bmg box $project_item renumber }
+		Bmg box $mg_item delete $id
+		if { $auto_renum } { Bmg box $mg_item renumber }
 	}
 	boxesDrawAll
 }
@@ -480,7 +491,10 @@ proc boxDeleteAll { } {
 
 proc boxDeleteCurrent { } {
 	global project_item theimg
-	Bmg box $project_item delete current
+	set wc [getControlWindow $theimg]
+	set img_num [$wc.image.scale get]
+	set mg_item [micrographItem $img_num]
+	Bmg box $mg_item delete current
 	boxesDrawAll
 }
 
@@ -827,12 +841,15 @@ proc updateBoxParam { } {
 #
 
 proc updateBoxCounts { } {
-	global project_item
+	global project_item theimg
 	global fom_max
 	if ![winfo exists .wbox] { return }
 #	puts "Updating box counts for $project_item"
-	set nbox [Bmg box $project_item count]
-	set nbad [Bmg box $project_item count bad]
+	set wc [getControlWindow $theimg]
+	set img_num [$wc.image.scale get]
+	set mg_item [micrographItem $img_num]
+	set nbox [Bmg box $mg_item count]
+	set nbad [Bmg box $mg_item count bad]
 	set nboxall [Bmg box all count]
 	set w .wbox
 	if [winfo exists $w] {

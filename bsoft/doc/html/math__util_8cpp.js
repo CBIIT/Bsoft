@@ -10,7 +10,7 @@ var math__util_8cpp =
     [ "next_permutation", "math__util_8cpp.html#a64e1c4c1524165dbe16c0d45914d98d1", null ],
     [ "number_of_combinations", "math__util_8cpp.html#a8b9a449a7c73665653c53e8a611f1b64", null ],
     [ "partition", "math__util_8cpp.html#ae08e883616c016c794dd48f4c8844a8a", null ],
-    [ "prime_factors", "math__util_8cpp.html#aa834c8621784ec9a55bb926a6f9855fb", null ],
+    [ "prime_factors", "math__util_8cpp.html#ad7e91c9a32a70a89117e0694e14282ec", null ],
     [ "smallest_prime", "math__util_8cpp.html#a0ef20e14605490f07837761bd514fe14", null ],
     [ "verbose", "math__util_8cpp.html#a0b2caeb4b6f130be43e5a2f0267dd453", null ]
 ];

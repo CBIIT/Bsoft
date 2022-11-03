@@ -3,7 +3,7 @@
 @brief	Select particles
 @author Bernard Heymann
 @date	Created: 20000426
-@date	Modified: 20200517
+@date	Modified: 20220623
 **/
 
 #include "mg_processing.h"
@@ -240,7 +240,7 @@ long		part_invert_selection(Bproject* project)
 @brief 	Sets selection to the micrographs indicated.
 @param 	*project		project parameter structure with all parameters.
 @param 	&mgselect		string with selection.
-@return long			number of particles.
+@return long				number of particles.
 
 	Only the micrograph selection fields are modified.
 **/
@@ -271,6 +271,41 @@ long		part_select_micrograph(Bproject* project, Bstring& mgselect)
 		}
 	}
 		
+	return nsel;
+}
+
+/**
+@brief 	Sets selection to the micrographs with selected particles.
+@param 	*project		project parameter structure with all parameters.
+@return long				number of particles.
+
+	Only the micrograph selection fields are modified.
+**/
+long		part_select_micrographs_with_selected_particles(Bproject* project)
+{
+	long			nsel(0);
+	Bfield*			field;
+	Bmicrograph*	mg;
+	Bparticle*		part;
+	
+	long			nmg = project_count_micrographs(project);
+	
+	for ( field = project->field; field; field = field->next ) {
+		for ( mg = field->mg; mg; mg = mg->next ) if ( mg->select ) {
+			mg->select = 0;
+			for ( part = mg->part; part; part = part->next ) {
+				if ( part->sel ) {
+					mg->select = 1;
+					break;
+				}
+			}
+			nsel += mg->select;
+		}
+	}
+		
+	if ( verbose )
+		cout << "Micrographs selected:           " << nsel << " (" << nsel*100.0/nmg << " %)" << endl;
+	
 	return nsel;
 }
 
@@ -345,7 +380,7 @@ long		part_set_selection(Bproject* project, int number)
 }
 
 /**
-@brief 	Selects one selection number and sets all others to zero.
+@brief 	Sets selection numbers sequentially.
 @param 	*project	project parameter structure with all parameters.
 @return long			number of particles selected.
 **/
@@ -1902,7 +1937,7 @@ long		part_select_group(Bproject* project, int group)
 @param 	*project	parameter structure with all parameters.
 @param 	size		number of particles in each set.
 @param 	flag		flag to not count across mg or rec boundaries.
-@return long		number of particles selected.
+@return long			number of sets selected.
 
 	Sets up sets of particles, each set identified as a number in the
 	selection array.
@@ -1977,7 +2012,7 @@ long		part_select_sets(Bproject* project, int size, int flag)
 		cout << "Number of particles selected:   " << nsel << " (" << nsel*100.0/ntot << " %)" << endl << endl;
 	}
 	
-	return nsel;
+	return number;
 }
 
 /**
@@ -2016,6 +2051,81 @@ long		part_select_frames(Bproject* project, int frame_start, int frame_end)
 	return nsel;
 }
 
+/**
+@brief 	List of particle images for reciprocal space reconstruction.
+@param 	*project		image processing parameter structure.
+@param 	num_select		selection number from the selection column.
+@param 	bootstrap		flag to indicate a bootstrap reconstruction.
+@return	Bimage*			3D reconstructed map.
+
+	An image is used in the reconstruction if its selection flag has been set.
+	If the selection number is less than zero, all particles with selection flags
+	greater than zero are used. If the selection number is zero or above, all
+	particles with the selection flag set to the same number are used.
+	A bootstrap reconstruction uses the particle selection to weigh each
+	selected particle.
+
+**/
+Bparticle* 	project_selected_partlist(Bproject* project,
+				int num_select, int bootstrap)
+{
+	Bfield*			field = project->field;
+	Bmicrograph*	mg = field->mg;
+	Breconstruction*	rec = project->rec;
+	Bparticle*		part = mg->part;
+	Bparticle*		partlist = NULL;
+
+	if ( verbose & VERB_DEBUG )
+		cout << "DEBUG project_selected_partlist: num_select = " << num_select << endl;
+
+	long 			psel;
+
+	if ( project->select < 1 ) {
+		for ( field = project->field; field; field = field->next ) {
+			for ( mg = field->mg; mg; mg = mg->next ) {
+				for ( part = mg->part; part; part = part->next ) {
+					psel = 0;
+					if ( part->sel ) {
+						if ( bootstrap ) {
+							psel = 1;
+						} else if ( num_select < 0 ) {
+							psel = 1;
+						} else if ( part->sel == num_select ) {
+							psel = 1;
+						}
+					}
+					if ( psel )	// Use only selected images
+						particle_copy(&partlist, part);
+				}
+			}
+		}
+	} else {
+		for ( rec = project->rec; rec; rec = rec->next ) {
+			for ( part = rec->part; part; part = part->next ) {
+				psel = 0;
+				if ( part->sel ) {
+					if ( bootstrap ) {
+						psel = 1;
+					} else if ( num_select < 0 ) {
+						psel = 1;
+					} else if ( part->sel == num_select ) {
+						psel = 1;
+					}
+				}
+				if ( psel )	// Use only selected images
+					particle_copy(&partlist, part);
+			}
+		}
+	}
+	
+/*	if ( num_select == 4) {
+		cout << num_select;
+		for ( part = partlist; part; part = part->next ) cout << tab << part->id;
+		cout << endl;
+	}
+*/
+	return partlist;
+}
 
 long		part_fix_fil_direction(Bparticle* partlist)
 {
@@ -2141,7 +2251,7 @@ vector<long>	part_fix_fil_direction(Bparticle* partlist, double minpct)
 	
 	long				n(0), up(0), dn(0), nt(0), nf(0), fup(0), fdn(0);
 	long				group(-1), fin(0), dir;
-	double				tol(M_PI/4.0), pup, pdn, theta, da, ccmax;
+	double				tol(M_PI/4.0), pup, pdn, theta(0), da, ccmax;
 //	Matrix3				mat1, mat;
 	Euler				euler;
 	Bparticle*			part;
@@ -2240,7 +2350,7 @@ vector<long>	part_fix_fil_direction(Bparticle* partlist, Bparticle* partlist2, d
 	
 	long				n(0), up(0), dn(0), nt(0), nf(0), fup(0), fdn(0);
 	long				group(-1), fin(0), dir;
-	double				tol(M_PI/4.0), pup, pdn, theta, da, ccmax;
+	double				tol(M_PI/4.0), pup, pdn, theta(0), da, ccmax;
 	Euler				euler;
 	Bparticle*			part;
 	Bparticle*			part2;

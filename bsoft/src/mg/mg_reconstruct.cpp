@@ -3,7 +3,7 @@
 @brief	Functions for reconstruction
 @author Bernard Heymann
 @date	Created: 20010403
-@date	Modified: 20200127
+@date	Modified: 20220221
 **/
 
 #include "rwimg.h"
@@ -70,13 +70,14 @@ int			part_ft_size(int xsize, double scale, int pad_factor)
 @param	sym_mode		0=apply symmetry, 1=C1, 2=random symmetry view
 @param 	hi_res			high resolution limit.
 @param 	scale			scale of reconstruction.
+@param 	sam				sampling/voxel size of reconstruction.
 @param 	size			size of reconstruction.
 @param 	ft_size			Fourier transform size.
 @param 	plan			Fourier transform plan.
 @param	interp_type		interpolation type.
 @param 	ctf_action		flag to apply CTF to projections.
 @param 	wiener			Wiener factor.
-@param 	flags			1=rescale particles, 2=2D reconstruction, 4=bootstrap.
+@param 	flags			1=rescale particles, 2=2D reconstruction, 4=bootstrap, 8=Ewald.
 @param 	first			flag to indicate the first thread.
 @return	Bimage*			3D reconstructed map.
 
@@ -97,17 +98,21 @@ int			part_ft_size(int xsize, double scale, int pad_factor)
 
 **/
 Bimage*		particle_reconstruct(Bparticle* partlist, Bsymmetry sym, int sym_mode,
-				double hi_res, Vector3<double> scale, Vector3<long> size,
+				double hi_res, Vector3<double> scale, Vector3<double> sam, Vector3<long> size,
 				int ft_size, fft_plan plan, int interp_type,
 				int ctf_action, double wiener, int flags, int first)
 {
 	random_seed();
 	
-	int				twoD_flag(flags & 2), bootstrap(flags & 4);
+	int				twoD_flag(flags & 2), bootstrap(flags & 4), ewald(flags & 8);
 	Bmicrograph*	mg = partlist->mg;
 	Bparticle*		part = partlist;
+	
+	if ( sam[0] < 0.1 ) sam = part->pixel_size;
 
-	Vector3<double>	pixel_size(mg->pixel_size/scale);
+//	Vector3<double>	pixel_size(mg->pixel_size/scale);
+//	Vector3<double>	pixel_size(partlist->pixel_size/scale);
+	Vector3<double>	pixel_size(sam/scale);
 	pixel_size[1] = pixel_size[0];
 	if ( twoD_flag ) pixel_size[2] = 1;			// Isotropic sampling in 2D
 	else pixel_size[2] = pixel_size[0];			// Isotropic sampling in 3D
@@ -115,7 +120,6 @@ Bimage*		particle_reconstruct(Bparticle* partlist, Bsymmetry sym, int sym_mode,
 	Bimage*			p;
 	Bimage* 		prec = new Bimage(Float, TComplex, size, 1);
 	prec->sampling(pixel_size);
-//	prec->origin(prec->size()/2);
 
 	prec->check_resolution(hi_res);
 	
@@ -128,7 +132,8 @@ Bimage*		particle_reconstruct(Bparticle* partlist, Bsymmetry sym, int sym_mode,
 	
 	long 			nrec(0), img_num;
 	double			part_weight(1), pad_ratio(1);
-	Vector3<double>	part_scale(scale);
+//	Vector3<double>	part_scale(scale);
+	Vector3<double>	part_scale(1,1,1);
 	View			view;
 	Bstring			partfile;
 	
@@ -175,9 +180,9 @@ Bimage*		particle_reconstruct(Bparticle* partlist, Bsymmetry sym, int sym_mode,
 			else p->image->view(0,0,-1,p->image->view().angle());
 		}
 		
-		// set the scaling
-		if ( part->mag > 0 ) part_scale = scale/part->mag;
-		else  part_scale = scale;
+		// set the particle scaling
+		part_scale = Vector3<double>(1,1,1);
+		if ( part->mag > 0 ) part_scale /= part->mag;
 
 		if ( part->def > 0 ) em_ctf.defocus_average(part->def);
 
@@ -199,14 +204,35 @@ Bimage*		particle_reconstruct(Bparticle* partlist, Bsymmetry sym, int sym_mode,
 	
 		p->fft(plan, 1);
 		p->phase_shift_to_origin();
+		
+		//Ewald sphere offset
+		double		ew_wl(0);
+		if ( ewald ) ew_wl = em_ctf.lambda();
 
-		if ( ctf_action ) img_ctf_apply(p, em_ctf, ctf_action, wiener, 0, hi_res);
+		if ( ctf_action ) {
+//			img_ctf_apply(p, em_ctf, ctf_action, wiener, 0, hi_res, (ewald!=0));
+//			img_apply_phase_aberration(p, em_ctf);
+//	 		img_ctf_apply_complex(p, em_ctf, (ctf_action==1), wiener, (ewald!=0), 0, hi_res);
+	 		img_ctf_apply_complex(p, em_ctf, (ctf_action==1), wiener, 0, hi_res);
+		}
 		
 		if ( sym_mode )
-			prec->fspace_pack_2D(p, view.matrix(), hi_res, 0, part_scale, part_weight, interp_type);
+			prec->fspace_pack_2D(p, view.matrix(), hi_res, 0, part_scale, ew_wl, part_weight, interp_type);
 		else
-			prec->fspace_pack_2D(p, view, sym, hi_res, 0, part_scale, part_weight, interp_type);
+			prec->fspace_pack_2D(p, view, sym, hi_res, 0, part_scale, ew_wl, part_weight, interp_type);
 
+		if ( ewald ) {
+//			if ( ctf_action ) {
+//				img_ctf_apply(p2, em_ctf, ctf_action, wiener, 0, hi_res, -1);
+//				img_apply_phase_aberration(p, em_ctf);
+//	 			img_ctf_apply_complex(p, em_ctf, (ctf_action==1), wiener, -1, 0, hi_res);
+//			}
+			if ( sym_mode )
+				prec->fspace_pack_2D(p, view.matrix(), hi_res, 0, part_scale, -ew_wl, part_weight, interp_type);
+			else
+				prec->fspace_pack_2D(p, view, sym, hi_res, 0, part_scale, -ew_wl, part_weight, interp_type);
+		}
+		
 		if ( mg->ctf ) em_ctf.defocus_average(mg->ctf->defocus_average());
 				
 		delete p;
@@ -228,81 +254,6 @@ Bimage*		particle_reconstruct(Bparticle* partlist, Bsymmetry sym, int sym_mode,
 	return prec;
 }
 
-/**
-@brief 	List of particle images for reciprocal space reconstruction.  
-@param 	*project		image processing parameter structure.
-@param 	num_select		selection number from the selection column.
-@param 	bootstrap		flag to indicate a bootstrap reconstruction.
-@return	Bimage*			3D reconstructed map.
-
-	An image is used in the reconstruction if its selection flag has been set.
-	If the selection number is less than zero, all particles with selection flags
-	greater than zero are used. If the selection number is zero or above, all
-	particles with the selection flag set to the same number are used.
-	A bootstrap reconstruction uses the particle selection to weigh each
-	selected particle.
-
-**/
-Bparticle* 	project_reconstruction_partlist(Bproject* project,
-				int num_select, int bootstrap)
-{
-	Bfield*			field = project->field;
-	Bmicrograph*	mg = field->mg;
-	Breconstruction*	rec = project->rec;
-	Bparticle*		part = mg->part;
-	Bparticle*		partlist = NULL;
-
-	if ( verbose & VERB_DEBUG )
-		cout << "DEBUG project_reconstruction_partlist: num_select = " << num_select << endl;
-
-	long 			psel;
-
-	if ( project->select < 1 ) {
-		for ( field = project->field; field; field = field->next ) {
-			for ( mg = field->mg; mg; mg = mg->next ) {
-				for ( part = mg->part; part; part = part->next ) {
-					psel = 0;
-					if ( part->sel ) {
-						if ( bootstrap ) {
-							psel = 1;
-						} else if ( num_select < 0 ) {
-							psel = 1;
-						} else if ( part->sel == num_select ) {
-							psel = 1;
-						}
-					}
-					if ( psel )	// Use only selected images
-						particle_copy(&partlist, part);
-				}
-			}
-		}
-	} else {
-		for ( rec = project->rec; rec; rec = rec->next ) {
-			for ( part = rec->part; part; part = part->next ) {
-				psel = 0;
-				if ( part->sel ) {
-					if ( bootstrap ) {
-						psel = 1;
-					} else if ( num_select < 0 ) {
-						psel = 1;
-					} else if ( part->sel == num_select ) {
-						psel = 1;
-					}
-				}
-				if ( psel )	// Use only selected images
-					particle_copy(&partlist, part);
-			}
-		}
-	}
-	
-/*	if ( num_select == 4) {
-		cout << num_select;
-		for ( part = partlist; part; part = part->next ) cout << tab << part->id;
-		cout << endl;
-	}
-*/	
-	return partlist;
-}
 
 /**
 @brief 	Combines and weighs a map from several partial maps and weight sets.
@@ -443,7 +394,7 @@ double		part_single_reconstruction(Bparticle* part, Vector3<long> size,
 	particle_copy(&partone, part);
 
 	Bimage*			prec = particle_reconstruct(partone, sym, 0, hi_res,
-						scale, size, ft_size, img_plan,
+						scale, partone->pixel_size, size, ft_size, img_plan,
 						interp_type, ctf_action, wiener, 0, 0);
 	
 	long			ncov = prec->fspace_reconstruction_weigh();
@@ -521,8 +472,10 @@ long		project_single_particle_reconstruction(Bproject* project,
 				int num_select, double hi_res, Vector3<double> scale, Vector3<long> size, 
 				int pad_factor, int interp_type, int ctf_action, double wiener, int flags)
 {
+	Vector3<double>		sam;
+	
 	if ( size.volume() <= 0 )
-		size = project_set_reconstruction_size(project, scale[0], 0);
+		size = project_set_reconstruction_size(project, sam, scale[0], 0);
 
 	if ( size.volume() <= 0 ) {
 		error_show("Error in project_single_particle_reconstruction", __FILE__, __LINE__);
@@ -648,14 +601,15 @@ long		project_single_particle_reconstruction(Bproject* project,
 /**
 @brief 	Sets the reconstruction size for reconstruction from 2D particle images.
 @param 	*project		project parameter structure.
+@param 	&sam			sampling/voxel size of new map.
 @param 	scale			scale of reconstruction.
 @param 	twoD_flag		doing a 2D reconstruction rather than 3D.
-@return Vector3<long>	reconstruction size.
+@return Vector3<long>		reconstruction size.
 
 	The reconstruction size is set from the first particle image size found.
 
 **/
-Vector3<long>	project_set_reconstruction_size(Bproject* project, double scale, int twoD_flag)
+Vector3<long>	project_set_reconstruction_size(Bproject* project, Vector3<double>& sam, double scale, int twoD_flag)
 {
 	if ( verbose & VERB_DEBUG )
 		cout << "DEBUG project_set_reconstruction_size: scale=" << scale << endl;
@@ -686,13 +640,21 @@ Vector3<long>	project_set_reconstruction_size(Bproject* project, double scale, i
 	}
 
 	Bimage* 		p = read_img(partfile, 0, 0);
+	
+	if ( sam[0] < 0.1 ) sam = part->pixel_size;
+	if ( sam[0] < 0.1 ) sam = mg->pixel_size;
+	if ( sam[0] < 0.1 ) sam = p->sampling(0);
+	sam[2] = sam[1] = sam[0];
 
 	size[0] = (int) (p->sizeX()*scale);
 	if ( size[0] < p->sizeY()/scale ) size[0] = (int) (p->sizeY()*scale);
 	if ( size[0] < p->sizeZ()/scale ) size[0] = (int) (p->sizeZ()*scale);
 	size[2] = size[1] = size[0];
 	
-	if ( twoD_flag ) size[2] = 1;
+	if ( twoD_flag ) {
+		sam[2] = 1;
+		size[2] = 1;
+	}
 	
 	delete p;
 	
@@ -720,7 +682,7 @@ Vector3<long>	project_set_reconstruction_size(Bproject* project, double scale, i
 	integrated with others from the same class afterwards.
 
 **/
-int			project_configure_for_reconstruction(Bproject* project, Bstring classes, long& nmaps, long& nthreads)
+int			project_configure_for_reconstruction(Bproject* project, Bstring classes, long& nmaps, int& nthreads)
 {
 	if ( !classes.length() ) classes = "selected";
 	classes = classes.lower();
@@ -833,6 +795,30 @@ int			project_configure_for_reconstruction(Bproject* project, Bstring classes, l
 	return nclass;
 }
 
+int			project_update_class_averages(Bproject* project, Bimage* prec, Bstring file_name)
+{
+	long			i;
+	Bparticle*		part;
+	
+	project->class_avg = part = NULL;
+
+	for ( i=0; i<prec->images(); ++i ) {
+		part = particle_add(&part, i+1);
+		if ( !project->class_avg ) project->class_avg = part;
+		part->mag = 1;
+		part->pixel_size = prec->image[i].sampling();
+		part->ori = prec->image[i].origin();
+		part->view = prec->image[i].view();
+		part->fom[0] = prec->image[i].FOM();
+		part->sel = prec->image[i].select();
+		part->fpart = file_name;
+	}
+
+	project_show_class_averages(project);
+	
+	return 1;
+}
+
 /**
 @brief 	Creates a 2D reconstruction from the images in a  multi-image file.  
 @param 	*project 		image processing parameter structure.
@@ -847,8 +833,9 @@ int			project_configure_for_reconstruction(Bproject* project, Bstring classes, l
 	into a new image with a "_proj.spi" ending.
 
 **/
-Bimage* 	project_reconstruct_2D(Bproject* project, int transform_output) 
+Bimage* 	project_reconstruct_2D(Bproject* project, Bstring file_name, int transform_output)
 {
+	bool			invert(0);
 	long			n, i, j, k, npart;
 
 	Bfield*			field = project->field;
@@ -918,7 +905,8 @@ Bimage* 	project_reconstruct_2D(Bproject* project, int transform_output)
 					p->rescale_to_avg_std(0, 1);
 					p->shift_background(0);
 					p->sampling(px, px, 1);
-					if ( mg->ctf ) img_ctf_apply(p, *(mg->ctf), 1, 0.2, 0, hires);
+					if ( mg->ctf )
+						img_ctf_apply(p, *(mg->ctf), 1, 0.2, 0, hires, invert);
 					if ( n < 0 ) {
 						translate = prec->image->origin() - part->ori;
 					} else {
@@ -957,7 +945,8 @@ Bimage* 	project_reconstruct_2D(Bproject* project, int transform_output)
 	// Normalize the new reconstructions
 	for ( i=n=0; n<prec->images(); n++ ) {
 		if ( num[n] ) fom[n] /= num[n];
-		prec->image[n].FOM(num[n]);
+		prec->image[n].FOM(fom[n]);
+		prec->image[n].select(num[n]);
 		for ( k=0; k<prec->image_size(); i++, k++ )
 			if ( num[n] ) prec->set(i, (*prec)[i] / num[n]);
 	}
@@ -976,13 +965,16 @@ Bimage* 	project_reconstruct_2D(Bproject* project, int transform_output)
 	
 	delete[] num;
 	delete[] fom;
-	
+
+	project_update_class_averages(project, prec, file_name);
+
 	return prec;
 }				
 
 Bparticle*	img_reconstruct_2D(long i, Bproject* project, Bimage* prec, 
 				double hires, fft_plan planf, fft_plan planb)
 {
+	bool			invert(0);
 	long			n(0);
 	Bfield*			field = project->field;
 	Bmicrograph*	mg = field->mg;
@@ -1008,7 +1000,8 @@ Bparticle*	img_reconstruct_2D(long i, Bproject* project, Bimage* prec,
 					p->rescale_to_avg_std(0, 1);
 					p->shift_background(0);
 					p->sampling(part->pixel_size);
-					if ( mg->ctf ) img_ctf_apply(p, *(mg->ctf), 1, 0.2, 0, hires, planf, planb);
+					if ( mg->ctf )
+						img_ctf_apply(p, *(mg->ctf), 1, 0.2, 0, hires, invert, planf, planb);
 					translate = prec->image[i].origin() - part->ori;
 					origin = part->ori;
 					euler = Euler(part->view);
@@ -1046,6 +1039,8 @@ Bparticle*	img_reconstruct_2D(long i, Bproject* project, Bimage* prec,
 long		img_reconstruct_2D_fspace(long i, Bproject* project, Bimage* prec,
 				double hires, fft_plan planf, fft_plan planb)
 {
+	bool			invert(0);
+
 	long			maxrad = ( hires > 0 )? prec->real_size()[0]/hires: prec->sizeX()/2;
 	if ( maxrad > prec->sizeX()/2 ) maxrad = prec->sizeX()/2;
 	
@@ -1091,7 +1086,7 @@ long		img_reconstruct_2D_fspace(long i, Bproject* project, Bimage* prec,
 					p->shift_background(0);
 					p->sampling(part->pixel_size);
 					if ( mg->ctf )
-						img_ctf_apply(p, *(mg->ctf), 1, 0.2, 0, hires, planf, planb);
+						img_ctf_apply(p, *(mg->ctf), 1, 0.2, 0, hires, invert, planf, planb);
 					translate = prec->image[i].origin() - part->ori;
 					origin = part->ori;
 					euler = Euler(part->view);
@@ -1147,10 +1142,8 @@ long		img_reconstruct_2D_fspace(long i, Bproject* project, Bimage* prec,
 	return n;
 }
 
-Bimage* 	project_reconstruct_2D_fast(Bproject* project) 
+Bimage* 	project_reconstruct_2D_fast(Bproject* project, Bstring file_name)
 {
-	long			i;
-
 	Bfield*			field = project->field;
 	Bmicrograph*	mg = NULL;
 	Bparticle*		part = part_find_first(project);
@@ -1202,7 +1195,7 @@ Bimage* 	project_reconstruct_2D_fast(Bproject* project)
 	});
 #else
 #pragma omp parallel for
-	for ( i=0; i<nmap; i++ ) {
+	for ( long i=0; i<nmap; i++ ) {
 		img_reconstruct_2D_fspace(i, project, prec, hires, planf, planb);
 		if ( verbose )
 			cout << i+1 << tab << prec->image[i].select() << tab << prec->image[i].FOM() << endl;
@@ -1216,21 +1209,10 @@ Bimage* 	project_reconstruct_2D_fast(Bproject* project)
 		cout << "done" << endl;
 	
 	prec->statistics();
+	
+	particle_kill(project->class_avg);
 
-	part = NULL;
-
-	for ( i=0; i<nmap; ++i ) {
-		part = particle_add(&part, i+1);
-		if ( !project->class_avg ) project->class_avg = part;
-		part->mag = 1;
-		part->pixel_size = prec->image[i].sampling();
-		part->ori = prec->image[i].origin();
-		part->view = prec->image[i].view();
-		part->fom[0] = prec->image[i].FOM();
-		part->sel = prec->image[i].select();
-	}
-
-	project_show_class_averages(project);
+	project_update_class_averages(project, prec, file_name);
 	
 	return prec;
 }				

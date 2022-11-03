@@ -3,7 +3,7 @@
 @brief	Header file for reading and writing micrograph parameters
 @author Bernard Heymann
 @date	Created: 20000426
-@date	Modified: 20210412
+@date	Modified: 20220311
 **/
 
 #include "mg_processing.h"
@@ -11,6 +11,9 @@
 
 #ifndef _RWMG_
 // Function prototypes
+int			field_resolve_file_access(Bfield* field, Bmicrograph* mg, Bstring filename, int flags);
+int			reconstruction_resolve_file_access(Breconstruction* rec, Bstring filename, int flags);
+int			project_resolve_file_access(Bproject* project, Bstring filename, int flags);
 Bproject*	read_project(const char* filename, int flags=0);
 Bproject*	read_project(Bstring& filename, int flags=0);
 Bproject*	read_project(Bstring& filename, Bstring& xsdfile, int flags=0);

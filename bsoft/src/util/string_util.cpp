@@ -1,7 +1,7 @@
 /**
 @file	string_util.cpp
 @author	Bernard Heymann
-@date	20160911 - 20210306
+@date	20160911 - 20220101
 
 **/
 
@@ -71,6 +71,20 @@ string		insert(string& filename, int i, int n)
 void		remove_spaces(string& s)
 {
 	remove_if(s.begin(), s.end(), ::isspace);
+}
+	
+string		remove_spaces2(string& s)
+{
+	long		i, j(0);
+	string		ns(s);
+	
+	for ( i=0; i<s.size(); ++i )
+		if ( !isspace(s[i]) )
+			ns[j++] = s[i];
+	
+	ns.resize(j);
+	
+	return ns;
 }
 
 /**
@@ -146,24 +160,51 @@ vector<string> split(const string &s)
 vector<string> splitn(const string &s, long n)
 {
 	vector<string>		sv(n);
-	long				i, j, k, l, m(s.size()), f(0);
+//	bool				q(0);
+	long				i, j, k, l, m(s.size());
 	const char*			cs = s.c_str();
 	for ( i=j=k=l=0; i<m && l<n; ++i ) {
-		if ( cs[i] == '"' ) f = 1 - f;
-		if ( !f && isspace(cs[i]) ) {
+		if ( cs[i] == '"' ) {
+			for ( j = ++i; cs[i] != '"' && i<m; ++i );
+			k = i-j;
+			i++;
+		}
+		if ( isspace(cs[i]) ) {	// End of string
 			if ( k ) {
 				sv[l++] = s.substr(j, k);
 				k = 0;
 			}
 		} else {
-			if ( !k ) j = i;
+			if ( !k ) j = i;	// Start of string
 			k++;
 		}
 	}
-	if ( l < n && k ) sv[l] = s.substr(j, k);
+	if ( l < n && k ) sv[l] = s.substr(j, k);	// Final string
     return sv;
 }
-
+/*
+vector<string> splitn(const string &s, long n)
+{
+	vector<string>		sv(n);
+	bool				q(0);
+	long				i, j, k, l, m(s.size());
+	const char*			cs = s.c_str();
+	for ( i=j=k=l=0; i<m && l<n; ++i ) {
+		if ( cs[i] == '"' ) q = 1 - q;	// Toggle on quotes
+		if ( !q && isspace(cs[i]) ) {	// End of string if not within quotes
+			if ( k ) {
+				sv[l++] = s.substr(j, k);
+				k = 0;
+			}
+		} else {
+			if ( !k ) j = i+q;	// Start of string
+			k++;
+		}
+	}
+	if ( l < n && k ) sv[l] = s.substr(j, k);	// Final string
+    return sv;
+}
+*/
 /**
 @brief 	Splits a string using a given delimiter.
 @param	&s				string to be split.
@@ -204,6 +245,48 @@ string	 concatenate(const vector<string>& vs)
     return cs;
 }
 
+/**
+@brief 	Concatenates a vector of integers into a comma-separated array.
+@param	&v				vector of integers.
+@return	string			concatenated strings.
+**/
+string	 concatenate(const vector<long>& v)
+{
+	string			s;
+	
+	if ( v.size() < 1 ) return s;
+	
+	s = to_string(v[0]);
+	
+	for ( long i=1; i<v.size(); ++i ) s += "," + to_string(v[i]);
+	
+	return s;
+}
+
+/**
+@brief 	Concatenates a vector of real values into a comma-separated array.
+@param	&v				vector of real values.
+@return	string			concatenated strings.
+**/
+string	 concatenate(const vector<double>& v)
+{
+	string			s;
+	
+	if ( v.size() < 1 ) return s;
+	
+	s = to_string(v[0]);
+	
+	for ( long i=1; i<v.size(); ++i ) s += "," + to_string(v[i]);
+	
+	return s;
+}
+
+
+/**
+@brief 	Parses a comma-separated array of integers into a vector.
+@param	vecstr			string.
+@return	vector<long>		vector of integers.
+**/
 vector<long>	parse_integer_vector(string vecstr)
 {
 	vector<string>	sv(split(vecstr, ','));
@@ -216,6 +299,11 @@ vector<long>	parse_integer_vector(string vecstr)
 	return vec;
 }
 
+/**
+@brief 	Parses a comma-separated array of real values into a vector.
+@param	vecstr			string.
+@return	vector<double>		vector of real values.
+**/
 vector<double>	parse_real_vector(string vecstr)
 {
 	vector<string>	sv(split(vecstr, ','));

@@ -3,7 +3,7 @@
 @brief	Segment images into density regions
 @author Bernard Heymann
 @date	Created: 20000901
-@date	Modified: 20190506
+@date	Modified: 20220120
 **/
 
 #include "rwimg.h"
@@ -35,6 +35,7 @@ const char* use[] = {
 "-chirp 0.01,45           Create a chirp image: frequency scale and shift (angstrom & degrees).",
 "-gradient quad           Correct for the gradient in an image: linear or quadratic.",
 "-tetrahedron 9,-3,4,...  Extract a tetrahedron defined by four sets of 3-valued vectors.",
+"-borderdifference        Extract a border difference image.",
 " ",
 "Parameters:",
 "-verbose 7               Verbosity of output.",
@@ -89,7 +90,8 @@ int 	main(int argc, char* argv[])
 	int 			correct_gradient(0);		// Linear gradient correction flag
 	int 			tetrahedron(0);				// Flag to extract a tetrahedron
 	Vector3<double> tet[4];						// Tetrahedron
-	int 			setwrap(0);					// Wrapping flag
+	int				edge_dif(0);				// Falg for border difference image
+	bool 			setwrap(0);					// Wrapping flag
 	Vector3<double>	loc;						// Location for image to place
 	double			angle(0);					// Rotation angle
 	Vector3<double>	axis(0.0,0.0,1.0);			// Rotation axis
@@ -184,6 +186,7 @@ int 	main(int argc, char* argv[])
 				tetrahedron = 1;
 			}
 		}
+		if ( curropt->tag == "borderdifference" ) edge_dif = 1;
 		if ( curropt->tag == "origin" ) {
 			if ( curropt->value[0] == 'c' ) {
 				set_origin = 2;
@@ -223,7 +226,9 @@ int 	main(int argc, char* argv[])
 		}
 		if ( nudatatype == Unknown_Type ) nudatatype = p->data_type();	// Preserve the old type
 	}
-	
+
+	if ( nudatatype > p->data_type() ) p->change_type(nudatatype);
+ 
 	if ( fill_type == FILL_AVERAGE ) fill = p->average();
 	if ( fill_type == FILL_BACKGROUND ) fill = p->background(long(0));
 	
@@ -238,13 +243,13 @@ int 	main(int argc, char* argv[])
 		p->line(linestart, lineend, width, fill_type, fill);
 
 	if ( boxsize.volume() > 0 )
-		p->shape(0, boxsize, boxstart, width, fill_type, fill);
+		p->shape(0, boxsize, boxstart, width, fill_type, fill, setwrap);
 
 	if ( sphereradius )
-		p->sphere(spherecenter, sphereradius, width, fill_type, fill);
+		p->sphere(spherecenter, sphereradius, width, fill_type, fill, setwrap);
 
 	if ( sigma > 0 )
-		p->gaussian_sphere(0, spherecenter, sigma, fill);
+		p->gaussian_sphere(0, spherecenter, sigma, fill, setwrap);
 	
 	if ( shellmaxrad > 0 ) {
 		if ( setwrap )
@@ -254,7 +259,7 @@ int 	main(int argc, char* argv[])
 	}
 	
 	if ( cylradius && cylheight )
-		p->cylinder(cylcenter, cylradius, cylheight, width, fill_type, fill);
+		p->cylinder(cylcenter, cylradius, cylheight, width, fill_type, fill, setwrap);
 
 	if ( quad[6] ) 
     	p->quadric(quad);
@@ -274,7 +279,13 @@ int 	main(int argc, char* argv[])
 		delete p;
 		p = pnu;
 	}
-	
+
+	if ( edge_dif ) {
+		Bimage*		pnu = p->extract_edge_difference();
+		delete p;
+		p = pnu;
+	}
+
 	if ( correct_gradient == 1 ) p->gradient_correction();
 	else if ( correct_gradient == 2 ) p->quadric_correct(p->quadric_fit());
 

@@ -3,12 +3,13 @@
 @brief	Projecting a 3D map and calculating comparison statistics of the projections.
 @author Bernard Heymann
 @date	Created: 20010420
-@date	Modified: 20200318
+@date	Modified: 20220331
 **/
 
 #include "rwimg.h"
 #include "matrix_util.h"
 #include "symmetry.h"
+#include "ctf.h"
 #include "ps_views.h"
 #include "linked_list.h"
 #include "options.h"
@@ -28,13 +29,12 @@ const char* use[] = {
 " ",
 "Usage: bproject [options] input.img output.img",
 "----------------------------------------------",
-"Projects a 3D map and calculating comparison statistics of the projections.",
-"If the input is a 2D image, it is assumed to be projections.",
+"Projects a 3D map and calculates comparison statistics of the projections.",
+"If the input is 2D, it is assumed to be projections.",
 " ",
 "Actions:",
 "-axis y,2                Project down a major axis (x, y, z).",
 "                         and a flag for minimum (1) or maximum (2).",
-"-kernel 6,2              Reciprocal space projection: kernel size and power.",
 "-average 7,5,3           Averaging/smoothing filter before projection: kernel size.",
 "-rescale -0.1,5.2        Rescale data to average and standard deviation (after -truncate).",
 "-View 0.3,-0.5,0.8,33    View to generate symmetry-related projections.",
@@ -44,6 +44,14 @@ const char* use[] = {
 "-random 24               Generate a number of random projections.",
 "-asu                     Change to views to fit into the asymmetric unit.",
 "-edgewidth 80            Gaussian width of edge to background (default 0).",
+"-noinplanerotation       No in-plane rotations applied to projections (default applied).",
+"-nonormalization         No normalization applied to projections (default applied).",
+" ",
+"Actions for frequency space projection:",
+"-kernel 6,2              Interpolation kernel size and power.",
+"-ewald 200,lower         Ewald sphere projection for given voltage, upper or lower (default combine).",
+"-back                    Back transform to real space (default not).",
+"-convert real            Convert the complex transform: real, imag, Amp, Int (default not).",
 " ",
 "Parameters:",
 "-verbose 7               Verbosity of output.",
@@ -54,8 +62,6 @@ const char* use[] = {
 "-fill 127                Fill value for resizing: average (default), background, or value.",
 "-symmetry D6             Symmetry: Point group identifier.",
 "-angles 8,6              Step sizes for theta and phi in the asymmetric unit, one value sets both.",
-"-noinplanerotation       No in-plane rotations applied to projections (default applied).",
-"-nonormalization         No normalization applied to projections (default applied).",
 "-unitcell 10,23,77,90,90,90 Unit cell parameters.",
 " ",
 "Output:",
@@ -75,6 +81,8 @@ int 		main(int argc, char **argv)
 	int				flags(1);					// Flags to modify axis-projection
 	int				kernel_width(0);			// Reciprocal space kernel width
 	int				kernel_power(2);			// Reciprocal space kernel power
+	bool			back(0);					// Flag to do backtransformation
+    ComplexConversion	conv(NoConversion);		// Conversion from complex transform
 	Vector3<long>	average_kernel;				// Average filter kernel size
 	double			nuavg(0), nustd(0); 		// Rescaling to average and stdev
 	Vector3<double>	origin;						// Origin
@@ -87,6 +95,8 @@ int 		main(int argc, char **argv)
 	double			ang_min(0), ang_max(0), ang_step(0), ang_axis(0); // Tilt series
 	double			side_ang(-1);				// Side view variation angle
     double   		edge_width(0);    	    	// Gaussian width of edge
+	double			ewald_wavelength(0);		// For Ewald sphere projection
+	int				ewald_flag(0);				// 0=combine, 1=upper, -1=lower
 	int				setfill(0);
 	double			fill(0);
 	int 			fill_type(FILL_BACKGROUND);	// Fill type for resizing
@@ -121,6 +131,18 @@ int 		main(int argc, char **argv)
 		if ( curropt->tag == "kernel" )
 			if ( curropt->values(kernel_width, kernel_power) < 1 )
 				cerr << "-kernel: At least the kernel size must be specified!" << endl;
+		if ( curropt->tag == "back" ) back = 1;
+		if ( curropt->tag == "convert" )
+			conv = curropt->complex_conversion();
+/*		if ( curropt->tag == "back" ) {
+			if ( curropt->value[0] == 'n' ) back = 0;
+			else if ( curropt->value[0] == 'r' ) back = 1;
+			else if ( curropt->value[0] == 'i' ) back = 2;
+			else if ( curropt->value[0] == 'a' ) back = 3;
+			else back = curropt->integer();
+			if ( back < 0 || back > 3 )
+				cerr << "-back: The value must be none, real, intensity or amplitude!" << endl;
+		}*/
 		if ( curropt->tag == "average" ) {
 			if ( ( i = curropt->values(average_kernel[0],
 					average_kernel[1], average_kernel[2]) ) < 1 )
@@ -160,6 +182,15 @@ int 		main(int argc, char **argv)
  		if ( curropt->tag == "edgewidth" )
 			if ( ( edge_width = curropt->value.real() ) < 0.001 )
 				cerr << "-edgewidth: An edge width must be specified!" << endl;
+		if ( curropt->tag == "ewald" ) {
+			if ( ( ewald_wavelength = curropt->value.real() ) < 0.001 )
+				cerr << "-ewald: An acceleration voltage must be specified!" << endl;
+			else {
+				ewald_wavelength = electron_wavelength(ewald_wavelength*1e3);
+				if ( curropt->value.contains(",u") ) ewald_flag = 1;
+				if ( curropt->value.contains(",l") ) ewald_flag = -1;
+			}
+		}
 		if ( curropt->tag == "random" )
 			if ( ( nviews = curropt->value.integer() ) < 1 )
 				cerr << "-random: A number of views must be specified!" << endl;
@@ -238,8 +269,16 @@ int 		main(int argc, char **argv)
 		}
 		if ( views ) {
 			nviews = count_list((char *) views);
-			if ( verbose )
-				cout << "Generating " << nviews << " projections" <<endl << endl;
+			if ( verbose ) {
+				cout << "Generating projections:" << endl;
+				cout << "Number:                         " << nviews << endl;
+				if ( ewald_wavelength ) {
+					cout << "Ewald sphere flag:              " << ewald_flag << endl;
+					cout << "Electron wavelength:            " << ewald_wavelength << " A" << endl;
+				}
+				cout << "Back transform flag:            " << back << endl;
+				cout << endl;
+			}
 			if ( asu ) change_views_to_asymmetric_unit(sym, views);
 			if ( ps_file.length() )
 				ps_views(ps_file, symmetry_string, views, ps_flag);
@@ -294,13 +333,15 @@ int 		main(int argc, char **argv)
 	if ( average_kernel[0] > 0 ) p->filter_average(average_kernel);
 	
 	Bimage* 	proj = p;
-	if ( axis != 'n' ) {
+	if ( axis != 'n' && !kernel ) {
 		proj = p->project(axis, flags);
 	} else if ( p->sizeZ() > 1 && views ) {
-		if ( kernel )
-			proj = p->project(views, hires, kernel);
-		else
+		if ( kernel ) {
+			if ( ewald_flag < 0 ) ewald_wavelength = -ewald_wavelength;
+			proj = p->project(views, hires, kernel, ewald_wavelength, back, conv);
+		} else {
 			proj = p->project(views, !(view_flag&4));
+		}
 	}
 	
 	if ( views ) kill_list((char *) views, sizeof(View));

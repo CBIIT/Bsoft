@@ -3,7 +3,7 @@
 @brief	Library routines to read and write micrograph parameters
 @author Bernard Heymann
 @date	Created: 20030418
-@date	Modified: 20210810
+@date	Modified: 20220406
 **/
 
 #include "rwmg.h"
@@ -14,6 +14,7 @@
 #include "rwmgSTAR.h"
 #include "rwmgXML.h"
 #include "rwmgEMX.h"
+#include "rwmgRELION.h"
 #include "rwmgIMOD.h"
 #include "rwmgSerialEM.h"
 #include "file_util.h"
@@ -64,6 +65,7 @@ int			project_display_counts(Bproject* project)
 /* The filename is for the current input parameter file */
 int			field_resolve_file_access(Bfield* field, Bmicrograph* mg, Bstring filename, int flags)
 {
+	if ( !field ) return 0;
 	if ( filename.length() < 1 ) return 0;
 	
 	Bstring		path;
@@ -71,8 +73,8 @@ int			field_resolve_file_access(Bfield* field, Bmicrograph* mg, Bstring filename
 
 	if ( filename.contains("/") ) path = filename.pre_rev('/');
 	
-	if ( verbose & VERB_DEBUG )
-		cout << "DEBUG field_resolve_file_access: file=" << filename << " path=" << path << endl;
+	if ( verbose )
+		cout << "Checking for micrographs in path: " << path << endl;
 	
 	for ( ; field; field = field->next ) {
 		if ( !mg ) mg = field->mg;
@@ -95,6 +97,7 @@ int			field_resolve_file_access(Bfield* field, Bmicrograph* mg, Bstring filename
 /* The filename is for the current input parameter file */
 int			reconstruction_resolve_file_access(Breconstruction* rec, Bstring filename, int flags)
 {
+	if ( !rec ) return 0;
 	if ( filename.length() < 1 ) return 0;
 	
 	Bstring		path;
@@ -102,8 +105,8 @@ int			reconstruction_resolve_file_access(Breconstruction* rec, Bstring filename,
 	
 	if ( filename.contains("/") ) path = filename.pre_rev('/');
 	
-	if ( verbose & VERB_DEBUG )
-		cout << "DEBUG reconstruction_resolve_file_access: file=" << filename << " path=" << path << endl;
+	if ( verbose )
+		cout << "Checking for reconstructions in path: " << path << endl;
 	
 	for ( ; rec; rec = rec->next ) {
 		rec->frec = find_file(rec->frec, path, flags);
@@ -136,10 +139,11 @@ int			project_resolve_file_access(Bproject* project, Bstring filename, int flags
 @return Bproject*			project structure, NULL if reading failed.
 
 	Flags (bits):
-	1.	check particle images against images.
-	8.	warn if files not found.
-	16.	delete file names of files not found.
-	32.	update micrograph intensities.
+	1	check particle images against images.
+	8	warn if files not found.
+	16	delete file names of files not found.
+	32	update micrograph intensities.
+	64	update STAR tags.
 
 **/
 Bproject*	read_project(const char* filename, int flags)
@@ -166,13 +170,19 @@ Bproject*	read_project(Bstring& filename, Bstring& xsdfile, int flags)
 	if ( verbose & VERB_LABEL )
 		cout << "Parameter filename: " << filename << endl;
 
-	int					err;
+	int					err(0);
+	FileType			type;
 	Bproject*			project = new Bproject;
 	project->filename = filename;
 	
-    if ( ext.contains("star") ) {
-		err = read_project_star2(filename, project);
-//		err = read_project_star(filename, project);
+	if ( ext.contains("star") ) {
+		type = file_type(filename);
+		if ( type == Micrograph )
+			err = read_project_star(filename, project, flags&64);
+		else if ( type == MgRelion )
+			err = read_project_relion(filename, project);
+		else
+			cerr << "Error: The STAR file is not a valid form Bsoft can read!" << endl;
 	} else if ( ext.contains("xml") ) {
 		err = read_project_xml(filename, project);
 	} else if ( ext.contains("emx") ) {
@@ -228,7 +238,8 @@ Bproject*	read_project(Bstring* file_list, Bstring& xsdfile, int flags)
 		cout << endl;
 	}
 	
-	int					err;
+	int					err(0);
+	FileType			type;
 	Bproject*			project = new Bproject;
 	Bfield*				field = NULL;
 	Bmicrograph*		mg = NULL;
@@ -245,8 +256,13 @@ Bproject*	read_project(Bstring* file_list, Bstring& xsdfile, int flags)
 		for ( rec = project->rec; rec && rec->next; rec = rec->next ) ;
 		ext = thisfile->extension();
 		if ( ext.contains("star") ) {
-//			err = read_project_star(*thisfile, project);
-			err = read_project_star2(*thisfile, project);
+			type = file_type(*thisfile);
+			if ( type == Micrograph )
+				err = read_project_star(*thisfile, project, flags&64);
+			else if ( type == MgRelion )
+				err = read_project_relion(*thisfile, project);
+			else
+				cerr << "Error: The STAR file is not a valid form Bsoft can read!" << endl;
 		} else if ( ext.contains("xml") ) {
 			err = read_project_xml(*thisfile, project);
 		} else if ( ext.contains("emx") ) {
@@ -379,8 +395,7 @@ int			write_project(Bstring& filename, Bproject* project, int flags)
 		project_display_counts(project);
 	
 	if ( project->split == 9 )
-//		return write_project_star(filename, project, mg_select, rec_select);
-		return write_project_star2(filename, project, mg_select, rec_select);
+		return write_project_star(filename, project, mg_select, rec_select);
 	
 	if ( filename.empty() )
 		return error_show("No micrograph parameter filename!", __FILE__, __LINE__);
@@ -391,8 +406,7 @@ int			write_project(Bstring& filename, Bproject* project, int flags)
 		cout << "Writing parameter file: " << filename << endl;
 
     if ( ext.contains("star") ) {
-//		err = write_project_star(filename, project, mg_select, rec_select);
-		err = write_project_star2(filename, project, mg_select, rec_select);
+		err = write_project_star(filename, project, mg_select, rec_select);
 	} else if ( ext.contains("xml") ) {
 		err = write_project_xml(filename, project, mg_select, rec_select);
 	} else if ( ext.contains("emx") ) {
@@ -547,7 +561,7 @@ int			ppx_check(Bparticle* part)
 
 int			project_check(Bproject* project, int flags)
 {
-	long				i, j, num_img_files(0);
+	long				i, j, num_img_files(0), nwarn(0);
 //	Vector3<double>		d, ori;
 	double				d;
 	Bfield*				field;
@@ -596,8 +610,14 @@ int			project_check(Bproject* project, int flags)
 					if ( mg->frame_pixel_size[0] < 0.01 ) mg->frame_pixel_size[0] *= 1e4; // Assume um
 					mg->frame_pixel_size[1] = mg->frame_pixel_size[0];
 				}
-				cerr << "Warning: Resetting frame pixel size for micrograph " <<
-					mg->id << " to " << mg->frame_pixel_size << endl;
+				if ( verbose && nwarn < 10 ) {
+					cerr << "Warning: Resetting frame pixel size for micrograph " <<
+						mg->id << " to " << mg->frame_pixel_size << endl;
+					nwarn++;
+				} else if ( nwarn == 10 ) {
+					cerr << "Warning: ..." << endl;
+					nwarn++;
+				}
 			}
 			mg->pixel_size[2] = 1;
 			if ( mg->pixel_size[0] < 0.01 || mg->pixel_size[1] < 0.01 ) {
@@ -620,9 +640,8 @@ int			project_check(Bproject* project, int flags)
 			if ( mg->scale[2] <= 0 ) mg->scale[2] = 1;
 			if ( mg->ctf ) {
 				if ( mg->ctf->volt() < 1e3 ) mg->ctf->volt(1e3*mg->ctf->volt());
-				if ( mg->ctf->Cs() < 1e3 ) mg->ctf->Cs(1e7*mg->ctf->Cs());
-				if ( mg->ctf->defocus_average() < 10 ) mg->ctf->defocus_average(1e4*mg->ctf->defocus_average());
-				if ( mg->ctf->defocus_deviation() < 10 ) mg->ctf->defocus_deviation(1e4*mg->ctf->defocus_deviation());
+				if ( mg->ctf->volt() < 1e3 )
+					cerr << "Warning: The acceleration voltage must be specified!" << endl;
 				mg->ctf->zero(1);
 			}
 			if ( mg->part ) part_file = mg->part->fpart;
@@ -632,6 +651,7 @@ int			project_check(Bproject* project, int flags)
 				part->mg = mg;
 				if ( part_file.length() && part_file != part->fpart ) part_file = 0;
 				if ( part->pixel_size[0] < 0.01 ) part->pixel_size = mg->pixel_size;
+				if ( part->pixel_size[1] < 0.01 ) part->pixel_size[1] = part->pixel_size[0];
 				part->pixel_size[2] = 1;
 				d = (part->ori - mg->box_size/2).length();
 				if ( d > mg->box_size[0]/4 )

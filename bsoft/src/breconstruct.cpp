@@ -3,11 +3,12 @@
 @brief	3D reconstruction from single particle images
 @author	Bernard Heymann
 @date	Created: 20010403
-@date	Modified: 20210520
+@date	Modified: 20220722
 **/
 
 #include "mg_processing.h"
 #include "mg_reconstruct.h"
+#include "mg_ctf.h"
 #include "rwmg.h"
 #include "mg_particle_select.h"
 #include "symmetry.h"
@@ -19,6 +20,7 @@
 
 // Declaration of global variables
 extern int 	verbose;		// Level of output to the screen
+extern int	thread_limit;	// Thread limit
 
 // Usage assistance
 const char* use[] = {
@@ -31,8 +33,10 @@ const char* use[] = {
 "Actions:",
 "-mode 1                  Symmetry mode: 0=during reconstruction (default), 1=after reconstruction,",
 "                         2=pick a random symmetry view for each particle.",
+"-ewald                   Ewald sphere correction (default off).",
 "-TwoD                    Generate a 2D reconstruction (default 3D).",
 "-CTF flip                Apply CTF correction to images before reconstruction (default not).",
+//"-noaberration odd        Delete aberration weights (all, odd or even).",
 "-rescale -0.1,5.2        Rescale reconstruction to an average and standard deviation.",
 " ",
 "Parameters for configuration:",
@@ -41,7 +45,7 @@ const char* use[] = {
 "-classes 1,3-5           Class selection: can be all, selected, or any combination of numbers (default selected).",
 "-fullmap                 Output one full map per class (default if -halfmaps not used).",
 "-halfmaps                Output 2 maps from half sets.",
-"-threads 2               Threads per class (default 1, must be even for -halfmaps).",
+"-threads 2               Total number of threads (default 1, must be even for -halfmaps).",
 " ",
 "Parameters:",
 "-verbose 7               Verbosity of output.",
@@ -69,7 +73,8 @@ int			main(int argc, char** argv)
 {
 	// Initializing variables
 	int 			sym_mode(0);				// 0=during, 1=after, 2=random
-	int 			flags(0);					// Flags: 1=rescale, 2=2D, 4=bootstrap
+	int 			flags(0);					// Flags: 1=rescale, 2=2D, 4=bootstrap, 8=ewald
+	int				noab(0);					// Flag to delete aberration weights
 	double			nuavg, nustd(0); 			// Values for rescaling
 	DataType 		nudatatype(Unknown_Type);	// Conversion to new type
 	Vector3<double>	sam;    					// Units for the three axes (A/pixel)
@@ -77,19 +82,20 @@ int			main(int argc, char** argv)
 	int				interp_type(0);				// Interpolation type
 	Vector3<double>	scale(1,1,1);				// Scale or magnification of reconstruction compared to original images
 	int				ctf_action(0);				// Default no CTF operation
-	double			wiener(0.2);				// Wiener for CTF correction
+	double			wiener(0);					// Wiener for CTF correction, flip if 0
 	int				pad_factor(2);				// Image padding factor
 	double 			resolution(0); 				// Must be set > 0 to limit resolution
 	Bsymmetry		sym;						// No symmetry specified
 	Bstring			classes("select");			// Class selection string
 	long 			nmaps(0); 					// Number of maps per class
-	long 			nthreads(1); 				// Number of threads per map
 	long			imap(0);					// Select one of multiple maps to reconstruct
 	int				filaments(0);				// Flag to generate separate filament reconstructions
 	Bstring			outfile;					// Output parameter file
 	Bstring			reconsfile;					// Output reconstruction file
 	Bstring			fomfile;					// Figure-of-merit file
 	Bstring			ps_file;					// Output postscript file
+	
+	thread_limit = 1;		// Default number of threads
 
 	int				i, optind;
 	Boption*		option = get_option_list(use, argc, argv, optind);
@@ -100,10 +106,18 @@ int			main(int argc, char** argv)
 			if ( sym_mode < 0 || sym_mode > 2 )
 				cerr << "-mode: A symmetry mode of 0, 1 or 2 must be specified!" << endl;
 		}
+		if ( curropt->tag == "ewald" )
+			flags |= 8;
 		if ( curropt->tag == "TwoD" )
 			flags |= 2;
 		if ( curropt->tag == "CTF" )
 			ctf_action = curropt->ctf_action();
+		if ( curropt->tag == "noaberration" ) {
+			if ( curropt->value[0] == 'o' ) noab = 1;
+			if ( curropt->value[0] == 'e' ) noab = 2;
+			if ( curropt->value[0] == 'a' ) noab = 3;
+			if ( curropt->value[0] == 'f' ) noab = 3;
+		}
 		if ( curropt->tag == "rescale" ) {
 			if ( curropt->values(nuavg, nustd) < 2 )
 				cerr << "-rescale: Both average and standard deviation must be specified!" << endl;
@@ -135,9 +149,6 @@ int			main(int argc, char** argv)
 			classes = curropt->value;
 		if ( curropt->tag == "fullmap" ) nmaps += 1;
 		if ( curropt->tag == "halfmaps" ) nmaps += 2;
-		if ( curropt->tag == "threads" )
-			if ( ( nthreads = curropt->value.integer() ) < 1 )
-				cerr << "-threads: A number of threads must be specified!" << endl;
 		if ( curropt->tag == "filaments" ) filaments = 1;
 		if ( curropt->tag == "wiener" ) {
 			if ( ( wiener = curropt->value.real() ) < 0.000001 )
@@ -180,11 +191,13 @@ int			main(int argc, char** argv)
 		cerr << "Error: No input file read!" << endl;
 		bexit(-1);
 	}
+	
+	if ( ctf_action > 2 && wiener < 0.01 ) wiener = 0.2;
+	
+//	project->field->mg->ctf->show();
 
-	if ( sam[0] > 0 ) {
-		if ( sam[0] < 0.1 ) sam = Vector3<double>(1,1,1);
-		project_set_mg_pixel_size(project, sam);
-	}
+//	if ( noab ) project_delete_aberration(project, noab);
+//	else project_convert_CTF_to_aberration_weights(project);
 
 	if ( verbose ) {
 		if ( flags & 2 )
@@ -199,8 +212,8 @@ int			main(int argc, char** argv)
 		bexit(-1);
 	}
 
-	if ( nthreads < 2 ) nthreads = 2;
-	if ( nthreads > npart/2 ) nthreads = npart/2;
+	if ( thread_limit < 2 ) thread_limit = 2;
+	if ( thread_limit > npart/2 ) thread_limit = npart/2;
 	
 	if ( nmaps < 1 ) nmaps = 1;
 	if ( !nmaps%2 ) nmaps = 2;
@@ -212,13 +225,13 @@ int			main(int argc, char** argv)
 		nclasses = part_set_filament_maps(project);
 		nmaps = 1;
 	} else {
-		nclasses = project_configure_for_reconstruction(project, classes, nmaps, nthreads);
+		nclasses = project_configure_for_reconstruction(project, classes, nmaps, thread_limit);
 	}
 
-	int					ntotal = nclasses*nthreads;
+	int					ntotal = nclasses*thread_limit;
 
-	if ( nmaps & 2 && nthreads%2 ) nthreads++;
-//	cout << " nthreads = " << nthreads << endl;
+	if ( nmaps & 2 && thread_limit%2 ) thread_limit++;
+//	cout << " thread_limit = " << thread_limit << endl;
 
 	Bimage**			pacc = new Bimage*[ntotal];
 	Bimage**			prec = new Bimage*[nclasses*nmaps];
@@ -229,7 +242,9 @@ int			main(int argc, char** argv)
 	Bparticle*			part = part_find_first(project);
 
 	if ( map_size.volume() <= 0 )
-		map_size = project_set_reconstruction_size(project, scale[0], flags & 2);
+		map_size = project_set_reconstruction_size(project, sam, scale[0], flags & 2);
+		
+	if ( resolution < 0.1 ) resolution = sam[0];
 
 	if ( map_size.volume() <= 0 ) {
 		error_show("Error in breconstruct", __FILE__, __LINE__);
@@ -240,10 +255,12 @@ int			main(int argc, char** argv)
 	long				ft_size = part->mg->box_size[0];
 	if ( map_size[0] > ft_size ) ft_size = map_size[0];
 	
-	ft_size = part_ft_size(ft_size, scale[0], pad_factor);
-
+//	ft_size = part_ft_size(ft_size, scale[0], pad_factor);
+	ft_size = part_ft_size(ft_size, 1, pad_factor);
+	
 	if ( verbose ) {
 		cout << "Map size:                       " << map_size << endl;
+		cout << "Map sampling:                   " << sam << endl;
 		cout << "Symmetry:                       " << sym.label() << endl;
 		cout << "Symmetry mode:                  " << sym_mode << endl;
 		cout << "Resolution limit:               " << resolution << " A" << endl;
@@ -251,6 +268,7 @@ int			main(int argc, char** argv)
 		cout << "Interpolation type:             " << interp_type << endl;
 		cout << "CTF application type:           " << ctf_action << endl;
 		if ( flags & 4 ) cout << "Bootstrapping on" << endl;
+		if ( flags & 8 ) cout << "Ewald sphere correction on" << endl;
 		cout << "Padding factor:                 " << pad_factor << endl;
 		cout << "Fourier transform size:         " << ft_size << " x " << ft_size << endl << endl;
 	}
@@ -262,20 +280,24 @@ int			main(int argc, char** argv)
 	
 #ifdef HAVE_GCD
 	dispatch_apply(ntotal, dispatch_get_global_queue(0, 0), ^(size_t i){
-		Bparticle*	partlist = project_reconstruction_partlist(project, i+1, flags & 4);
+		Bparticle*	partlist = project_selected_partlist(project, i+1, flags & 4);
 		pacc[i] = particle_reconstruct(partlist, sym, sym_mode,
-				resolution, scale, map_size, ft_size, plan, 
+				resolution, scale, sam, map_size, ft_size, plan,
 				interp_type, ctf_action, wiener, flags, (i==0));
 		particle_kill(partlist);
+		if ( verbose & ( VERB_TIME | VERB_PROCESS | VERB_RESULT ) )
+			cout << "List " << i+1 << " done: " << timer_report(ti) << endl;
 	});
 #else
 #pragma omp parallel for
 	for ( i=0; i<ntotal; i++ ) {
-		Bparticle*	partlist = project_reconstruction_partlist(project, i+1, flags & 4);
+		Bparticle*	partlist = project_selected_partlist(project, i+1, flags & 4);
 		pacc[i] = particle_reconstruct(partlist, sym, sym_mode,
-				resolution, scale, map_size, ft_size, plan, 
+				resolution, scale, sam, map_size, ft_size, plan, 
 				interp_type, ctf_action, wiener, flags, (i==0));
 		particle_kill(partlist);
+		if ( verbose & ( VERB_TIME | VERB_PROCESS | VERB_RESULT ) )
+			cout << "List " << i+1 << " done: " << timer_report(ti) << endl;
 	}
 #endif
 //	cout << "F0=" << pacc[0]->complex(0).real() << endl;
@@ -287,23 +309,23 @@ int			main(int argc, char** argv)
 	
 #ifdef HAVE_GCD
 	dispatch_apply(nclasses*nmaps, dispatch_get_global_queue(0, 0), ^(size_t i){
-		prec[i] = img_reconstruction_sum_weigh(pacc, i, nmaps, nthreads, resolution);
+		prec[i] = img_reconstruction_sum_weigh(pacc, i, nmaps, thread_limit, resolution);
 	});
 #else
 #pragma omp parallel for
 	for ( i=0; i<nclasses*nmaps; i++ )
-		prec[i] = img_reconstruction_sum_weigh(pacc, i, nmaps, nthreads, resolution);
+		prec[i] = img_reconstruction_sum_weigh(pacc, i, nmaps, thread_limit, resolution);
 #endif
 //	cout << "F0=" << prec[0]->complex(0).real() << endl;
 	
 	for ( i=0; i<ntotal; i++ ) if ( pacc[i] ) delete pacc[i];
 	delete[] pacc;
 
-	double			fsccut[4] = {0.8,0.3,0.143,0};	// FSC cutoff values
-	double			dprcut[4] = {0,0,0,0};		// DPR cutoff values
+	vector<double> 	fsccut{0.143, 0.3, 0.5, 0.8};	// FSC cutoff values
+	vector<double>	dprcut;							// DPR cutoff values
 	if ( nmaps > 1 ) {
-//		for ( i=nmaps-2; i<nclasses*nmaps; i+=nmaps ) {
-		for ( i=nmaps-2; i<nmaps; i+=nmaps ) {
+		for ( i=nmaps-2; i<nclasses*nmaps; i+=nmaps ) {
+//		for ( i=nmaps-2; i<nmaps; i+=nmaps ) {
 			Bplot*	plot = prec[i]->fsc(prec[i+1], resolution);
 			plot->resolution_display(fsccut, dprcut);
 			if ( ps_file.length() ) ps_plot(ps_file, plot);
