@@ -3,7 +3,7 @@
 @brief	Manipulating project and micrograph structures
 @author Bernard Heymann
 @date	Created: 20020826
-@date	Modified: 20210706
+@date	Modified: 20230107
 **/
 
 #include "mg_processing.h"
@@ -160,9 +160,9 @@ int main (int argc, char **argv)
 	double			Amp(0);					// Amplitude contrast contribution
 	double			alpha(0);				// Illumination half-angle (radians)
 	int				basetype(1);			// Baseline type: 1=poly, 2=double_gauss, 3=EMAN
-	double			base[5] = {1,0,0,0,0};	// Baseline coefficients
-	int				envtype(4);				// Envelope type: 1=gauss, 2=gauss+, 3=double_gauss, 4=double_gauss+
-	double			env[5] = {1,-10,0,0,0};	// Envelope coefficients
+	vector<double>	base = {1,0,0,0,0};		// Baseline coefficients
+	int				envtype(1);				// Envelope type: 1=gauss, 2=gauss+, 3=double_gauss, 4=double_gauss+
+	vector<double>	env = {1,-10,0,0,0};	// Envelope coefficients
 	int				setbase(0);
 	int				setenv(0);
 	int				setcohenv(0);			// Flag to set partial coherence envelope

@@ -83,6 +83,7 @@ int 		writePostScriptImage(Bimage* p)
 /**
 @brief	Writing the slices arranged in a postscript image.
 @param	*p			the image structure.
+@param	&t			array of slice locations.
 @return	int 			0.
 
 Every sub-image is drawn on its own page
@@ -141,6 +142,7 @@ int 		writePostScriptImage(Bimage* p, vector<Vector3<double>>& t)
 @param	z			slice within the sub-image.
 @param	tx			translation in x.
 @param	ty			translation in y.
+@param	m			slice number.
 @return	int 			0.
 
 Every sub-image is drawn on its own page

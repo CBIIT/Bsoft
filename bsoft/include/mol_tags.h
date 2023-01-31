@@ -150,4 +150,28 @@
 #define MOLECULE_FOM			"molecule.fom"
 #define MOLECULE_SELECT			"molecule.select"
 
+// Chemical models
+#define CHEMICAL_ID				"chem_comp.id"
+#define CHEMICAL_NAME			"chem_comp.name"
+#define CHEMICAL_PDB			"chem_comp.pdbx_type"
+#define CHEMICAL_FOMRULA		"chem_comp.formula"
+#define CHEMICAL_WEIGHT			"chem_comp.formula_weight"
+#define CHEMICAL_ONE			"chem_comp.one_letter_code"
+#define CHEMICAL_THREE			"chem_comp.three_letter_code"
+
+// Chemical atoms
+#define CHEMICAL_ATOM_RES		"chem_comp_atom.comp_id"
+#define CHEMICAL_ATOM_ID		"chem_comp_atom.atom_id"
+#define CHEMICAL_ATOM_ID_ALT	"chem_comp_atom.alt_atom_id"
+#define CHEMICAL_ATOM_SYMBOL	"chem_comp_atom.type_symbol"
+#define CHEMICAL_ATOM_CHARGE	"chem_comp_atom.charge"
+#define CHEMICAL_ATOM_X			"chem_comp_atom.model_Cartn_x"
+#define CHEMICAL_ATOM_Y			"chem_comp_atom.model_Cartn_y"
+#define CHEMICAL_ATOM_Z			"chem_comp_atom.model_Cartn_z"
+#define CHEMICAL_ATOM_XI		"chem_comp_atom.pdbx_model_Cartn_x_ideal"
+#define CHEMICAL_ATOM_YI		"chem_comp_atom.pdbx_model_Cartn_y_ideal"
+#define CHEMICAL_ATOM_ZI		"chem_comp_atom.pdbx_model_Cartn_z_ideal"
+#define CHEMICAL_ATOM_IDP		"chem_comp_atom.pdbx_component_atom_id"
+#define CHEMICAL_ATOM_RESP		"chem_comp_atom.pdbx_component_comp_id"
+#define CHEMICAL_ATOM_NUMBER	"chem_comp_atom.pdbx_ordinal"
 

@@ -84,7 +84,7 @@ int 	main(int argc, char **argv)
 	int 			wrap(0);				// No wrapping as default
 	double			Bfactor(0);				// B-factor = 0 angstrom squared
 	int 			spacegroup(1);
-	UnitCell		uc(0,0,0,M_PI_2,M_PI_2,M_PI_2);
+	UnitCell		uc;
 	Bstring			curves;					// String with elements for curve output
 	Bstring			coorfile;				// Atomic coordinates
 	Bstring			mapfile;				// Map to compare with
@@ -115,7 +115,7 @@ int 	main(int argc, char **argv)
 		if ( curropt->tag == "realspace" )
 			set_backtransform = 1;
 		if ( curropt->tag == "scatter" ) {
-			if ( ( volt = curropt->value.real() ) < 1 )
+			if ( ( volt = curropt->real_units() ) < 1 )
 				cerr << "-scatter: A voltage must be specified!" << endl;
 			else
 				if ( volt < 1e3 ) volt *= 1e3;	// Assume kilovolts

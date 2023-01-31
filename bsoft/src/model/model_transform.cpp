@@ -1,9 +1,9 @@
 /**
 @file	model_transform.cpp
 @brief	Library routines used for model transformation
-@author Bernard Heymann
+@author 	Bernard Heymann
 @date	Created: 20060908
-@date	Modified: 20220215
+@date	Modified: 20230120
 **/
 
 #include "model_transform.h"
@@ -71,6 +71,26 @@ long		models_shift(Bmodel* model, Vector3<double> shift)
 	
 	for ( mp = model; mp; mp = mp->next )
 		ncomp += mp->shift(shift);
+	
+	return ncomp;
+}
+
+/**
+@brief 	Trims models to a new enclosing box size.
+@param 	*model			model parameters.
+@param 	trim			new enclosing box size
+@return long				number of components retained.
+
+	All models in the list are processed.
+
+**/
+long		models_trim(Bmodel* model, Vector3<double> trim)
+{
+	long			ncomp(0);
+	Bmodel*			mp;
+	
+	for ( mp = model; mp; mp = mp->next )
+		ncomp += mp->trim(trim);
 	
 	return ncomp;
 }

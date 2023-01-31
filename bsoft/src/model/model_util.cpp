@@ -1,9 +1,9 @@
 /**
 @file	model_util.cpp
 @brief	Library routines used for model processing
-@author Bernard Heymann
+@author 	Bernard Heymann
 @date	Created: 20060908
-@date	Modified: 20220419
+@date	Modified: 20230120
 **/
 
 #include "model_util.h"
@@ -384,9 +384,32 @@ long		model_number_ids(Bmodel* model)
 }
 
 /**
+@brief 	Rename models with alphabetical letters.
+@param 	*model		model parameters.
+@param 	first_name	letter of first model.
+@return long			number of models.
+
+**/
+long		model_rename(Bmodel* model, char first_name)
+{
+	if ( first_name == 0 ) return 0;
+	
+	long			nmod(0);
+	char			letter(first_name);
+	Bmodel*			mp;
+	
+	for ( mp = model; mp; mp = mp->next, nmod++ ) {
+		mp->identifier() = letter++;
+		if ( letter > 'Z' ) letter = 'A';
+	}
+	
+	return nmod;
+}
+
+/**
 @brief 	Rename components.
 @param 	*model		model parameters.
-@return long		number of components.
+@return long			number of components.
 
 	The number of links to a component determines its new name.
 	Only the first model is processed.

@@ -160,7 +160,6 @@ int 	readCCP4(Bimage* p, int readdata)
 		p->sampling(header->a/header->mx, header->b/header->my, header->c/header->mz);
 	p->space_group(header->ispg);
 	UnitCell	uc(header->a, header->b, header->c, header->alpha, header->beta, header->gamma);
-	uc.degrees_to_radians();
 	p->unit_cell(uc);
 	p->label(header->labels);
 	

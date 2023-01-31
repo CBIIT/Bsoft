@@ -309,14 +309,14 @@ int 	writeASCII(Bimage* p)
 	}
 	if ( p->images() > 1 ) {
 		order[3] = i;
-		strncpy(label + 10*i, "Nimage", 6);
+		strncpy(label + 10*i, "Nimage", 7);
 		i++;
 	}
 	
 	switch ( p->compound_type() ) {
-		case TSimple: strncpy(label + 10*i, "Real", 4); i++; break;
-		case TComplex: strncpy(label + 10*i, "Real", 4); i++;
-			strncpy(label + 10*i, "Imag", 4); i++; break;
+		case TSimple: strncpy(label + 10*i, "Real", 5); i++; break;
+		case TComplex: strncpy(label + 10*i, "Real", 5); i++;
+			strncpy(label + 10*i, "Imag", 5); i++; break;
 		case TVector2: strncpy(label + 10*i, "VX", 4); i++;
 			strncpy(label + 10*i, "VY", 4); i++; break;
 		case TVector3: strncpy(label + 10*i, "VX", 4); i++;
@@ -337,7 +337,7 @@ int 	writeASCII(Bimage* p)
 			strncpy(label + 10*i, "Mag", 4); i++;
 			strncpy(label + 10*i, "Yel", 4); i++;
 			strncpy(label + 10*i, "blK", 4); i++; break;
-		default: strncpy(label + 10*i, "Real", 4); i++; break;
+		default: strncpy(label + 10*i, "Real", 5); i++; break;
 	}
 
 	if ( p->next ) {

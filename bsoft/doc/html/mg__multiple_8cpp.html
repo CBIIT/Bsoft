@@ -112,6 +112,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a248d9e78aefd88b2afcad71bfe69cdc8"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mg__multiple_8cpp.html#a248d9e78aefd88b2afcad71bfe69cdc8">project_multi_add</a> (<a class="el" href="class_bproject.html">Bproject</a> *<a class="el" href="tcltk__bmodel_8cpp.html#aea438e09dfc03683a0f49a05e9a69cac">project</a>, <a class="el" href="class_bstring.html">Bstring</a> *<a class="el" href="file__util_8cpp.html#a7ab6394d9aeeae9f7e26c62a32d97691">file_list</a>, int fom_index)</td></tr>
 <tr class="memdesc:a248d9e78aefd88b2afcad71bfe69cdc8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Merges multiple projects with an existing one.  <a href="mg__multiple_8cpp.html#a248d9e78aefd88b2afcad71bfe69cdc8">More...</a><br /></td></tr>
 <tr class="separator:a248d9e78aefd88b2afcad71bfe69cdc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5dc9904a077ea8b8579598627227e3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_bproject.html">Bproject</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mg__multiple_8cpp.html#aa5dc9904a077ea8b8579598627227e3c">project_multi_add_particles</a> (<a class="el" href="class_bstring.html">Bstring</a> *<a class="el" href="file__util_8cpp.html#a7ab6394d9aeeae9f7e26c62a32d97691">file_list</a>)</td></tr>
+<tr class="memdesc:aa5dc9904a077ea8b8579598627227e3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adds particles from a list of projects to the first one.  <a href="mg__multiple_8cpp.html#aa5dc9904a077ea8b8579598627227e3c">More...</a><br /></td></tr>
+<tr class="separator:aa5dc9904a077ea8b8579598627227e3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af46b124f8164524c8cad25328e34d787"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mg__multiple_8cpp.html#af46b124f8164524c8cad25328e34d787">project_multi_adjust_FOM</a> (<a class="el" href="class_bproject.html">Bproject</a> *project_list, int fom_index)</td></tr>
 <tr class="memdesc:af46b124f8164524c8cad25328e34d787"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adjusts FOM to the avergae of the first project.  <a href="mg__multiple_8cpp.html#af46b124f8164524c8cad25328e34d787">More...</a><br /></td></tr>
 <tr class="separator:af46b124f8164524c8cad25328e34d787"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -144,7 +147,7 @@ Variables</h2></td></tr>
 <dl class="section author"><dt>Author</dt><dd>Bernard Heymann </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>Created: 20010319 </dd>
 <dd>
-Modified: 20210516 </dd></dl>
+Modified: 20220831 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a8aefa8700c9fbca58af380f40a1e273f" name="a8aefa8700c9fbca58af380f40a1e273f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8aefa8700c9fbca58af380f40a1e273f">&#9670;&nbsp;</a></span>project_check_same_number_particles()</h2>
@@ -207,6 +210,37 @@ Modified: 20210516 </dd></dl>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>long selected particles. <pre class="fragment">The selected particles are merged with existing ones.
 Requirement: The project component ID's must correspond.
+</pre> </dd></dl>
+
+</div>
+</div>
+<a id="aa5dc9904a077ea8b8579598627227e3c" name="aa5dc9904a077ea8b8579598627227e3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5dc9904a077ea8b8579598627227e3c">&#9670;&nbsp;</a></span>project_multi_add_particles()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_bproject.html">Bproject</a> * project_multi_add_particles </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_bstring.html">Bstring</a> *&#160;</td>
+          <td class="paramname"><em>file_list</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adds particles from a list of projects to the first one. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">*file_list</td><td>linked list of parameter file names. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Bproject* project with renumbered particles. <pre class="fragment">The particles from other files are added to existing ones in the first file.
+Where project component ID's correspond the particles are added,
+otherwise new components are added.
+Particles are renumbered and the references to old particle files removed.
 </pre> </dd></dl>
 
 </div>
@@ -687,7 +721,7 @@ Requirement: The origin, view and rotation angle (or Euler angle),
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_1d197ef0d9947f4cc1ac44e7f59e2b57.html">mg</a></li><li class="navelem"><a class="el" href="mg__multiple_8cpp.html">mg_multiple.cpp</a></li>
-    <li class="footer">Generated on Fri Jan 7 2022 02:32:17 for Bsoft by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
+    <li class="footer">Generated on Tue Jan 31 2023 08:21:29 for Bsoft by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
   </ul>
 </div>
 </body>

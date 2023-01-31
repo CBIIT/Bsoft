@@ -1,0 +1,48 @@
+#!/bin/sh
+# the next line restarts using wish \
+exec wish "$0" "$@"
+
+# brun
+#
+# Script to run Bsoft programs from an interactive window
+# Bernard Heymann
+# 19990822 - 20191023
+
+set font {Helvetica 14}
+set bigfont {Helvetica 24}
+set smallfont {Helvetica 10}
+
+#----------------------------------------------------------------
+# The path to the source code and libraries
+#----------------------------------------------------------------
+set Bsoft $env(BSOFT)
+if { [string length $Bsoft] < 2 } {
+	puts "Environmental variable BSOFT not found: Set to /usr/local/bsoft"
+	set Bsoft /usr/local/bsoft
+}
+
+append env(LD_LIBRARY_PATH) ":$Bsoft/lib"
+append env(DYLD_LIBRARY_PATH) ":$Bsoft/lib"
+
+set bshow_script $Bsoft/tcltk
+set bshow_lib $Bsoft/lib
+set bsoft_bin $Bsoft/bin
+
+#----------------------------------------------------------------
+# Loading procedures in other script files
+#----------------------------------------------------------------
+source $bshow_script/btext.tcl
+source $bshow_script/brun_panel.tcl
+
+#----------------------------------------------------------------
+# Interpreting the arguments - only file name input supported
+# The conditional is to work around a Tru64 oddity when no file name is given
+#----------------------------------------------------------------
+set arg1 [lindex $argv 0]
+if { $arg1 == "{}" } {
+	set arg1 ""
+}
+
+# Main script body
+programInterface . $arg1
+

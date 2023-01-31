@@ -259,22 +259,12 @@ int			img_calc_phase_grating(Bimage* p, double volt)
 
 /**
 @brief 	Applies a complex CTF function to a Fourier transform.
-@param 	*p				complex Fourier transform (modified).
-@param 	def_avg			defocus minimum (angstrom).
-@param 	def_dev			defocus maximum (angstrom).
-@param 	ast_angle 		astigmatism angle (radians).
-@param 	volts 			acceleration voltage (volts).
-@param 	Cs				spherical aberration (angstrom).
-@param 	Cc				chromatic aberration (angstrom).
-@param 	amp_shift		amplitude contrast phase shift (radian).
-@param 	alpha			beam source size (radians).
-@param 	energy_spread	effective energy spread (fraction: typically 10^-5)
+@param 	*p			complex Fourier transform (modified).
+@param 	&cp			CTF parameters.
 @return int 			0.
 
 
-	The CTF is applied as a multiplication with a complex number:
-		new_datum.re = datum.re*amp_fac*cos(dphi) - datum.im*phi_fac*sin(dphi)
-		new_datum.re = datum.re*phi_fac*sin(dphi) + datum.im*amp_fac*cos(dphi)
+	The CTF is applied as a multiplication with a complex number.
 	Both input and output are complex transforms.
 
 

@@ -3,7 +3,7 @@
 @brief	Utilities for timing functions
 @author Bernard Heymann 
 @date	Created: 20010316
-@date	Modified: 20100726
+@date	Modified: 20221103
 **/
 
 #include <ctime>
@@ -15,6 +15,19 @@
  
 // Declaration of global variables
 extern int 	verbose;		// Level of output to the screen
+
+/**
+@brief 	Returns the current local time.
+@return tm* 			the current local time struct.
+
+ The time format is in the tm struct.
+
+*/
+tm*			get_localtime()
+{
+	time_t 			time_sec = time(NULL);
+	return localtime(&time_sec);
+}
 
 /**
 @brief 	Returns the current time.
@@ -40,11 +53,11 @@ double		getwalltime()
 
 /**
 @brief 	Returns the clock time.
+@return double 			the clock time in seconds.
+
 
 	The time format is in clock seconds since the start of the process.
 
-@param 	.
-@return double 			the clock time in seconds.
 **/
 double		getcputime()
 {
@@ -55,7 +68,6 @@ double		getcputime()
 
 /**
 @brief 	Starts timer and prints the time.
-@param 	.
 @return double 			the current time.
 **/
 double		timer_start()

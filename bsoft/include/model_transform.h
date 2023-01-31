@@ -1,9 +1,9 @@
 /**
 @file	model_transform.h
 @brief	Library routines used for model transformation
-@author Bernard Heymann
+@author 	Bernard Heymann
 @date	Created: 20060908
-@date	Modified: 20220223
+@date	Modified: 20230120
 **/
 
 #include "rwmodel.h"
@@ -14,6 +14,7 @@
 long		model_center(Bmodel* model);
 long		model_shift(Bmodel* model, Vector3<double> shift);
 long		models_shift(Bmodel* model, Vector3<double> shift);
+long		models_trim(Bmodel* model, Vector3<double> trim);
 long		model_scale(Bmodel* model, Vector3<double> scale, Vector3<double> origin);
 long		models_scale(Bmodel* model, Vector3<double> scale, Vector3<double> origin);
 long		model_reflect(Bmodel* model, Vector3<double> normal, Vector3<double> origin);

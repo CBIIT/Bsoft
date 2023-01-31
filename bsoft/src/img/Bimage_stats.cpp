@@ -208,29 +208,32 @@ double			Bimage::poisson_statistics_check()
 
 /**
 @brief 	Calculates the statistics for an image within given radii from a location.
-@param 	nn			sub-image number.
-@param	loc			center of shell.
-@param 	rad_min    	minimum radius (pixel units).
-@param 	rad_max    	maximum radius (pixel units).
-@param 	&vavg		return value for the average.
-@param 	&vstd		return value for the standard deviation.
-@return long		number of values (0 means failure).
+@param 	nn				sub-image number.
+@param	loc				center of shell.
+@param 	rad_min    		minimum radius (pixel units).
+@param 	rad_max    		maximum radius (pixel units).
+@return vector<double>	statistical values (none means failure).
 
 	If a voxel lies within the specified radii, it is included in
 	the statistical calculations.
 
+	Return vector:	num, min, max, avg, std
+
 **/
-long 		Bimage::stats_within_radii(long nn, Vector3<double> loc,
-				double rad_min, double rad_max, double& vavg, double& vstd)
+vector<double>	Bimage::stats_within_radii(long nn, Vector3<double> loc,
+				double rad_min, double rad_max)
 {
+	vector<double>		stats;
+
 	if ( !d.uc ) {
 		cerr << "Error: No data for image " << file_name() << " in memory!" << endl;
-		return 0;
+		return stats;
 	}
 	
     long				i, xx, yy, zz, cc, npx(0);
 	double				dx, dy, dz, d2, rmax2(rad_max*rad_max), rmin2(rad_min*rad_min);
-	double				value, sum(0), ssum(0), w(0), vmin(1e37), vmax(-1e37);
+	double				value, sum(0), ssum(0), w(0);
+	double				vmin(1e37), vmax(-1e37), vavg(0), vstd(0);
 	
 	if ( verbose & VERB_DEBUG ) {
 		cout << "DEBUG Bimage::stats_within_radii: Data size: " << size() << "x" << c << "x" << n << "=" << datasize << endl;
@@ -238,8 +241,6 @@ long 		Bimage::stats_within_radii(long nn, Vector3<double> loc,
 		cout << "DEBUG Bimage::stats_within_radii: min=" << min << " max=" << max << endl;
 		cout << "DEBUG Bimage::stats_within_radii: ave=" << avg << " std=" << std << endl;
 	}
-
-	vavg = vstd = 0;
 
 	for ( zz=0; zz<z; zz++ ) {
 		dz = (double)zz - loc[2];
@@ -272,6 +273,11 @@ long 		Bimage::stats_within_radii(long nn, Vector3<double> loc,
 		vstd = ssum/npx - vavg*vavg;
 		if ( vstd > 0 ) vstd = sqrt(vstd);
 		else vstd = 0;
+		stats.push_back(npx);
+		stats.push_back(vmin);
+		stats.push_back(vmax);
+		stats.push_back(vavg);
+		stats.push_back(vstd);
 	}
 	
 	if ( verbose & VERB_STATS ) {
@@ -280,40 +286,40 @@ long 		Bimage::stats_within_radii(long nn, Vector3<double> loc,
 				vmin << " " << vmax << " " << vavg << " " << vstd << endl << endl;
 	}
 	
-	return npx;
+	return stats;
 }
 
 /**
 @brief 	Calculates the statistics for an image within the given box.
-@param 	nn			sub-image number.
-@param 	type		type of selection: 1=rectangle, 2=ellipse.
-@param 	start		starting coordinates.
-@param 	end			ending coordinates.
-@param 	&vavg		return value for the average.
-@param 	&vstd		return value for the standard deviation.
-@return long		number of values (0 means failure).
+@param 	nn				sub-image number.
+@param 	type			type of selection: 1=rectangle, 2=ellipse.
+@param 	start			starting coordinates.
+@param 	end				ending coordinates.
+@return vector<double>	statistical values (none means failure).
 
 	If a voxel lies within the specified box, it is included in
 	the statistical calculations.
+	
+	Return vector:	num, min, max, avg, std
 
 **/
-long		Bimage::stats_in_shape(long nn, int type, Vector3<long> start,
-				Vector3<long> end, double& vavg, double& vstd)
+vector<double>	Bimage::stats_in_shape(long nn, int type,
+					Vector3<long> start, Vector3<long> end)
 {
 	int					inc;
 	long				i, xx, yy, zz, npx(0);
 	double				a(1), b(1), c(1), fx, fy, fz;
-	double				value, sum(0), sum2(0);
+	double				value, vmin(1e30), vmax(-1e30), vavg(0), vstd(0), sum(0), sum2(0);
+	vector<double>		stats;
 
 	if ( verbose & VERB_DEBUG ) {
 		cout << "DEBUG Bimage::stats_in_shape: start=" << start << endl;
 		cout << "DEBUG Bimage::stats_in_shape: end=" << end << endl;
 	}
 
-	avg = std = 0;
-	if ( ( start[0] >= x ) && ( end[0] >= x ) ) return 0;
-	if ( ( start[1] >= y ) && ( end[1] >= y ) ) return 0;
-//	if ( ( start[2] >= z ) && ( end[2] >= z ) ) return 0;
+	if ( ( start[0] >= x ) && ( end[0] >= x ) ) return stats;
+	if ( ( start[1] >= y ) && ( end[1] >= y ) ) return stats;
+//	if ( ( start[2] >= z ) && ( end[2] >= z ) ) return stats;
 	start = start.max(0);
 	end = end.max(0);
 	if ( start[0] >= x ) start[0] = x - 1;
@@ -361,6 +367,8 @@ long		Bimage::stats_in_shape(long nn, int type, Vector3<long> start,
 					value = (*this)[i];
 					sum += value;
 					sum2 += value*value;
+					if ( vmin > value ) vmin = value;
+					if ( vmax < value ) vmax = value;
 					npx++;
 				}
 			}
@@ -372,12 +380,17 @@ long		Bimage::stats_in_shape(long nn, int type, Vector3<long> start,
 		vstd = (sum2 - sum*sum/npx)/npx;
 		if ( vstd > 0 ) vstd = sqrt(vstd);
 		else vstd = 0;
+		stats.push_back(npx);
+		stats.push_back(vmin);
+		stats.push_back(vmax);
+		stats.push_back(vavg);
+		stats.push_back(vstd);
 	}
 	
 	if ( verbose & VERB_DEBUG )
 		cout << "DEBUG Bimage::stats_in_shape: npx=" << npx << " avg=" << vavg << " vstd=" << std << endl;
 	
-	return npx;
+	return stats;
 }
 
 
@@ -423,25 +436,26 @@ double		vector3_inside_outside(Vector3<double> vec, int ndim, int nvert, Vector3
 
 /**
 @brief 	Calculates the statistics for an image within the given polyhedron.
-@param 	nn			sub-image number.
-@param 	nvert		number of polygon vertices.
-@param 	*poly		array of polygon vertices.
-@param 	&vavg		return value for the average.
-@param 	&vstd		return value for the standard deviation.
-@return long		number of values (0 means failure).
+@param 	nn				sub-image number.
+@param 	nvert			number of polygon vertices.
+@param 	*poly			array of polygon vertices.
+@return vector<double>	statistical values (none means failure).
 
 	If a voxel lies within the specified polyhedron, it is included in
 	the statistical calculations.
 
+	Return vector:	num, min, max, avg, std
+
 **/
-long		Bimage::stats_in_poly(long nn, int nvert, Vector3<double>* poly,
-				double& vavg, double& vstd)
+vector<double>	Bimage::stats_in_poly(long nn, int nvert, Vector3<double>* poly)
 {
 	int					ndim, inc;
 	long				i, xx, yy, zz, cc, npx(0);
 	long				imgsize(x*y*z*c);
-	double				value, d, dmin(1e30), dmax(0), sum(0), sum2(0);
+	double				value, d, dmin(1e30), dmax(0);
+	double				vmin(0), vmax(0), sum(0), sum2(0), vavg(0), vstd(0);
 	Vector3<double>		center, var, vec;
+	vector<double>		stats;
 	
 	for ( i=0; i<nvert; i++ ) center += poly[i];
 	
@@ -479,6 +493,8 @@ long		Bimage::stats_in_poly(long nn, int nvert, Vector3<double>* poly,
 					value = (*this)[i];
 					sum += value;
 					sum2 += value*value;
+					if ( vmin > value ) vmin = value;
+					if ( vmax < value ) vmax = value;
 					npx++;
 				}
 			}
@@ -491,19 +507,24 @@ long		Bimage::stats_in_poly(long nn, int nvert, Vector3<double>* poly,
 		vstd = (sum2 - sum*sum/npx)/npx;
 		if ( vstd > 0 ) vstd = sqrt(vstd);
 		else vstd = 0;
+		stats.push_back(npx);
+		stats.push_back(vmin);
+		stats.push_back(vmax);
+		stats.push_back(vavg);
+		stats.push_back(vstd);
 	}
 	
 	if ( verbose & VERB_DEBUG )
 		cout << "DEBUG Bimage::stats_in_poly: npx=" << npx << " vavg=" << vavg << " vstd=" << vstd << endl;
 	
-	return npx;
+	return stats;
 }
 
 /**
 @brief 	Calculates the statistics for an image for each level in a mask.
 @param 	nn			sub-image number.
 @param 	*pmask		mask with two or more levels
-@return long		number of levels (0 means failure).
+@return long			number of levels (0 means failure).
 **/
 long		Bimage::stats_in_mask(long nn, Bimage* pmask)
 {

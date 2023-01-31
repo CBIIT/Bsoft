@@ -1,9 +1,9 @@
 /**
 @file	moving_average.cpp
 @brief	Functions for moving average calculations
-@author Bernard Heymann
+@author 	Bernard Heymann
 @date	Created: 20000430
-@date	Modified: 20210404
+@date	Modified: 20221129
 **/
 
 #include "moving_average.h"
@@ -25,44 +25,20 @@ extern int 	verbose;		// Level of output to the screen
 	A new array is allocated and the moving averages returned.
 
 **/
-double*		moving_average(long number, double* x, long window)
+vector<double>	moving_average(long number, double* x, long window)
 {
-	long 		i, j=0, halfwindow = window/2;
-	double*		mov_avg = new double[number];
-	for ( i=0; i<number; i++ ) mov_avg[i] = 0;
+	vector<double>	v(number);
 	
-	if ( verbose & VERB_PROCESS )
-		cout << "Calculating moving average with window of " << window << " points" << endl << endl;
+	for ( long i=0; i<number; ++i ) v[i] = x[i];
 	
-	// Calculate the moving sum
-	for ( i=0; i<number; i++ ) {
-		if ( i>0 ) mov_avg[i] = mov_avg[i-1];
-		if ( j-window >= 0 ) {
-			mov_avg[i] -= x[j-window];
-			if ( j>=number ) j++;
-		}
-		while ( j<i+halfwindow && j<number) {
-			mov_avg[i] += x[j];
-			j++;
-		}
-	}
-	
-	// Normalize the moving sum
-	for ( i=0; i<number; i++ ) {
-		j = window;
-		if ( i-halfwindow < 0 ) j += i - halfwindow;
-		if ( i+halfwindow >= number ) j -= i + halfwindow - number;
-		mov_avg[i] /= j;
-	}
-		
-	return mov_avg;
+	return moving_average(v, window);
 }
 
 /**
 @brief 	Calculates a moving average over an array of data.
-@param 	*x			the array.
-@param 	window		sliding window length.
-@return double*		the moving average array.
+@param 	&x				the array.
+@param 	window			sliding window length.
+@return vector<double>	the moving average array.
 
 	All data points within a sliding window are averaged.
 	The window moves over the ends of the array and averages only the
@@ -72,78 +48,31 @@ double*		moving_average(long number, double* x, long window)
 **/
 vector<double>	moving_average(vector<double>& x, long window)
 {
-	long			number(x.size());
-	long 			i, j=0, halfwindow = window/2;
-	vector<double>	mov_avg(number,0);
+	long			n(x.size());
+	long 			i, j, hw(window/2);
+	vector<double>	mov_avg(n,0.0);
 	
 	if ( verbose & VERB_PROCESS )
 		cout << "Calculating moving average with window of " << window << " points" << endl << endl;
 	
 	// Calculate the moving sum
-	for ( i=0; i<number; i++ ) {
+	for ( i=j=0; i<n; ++i ) {
 		if ( i>0 ) mov_avg[i] = mov_avg[i-1];
 		if ( j-window >= 0 ) {
 			mov_avg[i] -= x[j-window];
-			if ( j>=number ) j++;
+			if ( j>=n ) j++;
 		}
-		while ( j<i+halfwindow && j<number) {
+		while ( j<i+hw && j<n) {
 			mov_avg[i] += x[j];
 			j++;
 		}
 	}
 	
 	// Normalize the moving sum
-	for ( i=0; i<number; i++ ) {
+	for ( i=0; i<n; ++i ) {
 		j = window;
-		if ( i-halfwindow < 0 ) j += i - halfwindow;
-		if ( i+halfwindow >= number ) j -= i + halfwindow - number;
-		mov_avg[i] /= j;
-	}
-		
-	return mov_avg;
-}
-
-
-/**
-@brief 	Calculates a moving average over an array of complex data.
-@param 	number			number of values in the array.
-@param 	*x				the array.
-@param 	window			sliding window length.
-@return Complex<float>*	the moving average complex array.
-
-	All data points within a sliding window are averaged.
-	The window moves over the ends of the array and averages only the 
-	available points.
-	A new array is allocated and the moving averages returned in it.
-
-**/
-Complex<float>*	moving_average_complex(long number, Complex<float>* x, long window)
-{
-	long 			i, j=0, halfwindow = window/2;
-	Complex<float>*	mov_avg = new Complex<float>[number];
-	for ( i=0; i<number; i++ ) mov_avg[i] = 0;
-	
-	if ( verbose & VERB_PROCESS )
-		cout << "Calculating complex moving average with window of " << window << " points" << endl << endl;
-	
-	// Calculate the moving sum
-	for ( i=0; i<number; i++ ) {
-		if ( i>0 ) mov_avg[i] = mov_avg[i-1];
-		if ( j-window >= 0 ) {
-			mov_avg[i] -= x[j-window];
-			if ( j>=number ) j++;
-		}
-		while ( j<i+halfwindow && j<number) {
-			mov_avg[i] += x[j];
-			j++;
-		}
-	}
-	
-	// Normalize the moving sum
-	for ( i=0; i<number; i++ ) {
-		j = window;
-		if ( i-halfwindow < 0 ) j += i - halfwindow;
-		if ( i+halfwindow >= number ) j -= i + halfwindow - number;
+		if ( i-hw < 0 ) j += i - hw;
+		if ( i+hw >= n ) j -= i + hw - n;
 		mov_avg[i] /= j;
 	}
 		
@@ -152,7 +81,7 @@ Complex<float>*	moving_average_complex(long number, Complex<float>* x, long wind
 
 /**
 @brief 	Calculates a moving average over an array of complex data.
-@param 	*x				the array.
+@param 	&x				the array.
 @param 	window			sliding window length.
 @return Complex<float>*	the moving average complex array.
 
@@ -197,11 +126,11 @@ vector<Complex<float>>	moving_average_complex(vector<Complex<float>>& x, long wi
 
 /**
 @brief 	Calculates a moving polynomial fit over an array of data.
-@param 	order		polynomial order.
-@param 	number		number of values in the array.
-@param 	*x			the array.
-@param 	window		sliding window length.
-@return double*		the moving polynomial fit array.
+@param 	order			polynomial order.
+@param 	number			number of values in the array.
+@param 	*x				the array.
+@param 	window			sliding window length.
+@return vector<double>	the moving polynomial fit array.
 
 	All data points within a sliding window are fit to a polynomial.
 	The window moves over the ends of the array and fits only the 
@@ -209,6 +138,15 @@ vector<Complex<float>>	moving_average_complex(vector<Complex<float>>& x, long wi
 	A new array is allocated and the moving polynomial fit values returned.
 
 **/
+vector<double>	moving_polynomial(long order, long number, double* x, long window)
+{
+	vector<double>	v(number);
+	
+	for ( long i=0; i<number; ++i ) v[i] = x[i];
+	
+	return moving_polynomial(order, v, window);
+}
+/*
 vector<double>	moving_polynomial(long order, long number, double* x, long window)
 {
 	vector<double>	m;
@@ -237,7 +175,21 @@ vector<double>	moving_polynomial(long order, long number, double* x, long window
 
 	return m;
 }
+*/
 
+/**
+@brief 	Calculates a moving polynomial fit over an array of data.
+@param 	order			polynomial order.
+@param 	&x				the array.
+@param 	window			sliding window length.
+@return vector<double>	the moving polynomial fit array.
+
+	All data points within a sliding window are fit to a polynomial.
+	The window moves over the ends of the array and fits only the
+	available points.
+	A new array is allocated and the moving polynomial fit values returned.
+
+**/
 vector<double>	moving_polynomial(long order, vector<double>& x, long window)
 {
 	vector<double>	m;

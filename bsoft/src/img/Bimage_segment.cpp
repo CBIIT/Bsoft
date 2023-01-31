@@ -759,18 +759,21 @@ long		Bimage::replace_maxima(double threshold)
 		return 0;
 	}
 	
-	long   			i, j, k, m, nn, xx, yy, zz, iter, nvr(0);
-	long			kx, ky, kz, nval, tx, ty, tz;
-	long   			nr((long) (pmask->maximum() + 1.9)), rs;
+//	long   			i, j, k, m, nn, xx, yy, zz, iter, nvr(0);
+//	long			kx, ky, kz, nval, tx, ty, tz;
+//	long   			nr((long) (pmask->maximum() + 1.9)), rs;
+	long   			i, j, nn, xx, yy, zz, nvr(0);
+	long   			nr((long) (pmask->maximum() + 1.9));
 	double			val;
 	Vector3<long>	lo, hi, region_size;
 	
-	int*			num = new int[nr];
-	int*			nimg = new int[nr];
-	Vector3<float>*	region = new Vector3<float>[nr];
-	Vector3<int>*	rmin = new Vector3<int>[nr];
-	Vector3<int>*	rmax = new Vector3<int>[nr];
-	float*			temp;
+	vector<int>				num(nr,0);
+	vector<int>				nimg(nr,0);
+	vector<Vector3<float>>	region(nr);
+	vector<Vector3<int>>	rmin(nr);
+	vector<Vector3<int>>	rmax(nr);
+	vector<float>			a(nr,0);
+	vector<int>				na(nr,0);
 	
 	for ( j=1; j<nr; j++ ) rmin[j] = size();
 	
@@ -791,24 +794,46 @@ long		Bimage::replace_maxima(double threshold)
 						if ( rmax[j][0] < xx ) rmax[j][0] = xx;
 						if ( rmax[j][1] < yy ) rmax[j][1] = yy;
 						if ( rmax[j][2] < zz ) rmax[j][2] = zz;
+						val = kernel_average(i, 3, -1e30, threshold);
+						if ( val > min ) {
+							a[j] += val;
+							na[j]++;
+						}
 					}
 				}
 			}
 		}
 	}
-				
+
+	if ( verbose & VERB_STATS )
+		cout << "Regions:\n#\tImage\tx\ty\tz\tSize\tAvg" << endl;
+	for ( j=1; j<nr; j++ ) {
+		nn = nimg[j];
+		if ( num[j] ) region[j] /= num[j];
+		if ( na[j] ) a[j] /= na[j];
+		if ( verbose & VERB_STATS )
+			cout << j << tab << nn << tab << region[j] << tab << num[j] << tab << a[j] << endl;
+	}
+	
+	for ( i=0; i<datasize; ++i ) {
+		j = (long) (*pmask)[i];
+		if ( j ) set(i, a[j]);
+	}
+	
+/*
 	if ( verbose & VERB_STATS )
 		cout << "Regions:\n#\tImage\tx\ty\tz\tSize" << endl;
 	for ( j=1; j<nr; j++ ) {
 		nn = nimg[j];
 		if ( num[j] ) region[j] /= num[j];
+		if ( navg[j] ) avg[j] /= navg[j];
 		if ( verbose & VERB_STATS )
 			cout << j << tab << nn << tab << region[j] << tab << num[j] << endl;
 		rmin[j] = rmin[j].max(0);
 		rmax[j] = rmax[j].min(size()-1);
 		region_size = rmax[j] - rmin[j] + 1;
 		rs = (long) region_size.volume();
-		temp = new float[rs];
+		vector<float>	temp(rs,0);
 		nval = iter = 0;
 		val = 0;
 		while ( nval < num[j] ) {
@@ -818,6 +843,7 @@ long		Bimage::replace_maxima(double threshold)
 				for ( yy=rmin[j][1], ty=0; yy<=rmax[j][1]; ++yy, ty++ ) {
 					for ( xx=rmin[j][0], tx=0; xx<=rmax[j][0]; ++xx, tx++ ) {
 						i = index(0,xx,yy,zz,nn);
+						set(i, avg[j]);
 						lo = kernel_low(i);
 						hi = kernel_high(i);
 						if ( (*pmask)[i] == j ) {
@@ -858,18 +884,11 @@ long		Bimage::replace_maxima(double threshold)
 			if ( verbose & VERB_FULL )
 				cout << iter << ":\t" << nval << endl;
 		}
-		delete[] temp;
 		nvr += nval;
-	}
+	}*/
 	if ( verbose & ( VERB_STATS | VERB_FULL ) )
 		cout << endl;
-	
-	delete[] num;
-	delete[] nimg;
-	delete[] region;
-	delete[] rmin;
-	delete[] rmax;
-	
+
 	delete pmask;
 	
 	return nvr;

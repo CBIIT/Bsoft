@@ -74,6 +74,16 @@ proc Selection { } {
 		label .wsel.std.value -width 10 -text "" -relief sunken -bd 1 \
 				-font $helv12 -anchor w
 
+		frame .wsel.min
+		label .wsel.min.tag -font $helv12 -text "Minimum" -width 25 -anchor w
+		label .wsel.min.value -width 10 -text "" -relief sunken -bd 1 \
+				-font $helv12 -anchor w
+
+		frame .wsel.max
+		label .wsel.max.tag -font $helv12 -text "Maximum" -width 25 -anchor w
+		label .wsel.max.value -width 10 -text "" -relief sunken -bd 1 \
+				-font $helv12 -anchor w
+
 		checkbutton .wsel.calc -text "Calculate" -variable calc_stats \
 				-command { updateSelectionStats }
 
@@ -95,9 +105,12 @@ proc Selection { } {
 		pack .wsel.sum.tag .wsel.sum.value -side left -pady 5 -padx 20
 		pack .wsel.avg.tag .wsel.avg.value -side left -pady 5 -padx 20
 		pack .wsel.std.tag .wsel.std.value -side left -pady 5 -padx 20
+		pack .wsel.min.tag .wsel.min.value -side left -pady 5 -padx 20
+		pack .wsel.max.tag .wsel.max.value -side left -pady 5 -padx 20
 		pack .wsel.buttons.clear .wsel.buttons.close -side left -expand 1
 		pack .wsel.selectiontype .wsel.size .wsel.num .wsel.sum \
-			.wsel.avg .wsel.std .wsel.calc .wsel.buttons -side top -pady 2
+			.wsel.avg .wsel.std .wsel.min .wsel.max \
+			.wsel.calc .wsel.buttons -side top -pady 2
 
 	} else {
 		wm deiconify .wsel
@@ -194,9 +207,11 @@ proc updateSelectionStats { } {
 		set stats [Bimage stats $theimg $img_num 3 $poly]
 	}
 	.wsel.num.value config -text [lindex $stats 0]
-	.wsel.sum.value config -text [lindex $stats 1]
-	.wsel.avg.value config -text [lindex $stats 2]
-	.wsel.std.value config -text [lindex $stats 3]
+	.wsel.min.value config -text [lindex $stats 1]
+	.wsel.max.value config -text [lindex $stats 2]
+	.wsel.avg.value config -text [lindex $stats 3]
+	.wsel.std.value config -text [lindex $stats 4]
+	.wsel.sum.value config -text [lindex $stats 5]
 #	puts "Expected size [expr (abs($sx1 - $sx2) + 1)*(abs($sy1 - $sy2) + 1)]"
 }
 

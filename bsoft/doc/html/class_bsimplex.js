@@ -19,10 +19,12 @@ var class_bsimplex =
     [ "limits_low", "class_bsimplex.html#adc809a9788235a8b3bf3d6b58552ab0f", null ],
     [ "parameter", "class_bsimplex.html#ab214726a1f74d315407e21991987b9bd", null ],
     [ "parameter", "class_bsimplex.html#a9d3ae6fad16d885e2984e8f4a7e2f2fe", null ],
+    [ "parameter_vector", "class_bsimplex.html#acf8c705e14264430b3d4b1e4c552bfea", null ],
     [ "parameters", "class_bsimplex.html#acc63a985d6749abbd360dcc4a72397be", null ],
     [ "parameters", "class_bsimplex.html#ae99c46cb3d721d2c1acd2abbc3cbeb94", null ],
     [ "points", "class_bsimplex.html#ad2c14f9c9a9a915d1b63bdc710f1605b", null ],
-    [ "run", "class_bsimplex.html#a19eece3c0ab90f16ea48bf8c4ed4ac46", null ],
+    [ "R", "class_bsimplex.html#a432309401c22ba375feeea9373a1895b", null ],
+    [ "run", "class_bsimplex.html#aa40599cdbc6c02379ca7c57226cef3bd", null ],
     [ "show", "class_bsimplex.html#a98db1f87c204fe2de9cdd73f02dd800b", null ],
     [ "variables", "class_bsimplex.html#a396062320022f882e581c01a58c0913b", null ]
 ];

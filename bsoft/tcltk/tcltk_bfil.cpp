@@ -308,7 +308,7 @@ Tcl_Obj*	filament_delete(Bproject* project, int objc, Tcl_Obj *CONST objv[])
 		}
 	}	
 	
-	sprintf(string, "%d", fid);
+	snprintf(string, 60, "%d", fid);
 	Tcl_SetStringObj(returnObj, string, strlen(string));
 	
 	return returnObj;
@@ -446,11 +446,11 @@ Tcl_Obj*	filament_profile(Bmicrograph* mg, Breconstruction* rec, Bimage* p, int 
 		for ( ; fil && fil->id != fid; fil = fil->next ) ;
 		if ( fil ) {
 			profile = filament_profile(fil->node, p, img_num, nid, filament_width, n);
-			sprintf(string, "%ld", n);
+			snprintf(string, MAXLINELEN, "%ld", n);
 			Tcl_SetStringObj(returnObj, string, strlen(string));
 			if ( profile ) {
 				for ( i=0; i<2*n; i++ ) {
-					sprintf(string, " %lf", profile[i]);
+					snprintf(string, MAXLINELEN, " %lf", profile[i]);
 					Tcl_AppendToObj(returnObj, string, strlen(string));
 				}
 				delete[] profile;
@@ -704,7 +704,7 @@ Tcl_Obj*	node_ids(Bfilament* fillist)
 	if ( fillist ) {
 		for ( fil = fillist; fil; fil = fil->next ) {
 			for ( fnode = fil->node; fnode; fnode = fnode->next ) {
-				sprintf(string, " %d %d", fil->id, fnode->id);
+				snprintf(string, MAXLINELEN, " %d %d", fil->id, fnode->id);
 				Tcl_AppendToObj(returnObj, string, strlen(string));
 			}
 		}
@@ -730,7 +730,7 @@ Tcl_Obj*	node_location(Bfilament* fillist, int objc, Tcl_Obj *CONST objv[])
 		if ( fil )
 			for ( fnode = fil->node; fnode && fnode->id != nid; fnode = fnode->next ) ;
 		if ( fnode ) {
-			sprintf(string, "%f %f %f", fnode->loc[0], fnode->loc[1], fnode->loc[2]);
+			snprintf(string, MAXLINELEN, "%f %f %f", fnode->loc[0], fnode->loc[1], fnode->loc[2]);
 			Tcl_SetStringObj(returnObj, string, strlen(string));
 		}
 	}
@@ -769,7 +769,7 @@ Tcl_Obj*	node_select(Bfilament* fillist, double radius, int objc, Tcl_Obj *CONST
 			}
 		}
 		if ( dmin <= radius ) {
-			sprintf(string, "%d %d", fid, nid);
+			snprintf(string, 60, "%d %d", fid, nid);
 			Tcl_SetStringObj(returnObj, string, strlen(string));
 		}
 	}
@@ -801,7 +801,7 @@ Tcl_Obj*	node_move(Bfilament* fillist, int objc, Tcl_Obj *CONST objv[])
 			for ( fnode = fil->node; fnode && fnode->id != nid; fnode = fnode->next ) ;
 		if ( fnode ) {
 			fnode->loc += d;
-			sprintf(string, "%d %d", fid, nid);
+			snprintf(string, 60, "%d %d", fid, nid);
 			Tcl_SetStringObj(returnObj, string, strlen(string));
 		}
 	}
@@ -857,7 +857,7 @@ Tcl_Obj*	node_create(Bfilament** fillist, int objc, Tcl_Obj *CONST objv[])
 
 	fnode->loc = loc;
 
-	sprintf(string, "%d %d", fil->id, fnode->id);
+	snprintf(string, 60, "%d %d", fil->id, fnode->id);
 	Tcl_SetStringObj(returnObj, string, strlen(string));
 	
 	return returnObj;
@@ -918,7 +918,7 @@ Tcl_Obj*	node_delete(Bmicrograph* mg, int objc, Tcl_Obj *CONST objv[])
 		}
 	}
 	
-	sprintf(string, "%d %d", fid, nid);
+	snprintf(string, 60, "%d %d", fid, nid);
 	Tcl_SetStringObj(returnObj, string, strlen(string));
 	
 	return returnObj;
@@ -949,7 +949,7 @@ Tcl_Obj*	node_delete(Breconstruction* rec, int objc, Tcl_Obj *CONST objv[])
 		}
 	}
 	
-	sprintf(string, "%d %d", fid, nid);
+	snprintf(string, 60, "%d %d", fid, nid);
 	Tcl_SetStringObj(returnObj, string, strlen(string));
 	
 	return returnObj;

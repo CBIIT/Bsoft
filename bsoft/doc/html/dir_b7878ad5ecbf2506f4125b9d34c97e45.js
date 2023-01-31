@@ -8,6 +8,7 @@ var dir_b7878ad5ecbf2506f4125b9d34c97e45 =
     [ "dynamic_programming.cpp", "dynamic__programming_8cpp.html", "dynamic__programming_8cpp" ],
     [ "fft.cpp", "fft_8cpp.html", "fft_8cpp" ],
     [ "file_util.cpp", "file__util_8cpp.html", "file__util_8cpp" ],
+    [ "histogram.cpp", "histogram_8cpp.html", "histogram_8cpp" ],
     [ "json.cpp", "json_8cpp.html", "json_8cpp" ],
     [ "linked_list.cpp", "linked__list_8cpp.html", "linked__list_8cpp" ],
     [ "marker.cpp", "marker_8cpp.html", "marker_8cpp" ],
@@ -28,6 +29,7 @@ var dir_b7878ad5ecbf2506f4125b9d34c97e45 =
     [ "symmetry.cpp", "symmetry_8cpp.html", "symmetry_8cpp" ],
     [ "timer.cpp", "timer_8cpp.html", "timer_8cpp" ],
     [ "Transform.cpp", "_transform_8cpp.html", "_transform_8cpp" ],
+    [ "TrigLUT.cpp", "_trig_l_u_t_8cpp.html", "_trig_l_u_t_8cpp" ],
     [ "UnitCell.cpp", "_unit_cell_8cpp.html", "_unit_cell_8cpp" ],
     [ "utilities.cpp", "utilities_8cpp.html", "utilities_8cpp" ],
     [ "View.cpp", "_view_8cpp.html", "_view_8cpp" ]

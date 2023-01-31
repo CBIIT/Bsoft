@@ -3,7 +3,7 @@
 @brief	A program to determine and correct for the CTF (contrast transfer function) in electron micrographs.
 @author Bernard Heymann
 @date	Created: 19970715
-@date	Modified: 20220813
+@date	Modified: 20230127
 **/
 
 #include "rwimg.h"
@@ -41,10 +41,15 @@ const char* use[] = {
 "-fitastigmatism 2        Fit astigmatism for individual micrographs (1) or combined (2) (default not).",
 "-isotropy                Assess the power spectrum isotropy.",
 "-toparticle              Transfer micrograph CTF parameters to particle records (default not).",
-"-ctf 512,512,2           Generate a CTF image of this size with flag: 1=center, 2=power, 3=both.",
-"-simulate                Simulate a tilted CTF for each x or y-line.",
 //"-noaberration odd        Delete aberration weights (all, odd or even).",
 "-statistics              Display CTF parameter statistics.",
+" ",
+"Simulations:",
+"-ctf 512,512,10          Generate a CTF image of this size (z>1 for focal series).",
+"-center                  Center the simulated image.",
+"-power                   Convert to intensities.",
+//"-series 1.2,1.4,0.05     Calculate a focal series function: start, end, increment.",
+"-simulate                Simulate a tilted CTF for each x or y-line.",
 " ",
 "Parameters:",
 "-verbose 7               Verbosity of output.",
@@ -62,9 +67,8 @@ const char* use[] = {
 #include "use_ctf.inc"
 " ",
 "Imaging parameters:",
-"-Defocus 1.2,1.0,47      Defocus average & deviation, and astigmatism angle (default 2 um, 0 um, 0).",
-"-Astigmatism 0.3,-34     Set defocus deviation and astigmatism angle (um, degrees).",
-"-gradient 1.2,1.4,0.05   Calculate a defocus gradient function: min, max, increment (um).",
+"-Defocus 1.2,1.0,47      Defocus average & deviation, and astigmatism angle (default 2 um, 0, 0).",
+"-Astigmatism 0.3,-34     Set defocus deviation and astigmatism angle.",
 "-axis 74.7               Tilt axis angle relative to x-axis (default 0 or from parameter file).",
 "-tilt 15                 Tilt angle (default from parameter file).",
 "-basetype 2              Baseline type: (default 1)",
@@ -78,7 +82,7 @@ const char* use[] = {
 "                         Type 2: Single gaussian with constant (3 coefficients).",
 "                         Type 3: Double gaussian (4 coefficients).",
 "                         Type 4: Double gaussian with constant (5 coefficients).",
-"-envelope 28,-563,0.78,-215 Envelope coefficients: Double gaussian with 4 coefficients (default 1,-10,0,0).",
+"-envelope 28,-563        Envelope coefficients: default 1,-10.",
 " ",
 "Fitting parameters:",
 "-Range 0.6,3.5,0.2       Defocus minimum, maximum and increment for fitting (default 0.1,20,0.1 um).",
@@ -159,7 +163,7 @@ int 		main(int argc, char **argv)
 	double			wiener(0);				// Wiener for CTF correction
 	double			def_avg(2e4);			// In angstrom
 	double			def_dev(0);				// In angstrom
-	double			def_grad_min(0), def_grad_max(0), def_grad_inc(0);	// In angstrom
+//	double			def_ser_start(0), def_ser_end(0), def_ser_inc(0);	// In angstrom
 	double			ast_angle(-1);	 		// Used to limit astigmatism
 	double			tilt_axis(0);			// Tilt axis angle in radians
 	double			tilt_angle(0);			// Tilt angle start in radians
@@ -167,9 +171,9 @@ int 		main(int argc, char **argv)
 //	int				noab(0);				// Flag to delete aberration weights
 	int				stats(0);				// Flag to display CTF parameter statistics
 	int				basetype(1);			// Baseline type: 1=poly, 2=double_gauss, 3=EMAN
-	double			base[5] = {1,0,0,0,0};	// Baseline coefficients
-	int				envtype(4);				// Envelope type: 1=gauss, 2=gauss+, 3=double_gauss, 4=double_gauss+
-	double			env[5] = {1,-10,0,0,0};	// Envelope coefficients
+	vector<double>	base = {1,0,0,0,0};		// Baseline coefficients
+	int				envtype(1);				// Envelope type: 1=gauss, 2=gauss+, 3=double_gauss, 4=double_gauss+
+	vector<double>	env = {1,-1,0,0,0};		// Envelope coefficients
 	double			def_start(1e3), def_end(2e5), def_inc(1e3);	// Defocus fitting range and increment
 	int				setDefocus(0);			// Flags
 	int				setbase(0);
@@ -205,13 +209,10 @@ int 		main(int argc, char **argv)
 		if ( curropt->tag == "invertaxis" )
 			invert_axis = 1;
 		if ( curropt->tag == "toparticle" ) toparticle = 1;
-		if ( curropt->tag == "ctf" ) {
+		if ( curropt->tag == "ctf" )
 			size = curropt->size();
-			ctf_flag = size[2];
-			size[2] = 1;
-			if ( size.volume() < 1 )
-				cerr << "-size: All three dimensions must be specified." << endl;
-		}
+		if ( curropt->tag == "center" ) ctf_flag |= 1;
+		if ( curropt->tag == "power" ) ctf_flag |= 2;
 		if ( curropt->tag == "tile" ) {
 			tile_size = curropt->size();
 			if ( tile_size.volume() < 1 )
@@ -236,11 +237,6 @@ int 		main(int argc, char **argv)
 			isotropy = 1;
 		if ( curropt->tag == "simulate" )
 			simulate = 1;
-/*		if ( curropt->tag == "noaberration" ) {
-			if ( curropt->value[0] == 'o' ) noab = 1;
-			if ( curropt->value[0] == 'e' ) noab = 2;
-			if ( curropt->value[0] == 'a' ) noab = 3;
-		}*/
 		if ( curropt->tag == "statistics" )
 			stats = 1;
 		if ( curropt->tag == "mgpath" ) {
@@ -286,36 +282,23 @@ int 		main(int argc, char **argv)
 			}
 		}
 		if ( curropt->tag == "Defocus" ) {
-//			if ( curropt->values(def_avg, def_dev, ast_angle) < 1 )
 			if ( curropt->real_units(def_avg, def_dev, ast_angle) < 1 )
 				cerr << "-Defocus: At least the defocus average must be specified!" << endl;
 			else {
-//				if ( fabs(def_avg) < 20 ) def_avg *= 1e4;	// Assume um
-//				if ( fabs(def_dev) < 10 ) def_dev *= 1e4;	// Assume um
 				ast_angle *= M_PI/180;				// Assume degrees
 				setDefocus = 1;
 			}
 		}
 		if ( curropt->tag == "Astigmatism" ) {
-//			if ( curropt->values(def_dev, ast_angle) < 1 )
 			if ( curropt->real_units(def_dev, ast_angle) < 1 )
 				cerr << "-Astigmatism: A defocus value must be specified!" << endl;
 			else {
-//				if ( def_dev < 1e3 ) def_dev *= 1e4;			// Assume um
 				ast_angle *= M_PI/180.0;						// Assume degrees
 			}
 		}
-		if ( curropt->tag == "gradient" ) {
-			if ( curropt->values(def_grad_min, def_grad_max, def_grad_inc) < 3 )
-				cerr << "-gradient: All three values must be specified!" << endl;
-			else {
-				if ( def_grad_min < 10 ) {			// Assume um
-					def_grad_min *= 1e4;
-					def_grad_max *= 1e4;
-					def_grad_inc *= 1e4;
-				}
-			}
-		}
+//		if ( curropt->tag == "series" )
+//			if ( curropt->real_units(def_ser_start, def_ser_end, def_ser_inc) < 3 )
+//				cerr << "-series: All three values must be specified!" << endl;
 #include "ctf.inc"
 		if ( curropt->tag == "basetype" ) {
 			basetype = curropt->value.integer();
@@ -349,15 +332,6 @@ int 		main(int argc, char **argv)
 			else
 				setenv = 2;
 		}
-/*		if ( curropt->tag == "Range" ) {
-			if ( curropt->values(def_start, def_end, def_inc) < 1 )
-				cerr << "-Range: At least two values must be specified!" << endl;
-			else {
-				if ( def_start < 100 ) def_start *= 1e4;	// Assume um
-				if ( def_end < 100 ) def_end *= 1e4;		// Assume um
-				if ( def_inc < 10 ) def_inc *= 1e4;			// Assume um
-			}
-		}*/
 		if ( curropt->tag == "Range" )
 			if ( curropt->real_units(def_start, def_end, def_inc) < 2 )
 				cerr << "-Range: At least two values must be specified!" << endl;
@@ -398,6 +372,8 @@ int 		main(int argc, char **argv)
 	CTFparam		cp = ctf_from_json(jsctf);
 	cp.defocus_average(def_avg);
 	cp.astigmatism(def_dev, ast_angle);
+	if ( setbase ) cp.baseline(basetype, base);
+	if ( setenv ) cp.envelope(envtype, env);
 
 //			ctf_to_json(cp).write("test.json");
 
@@ -430,10 +406,13 @@ int 		main(int argc, char **argv)
 		}
 		if ( size.volume() > 1 ) {
 			if ( action < 1 ) action = 2;	// Only CTF function - no baseline or envelope
-			if ( def_grad_inc ) {
-				p = img_ctf_gradient(cp, def_grad_min, def_grad_max, def_grad_inc,
+/*			if ( def_ser_inc ) {
+//				p = img_ctf_gradient(cp, def_ser_start, def_ser_end, def_ser_inc,
+//						size, sam, resolution_lo, resolution_hi);
+				p = img_ctf_focal_series(cp, def_ser_start, def_ser_end, def_ser_inc,
 						size, sam, resolution_lo, resolution_hi);
-			} else if ( wave_aberration ) {
+			} else if ( wave_aberration ) {*/
+			if ( wave_aberration ) {
 				p = img_wave_aberration(cp, size, sam);
 			} else if ( action > 2 ) {
 				p = img_ctf_calculate(cp, action, wiener, size,
@@ -442,9 +421,10 @@ int 		main(int argc, char **argv)
 				p = img_ctf_calculate(cp, (action==1), wiener, size,
 						sam, resolution_lo, resolution_hi);
 			}
-			p->complex_to_real();
+//			p->complex_to_real();
 			if ( ctf_flag & 1 ) p->center_wrap();
-			if ( ctf_flag & 2 ) p->square();
+//			if ( ctf_flag & 2 ) p->square();
+			if ( ctf_flag & 2 ) p->complex_to_intensities();
 			p->change_type(nudatatype);
 			write_img(funcfile, p, 0);
 			delete p;
@@ -468,9 +448,7 @@ int 		main(int argc, char **argv)
 			project = read_project(file_list);
 			string_kill(file_list);
 			if ( project_count_mg_particles(project) < 1 ) flags |= 1;
-//			if ( noab ) project_delete_aberration(project, noab);
 			if ( project->field->mg->ctf ) {
-//				cp = *project->field->mg->ctf;
 				cp.update(project->field->mg->ctf);
 				cp.show();
 				cp.show_baseline();

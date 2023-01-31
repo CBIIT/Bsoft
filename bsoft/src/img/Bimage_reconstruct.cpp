@@ -152,15 +152,20 @@ int			Bimage::fspace_pack_2D(Bimage* p, Matrix3 mat, double hi_res,
 			s[0] *= invscale[0];
 			s2 = s[0]*s[0] + s[1]*s[1];
 			if ( s2 >= mins2 && s2 <= maxs2 ) {
+				w = part_weight;
+				d = (maxs2 - s2)*mscale[2];
+				if ( d < 1 ) w *= sqrt(d);
 				// Ewald sphere offset: s[2] = ±(lambda/2) * s2
 				if ( ew ) s[2] = ew * s2;
 				m = mat * s;
 				m *= mscale;
-				w = part_weight;
-				d = (maxs2 - s2)*mscale[2];
-				if ( d < 1 ) w *= sqrt(d);
-				fspace_2D_interpolate(p->complex(i), m,
-					w, interp_type);
+				fspace_2D_interpolate(p->complex(i), m, w, interp_type);
+				if ( ew ) {
+					s[2] = -s[2];
+					m = mat * s;
+					m *= mscale;
+					fspace_2D_interpolate(p->complex(i), m, w, interp_type);
+				}
 			}
 		}
 	}

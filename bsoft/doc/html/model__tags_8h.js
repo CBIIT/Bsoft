@@ -26,6 +26,7 @@ var model__tags_8h =
     [ "COMPONENT_ALPHA", "model__tags_8h.html#a49d83358c310b81bb6f75fc026272b2f", null ],
     [ "COMPONENT_BLUE", "model__tags_8h.html#acaccac88521b5a8b2334621ca70037c3", null ],
     [ "COMPONENT_DENSITY", "model__tags_8h.html#a30277163b6db81d0ff8a21532fc37fa9", null ],
+    [ "COMPONENT_DESCRIPTION", "model__tags_8h.html#ab9593654553d65ba03210377ff2bd0ec", null ],
     [ "COMPONENT_FOM", "model__tags_8h.html#a15d31b6f936a9b01351a857f08bbe560", null ],
     [ "COMPONENT_GREEN", "model__tags_8h.html#ad82f99b6ce4d05169481b25227707c81", null ],
     [ "COMPONENT_ID", "model__tags_8h.html#a45b6c77684c03f79ca832eb02cee7377", null ],

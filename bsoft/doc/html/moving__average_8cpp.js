@@ -1,8 +1,7 @@
 var moving__average_8cpp =
 [
-    [ "moving_average", "moving__average_8cpp.html#aa36173eda153d6d358d3a486fb67c946", null ],
+    [ "moving_average", "moving__average_8cpp.html#aeaefd6dba16bf30bfc8f132e35af8012", null ],
     [ "moving_average", "moving__average_8cpp.html#a472fb8666607542d52e2a27a8868587b", null ],
-    [ "moving_average_complex", "moving__average_8cpp.html#a4f80454fc59215abf03bef9f0bae0d96", null ],
     [ "moving_average_complex", "moving__average_8cpp.html#ab028a75f9efcee122afa46064cdde731", null ],
     [ "moving_curvature", "moving__average_8cpp.html#accbd9030b0aaf5ff92d025d2eccdad39", null ],
     [ "moving_gradient", "moving__average_8cpp.html#ac7a7e97f5f0b7042a46d273810ce7319", null ],

@@ -79,7 +79,7 @@ Bplot*		read_rps(Bstring& filename)
 	plot->page(0).title(title);
 	plot->page(0).columns(ncol);
 	for ( i=0; i<ncol; i++ ) plot->page(0).column(i).number(i);
-	plot->page(0).column(0).label("s");
+	plot->page(0).column(0).label("Spatial Frequency (A)");
 	plot->page(0).column(1).label("Power");
 //	plot->page(0).axis(1).min(0);
 //	plot->page(0).axis(1).max(1/hi_res);

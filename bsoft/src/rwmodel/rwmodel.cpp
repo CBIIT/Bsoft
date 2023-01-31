@@ -1,9 +1,9 @@
 /**
 @file	rwmodel.cpp
-@brief	Library routines to read and write atomic model parameters
+@brief	Library routines to read and write model parameters
 @author Bernard Heymann
 @date	Created: 20060919
-@date	Modified: 20220929
+@date	Modified: 20221115
 **/
 
 #include "rwmodel.h"
@@ -111,6 +111,13 @@ int			write_model(Bstring& filename, Bmodel* model)
 	return write_model(filename, model, 0);
 }
 
+/**
+@brief 	Writes model parameters.
+@param 	&filename	model parameter file name.
+@param 	*model		model parameters.
+@param 	split		number of digits for writing multiple models.
+@return int			number of models.
+**/
 int			write_model(Bstring& filename, Bmodel* model, int split)
 {
 	if ( verbose & VERB_DEBUG )
@@ -146,17 +153,17 @@ int			write_model(Bstring& filename, Bmodel* model, int split)
     else if ( ext.contains("xml") )
 		n = write_model_xml(filename, model);
     else if ( ext.contains("cmm") )
-		n = write_model_chimera(filename, model);
+		n = write_model_chimera(filename, model, split);
     else if ( ext.contains("bld") ||  ext.contains("bild") )
-		n = write_model_bild(filename, model);
+		n = write_model_bild(filename, model, split);
     else if ( ext.contains("v3d") )
-		n = write_model_vega(filename, model);
+		n = write_model_vega(filename, model, split);
 	else if ( ext.contains("pdb") )
 		n = write_model_pdb(filename, model, split);
 	else if ( ext.contains("cif") )
 		n = write_model_cif(filename, model);
 	else if ( ext.contains("xyz") )
-		n = write_model_xyz(filename, model);
+		n = write_model_xyz(filename, model, split);
     else
 		n = write_model_molecule(filename, model);
 	

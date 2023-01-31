@@ -3,13 +3,14 @@
 @brief	Calculates coordinates for multiple unit cells.
 @author Bernard Heymann
 @date	Created: 20001015
-@date	Modified: 20080225
+@date	Modified: 20230120
 **/
 
-#include "rwmolecule.h"
-#include "mol_symmetry.h"
-#include "mol_transform.h"
-#include "mol_util.h"
+#include "rwmodel.h"
+#include "model_symmetry.h"
+#include "model_transform.h"
+#include "model_select.h"
+#include "model_util.h"
 #include "options.h"
 #include "utilities.h"
 #include "timer.h"
@@ -20,8 +21,8 @@ extern int 	verbose;		// Level of output to the screen
 /* Usage assistance */
 const char* use[] = {
 " ",
-"Usage: bcrystal [options] in.pdb out.pdb",
-"----------------------------------------",
+"Usage: bcrystal [options] in.pdb",
+"--------------------------------",
 "Calculates coordinates for multiple unit cells.",
 " ",
 "Actions:",
@@ -37,6 +38,9 @@ const char* use[] = {
 "Input:",
 "-parameters parm.star    Atomic properties parameter file (default atom_prop.star)",
 " ",
+"Output:",
+"-output newmod.star      New model file.",
+" ",
 NULL
 };
 
@@ -44,12 +48,13 @@ int 	main(int argc, char **argv)
 {
     /* Initialize variables */
 	char			first_name(0);				// First molecule name for renaming
-    Vector3<double> 	t;							// Shift
-	Vector3<long>	number(1,1,1);				// Number of unit cells in the 3 directions
+    Vector3<double> t;							// Shift
+	Vector3<long>	lattice(1,1,1);				// Number of unit cells in the 3 directions
 	int 			spacegroup(1);
-	UnitCell		uc(0,0,0,M_PI_2,M_PI_2,M_PI_2);
+	UnitCell		uc;
     Bstring    		atom_select("all");
 	Bstring			paramfile;					// Use default parameter file
+	Bstring			outfile;					// Output parameter file name
     
 	int				optind;
 	Boption*		option = get_option_list(use, argc, argv, optind);
@@ -64,8 +69,8 @@ int 	main(int argc, char **argv)
 				cerr << "-translate: Three values must be specified!" << endl;
 		}
 		if ( curropt->tag == "cells" ) {
-			number = curropt->vector3();
-			if ( number.volume() < 1 )
+			lattice = curropt->vector3();
+			if ( lattice.volume() < 1 )
 				cerr << "-cells: Three values must be specified" << endl;
 		}
 		if ( curropt->tag == "unitcell" )
@@ -75,33 +80,45 @@ int 	main(int argc, char **argv)
 				cerr << "-symmetry: The space group number must be specified!" << endl;
 		if ( curropt->tag == "parameters" )
 			paramfile = curropt->filename();
+		if ( curropt->tag == "output" )
+			outfile = curropt->filename();
     }
 	option_kill(option);
 	
 	double		ti = timer_start();
+
+	// Read all the parameter files
+	Bstring*		file_list = NULL;
+	Bmodel*			model = NULL;
+	while ( optind < argc ) string_add(&file_list, argv[optind++]);
+	if ( file_list ) {
+		model = read_model(file_list, paramfile);
+		string_kill(file_list);
+	}
 	
-	Bstring		filename = argv[optind++];
-	Bmolgroup*	molgroup = read_molecule(filename, atom_select, paramfile);
-	if ( molgroup == NULL ) {
-		cerr << "Error: No coordinate file given!" << endl;
+	if ( !model ) {
+		cerr << "Error: No model file read!" << endl;
 		bexit(-1);
 	}
 	
-	if ( t[0] != 0 || t[1] != 0 || t[2] != 0 )
-		molgroup_coor_shift(molgroup, t);
+	if ( t.length() )
+		models_shift(model, t);
 	
-	if ( number.volume() > 1 )
-		molgroup_generate_crystal(molgroup, uc, number);
+	if ( lattice.volume() > 1 ) {
+		model_generate_lattice(model, uc, lattice);
+		model_merge(model);
+	}
 		
     if ( first_name )
-		molgroup_rename(molgroup, first_name);
+		model_rename(model, first_name);
     
-	if ( optind < argc ) {
-		molecule_update_comment(molgroup, argc, argv);
-		write_molecule(argv[optind], molgroup);
-	}
+	model_selection_stats(model);
 
-    molgroup_kill(molgroup);
+	// Write an output parameter format file if a name is given
+    if ( outfile.length() && model )
+		write_model(outfile, model);
+
+	model_kill(model);
 	
 	if ( verbose & VERB_TIME )
 		timer_report(ti);

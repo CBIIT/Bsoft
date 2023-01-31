@@ -43,11 +43,12 @@ var searchData=
   ['xmlformat_40',['xmlFormat',['../rwxml_8h.html#a1bbfb8e170dae85835afe09a7090b8e6',1,'rwxml.h']]],
   ['xoff_41',['xoff',['../struct_s_p_i_d_e_rhead.html#a16580add19ca28d40ed721730756ca41',1,'SPIDERhead']]],
   ['xoffset_42',['xoffset',['../struct_i_m_o_d.html#a1cf0d023eb607bafb8b99310d332f128',1,'IMOD']]],
-  ['xorigin_43',['xOrigin',['../struct_m_r_chead.html#aace7fdd126439d8dce199524e6c43942',1,'MRChead::xOrigin()'],['../struct_m_r_chead2000.html#a52832afb5aebefa97b780853e9c3e49e',1,'MRChead2000::xOrigin()'],['../struct_m_r_cheadold.html#af1412432e74ec8930f54beda081dc68c',1,'MRCheadold::xOrigin()']]],
+  ['xorigin_43',['xOrigin',['../struct_m_r_cheadold.html#af1412432e74ec8930f54beda081dc68c',1,'MRCheadold']]],
   ['xorigin_44',['xorigin',['../struct_p_i_fimagehead__new.html#a79eb4b566d8c9b49d7babdf1767cc7a1',1,'PIFimagehead_new::xorigin()'],['../struct_p_i_fimagehead.html#afc8cc97b5590b1c324bc2579767bbc13',1,'PIFimagehead::xorigin()']]],
-  ['xscale_45',['xscale',['../struct_i_m_o_d.html#a65d8f06479b66cd2522c9ef05e5f1681',1,'IMOD']]],
-  ['xshift_46',['xshift',['../struct_i_m_a_g_i_chead.html#a875b6d1113c2c1b21365cdca68f8498b',1,'IMAGIChead']]],
-  ['xsize_47',['xSize',['../struct_d_mhead.html#a8ceba50cc0c2010ab44a3eeb8811bcc8',1,'DMhead']]],
-  ['xx_5fcell_48',['XX_CELL',['../rw_s_u_p_r_i_m_8h.html#aa553d40999db05f7428de3a002a323ea',1,'rwSUPRIM.h']]],
-  ['xy_5fcell_49',['XY_CELL',['../rw_s_u_p_r_i_m_8h.html#a5d89861c420f68c4e93585a2b9f9355d',1,'rwSUPRIM.h']]]
+  ['xorigin_45',['xOrigin',['../struct_m_r_chead.html#aace7fdd126439d8dce199524e6c43942',1,'MRChead::xOrigin()'],['../struct_m_r_chead2000.html#a52832afb5aebefa97b780853e9c3e49e',1,'MRChead2000::xOrigin()']]],
+  ['xscale_46',['xscale',['../struct_i_m_o_d.html#a65d8f06479b66cd2522c9ef05e5f1681',1,'IMOD']]],
+  ['xshift_47',['xshift',['../struct_i_m_a_g_i_chead.html#a875b6d1113c2c1b21365cdca68f8498b',1,'IMAGIChead']]],
+  ['xsize_48',['xSize',['../struct_d_mhead.html#a8ceba50cc0c2010ab44a3eeb8811bcc8',1,'DMhead']]],
+  ['xx_5fcell_49',['XX_CELL',['../rw_s_u_p_r_i_m_8h.html#aa553d40999db05f7428de3a002a323ea',1,'rwSUPRIM.h']]],
+  ['xy_5fcell_50',['XY_CELL',['../rw_s_u_p_r_i_m_8h.html#a5d89861c420f68c4e93585a2b9f9355d',1,'rwSUPRIM.h']]]
 ];

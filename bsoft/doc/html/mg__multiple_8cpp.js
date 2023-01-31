@@ -2,6 +2,7 @@ var mg__multiple_8cpp =
 [
     [ "project_check_same_number_particles", "mg__multiple_8cpp.html#a8aefa8700c9fbca58af380f40a1e273f", null ],
     [ "project_multi_add", "mg__multiple_8cpp.html#a248d9e78aefd88b2afcad71bfe69cdc8", null ],
+    [ "project_multi_add_particles", "mg__multiple_8cpp.html#aa5dc9904a077ea8b8579598627227e3c", null ],
     [ "project_multi_adjust_FOM", "mg__multiple_8cpp.html#af46b124f8164524c8cad25328e34d787", null ],
     [ "project_multi_merge", "mg__multiple_8cpp.html#a7cbe4cb82088c433b982c0ff2c43cc42", null ],
     [ "project_multi_select_best_FOM", "mg__multiple_8cpp.html#a04ef27f83d8cfdd7d2e7fd32cda7bbb3", null ],

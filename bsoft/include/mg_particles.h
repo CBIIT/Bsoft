@@ -1,9 +1,9 @@
 /**
 @file	mg_particles.h
 @brief	Manipulates single particle images.
-@author  Bernard Heymann
+@author  	Bernard Heymann
 @date	Created: 20080424
-@date	Modified: 20220531
+@date	Modified: 20221130
 **/
 
 #include "rwimg.h"
@@ -27,6 +27,4 @@ double		project_tilt_from_particle_defocus(Bproject* project);
 long		project_set_particle_defocus_from_tilt(Bproject* project, double axis, double tilt);
 Bimage*		project_correlation_sum(Bproject* project, Bimage* pref, double hires, FSI_Kernel* kernel);
 Bimage*		project_aberration_phase_difference(Bproject* project, Bimage* pref, double hires, FSI_Kernel* kernel);
-Bimage*		project_ewald_phase(Bproject* project, Bimage* pref, double hires, FSI_Kernel* kernel);
-Bimage*		project_ewald_correlation(Bproject* project, Bimage* pref, double hires, FSI_Kernel* kernel);
 

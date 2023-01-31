@@ -184,6 +184,9 @@ map<string, vector<double>>		calculate_scattering_curves(
 @brief 	Calculates the integral of the whole curve.
 @param 	&ct				component type.
 @return double			integral.
+
+	Burge & Smith (1962) formula
+	
 **/
 double		scatter_curve_integral(Bcomptype& ct)
 {
@@ -419,7 +422,7 @@ double		cross_section_integrated(map<string,Bcomptype>& types, CTFparam& ctf)
 }
 
 /**
-@brief 	Calculates the half-maximal frequency for an component type.
+@brief 	Calculates the half-maximal frequency for a component type.
 @param 	&ct				component type.
 @return double			half-maximal frequency.
 **/
@@ -494,7 +497,7 @@ Bmaterial	material_combine(vector<Bmaterial>& mlist, vector<double> fractions)
 }
 
 /**
-@brief 	Returns vitreous ice density.
+@brief 	Returns vitreous ice as material.
 @param	types			reference parameters.
 @return double			density in molecules/A3.
 **/
@@ -532,26 +535,6 @@ Bmaterial	material_ice(map<string,Bcomptype>& types)
 	}
 */
 	return ice;
-}
-
-/**
-@brief 	Returns gold density.
-@return double			density in molecules/A3.
-**/
-double		gold_density()
-{
-	double			dens(19.32);					// Density in g/cm3
-	double			mdens(dens*AVOGADRO/1.0e24);	// Density in Da/A3
-	double			wdens(mdens/196.966);			// Density in atoms/A3
-
-	if ( verbose ) {
-		cout << "Gold:" << endl;
-		cout << "Density:                        " << dens << " g/cm3" << endl;
-		cout << "Density:                        " << mdens << " Da/A3" << endl;
-		cout << "Density:                        " << wdens << " molecules/A3" << endl;
-	}
-	
-	return wdens;
 }
 
 /**

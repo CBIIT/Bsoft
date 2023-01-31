@@ -68,7 +68,7 @@ Bsimplex::Bsimplex(long nv, long np, long nc, long n, vector<double>& ax, vector
 @brief 	Estimates parameters using a generalized search algorithm.
 @param 	maxcycles 		maximum number of evaluation cycles to use.
 @param 	tolerance 		absolute tolerance on the R function.
-@fn		(funk)(Bsimplex *)	evaluation function returning an R value.
+@fn		(funk)(Bsimplex&)	evaluation function returning an R value.
 @param 	report 			interval to report R values, default 0 (no reporting).
 @return double			final R value (such as a correlation index).
 
@@ -97,11 +97,15 @@ double		Bsimplex::run(long maxcycles, double tolerance, double (funk)(Bsimplex&)
 	
 	random_seed();
 	
-	if ( verbose & VERB_DEBUG )
+	if ( verbose & VERB_DEBUG ) {
 		for ( i=0; i<10; i++ )
-			cout << "DEBUG Bsimplex::run: Random: " <<
+			cout << "DEBUG Bsimplex::run: Random test: " <<
 					rand_max << " " << random() << " " << exp(random()*4.0/rand_max-2.0) << endl;
-
+		cout << "DEBUG Bsimplex::run: Initial parameters:" << endl;
+		for ( i=0; i<nparam; ++i )
+			cout << i << tab << param[i] << tab << lo[i] << tab << hi[i] << endl;
+	}
+	
 	// Initialize the R's
 	vector<double>		R(npnt, 0);
 //	for ( i=0; i<npnt; i++ ) R[i] = 0;
@@ -216,8 +220,8 @@ double		Bsimplex::run(long maxcycles, double tolerance, double (funk)(Bsimplex&)
 	Rsave = R[ilo];
 	
 	if ( verbose && report ) {
-		cout << "Simplex cycles used:               " << cycle << endl;
-		cout << "Tolerance:                         " << setprecision(6) << tolerance << endl << endl;
+		cout << "Simplex cycles used:            " << cycle << endl;
+		cout << "R range:                        " << setprecision(6) << R[ihi] - R[ilo] << endl << endl;
 	}
 
 	return Rsave;

@@ -309,10 +309,11 @@ public:
 		for ( int i=0; i<3; i++ ) e += isfinite(data[i]);
 		return ( e != 3 );
 	}
-	bool within(Vector3& v1, Vector3& v2) {
+	template <typename T1, typename T2>
+	bool within(Vector3<T1>& v1, Vector3<T2>& v2) {
 		int			i, e(0);
-		for ( i=0; i<3; i++ ) e += (data[i] >= v1.data[i]);
-		for ( i=0; i<3; i++ ) e += (data[i] <= v2.data[i]);
+		for ( i=0; i<3; i++ ) e += (data[i] >= v1[i]);
+		for ( i=0; i<3; i++ ) e += (data[i] <= v2[i]);
 		return ( e == 6 );
 	}
 //	friend Vector3<float>	operator=(Vector3<double>& vd);

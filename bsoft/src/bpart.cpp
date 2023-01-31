@@ -3,7 +3,7 @@
 @brief	Process single particle images in various ways.
 @author Bernard Heymann
 @date	Created: 20080424
-@date	Modified: 20220531
+@date	Modified: 20221130
 **/
 
 #include "mg_processing.h"
@@ -39,8 +39,6 @@ const char* use[] = {
 "-calctilt                Calculate micrograph tilt parameters from particle defocus.",
 "-phasedifference p.grd   Phase difference from reference: Output \"even\" and \"odd\" files.",
 "-fit 2.3,2,10000         Fit phase image to resolution limit; flag: 0=full, 1=odd, 2=even; fitting iterations.",
-//"-ewald ew.grd            Ewald phase map from particles.",
-"-ewald ew.grd            Ewald correlation map from particles.",
 " ",
 "Parameters:",
 "-verbose 7               Verbosity of output.",
@@ -123,8 +121,6 @@ int			main(int argc, char** argv)
 		if ( curropt->tag == "fit" )
     	    if ( curropt->values(fit_res, fit_flag, fit_iter) < 1 )
 				cerr << "-fit: A resolution limit must be specified!" << endl;
-		if ( curropt->tag == "ewald" )
-			ewaldfile = curropt->filename();
 		if ( curropt->tag == "select" )
 			if ( ( part_select = curropt->value.integer() ) < 0 )
 				cerr << "-select: A selection number must be specified!" << endl;
@@ -216,8 +212,8 @@ int			main(int argc, char** argv)
 		write_img(filename, podd, 0);
 		if ( fit_res && pphi ) {
 			map<string,CTFparam>	cpa = project_ctf_optics_groups(project);
-			vector<map<pair<long,long>,double>> we = img_aberration_fit(pphi, 0, fit_res, 2, fit_iter);
-			vector<map<pair<long,long>,double>> wo = img_aberration_fit(podd, 0, fit_res, 1, fit_iter);
+			vector<map<pair<long,long>,double>> we = img_aberration_phase_fit(pphi, 0, fit_res, 2, fit_iter);
+			vector<map<pair<long,long>,double>> wo = img_aberration_phase_fit(podd, 0, fit_res, 1, fit_iter);
 			long			i(0);
 			for ( auto& cp: cpa ) {
 				cp.second.aberration_weights(we[i]);
@@ -247,14 +243,6 @@ int			main(int argc, char** argv)
 		delete kernel;
 	}
 	
-	if ( pref && ewaldfile.length() ) {
-		if ( !kernel ) kernel = new FSI_Kernel(8, 2);
-//		Bimage*		pew = project_ewald_phase(project, pref, hires, kernel);
-		Bimage*		pew = project_ewald_correlation(project, pref, hires, kernel);
-		write_img(ewaldfile, pew, 0);
-		delete pew;
-	}
-
 	if ( outfile.length() )
 		write_project(outfile, project, 0, 0);
 	

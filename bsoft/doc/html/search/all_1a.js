@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['z_0',['Z',['../class_zernike.html#aa2c0572b6a4107590bf602839f41ad6f',1,'Zernike']]],
+  ['z_0',['Z',['../class_zernike.html#aff8ffef043b2f76c8621845a2811c85c',1,'Zernike']]],
   ['z_1',['z',['../struct_batomtype.html#a92249c20b60c91609577010a3c185e36',1,'Batomtype::z()'],['../class_view.html#a7c236e8499df59e01865619997f52d00',1,'View::z()'],['../class_view.html#a610c231ef18bdd4cd8e0dd7b319ae619',1,'View::z(const double d)'],['../class_view2.html#a767f0890625d57aba4524992499aeb61',1,'View2::z()'],['../class_view2.html#aeec38ce839c8ff56d31d696a92d5fe6c',1,'View2::z(const double d)']]],
   ['z_5fextent_2',['z_extent',['../struct_d_s_n6head.html#aa0f2949698086fc986a4e9e4c8109fab',1,'DSN6head']]],
   ['z_5fsampling_3',['z_sampling',['../struct_d_s_n6head.html#a9c07d75c9ef7bd3f5911b8db34d2b761',1,'DSN6head']]],
@@ -8,8 +8,8 @@ var searchData=
   ['zernike_5',['Zernike',['../class_zernike.html',1,'Zernike'],['../class_zernike.html#ac65276c6421aaae67a16e6c3bb542cc1',1,'Zernike::Zernike()']]],
   ['zernike_2eh_6',['zernike.h',['../zernike_8h.html',1,'']]],
   ['zernike_5fcoefficient_7',['Zernike_Coefficient',['../class_zernike___coefficient.html',1,'Zernike_Coefficient'],['../class_zernike___coefficient.html#ac3db96ace9c585bcfe203ebc63cf6c64',1,'Zernike_Coefficient::Zernike_Coefficient()']]],
-  ['zernike_5feven_8',['zernike_even',['../class_c_t_fparam.html#a5db53cf101de2d4261cde443395fb1b5',1,'CTFparam::zernike_even()'],['../class_c_t_fparam.html#aaef8e6c83cd3dd574196dc89779c8a5a',1,'CTFparam::zernike_even(vector&lt; double &gt; &amp;v)']]],
-  ['zernike_5fodd_9',['zernike_odd',['../class_c_t_fparam.html#ab45aae9cec5490bac24ab712b37d5882',1,'CTFparam::zernike_odd()'],['../class_c_t_fparam.html#a3740f5095ae434b92711d0d6c76c5479',1,'CTFparam::zernike_odd(vector&lt; double &gt; &amp;v)']]],
+  ['zernike_5feven_8',['zernike_even',['../class_c_t_fparam.html#a7b79b9fa9c735cba1be5e1879a6e57d9',1,'CTFparam']]],
+  ['zernike_5fodd_9',['zernike_odd',['../class_c_t_fparam.html#a256bf3d893119e28b9fee983c50c8941',1,'CTFparam']]],
   ['zero_10',['zero',['../class_c_t_fparam.html#acec5be471cb9d7a8d3f731204f2d53d5',1,'CTFparam']]],
   ['zero_5ffourier_5forigin_11',['zero_fourier_origin',['../class_bimage.html#a7c09597809c7610566d5615cf9dbfca1',1,'Bimage']]],
   ['zero_5forigin_12',['zero_origin',['../class_bimage.html#a32b57fc3c6d4e3ea245b11686bf4c8ae',1,'Bimage']]],
@@ -22,5 +22,5 @@ var searchData=
   ['zorigin_19',['zOrigin',['../struct_m_r_chead2000.html#a0b461ca76aef24176f2be649b0e3be4f',1,'MRChead2000::zOrigin()'],['../struct_m_r_chead.html#ac6aac2162eb59aa1545c228156d9137a',1,'MRChead::zOrigin()']]],
   ['zscale_20',['zscale',['../struct_i_m_o_d.html#aa7df6173b7c015c9797a60c365eb728f',1,'IMOD']]],
   ['zsize_21',['zSize',['../struct_d_mhead.html#a16f3ea155b280085a058a4ea58bb0deb',1,'DMhead']]],
-  ['zxy_22',['Zxy',['../class_zernike.html#a8f679090e10e5bcf321f7b9dc864f117',1,'Zernike']]]
+  ['zxy_22',['Zxy',['../class_zernike.html#a1e24d200223e70e9a21e8d912d9f6ab0',1,'Zernike']]]
 ];

@@ -1,0 +1,25 @@
+#! /bin/bash
+
+# Bsoft check configuration script
+# Bernard Heymann
+# 20220826
+
+source dev.rsc
+
+BDIR=`pwd`
+BSOFT=$BDIR/bsoft
+LIBFFTW=""
+LIBTIFF=""
+LIBJPEG=""
+LIBPNG=""
+
+version=`sed "s/[^0-9]/_/g" bsoft/BVERSION`
+
+echo "bcheck: Bsoft $version"
+
+developer_resources
+
+check_dependencies
+
+show_configuration
+

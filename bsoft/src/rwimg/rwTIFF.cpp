@@ -511,9 +511,9 @@ int 	writeTIFF(Bimage* p, int flags)
 	
 	tm*		t = p->get_localtime();
 	char	timestring[20];
-	snprintf(timestring, 20, "%4d:%02d:%02d %02d:%02d:%02d",
-			t->tm_year+1900, t->tm_mon+1, t->tm_mday, 
-			t->tm_hour, t->tm_min, t->tm_sec);
+  	strftime (timestring, 20, "%Y:%m:%d %H:%M:%S", t);
+	if ( verbose & VERB_DEBUG )
+		cout << "DEBUG writeTIFF: timestring=" << timestring << endl;
 	
 	for ( n=0; n<p->images(); n++ ) {
 		TIFFSetDirectory(fimg, n);

@@ -1,9 +1,9 @@
 /**
 @file	rwmodel_bild.cpp
 @brief	Library routines to read and write Chimera BILD model parameters
-@author Bernard Heymann
+@author 	Bernard Heymann
 @date	Created: 20080521
-@date	Modified: 20210305
+@date	Modified: 20221115
 **/
 
 
@@ -233,21 +233,25 @@ void		bild_arrow(ofstream& fbld, Vector3<double> start, Vector3<double> end, dou
 @brief 	Writes Chimera BILD model parameters.
 @param 	&filename	model parameter file name.
 @param 	*model		model parameters.
+@param 	splt		flag to split into separate models.
 @return int			models written.
 **/
-int			write_model_bild(Bstring& filename, Bmodel* model)
+int			write_model_bild(Bstring& filename, Bmodel* model, int splt)
 {
 	int				n;
 	Bmodel*			mp = NULL;
 	Bcomponent*		comp = NULL;
 	Blink*			link = NULL;
 	Bstring			onename;
+	char			format[32];
+
+	snprintf(format, 32, "_%%0%dd.", splt);
 
 	ofstream		fmod;
 
 	for ( n=1, mp = model; mp; mp = mp->next, n++ ) {
 		if ( model->next )
-			onename = filename.pre_rev('.') + Bstring(n, "_%04d.") + filename.post_rev('.');
+			onename = filename.pre_rev('.') + Bstring(n, format) + filename.post_rev('.');
 		else
 			onename = filename;
 		fmod.open(onename.c_str());

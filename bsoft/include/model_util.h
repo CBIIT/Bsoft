@@ -1,9 +1,9 @@
 /**
 @file	model_util.h
 @brief	Library routines used for model processing
-@author Bernard Heymann
+@author 	Bernard Heymann
 @date	Created: 20060908
-@date	Modified: 20220414
+@date	Modified: 20230120
 **/
 
 #include "rwmodel.h"
@@ -21,6 +21,7 @@ long		model_list_comp(Bmodel* model);
 long		model_replace_components(Bmodel* model, Bmodel* modref);
 long		model_merge(Bmodel* model);
 long		model_number_ids(Bmodel* model);
+long		model_rename(Bmodel* model, char first_name);
 long		model_rename_components(Bmodel* model);
 double		model_mass(Bmodel* model);
 long		model_mass_all(Bmodel* model);

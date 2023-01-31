@@ -1,9 +1,9 @@
 /**
 @file	mg_ctf.h
 @brief	Functions for CTF (contrast transfer function) processing
-@author Bernard Heymann
+@author 	Bernard Heymann
 @date	Created: 19970715
-@date	Modified: 20220805
+@date	Modified: 20230127
 **/
 
 #include "mg_processing.h"
@@ -66,10 +66,10 @@ int			project_set_aperture(Bproject* project, double aperture);
 int			project_set_slit_width(Bproject* project, double slit);
 int			project_set_alpha(Bproject* project, double alpha);
 int			project_set_envelope_type(Bproject* project, int type);
-int			project_set_envelope(Bproject* project, int type, double* coeff);
+int			project_set_envelope(Bproject* project, int type, vector<double>& coeff);
 int			project_set_coherence_envelope(Bproject* project);
 int			project_set_baseline_type(Bproject* project, int type);
-int			project_set_baseline(Bproject* project, int type, double* coeff);
+int			project_set_baseline(Bproject* project, int type, vector<double>& coeff);
 map<string,CTFparam>	project_ctf_optics_groups(Bproject* project);
 long		project_update_ctf_aberration(Bproject* project, map<string,CTFparam>& cpa, int flag);
 //int			project_convert_CTF_to_aberration_weights(Bproject* project);

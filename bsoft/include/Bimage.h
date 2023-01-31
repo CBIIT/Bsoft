@@ -3,7 +3,7 @@
 @brief	Header file for image class
 @author Bernard Heymann
 @date	Created: 19990321
-@date 	Modified: 20220805
+@date 	Modified: 20230110
 **/
 
 //#include <time.h>
@@ -216,6 +216,7 @@ public:
 	bool			check_if_same_image_size(Bimage* p);
 	void			check_sampling();
 	void			check_resolution(double& resolution);
+	void			set_hi_lo_resolution(double& hi, double& lo);
 	bool 			compatible(Bimage* p);
 	// Informational strings
 	void			identifier(Bstring s) { id = s; }
@@ -619,12 +620,24 @@ public:
 		return metadata["pointgroup"].value();
 	}
 	void			symmetry(string grp) { metadata["pointgroup"] = grp; }
-	void			unit_cell(UnitCell uc) {
+	void			unit_cell_check() {
+		UnitCell		uc;
 		Vector3<double>		u(image->sampling());
+		if ( !isfinite(uc.a()) || uc.a() < 1 ) uc.a(u[0]*x);
+		if ( !isfinite(uc.b()) || uc.b() < 1 ) uc.b(u[1]*y);
+		if ( !isfinite(uc.c()) || uc.c() < 1 ) uc.c(u[2]*z);
+		if ( uc.a() > 100*x*u[0] ) uc.a(u[0]*x);
+		if ( uc.b() > 100*y*u[1] ) uc.b(u[1]*y);
+		if ( uc.c() > 100*z*u[2] ) uc.c(u[2]*z);
+		if ( uc.alpha() > M_PI || uc.beta() > M_PI || uc.gamma() > M_PI ) uc.degrees_to_radians();
+		if ( uc.alpha() < 0.001 || uc.alpha() > M_PI ) uc.alpha(M_PI_2);
+		if ( uc.beta() < 0.001 || uc.beta() > M_PI ) uc.beta(M_PI_2);
+		if ( uc.gamma() < 0.001 || uc.gamma() > M_PI ) uc.gamma(M_PI_2);
 		ucell = uc;
-		if ( !isfinite(ucell.a()) || ucell.a() < u[0]*x ) ucell.a(u[0]*x);
-		if ( !isfinite(ucell.b()) || ucell.b() < u[1]*y ) ucell.b(u[1]*y);
-		if ( !isfinite(ucell.c()) || ucell.c() < u[2]*z ) ucell.c(u[2]*z);
+	}
+	void			unit_cell(UnitCell uc) {
+		ucell = uc;
+		unit_cell_check();
 	}
 	UnitCell		unit_cell() { return ucell; }
 	double			maximum_included_radius();
@@ -648,12 +661,9 @@ public:
 	long			statistics(long img_num);
 	long			statistics(Bimage* pmask, double& regavg, double& regstd);
 	double			poisson_statistics_check();
-	long 			stats_within_radii(long nn, Vector3<double> loc,
-						double rad_min, double rad_max, double& vavg, double& vstd);
-	long			stats_in_shape(long nn, int type, Vector3<long> start,
-						Vector3<long> end, double& vavg, double& vstd);
-	long			stats_in_poly(long nn, int nvert, Vector3<double>* poly,
-						double& vavg, double& vstd);
+	vector<double>	stats_within_radii(long nn, Vector3<double> loc, double rad_min, double rad_max);
+	vector<double>	stats_in_shape(long nn, int type, Vector3<long> start, Vector3<long> end);
+	vector<double>	stats_in_poly(long nn, int nvert, Vector3<double>* poly);
 	long			stats_in_mask(long nn, Bimage* pmask);
 private:
 	int				kernel_sums(long n, long i, long ik, long nk);
@@ -913,6 +923,8 @@ public:
 						double tilt_axis, double tilt_angle, double tilt_offset, 
 						double defocus, double iCL2, int flags=0);
 	vector<double>	powerspectrum_isotropy(long n, double& lores, double& hires);
+	double			average_line(long xx, long yy, long zz, long nn, long len, int dir);
+	long			fix_power_spectrum(int dir, double ratio);
 	// Frequency space interpolation and reconstruction
 	long			fspace_maximum_radius(double resolution, double sampling_ratio=1);
 	int				fspace_background();
@@ -1410,6 +1422,7 @@ public:
 	int				noise_logistical(double ravg, double rstd);
 	int				noise_spectral(double alpha);
 	int 			noise_uniform_distance(long number);
+	int 			noise_gaussian_distance(long number, double stdev);
 	// Binary masks
 	long			mask(Bimage* pmask, double fill);
 	long			to_mask() { return to_mask((max + min)/2); }

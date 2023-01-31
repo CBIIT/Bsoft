@@ -16,6 +16,6 @@ var rwmodel__bild_8cpp =
     [ "model_to_bild_view_polygons", "rwmodel__bild_8cpp.html#af6738624ffd062eb05a425684928a8d1", null ],
     [ "model_to_bild_view_sphere", "rwmodel__bild_8cpp.html#abdb2fe00ab1a841720f4eb92aee04ff2", null ],
     [ "read_model_bild", "rwmodel__bild_8cpp.html#a7bdea0677bbb3ecdc07daa5405f3e823", null ],
-    [ "write_model_bild", "rwmodel__bild_8cpp.html#aee5f32ef4b7ede2128e09c96be9aed97", null ],
+    [ "write_model_bild", "rwmodel__bild_8cpp.html#a326468b362b29219ee00960af4a1ca4e", null ],
     [ "verbose", "rwmodel__bild_8cpp.html#a0b2caeb4b6f130be43e5a2f0267dd453", null ]
 ];

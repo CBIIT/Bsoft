@@ -209,30 +209,14 @@ Bimage*		particle_reconstruct(Bparticle* partlist, Bsymmetry sym, int sym_mode,
 		double		ew_wl(0);
 		if ( ewald ) ew_wl = em_ctf.lambda();
 
-		if ( ctf_action ) {
-//			img_ctf_apply(p, em_ctf, ctf_action, wiener, 0, hi_res, (ewald!=0));
-//			img_apply_phase_aberration(p, em_ctf);
-//	 		img_ctf_apply_complex(p, em_ctf, (ctf_action==1), wiener, (ewald!=0), 0, hi_res);
+		if ( ctf_action )
 	 		img_ctf_apply_complex(p, em_ctf, (ctf_action==1), wiener, 0, hi_res);
-		}
 		
 		if ( sym_mode )
 			prec->fspace_pack_2D(p, view.matrix(), hi_res, 0, part_scale, ew_wl, part_weight, interp_type);
 		else
 			prec->fspace_pack_2D(p, view, sym, hi_res, 0, part_scale, ew_wl, part_weight, interp_type);
 
-		if ( ewald ) {
-//			if ( ctf_action ) {
-//				img_ctf_apply(p2, em_ctf, ctf_action, wiener, 0, hi_res, -1);
-//				img_apply_phase_aberration(p, em_ctf);
-//	 			img_ctf_apply_complex(p, em_ctf, (ctf_action==1), wiener, -1, 0, hi_res);
-//			}
-			if ( sym_mode )
-				prec->fspace_pack_2D(p, view.matrix(), hi_res, 0, part_scale, -ew_wl, part_weight, interp_type);
-			else
-				prec->fspace_pack_2D(p, view, sym, hi_res, 0, part_scale, -ew_wl, part_weight, interp_type);
-		}
-		
 		if ( mg->ctf ) em_ctf.defocus_average(mg->ctf->defocus_average());
 				
 		delete p;
@@ -821,7 +805,8 @@ int			project_update_class_averages(Bproject* project, Bimage* prec, Bstring fil
 
 /**
 @brief 	Creates a 2D reconstruction from the images in a  multi-image file.  
-@param 	*project 		image processing parameter structure.
+@param 	*project 			image processing parameter structure.
+@param	file_name			2D reconstruction file name.
 @param 	transform_output	flag to output transformed images.
 @return	Bimage* 				2D reconstruction image.
 

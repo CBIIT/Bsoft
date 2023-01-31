@@ -1,11 +1,19 @@
 var searchData=
 [
-  ['scharacter_0',['SCharacter',['../utilities_8h.html#ad8ed01ff3ff33333d8e19db4d2818bb6a3d19d5aa639923b8655491f48b29ba1d',1,'utilities.h']]],
-  ['short_1',['Short',['../utilities_8h.html#ad8ed01ff3ff33333d8e19db4d2818bb6af5a4874501b800b316e5817874430c98',1,'utilities.h']]],
-  ['signed_5fint16_5fdata_2',['SIGNED_INT16_DATA',['../rw_d_m_8h.html#a9ae5e142ae72d8367729fb10c19e7e1eae563f425d385ea8db45bc14157d030d8',1,'rwDM.h']]],
-  ['signed_5fint32_5fdata_3',['SIGNED_INT32_DATA',['../rw_d_m_8h.html#a9ae5e142ae72d8367729fb10c19e7e1ea8f423ecaca04f39b1034ef5a82dd2128',1,'rwDM.h']]],
-  ['signed_5fint8_5fdata_4',['SIGNED_INT8_DATA',['../rw_d_m_8h.html#a9ae5e142ae72d8367729fb10c19e7e1ea38361093c7e419d06964a97018677ee6',1,'rwDM.h']]],
-  ['standard_5',['Standard',['../_bimage_8h.html#a01e0deba350901d769526633e868806fa57f9bf199e30a749a03be1dac2f5f624',1,'Bimage.h']]],
-  ['strand_6',['Strand',['../rwmolecule_8h.html#a2403a7fa6b34471d6ea53d11bdf86806a93159c7b6fcfbae8b318915da4ae0620',1,'rwmolecule.h']]],
-  ['stringitem_7',['StringItem',['../rwstar_8h.html#a8435d7365a22ddeb114cbb1a37e7f524ae783438486301d16448686cd89218326',1,'rwstar.h']]]
+  ['real_0',['Real',['../_complex_8h.html#a28b827e6d236d7def720968b3b386430ae47767a8fd75c3f527962d1c194cc19c',1,'Complex.h']]],
+  ['real4_5fdata_1',['REAL4_DATA',['../rw_d_m_8h.html#a9ae5e142ae72d8367729fb10c19e7e1ea887dab4e71e030c532414e245cab7200',1,'rwDM.h']]],
+  ['real8_5fdata_2',['REAL8_DATA',['../rw_d_m_8h.html#a9ae5e142ae72d8367729fb10c19e7e1eacd979de80b1c1413b5df40517e6f724a',1,'rwDM.h']]],
+  ['rgb_5fdata_3',['RGB_DATA',['../rw_d_m_8h.html#a9ae5e142ae72d8367729fb10c19e7e1ea0ac41829486d1d0c1c1d41aa83d7abd9',1,'rwDM.h']]],
+  ['rgb_5ffloat64_5fdata_4',['RGB_FLOAT64_DATA',['../rw_d_m_8h.html#a9ae5e142ae72d8367729fb10c19e7e1eaa138ad9ff60087bef8517519422c2f36',1,'rwDM.h']]],
+  ['rgb_5fuint16_5fdata_5',['RGB_UINT16_DATA',['../rw_d_m_8h.html#a9ae5e142ae72d8367729fb10c19e7e1ead55a84434b6435372837508a10adcc32',1,'rwDM.h']]],
+  ['rgb_5fuint8_5fdata_6',['RGB_UINT8_DATA',['../rw_d_m_8h.html#a9ae5e142ae72d8367729fb10c19e7e1ea20a397f89d1da162d9701c95d83e312b',1,'rwDM.h']]],
+  ['rgba_5ffloat32_5fdata_7',['RGBA_FLOAT32_DATA',['../rw_d_m_8h.html#a9ae5e142ae72d8367729fb10c19e7e1ea57ccf9db52bd4bc51634ede9bc975e64',1,'rwDM.h']]],
+  ['rgba_5ffloat64_5fdata_8',['RGBA_FLOAT64_DATA',['../rw_d_m_8h.html#a9ae5e142ae72d8367729fb10c19e7e1ea8fee437a6c48de1e5e02e8b4f906684e',1,'rwDM.h']]],
+  ['rgba_5fuint16_5fdata_9',['RGBA_UINT16_DATA',['../rw_d_m_8h.html#a9ae5e142ae72d8367729fb10c19e7e1ea7edf03d6c2a7faf12607db36230e3095',1,'rwDM.h']]],
+  ['rgba_5fuint8_5fdata_10',['RGBA_UINT8_DATA',['../rw_d_m_8h.html#a9ae5e142ae72d8367729fb10c19e7e1ea46b4b23a84ca527c856c3b22aa4c56a7',1,'rwDM.h']]],
+  ['righthanded310_11',['RightHanded310',['../rwmolecule_8h.html#a2403a7fa6b34471d6ea53d11bdf86806a593bb962f5e2c62a45af5994a800fd85',1,'rwmolecule.h']]],
+  ['righthandedalpha_12',['RightHandedAlpha',['../rwmolecule_8h.html#a2403a7fa6b34471d6ea53d11bdf86806ad00b06e013a390c5419f9448f660ab3f',1,'rwmolecule.h']]],
+  ['righthandedgamma_13',['RightHandedGamma',['../rwmolecule_8h.html#a2403a7fa6b34471d6ea53d11bdf86806a6d1feda136d81cd7928a820ac8231f5b',1,'rwmolecule.h']]],
+  ['righthandedomega_14',['RightHandedOmega',['../rwmolecule_8h.html#a2403a7fa6b34471d6ea53d11bdf86806aa16207d5773e0177838951cd54ed3f07',1,'rwmolecule.h']]],
+  ['righthandedpi_15',['RightHandedPi',['../rwmolecule_8h.html#a2403a7fa6b34471d6ea53d11bdf86806a75e1b953719e5dbf0998c3d7176be0c7',1,'rwmolecule.h']]]
 ];

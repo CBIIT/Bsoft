@@ -2,11 +2,15 @@ var class_unit_cell =
 [
     [ "UnitCell", "class_unit_cell.html#a7217ff77357c0a8529c3066efc97d23b", null ],
     [ "UnitCell", "class_unit_cell.html#ad047f6ff2b43caaeb7c71b56b2b0b2b4", null ],
+    [ "UnitCell", "class_unit_cell.html#a2fa1a6e95df7b0f687917fe73179e83b", null ],
     [ "UnitCell", "class_unit_cell.html#a623fe291b1f3841af031d7b33575b986", null ],
+    [ "UnitCell", "class_unit_cell.html#ad090c9d475c57c0108b7635213360a43", null ],
+    [ "UnitCell", "class_unit_cell.html#a70be67a1ce6c7329366b44a204d0a98f", null ],
     [ "a", "class_unit_cell.html#a7b7389247d198508292a96b822cf5a9e", null ],
     [ "a", "class_unit_cell.html#a622137ff1925eff7a1f15575e0c63011", null ],
     [ "alpha", "class_unit_cell.html#a354ced8b6db0d28a90558d8752078abe", null ],
     [ "alpha", "class_unit_cell.html#afd48aeade969b9b8d398e4d502cb9ba8", null ],
+    [ "angles", "class_unit_cell.html#adafefd5a6a33a84d2238648b2aee17c9", null ],
     [ "b", "class_unit_cell.html#a2ef525568056a5ef0d8b6e531de7989d", null ],
     [ "b", "class_unit_cell.html#aac72a618a8091bdf3a08ad77f5b977d2", null ],
     [ "beta", "class_unit_cell.html#a8479b379080963969a986ad354240a5c", null ],
@@ -21,7 +25,9 @@ var class_unit_cell =
     [ "radians_to_degrees", "class_unit_cell.html#a58539a8e394693941c4fd0ec98f85508", null ],
     [ "set_angle_range", "class_unit_cell.html#adf8c0908f6b207c9e584a3420d08071b", null ],
     [ "size", "class_unit_cell.html#a40224b13002c56fb8ec40a14c3176e3e", null ],
+    [ "size", "class_unit_cell.html#aca884b17def9e351399da459eba17de4", null ],
     [ "skew_matrix", "class_unit_cell.html#aabda30bdf4a5afd5e4a0d5035fd0bbb3", null ],
+    [ "skew_matrix_inverse", "class_unit_cell.html#aa638d0ccd25c9c1d6f8ad5e6826f483d", null ],
     [ "skew_rotation", "class_unit_cell.html#ad0dba6e12ebb4c83030b9bb3d016316f", null ],
     [ "volume", "class_unit_cell.html#a703773d1a9e6985bf963c6465d2e4efc", null ]
 ];

@@ -395,8 +395,8 @@ Bplot*		plot_radial_powerspectrum(Bimage* p, double resolution, int ps_flags)
 	for ( i=0; i<n; i++ ) plot->page(0).column(i).number(i);
 	plot->page(0).column(0).label("SpatialFrequency(1/A)");
 	plot->page(0).column(0).axis(1);
-	plot->page(0).axis(1).min(0);
-	plot->page(0).axis(1).max(1/resolution);
+	plot->page(0).axis(0).min(0);
+	plot->page(0).axis(0).max(1/resolution);
 	for ( i=1; i<n; i++ ) {
 		plot->page(0).column(i).type(2);
 		plot->page(0).column(i).label(Bstring(i, "%d"));

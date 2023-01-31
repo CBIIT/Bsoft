@@ -315,13 +315,10 @@ int 	writeSPIDER(Bimage* p)
 	spider_euler_from_view(header, p->image->view());
 			
     tm* 		t = p->get_localtime();
-	char		astring[12];
-	while ( t->tm_year > 100 ) t->tm_year -= 100;
-//	snprintf(header->ctim, 8, "%02d:%02d:%02d", t->tm_hour, t->tm_min, t->tm_sec);
-	snprintf(astring, 12, "%02d:%02d:%02d", t->tm_hour, t->tm_min, t->tm_sec);
-//    cout << "number of characters = %ld\n", strlen(header->ctim));
-	strncpy(header->ctim, astring, 8);
-    snprintf(header->cdat, 12, "%02d-%3s-%02d", t->tm_mday, month[t->tm_mon], t->tm_year);
+ 	strftime (header->cdat, 12, "%d-%b-%y", t);
+ 	strftime (header->ctim, 8, "%H:%M:%S", t);
+	if ( verbose & VERB_DEBUG )
+		cout << "DEBUG writeSPIDER: date=" << header->cdat << " time=" << header->ctim << endl;
 	strncpy(header->ctit, p->label().c_str(), 160);
 	
 	if ( verbose & VERB_DEBUG ) {

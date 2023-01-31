@@ -5,6 +5,7 @@ var rwmolecule_8cpp =
     [ "atom_add", "rwmolecule_8cpp.html#aa38922362b1975caf0c63e5c1e3bb246", null ],
     [ "atom_add", "rwmolecule_8cpp.html#a5adfdd0ad0489ce2d067d39edf492d46", null ],
     [ "atom_clean_type", "rwmolecule_8cpp.html#a68c7bf4749ada5f5e6dd63c38201b638", null ],
+    [ "atom_copy", "rwmolecule_8cpp.html#a9061ed37dd521af67a13af6453e18240", null ],
     [ "atom_count", "rwmolecule_8cpp.html#a59fcac126977caccc8f5fa2ebd9f3f39", null ],
     [ "bond_add", "rwmolecule_8cpp.html#aa7504db6c6869efd012d0f1a9258f7be", null ],
     [ "bond_exists", "rwmolecule_8cpp.html#a6a9e838cc407085e389b3752de71cd62", null ],

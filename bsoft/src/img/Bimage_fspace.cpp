@@ -116,19 +116,25 @@ Complex<double>	Bimage::fspace_interpolate(long img_num, Vector3<double> m, FSI_
 	
 	for ( zz=0, kz=ikz, mz=iz; zz<nz; ++zz, kz++, mz++ ) {
 		jz = mz;
-		while ( jz < 0 ) jz += z;
-		while ( jz >= z ) jz -= z;
+//		while ( jz < 0 ) jz += z;
+//		while ( jz >= z ) jz -= z;
+		if ( jz < 0 ) jz += z;
+		if ( jz >= z ) jz -= z;
 		jz = (img_num*z + jz)*y;
 		for ( yy=0, ky=iky, my=iy; yy<ny; ++yy, ky++, my++ ) {
 			jy = my;
-			while ( jy < 0 ) jy += y;
-			while ( jy >= y ) jy -= y;
+//			while ( jy < 0 ) jy += y;
+//			while ( jy >= y ) jy -= y;
+			if ( jy < 0 ) jy += y;
+			if ( jy >= y ) jy -= y;
 			jy = (jz + jy)*x;
 			w = (*kernel)[ky]*(*kernel)[kz];
 			for ( xx=0, kx=ikx, mx=ix; xx<nx; ++xx, kx++, mx++ ) {
 				jx = mx;
-				while ( jx < 0 ) jx += x;
-				while ( jx >= x ) jx -= x;
+//				while ( jx < 0 ) jx += x;
+//				while ( jx >= x ) jx -= x;
+				if ( jx < 0 ) jx += x;
+				if ( jx >= x ) jx -= x;
 				value += complex(jy + jx) * ((*kernel)[kx] * w);
 			}
 		}
@@ -1368,7 +1374,7 @@ int 		Bimage::fspace_weigh_B_factor(double B, double resolution)
 /**
 @brief 	Calculates a Butterworth band-pass filter profile.
 @param 	res_hi			high resolution limit.
-@param 	reso_lo			low resolution limit.
+@param 	res_lo			low resolution limit.
 @param	order			Buttorworth filter order.
 @return int				0.
 
@@ -1642,7 +1648,7 @@ int 		Bimage::fspace_weigh_gaussian(long nn, Vector3<double> sigma, int dir)
 }
 
 /**
-@brief 	Generates a image with orthogonal gradients encded in 3-value vectors.
+@brief 	Generates a image with orthogonal gradients encoded in 3-value vectors.
 @param 	sigma		Gaussian sigma values.
 @return int			0.
 
@@ -1665,7 +1671,7 @@ Bimage*		Bimage::fspace_gradient(Vector3<double> sigma)
 	pg->sampling(sampling(0));
 	pg->origin(image->origin());
 
-	for ( i=0; i<nd; ++ i ) {
+	for ( i=0; i<nd; ++i ) {
 		pt = copy();
 		pt->fspace_weigh_gaussian(0, sigma, i+1);
 		pt->fft_back();

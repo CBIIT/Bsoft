@@ -3,11 +3,12 @@
 @brief	Functions for reading and writing GRD files
 @author Bernard Heymann
 @date	Created: 19990410
-@date 	Modified: 20210304
+@date 	Modified: 20221103
 **/
 
 #include "rwGRD.h"
 #include "file_util.h"
+#include "timer.h"
 #include "utilities.h"
 
 // Declaration of global variables
@@ -334,12 +335,11 @@ int 	writeGRD(Bimage *p, int flags)
 		cout << "DEBUG writeGRD: bkg=" << header->bkg << endl;
 	
 	tm*			t = p->get_localtime();
-	snprintf(header->datetime, 16, "%4d%02d%02d%02d%02d%02d", t->tm_year+1900,
-			t->tm_mon+1, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
-	
+//	tm*			t = get_localtime();
+  	strftime (header->datetime, 16, "%Y%m%d%H%M%S", t);
 	if ( verbose & VERB_DEBUG )
 		cout << "DEBUG writeGRD: datetime=" << header->datetime << endl;
-	
+
 	strncpy(header->symmetry, p->symmetry().c_str(), 30);
 	strncpy(header->label, p->label().c_str(), 200);
 	

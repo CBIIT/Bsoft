@@ -3,10 +3,10 @@
 @brief	Header file for general utilities 
 @author Bernard Heymann
 @date	Created: 19990722
-@date	Modified: 20210721
+@date	Modified: 20220713
 **/
 
-#define BVERSION "2.1.3-20211109"
+#define BVERSION "2.1.4-20230131"
 
 #include <stdio.h>
 #include <string.h>
@@ -20,6 +20,7 @@
 #include <cfloat>
 #include <algorithm>
 #include <iostream>
+#include <sstream>
 #include <iomanip>
 #include <vector>
 #include <map>
@@ -55,6 +56,7 @@ using namespace std;
 #define	ECHARGE				1.602177E-19	// C
 #define EMASS				9.109384E-31	// kg
 #define LIGHTSPEED			299792458		// m/s
+#define COULOMB	1e-7*LIGHTSPEED*LIGHTSPEED		// Coulomb's constant in Nm2/C2
 #define	AVOGADRO			6.02214076e23	// Entities per mole
 
 /************************************************************************
@@ -231,6 +233,7 @@ void		swapbytes(unsigned char* v, size_t n);
 void		swapbytes(size_t size, unsigned char* v, size_t n);
 void		vax2ieee(unsigned char* v, int sb);
 double		angle_set_negPI_to_PI(double angle);
+double		angle_set_0_to_TWOPI(double angle);
 float		remove_negative_zeros(float value0, float threshold);
 size_t		get_chunk_size(size_t datasize);
 size_t		get_chunk_size(size_t datasize, size_t c);

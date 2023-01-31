@@ -104,6 +104,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a1f36c65fe9a1e4c0e04cfc0ce818892b"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="math__util_8cpp.html#a1f36c65fe9a1e4c0e04cfc0ce818892b">bround</a> (double value, int places)</td></tr>
 <tr class="memdesc:a1f36c65fe9a1e4c0e04cfc0ce818892b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rounds a value to a specified number of decimal places.  <a href="math__util_8cpp.html#a1f36c65fe9a1e4c0e04cfc0ce818892b">More...</a><br /></td></tr>
 <tr class="separator:a1f36c65fe9a1e4c0e04cfc0ce818892b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23284d6b2bbf5885eb9a79f66e3c93e4"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="math__util_8cpp.html#a23284d6b2bbf5885eb9a79f66e3c93e4">sinc</a> (double d)</td></tr>
+<tr class="memdesc:a23284d6b2bbf5885eb9a79f66e3c93e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the normalized cardinal sine.  <a href="math__util_8cpp.html#a23284d6b2bbf5885eb9a79f66e3c93e4">More...</a><br /></td></tr>
+<tr class="separator:a23284d6b2bbf5885eb9a79f66e3c93e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73776fd605fa19612cdeaa699c517cf8"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="math__util_8cpp.html#a73776fd605fa19612cdeaa699c517cf8">factorial</a> (int n)</td></tr>
 <tr class="memdesc:a73776fd605fa19612cdeaa699c517cf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the factorial of n.  <a href="math__util_8cpp.html#a73776fd605fa19612cdeaa699c517cf8">More...</a><br /></td></tr>
 <tr class="separator:a73776fd605fa19612cdeaa699c517cf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -145,7 +148,7 @@ Variables</h2></td></tr>
 <dl class="section author"><dt>Author</dt><dd>Bernard Heymann </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>Created: 20030414 </dd>
 <dd>
-Modified: 20151203 </dd></dl>
+Modified: 20220524 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a1d6e649feccbc1d73424037ed02d7418" name="a1d6e649feccbc1d73424037ed02d7418"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1d6e649feccbc1d73424037ed02d7418">&#9670;&nbsp;</a></span>betacf()</h2>
@@ -335,20 +338,19 @@ Symmetry relation: Ix(a,b) = 1 - I1-x(b,a).
 </div><div class="memdoc">
 
 <p>Calculates the factorial of n. </p>
-<pre class="fragment">All values of n less than 1 returns 1.
-An exact calculation is done for 1 &lt; n &lt;= 50.
-The Lancos approximation is used for n &gt; 50.
-Factorials of integers larger than 170 exceeds the capacity of a 
-double and causes program termination.
-The largest relative error is for 170: 1.22378e-13.
-</pre><p> Reference: Press W.H. et al (1992) Numerical Recipes in C.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">n</td><td>integer. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>double factorial of n, &lt;0 on error. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>double factorial of n, &lt;0 on error. <pre class="fragment">All values of n less than 1 returns 1.
+An exact calculation is done for 1 &lt; n &lt;= 50.
+The Lancos approximation is used for n &gt; 50.
+Factorials of integers larger than 170 exceeds the capacity of a 
+double and causes program termination.
+The largest relative error is for 170: 1.22378e-13.
+</pre> Reference: Press W.H. et al (1992) Numerical Recipes in C. </dd></dl>
 
 </div>
 </div>
@@ -579,6 +581,33 @@ This is useful to determine the median without full sorting.
 
 </div>
 </div>
+<a id="a23284d6b2bbf5885eb9a79f66e3c93e4" name="a23284d6b2bbf5885eb9a79f66e3c93e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23284d6b2bbf5885eb9a79f66e3c93e4">&#9670;&nbsp;</a></span>sinc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double sinc </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>d</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns the normalized cardinal sine. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">d</td><td>value. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double sinc value. </dd></dl>
+
+</div>
+</div>
 <a id="a0ef20e14605490f07837761bd514fe14" name="a0ef20e14605490f07837761bd514fe14"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0ef20e14605490f07837761bd514fe14">&#9670;&nbsp;</a></span>smallest_prime()</h2>
 
@@ -639,7 +668,7 @@ input number if it is prime.
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_b7878ad5ecbf2506f4125b9d34c97e45.html">util</a></li><li class="navelem"><a class="el" href="math__util_8cpp.html">math_util.cpp</a></li>
-    <li class="footer">Generated on Fri Jan 7 2022 02:32:17 for Bsoft by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
+    <li class="footer">Generated on Tue Jan 31 2023 08:21:30 for Bsoft by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
   </ul>
 </div>
 </body>

@@ -1,6 +1,7 @@
 var scatter_8h =
 [
     [ "all_elements", "scatter_8h.html#acaeba4c5eac618c10f324171311312e0", null ],
+    [ "calculate_potential_curves", "scatter_8h.html#ab36d71a14e1e31f6e5a5880eda94f6ab", null ],
     [ "calculate_scattering_curve", "scatter_8h.html#a78024d62474fbfc1b79edc25f91e5189", null ],
     [ "calculate_scattering_curves", "scatter_8h.html#a2e602abd0e4fee85fd1850c06e8c195c", null ],
     [ "calculate_scattering_curves", "scatter_8h.html#a911f3587ab1f950dbb3851b9a81790e8", null ],
@@ -21,5 +22,6 @@ var scatter_8h =
     [ "scatter_curve_integral", "scatter_8h.html#a239df0be03092e5ecd070689e8c9fc56", null ],
     [ "signal_intensity", "scatter_8h.html#a3c20b590469a94f059d0b9b32d4439ed", null ],
     [ "signal_intensity", "scatter_8h.html#abea29ac90a53108ecb181bcbe177ea0d", null ],
-    [ "write_scattering_curves", "scatter_8h.html#a96a78513215696f59337cc56eb92f911", null ]
+    [ "write_potential_curves", "scatter_8h.html#a60e55ac03a3832f5733c0bb3f6293bd5", null ],
+    [ "write_scattering_curves", "scatter_8h.html#ae11be43f1a5eb24f62d2e8b3816e83cc", null ]
 ];

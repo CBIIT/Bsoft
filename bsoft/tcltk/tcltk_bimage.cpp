@@ -1043,7 +1043,6 @@ Tcl_Obj*	do_stats(Bimage* p, int objc, Tcl_Obj *CONST objv[])
 	if ( objc < 4 ) return returnObj;
 	
 	int				img_num(-1), type(0), nvert(0), i, k;
-	double			sum(0), avg(0), std(0);
 	Vector3<double>	start, end;
 	
 	Tcl_GetIntFromObj(NULL, objv[3], &img_num);
@@ -1056,13 +1055,14 @@ Tcl_Obj*	do_stats(Bimage* p, int objc, Tcl_Obj *CONST objv[])
 	vector<double>		v = alist.split_into_doubles(" ");
 	long				n(v.size());
 	Vector3<double>*	poly = NULL;
+	vector<double>		stats;
 	
 	switch ( type ) {
 		case 1:
 		case 2: if ( n > 5 ) {
 					start = Vector3<long>((long)v[0], (long)v[1], (long)v[2]);
 					end = Vector3<long>((long)v[3], (long)v[4], (long)v[5]);
-					n = p->stats_in_shape(img_num, type, start, end, avg, std);
+					stats = p->stats_in_shape(img_num, type, start, end);
 				}
 				break;
 		case 3: nvert = n/3;
@@ -1073,7 +1073,7 @@ Tcl_Obj*	do_stats(Bimage* p, int objc, Tcl_Obj *CONST objv[])
 						poly[i] = Vector3<double>(v[k], v[k+1], v[k+2]);
 						cout << poly[i][0] << " " << poly[i][1] << " " << poly[i][2] << endl;
 					}
-					n = p->stats_in_poly(img_num, nvert, poly, avg, std);
+					stats = p->stats_in_poly(img_num, nvert, poly);
 					delete[] poly;
 				}
 				break;
@@ -1081,12 +1081,9 @@ Tcl_Obj*	do_stats(Bimage* p, int objc, Tcl_Obj *CONST objv[])
 				break;
 	}
 	
-	if ( poly ) delete[] poly;
-	
-	sum = n*avg;
-
 	char		string[MAXLINELEN];
-	snprintf(string, MAXLINELEN, "%ld %g %g %g", n, sum, avg, std);
+	snprintf(string, MAXLINELEN, "%ld %g %g %g %g %g", long(stats[0]),
+		stats[1], stats[2], stats[3], stats[4], stats[0]*stats[3]);
 	Tcl_AppendToObj(returnObj, string, strlen(string));
 
 	return returnObj;

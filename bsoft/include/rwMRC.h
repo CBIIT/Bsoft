@@ -106,7 +106,7 @@ struct MRChead {                		// file header for MRC data
         int ispg;               		// 22		space group number/ 2/3/4D config: 0=2D,sg=3D,sg+400=4D
         int nsymbt;             		// 23	92	bytes used for extended header
         float extra1[2];        		// 24		user-defined info
-		char exttype[4];				// 26		extended type (CCP4,MRCO,SERI,AGAR,FEI1)
+		char exttype[4];				// 26		extended type (CCP4,MRCO,SERI,AGAR,FEI1,JSON)
 		int nversion;        			// 27	108	version: year*10 + sub-version [0,9]
 		float extra2[10];        		// 28		user-defined info
 		int imodStamp;					// 38	152	IMOD stamp: 1146047817

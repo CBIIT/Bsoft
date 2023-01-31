@@ -73,7 +73,7 @@ int 	main(int argc, char **argv)
 	int				gextype(0);				// Type of gaussian used: 0 = single, 1 = atomic potential
 	double			Bfactor(0);				// B-factor = 30 angstrom squared
 	int 			spacegroup(1);
-	UnitCell		uc(0,0,0,M_PI_2,M_PI_2,M_PI_2);
+	UnitCell		uc;
 	Bstring			coorfile;				// Atomic coordinates
 	Bstring			mapfile;				// Map to compare with
 	Bstring			paramfile;				// Use default parameter file

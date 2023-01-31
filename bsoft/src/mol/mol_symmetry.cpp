@@ -228,7 +228,8 @@ int			molgroup_apply_symmetry_from_pdb(Bmolgroup* molgroup, Bstring& filename)
 	
     fpdb.close();
 	
-	Bmolecule		*mol, *newmol;
+	Bmolecule*		mol = molgroup->mol;
+	Bmolecule*		newmol = mol;
 	Bresidue		*res;
 	Batom			*atom;
 	int				nmol(0), m;
@@ -304,7 +305,8 @@ int			molgroup_apply_matrices_from_pdb(Bmolgroup* molgroup, Bstring& filename)
 	
     fpdb.close();
 
-	Bmolecule		*mol, *newmol;
+	Bmolecule*		mol = molgroup->mol;
+	Bmolecule*		newmol = mol;
 	Bresidue		*res;
 	Batom			*atom;
 	int				nmol(0), m;
@@ -971,18 +973,27 @@ double		molgroup_symmetry_B(Bmolgroup* molgroup, Bsymmetry& sym)
 int 		molgroup_generate_crystal(Bmolgroup* molgroup, UnitCell uc, Vector3<int> number)
 {
 	if ( number.volume() < 2 ) return 0;
-	
+/*
 	if ( !uc.check() ) {
 		cerr << "Error: Please specify the unit cell!" << endl;
 		return -1;
 	}
-	
+*/
 	int				i, x, y, z, nmol(0);
 	Vector3<double>	d;
-	Matrix3			mat(uc.a(), uc.b()*cos(uc.gamma()), uc.c()*cos(uc.beta()),
-						0, uc.b()*sin(uc.gamma()), uc.c()*(cos(uc.alpha()) - cos(uc.beta())*cos(uc.gamma()))/sin(uc.gamma()),
+/*	Matrix3			mat(uc.a(), uc.b()*cos(uc.gamma()), uc.c()*cos(uc.beta()),
+						0, uc.b()*sin(uc.gamma()), uc.c()*(cos(uc.alpha()) -cos(uc.beta())*cos(uc.gamma()))/sin(uc.gamma()),
 						0, 0, uc.volume()/(uc.a()*uc.b()*sin(uc.gamma())));
-	Bmolecule		*mol, *newmol;
+*/
+/*
+	Matrix3			mat(uc.a(), uc.b()*cos(uc.gamma()), uc.c()*cos(uc.beta()),
+						0, uc.b()*sin(uc.gamma()), uc.c()*(cos(uc.alpha()) -cos(uc.beta())*cos(uc.gamma()))/sin(uc.gamma()),
+						0, 0, uc.c());
+*/
+	Matrix3			mat = uc.skew_matrix_inverse();
+
+	Bmolecule*		mol = molgroup->mol;
+	Bmolecule*		newmol = mol;
 	Bresidue		*res, *newres;
 	Batom			*atom, *newatom;
 	

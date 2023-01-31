@@ -363,7 +363,7 @@ int 		ps_graph(ofstream* fps, Bplot* plot, int page_number)
 	*fps << "%";
 	for ( j=0; j<ncol; j++ ) {
 		col = page.column(j);
-		*fps << col.label() << " ";
+		*fps << col.label() << tab;
 	}
 	*fps << endl;
 	*fps << setprecision(8);
@@ -371,7 +371,7 @@ int 		ps_graph(ofstream* fps, Bplot* plot, int page_number)
 		for ( j=0; j<ncol; j++ ) {
 			c = page.column(j).number();
 //			cout << c << ":" << i << " " << (*plot)[c*nrow+i] << endl;
-			*fps << (*plot)[c*nrow+i] << " ";
+			*fps << (*plot)[c*nrow+i] << tab;
 		}
 		*fps << endl;
 	}

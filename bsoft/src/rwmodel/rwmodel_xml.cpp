@@ -1,9 +1,9 @@
 /**
 @file	rwmodel_xml.cpp
 @brief	Library routines to read and write XML model parameters
-@author Bernard Heymann
+@author 	Bernard Heymann
 @date	Created: 20081029
-@date	Modified: 20161004
+@date	Modified: 20221123
 **/
 
 #ifdef HAVE_XML
@@ -150,6 +150,7 @@ Bmodel*		read_model_xml(Bstring* file_list)
 					comp->density(xml_get_real(node, COMPONENT_DENSITY));
 					comp->FOM(xml_get_real(node, COMPONENT_FOM));
 					comp->select(xml_get_integer(node, COMPONENT_SELECT));
+					comp->description(xml_get_string(node, COMPONENT_DESCRIPTION));
 				}
 			}
 			link = NULL;
@@ -281,6 +282,7 @@ int			write_model_xml(Bstring& filename, Bmodel* model)
 			xml_set_real(comp_node, COMPONENT_DENSITY, comp->density(), "%8.3f");
 			xml_set_real(comp_node, COMPONENT_FOM, comp->FOM(), "%8.3f");
 			xml_set_integer(comp_node, COMPONENT_SELECT, comp->select(), "%4d");
+			xmlNewChild(type_node, NULL, BAD_CAST COMPONENT_DESCRIPTION, BAD_CAST comp->description().c_str());
 		}
 		for ( link = mp->link; link; link = link->next ) {
 			link_node = xmlNewChild(model_node, NULL, BAD_CAST COMPLINK, NULL);

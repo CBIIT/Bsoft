@@ -1,11 +1,9 @@
 var rwmodel_8cpp =
 [
     [ "comp_associated_links_kill", "rwmodel_8cpp.html#a3f6d8a4ff6b4ba32927200c1bbdecc29", null ],
-    [ "comp_type_kill", "rwmodel_8cpp.html#aaa8e791654c724b62eca98f30bc4fcbb", null ],
     [ "comp_type_list_kill", "rwmodel_8cpp.html#a10942a7d1017a448cf989936558e6a42", null ],
     [ "component_add", "rwmodel_8cpp.html#ade19326e0ae5215600898073e243a279", null ],
     [ "component_add", "rwmodel_8cpp.html#aee53429901b3393a3f5a986fcbd1ed67", null ],
-    [ "component_kill", "rwmodel_8cpp.html#af0b4ad605eb57ff0e0e27b57a36d764d", null ],
     [ "component_list_kill", "rwmodel_8cpp.html#ac1b9eab88cf92b96392fb308dec6d88b", null ],
     [ "link_add", "rwmodel_8cpp.html#a11651af6db6493817fde0a413036d110", null ],
     [ "link_add", "rwmodel_8cpp.html#a996e68b986b35d14a27bb1b88acc15ab", null ],

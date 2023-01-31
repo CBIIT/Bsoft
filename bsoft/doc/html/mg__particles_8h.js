@@ -1,6 +1,7 @@
 var mg__particles_8h =
 [
     [ "mg_find_part_centers", "mg__particles_8h.html#a20b479d1317983b450baec2e144adda0", null ],
+    [ "project_aberration_phase_difference", "mg__particles_8h.html#a31c14ba0d78431e826cbd9a06e547ce5", null ],
     [ "project_align_particles", "mg__particles_8h.html#a21b160ebd1952bd2a46dfed95e5f8c91", null ],
     [ "project_center_particles", "mg__particles_8h.html#a572792d8d3510bcab5f2bd2bd36a99bf", null ],
     [ "project_compare_particles", "mg__particles_8h.html#a7f91e58c5f4aee2b1192291c63332fc1", null ],

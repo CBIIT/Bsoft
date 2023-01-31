@@ -188,7 +188,7 @@ Bplot*		Bimage::fsc_dpr(double hi_res, double sampling_ratio, int flag)
 	plot->page(0).title(label());
 	plot->page(0).columns(ncol);
 	for ( i=0; i<ncol; i++ ) plot->page(0).column(i).number(i);
-	plot->page(0).column(0).label("s");
+	plot->page(0).column(0).label("Spatial Frequency A");
 	plot->page(0).column(0).axis(1);
 
 	if ( z > 1 ) plot->page(0).column(1).label("FSC");
@@ -292,7 +292,7 @@ Bplot*		Bimage::fsc(double hi_res, double sampling_ratio, vector<double>& fsccut
 		plot->page(nn).columns(2);
 		plot->page(nn).column(0).number(0);
 		plot->page(nn).column(1).number(nn+1);
-		plot->page(nn).column(0).label("s");
+		plot->page(nn).column(0).label("Spatial Frequency (A)");
 		plot->page(nn).column(0).axis(1);
 		if ( z > 1 ) plot->page(nn).column(1).label("FSC");
 		else plot->page(nn).column(1).label("FRC");
@@ -383,7 +383,7 @@ Bplot*		Bimage::fsc(Bimage* p, double hi_res, double sampling_ratio)
 		plot->page(nn).columns(2);
 		plot->page(nn).column(0).number(0);
 		plot->page(nn).column(1).number(nn+1);
-		plot->page(nn).column(0).label("s");
+		plot->page(nn).column(0).label("Spatial Frequency (A)");
 		plot->page(nn).column(0).axis(1);
 		if ( z > 1 ) plot->page(nn).column(1).label("FSC");
 		else plot->page(nn).column(1).label("FRC");

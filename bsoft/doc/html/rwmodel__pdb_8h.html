@@ -99,16 +99,16 @@ Functions</h2></td></tr>
 <tr class="memitem:afac48a22d3b3982f785287b84f89906c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_bmodel.html">Bmodel</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rwmodel__pdb_8h.html#afac48a22d3b3982f785287b84f89906c">read_model_pdb</a> (<a class="el" href="class_bstring.html">Bstring</a> *<a class="el" href="file__util_8cpp.html#a7ab6394d9aeeae9f7e26c62a32d97691">file_list</a>, <a class="el" href="class_bstring.html">Bstring</a> &amp;paramfile)</td></tr>
 <tr class="memdesc:afac48a22d3b3982f785287b84f89906c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads molecular model parameters.  <a href="rwmodel__pdb_8h.html#afac48a22d3b3982f785287b84f89906c">More...</a><br /></td></tr>
 <tr class="separator:afac48a22d3b3982f785287b84f89906c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d945b95be7d27185427fe07cf65c0b6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rwmodel__pdb_8h.html#a4d945b95be7d27185427fe07cf65c0b6">write_model_pdb</a> (<a class="el" href="class_bstring.html">Bstring</a> &amp;filename, <a class="el" href="class_bmodel.html">Bmodel</a> *<a class="el" href="tcltk__bmodel_8cpp.html#a828359eaa8de833b547ac96934f43841">model</a>)</td></tr>
-<tr class="memdesc:a4d945b95be7d27185427fe07cf65c0b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes molecular model parameters.  <a href="rwmodel__pdb_8h.html#a4d945b95be7d27185427fe07cf65c0b6">More...</a><br /></td></tr>
-<tr class="separator:a4d945b95be7d27185427fe07cf65c0b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac149a3369ca097f663237c229ad63e42"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="rwmodel__pdb_8h.html#ac149a3369ca097f663237c229ad63e42">write_model_pdb</a> (<a class="el" href="class_bstring.html">Bstring</a> &amp;filename, <a class="el" href="class_bmodel.html">Bmodel</a> *<a class="el" href="tcltk__bmodel_8cpp.html#a828359eaa8de833b547ac96934f43841">model</a>, int <a class="el" href="string__util_8cpp.html#aef351323c778aa1ecedb0198537394b1">split</a>)</td></tr>
+<tr class="memdesc:ac149a3369ca097f663237c229ad63e42"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes molecular model parameters.  <a href="rwmodel__pdb_8h.html#ac149a3369ca097f663237c229ad63e42">More...</a><br /></td></tr>
+<tr class="separator:ac149a3369ca097f663237c229ad63e42"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Header file for reading and writing molecular model parameters. </p>
 <dl class="section author"><dt>Author</dt><dd>Bernard Heymann </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>Created: 20211231 </dd>
 <dd>
-Modified: 20220101 </dd></dl>
+Modified: 20220929 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="afac48a22d3b3982f785287b84f89906c" name="afac48a22d3b3982f785287b84f89906c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afac48a22d3b3982f785287b84f89906c">&#9670;&nbsp;</a></span>read_model_pdb()</h2>
@@ -144,12 +144,20 @@ Modified: 20220101 </dd></dl>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>Bmodel* model parameters. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Bmodel* model parameters. <pre class="fragment">Each file is considered a separate model.
+
+The component description field contains the following detail as a space-separated list:
+    element
+    atom type
+    residue type
+    chain id
+    residue number
+</pre> </dd></dl>
 
 </div>
 </div>
-<a id="a4d945b95be7d27185427fe07cf65c0b6" name="a4d945b95be7d27185427fe07cf65c0b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d945b95be7d27185427fe07cf65c0b6">&#9670;&nbsp;</a></span>write_model_pdb()</h2>
+<a id="ac149a3369ca097f663237c229ad63e42" name="ac149a3369ca097f663237c229ad63e42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac149a3369ca097f663237c229ad63e42">&#9670;&nbsp;</a></span>write_model_pdb()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -164,7 +172,13 @@ Modified: 20220101 </dd></dl>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_bmodel.html">Bmodel</a> *&#160;</td>
-          <td class="paramname"><em>model</em>&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>split</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -179,10 +193,12 @@ Modified: 20220101 </dd></dl>
   <table class="params">
     <tr><td class="paramname">&amp;filename</td><td>model parameter file name. </td></tr>
     <tr><td class="paramname">*model</td><td>model parameters. </td></tr>
+    <tr><td class="paramname">split</td><td>flag to split into individual files and number of digits for the insert. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>int models written. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>int files written. <pre class="fragment">if ( split=0 ) only the first model is written
+</pre> </dd></dl>
 
 </div>
 </div>
@@ -192,7 +208,7 @@ Modified: 20220101 </dd></dl>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="rwmodel__pdb_8h.html">rwmodel_pdb.h</a></li>
-    <li class="footer">Generated on Fri Jan 7 2022 02:32:16 for Bsoft by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
+    <li class="footer">Generated on Tue Jan 31 2023 08:21:29 for Bsoft by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
   </ul>
 </div>
 </body>

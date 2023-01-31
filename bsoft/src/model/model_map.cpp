@@ -828,6 +828,7 @@ Bimage*		scatter_one_img(Bcomponent* comp, Bimage* p,
 				vector<double>& scurve, CTFparam cp, double ds, double scut, int flag)
 {
 	Bimage*			pone = new Bimage(Float, TComplex, p->size(), 1);
+	pone->sampling(p->image->sampling());
 
 	scatter_one(comp, pone, scurve, cp, ds, scut, flag);
 
@@ -1064,7 +1065,7 @@ int			img_electron_scattering(Bmodel* model, Bimage* p,
 	
 //	if ( scut > 0.5/p->sampling(0)[0] ) scut = 0.5/p->sampling(0)[0];
 
-	double			ds(0.01), smax(5);
+	double			ds(0.01), smax(1.1*scut);
 	
 	map<string,Bcomptype>	atompar = read_atom_properties(atompropfile);
 	

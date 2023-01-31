@@ -94,6 +94,7 @@ $(document).ready(function(){initNavTree('model__symmetry_8h.html',''); initResi
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="rwmodel_8h.html">rwmodel.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_view_8h.html">View.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_unit_cell_8h.html">UnitCell.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_bstring_8h.html">Bstring.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -113,13 +114,16 @@ Functions</h2></td></tr>
 <tr class="memitem:a933e8a33de9c60605e7fb815ec43cc0c"><td class="memItemLeft" align="right" valign="top">long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="model__symmetry_8h.html#a933e8a33de9c60605e7fb815ec43cc0c">model_symmetry_related</a> (<a class="el" href="class_bmodel.html">Bmodel</a> *<a class="el" href="tcltk__bmodel_8cpp.html#a828359eaa8de833b547ac96934f43841">model</a>, string &amp;symmetry_string)</td></tr>
 <tr class="memdesc:a933e8a33de9c60605e7fb815ec43cc0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates a list of symmetry-related models.  <a href="model__symmetry_8h.html#a933e8a33de9c60605e7fb815ec43cc0c">More...</a><br /></td></tr>
 <tr class="separator:a933e8a33de9c60605e7fb815ec43cc0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7257c84b777ccc78aa255bfca4269c4f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="model__symmetry_8h.html#a7257c84b777ccc78aa255bfca4269c4f">model_generate_lattice</a> (<a class="el" href="class_bmodel.html">Bmodel</a> *<a class="el" href="tcltk__bmodel_8cpp.html#a828359eaa8de833b547ac96934f43841">model</a>, <a class="el" href="class_unit_cell.html">UnitCell</a> uc, <a class="el" href="class_vector3.html">Vector3</a>&lt; long &gt; lattice)</td></tr>
+<tr class="memdesc:a7257c84b777ccc78aa255bfca4269c4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates unit cells from a set of coordinates.  <a href="model__symmetry_8h.html#a7257c84b777ccc78aa255bfca4269c4f">More...</a><br /></td></tr>
+<tr class="separator:a7257c84b777ccc78aa255bfca4269c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Library routines used for model symmetry operations. </p>
 <dl class="section author"><dt>Author</dt><dd>Bernard Heymann </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>Created: 20060908 </dd>
 <dd>
-Modified: 20191101 </dd></dl>
+Modified: 20221109 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a231bf560b4198e4d3d0ceee4dfae1709" name="a231bf560b4198e4d3d0ceee4dfae1709"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a231bf560b4198e4d3d0ceee4dfae1709">&#9670;&nbsp;</a></span>model_apply_point_group()</h2>
@@ -216,6 +220,53 @@ Modified: 20191101 </dd></dl>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>long number of components (&lt;0 means failure). <pre class="fragment">Only the first model is processed.
+</pre> </dd></dl>
+
+</div>
+</div>
+<a id="a7257c84b777ccc78aa255bfca4269c4f" name="a7257c84b777ccc78aa255bfca4269c4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7257c84b777ccc78aa255bfca4269c4f">&#9670;&nbsp;</a></span>model_generate_lattice()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int model_generate_lattice </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_bmodel.html">Bmodel</a> *&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_unit_cell.html">UnitCell</a>&#160;</td>
+          <td class="paramname"><em>uc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_vector3.html">Vector3</a>&lt; long &gt;&#160;</td>
+          <td class="paramname"><em>lattice</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates unit cells from a set of coordinates. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">*model</td><td>molecule group. </td></tr>
+    <tr><td class="paramname">uc</td><td>unit cell dimensions. </td></tr>
+    <tr><td class="paramname">lattice</td><td>number of unit cells in each lattice direction. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>int 0, &lt;0 if error. <pre class="fragment">The input model is replicated to generate the requested number
+of copies in each lattice direction.
 </pre> </dd></dl>
 
 </div>
@@ -366,7 +417,7 @@ of the closest symmetry-related components.
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="model__symmetry_8h.html">model_symmetry.h</a></li>
-    <li class="footer">Generated on Fri Jan 7 2022 02:32:16 for Bsoft by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
+    <li class="footer">Generated on Tue Jan 31 2023 08:21:29 for Bsoft by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
   </ul>
 </div>
 </body>

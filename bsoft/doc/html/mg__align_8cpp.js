@@ -9,7 +9,7 @@ var mg__align_8cpp =
     [ "fit_progressive_snr2", "mg__align_8cpp.html#a363de496d1b3ece3bcdb6571ac6a02b7", null ],
     [ "img_align", "mg__align_8cpp.html#a19ceb9be403a648693874979f82d7feb", null ],
     [ "img_extract_features", "mg__align_8cpp.html#af30fb46fb1b5157378f74ab1a7a61c38", null ],
-    [ "img_filter_spikes", "mg__align_8cpp.html#abce0b9aaef5405f0150d5fe7453109cd", null ],
+    [ "img_filter_spikes", "mg__align_8cpp.html#aeb76e2634ab079c8399943a81a32e657", null ],
     [ "img_sum_subset", "mg__align_8cpp.html#ab297567bb3fb167eed485b655eabba37", null ],
     [ "mg_align_coordinates", "mg__align_8cpp.html#a9662f805dd1b4f10fb35674c1d8fa69b", null ],
     [ "mg_align_feature_extraction", "mg__align_8cpp.html#a5d2476a740a9726a32dc3b6015793e4a", null ],

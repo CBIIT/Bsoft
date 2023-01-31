@@ -2,6 +2,8 @@ var class_bpage =
 [
     [ "Bpage", "class_bpage.html#a06e126701a6b1384d2f35b2ff8b6a65a", null ],
     [ "Bpage", "class_bpage.html#a28211dbefc91907b9c64278b6db42ed2", null ],
+    [ "~Bpage", "class_bpage.html#a4984e5177ea528fe1d7d32df1c49fe5f", null ],
+    [ "add_columns", "class_bpage.html#a7028660d7dc36d8d7453d90aa873aa3e", null ],
     [ "add_text", "class_bpage.html#a75d3e8916c6ba5fefc59b2f1a00ff514", null ],
     [ "axes", "class_bpage.html#abfdf7409d90f950b4f739b7950627bc0", null ],
     [ "axis", "class_bpage.html#a6b8aaff30638eaddba36e0b102e7df7e", null ],

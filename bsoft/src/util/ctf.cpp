@@ -29,8 +29,8 @@ int			CTFparam::update(CTFparam& ctf)
 	if ( ctf.objective_aperture() ) oa = ctf.objective_aperture();		// Objective aperture (angstrom)
 //	if ( ctf.Cs() ) Cs(ctf.Cs());						// Spherical aberation (angstrom)
 	if ( ctf.Cc() ) cc = ctf.Cc();						// Chromatic aberation (angstrom)
-	if ( ctf.beam_tiltX() ) tx = ctf.beam_tiltX();	// Beam tilt (radian)
-	if ( ctf.beam_tiltY() ) ty = ctf.beam_tiltY();	// Beam tilt (radian)
+//	if ( ctf.beam_tiltX() ) tx = ctf.beam_tiltX();	// Beam tilt (radian)
+//	if ( ctf.beam_tiltY() ) ty = ctf.beam_tiltY();	// Beam tilt (radian)
 	if ( ctf.alpha() ) a = ctf.alpha();					// Illumination half-angle (radians)
 	if ( ctf.dE() ) de = ctf.dE();						// Energy spread (eV)
 //	if ( ctf.amp_shift() ) amp_shift(ctf.amp_shift());	// CTF amplitude phase shift (radians)
@@ -377,6 +377,9 @@ Bstring		CTFparam::envelope_equation()
 			enveq += Bstring(env[1], " + %.4g") + Bstring(env[2], "*exp(%.4g*$s2)") +
 				Bstring(env[3], " + %.4g") + Bstring(env[4], "*exp(%.4g*$s2)");
 			break;
+		case 5:		// Hyperbolic decay with constant
+			enveq += Bstring(env[1], " + %.4g/$s");
+			break;
 		default: break;
 	}
 
@@ -399,7 +402,7 @@ int			CTFparam::parse_baseline_equation(Bstring base_eq)
 		
 	int 		n(0);
 		
-	if ( base_eq.contains("s4") ) {				// Polynomial
+	if ( base_eq.contains("s3") ) {				// Polynomial
 		bt = 1;	
 		sscanf(base_eq.c_str(), "%lf + %lf*$s + %lf*$s2 + %lf*$s3 + %lf*$s4%n",
 			   &base[0], &base[1], &base[2], &base[3], &base[4], &n);
@@ -417,6 +420,7 @@ int			CTFparam::parse_baseline_equation(Bstring base_eq)
 		base[1] = base[2] = base[3] = base[4] = 0;
 	}
 
+	// Water ring
 	char*		ptr = &base_eq[n];
 	if ( strstr(ptr, "exp") ) {
 //		cout << ptr << endl;
@@ -446,9 +450,11 @@ int			CTFparam::parse_envelope_equation(Bstring env_eq)
 {
 	env_eq = env_eq.remove('"');
 	
-	et = 2*env_eq.count('s') - 1;
-	if ( env_eq.index('+') > 0 )
-		if ( env_eq.index('+') < env_eq.index('*') ) et++;
+	if ( env_eq.contains("s2") ) {
+		et = 2*env_eq.count('s') - 1;
+		if ( env_eq.index('+') > 0 )
+			if ( env_eq.index('+') < env_eq.index('*') ) et++;
+	} else et = 5;
 	
 //	cout << et << tab << env_eq << endl;
 
@@ -468,6 +474,10 @@ int			CTFparam::parse_envelope_equation(Bstring env_eq)
 		case 4:		// Double gaussian with constant
 			sscanf(env_eq.c_str(), "%lf + %lf*exp(%lf*$s2) + %lf*exp(%lf*$s2)",
 		   		&env[0], &env[1], &env[2], &env[3], &env[4]);
+			break;
+		case 5:		// Double gaussian with constant
+			sscanf(env_eq.c_str(), "%lf + %lf/$s",
+		   		&env[0], &env[1]);
 			break;
 		default:
 			et = 4;
@@ -526,7 +536,7 @@ References:
 vector<double>	CTFparam::envelope_partial_coherence(long n, double freq_step)
 {
 	long			i;
-    double			l = lambda(), Csl2(Cs()*l*l);
+    double			Csl2(Cs()*wl*wl);
 	double			s, arg, pal(M_PI*a);
 	vector<double>	curve(n);
 	
@@ -589,7 +599,7 @@ vector<double>	CTFparam::envelope_energy_spread(long n, double freq_step)
 	double			s, arg;
 //	double			fac(1.0/(16*log(2.0)));
 	double			fac(0.5);
-    double			l = lambda(), deccl(M_PI*l*cc*de/av);
+    double			deccl(M_PI*wl*cc*de/av);
 	vector<double>	curve(n);
 	
 	for ( i=0; i<n; i++ ) {

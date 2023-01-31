@@ -194,10 +194,6 @@ int		main(int argc, char** argv)
 	double			ti = timer_start();
 
 	CTFparam		cp = ctf_from_json(jsctf);
-/*	if ( ewald_flag ) {
-		if ( ewald_flag > 0 ) cp.ewald(1);
-		else cp.ewald(-1);
-	}*/
 	cp.defocus_average(def_avg);
 	cp.astigmatism(def_dev, ast_angle);
 	

@@ -1,9 +1,9 @@
 /**
 @file	model_symmetry.cpp
 @brief	Library routines used for model symmetry operations
-@author Bernard Heymann
+@author 	Bernard Heymann
 @date	Created: 20060908
-@date	Modified: 20191101
+@date	Modified: 20221115
 **/
 
 #include "model_util.h"
@@ -392,3 +392,57 @@ long		model_symmetry_related(Bmodel* model, string& symmetry_string)
 	
 	return ncomp;
 }
+
+/**
+@brief 	Generates unit cells from a set of coordinates.
+@param 	*model		molecule group.
+@param 	uc			unit cell dimensions.
+@param 	lattice		number of unit cells in each lattice direction.
+@return int 			0, <0 if error.
+
+	The input model is replicated to generate the requested number
+	of copies in each lattice direction.
+
+**/
+int 		model_generate_lattice(Bmodel* model, UnitCell uc, Vector3<long> lattice)
+{
+	if ( lattice.volume() < 2 ) return 0;
+
+	int				i, x, y, z, nmodel(0);
+	Vector3<double>	d;
+	Matrix3			mat = uc.skew_matrix_inverse();
+	Bmodel*			mp = model;
+	Bmodel*			nu_mp = mp;
+	Bcomponent		*comp;
+	
+	for ( nmodel=0, mp = model; mp; mp = mp->next ) {
+		nmodel++;
+		nu_mp = mp;
+	}
+	
+	if ( verbose ) {
+		cout << "Generating new unit cells for " << nmodel << " models:" << endl;
+		cout << "Lattice:                        " << lattice << " = " << (long)lattice.volume() << endl;
+		cout << mat << endl;
+	}
+	
+	for ( z=0; z<lattice[2]; z++ ) {
+		for ( y=0; y<lattice[1]; y++ ) {
+			for ( x=0; x<lattice[0]; x++ ) {
+				d = Vector3<double>(x,y,z);
+				d = mat * d;
+				if ( verbose & VERB_FULL )
+					cout << "Generating unit cell:           " << x << " " << y << " " << z << tab << d << endl;
+				if ( x+y+z > 0 ) for ( i=0, mp = model; i<nmodel; mp = mp->next, i++ ) {
+					nu_mp->next = mp->copy();
+					nu_mp = nu_mp->next;
+					for ( comp = nu_mp->comp; comp; comp = comp->next )
+						comp->location() = comp->location() + d;
+				}
+			}
+		}
+	}
+	
+	return 0;
+}
+

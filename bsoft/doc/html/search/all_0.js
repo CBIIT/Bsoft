@@ -83,12 +83,13 @@ var searchData=
   ['_5fsystype_5f_80',['_systype_',['../utilities_8h.html#a4feef126b496a550a29cebd57a4ccd6d',1,'utilities.h']]],
   ['_5ftransform_5f8cpp_2ejs_81',['_transform_8cpp.js',['../__transform__8cpp_8js.html',1,'']]],
   ['_5ftransform_5f8h_2ejs_82',['_transform_8h.js',['../__transform__8h_8js.html',1,'']]],
-  ['_5funit_5fcell_5f8cpp_2ejs_83',['_unit_cell_8cpp.js',['../__unit__cell__8cpp_8js.html',1,'']]],
-  ['_5funit_5fcell_5f8h_2ejs_84',['_unit_cell_8h.js',['../__unit__cell__8h_8js.html',1,'']]],
-  ['_5funitcell_5f_85',['_UnitCell_',['../_unit_cell_8h.html#ab8ca435a3f87acf05cb6af0802866add',1,'UnitCell.h']]],
-  ['_5fvector3_5f8h_2ejs_86',['_vector3_8h.js',['../__vector3__8h_8js.html',1,'']]],
-  ['_5fversions_5f_87',['_VERSIONS_',['../versions_8h.html#abb37c3855ad21b49f91317e5b53257ba',1,'versions.h']]],
-  ['_5fview2_5f8h_2ejs_88',['_view2_8h.js',['../__view2__8h_8js.html',1,'']]],
-  ['_5fview_5f8cpp_2ejs_89',['_view_8cpp.js',['../__view__8cpp_8js.html',1,'']]],
-  ['_5fview_5f8h_2ejs_90',['_view_8h.js',['../__view__8h_8js.html',1,'']]]
+  ['_5ftrig_5fl_5fu_5ft_5f8cpp_2ejs_83',['_trig_l_u_t_8cpp.js',['../__trig__l__u__t__8cpp_8js.html',1,'']]],
+  ['_5funit_5fcell_5f8cpp_2ejs_84',['_unit_cell_8cpp.js',['../__unit__cell__8cpp_8js.html',1,'']]],
+  ['_5funit_5fcell_5f8h_2ejs_85',['_unit_cell_8h.js',['../__unit__cell__8h_8js.html',1,'']]],
+  ['_5funitcell_5f_86',['_UnitCell_',['../_unit_cell_8h.html#ab8ca435a3f87acf05cb6af0802866add',1,'UnitCell.h']]],
+  ['_5fvector3_5f8h_2ejs_87',['_vector3_8h.js',['../__vector3__8h_8js.html',1,'']]],
+  ['_5fversions_5f_88',['_VERSIONS_',['../versions_8h.html#abb37c3855ad21b49f91317e5b53257ba',1,'versions.h']]],
+  ['_5fview2_5f8h_2ejs_89',['_view2_8h.js',['../__view2__8h_8js.html',1,'']]],
+  ['_5fview_5f8cpp_2ejs_90',['_view_8cpp.js',['../__view__8cpp_8js.html',1,'']]],
+  ['_5fview_5f8h_2ejs_91',['_view_8h.js',['../__view__8h_8js.html',1,'']]]
 ];

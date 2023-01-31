@@ -15,6 +15,10 @@ set bshow_script $Bsoft/tcltk
 set bshow_lib $Bsoft/lib
 set bsoft_bin $Bsoft/bin
 
+## @brief Writes a command to a file.
+#
+# @param	filename	file name.
+# @param	mode		access mode.
 proc saveCommand { filename mode } {
 	global command
 
@@ -25,11 +29,9 @@ proc saveCommand { filename mode } {
 	close $f
 }
 
-# fileDialog
-# A file is selected for reading or writing using a standard dialog
+## @brief Selects a file for reading or writing using a standard dialog
 #
-# Arguments:
-# operation 	"save" or "append".
+# @param	operation 	"save" or "append".
 
 proc fileDialog { operation } {
 	set filename [tk_getSaveFile]
@@ -43,14 +45,11 @@ proc fileDialog { operation } {
 	}
 }
 
-# constructCommand
-# Constructs the command line from a list containing the program name,
-# the options, and the file names
+## @brief Constructs the command line from a list containing the program name, the options, and the file names
 #
-# Arguments:
-# c 			the entry for the command
-# f 			the frame for files
-# t 			the text with options
+# @param c 			the entry for the command
+# @param f 			the frame for files
+# @param t 			the text with options
 
 proc constructCommand { c f t } {
 	set cmd [lindex [$c get] 0]
@@ -76,14 +75,12 @@ proc constructCommand { c f t } {
 	$c insert 0 $cmd
 }
 
-# parseUsageLine
-# Parses the usage line
+## @brief Parses the usage line
 #
-# Arguments:
-# c 			the entry for the command
-# f 			the frame for files
-# t 			the text with options
-# line 			the line
+# @param c 			the entry for the command
+# @param f 			the frame for files
+# @param t 			the text with options
+# @param line 		the line
 
 proc parseUsageLine { c f t line } {
 	global font
@@ -110,14 +107,12 @@ proc parseUsageLine { c f t line } {
 	pack .usage -side bottom -pady 2 -anchor w
 }
 
-# parseOptionLine
-# Parses one line starting with an option
+## @brief Parses one line starting with an option
 #
-# Arguments:
-# c 			the entry for the command
-# f 			the frame for files
-# t 			the text with options
-# line 			the line
+# @param c 			the entry for the command
+# @param f 			the frame for files
+# @param t 			the text with options
+# @param line 		the line
 
 proc parseOptionLine { c f t line } {
 	global font smallfont
@@ -156,12 +151,10 @@ proc parseOptionLine { c f t line } {
 	bind $w.e1 <KeyRelease> "constructCommand $c $f $t"
 }
 
-# parseCommand
-# Parses a command line to fill in options
+## @brief Parses a command line to fill in options
 #
-# Argument:
-# t 			text window name
-# cmd 			command line
+# @param t 			text window name
+# @param cmd 		command line
 
 proc parseCommand { t cmd } {
 	set vf 0
@@ -186,12 +179,10 @@ proc parseCommand { t cmd } {
 	}
 }
 
-# selectProgram
-# Select the program and get the options from the program
+## @brief Selects the program and get the options from the program
 #
-# Argument:
-# w 			window name
-# cmd 			command line
+# @param w 			window name
+# @param cmd 		command line
 
 proc selectProgram { w cmd } {
 	global font
@@ -258,12 +249,10 @@ proc selectProgram { w cmd } {
 	parseCommand $t $cmd
 }
 
-# programInterface
-# Generate the program interface
+## @brief Generates the program interface
 #
-# Argument:
-# w 			window name
-# cl			command line
+# @param w 			window name
+# @param cl			command line
 
 proc programInterface { w cl } {
 	global bsoft_bin

@@ -1,6 +1,8 @@
 var scatter_8cpp =
 [
     [ "all_elements", "scatter_8cpp.html#acaeba4c5eac618c10f324171311312e0", null ],
+    [ "calculate_potential_curve", "scatter_8cpp.html#a0d4b17e0447e99daeafa04b4dfcdbcef", null ],
+    [ "calculate_potential_curves", "scatter_8cpp.html#ab36d71a14e1e31f6e5a5880eda94f6ab", null ],
     [ "calculate_scattering_curve", "scatter_8cpp.html#a78024d62474fbfc1b79edc25f91e5189", null ],
     [ "calculate_scattering_curves", "scatter_8cpp.html#a2e602abd0e4fee85fd1850c06e8c195c", null ],
     [ "calculate_scattering_curves", "scatter_8cpp.html#a911f3587ab1f950dbb3851b9a81790e8", null ],
@@ -14,7 +16,6 @@ var scatter_8cpp =
     [ "elastic_cross_section", "scatter_8cpp.html#ae30113e980c5bd1cef84f5dfe0b0beb2", null ],
     [ "elastic_cross_section_integrated", "scatter_8cpp.html#a882f0097bc8a9e248182ba0a059743f8", null ],
     [ "elastic_cross_section_integrated", "scatter_8cpp.html#a9797038083b4d03efabeb9d0f50940e4", null ],
-    [ "gold_density", "scatter_8cpp.html#aa471254806fd2c58f95f114b62c95d48", null ],
     [ "ice_cross_section", "scatter_8cpp.html#aff91ca8154dce67488f69fb0b2191ce3", null ],
     [ "ice_intensity", "scatter_8cpp.html#aa582a4622bc3a81efea95ea7c0db9842", null ],
     [ "inelastic_cross_section_langmore", "scatter_8cpp.html#a25fb12434bbf91df242865860068a0c9", null ],
@@ -29,7 +30,8 @@ var scatter_8cpp =
     [ "signal_integrated_new", "scatter_8cpp.html#aeda720e54f495604410689f729a500f1", null ],
     [ "signal_intensity", "scatter_8cpp.html#a3c20b590469a94f059d0b9b32d4439ed", null ],
     [ "signal_intensity", "scatter_8cpp.html#abea29ac90a53108ecb181bcbe177ea0d", null ],
-    [ "write_scattering_curves", "scatter_8cpp.html#a96a78513215696f59337cc56eb92f911", null ],
+    [ "write_potential_curves", "scatter_8cpp.html#a60e55ac03a3832f5733c0bb3f6293bd5", null ],
+    [ "write_scattering_curves", "scatter_8cpp.html#ae11be43f1a5eb24f62d2e8b3816e83cc", null ],
     [ "string_is_empty", "scatter_8cpp.html#adeeef9c94ab043ee0d1eca1006158096", null ],
     [ "verbose", "scatter_8cpp.html#a0b2caeb4b6f130be43e5a2f0267dd453", null ]
 ];

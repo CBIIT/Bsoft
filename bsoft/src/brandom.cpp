@@ -26,7 +26,9 @@ const char* use[] = {
 " ",
 "Actions:",
 "-type gauss              Distribution type (default: uniform, ",
-"                         others: gaussian, poisson, logistical, spectral, distance).",
+"                         others: gaussian, poisson, logistical, spectral).",
+"-distance gauss          Distance distribution type (default: uniform, ",
+"                         others: gaussian)",
 "-rescale -0.1,5.2        Rescale output data to average and standard deviation.",
 " ",
 "Parameters:",
@@ -62,6 +64,7 @@ int 	main(int argc, char **argv)
 	double			snr(1);							// Signal-to-noise ratio
 	double			foreground_radius(0);			// Foreground radius
 	int 			rand_type(0);					// Default uniform distribution
+	int 			dist_type(0);					// Default uniform distribution
 	
 	int				optind;
 	Boption*		option = get_option_list(use, argc, argv, optind);
@@ -87,9 +90,14 @@ int 	main(int argc, char **argv)
 			else if ( curropt->value[0] == 'p' ) rand_type = 2;
 			else if ( curropt->value[0] == 'l' ) rand_type = 3;
 			else if ( curropt->value[0] == 's' ) rand_type = 4;
-			else if ( curropt->value[0] == 'd' ) rand_type = 5;
 			else
 				cerr << "-type: Type " << curropt->value << " not supported! Default to uniform distribution" << endl;
+		}
+		if ( curropt->tag == "distance" ) {
+			if ( curropt->value[0] == 'u' ) dist_type = 1;
+			else if ( curropt->value[0] == 'g' ) dist_type = 2;
+			else
+				cerr << "-distance: Distance type " << curropt->value << " not supported! Default to uniform distribution" << endl;
 		}
 		if ( curropt->tag == "minmax" ) {
 			if ( curropt->values(min, max) < 2 )
@@ -162,6 +170,14 @@ int 	main(int argc, char **argv)
 	}
 
 	pran = new Bimage(Float, TSimple, size, nimg);
+
+	if ( set_sampling ) pran->sampling(sampling);
+	
+	if ( set_origin ) {
+		if ( set_origin == 2 ) pran->origin(pran->size()/2);
+		else pran->origin(origin);
+	}
+	
 	switch ( rand_type ) {
 		case 1:
 			pran->noise_gaussian(avg, std);
@@ -175,11 +191,19 @@ int 	main(int argc, char **argv)
 		case 4:
 			pran->noise_spectral(alpha);
 			break;
-		case 5:
+		default:
+			if ( dist_type < 1 ) pran->noise_uniform(min, max);
+			break;
+	}
+	
+	switch ( dist_type ) {
+		case 1:
 			pran->noise_uniform_distance(avg*pran->size().volume());
 			break;
+		case 2:
+			pran->noise_gaussian_distance(avg*pran->size().volume(), std);
+			break;
 		default:
-			pran->noise_uniform(min, max);
 			break;
 	}
 	
@@ -198,13 +222,6 @@ int 	main(int argc, char **argv)
 	}
 	
 	pran->change_type(nudatatype);
-	
-	if ( set_sampling ) pran->sampling(sampling);
-	
-	if ( set_origin ) {
-		if ( set_origin == 2 ) pran->origin(pran->size()/2);
-		else pran->origin(origin);
-	}
 	
 	if ( optind < argc )
 		write_img(argv[optind], pran, 0);

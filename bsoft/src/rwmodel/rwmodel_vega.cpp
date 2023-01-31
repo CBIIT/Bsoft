@@ -1,9 +1,9 @@
 /**
 @file	rwmodel_vega.cpp
 @brief	Library routines to read and write Vega model parameters
-@author Bernard Heymann
+@author 	Bernard Heymann
 @date	Created: 20060919
-@date	Modified: 20120211
+@date	Modified: 20221115
 **/
 
 #include "rwmodel.h"
@@ -97,20 +97,24 @@ Bmodel*		read_model_vega(Bstring* file_list)
 @brief 	Writes Vega model parameters.
 @param 	&filename	model parameter file name.
 @param 	*model		model parameters.
+@param 	split		flag to split into separate models.
 @return int			models written.
 **/
-int			write_model_vega(Bstring& filename, Bmodel* model)
+int			write_model_vega(Bstring& filename, Bmodel* model, int split)
 {
 	int				n;
 	Bmodel*			mp = NULL;
 	Bcomponent*		comp;
 	Bstring			onename;
-	
+	char			format[32];
+
+	snprintf(format, 32, "_%%0%dd.", split);
+
 	ofstream		fmod;
 
 	for ( n=0, mp = model; mp; mp = mp->next, n++ ) {
 		if ( model->next )
-			onename = filename.pre_rev('.') + Bstring(n+1, "_%04d.") + filename.post_rev('.');
+			onename = filename.pre_rev('.') + Bstring(n+1, format) + filename.post_rev('.');
 		else
 			onename = filename;
 		fmod.open(onename.c_str());

@@ -51,9 +51,10 @@ var searchData=
   ['dmerge_2ecpp_48',['dmerge.cpp',['../dmerge_8cpp.html',1,'']]],
   ['dmerge_5f8cpp_2ejs_49',['dmerge_8cpp.js',['../dmerge__8cpp_8js.html',1,'']]],
   ['dose_2einc_50',['dose.inc',['../dose_8inc.html',1,'']]],
-  ['dynamic_5f_5fprogramming_5f8cpp_2ejs_51',['dynamic__programming_8cpp.js',['../dynamic____programming__8cpp_8js.html',1,'']]],
-  ['dynamic_5f_5fprogramming_5f8h_2ejs_52',['dynamic__programming_8h.js',['../dynamic____programming__8h_8js.html',1,'']]],
-  ['dynamic_5fprogramming_2ecpp_53',['dynamic_programming.cpp',['../dynamic__programming_8cpp.html',1,'']]],
-  ['dynamic_5fprogramming_2eh_54',['dynamic_programming.h',['../dynamic__programming_8h.html',1,'']]],
-  ['dynsections_2ejs_55',['dynsections.js',['../dynsections_8js.html',1,'']]]
+  ['dose_5f8inc_2ejs_51',['dose_8inc.js',['../dose__8inc_8js.html',1,'']]],
+  ['dynamic_5f_5fprogramming_5f8cpp_2ejs_52',['dynamic__programming_8cpp.js',['../dynamic____programming__8cpp_8js.html',1,'']]],
+  ['dynamic_5f_5fprogramming_5f8h_2ejs_53',['dynamic__programming_8h.js',['../dynamic____programming__8h_8js.html',1,'']]],
+  ['dynamic_5fprogramming_2ecpp_54',['dynamic_programming.cpp',['../dynamic__programming_8cpp.html',1,'']]],
+  ['dynamic_5fprogramming_2eh_55',['dynamic_programming.h',['../dynamic__programming_8h.html',1,'']]],
+  ['dynsections_2ejs_56',['dynsections.js',['../dynsections_8js.html',1,'']]]
 ];

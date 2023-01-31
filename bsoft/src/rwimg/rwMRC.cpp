@@ -184,7 +184,6 @@ int 	readMRC(Bimage* p, int readdata, int img_select)
 	p->standard_deviation(header->arms);
 
 	UnitCell	uc(header->a, header->b, header->c, header->alpha, header->beta, header->gamma);
-	uc.degrees_to_radians();
 	p->unit_cell(uc);
 	
 	if ( header->mx && header->my && header->mz )

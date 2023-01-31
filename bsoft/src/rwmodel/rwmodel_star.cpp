@@ -1,9 +1,9 @@
 /**
 @file	rwmodel_star.cpp
 @brief	Library routines to read and write STAR model parameters
-@author Bernard Heymann
+@author 	Bernard Heymann
 @date	Created: 20060919
-@date	Modified: 20210819
+@date	Modified: 20221123
 **/
 
 #include "rwmodel.h"
@@ -80,6 +80,7 @@ map<string, int>	component_tags()
 	tag[COMPONENT_DENSITY] = 14;
 	tag[COMPONENT_FOM] = 15;
 	tag[COMPONENT_SELECT] = 16;
+	tag[COMPONENT_DESCRIPTION] = 17;
 
 	return tag;
 }
@@ -197,6 +198,7 @@ Bmodel*		read_model_star(Bstring* file_list)
 					if ( ( j = il.find(COMPONENT_DENSITY) ) >= 0 ) comp->density(stod(ir[j]));
 					if ( ( j = il.find(COMPONENT_FOM) ) >= 0 ) comp->FOM(stod(ir[j]));
 					if ( ( j = il.find(COMPONENT_SELECT) ) >= 0 ) comp->select(stol(ir[j]));
+					if ( ( j = il.find(COMPONENT_DESCRIPTION) ) >= 0 ) comp->description(ir[j]);
 				}
 			} else if ( ( k = il.find(COMPLINK_1) ) >= 0 ) {
 //				cout << "COMPLINK_1 found: " << COMPLINK_1 << endl;
@@ -293,7 +295,7 @@ int			write_model_star(Bstring& filename, Bmodel* model, int split)
 			BstarLoop&			loop = block.add_loop();
 			loop.tags() = component_tags();
 			for ( comp = mp->comp; comp; comp = comp->next ) {
-				vector<string>&	vs = loop.add_row(17);
+				vector<string>&	vs = loop.add_row(18);
 				vs[0] = comp->identifier();
 				if ( comp->type() ) id = comp->type()->identifier();
 				else id = "?";
@@ -313,6 +315,7 @@ int			write_model_star(Bstring& filename, Bmodel* model, int split)
 				vs[14] = to_string(comp->density());
 				vs[15] = to_string(comp->FOM());
 				vs[16] = to_string(comp->select());
+				vs[17] = comp->description();
 			}
 		}
 //		cout << "writing links" << endl;

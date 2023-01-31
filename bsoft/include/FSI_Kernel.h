@@ -24,7 +24,6 @@ public:
 @brief 	Calculates a reciprocal space interpolation lookup table.
 @param 	kernel_width			table width.
 @param 	kernel_power			interpolation power.
-@return FSI_Kernel*				new lookup table.
 **/
 	FSI_Kernel(long kernel_width, long kernel_power) {
 		long			i, j, ik, wd_2;

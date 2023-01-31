@@ -11,6 +11,7 @@ var class_vector3 =
     [ "cross", "class_vector3.html#a85ee899fe290dd6bc961e03730946f94", null ],
     [ "distance", "class_vector3.html#af2949790ea4902d32e0d69a36426f6a6", null ],
     [ "distance2", "class_vector3.html#a7a5d07fe53328a358249728c6db6c381", null ],
+    [ "distance_along_vector", "class_vector3.html#af72a34e9d684b625b7aaebbab76156ee", null ],
     [ "distance_from_line", "class_vector3.html#a58dc92c7c61ee2efeb9a20729cfef35f", null ],
     [ "distance_from_line2", "class_vector3.html#ae45970417c148cc2e6015e7c95499059", null ],
     [ "finite", "class_vector3.html#a55554e360776458f488cc10fd313bdd3", null ],
@@ -66,5 +67,5 @@ var class_vector3 =
     [ "square_root", "class_vector3.html#a32aaf349f651501197becfb7e03cd021", null ],
     [ "sum", "class_vector3.html#ab7cbc659a089fbee44d7f4caf27df159", null ],
     [ "volume", "class_vector3.html#a0ff3d7cde895ed2c0b4028e3db297bbd", null ],
-    [ "within", "class_vector3.html#a71b3465179a4753b9f72eff6c7a64afa", null ]
+    [ "within", "class_vector3.html#adbe12e337898465a3c93b252e6f1790e", null ]
 ];

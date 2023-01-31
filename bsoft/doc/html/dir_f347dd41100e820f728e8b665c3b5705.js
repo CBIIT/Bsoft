@@ -9,5 +9,6 @@ var dir_f347dd41100e820f728e8b665c3b5705 =
     [ "rwmodel_pdb.cpp", "rwmodel__pdb_8cpp.html", "rwmodel__pdb_8cpp" ],
     [ "rwmodel_star.cpp", "rwmodel__star_8cpp.html", "rwmodel__star_8cpp" ],
     [ "rwmodel_vega.cpp", "rwmodel__vega_8cpp.html", "rwmodel__vega_8cpp" ],
-    [ "rwmodel_xml.cpp", "rwmodel__xml_8cpp.html", "rwmodel__xml_8cpp" ]
+    [ "rwmodel_xml.cpp", "rwmodel__xml_8cpp.html", "rwmodel__xml_8cpp" ],
+    [ "rwmodel_xyz.cpp", "rwmodel__xyz_8cpp.html", "rwmodel__xyz_8cpp" ]
 ];

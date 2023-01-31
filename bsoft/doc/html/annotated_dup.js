@@ -137,6 +137,7 @@ var annotated_dup =
     [ "SUPRIMhead", "struct_s_u_p_r_i_mhead.html", "struct_s_u_p_r_i_mhead" ],
     [ "TagValue", "struct_tag_value.html", "struct_tag_value" ],
     [ "Transform", "class_transform.html", "class_transform" ],
+    [ "TrigLUT", "class_trig_l_u_t.html", "class_trig_l_u_t" ],
     [ "TypePointer", "union_type_pointer.html", "union_type_pointer" ],
     [ "UnitCell", "class_unit_cell.html", "class_unit_cell" ],
     [ "Vector3", "class_vector3.html", "class_vector3" ],

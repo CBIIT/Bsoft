@@ -7,5 +7,6 @@ var options_8cpp =
     [ "get_option_verbose", "options_8cpp.html#a5c2ee1366a96c41d244a611c2059e7a1", null ],
     [ "option_kill", "options_8cpp.html#ab897a3ef92122fe785134849f98fb2c7", null ],
     [ "command", "options_8cpp.html#a4c9ef422180cc13bda2c623c7b9d43e5", null ],
+    [ "thread_limit", "options_8cpp.html#aa9f2c47dd5223db9f7cbe6fd24262f68", null ],
     [ "verbose", "options_8cpp.html#a0b2caeb4b6f130be43e5a2f0267dd453", null ]
 ];

@@ -1,9 +1,9 @@
 /**
 @file	mg_img_proc.cpp
 @brief	Functions for image processing from micrograph structures
-@author Bernard Heymann
+@author 	Bernard Heymann
 @date	Created: 20010206
-@date	Modified: 20210806
+@date	Modified: 20221117
 **/
 
 #include "mg_img_proc.h"
@@ -714,6 +714,8 @@ Bmicrograph*	micrograph_create_from_image(Bimage* p, Bstring type)
 			cout << "Micrograph \"" << mg->id << endl;
 		if ( type == "mg" ) mg->fmg = p->file_name();
 		else if ( type == "frame" ) mg->fframe = p->file_name();
+		else if ( type == "ft" ) mg->fft = p->file_name();
+		else if ( type == "ps" ) mg->fps = p->file_name();
 		mg->img_num = j;
 		mg->block = j;
 		mg->pixel_size = pixel_size;
@@ -814,6 +816,7 @@ Breconstruction*	reconstruction_create_from_image(Bimage* p, Bstring type)
 		cout << "Creating reconstruction \"" << rec->id << "\"";
 	rec->select = 1;
 	rec->voxel_size = pixel_size;
+
 	if ( type == "part" ) {
 		rec->fpart = p->file_name();
 		rec->box_size = p->size();
@@ -838,6 +841,8 @@ Breconstruction*	reconstruction_create_from_image(Bimage* p, Bstring type)
 		rec->filament_width = p->sizeX();
 		if ( p->sizeY() < rec->filament_width ) rec->filament_width = p->sizeY();
 		if ( p->sizeZ() < rec->filament_width ) rec->filament_width = p->sizeZ();
+		if ( type == "ft" ) rec->fft = p->file_name();
+		else if ( type == "ps" ) rec->fps = p->file_name();
 	} else {
 		rec->frec = p->file_name();
 		rec->origin = p->image->origin();

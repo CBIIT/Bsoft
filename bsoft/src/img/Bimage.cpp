@@ -505,6 +505,8 @@ void			Bimage::check()
 		smax = max;
 	}
 	
+	unit_cell_check();
+	
 	if ( verbose & VERB_DEBUG ) {
 		cout << "DEBUG Bimage::check: Min, max, mean, stdev: " << 
 				min << " " << max << " " << avg << " " << std << endl;
@@ -528,30 +530,12 @@ void			Bimage::check()
 			image[j].magnification(1);
 	}
 
-	UnitCell		uc = unit_cell();
-	
 	if ( verbose & VERB_DEBUG )
-		cout << "DEBUG Bimage::check: Unit cell: " << uc.a() << " " << uc.b() << " " << uc.c()
-			 << " " << uc.alpha() << " " << uc.beta() << " " << uc.gamma() << endl;
-	
-	
-	if ( uc.a() < 1 ) uc.a(u[0]*x);
-	if ( uc.b() < 1 ) uc.b(u[1]*y);
-	if ( uc.c() < 1 ) uc.c(u[2]*z);
-	if ( uc.a() > 100*x*u[0] ) uc.a(u[0]*x);
-	if ( uc.b() > 100*y*u[1] ) uc.b(u[1]*y);
-	if ( uc.c() > 100*z*u[2] ) uc.c(u[2]*z);
-	if ( uc.alpha() > TWOPI || uc.beta() > TWOPI || uc.gamma() > TWOPI ) uc.degrees_to_radians();
-	if ( uc.alpha() < 0.001 || uc.alpha() > M_PI ) uc.alpha(M_PI_2);
-	if ( uc.beta() < 0.001 || uc.beta() > M_PI ) uc.beta(M_PI_2);
-	if ( uc.gamma() < 0.001 || uc.gamma() > M_PI ) uc.gamma(M_PI_2);
-	
-	unit_cell(uc);
-	
-	if ( verbose & VERB_DEBUG )
-		cout << "DEBUG Bimage::check: Unit cell: " << uc.a() << " " << uc.b() << " " << uc.c()
-			 << " " << uc.alpha() << " " << uc.beta() << " " << uc.gamma() << endl;
-/*	
+//		cout << "DEBUG Bimage::check: Unit cell: " << uc.a() << " " << uc.b() << " " << uc.c()
+//			 << " " << uc.alpha() << " " << uc.beta() << " " << uc.gamma() << endl;
+		cout << "DEBUG Bimage::check: Unit cell: " << unit_cell() << endl;
+
+/*
 	Bstring		t;
 	if ( lbl.length() ) {
 		j = lbl.length() - 1;
@@ -672,6 +656,14 @@ void		Bimage::check_resolution(double& resolution)
 	if ( resolution > real_size()[0] ) resolution = real_size()[0];
 }
 */
+
+void		Bimage::set_hi_lo_resolution(double& hi, double& lo)
+{
+	if ( lo < 1e-6 ) lo = 1e6;
+	if ( hi > lo ) swap(hi, lo);
+	check_resolution(hi);
+	check_resolution(lo);
+}
 
 /**
 @brief Check if this image has the same number of channels and data type as another.
@@ -1763,7 +1755,6 @@ Bstring		Bimage::compound_type_string()
 
 /**
 @brief Determines the replacement data type.
-@return DataType				replacement data type.
 
 	An integer data type is switched between signed and unsigned.
 
@@ -1891,7 +1882,7 @@ void		Bimage::change_type(DataType nutype)
 	// Integer switches between signed and unsigned
 	if ( datatype >= UCharacter && datatype <= Long ) {
 		if ( oldtype >= Float ) {		// floating point to integer
-			if ( min >= 0 ) scale = mx/max;
+			if ( min >= 0 && datatype > UCharacter ) scale = mx/max;
 			else {
 				scale = (mx - mn)/(max - min);
 				shift = mn - min*scale;
@@ -3115,7 +3106,7 @@ double		Bimage::kernel_sum(long idx, long ksize)
 }
 
 /**
-@brief 	Finds the highest value in a kernel.
+@brief 	Finds the average of neigbor values in a kernel.
 @param 	idx		index in multi-image.
 @param 	ksize	kernel edge half size.
 @return double 	average value.
@@ -3892,7 +3883,6 @@ Bimage*		Bimage::moving_sum(long window, long step, int flag)
 
 /**
 @brief 	Progressive sum of the sub-images.
-@return int		0.
 
 	Each sub-image is summed with all previous sub-images.
 **/

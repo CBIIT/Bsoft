@@ -8,6 +8,7 @@ var dir_5dd65160827af56e6353642206b80129 =
     [ "model_map.cpp", "model__map_8cpp.html", "model__map_8cpp" ],
     [ "model_mask.cpp", "model__mask_8cpp.html", "model__mask_8cpp" ],
     [ "model_mechanics.cpp", "model__mechanics_8cpp.html", "model__mechanics_8cpp" ],
+    [ "model_mol.cpp", "model__mol_8cpp.html", "model__mol_8cpp" ],
     [ "model_multifit.cpp", "model__multifit_8cpp.html", "model__multifit_8cpp" ],
     [ "model_neighbors.cpp", "model__neighbors_8cpp.html", "model__neighbors_8cpp" ],
     [ "model_occupancy.cpp", "model__occupancy_8cpp.html", "model__occupancy_8cpp" ],

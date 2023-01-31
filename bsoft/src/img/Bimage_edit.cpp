@@ -586,7 +586,7 @@ int			Bimage::sphere(Vector3<double> center, double radius,
 				double width, int fill_type, double fill, bool wrap)
 {
 	Vector3<long>		rect((long) (2*radius+0.5), (long) (2*radius+0.5), (long) (2*radius+0.5));
-	rect = rect.min(size());
+//	rect = rect.min(size());
 	
 	center -= rect/2;
 	

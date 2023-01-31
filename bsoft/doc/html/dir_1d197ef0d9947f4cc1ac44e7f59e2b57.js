@@ -4,6 +4,7 @@ var dir_1d197ef0d9947f4cc1ac44e7f59e2b57 =
     [ "mg_class.cpp", "mg__class_8cpp.html", "mg__class_8cpp" ],
     [ "mg_ctf.cpp", "mg__ctf_8cpp.html", "mg__ctf_8cpp" ],
     [ "mg_ctf_fit.cpp", "mg__ctf__fit_8cpp.html", "mg__ctf__fit_8cpp" ],
+    [ "mg_ctf_focal.cpp", "mg__ctf__focal_8cpp.html", "mg__ctf__focal_8cpp" ],
     [ "mg_ctf_sim.cpp", "mg__ctf__sim_8cpp.html", "mg__ctf__sim_8cpp" ],
     [ "mg_extract.cpp", "mg__extract_8cpp.html", "mg__extract_8cpp" ],
     [ "mg_hand.cpp", "mg__hand_8cpp.html", "mg__hand_8cpp" ],

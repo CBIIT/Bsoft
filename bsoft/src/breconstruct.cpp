@@ -33,10 +33,9 @@ const char* use[] = {
 "Actions:",
 "-mode 1                  Symmetry mode: 0=during reconstruction (default), 1=after reconstruction,",
 "                         2=pick a random symmetry view for each particle.",
-"-ewald                   Ewald sphere correction (default off).",
+"-ewald                   Ewald sphere integration (default central section).",
 "-TwoD                    Generate a 2D reconstruction (default 3D).",
 "-CTF flip                Apply CTF correction to images before reconstruction (default not).",
-//"-noaberration odd        Delete aberration weights (all, odd or even).",
 "-rescale -0.1,5.2        Rescale reconstruction to an average and standard deviation.",
 " ",
 "Parameters for configuration:",
@@ -74,7 +73,6 @@ int			main(int argc, char** argv)
 	// Initializing variables
 	int 			sym_mode(0);				// 0=during, 1=after, 2=random
 	int 			flags(0);					// Flags: 1=rescale, 2=2D, 4=bootstrap, 8=ewald
-	int				noab(0);					// Flag to delete aberration weights
 	double			nuavg, nustd(0); 			// Values for rescaling
 	DataType 		nudatatype(Unknown_Type);	// Conversion to new type
 	Vector3<double>	sam;    					// Units for the three axes (A/pixel)
@@ -112,12 +110,6 @@ int			main(int argc, char** argv)
 			flags |= 2;
 		if ( curropt->tag == "CTF" )
 			ctf_action = curropt->ctf_action();
-		if ( curropt->tag == "noaberration" ) {
-			if ( curropt->value[0] == 'o' ) noab = 1;
-			if ( curropt->value[0] == 'e' ) noab = 2;
-			if ( curropt->value[0] == 'a' ) noab = 3;
-			if ( curropt->value[0] == 'f' ) noab = 3;
-		}
 		if ( curropt->tag == "rescale" ) {
 			if ( curropt->values(nuavg, nustd) < 2 )
 				cerr << "-rescale: Both average and standard deviation must be specified!" << endl;
@@ -195,9 +187,6 @@ int			main(int argc, char** argv)
 	if ( ctf_action > 2 && wiener < 0.01 ) wiener = 0.2;
 	
 //	project->field->mg->ctf->show();
-
-//	if ( noab ) project_delete_aberration(project, noab);
-//	else project_convert_CTF_to_aberration_weights(project);
 
 	if ( verbose ) {
 		if ( flags & 2 )

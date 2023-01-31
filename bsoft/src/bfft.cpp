@@ -3,7 +3,7 @@
 @brief	General FFT for n-dimensional data
 @author Bernard Heymann
 @date	Created: 19980805
-@date 	Modified: 20220805
+@date 	Modified: 20221117
 Implementing the FFTW library
 **/
 
@@ -34,6 +34,7 @@ const char* use[] = {
 "-powerspectrum           Calculate powerspectrum estimate (can be used with the -tile option).",
 "-tile 1024,1024,1        Size of tiles for calculating a transform or power spectrum.",
 //"-edgesmooth              Smooth the edge to get rid of any cross.",
+"-fix ver                 Fix the horizontal or vertical zero-frequency line, or both.",
 "-average                 Average multiple power spectra (can be used with the -tile option).",
 "-logarithm               Calculate the logarithm of the power spectrum.",
 "-color 1.5               Generate a phase-coloured power spectrum: amplitude scaling.",
@@ -78,7 +79,7 @@ int 	main(int argc, char **argv)
 	int				set_origin(0);				// Flag for setting the origin
 	Vector3<double>	sam;    					// Sampling
 	int 			spacegroup(0);  	    	// Spacegroup
-	UnitCell		uc(0,0,0,M_PI_2,M_PI_2,M_PI_2);		// Unit cell parameters
+	UnitCell		uc;							// Unit cell parameters
 	Vector3<long>	tile_size;					// Size of power spectrum tiles
     
     double			hires(0), lores(1e4);		// Limiting resolution range (hires must be > 0 to be set)
@@ -112,6 +113,11 @@ int 	main(int argc, char **argv)
 		if ( curropt->tag == "phaseshift" ) phase_shift = 1;
 		if ( curropt->tag == "powerspectrum" ) setpower = 1;
 		if ( curropt->tag == "edgesmooth" ) power_flags |= 16;
+		if ( curropt->tag == "fix" ) {
+			if ( curropt->value[0] == 'h' ) power_flags |= 32;
+			if ( curropt->value[0] == 'v' ) power_flags |= 64;
+			if ( curropt->value[0] == 'b' ) power_flags |= 96;
+		}
 		if ( curropt->tag == "average" ) power_flags |= 2;
 		if ( curropt->tag == "logarithm" ) { power_flags |= 8; }
 		if ( curropt->tag == "halfshift" ) { power_flags |= 4; halfshift = 1; }

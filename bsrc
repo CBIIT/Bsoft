@@ -2,7 +2,7 @@
 
 # Script to archive a Bsoft source distribution
 # Bernard Heymann                                  
-# 20171117 - 20210701
+# 20171117 - 20230131
 
 here=`pwd`
 version=`sed "s/[^0-9]/_/g" bsoft/BVERSION`
@@ -15,6 +15,8 @@ tarfile=${here}'/bsoft'${today}'.tar'
 tgzfile=${here}'/bsoft'${today}'.tgz'
 
 echo Bsoft version:		$version
+
+xattr -cr *
 
 TAR='tar vrbf 20 '$tarfile
 

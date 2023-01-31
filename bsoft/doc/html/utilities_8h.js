@@ -4,6 +4,7 @@ var utilities_8h =
     [ "_systype_", "utilities_8h.html#a4feef126b496a550a29cebd57a4ccd6d", null ],
     [ "AVOGADRO", "utilities_8h.html#a29763ca81b8e5a8c64dac560ade56b66", null ],
     [ "BVERSION", "utilities_8h.html#a13ffa6bb97c5ff625e545e3d857dea54", null ],
+    [ "COULOMB", "utilities_8h.html#a70861db4221d397b57e5ff6c9a193d87", null ],
     [ "ECHARGE", "utilities_8h.html#a2d5f31d124b93521f06b9aa59478e51b", null ],
     [ "EMASS", "utilities_8h.html#afdc69024e9eb87600e91c9b73580ced9", null ],
     [ "FILL_AVERAGE", "utilities_8h.html#aac4d97846d9b1dce850d8ce219db5cdc", null ],
@@ -72,6 +73,7 @@ var utilities_8h =
       [ "LittleVAX", "utilities_8h.html#a52efce6fcab4e9924d8ceba1e9d95cbba54fd1e68b37aec846800c7d3e132b336", null ],
       [ "LittleOther", "utilities_8h.html#a52efce6fcab4e9924d8ceba1e9d95cbbab293da8a4ce8acc6f37b568a9aa6039c", null ]
     ] ],
+    [ "angle_set_0_to_TWOPI", "utilities_8h.html#a2de3daece3064b12846446dcec48d218", null ],
     [ "angle_set_negPI_to_PI", "utilities_8h.html#a0d4492f03ef8ece5d6bf2160ce56a111", null ],
     [ "bexit", "utilities_8h.html#ab9a53ea733d8033e6ccad6a0b8095453", null ],
     [ "cmd_line", "utilities_8h.html#ae62313715baf7b0990a14b502f1d6b4e", null ],

@@ -39,12 +39,14 @@ int			set_tile_size(Vector3<long>& tile_size, Vector3<long> img_size)
 @return int				error code.
 
 	All the sub-images are Fourier transformed.
-	The flags variable controls options base don which bits are set:
+	The flags variable controls options based on which bits are set:
 		1	normalize image before transformation
 		2	average all power spectra
 		4	shift the origin to the center
 		8	calculate the logarithm of the power spectrum
 		16	do edge smoothing to get rid of the cross artifact
+		32	fix peaks on the horizontal zero-line
+		64	fix peaks on the vertical zero-line
 
 **/
 int			Bimage::power_spectrum(int flags)
@@ -77,7 +79,7 @@ int			Bimage::power_spectrum(int flags)
 		return error_show("Bimage::power_spectrum", __FILE__, __LINE__);
 
 	if ( flags & 1 ) zero_fourier_origin();
-
+	
 	if ( flags & 16 ) {		// Very slow! 3D does not seem to work
 		if ( verbose & VERB_PROCESS )
 			cout << "Decomposing for edge smoothing" << endl;
@@ -118,6 +120,8 @@ int			Bimage::power_spectrum(int flags)
 	complex_to_intensities();
 	
 	fourier_type(NoTransform);
+
+	if ( flags & 96 ) fix_power_spectrum((flags>>5), 2);
 
 	if ( flags & 2 ) average_images();
 //	cout << "number of images = " << images() << endl;
@@ -484,11 +488,11 @@ double		isotropy_R(Bsimplex& simp)
 }
 
 /**
-@brief 	Calculates a measure of anisotropy in a poer spectrum.
+@brief 	Calculates a measure of anisotropy in a power spectrum.
 @param	n				sub-image number.
 @param 	&lores			low resolution limit.
 @param 	&hires			high resolution limit
-@return vector<double>		3-vlaue vector: power average and deviation and maximum power angle.
+@return vector<double>	3-vlaue vector: power average and deviation and maximum power angle.
 	The power between the indicated resolution shells are averaged for
 	each angle and fitted to an equation for anisotropy:
 		P = Pavg + Pdev*cos(2(a-phi))
@@ -589,6 +593,87 @@ vector<double>	Bimage::powerspectrum_isotropy(long n, double& lores, double& hir
 	
 	return fit;
 }
+
+double		Bimage::average_line(long xx, long yy, long zz, long nn, long len, int dir)
+{
+	long			i, j;
+	double			val(0);
+	
+	if ( dir & 1 ) {
+		if ( xx < 0 ) {
+			len += xx;
+			xx = 0;
+		} else if ( xx + len >= x ) {
+			len += x - xx - 1;
+		}
+		for ( i=index(xx, yy, zz, nn), j=0; j<len; ++i, ++j ) val += (*this)[i];
+	} else if ( dir & 2 ) {
+		if ( yy < 0 ) {
+			len += yy;
+			yy = 0;
+		} else if ( yy + len >= y ) {
+			len += y - yy - 1;
+		}
+		for ( i=index(xx, yy, zz, nn), j=0; j<len; i+=x, ++j ) val += (*this)[i];
+	}
+	
+	if ( len ) val /= len;
+	
+	return val;
+}
+
+/**
+@brief 	Removes high-intensity artifacts on the zero-frequency lines in a power spectrum.
+@param	dir				line direction: 1=horizontal, 2=vertical, 3=both.
+@param 	ratio			threshold ratio.
+@return long				number of fixed pixels.
+	The average of the lines above and below a pixel are calculated.
+	If the pixel vale divided by this average exceeds the given threshod ratio.
+	it is replaced by the average.
+**/
+long		Bimage::fix_power_spectrum(int dir, double ratio)
+{
+	long			nfix(0);
+	long			i, xx, yy, zz, nn;
+	double			v;
+	
+	if ( dir & 1 ) {	// Horizontal
+		yy = y/2;
+		for ( nn=0; nn<n; ++nn ) {
+			for ( zz=0; zz<z; ++zz ) {
+				for ( xx=0; xx<x; ++xx ) {
+					i = index(xx, yy, zz, nn);
+					v = (average_line(xx-1, yy-1, zz, nn, 3, dir) +
+						average_line(xx-1, yy+1, zz, nn, 3, dir))/2;
+					if ( (*this)[i] - v > ratio ) {
+						set(i, v);
+						nfix++;
+					}
+				}
+			}
+		}
+	}
+	
+	if ( dir & 2 ) {	// Vertical
+		xx = x/2;
+		for ( nn=0; nn<n; ++nn ) {
+			for ( zz=0; zz<z; ++zz ) {
+				for ( yy=0; yy<y; ++yy ) {
+					i = index(xx, yy, zz, nn);
+					v = (average_line(xx-1, yy-1, zz, nn, 3, dir) +
+						average_line(xx+1, yy-1, zz, nn, 3, dir))/2;
+					if ( (*this)[i] - v > ratio ) {
+						set(i, v);
+						nfix++;
+					}
+				}
+			}
+		}
+	}
+	
+	return nfix;
+}
+
 
 /*
 int			Bimage::powerspectrum_edge_smoothed(int flags)

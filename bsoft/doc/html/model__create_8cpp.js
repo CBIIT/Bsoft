@@ -4,6 +4,7 @@ var model__create_8cpp =
     [ "ellipsoid_next_z", "model__create_8cpp.html#ad3b00d90d22839c0ab6d406291a157ab", null ],
     [ "ellipsoid_slice_distance_error", "model__create_8cpp.html#a314563f4d0f1e0be82d84588da3dd53b", null ],
     [ "model_add_component", "model__create_8cpp.html#a027baf97f359ec36ed1dfe59875a926a", null ],
+    [ "model_add_components", "model__create_8cpp.html#a3f01deadd471041ce4f6bd18af910efe", null ],
     [ "model_create_circle", "model__create_8cpp.html#a85389434895323d06f6628e73117d799", null ],
     [ "model_create_cubic_lattice", "model__create_8cpp.html#af58be5d49e80dc0394f4b8fe6b0d6fe0", null ],
     [ "model_create_cylinder", "model__create_8cpp.html#af316baab7c6a8046b26b9586be3dda2c", null ],

@@ -241,7 +241,7 @@ Vector3<double>	sinc_fit(vector<Vector3<double>> coor, vector<double> value, dou
 Vector3<double>	img_sinc_fit(Bimage* p, Vector3<double> loc, double bkg, double peak, double& R)
 {
 	long					i, xx, yy, k(2);
-	double					sum(0);
+//	double					sum(0);
 	vector<Vector3<double>>	coor;
 	vector<double>			value;
 	
@@ -250,7 +250,7 @@ Vector3<double>	img_sinc_fit(Bimage* p, Vector3<double> loc, double bkg, double 
 			coor.push_back(Vector3<double>(xx,yy,0)-loc);
 			i = p->index(xx, yy);
 			value.push_back(((*p)[i]-bkg)/peak);
-			sum += value.back();
+//			sum += value.back();
 		}
 	}
 	
@@ -330,7 +330,7 @@ int			img_analyze_reflection(Bimage* p, double ref_res, double threshold, long k
 	if ( kedge < 1 ) kedge = 1;
 	if ( sym < 1 ) sym = 1;
 	
-	long				i, j, na, nc(0);
+	long				i, j, na;
 	long				ks(kedge/2);				// Summation kernel half edge and volume
 	double				a, sf;
 	double				s(1/ref_res);				// Spatial frequency
@@ -355,9 +355,13 @@ int			img_analyze_reflection(Bimage* p, double ref_res, double threshold, long k
 		cout << "Angular increment:              " << da*180.0/M_PI << " degrees" << endl << endl;
 	}
 
-	for ( a=0, j=na=nc=0; a<TWOPI; a+=da, ++na ) {
-		tloc = Vector3<double>(p->image->origin()[0] + k[0]*cos(a), p->image->origin()[1] + k[1]*sin(a), 0);
-		rloc = tloc[na] * rd;
+	for ( a=0, j=na=0; a<TWOPI; a+=da, ++na ) {
+//		tloc = Vector3<double>(p->image->origin()[0] + k[0]*cos(a), p->image->origin()[1] + k[1]*sin(a), 0);
+		tloc = Vector3<double>(k[0]*cos(a), k[1]*sin(a), 0);
+		rloc = tloc * rd;
+		tloc += p->image->origin();
+		rloc += p->image->origin();
+//		cout << na << tab << tloc << tab << rloc << endl;
 		i = p->kernel_max(p->index(tloc,0), ks);
 		pmax = (*p)[i];
 		ravg = p->kernel_average(p->index(rloc,0), ks, 0, 1e30);
@@ -380,6 +384,11 @@ int			img_analyze_reflection(Bimage* p, double ref_res, double threshold, long k
 	}
 	
 	bkg /= na;
+	
+	if ( loc.size() < 1 ) {
+		cerr << "Error: No reflections found, check the threshold." << endl;
+		return -1;
+	}
 	
 	if ( loc[0].distance(loc.back()) < 2 ) {
 		if ( R[0] < R.back() ) {

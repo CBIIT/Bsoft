@@ -27,25 +27,11 @@ ostream& operator<<(ostream& output, Matrix& mat) {
 	return output;
 }
 
-/*int			Matrix::multiply_in_place(double* vec)
-{
-	long			i, j;
-	
-	double*		t = new double[n];
-	
-	for ( i=0; i<n; i++ ) {
-		t[i] = 0;
-		for ( j=0; j<n; j++ )
-			t[i] += p[i][j]*vec[j];
-	}
-	
-	for ( i=0; i<n; i++ ) vec[i] = t[i];
-	
-	delete[] t;
-	
-	return 0;
-}*/
-
+/**
+@brief 	Multiplies a matrix by a vector, modifiying the vector.
+@param	&vec			vector.
+@return double	 		determinant.
+**/
 int			Matrix::multiply_in_place(vector<double>& vec)
 {
 	if ( vec.size() != n ) return -1;
@@ -411,13 +397,6 @@ The eigenvectors are returned in the columns of the input matrix.
 Reference: 	Press W.H. et al (1992) Numerical Recipes in C.
 
 **/
-/*double*		Matrix::jacobi_rotation_old() {
-	vector<double>	v = jacobi_rotation();
-	double*			vo = new double[n];
-	for ( long i=0; i<n; ++i ) vo[i] = v[i];
-	return vo;
-}*/
-
 vector<double>	Matrix::jacobi_rotation()
 {
 	long			j, iq, ip, i, nrot(0);
@@ -562,16 +541,7 @@ long	Matrix::jacobi_rotation_row(long ip, long n, long i, double* val, double* z
 	
 	return nrot;
 }
-*/
-/**
-@brief 	Computes all eigenvalues and eigenvectors of a real symmetric matrix.
-@return	double* val			eigenvalues.
-
-The eigenvectors are returned in the columns of the input matrix.
-Reference: 	Press W.H. et al (1992) Numerical Recipes in C.
-
-**/
-/*double*		Matrix::jacobi_rotation_parallel()
+double*		Matrix::jacobi_rotation_parallel()
 {
 	long		j, iq, ip, i, nrot(0);
 	double		tresh, theta, tau, t, sm, s, h, g, c;
@@ -649,31 +619,12 @@ Reference: 	Press W.H. et al (1992) Numerical Recipes in C.
 /**
 @brief 	Sorts eigenvalues into descending order and rearranges matrix columns accordingly.
 @param 	val					eigenvalues.
-@return void				.
 
 	The eigenvectors are in the columns.
 	This method uses straight insertion.
 Reference: 	Press W.H. et al (1992) Numerical Recipes in C.
 
 **/
-/*void 	Matrix::eigen_sort(double* val)
-{
-	long			k,j,i;
-	double			t;
-
-	for ( i=0; i<n-1; i++ ) {
-		t = val[k=i];
-		for ( j=i+1; j<n; j++ )
-			if ( val[j] >= t ) t = val[k=j];
-		if ( k != i ) {
-			val[k] = val[i];
-			val[i] = t;
-			for ( j=0; j<n; j++ )
-				swap(p[j][i], p[j][k]);
-		}
-	}
-}*/
-
 void 	Matrix::eigen_sort(vector<double>& val)
 {
 	long			k,j,i;
@@ -813,7 +764,6 @@ Vector3<double> principal_axes(vector<Vector3<double>>& coor, Matrix& a)
 @param 	A					matrix, replaced by tridiagonal matrix.
 @param 	d					diagonal.
 @param 	e					off-diagonal.
-@return void				.
 
 	Reduces a symmetric 3x3 matrix to tridiagonal form by applying
 	(unitary) Householder transformations:

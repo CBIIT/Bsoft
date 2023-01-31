@@ -3,7 +3,7 @@
 @brief	Deals with model and component symmetries.
 @author Bernard Heymann
 @date	Created: 20060908
-@date 	Modified: 20191101
+@date 	Modified: 20221115
 **/
 
 #include "rwmodel.h"
@@ -28,7 +28,6 @@ const char* use[] = {
 "Manipulates models.",
 " ",
 "Actions for preparation:",
-"-merge                   Merge models in different files rather than concatenate.",
 "-all                     Reset selection to all models and components before other selections.",
 " ",
 "Selections:",
@@ -40,17 +39,22 @@ const char* use[] = {
 "-setasu D8               Set components to within an asymmetric unit.",
 "-apply T                 Apply point group symmetry.",
 "-symmetrize C5           Symmetrize for a point group symmetry.",
+"-lattice 2,5,3           Generate a lattice with the number of unit cells in each direction",
 "-separate D7             Generate separate symmetry-related models.",
 "-find 3,12               Find component cyclic symmetry in the given order range.",
 " ",
 "Actions for finishing:",
 "-reset                   Reset selection to all components before other selections.",
+"-merge                   Merge models before writing.",
 " ",
 "Parameters:",
 "-verbose 7               Verbose output.",
 "-componentradius 8.4     Set display radius for all components.",
 "-linkradius 5.1          Set display radius for all links.",
 "-origin 0,22.5,30        Set the symmetry origin.",
+" ",
+"Parameters for generating a lattice:",
+"-unitcell 50,50,50,90,90,90 Unit cell parameters (angstrom & degrees)",
 " ",
 "Parameters for finding symmetry:",
 "-annuli 3,12             Annular range to find cyclic symmetry (pixels).",
@@ -74,6 +78,7 @@ int 	main(int argc, char **argv)
 	/* Initialize variables */
 	int 			all(0);						// Keep selection as read from file
 	int 			reset(0);					// Keep selection as ouput
+	int				merge(0);					// Flag to merge models
 	Bstring			mod_select;					// Model and component selection
 	int				center(0);					// Flag to center the structure
 	Bstring			map_name;					// Density map reference
@@ -85,6 +90,8 @@ int 	main(int argc, char **argv)
 	string			asu_sym;					// Set coordinates within the ASU
 	string			symmetry_apply_string;		// Point group string
 	string			symmetrize_string;			// Point group string
+	Vector3<long>	lattice;					// Crystal lattice size
+	UnitCell		uc;							// Unit cell parameters for lattice
 	string			separate_symmetrize;		// Point group string
 	Bstring			find_sym;					// Point group string
 	double			comprad(0);					// Component display radius
@@ -102,6 +109,7 @@ int 	main(int argc, char **argv)
 	for ( curropt = option; curropt; curropt = curropt->next ) {
 		if ( curropt->tag == "all" ) all = 1;
 		if ( curropt->tag == "reset" ) reset = 1;
+		if ( curropt->tag == "merge" ) merge = 1;
 		if ( curropt->tag == "select" )
 			mod_select = curropt->value;
 		if ( curropt->tag == "center" ) center = 1;
@@ -120,6 +128,13 @@ int 	main(int argc, char **argv)
 			symmetry_apply_string = curropt->symmetry_string().str();
 		if ( curropt->tag == "symmetrize" )
 			symmetrize_string = curropt->symmetry_string().str();
+		if ( curropt->tag == "lattice" ) {
+			lattice = curropt->vector3();
+			if ( lattice.volume() < 1 )
+				cerr << "-lattice: Three values must be specified" << endl;
+		}
+		if ( curropt->tag == "unitcell" )
+			uc = curropt->unit_cell();
 		if ( curropt->tag == "separate" )
 			separate_symmetrize = curropt->symmetry_string().str();
 		if ( curropt->tag == "find" )
@@ -194,6 +209,9 @@ int 	main(int argc, char **argv)
 	if ( symmetrize_string.size() )
 		models_process(model, symmetrize_string, model_symmetrize);
 
+	if ( lattice.volume() > 1 )
+		model_generate_lattice(model, uc, lattice);
+		
 	if ( separate_symmetrize.size() )
 		model_symmetry_related(model, separate_symmetrize);
 	
@@ -202,6 +220,8 @@ int 	main(int argc, char **argv)
 		
 	if ( reset ) models_process(model, model_reset_selection);
 
+	if ( merge ) model_merge(model);
+	
 	model_selection_stats(model);
 
 	// Write an output parameter format file if a name is given

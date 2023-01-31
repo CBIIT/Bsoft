@@ -1238,10 +1238,10 @@ long		img_erase_markers(Bimage* p, Bmarker* mark, double marker_radius)
 	if ( marker_radius < 1 ) return 0;
 	
 	long			nm(0);
-	double			fill, fstd;
+	vector<double>	stats;
 	for ( ; mark; mark = mark->next, nm++ ) {
-		p->stats_within_radii(0, mark->loc, marker_radius, 2*marker_radius, fill, fstd);
-		p->sphere(mark->loc, marker_radius, 2, FILL_USER, fill);
+		stats = p->stats_within_radii(0, mark->loc, marker_radius, 2*marker_radius);
+		p->sphere(mark->loc, marker_radius, 2, FILL_USER, stats[3]);
 	}
 	
 	return nm;

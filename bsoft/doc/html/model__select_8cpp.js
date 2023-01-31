@@ -31,13 +31,16 @@ var model__select_8cpp =
     [ "model_select_non_fullerene", "model__select_8cpp.html#a2104021dfc9876054a884890d459e4c4", null ],
     [ "model_select_number_of_components", "model__select_8cpp.html#a99d8915c9375b00efc72276b032950d8", null ],
     [ "model_select_polygons", "model__select_8cpp.html#a7bb200bd8221b5736902a1a02f882680", null ],
+    [ "model_select_random", "model__select_8cpp.html#ae910ae0ef81839001d7a0781b14e4af3", null ],
     [ "model_select_sets", "model__select_8cpp.html#a3911df5e73a2f2f78b9260a94b4a377c", null ],
     [ "model_select_unknowns", "model__select_8cpp.html#a3be9cf5d44f487f80eba65096b94b123", null ],
     [ "model_select_valence", "model__select_8cpp.html#a2219d85b95dfff7186ff9f0969945593", null ],
     [ "model_select_within_shell", "model__select_8cpp.html#a85bca03fb3f57316765444670080d087", null ],
     [ "model_selection_stats", "model__select_8cpp.html#add2c9145c23ebf30a34098ddab54f450", null ],
+    [ "model_show_selection", "model__select_8cpp.html#ad93bed3484f7fc0d99aa74cb0aaf9140", null ],
     [ "model_type_from_selection", "model__select_8cpp.html#adc2044a6e916f7599cac0aa6a94af227", null ],
     [ "model_unset_selection", "model__select_8cpp.html#ac8ccc239deb63ae88486014447272295", null ],
     [ "models_radius_deselect", "model__select_8cpp.html#af73c878b06ac24962f5ba5c438054795", null ],
+    [ "models_select_within_bounds", "model__select_8cpp.html#a0f89ff6a3bac1e357d150e4062f4cadb", null ],
     [ "verbose", "model__select_8cpp.html#a0b2caeb4b6f130be43e5a2f0267dd453", null ]
 ];

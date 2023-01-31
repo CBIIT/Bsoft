@@ -513,14 +513,14 @@ Tcl_Obj*	marker_ids(Bproject* project, double fom_cut)
 		if ( field ) for ( mg = field->mg; mg && !mg->mark; mg = mg->next ) ;
 		if ( mg ) {
 			for ( mark = mg->mark; mark; mark = mark->next ) if ( mark->fom >= fom_cut ) {
-				sprintf(string, " %d", mark->id);
+				snprintf(string, MAXLINELEN, " %d", mark->id);
 				Tcl_AppendToObj(returnObj, string, strlen(string));
 			}
 		}
 	} else {
 		if ( rec ) {
 			for ( mark = rec->mark; mark; mark = mark->next ) if ( mark->fom >= fom_cut ) {
-				sprintf(string, " %d", mark->id);
+				snprintf(string, MAXLINELEN, " %d", mark->id);
 				Tcl_AppendToObj(returnObj, string, strlen(string));
 			}
 		}
@@ -540,7 +540,7 @@ Tcl_Obj*	marker_ids(Bfield* field, double fom_cut)
 	for ( mg = field->mg; mg && !mg->mark; mg = mg->next ) ;
 	if ( mg ) {
 		for ( mark = mg->mark; mark; mark = mark->next ) if ( mark->fom >= fom_cut ) {
-			sprintf(string, " %d", mark->id);
+			snprintf(string, MAXLINELEN, " %d", mark->id);
 			Tcl_AppendToObj(returnObj, string, strlen(string));
 		}
 	}
@@ -556,7 +556,7 @@ Tcl_Obj*	marker_ids(Bmicrograph* mg, double fom_cut)
 	Bmarker*			mark = NULL;
 
 	for ( mark = mg->mark; mark; mark = mark->next ) if ( mark->fom >= fom_cut ) {
-		sprintf(string, " %d", mark->id);
+		snprintf(string, MAXLINELEN, " %d", mark->id);
 		Tcl_AppendToObj(returnObj, string, strlen(string));
 	}
 		
@@ -571,7 +571,7 @@ Tcl_Obj*	marker_ids(Breconstruction* rec, double fom_cut)
 	Bmarker*			mark = NULL;
 
 	for ( mark = rec->mark; mark; mark = mark->next ) if ( mark->fom >= fom_cut ) {
-		sprintf(string, " %d", mark->id);
+		snprintf(string, MAXLINELEN, " %d", mark->id);
 		Tcl_AppendToObj(returnObj, string, strlen(string));
 	}
 		
@@ -592,13 +592,13 @@ Tcl_Obj*	marker_list(Bproject* project)
 		for ( field = project->field; field; field = field->next )
 			for ( mg = field->mg; mg; mg = mg->next )
 				for ( mark = mg->mark; mark; mark = mark->next ) {
-					sprintf(string, " %d %d %20.16f %20.16f %d", mg->img_num, mark->id, mark->res, mark->fom, mark->sel);
+					snprintf(string, MAXLINELEN, " %d %d %20.16f %20.16f %d", mg->img_num, mark->id, mark->res, mark->fom, mark->sel);
 					Tcl_AppendToObj(returnObj, string, strlen(string));
 				}
 	} else {
 		if ( rec ) {
 			for ( mark = rec->mark; mark; mark = mark->next ) {
-				sprintf(string, " 0 %d %20.16f %20.16f %d", mark->id, mark->res, mark->fom, mark->sel);
+				snprintf(string, MAXLINELEN, " 0 %d %20.16f %20.16f %d", mark->id, mark->res, mark->fom, mark->sel);
 				Tcl_AppendToObj(returnObj, string, strlen(string));
 			}
 		}
@@ -617,7 +617,7 @@ Tcl_Obj*	marker_list(Bfield* field)
 
 	for ( mg = field->mg; mg; mg = mg->next )
 		for ( mark = mg->mark; mark; mark = mark->next ) {
-			sprintf(string, " %d %d %20.16f %20.16f %d", mg->img_num, mark->id, mark->res, mark->fom, mark->sel);
+			snprintf(string, MAXLINELEN, " %d %d %20.16f %20.16f %d", mg->img_num, mark->id, mark->res, mark->fom, mark->sel);
 			Tcl_AppendToObj(returnObj, string, strlen(string));
 		}
 		
@@ -632,7 +632,7 @@ Tcl_Obj*	marker_list(Bmicrograph* mg)
 	Bmarker*			mark = NULL;
 
 	for ( mark = mg->mark; mark; mark = mark->next ) {
-		sprintf(string, " %d %d %20.16f %20.16f %d", mg->img_num, mark->id, mark->res, mark->fom, mark->sel);
+		snprintf(string, MAXLINELEN, " %d %d %20.16f %20.16f %d", mg->img_num, mark->id, mark->res, mark->fom, mark->sel);
 		Tcl_AppendToObj(returnObj, string, strlen(string));
 	}
 		
@@ -647,7 +647,7 @@ Tcl_Obj*	marker_list(Breconstruction* rec)
 	Bmarker*			mark = NULL;
 
 	for ( mark = rec->mark; mark; mark = mark->next ) {
-		sprintf(string, " 0 %d %20.16f %20.16f %d", mark->id, mark->res, mark->fom, mark->sel);
+		snprintf(string, MAXLINELEN, " 0 %d %20.16f %20.16f %d", mark->id, mark->res, mark->fom, mark->sel);
 		Tcl_AppendToObj(returnObj, string, strlen(string));
 	}
 		
@@ -661,7 +661,7 @@ Tcl_Obj*	marker_location(Bmarker* mark)
 	char				string[MAXLINELEN] = "";
 
 	if ( mark ) {
-		sprintf(string, "%f %f %f %f %f %f", 
+		snprintf(string, MAXLINELEN, "%f %f %f %f %f %f", 
 			mark->loc[0], mark->loc[1], mark->loc[2], 
 			mark->err[0], mark->err[1], mark->err[2]);
 		Tcl_SetStringObj(returnObj, string, strlen(string));
@@ -774,7 +774,7 @@ Tcl_Obj*	marker_select_rectangle(Bmarker* marklist, int objc, Tcl_Obj *CONST obj
 		for ( mark = marklist; mark; mark = mark->next ) {
 			if ( mark->loc[0] >= x1 && mark->loc[0] <= x2 && 
 					mark->loc[1] >= y1 && mark->loc[1] <= y2 ) {
-				sprintf(string, " %d", mark->id);
+				snprintf(string, MAXLINELEN, " %d", mark->id);
 				Tcl_AppendToObj(returnObj, string, strlen(string));
 			}
 		}

@@ -1,9 +1,9 @@
 /**
 @file	mg_ctf_fit.cpp
 @brief	Functions for CTF (contrast transfer function) processing
-@author Bernard Heymann
+@author 	Bernard Heymann
 @date	Created: 19970715
-@date	Modified: 20220411
+@date	Modified: 20221213
 **/
 
 #include "rwimg.h"
@@ -24,7 +24,7 @@ extern int 	verbose;		// Level of output to the screen
 double		ctf_fit_baseline(Bimage* prad, double real_size, CTFparam& em_ctf, double lores, double hires);
 double		ctf_fit_envelope(Bimage* prad, double real_size, CTFparam& em_ctf, double lores, double hires);
 
-double		img_aberration_fit_iter(Bimage* p, long nn, double lores, double hires, int flag, long iter, map<pair<long,long>,double>& wa);
+double		img_aberration_phase_fit_iter(Bimage* p, long nn, double lores, double hires, int flag, long iter, map<pair<long,long>,double>& wa);
 
 int			complete_weights(map<pair<long,long>,double>& w, int flag)
 {
@@ -203,22 +203,24 @@ double		img_ctf_find_defocus2(Bimage* p, long n, CTFparam& em_ctf,
 
 int			img_manage_power_spectrum_peak(Bimage* p, Bimage* pb, long radius)
 {
-	long		i, xx, yy;
+	long		i, xx, yy, zz;
 	double		dx, dy, f;
 	
-	for ( i=yy=0; yy<p->sizeY(); ++yy ) {
-		dy = (double)yy - p->image->origin()[1];
-		for ( xx=0; xx<p->sizeX(); ++xx, ++i ) {
-			dx = (double)xx - p->image->origin()[0];
-			f = sqrt(dx*dx + dy*dy)/radius;
-			if ( f <= 1 )
-				pb->set(i, f*(*pb)[i] + (1.0-f)*(*p)[i]);
+	for ( i=zz=0; zz<p->sizeZ(); ++zz ) {
+		for ( yy=0; yy<p->sizeY(); ++yy ) {
+			dy = (double)yy - p->image->origin()[1];
+			for ( xx=0; xx<p->sizeX(); ++xx, ++i ) {
+				dx = (double)xx - p->image->origin()[0];
+				f = sqrt(dx*dx + dy*dy)/radius;
+				if ( f <= 1 )
+					pb->set(i, f*(*pb)[i] + (1.0-f)*(*p)[i]);
+			}
 		}
 	}
 	
 	return 0;
 }
-
+/*
 Bimage*		img_ctf_fit_prepare(Bimage* p, long n, double sigma)
 {
 	long		gauss_kernel(6*sigma);
@@ -244,13 +246,64 @@ Bimage*		img_ctf_fit_prepare(Bimage* p, long n, double sigma)
 	pf->truncate_to_min_max(-1,1);
 //	pf->invert();
 	
-	write_img("pb.grd", pb, 0);
-	write_img("pe.grd", pe, 0);
-	write_img("pf.grd", pf, 0);
+//	if ( verbose & VERB_DEBUG ) {
+		write_img("pb.grd", pb, 0);
+		write_img("pe.grd", pe, 0);
+		write_img("pf.grd", pf, 0);
+//	}
 	
 	delete ps;
 	delete pb;
 	delete pe;
+	
+	return pf;
+}
+*/
+Bimage*		img_ctf_fit_prepare(Bimage* p, double sigma)
+{
+	long		gauss_kernel(6*sigma);
+//	long		radius(p->real_size()[0]/30);
+	long		radius(5);
+	
+	Bimage*		pb = p->copy();
+
+	pb->filter_gaussian(gauss_kernel, sigma);		// Smooth to get B + E/2
+	img_manage_power_spectrum_peak(p, pb, radius);	// Reconstruct central peak to counter excessive smoothing
+
+	Bimage*		pe = pb->copy();
+	pe->add(p, -1, 0);							// Subtract B + E/2 to get ~S/2
+	pe->absolute();								// Convert to only positive values
+	pe->filter_gaussian(gauss_kernel, sigma);	// Smooth to get ~E/pi
+	pe->multiply(M_PI);							// Envelope
+	
+	Bimage*		pf = p->copy();
+	pf->add(pb, -1, 0);							// Subtract B + E/2
+	pf->divide(pe, 1, 0);						// Divide by E
+	pf->truncate_to_min_max(-1,1);				// Ensure within [-1,1]
+//	pf->invert();
+
+	pb->add(pe, -0.5, 0);						// (B + E/2) - E/2
+	pb->truncate_to_min_max(0,pb->maximum());	// Eliminate negative values
+
+//	if ( verbose & VERB_DEBUG ) {
+		write_img("pb.grd", pb, 0);
+		write_img("pe.grd", pe, 0);
+		write_img("pf.grd", pf, 0);
+//	}
+	
+	pf->next = pb;
+	pb->next = pe;
+	
+	return pf;
+}
+
+Bimage*		img_ctf_fit_prepare(Bimage* p, long n, double sigma)
+{
+	Bimage*		ps = p->extract(n);
+
+	Bimage*		pf = img_ctf_fit_prepare(ps, sigma);
+	
+	delete ps;
 	
 	return pf;
 }
@@ -277,7 +330,7 @@ Bimage*		img_ctf_fit_prepare(Bimage* p, long n, double sigma)
 	for ( auto w: wa )
 		cout << w.first.first << tab << w.first.second << tab << w.second << endl;
 	
-	img_aberration_fit_iter(pf, 0, 5, 4, 100, wa);
+	img_aberration_phase_fit_iter(pf, 0, 5, 4, 100, wa);
 
 		cout << "Aberration parameters:\nn\tm\tw" << endl;
 	for ( auto w: wa )
@@ -504,7 +557,7 @@ double		img_ctf_fit(Bimage* p, long n, CTFparam& em_ctf, double lores, double hi
 		wa[{2,0}] = em_ctf.aberration_weight(2,0);
 		wa[{4,0}] = em_ctf.aberration_weight(4,0);
 
-		img_aberration_fit_iter(pf, 0, lores, hires, 4, 1000, wa);
+		img_aberration_phase_fit_iter(pf, 0, lores, hires, 4, 1000, wa);
 			
 		em_ctf.aberration_weights(wa);
 		
@@ -629,7 +682,7 @@ double		img_ctf_fit_envelope(Bimage* p, long n, CTFparam& em_ctf, double lores, 
 double		ctf_test_defocus(CTFparam& em_ctf, double def,
 				double step_size, vector<double>& r, long rmin, long rmax)
 {
-	long			i, nr(rmax-rmin+1);
+//	long			i, nr(rmax-rmin+1);
 	double			fom(0);
 	
 	em_ctf.defocus_average(def);
@@ -645,7 +698,7 @@ double		ctf_test_defocus(CTFparam& em_ctf, double def,
 //	fom /= nr;
 
 	double			c2, c2sum(0), r2sum(0);
-	for ( i=rmin; i<=rmax; i++ ) {
+	for ( long i=rmin; i<=rmax; ++i ) {
 		c2 = c[i]*c[i] - 0.5;
 		fom += c2*r[i];
 		c2sum += c2*c2;
@@ -1073,7 +1126,7 @@ double		img_ctf_fit_astigmatism(Bimage* p, long n, CTFparam& em_ctf, double lore
 	The origin of the image must be at {0,0}.
 
 **/
-map<pair<long,long>,double>	img_aberration_fit(Bimage* p, long nn, double lores, double hires, int flag)
+map<pair<long,long>,double>	img_aberration_phase_fit(Bimage* p, long nn, double lores, double hires, int flag)
 {
 	if ( hires < p->image->sampling()[0] ) hires = p->image->sampling()[0];
 	if ( lores && lores < hires ) lores = 1e5;
@@ -1168,7 +1221,7 @@ double		sine_aberration_fit_R(Bsimplex& simp)
 double		cosine_aberration_fit_R(Bsimplex& simp)
 {
 	long			i, j, k, nt(simp.parameters());
-	double			v, v2(0), f2(0), cc(0), R(0), w4(0);
+	double			v, cc(0), R(0), w4(0);
 	vector<double>&	f = simp.dependent_values();
 	vector<double>&	x = simp.independent_values();
 	if ( simp.constants() ) w4 = simp.constant(0);
@@ -1180,8 +1233,8 @@ double		cosine_aberration_fit_R(Bsimplex& simp)
 			v += simp.parameter(k) * x[j];
 		v = -cos(2*v);
 		cc += f[i]*v;
-		v2 += v*v;
-		f2 += f[i]*f[i];
+//		v2 += v*v;
+//		f2 += f[i]*f[i];
 	}
 	
 //	cc /= sqrt(v2*f2);
@@ -1201,7 +1254,7 @@ double		cosine_aberration_fit_R(Bsimplex& simp)
 		4 = even, nt = 9
 		5 = even, nt = 4
 */
-double		img_aberration_fit_iter_old(Bimage* p, long nn, double lores, double hires, int flag, long iter, map<pair<long,long>,double>& wa)
+double		img_aberration_phase_fit_iter_old(Bimage* p, long nn, double lores, double hires, int flag, long iter, map<pair<long,long>,double>& wa)
 {
 	if ( hires < p->image->sampling()[0] ) hires = p->image->sampling()[0];
 	if ( lores && lores < hires ) lores = 1e5;
@@ -1295,7 +1348,7 @@ double		img_aberration_fit_iter_old(Bimage* p, long nn, double lores, double hir
 	return R;
 }
 
-double		img_aberration_fit_iter(Bimage* p, long nn, double lores, double hires, int flag, long iter, map<pair<long,long>,double>& wa)
+double		img_aberration_phase_fit_iter(Bimage* p, long nn, double lores, double hires, int flag, long iter, map<pair<long,long>,double>& wa)
 {
 	if ( hires < p->image->sampling()[0] ) hires = p->image->sampling()[0];
 	if ( lores && lores < hires ) lores = 1e5;
@@ -1391,11 +1444,11 @@ double		img_aberration_fit_iter(Bimage* p, long nn, double lores, double hires, 
 	return R;
 }
 
-vector<map<pair<long,long>,double>>	img_aberration_fit(Bimage* p, double lores, double hires, int flag,
+vector<map<pair<long,long>,double>>	img_aberration_phase_fit(Bimage* p, double lores, double hires, int flag,
 		long iter)
 {
 	vector<map<pair<long,long>,double>>		win;
-	return img_aberration_fit(p, lores, hires, win, flag, iter);
+	return img_aberration_phase_fit(p, lores, hires, win, flag, iter);
 }
 
 /**
@@ -1411,7 +1464,7 @@ vector<map<pair<long,long>,double>>	img_aberration_fit(Bimage* p, double lores, 
 	
 
 **/
-vector<map<pair<long,long>,double>>	img_aberration_fit(Bimage* p, double lores, double hires,
+vector<map<pair<long,long>,double>>	img_aberration_phase_fit(Bimage* p, double lores, double hires,
 			vector<map<pair<long,long>,double>>& win, int flag, long iter)
 {
 	if ( hires < p->image->sampling()[0] ) hires = p->image->sampling()[0];
@@ -1426,7 +1479,9 @@ vector<map<pair<long,long>,double>>	img_aberration_fit(Bimage* p, double lores, 
 			cout << "Input terms:\nn\tm\tw" << endl;
 			for ( auto w: win[0] ) cout << w.first.first << tab << w.first.second << tab << w.second << endl;
 		}
-		cout << "Resolution limits:              " << hires << " - " << lores << " A" << endl;
+		cout << "Resolution limits:              " << hires << " - ";
+		if ( lores ) cout << lores << " A" << endl;
+		else cout << "inf A" << endl;
 		cout << "Iterations:                     " << iter << endl;
 	}
 
@@ -1441,9 +1496,9 @@ vector<map<pair<long,long>,double>>	img_aberration_fit(Bimage* p, double lores, 
 			else w = win[0];
 			complete_weights(w, flag);
 		} else {
-			w = img_aberration_fit(p, nn, lores, hires, flag);
+			w = img_aberration_phase_fit(p, nn, lores, hires, flag);
 		}
-		if ( iter > 0 ) img_aberration_fit_iter(p, nn, lores, hires, flag, iter, w);
+		if ( iter > 0 ) img_aberration_phase_fit_iter(p, nn, lores, hires, flag, iter, w);
 		wa[nn] = w;
 		dispatch_sync(myq, ^{
 			ndone++;
@@ -1463,9 +1518,9 @@ vector<map<pair<long,long>,double>>	img_aberration_fit(Bimage* p, double lores, 
 			else w = win[0];
 			complete_weights(w, flag);
 		} else {
-			w = img_aberration_fit(p, nn, lores, hires, flag);
+			w = img_aberration_phase_fit(p, nn, lores, hires, flag);
 		}
-		if ( iter > 0 ) img_aberration_fit_iter(p, nn, lores, hires, flag, iter, w);
+		if ( iter > 0 ) img_aberration_phase_fit_iter(p, nn, lores, hires, flag, iter, w);
 		wa[nn] = w;
 	#pragma omp critical
 		{
@@ -1497,7 +1552,7 @@ double		img_ctf_fit_aberration(Bimage* p, long n, CTFparam& em_ctf, double lores
 //	wa[{2,0}] = M_PI*em_ctf.lambda()*em_ctf.defocus_average();
 //	wa[{4,0}] = M_PI_2*em_ctf.lambda()*em_ctf.lambda()*em_ctf.lambda()*em_ctf.Cs();
 	
-	double		R = img_aberration_fit_iter(p, n, lores, hires, 4, iter, wa);
+	double		R = img_aberration_phase_fit_iter(p, n, lores, hires, 4, iter, wa);
 	
 	em_ctf.update_aberration_weights(wa);
 //	em_ctf.update_CTF_from_aberration_weights();
@@ -1590,6 +1645,78 @@ double		img_water_ring_index(Bimage* prad)
 	if ( b1 ) wri = wp/b1 - 1;
 
 	return wri;
+}
+
+double		water_ring_R(Bsimplex& simp)
+{
+	long			i, j;
+	double			R(0), df, s;
+	vector<double>&	f = simp.dependent_values();
+	vector<double>&	x = simp.independent_values();
+	
+	for ( i=j=0; i<simp.points(); i++ ) {
+		s = x[j++];
+		s -= simp.parameter(2) + simp.parameter(3)*x[j++];
+		s /= simp.parameter(4);
+		df = f[i] - (simp.parameter(0) + simp.parameter(1)*exp(-0.5*s*s));
+		R += df*df;
+	}
+	
+	R = sqrt(R/i);
+			
+	return R;
+}
+
+
+vector<double>	img_fit_water_ring(Bimage* p)
+{
+	long			i, xx, yy;
+	double			sx, sy, s;
+	double			smin(0.2), smax(0.4);
+	vector<double>	x, fx;
+	
+	for ( i=yy=0; yy<p->sizeY(); ++yy ) {
+		sy = (p->image->origin()[1] - yy)/p->real_size()[1];
+		for ( xx=0; xx<p->sizeX(); ++xx, ++i ) {
+			sx = (p->image->origin()[0] - xx)/p->real_size()[0];
+			s = sqrt(sx*sx + sy*sy);		// Spatial frequency
+			if ( s > smin && s < smax ) {
+				x.push_back(s);
+				x.push_back(cos(2*atan2(sy, sx)));	// cos(2*angle)
+				fx.push_back((*p)[i]);
+			}
+		}
+	}
+
+	Bsimplex			simp(2, 5, 0, fx.size(), x, fx);
+
+	simp.parameter(0, fx.back());	// Constant baseline
+	simp.parameter(1, 1);			// Water ring power
+	simp.parameter(2, 0.27);		// Spatial frequency average
+	simp.parameter(3, 0.01);		// Spatial frequency deviation
+	simp.parameter(4, 0.03);		// Spatial frequency sigma
+	simp.limits(0, 0, 10*fx.back());
+	simp.limits(1, 0, 100*fx.back());
+	simp.limits(2, 0.25, 0.29);
+	simp.limits(3, -0.1, 0.1);
+	simp.limits(4, 0.01, 0.05);
+
+	double			R = simp.run(10000, 0.01, water_ring_R);
+	R /= sqrt(simp.dependent_variance());
+	
+	vector<double>	wrfit(6,0);
+	for ( i=0; i<5; i++ ) wrfit[i] = simp.parameter(i);
+	wrfit[i] = R;
+	
+	if ( verbose ) {
+		cout << "Water ring fit:" << endl;
+		cout << "Limits:                          " << smin << " - " << smax << " /A" << endl;
+		cout << wrfit[0] << " + " << wrfit[1] << " * exp(-0.5*((s-" <<
+			wrfit[2] << "-" << wrfit[3] << "*cos(2a))/" << wrfit[4] << ")^2)" << endl;
+		cout << "R = " << wrfit[5] << endl << endl;
+	}
+
+	return wrfit;
 }
 
 double		gaussian_R(Bsimplex& simp)
@@ -1948,7 +2075,6 @@ double		ctf_fit_baseline(Bimage* prad, double real_size, CTFparam& em_ctf, doubl
 	}
 	
 	double			min(1e10), dmin;
-	double*			mavg = NULL;
 	
 	if ( n > 3 ) {		// Enough zeroes to fit the baseline
 		for ( i=0; i<n; i++ ) {
@@ -1960,7 +2086,7 @@ double		ctf_fit_baseline(Bimage* prad, double real_size, CTFparam& em_ctf, doubl
 			d.push_back(dmin);
 		}
 	} else {			// Too few zeroes, use local minima
-		mavg = moving_average(prad->sizeX(), (double *) prad->data_pointer(), prad->sizeX()/10);
+		vector<double>	mavg = moving_average(prad->sizeX(), (double *) prad->data_pointer(), prad->sizeX()/10);
 		for ( i=istart, n=0; i<iend; i++ ) {
 			if ( min > (*prad)[i] - mavg[i] ) {
 				min = (*prad)[i] - mavg[i];
@@ -1977,7 +2103,6 @@ double		ctf_fit_baseline(Bimage* prad, double real_size, CTFparam& em_ctf, doubl
 		s.push_back(10);
 		d.push_back(0);
 		n++;
-		delete[] mavg;
 	}
 	
 	if ( verbose & VERB_DEBUG ) {

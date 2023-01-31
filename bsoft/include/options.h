@@ -394,7 +394,7 @@ public:
  		return 3;
  	}
 	UnitCell		unit_cell() {
-		UnitCell		uc(0,0,0,M_PI_2,M_PI_2,M_PI_2);
+		UnitCell		uc;
 		vector<double>	d = value.split_into_doubles(",");
 		if ( d.size() < 6 ) {
 			cerr << "-unitcell: All 6 values for the unit cell must be specified!" << endl;

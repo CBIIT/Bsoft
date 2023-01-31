@@ -45,6 +45,7 @@ var class_bcomptype =
     [ "select", "class_bcomptype.html#a07de475ac8bd6136ed4494531497e017", null ],
     [ "select", "class_bcomptype.html#a98f4e3c3dcf922f686d37ffa1d311f30", null ],
     [ "select_increment", "class_bcomptype.html#a2def4b87b48e027b023b0e6cd50ee58e", null ],
+    [ "show", "class_bcomptype.html#ab1df789f74377216251d36067df951b2", null ],
     [ "update", "class_bcomptype.html#a0e81b7dd079c076d20d255eb712dcf79", null ],
     [ "next", "class_bcomptype.html#a07d0c91463aebaea0f39e3065d943c32", null ]
 ];

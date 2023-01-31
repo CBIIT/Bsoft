@@ -3,7 +3,7 @@
 @brief	Program to calculate density in selected regions of a map
 @author Bernard Heymann
 @date	Created: 20140424
-@date	Modified: 20150720
+@date	Modified: 20230110
 **/
 
 #include "rwimg.h"
@@ -77,18 +77,18 @@ int 	main(int argc, char* argv[])
     // Read the input file
     Bimage* 	p = read_img(argv[optind++], 1, -1);
 
-	long		num(0);
-	double		avg(0), std(0);
 	Bimage*		pmask = NULL;
 	if ( maskfile.length() ) {
 		pmask = read_img(maskfile, 1, -1);
 		p->stats_in_mask(setimg, pmask);
 		delete pmask;
 	} else if ( stat_type > 0 ) {
-		num = p->stats_in_shape(setimg, stat_type, start, start+size, avg, std);
-		cout << "Number of voxels:        " << num << endl;
-		cout << "Average density:         " << avg << endl;
-		cout << "Standard deviation:      " << std << endl << endl;
+		vector<double>	stats = p->stats_in_shape(setimg, stat_type, start, start+size);
+		cout << "Number of voxels:        " << stats[0] << endl;
+		cout << "Minimum:                 " << stats[1] << endl;
+		cout << "Maximum:                 " << stats[2] << endl;
+		cout << "Average density:         " << stats[3] << endl;
+		cout << "Standard deviation:      " << stats[4] << endl << endl;
 	}
 	
     // Write an output file if a file name is given

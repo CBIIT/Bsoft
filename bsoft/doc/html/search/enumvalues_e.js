@@ -1,14 +1,11 @@
 var searchData=
 [
-  ['tcmyk_0',['TCMYK',['../utilities_8h.html#a768a6f0a6fd7e9087ff7971abbcc3f36acba56a013b1b32be509f46e5cbeeb3b0',1,'utilities.h']]],
-  ['tcomplex_1',['TComplex',['../utilities_8h.html#a768a6f0a6fd7e9087ff7971abbcc3f36a5698f6783737000ae6f3a20769f59749',1,'utilities.h']]],
-  ['tmulti_2',['TMulti',['../utilities_8h.html#a768a6f0a6fd7e9087ff7971abbcc3f36a0d5cbbb1c86409469d249a4ab16c9445',1,'utilities.h']]],
-  ['trgb_3',['TRGB',['../utilities_8h.html#a768a6f0a6fd7e9087ff7971abbcc3f36a8a7a8c855ddcb08760dab8196cd15794',1,'utilities.h']]],
-  ['trgba_4',['TRGBA',['../utilities_8h.html#a768a6f0a6fd7e9087ff7971abbcc3f36a498e7653bc584ade150493c37b6e5e1e',1,'utilities.h']]],
-  ['tsimple_5',['TSimple',['../utilities_8h.html#a768a6f0a6fd7e9087ff7971abbcc3f36ad83a0f556634bd31d3357be2a64aac4c',1,'utilities.h']]],
-  ['turn_6',['Turn',['../rwmolecule_8h.html#a2403a7fa6b34471d6ea53d11bdf86806a0c1b9bb2e704447170944d00fcca57a3',1,'rwmolecule.h']]],
-  ['tvector2_7',['TVector2',['../utilities_8h.html#a768a6f0a6fd7e9087ff7971abbcc3f36a38dc2d7a94e3f45c2f1f19e4336fc95e',1,'utilities.h']]],
-  ['tvector3_8',['TVector3',['../utilities_8h.html#a768a6f0a6fd7e9087ff7971abbcc3f36a9d1539b7c3e3ba1c8af42e768e61024d',1,'utilities.h']]],
-  ['tview_9',['TView',['../utilities_8h.html#a768a6f0a6fd7e9087ff7971abbcc3f36a277e462a5c31ac284cdaf903b1427b89',1,'utilities.h']]],
-  ['twosevenribbon_10',['TwoSevenRibbon',['../rwmolecule_8h.html#a2403a7fa6b34471d6ea53d11bdf86806a18d32fb85f2f2677ebce16e9b3e1c264',1,'rwmolecule.h']]]
+  ['scharacter_0',['SCharacter',['../utilities_8h.html#ad8ed01ff3ff33333d8e19db4d2818bb6a3d19d5aa639923b8655491f48b29ba1d',1,'utilities.h']]],
+  ['short_1',['Short',['../utilities_8h.html#ad8ed01ff3ff33333d8e19db4d2818bb6af5a4874501b800b316e5817874430c98',1,'utilities.h']]],
+  ['signed_5fint16_5fdata_2',['SIGNED_INT16_DATA',['../rw_d_m_8h.html#a9ae5e142ae72d8367729fb10c19e7e1eae563f425d385ea8db45bc14157d030d8',1,'rwDM.h']]],
+  ['signed_5fint32_5fdata_3',['SIGNED_INT32_DATA',['../rw_d_m_8h.html#a9ae5e142ae72d8367729fb10c19e7e1ea8f423ecaca04f39b1034ef5a82dd2128',1,'rwDM.h']]],
+  ['signed_5fint8_5fdata_4',['SIGNED_INT8_DATA',['../rw_d_m_8h.html#a9ae5e142ae72d8367729fb10c19e7e1ea38361093c7e419d06964a97018677ee6',1,'rwDM.h']]],
+  ['standard_5',['Standard',['../_bimage_8h.html#a01e0deba350901d769526633e868806fa57f9bf199e30a749a03be1dac2f5f624',1,'Bimage.h']]],
+  ['strand_6',['Strand',['../rwmolecule_8h.html#a2403a7fa6b34471d6ea53d11bdf86806a93159c7b6fcfbae8b318915da4ae0620',1,'rwmolecule.h']]],
+  ['stringitem_7',['StringItem',['../rwstar_8h.html#a8435d7365a22ddeb114cbb1a37e7f524ae783438486301d16448686cd89218326',1,'rwstar.h']]]
 ];

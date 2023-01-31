@@ -1,4 +1,29 @@
 var searchData=
 [
-  ['hermitian_0',['Hermitian',['../_bimage_8h.html#a01e0deba350901d769526633e868806fa80618743de43c592678f4c2c5df2afca',1,'Bimage.h']]]
+  ['float_0',['Float',['../utilities_8h.html#ad8ed01ff3ff33333d8e19db4d2818bb6ad67b0ee7230dcecb610254e4e5e589cd',1,'utilities.h']]],
+  ['fom_1',['FOM',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfa065fec74420cd18346040e497d71993b',1,'mg_processing.h']]],
+  ['fom1_2',['FOM1',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfa4796eb9aeaa0065da5f9d02fb4eae41b',1,'mg_processing.h']]],
+  ['fom2_3',['FOM2',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfa1b537fdabec28a0449a00c9a8e5c1b38',1,'mg_processing.h']]],
+  ['fom3_4',['FOM3',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfa698fcbc7f8c54f6c7f3eddb4ef024cff',1,'mg_processing.h']]],
+  ['fom4_5',['FOM4',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfa062705311781ab80b8511b3d49947c2a',1,'mg_processing.h']]],
+  ['fom5_6',['FOM5',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfa61415279d2d31f8f19fe24ad8be7eff2',1,'mg_processing.h']]],
+  ['fom6_7',['FOM6',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfae3761d93cb832028164094e146a804d5',1,'mg_processing.h']]],
+  ['fom7_8',['FOM7',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfa658a3bec97657b45aae11d337cce801c',1,'mg_processing.h']]],
+  ['fom8_9',['FOM8',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfa20995c415282a30abdbec2715bbc220b',1,'mg_processing.h']]],
+  ['fom9_10',['FOM9',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfa3b7ec516a34eb052c38d7d9587a1e46a',1,'mg_processing.h']]],
+  ['fom_5fcc_11',['FOM_CC',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfa31fea2d078f06af81b75a599eacc5544',1,'mg_processing.h']]],
+  ['fom_5fcc_5favg_12',['FOM_CC_AVG',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfae32e29507c39f153deba7ace768695d3',1,'mg_processing.h']]],
+  ['fom_5fcc_5fstd_13',['FOM_CC_STD',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfa972c8989e3bb5a412f44e83ea8c02444',1,'mg_processing.h']]],
+  ['fom_5fcv_14',['FOM_CV',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfafb7b28c211352092896774d30fcdc430',1,'mg_processing.h']]],
+  ['fom_5fhand_5fa_15',['FOM_HAND_A',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfaf9d9f40a64cf52ce9a80c9dd68e8a1cc',1,'mg_processing.h']]],
+  ['fom_5fhand_5fb_16',['FOM_HAND_B',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfaa574bba0b5509f16ca3967d48f16a9f9',1,'mg_processing.h']]],
+  ['fom_5fpft_5fcc_17',['FOM_PFT_CC',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfa325ae8565ed0b9da723eb4041d119789',1,'mg_processing.h']]],
+  ['fom_5fpft_5fcmp_18',['FOM_PFT_CMP',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfa558886b7c2e6aa390544613eb612805a',1,'mg_processing.h']]],
+  ['fom_5fpft_5fprj_19',['FOM_PFT_PRJ',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfa0f7cf6ba784ead8c5c1bef385f42a123',1,'mg_processing.h']]],
+  ['fom_5frfactorab_20',['FOM_RFACTORAB',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfa387a9049c8103c665076f444dc2a6b9d',1,'mg_processing.h']]],
+  ['fom_5fsnr_21',['FOM_SNR',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfa853bde58f48f6880c63975f331d07fcc',1,'mg_processing.h']]],
+  ['fomlast_22',['FOMlast',['../mg__processing_8h.html#a9b8250bcd3dbae566bd5ef8a6089b1cfa5207a631b67a0fdb7192250bc4a9a162',1,'mg_processing.h']]],
+  ['footererror_23',['footerError',['../_electron_counted_frames_decompressor_8cpp.html#a9e36d55524a9931a8f4e67f2604b5364ab02934ea957a5cd8f3e74322755e4268',1,'ElectronCountedFramesDecompressor.cpp']]],
+  ['footerinvalid_24',['footerInvalid',['../_electron_counted_frames_decompressor_8cpp.html#a9e36d55524a9931a8f4e67f2604b5364a6fb45cca0cd41132a45e7a898bd74b79',1,'ElectronCountedFramesDecompressor.cpp']]],
+  ['footerok_25',['footerOK',['../_electron_counted_frames_decompressor_8cpp.html#a9e36d55524a9931a8f4e67f2604b5364a9a713233e12c7dbaf1fa66101577fd11',1,'ElectronCountedFramesDecompressor.cpp']]]
 ];

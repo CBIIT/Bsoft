@@ -11,6 +11,7 @@
 
 
 // Function prototypes 
+tm*			get_localtime();
 double		getwalltime();
 double		getcputime();
 double		timer_start();

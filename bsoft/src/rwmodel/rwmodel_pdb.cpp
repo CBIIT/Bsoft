@@ -26,6 +26,8 @@ int			writePDB(Bstring& filename, Bmodel* model);
 @param 	&paramfile		parameter file.
 @return Bmodel*			model parameters.
 
+	Each file is considered a separate model.
+	
 	The component description field contains the following detail as a space-separated list:
 		element
 		atom type
@@ -52,8 +54,10 @@ Bmodel*		read_model_pdb(Bstring* file_list, Bstring& paramfile)
 		if ( verbose & VERB_LABEL )
 			cout << "Reading file:                   " << *filename << endl;
 		mp = readPDB(*filename, i);
-		if ( model ) model->add(mp);
-		else model = mp;
+		if ( mp ) {
+			if ( model ) model->add(mp);
+			else model = mp;
+		}
 //		mp->model_type(mp->identifier());
 	}
 	
@@ -72,17 +76,12 @@ Bmodel* 	readPDB(Bstring& filename, long n)
 	if ( verbose )
 		cout << "Reading file:                   " << filename << endl;
 
-	Bmodel*			model = NULL;
-	Bcomponent*		comp = NULL;
-	Bcomponent*		comp2 = NULL;
-	Blink*			link = NULL;
-	Bgroup*			group = NULL;
 
 	// Open pdb file read only
 	ifstream		fmod(filename.c_str());
 	if ( fmod.fail() ) {
 		cerr << "Error: File " << filename << " not opened!" << endl;
-		return model;
+		return NULL;
 	}
 
 	string			s, recordname, chain("-"), grpch, resnumstr;
@@ -96,7 +95,11 @@ Bmodel* 	readPDB(Bstring& filename, long n)
 
 //	UnitCell		unitcell = molgroup->unitcell;
 
-	model = new Bmodel(n);
+	Bmodel*			model = new Bmodel(n);
+	Bcomponent*		comp = NULL;
+	Bcomponent*		comp2 = NULL;
+	Blink*			link = NULL;
+	Bgroup*			group = NULL;
 	
 	while ( !fmod.eof() ) {
 		getline(fmod, s);
@@ -246,8 +249,10 @@ Bmodel* 	readPDB(Bstring& filename, long n)
 @brief 	Writes molecular model parameters.
 @param 	&filename	model parameter file name.
 @param 	*model		model parameters.
-@param 	split		flag to split into individual files and number  of digits for the insert.
+@param 	split		flag to split into individual files and number of digits for the insert.
 @return int			files written.
+
+	if ( split=0 ) only the first model is written
 **/
 int			write_model_pdb(Bstring& filename, Bmodel* model, int split)
 {
@@ -263,7 +268,9 @@ int			write_model_pdb(Bstring& filename, Bmodel* model, int split)
 				name = filename.pre_rev('.') + Bstring(n, format) + filename.post_rev('.');
 			writePDB(name, mp);
 		}
-	} else writePDB(name, model);
+	} else {
+		writePDB(name, model);
+	}
 	
 	return  n;
 }
@@ -345,12 +352,10 @@ int			writePDB(Bstring& filename, Bmodel* model)
 			if ( comp->type() )
 				atomtype = comp->type()->identifier().substr(0,4);
 			vector<string>	vs = split(comp->description());
-			if ( vs.size() > 3 ) {
-				el = vs[0];
-				restype = vs[2];
-				chain = vs[3];
-				resnum = to_integer(vs[4]);
-			}
+			if ( vs.size() > 0 ) el = vs[0];
+			if ( vs.size() > 2 ) restype = vs[2];
+			if ( vs.size() > 3 ) chain = vs[3];
+			if ( vs.size() > 4 ) resnum = to_integer(vs[4]);
 			if ( comp->select() < 2 ) {
 				atomtag = "ATOM  ";
 				if ( el.length() < 1 && comp->type() )

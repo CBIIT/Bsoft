@@ -285,7 +285,7 @@ int 	main(int argc, char **argv)
 */		
 		if ( symmetry_string.length() ) p->symmetry(symmetry_string.str());
 			
-		if ( uc.check() ) p->unit_cell(uc);
+		if ( uc.c() ) p->unit_cell(uc);
 	
 		if ( spacegroup ) {
 			Bstring			symfile;

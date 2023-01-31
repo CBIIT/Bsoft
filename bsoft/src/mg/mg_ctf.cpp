@@ -1,9 +1,9 @@
 /**
 @file	mg_ctf.cpp
 @brief	Functions for CTF (contrast transfer function) processing
-@author Bernard Heymann
+@author 	Bernard Heymann
 @date	Created: 19970715
-@date	Modified: 20220805
+@date	Modified: 20230105
 **/
 
 #include "rwimg.h"
@@ -84,15 +84,15 @@ Bimage*		img_ctf_calculate(CTFparam& cp, bool flip, double wiener,
 		}
 	}
 	
-		for ( i=z=0; z<p->sizeZ(); z++ ) {
+		for ( i=z=0; z<p->sizeZ(); ++z ) {
 			sz = z;
 			if ( z > h[2] ) sz -= p->sizeZ();
 			sz *= freq_scale[2];
-			for ( y=0; y<p->sizeY(); y++ ) {
+			for ( y=0; y<p->sizeY(); ++y ) {
 				sy = y;
 				if ( y > h[1] ) sy -= p->sizeY();
 				sy *= freq_scale[1];
-				for ( x=0; x<p->sizeX(); x++, i++ ) {
+				for ( x=0; x<p->sizeX(); ++x, ++i ) {
 					sx = x;
 					if ( x > h[0] ) sx -= p->sizeX();
 					sx *= freq_scale[0];
@@ -208,15 +208,15 @@ Bimage*		img_ctf_calculate(CTFparam cp, int action, double wiener, Vector3<long>
 		}
 	}
 	
-		for ( i=z=0; z<p->sizeZ(); z++ ) {
+		for ( i=z=0; z<p->sizeZ(); ++z ) {
 			sz = z;
 			if ( z > h[2] ) sz -= p->sizeZ();
 			sz *= freq_scale[2];
-			for ( y=0; y<p->sizeY(); y++ ) {
+			for ( y=0; y<p->sizeY(); ++y ) {
 				sy = y;
 				if ( y > h[1] ) sy -= p->sizeY();
 				sy *= freq_scale[1];
-				for ( x=0; x<p->sizeX(); x++, i++ ) {
+				for ( x=0; x<p->sizeX(); ++x, ++i ) {
 					sx = x;
 					if ( x > h[0] ) sx -= p->sizeX();
 					sx *= freq_scale[0];
@@ -267,116 +267,14 @@ Bimage*		img_ctf_calculate(CTFparam cp, int action, double wiener, Vector3<long>
 	return p;
 }
 
-/**
-@brief 	Calculates an aberration image.
-@param 	cp				CTF & aberration parameters.
-@param 	def_min			Minimum defocus.
-@param 	def_max			Maximum defocus.
-@param 	def_inc			Defocus increment.
-@param 	size			new image size.
-@param 	sam				new image pixel size.
-@param 	lores			low resolution limit.
-@param 	hires			high resolution limit.
-@return Bimage*			new complex CTF function image.
-
-	Functions:
-		angle = atan(y/x)
-		s2 = x*x + y*y
-		defocus_average = (defocus_max + defocus_min)/2
-		defocus_deviation = (defocus_max - defocus_min)/2
-		defocus = defocus_average + defocus_deviation*cos(2*(angle - astigmatism_angle))
-		phase = 0.5*PI*lambda*lambda*lambda*Cs*s2*s2 - PI*lambda*defocus*s2 - amp_shift;
-		CTF = sin(phase)
-	Note: Defocus is positive for underfocus and negative for overfocus.
-
-**/
-Bimage*		img_ctf_gradient(CTFparam& cp, double def_min, double def_max, double def_inc,
-				Vector3<long> size, Vector3<double> sam, double lores, double hires)
-{
-	if ( lores < 0 ) lores = 0;
-	if ( hires <= 0 ) hires = sam[0];
-	if ( lores > 0 && lores < hires ) swap(lores, hires);
-	if ( size[2] == 1 ) sam[2] = 1;
-	
-	cp.defocus_average((def_min+def_max)/2);
-	
-	double			shi(1/hires);
-	double			slo = (lores > 0)? 1/lores: 0;
-	double			shi2(shi*shi), slo2(slo*slo);
-	
-	Bimage*			p = new Bimage(Float, TComplex, size, 1);
-	if ( sam.volume() > 0 ) p->sampling(sam);
-	
-	long 			i, x, y, z, n(0);
-	double			d, sx, sy, sz, s2, a, dphi;
-	Complex<double>	cv(1,0);
-	Vector3<double>	freq_scale(1.0L/p->real_size());
-	Vector3<double>	h((p->size() - 1)/2);
-	
-	if ( verbose & ( VERB_LABEL | VERB_PROCESS ) ) {
-		cout << "Calculating a CTF gradient function:" << endl;
-	}
-	if ( verbose & VERB_PROCESS ) {
-		cp.show();
-		cout << "Defocus min, max, inc:          " << def_min << " - " << def_max << " ∆ " << def_inc << endl;
-		cout << "First sinc node:                " << sqrt((def_max-def_min)*cp.lambda()/2) << " A" << endl;
-		cout << "Resolution range:               " << hires << " - ";
-		if ( lores > 0 ) cout << lores << " A" << endl;
-		else cout << "inf A" << endl;
-		cout << "Frequency range:                " << slo << " - " << shi << " 1/A" << endl;
-		double		rel_size = cp.lambda()*cp.defocus_average()/(sam[0]*sam[1]);
-		if ( rel_size > 500 ) {
-			cerr << "Warning: The oscillations are too high and create artifacts!" << endl;
-			cerr << tab << "Either decrease the defocus below " << 1e-4*500*sam[0]*sam[1]/cp.lambda() << " um" << endl;
-			cerr << tab << "or increase the pixel size above " << sqrt(cp.lambda()*cp.defocus_average()/500) << " Å" << endl << endl;
-		}
-	}
-	
-	for ( d = def_min, n=0; d <= def_max; d += def_inc, ++n ) {
-		cp.defocus_average(d);
-		for ( i=z=0; z<p->sizeZ(); z++ ) {
-			sz = z;
-			if ( z > h[2] ) sz -= p->sizeZ();
-			sz *= freq_scale[2];
-			for ( y=0; y<p->sizeY(); y++ ) {
-				sy = y;
-				if ( y > h[1] ) sy -= p->sizeY();
-				sy *= freq_scale[1];
-				for ( x=0; x<p->sizeX(); x++, i++ ) {
-					sx = x;
-					if ( x > h[0] ) sx -= p->sizeX();
-					sx *= freq_scale[0];
-					s2 = sx*sx + sy*sy + sz*sz;
-					if ( s2 >= slo2 && s2 <= shi2 ) {
-						a = atan2(sy,sx);
-						dphi = cp.calculate_aberration_even(s2, a);
-						cv = cp.aberration_odd_complex(s2, a);
-						p->add(i, cv.conj() * sinl(dphi));
-					}
-				}
-			}
-		}
-	}
-	
-	p->multiply(1.0L/n);
-	
-//	p->complex_to_real();
-//	p->statistics();
-	
-//	write_img("c.grd", p, 0);
-//	bexit(0);
-	
-	return p;
-}
 
 
 double		aberration(long n, long m, double s, double p)
 {
-	if ( n == 0 ) return 1;
+	if ( n <= 0 ) return 1;
 	if ( n > 4 ) return 0;
 	
-	double		s2;
-	if ( n > 1 ) s2 = s*s;
+	double		s2(s*s);
 	if ( n == 2 ) s = s2;
 	else if ( n == 3 ) s *= s2;
 	else if ( n == 4 ) s = s2*s2;
@@ -406,7 +304,7 @@ vector<double>	aberration_terms(long nt, double u, double v)
 
 	for ( i=n=0; n<5 && i<t.size(); ++n )
 		for ( m=-n; m<=n; m+=2 )
-			t[i++] = aberration(n, m, s, p);
+			t[++i] = aberration(n, m, s, p);
 
 	return t;
 }
@@ -420,7 +318,7 @@ vector<double>	aberration_even_terms(long nt, double u, double v)
 
 	for ( i=n=0; n<5 && i<t.size(); n+=2 )
 		for ( m=-n; m<=n; m+=2 )
-			t[i++] = aberration(n, m, s, p);
+			t[++i] = aberration(n, m, s, p);
 
 	return t;
 }
@@ -434,7 +332,7 @@ vector<double>	aberration_odd_terms(long nt, double u, double v)
 
 	for ( i=0, n=1; n<5 && i<t.size(); n+=2 )
 		for ( m=-n; m<=n; m+=2 )
-			t[i++] = aberration(n, m, s, p);
+			t[++i] = aberration(n, m, s, p);
 
 	return t;
 }
@@ -452,7 +350,7 @@ map<pair<long,long>,double>	aberration_weights(vector<double> v, int flag)
 		
 	for ( i=0; n<5 && i<v.size() && i<nt; n+=t ) {
 		for ( m=-n; m<=n; m+=2 ) {
-			w[{n,m}] = v[i++];
+			w[{n,m}] = v[++i];
 			if ( verbose & VERB_FULL )
 				cout << i << "\t" << n << "\t" << m << "\t" << w[{n,m}] << endl;
 		}
@@ -513,6 +411,14 @@ int			img_create_aberration(Bimage* p, map<pair<long,long>,double>& weights, int
 	
 	wa.push_back(weights);
 
+	if ( verbose & VERB_PROCESS ) {
+		cout << "Creating " << weights.size() << " images with aberration weights" << endl;
+		cout << "m\tn\tw" << endl;
+		for ( auto w1: weights )
+			cout << w1.first.first << tab << w1.first.second << tab << w1.second << endl;
+		cout << endl;
+	}
+
 	img_create_aberration(p, wa, flag);
 
 	return 0;
@@ -522,10 +428,7 @@ int			img_create_aberration(Bimage* p, vector<map<pair<long,long>,double>>& weig
 {
 	if ( verbose & VERB_PROCESS ) {
 		cout << "Creating " << weights.size() << " images with aberration weights" << endl;
-//		cout << "m\tn\tw" << endl;
-//		for ( auto w1: weights )
-//			cout << w1.first.first << tab << w1.first.second << tab << w1.second << endl;
-//		cout << endl;
+		cout << "Number weight sets:             " << weights.size() << endl << endl;
 	}
 	
 	long			i, xx, yy, zz, nn;
@@ -536,9 +439,7 @@ int			img_create_aberration(Bimage* p, vector<map<pair<long,long>,double>>& weig
 	for ( i=nn=0; nn<p->images(); ++nn ) {
 		w = weights[nn];
 		for ( zz=0; zz<p->sizeZ(); ++zz ) {
-			s[2] = (double(zz) - p->image[nn].origin()[2])/p->sizeZ();
-			if ( s[2] >= 0.5 ) s[2] -= 1;
-			s[2] /= p->image->sampling()[2];
+//			d = M_PI*wl*(double(zz) - p->image[nn].origin()[2])*p->image->sampling()[2];
 			for ( yy=0; yy<p->sizeY(); ++yy ) {
 				s[1] = (double(yy) - p->image[nn].origin()[1])/p->sizeY();
 				if ( s[1] >= 0.5 ) s[1] -= 1;
@@ -550,6 +451,7 @@ int			img_create_aberration(Bimage* p, vector<map<pair<long,long>,double>>& weig
 					sf = s.length();
 					phi = atan2(s[1],s[0]);
 					v = 0;
+//					v = d*sf*sf;
 					for ( auto w1: w ) {
 						if ( flag ) {
 							if ( w1.first.first%2 == flag%2 )
@@ -583,6 +485,7 @@ int			img_create_aberration(Bimage* p, map<string,CTFparam>& cpa, int flag)
 	
 	return img_create_aberration(p, wa, flag);
 }
+
 /**
 @brief 	Calculates a wave aberration function.
 @param 	cp				CTF parameters.
@@ -622,15 +525,15 @@ Bimage*		img_wave_aberration(CTFparam cp, Vector3<long> size, Vector3<double> sa
 	}
 	
 	for ( i=n=0; n<p->images(); n++ ) {
-		for ( z=0; z<p->sizeZ(); z++ ) {
+		for ( z=0; z<p->sizeZ(); ++z ) {
 			sz = z;
 			if ( z > h[2] ) sz -= p->sizeZ();
 			sz *= freq_scale[2];
-			for ( y=0; y<p->sizeY(); y++ ) {
+			for ( y=0; y<p->sizeY(); ++y ) {
 				sy = y;
 				if ( y > h[1] ) sy -= p->sizeY();
 				sy *= freq_scale[1];
-				for ( x=0; x<p->sizeX(); x++, i++ ) {
+				for ( x=0; x<p->sizeX(); ++x, ++i ) {
 					sx = x;
 					if ( x > h[0] ) sx -= p->sizeX();
 					sx *= freq_scale[0];
@@ -690,7 +593,7 @@ int 		img_ctf_apply(Bimage* p, CTFparam em_ctf, int action, double wiener,
 	long 			i, j, nn;
 	
 	for ( nn=j=0; nn<p->images(); nn++ )
-		for ( i=0; i<p->image_size(); i++, j++ )
+		for ( i=0; i<p->image_size(); ++i, j++ )
 			p->set(j, p->complex(j) * (*pctf)[i]);
 
 //	write_img("pf.grd", p, 0);
@@ -727,7 +630,7 @@ int 		img_ctf_apply(Bimage* p, CTFparam em_ctf, int action, double wiener,
 	long 			i, j, nn;
 	
 	for ( nn=j=0; nn<p->images(); nn++ )
-		for ( i=0; i<p->image_size(); i++, j++ )
+		for ( i=0; i<p->image_size(); ++i, j++ )
 			p->set(j, p->complex(j) * (*pctf)[i]);
 	
 	delete pctf;
@@ -764,7 +667,7 @@ int 		img_ctf_apply_complex(Bimage* p, CTFparam& cp, bool flip,
 	long 			i, j, nn;
 	
 	for ( nn=j=0; nn<p->images(); nn++ )
-		for ( i=0; i<p->image_size(); i++, j++ )
+		for ( i=0; i<p->image_size(); ++i, j++ )
 			p->set(j, p->complex(j) * pctf->complex(i));
 
 	delete pctf;
@@ -786,15 +689,15 @@ int			img_apply_phase_aberration(Bimage* p, CTFparam em_ctf)
 	}
 	
 	for ( i=n=0; n<p->images(); n++ ) {
-		for ( z=0; z<p->sizeZ(); z++ ) {
+		for ( z=0; z<p->sizeZ(); ++z ) {
 			sz = z;
 			if ( z > h[2] ) sz -= p->sizeZ();
 			sz *= freq_scale[2];
-			for ( y=0; y<p->sizeY(); y++ ) {
+			for ( y=0; y<p->sizeY(); ++y ) {
 				sy = y;
 				if ( y > h[1] ) sy -= p->sizeY();
 				sy *= freq_scale[1];
-				for ( x=0; x<p->sizeX(); x++, i++ ) {
+				for ( x=0; x<p->sizeX(); ++x, ++i ) {
 					sx = x;
 					if ( x > h[0] ) sx -= p->sizeX();
 					sx *= freq_scale[0];
@@ -972,7 +875,7 @@ int			img_ttf_apply(Bimage* p, CTFparam ctf, int action, double wiener,
 	});
 #else
 #pragma omp parallel for
-	for ( long i=0; i<pt->images(); i++ )
+	for ( long i=0; i<pt->images(); ++i )
 		img_ttf_apply_one(pt, i, ctf, action, wiener, d[i], res_lo, res_hi, invert, psize, planf, planb);
 #endif
 
@@ -1991,8 +1894,8 @@ int 		project_ctf_average(Bproject* project, Bstring& psname)
 
 	plot->page(0).title(title);
 	plot->page(0).columns(ncol);
-	for ( i=0; i<ncol; i++ ) plot->page(0).column(i).number(i);
-	plot->page(0).column(0).label("s");
+	for ( i=0; i<ncol; ++i ) plot->page(0).column(i).number(i);
+	plot->page(0).column(0).label("Spatial Frequency (A)");
 	plot->page(0).column(1).label("CTFavg");
 	plot->page(0).column(0).axis(1);
 	plot->page(0).column(1).axis(3);
@@ -2009,7 +1912,7 @@ int 		project_ctf_average(Bproject* project, Bstring& psname)
 		for ( mg = field->mg; mg; mg = mg->next ) {
 			if ( mg->ctf ) {
 				ctf = mg->ctf->calculate(maxrad, 1, recip_interval);
-				for ( i=0, j=maxrad; i<maxrad; i++, j++ )
+				for ( i=0, j=maxrad; i<maxrad; ++i, j++ )
 					(*plot)[j] += ctf[i]*ctf[i];
 //				delete ctf;
 				n++;
@@ -2017,7 +1920,7 @@ int 		project_ctf_average(Bproject* project, Bstring& psname)
 		}
 	}
 	
-	for ( i=0, j=maxrad; i<maxrad; i++, j++ ) {
+	for ( i=0, j=maxrad; i<maxrad; ++i, j++ ) {
 		(*plot)[i] = i*recip_interval;
 		(*plot)[j] /= n;
 	}
@@ -2519,10 +2422,10 @@ int			project_set_envelope_type(Bproject* project, int type)
 @brief 	Sets the envelope equations of all the micrographs.
 @param 	*project 		project parameter structure.
 @param 	type			envelope type.
-@param 	*coeff			5 envelope coefficients.
+@param 	&coeff			5 envelope coefficients.
 @return int				0.
 **/
-int			project_set_envelope(Bproject* project, int type, double* coeff)
+int			project_set_envelope(Bproject* project, int type, vector<double>& coeff)
 {
 	if ( !project ) return 0;
 	
@@ -2611,11 +2514,11 @@ int			project_set_baseline_type(Bproject* project, int type)
 /**
 @brief 	Sets the baseline equations of all the micrographs.
 @param 	*project 		project parameter structure.
-@param 	type				baseline type.
-@param 	*coeff			5 baseline coefficients.
+@param 	type			baseline type.
+@param 	&coeff			5 baseline coefficients.
 @return int						0.
 **/
-int			project_set_baseline(Bproject* project, int type, double* coeff)
+int			project_set_baseline(Bproject* project, int type, vector<double>& coeff)
 {
 	if ( !project ) return 0;
 	
@@ -2715,26 +2618,6 @@ long		project_update_ctf_aberration(Bproject* project, map<string,CTFparam>& cpa
 	return nf;
 }
 
-/**
-@brief 	Updates the aberration weights for all optics groups.
-@param 	*project 		project parameter structure.
-@return int				0.
-**/
-/*int			project_convert_CTF_to_aberration_weights(Bproject* project)
-{
-	if ( !project ) return 0;
-	
-	Bfield*				field;
-	Bmicrograph*		mg;
-
-	for ( field = project->field; field; field = field->next )
-		for ( mg = field->mg; mg; mg = mg->next )
-			if ( mg->ctf )
-				mg->ctf->convert_CTF_to_aberration_weights();
-	
-	return 0;
-}
-*/
 /**
 @brief 	Compares the aberration parameters from two projects.
 @param 	*project 		project parameter structure.

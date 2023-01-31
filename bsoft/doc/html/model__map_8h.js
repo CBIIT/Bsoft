@@ -1,5 +1,6 @@
 var model__map_8h =
 [
+    [ "img_electron_scattering", "model__map_8h.html#a531be4acd179a3d931446b5a64d9600d", null ],
     [ "img_from_model", "model__map_8h.html#ab5c6ae8b186f5c1c77c21abef528f240", null ],
     [ "model_catenate_maps", "model__map_8h.html#ae5536e83d268a99aad537ecb8158a019", null ],
     [ "model_component_symmetry", "model__map_8h.html#ac0676cc045f8488b4ca2413454a21b3a", null ],

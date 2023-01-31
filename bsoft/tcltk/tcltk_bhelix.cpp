@@ -119,7 +119,7 @@ Tcl_Obj*	do_layerline(Bproject* project, int objc, Tcl_Obj *CONST objv[])
 			
 	if ( !p ) {
 		returnObj = Tcl_NewObj();
-		sprintf(string, "Image %s not found!", filename.c_str());
+		snprintf(string, MAXLINELEN, "Image %s not found!", filename.c_str());
 		Tcl_AppendToObj(returnObj, string, strlen(string));
 	}
 
@@ -195,7 +195,7 @@ Tcl_Obj*	layerline_ids(Bmicrograph* mg, int objc, Tcl_Obj *CONST objv[])
 
 	if ( mg ) {
 		for ( line = mg->layer; line; line = line->next ) if ( line->fom >= fom_cut ) {
-			sprintf(string, " %d", line->number);
+			snprintf(string, MAXLINELEN, " %d", line->number);
 			Tcl_AppendToObj(returnObj, string, strlen(string));
 		}
 	}
@@ -521,7 +521,7 @@ Tcl_Obj*	layerline_plot(Bmicrograph* mg, Bimage* p, int objc, Tcl_Obj *CONST obj
 	int					l(0), len(p->sizeX()), i;
 	Blayerline*			line;
 	double*				plot;
-	char				string[100];
+	char				string[64];
 	
 	if ( objc > 4 ) Tcl_GetIntFromObj(NULL, objv[4], &l);
 	if ( objc > 5 ) Tcl_GetIntFromObj(NULL, objv[5], &len);
@@ -530,10 +530,10 @@ Tcl_Obj*	layerline_plot(Bmicrograph* mg, Bimage* p, int objc, Tcl_Obj *CONST obj
 		for ( line = mg->layer; line && line->number != l; line = line->next ) ;
 		if ( line ) {
 			plot = img_extract_layer_line(p, line, mg->helix_axis, len);
-			sprintf(string, "%d", len);
+			snprintf(string, 60, "%d", len);
 			Tcl_AppendToObj(returnObj, string, strlen(string));
 			for ( i=0; i<p->sizeX(); i++ ) {
-				sprintf(string, " %g", plot[i]);
+				snprintf(string, 60, " %g", plot[i]);
 				Tcl_AppendToObj(returnObj, string, strlen(string));
 			}
 			delete[] plot;
@@ -557,14 +557,14 @@ Tcl_Obj*	layerline_bessel_function(double realsizeX, int objc, Tcl_Obj *CONST ob
 	if ( radius < 1 ) return returnObj;
 	
 	int					x;
-	char				string[100];
+	char				string[64];
 	double				j, scale = TWOPI*radius/realsizeX;
 	
-	sprintf(string, "%d", len);
+	snprintf(string, 60, "%d", len);
 	Tcl_AppendToObj(returnObj, string, strlen(string));
 	for ( x=0; x<len; x++ ) {
 		j = jn(n, (x - len/2)*scale);
-		sprintf(string, " %g", j*j);
+		snprintf(string, 60, " %g", j*j);
 		Tcl_AppendToObj(returnObj, string, strlen(string));
 	}
 	

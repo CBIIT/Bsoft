@@ -29,6 +29,7 @@ var mg__particle__select_8h =
     [ "part_select_group", "mg__particle__select_8h.html#a8be61b52e8203330c8146202044df533", null ],
     [ "part_select_maxsmooth", "mg__particle__select_8h.html#acb9d9c2915258d2a40f4b84a1b2eb84b", null ],
     [ "part_select_micrograph", "mg__particle__select_8h.html#af7c4047fd0427b6e25f11f687570006f", null ],
+    [ "part_select_micrographs_with_selected_particles", "mg__particle__select_8h.html#a683705737b6418786576c1b3f1dd776c", null ],
     [ "part_select_percentage", "mg__particle__select_8h.html#a09ffa8f997dd6f48a377a75207201ff1", null ],
     [ "part_select_random", "mg__particle__select_8h.html#a4b689a26908be5625d65eb4c20d1857e", null ],
     [ "part_select_random_filaments", "mg__particle__select_8h.html#a4224656f5ee9c547a1b99be6e7dfa215", null ],
@@ -51,5 +52,6 @@ var mg__particle__select_8h =
     [ "part_unset_selection", "mg__particle__select_8h.html#a41fac751b6e91e0bb5db4908f2ada1c6", null ],
     [ "part_view_select", "mg__particle__select_8h.html#a72245a5d264784a13e98b32e80f9488e", null ],
     [ "project_fom_order", "mg__particle__select_8h.html#a5356ecac16472ef3a1fb6fcf5b9c3f42", null ],
-    [ "project_part_sort", "mg__particle__select_8h.html#a37c329a18a4968448aea7e63ef3c760d", null ]
+    [ "project_part_sort", "mg__particle__select_8h.html#a37c329a18a4968448aea7e63ef3c760d", null ],
+    [ "project_selected_partlist", "mg__particle__select_8h.html#a7bbf93a8c1bce7c7289755968df3fad2", null ]
 ];

@@ -3,7 +3,7 @@
 @brief	Program to generate images from aberration weights and analyze them
 @author Bernard Heymann
 @date	Created: 20220106
-@date	Modified: 20220725
+@date	Modified: 20221212
 **/
 
 #include "rwimg.h"
@@ -36,7 +36,7 @@ const char* use[] = {
 " ",
 "Actions:",
 "-create 200,200,1        Create a new image of this size (pixels/voxels).",
-"                         Note: No input image is read and the first file name is taken as the output image.",
+//"                         Note: No input image is read and the first file name is taken as the output image.",
 "-basis 2                 Generate basis images (0=full, 1=odd, 2=even).",
 "-zernike                 Treat weights as zernike polynomials (only with the -even and -odd options).",
 "-fit 2,10000             Fit phase image; flag: 0=full, 1=odd, 2=even; fitting iterations.",
@@ -107,9 +107,9 @@ int 	main(int argc, char **argv)
 
 //	double			v;
 	JSvalue			jsctf(JSobject);
-	double			def_avg(2e4);			// In angstrom
+	double			def_avg(0);				// In angstrom
 	double			def_dev(0);				// In angstrom
-	double			ast_angle(-1);	 		// Used to limit astigmatism
+	double			ast_angle(0);	 		// Used to limit astigmatism
 
 	int				optind;
 	Boption*		option = get_option_list(use, argc, argv, optind);
@@ -181,8 +181,9 @@ int 	main(int argc, char **argv)
 	double			ti = timer_start();
 
 	CTFparam		cp = ctf_from_json(jsctf);
-	cp.defocus_average(def_avg);
-	cp.astigmatism(def_dev, ast_angle);
+	cp.aberration_weights(weights);
+	if ( def_avg ) cp.defocus_average(def_avg);
+	if ( def_dev ) cp.astigmatism(def_dev, ast_angle);
 	
 //	cout << jsctf << endl;
 	cp.show();
@@ -211,8 +212,12 @@ int 	main(int argc, char **argv)
 //			p->ewald_sphere(volt, ew_thick);
 			img_ewald_sphere(p, cp, ew_thick);
 		} else {
-			if ( wodd.length() ) weights_add(weights, wodd, zflag|1);
-			if ( weven.length() ) weights_add(weights, weven, zflag);
+			if ( wodd.length() || weven.length() ) {
+				if ( wodd.length() ) weights_add(weights, wodd, zflag|1);
+				if ( weven.length() ) weights_add(weights, weven, zflag);
+			} else {
+				weights = cp.aberration_weights();
+			}
 			img_create_aberration(p, weights, 0);
 		}
 	} else if ( phifile.length() ) {
@@ -260,12 +265,14 @@ int 	main(int argc, char **argv)
 	if ( weights.find({4,0}) == weights.end() )
 		weights[{4,0}] = cp.aberration_weight(4,0);
 	if ( weights.size() ) wa.push_back(weights);
-//	cout << "Checking weights:" << endl;
-//	for ( auto w: weights ) cout << w.first.first << tab << w.first.second << tab << w.second << endl;
+	cout << "Checking weights:" << endl;
+	for ( auto w: weights ) cout << w.first.first << tab << w.first.second << tab << w.second << endl;
 
 	Bimage*		pd = NULL;
 	if ( fit_flag >= 0 && p ) {
-		wa = img_aberration_fit(p, lo_res, hi_res, wa, fit_flag, fit_iter);
+		if ( fit_flag > 3 )
+			img_ctf_fit_prepare(p, 10);
+		wa = img_aberration_phase_fit(p, lo_res, hi_res, wa, fit_flag, fit_iter);
 		if ( abfile.length() ) {
 			Bimage*		pf = p->copy();
 			img_create_aberration(pf, wa, fit_flag);

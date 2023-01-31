@@ -1073,6 +1073,27 @@ public:
 		for ( Bcomponent* c = comp; c; c = c->next ) c->shift(t);
 		return component_count();
 	}
+	long			trim(Vector3<double> b) {
+		Vector3<double>		start;
+		Bcomponent* 		c;
+		Bcomponent*			nu_list = NULL;
+		Bcomponent*			c2 = NULL;
+		for ( c = comp; c; c = c->next ) {
+			if ( c->location().within(start, b) ) {
+				if ( c2 ) c2 = c2->next = new Bcomponent(c);
+				else nu_list = c2 = new Bcomponent(c);
+				c2->type(add_type(c->type()->identifier()));
+				for ( auto it = c->link.begin(); it != c->link.end(); ++it )
+					nu_list->find_and_add_links(c->identifier(), (*it)->identifier());
+			}
+		}
+		for ( c = comp; c; c = c2 ) {
+			c2 = c->next;
+			delete c;
+		}
+		comp = nu_list;
+		return component_count();
+	}
 	void			show_components() {
 		cout << "Components:" << endl;
 		for ( Bcomponent* c = comp; c; c = c->next )

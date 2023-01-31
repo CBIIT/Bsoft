@@ -34,6 +34,7 @@ var class_bsub__image =
     [ "view", "class_bsub__image.html#a48377d509d48e11bd262f11a43cf7d31", null ],
     [ "view", "class_bsub__image.html#a13b6b01bbdd0d9a66c8bc220fda962c5", null ],
     [ "view", "class_bsub__image.html#ae33d1d12bb4ded337583bf20eed2a45b", null ],
+    [ "view", "class_bsub__image.html#a5c1885719920545fadc561435d40ce32", null ],
     [ "view_angle", "class_bsub__image.html#aaa399f9f46de8b569464287b95435241", null ],
     [ "view_angle", "class_bsub__image.html#a0c0efb2b960e3da9b6ea6a6e62d8e309", null ]
 ];

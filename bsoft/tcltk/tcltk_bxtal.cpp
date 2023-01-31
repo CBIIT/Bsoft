@@ -178,7 +178,7 @@ Tcl_Obj*	spot_ids(Bmicrograph* mg, int objc, Tcl_Obj *CONST objv[])
 
 	if ( mg ) {
 		for ( sf = mg->sf; sf; sf = sf->next ) if ( sf->fom >= fom_cut ) {
-			sprintf(string, " %d %d %d", sf->index[0], sf->index[1], sf->index[2]);
+			snprintf(string, MAXLINELEN, " %d %d %d", sf->index[0], sf->index[1], sf->index[2]);
 			Tcl_AppendToObj(returnObj, string, strlen(string));
 		}
 	}
@@ -213,7 +213,7 @@ Tcl_Obj*	spot_reindex(Bmicrograph* mg, int objc, Tcl_Obj *CONST objv[])
 		}
 	}
 
-	sprintf(string, "%d %d %d", id2[0], id2[1], id2[2]);
+	snprintf(string, MAXLINELEN, "%d %d %d", id2[0], id2[1], id2[2]);
 	Tcl_SetStringObj(returnObj, string, strlen(string));
 	
 	return returnObj;
@@ -238,7 +238,7 @@ Tcl_Obj*	spot_location(Bmicrograph* mg, int objc, Tcl_Obj *CONST objv[])
 
 	if ( sf ) {
 		Vector3<double>		loc = sf->loc + mg->origin;
-		sprintf(string, "%f %f %f", loc[0], loc[1], loc[2]);
+		snprintf(string, MAXLINELEN, "%f %f %f", loc[0], loc[1], loc[2]);
 		Tcl_SetStringObj(returnObj, string, strlen(string));
 //		cout << id << tab << sf->loc << endl;
 	}
@@ -303,7 +303,7 @@ Tcl_Obj*	spot_select(Bmicrograph* mg, int objc, Tcl_Obj *CONST objv[])
 			}
 		}
 		if ( dmin <= rad ) {
-			sprintf(string, " %d %d %d", ind[0], ind[1], ind[2]);
+			snprintf(string, 60, " %d %d %d", ind[0], ind[1], ind[2]);
 			Tcl_SetStringObj(returnObj, string, strlen(string));
 		}
 	}
@@ -337,7 +337,7 @@ Tcl_Obj*	spot_move(Bmicrograph* mg, int objc, Tcl_Obj *CONST objv[])
 		for ( sf = sflist; sf && sf->index != id; sf = sf->next ) ;
 		if ( sf ) {
 			sf->loc += d;
-			sprintf(string, " %d %d %d", sf->index[0], sf->index[1], sf->index[2]);
+			snprintf(string, 60, " %d %d %d", sf->index[0], sf->index[1], sf->index[2]);
 			Tcl_SetStringObj(returnObj, string, strlen(string));
 		}
 	}
@@ -373,7 +373,7 @@ Tcl_Obj*	spot_create(Bmicrograph* mg, int objc, Tcl_Obj *CONST objv[])
 		sf->amp = 1;
 		sf->fom = 1;
 		sf->sel = 1;
-		sprintf(string, " %d %d %d", sf->index[0], sf->index[1], sf->index[2]);
+		snprintf(string, 60, " %d %d %d", sf->index[0], sf->index[1], sf->index[2]);
 		Tcl_SetStringObj(returnObj, string, strlen(string));
 //		cout << id << tab << sf->loc << endl;
 	}
@@ -409,7 +409,7 @@ Tcl_Obj*	spot_delete(Bmicrograph* mg, int objc, Tcl_Obj *CONST objv[])
 			if ( sf )
 				remove_item((char **)&mg->sf, (char *)sf, sizeof(Bstrucfac));
 		}
-		sprintf(string, "%d %d %d", h, k, l);
+		snprintf(string, 60, "%d %d %d", h, k, l);
 		Tcl_SetStringObj(returnObj, string, strlen(string));
 	}
 	

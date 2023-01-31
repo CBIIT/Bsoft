@@ -136,13 +136,16 @@ Functions</h2></td></tr>
 <tr class="memitem:adb7b2241d24b46407d31b12f798186c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_bimage.html">Bimage</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mg__particles_8h.html#adb7b2241d24b46407d31b12f798186c8">project_correlation_sum</a> (<a class="el" href="class_bproject.html">Bproject</a> *<a class="el" href="tcltk__bmodel_8cpp.html#aea438e09dfc03683a0f49a05e9a69cac">project</a>, <a class="el" href="class_bimage.html">Bimage</a> *pref, double hires, <a class="el" href="class_f_s_i___kernel.html">FSI_Kernel</a> *<a class="el" href="structkernel.html">kernel</a>)</td></tr>
 <tr class="memdesc:adb7b2241d24b46407d31b12f798186c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Correlates each particle with the CTF applied reference projection and sum the correlations.  <a href="mg__particles_8h.html#adb7b2241d24b46407d31b12f798186c8">More...</a><br /></td></tr>
 <tr class="separator:adb7b2241d24b46407d31b12f798186c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31c14ba0d78431e826cbd9a06e547ce5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_bimage.html">Bimage</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="mg__particles_8h.html#a31c14ba0d78431e826cbd9a06e547ce5">project_aberration_phase_difference</a> (<a class="el" href="class_bproject.html">Bproject</a> *<a class="el" href="tcltk__bmodel_8cpp.html#aea438e09dfc03683a0f49a05e9a69cac">project</a>, <a class="el" href="class_bimage.html">Bimage</a> *pref, double hires, <a class="el" href="class_f_s_i___kernel.html">FSI_Kernel</a> *<a class="el" href="structkernel.html">kernel</a>)</td></tr>
+<tr class="memdesc:a31c14ba0d78431e826cbd9a06e547ce5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the aberration phase difference from a set of particles.  <a href="mg__particles_8h.html#a31c14ba0d78431e826cbd9a06e547ce5">More...</a><br /></td></tr>
+<tr class="separator:a31c14ba0d78431e826cbd9a06e547ce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Manipulates single particle images. </p>
 <dl class="section author"><dt>Author</dt><dd>Bernard Heymann </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>Created: 20080424 </dd>
 <dd>
-Modified: 20220104 </dd></dl>
+Modified: 20221130 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="a20b479d1317983b450baec2e144adda0" name="a20b479d1317983b450baec2e144adda0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a20b479d1317983b450baec2e144adda0">&#9670;&nbsp;</a></span>mg_find_part_centers()</h2>
@@ -199,6 +202,61 @@ The extracted particle images are each rotated by PI and the shift
 found by cross-correlation between the unrotated and rotated images.
 The particle coordinates in the parameter structure are updated with
 the shift.
+</pre> </dd></dl>
+
+</div>
+</div>
+<a id="a31c14ba0d78431e826cbd9a06e547ce5" name="a31c14ba0d78431e826cbd9a06e547ce5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31c14ba0d78431e826cbd9a06e547ce5">&#9670;&nbsp;</a></span>project_aberration_phase_difference()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_bimage.html">Bimage</a> * project_aberration_phase_difference </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_bproject.html">Bproject</a> *&#160;</td>
+          <td class="paramname"><em>project</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_bimage.html">Bimage</a> *&#160;</td>
+          <td class="paramname"><em>pref</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>hires</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_f_s_i___kernel.html">FSI_Kernel</a> *&#160;</td>
+          <td class="paramname"><em>kernel</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the aberration phase difference from a set of particles. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">*project</td><td>project parameter structure. </td></tr>
+    <tr><td class="paramname">*pref</td><td>reference map. </td></tr>
+    <tr><td class="paramname">hires</td><td>high resolution limit (angstrom). </td></tr>
+    <tr><td class="paramname">*kernel</td><td>frequency space interpolation kernel lookup table. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Bimage* aberration phase differences as a complex image. <pre class="fragment">Uses the method as described in Zivanov et al (2020).
+The return image is complex with the even and odd phase differences
+in real and imaginary parts, respectively.
 </pre> </dd></dl>
 
 </div>
@@ -717,7 +775,7 @@ The reference must be the same size as the particle images.
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="mg__particles_8h.html">mg_particles.h</a></li>
-    <li class="footer">Generated on Fri Jan 7 2022 02:32:16 for Bsoft by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
+    <li class="footer">Generated on Tue Jan 31 2023 08:21:29 for Bsoft by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
   </ul>
 </div>
 </body>

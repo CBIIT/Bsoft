@@ -497,11 +497,9 @@ int			mol_to_structure_factors(Bmolgroup* molgroup, Bimage* p,
 	Vector3<double> fcoor;
 	
 	// Convert to fractional coordinates
-	UnitCell		unit_cell = p->unit_cell();
-	unit_cell.a(p->real_size()[0]);
-	unit_cell.b(p->real_size()[1]);
-	unit_cell.c(p->real_size()[2]);
+	UnitCell		unit_cell(p->real_size());
 	p->unit_cell(unit_cell);
+//	cout << unit_cell << endl;
 	Matrix3			frac_mat = unit_cell.skew_matrix();
 
 	double*			scat = get_scattering_curves(atompar, Bfactor, recip_interval, nscat);
@@ -815,7 +813,7 @@ map<string, vector<double>>	get_scattering_curves(map<string,Bcomptype>& types,
 	// Impose the B-factor
 	for ( auto c: scat ) {
 		i = 0;
-		for ( auto v: c.second ) {
+		for ( auto& v: c.second ) {
 			s2 = i*i*recip_int2;
 			v *= exp(fact*s2);
 			i++;

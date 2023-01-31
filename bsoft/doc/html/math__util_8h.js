@@ -12,5 +12,6 @@ var math__util_8h =
     [ "partition", "math__util_8h.html#aac98ca45f1111aa90f282a43c08b2416", null ],
     [ "partition", "math__util_8h.html#ae08e883616c016c794dd48f4c8844a8a", null ],
     [ "prime_factors", "math__util_8h.html#ad7e91c9a32a70a89117e0694e14282ec", null ],
+    [ "sinc", "math__util_8h.html#a23284d6b2bbf5885eb9a79f66e3c93e4", null ],
     [ "smallest_prime", "math__util_8h.html#a0ef20e14605490f07837761bd514fe14", null ]
 ];

@@ -33,7 +33,7 @@ var _vector3_8h =
     [ "vecmax", "_vector3_8h.html#ab7ae446b4a390032ad1169cfdcbc4c67", null ],
     [ "vecmin", "_vector3_8h.html#a29cce9af72f69e3d5228ae62a3c4f516", null ],
     [ "vecmin", "_vector3_8h.html#a2a638a128a7ae19f375d3a09e3f3e7e0", null ],
-    [ "vector3_difference_PBC", "_vector3_8h.html#a3939ff6c6ebfb2f542cbc9d6547dfd29", null ],
+    [ "vector3_difference_PBC", "_vector3_8h.html#ae694c147970a8f901ef361f97a1dafa0", null ],
     [ "vector3_origin_to_shift", "_vector3_8h.html#a50721777e04bd92aaf0007eb1efe65b0", null ],
     [ "vector3_scalar_range", "_vector3_8h.html#abb0c047bbc952be786bd2a8384e018a2", null ],
     [ "vector3_set_PBC", "_vector3_8h.html#ac694362a1b0d198b384944a7ecd0d92c", null ],

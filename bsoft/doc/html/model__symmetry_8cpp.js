@@ -2,6 +2,7 @@ var model__symmetry_8cpp =
 [
     [ "model_apply_point_group", "model__symmetry_8cpp.html#a9867fee367bbc35a3ed25450e9f5996a", null ],
     [ "model_find_asymmetric_unit", "model__symmetry_8cpp.html#a4331ffd77a6d032146a0d295f7424aec", null ],
+    [ "model_generate_lattice", "model__symmetry_8cpp.html#a7257c84b777ccc78aa255bfca4269c4f", null ],
     [ "model_symmetrize", "model__symmetry_8cpp.html#a1bca3a0e6ec4a90a03f139e2200997f6", null ],
     [ "model_symmetry_related", "model__symmetry_8cpp.html#a933e8a33de9c60605e7fb815ec43cc0c", null ],
     [ "models_apply_point_group", "model__symmetry_8cpp.html#a46a8b870e37df2cbefcaa680d014ac8d", null ],

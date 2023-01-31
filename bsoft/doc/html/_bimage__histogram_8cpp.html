@@ -94,7 +94,7 @@ $(document).ready(function(){initNavTree('_bimage__histogram_8cpp.html',''); ini
 <p>Library routines to calculate histograms for images.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="_bimage_8h.html">Bimage.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="simplex_8h.html">simplex.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="histogram_8h.html">histogram.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="cluster_8h.html">cluster.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="moving__average_8h.html">moving_average.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="matrix__linear_8h.html">matrix_linear.h</a>&quot;</code><br />
@@ -103,13 +103,6 @@ $(document).ready(function(){initNavTree('_bimage__histogram_8cpp.html',''); ini
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae3645c230b52949696588b3be119432d"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_bimage__histogram_8cpp.html#ae3645c230b52949696588b3be119432d">find_maximum_sigma</a> (<a class="el" href="class_matrix.html">Matrix</a> &amp;H, long i, long <a class="el" href="rw_d_m_8cpp.html#a2f48c9e23195864af2581edd4f60917e">level</a>, long depth, double sum, double &amp;maxsum, vector&lt; double &gt; &amp;t)</td></tr>
-<tr class="separator:ae3645c230b52949696588b3be119432d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9531a9017d7ff254b51071178586ce8"><td class="memItemLeft" align="right" valign="top">vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_bimage__histogram_8cpp.html#ab9531a9017d7ff254b51071178586ce8">histogram_thresholds</a> (vector&lt; long &gt; h, long number)</td></tr>
-<tr class="memdesc:ab9531a9017d7ff254b51071178586ce8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates multiple thresholds from a histogram.  <a href="_bimage__histogram_8cpp.html#ab9531a9017d7ff254b51071178586ce8">More...</a><br /></td></tr>
-<tr class="separator:ab9531a9017d7ff254b51071178586ce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a447b7a33ce3b1aa6abfd0a9848abeb"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_bimage__histogram_8cpp.html#a0a447b7a33ce3b1aa6abfd0a9848abeb">simplex_gauss_R</a> (<a class="el" href="class_bsimplex.html">Bsimplex</a> &amp;simp)</td></tr>
-<tr class="separator:a0a447b7a33ce3b1aa6abfd0a9848abeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a626538e70f9a41f8b447e789ad89ff83"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_bimage__histogram_8cpp.html#a626538e70f9a41f8b447e789ad89ff83">simplex_poisson_R</a> (<a class="el" href="class_bsimplex.html">Bsimplex</a> &amp;simp)</td></tr>
 <tr class="separator:a626538e70f9a41f8b447e789ad89ff83"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -125,122 +118,6 @@ Variables</h2></td></tr>
 <dd>
 Modified: 20210304 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="ae3645c230b52949696588b3be119432d" name="ae3645c230b52949696588b3be119432d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae3645c230b52949696588b3be119432d">&#9670;&nbsp;</a></span>find_maximum_sigma()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double find_maximum_sigma </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_matrix.html">Matrix</a> &amp;&#160;</td>
-          <td class="paramname"><em>H</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">long&#160;</td>
-          <td class="paramname"><em>i</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">long&#160;</td>
-          <td class="paramname"><em>level</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">long&#160;</td>
-          <td class="paramname"><em>depth</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>sum</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double &amp;&#160;</td>
-          <td class="paramname"><em>maxsum</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">vector&lt; double &gt; &amp;&#160;</td>
-          <td class="paramname"><em>t</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ab9531a9017d7ff254b51071178586ce8" name="ab9531a9017d7ff254b51071178586ce8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab9531a9017d7ff254b51071178586ce8">&#9670;&nbsp;</a></span>histogram_thresholds()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">vector&lt; double &gt; histogram_thresholds </td>
-          <td>(</td>
-          <td class="paramtype">vector&lt; long &gt;&#160;</td>
-          <td class="paramname"><em>h</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">long&#160;</td>
-          <td class="paramname"><em>number</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Calculates multiple thresholds from a histogram. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">h</td><td>histogram. </td></tr>
-    <tr><td class="paramname">number</td><td>number of clusters (one more than thresholds). </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>vector&lt;double&gt; thresholds. <pre class="fragment">Reference: PS.Liao, TS.Chen, and PC. Chung,
-       Journal of Information Science and Engineering, vol 17, 713-727 (2001)
-</pre> </dd></dl>
-
-</div>
-</div>
-<a id="a0a447b7a33ce3b1aa6abfd0a9848abeb" name="a0a447b7a33ce3b1aa6abfd0a9848abeb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a447b7a33ce3b1aa6abfd0a9848abeb">&#9670;&nbsp;</a></span>simplex_gauss_R()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">double simplex_gauss_R </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="class_bsimplex.html">Bsimplex</a> &amp;&#160;</td>
-          <td class="paramname"><em>simp</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a626538e70f9a41f8b447e789ad89ff83" name="a626538e70f9a41f8b447e789ad89ff83"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a626538e70f9a41f8b447e789ad89ff83">&#9670;&nbsp;</a></span>simplex_poisson_R()</h2>
 
@@ -288,7 +165,7 @@ Modified: 20210304 </dd></dl>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_7673ec780970b264223275c6ce2fb0e1.html">img</a></li><li class="navelem"><a class="el" href="_bimage__histogram_8cpp.html">Bimage_histogram.cpp</a></li>
-    <li class="footer">Generated on Fri Jan 7 2022 02:32:17 for Bsoft by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
+    <li class="footer">Generated on Tue Jan 31 2023 08:21:29 for Bsoft by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
   </ul>
 </div>
 </body>

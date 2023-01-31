@@ -4,6 +4,7 @@ var model__transform_8cpp =
     [ "model_align_to_guide", "model__transform_8cpp.html#a521992da27364c9d208fee6a20dcfd18", null ],
     [ "model_center", "model__transform_8cpp.html#a2133b207763cf66251339d5e0180e9b8", null ],
     [ "model_find_transform", "model__transform_8cpp.html#ae8fd10433436e024aa99ed58a86d3924", null ],
+    [ "model_random_displace_number", "model__transform_8cpp.html#adf22657772b2320c26346b5cda2fb04c", null ],
     [ "model_reflect", "model__transform_8cpp.html#a5055de3eef849fc9d3d5babc3eeac5dc", null ],
     [ "model_reflect_and_compare", "model__transform_8cpp.html#a23652b897563ca2d76db07f711bdfa41", null ],
     [ "model_rotate", "model__transform_8cpp.html#a3ecd16ff7d9227c91843b83f72303eba", null ],
@@ -16,7 +17,14 @@ var model__transform_8cpp =
     [ "model_scale", "model__transform_8cpp.html#a51c5fe3d1787d3e961406e275ac7aac5", null ],
     [ "model_shift", "model__transform_8cpp.html#a265cea81d372bfdc5a4051262a4ea0c9", null ],
     [ "models_reflect", "model__transform_8cpp.html#a50a42adf7a874a3bee8672240742ca91", null ],
+    [ "models_rotate", "model__transform_8cpp.html#a15990d160d6fdffa3e0fdb612bf1c034", null ],
+    [ "models_rotate", "model__transform_8cpp.html#ace17b18f6b4579ef7a06ab945b5c9ee3", null ],
+    [ "models_rotate", "model__transform_8cpp.html#a2c37ed1b55a0e7a0117b2b6062cd5022", null ],
+    [ "models_rotate", "model__transform_8cpp.html#a063e0b59e6e9f442d3030ad858a6252a", null ],
+    [ "models_rotate", "model__transform_8cpp.html#aa3159357556fbf0b8337ff74655a23d2", null ],
+    [ "models_rotate", "model__transform_8cpp.html#a04d9f90b4d369a87947670fcb9988260", null ],
     [ "models_scale", "model__transform_8cpp.html#a86e0195ba77cb4275a2264d08ce4d545", null ],
     [ "models_shift", "model__transform_8cpp.html#ae0ce5e568f24b9bc162f55fdcf3b405a", null ],
+    [ "models_trim", "model__transform_8cpp.html#a7ae29867da97c6d3e170d3f793f2975e", null ],
     [ "verbose", "model__transform_8cpp.html#a0b2caeb4b6f130be43e5a2f0267dd453", null ]
 ];

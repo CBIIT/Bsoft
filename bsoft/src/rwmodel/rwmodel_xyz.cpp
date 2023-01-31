@@ -1,9 +1,9 @@
 /**
 @file	rwmodel_xyz.cpp
 @brief	Library routines to read and write Kirkland's xyz atomic model parameters
-@author Bernard Heymann
+@author 	Bernard Heymann
 @date	Created: 20220426
-@date	Modified: 20220426
+@date	Modified: 20221115
 **/
 
 #include "rwmodel.h"
@@ -32,7 +32,7 @@ Bmodel*		read_model_xyz(Bstring* file_list, Bstring& paramfile)
 	ifstream		fmod;
 	string			s;
 	long			Z, natom(0);
-	double			occ, wobble;
+	double			occ, wobble; // Occupancy and Debye-Waller (thermal motion)
 	Vector3<double>	size, loc;
 
 	map<string,Bcomptype> 	atompar = read_atom_properties(paramfile);
@@ -49,11 +49,13 @@ Bmodel*		read_model_xyz(Bstring* file_list, Bstring& paramfile)
 		else mp = model = new Bmodel(id);
 		mp->model_type(type);
 		mp->select(1);
-		getline(fmod, s);
+		getline(fmod, s);	// Description
+		if ( verbose & VERB_PROCESS )
+			cout << "Description:  " << s << endl;
 		fmod >> size[0] >> size[1] >> size[2];
 		while ( fmod.good() ) {
 			fmod >> Z >> loc[0] >> loc[1] >> loc[2] >> occ >> wobble;
-			if ( Z > 0 ) {
+			if ( fmod.good() && Z > 0 ) {
 				natom++;
 				if ( comp ) comp = comp->add(natom);
 				else comp = model->comp = new Bcomponent(natom);
@@ -77,9 +79,10 @@ Bmodel*		read_model_xyz(Bstring* file_list, Bstring& paramfile)
 @brief 	Writes Kirkland's xyz atomic model parameters.
 @param 	&filename	model parameter file name.
 @param 	*model		model parameters.
+@param 	split		flag to split into separate models.
 @return int			models written.
 **/
-int			write_model_xyz(Bstring& filename, Bmodel* model)
+int			write_model_xyz(Bstring& filename, Bmodel* model, int split)
 {
 	int					n, Z(1);
 	Bmodel*				mp = NULL;
@@ -88,6 +91,9 @@ int			write_model_xyz(Bstring& filename, Bmodel* model)
 	double				occ(1), wobble(0);
 	Vector3<double>		loc, size, off;
 	Bstring				paramfile;
+	char			format[32];
+
+	snprintf(format, 32, "_%%0%dd.", split);
 
 	map<string,Bcomptype> 	atompar = read_atom_properties(paramfile);
 
@@ -101,7 +107,7 @@ int			write_model_xyz(Bstring& filename, Bmodel* model)
 
 	for ( n=0, mp = model; mp; mp = mp->next, n++ ) {
 		if ( model->next )
-			onename = filename.pre_rev('.') + Bstring(n+1, "_%04d.") + filename.post_rev('.');
+			onename = filename.pre_rev('.') + Bstring(n+1, format) + filename.post_rev('.');
 		else
 			onename = filename;
 		fmod.open(onename.c_str());

@@ -236,6 +236,7 @@ int 		Bimage::fft(fft_plan plan, int norm_flag)
 /**
 @brief 	Tiled Fourier transform.
 @param 	dir			direction of transformation (FFTW_FORWARD or FFTW_BACKWARD)
+@param	tile_size	tile size.
 @param 	norm_flag	normalization: 0=none, 1=sqrtN, 2=N.
 @return int 			error code.
 

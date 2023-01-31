@@ -3,7 +3,7 @@
 @brief	Header file for CTF (contrast transfer function) functions
 @author Bernard Heymann
 @date	Created: 20000426
-@date	Modified: 20220606
+@date	Modified: 20230105
 **/
 
 #include <cmath>
@@ -36,7 +36,7 @@ private:
 	double			de;				// Energy spread (eV)
 	double			oa;				// Objective aperture radius (angstrom)
 	double			sw;				// Energy filter slit width (eV), 0 if not used
-	double			tx, ty;			// Beam tilt (radian)
+//	double			tx, ty;			// Beam tilt (radian)
 	map<pair<long,long>,double>	abw;	// Aberration weights
 	long			bt;				// Baseline type (1=poly, 2=double_gauss, 3=eman)
 	vector<double>	base;			// Baseline (up to 10 coefficients)
@@ -54,7 +54,7 @@ private:
 		fl = 3.5e7;
 		oa = 2e6;
 		cc = 2e7;
-		tx = ty = 0;
+//		tx = ty = 0;
 		for ( int i=0; i<NCTFPARAM; i++ ) {
 			base.push_back(0);
 			env.push_back(0);
@@ -62,8 +62,11 @@ private:
 		bt = 1;
 		base[0] = 1;
 		et = 4;
-		env[0] = 0.2;
-		env[1] = -1000;
+		env[0] = 1.0;
+		env[1] = 0.2;
+		env[2] = -1000;
+		env[3] = 0.1;
+		env[4] = -100;
 		wl = t1 = t2 = 0;
 		aberration_init();
 	}
@@ -106,11 +109,6 @@ public:
 	void	alpha(double v) { a = v; }
 	double	dE() { return de; }
 	void	dE(double v) { de = v; }
-	double	beam_tiltX() { return tx; }
-	double	beam_tiltY() { return ty; }
-	void	beam_tiltX(double v) { tx = v; }
-	void	beam_tiltY(double v) { ty = v; }
-	void	beam_tilt(double x, double y) { tx = x; ty = y; }
 	double	aberration_weight(long n, long m) { return abw[{n,m}]; }
 	void	aberration_weight(long n, long m, double v) { abw[{n,m}] = v; }
 	void	add_aberration_weight(long n, long m, double v) { abw[{n,m}] += v; }
@@ -127,6 +125,11 @@ public:
 	void	slit_width(double v) { sw = v; }
 	double	amp_shift() { return -abw[{0,0}]; }
 	void	amp_shift(double v) { abw[{0,0}] = -v; }
+	double	beam_tiltX() { return abw[{1,1}]/TWOPI; }
+	double	beam_tiltY() { return abw[{1,-1}]/TWOPI; }
+	void	beam_tiltX(double v) { abw[{1,1}] = TWOPI*v; }
+	void	beam_tiltY(double v) { abw[{1,-1}] = TWOPI*v; }
+	void	beam_tilt(double x, double y) { abw[{1,1}] = TWOPI*x; abw[{1,-1}] = TWOPI*y; }
 	double	defocus_average() { return abw[{2,0}]/t2; }
 	void	defocus_average(double v) { abw[{2,0}] = t2*v; }
 	double	defocus_deviation() { return -sqrt(abw[{2,-2}]*abw[{2,-2}]+abw[{2,2}]*abw[{2,2}])/t2; }
@@ -145,6 +148,10 @@ public:
 	void	baseline(int i, double d) { if ( i>=0 && i < NCTFPARAM ) base[i] = d; }
 	void	baseline(double* b) { for ( int i=0; i<NCTFPARAM; i++ ) base[i] = b[i]; }
 	void	baseline(vector<double>& b) { for ( int i=0; i<NCTFPARAM; i++ ) base[i] = b[i]; }
+	void	baseline(long t, vector<double>& b) {
+		bt = t;
+		for ( int i=0; i<NCTFPARAM; i++ ) base[i] = b[i];
+	}
 	long	envelope_type() { return et; }
 	void	envelope_type(long t) { et = t; }
 	vector<double>&	envelope() { return env; }
@@ -152,8 +159,22 @@ public:
 	void	envelope(int i, double d) { if ( i>=0 && i < NCTFPARAM ) env[i] = d; }
 	void	envelope(double* v) { for ( int i=0; i<NCTFPARAM; i++ ) env[i] = v[i]; }
 	void	envelope(vector<double>& v) { for ( int i=0; i<NCTFPARAM; i++ ) env[i] = v[i]; }
+	void	envelope(long t, vector<double>& v) {
+		et = t;
+		for ( int i=0; i<NCTFPARAM; i++ ) env[i] = v[i];
+	}
 	double	fom() { return f; }
 	void	fom(double v) { f = v; }
+	double	aberration_coefficient(long n, long m) {
+		if ( n == 0 ) return wl*abw[{0,0}]/TWOPI;
+		if ( n == 1 ) return abw[{n,m}]/TWOPI;
+		double		d(wl);
+		for ( int i=2; i<n; ++i ) d *= wl;
+		return n*abw[{n,m}]/(TWOPI*d);
+	}
+	double	aberration_coefficient(pair<long,long> a) {
+		return aberration_coefficient(a.first, a.second);
+	}
 	string	aberration_weight_string() {
 		string		ws;
 		for ( auto w: abw ) ws += "," + to_string(w.second);
@@ -458,10 +479,10 @@ public:
 		cout << "Wavelength:                     " << lambda() << " A" << endl;
 		cout << "Spherical aberration (Cs):      " << Cs()*1e-7 << " mm" << endl;
 		cout << "Chromatic aberration (Cc):      " << cc*1e-7 << " mm" << endl;
-		cout << "Beam tilt:                      " << tx << tab << ty << endl;
-		cout << "Aberration parameters:\nn\tm\tw" << endl;
+		cout << "Image shift (beam tilt):        " << beam_tiltX() << tab << beam_tiltY() << " A" << endl;
+		cout << "Aberration parameters:\nn\tm\tw\tc" << endl;
 		for ( auto w: abw )
-			cout << w.first.first << tab << w.first.second << tab << w.second << endl;
+			cout << w.first.first << tab << w.first.second << tab << w.second << tab << aberration_coefficient(w.first) << endl;
 		cout << "Illumination halfangle (alpha): " << a*1e3 << " mrad" << endl;
 		cout << "Energy spread:                  " << de << " eV" << endl;
 		cout << "Energy filter slit width:       " << sw << " eV" << endl;
@@ -474,11 +495,11 @@ public:
 	void	show_aberration() {
 		cout << "Optics group:                   " << id << endl;
 		cout << "Number:                         " << sel << endl;
-		cout << "Aberration parameters:\nn\tm\tw" << endl;
+		cout << "Aberration parameters:\nn\tm\tw\tc" << endl;
 		for ( auto w: abw )
-			cout << w.first.first << tab << w.first.second << tab << w.second << endl;
+			cout << w.first.first << tab << w.first.second << tab << w.second << tab << aberration_coefficient(w.first) << endl;
 		cout << "Phase shift:                    " << -abw[{0,0}] << " radians" << endl;
-		cout << "Image shift:                    " << abw[{1,1}]/TWOPI << tab << abw[{1,-1}]/TWOPI << " A" << endl;
+		cout << "Image shift (beam tilt):        " << beam_tiltX() << tab << beam_tiltY() << " A" << endl;
 		cout << "Defocus:                        " << defocus_average()*1e-4 << " um" << endl;
 		cout << "Astigmatism:                    " << -abw[{2,2}]*1e-4/(M_PI*lambda()) << tab << -abw[{2,-2}]*1e-4/(M_PI*lambda()) << " um" << endl;
 		cout << "Defocus deviation:              " << defocus_deviation()*1e-4 << " um" << endl;

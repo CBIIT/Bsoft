@@ -564,7 +564,8 @@ int 		Bimage::complex_multiply(Bimage* p)
 {
 	if ( !d.uc ) return -1;
 	
-	if ( compoundtype != TComplex || p->compound_type() != TSimple ) return -1;
+	if ( compoundtype != TComplex ) return -1;
+	if ( p->compoundtype > TComplex ) return -1;
 	
 	change_type(Float);
 	p->change_type(Float);
@@ -574,7 +575,10 @@ int 		Bimage::complex_multiply(Bimage* p)
 	
 	long				i, ds(x*y*z*n);
 	
-	for ( i=0; i<ds; i++ ) set(i, complex(i) * (*p)[i]);
+	if ( p->compoundtype == TSimple )
+		for ( i=0; i<ds; i++ ) set(i, complex(i) * (*p)[i]);
+	else
+		for ( i=0; i<ds; i++ ) set(i, complex(i) * p->complex(i));
 	
 	return 0;
 }
@@ -1097,31 +1101,6 @@ int 		Bimage::combined_complex_product(Bimage* pmask)
 	return combined_complex_product(0, 0, pmask);
 }
 
-
-/**
-@brief 	Calculates the complex conjugate product of a complex image resulting from combining and Fourier transforming two real space images.
-@param 	hires		high resolution limit.
-@param 	lores		low resolution limit.
-@return int			error code.
-
-	Requirement: Fourier transform of two images packed into one complex
-		data block with the function Bimage::pack_two_in_complex and then
-		transformed with the function Bimage::fft.
-	The Friedel relationships in transforms from real space images are
-	exploited to transform two images simultaneously and then extract
-	the individual transforms from the complex data set.
-	This function extracts the individual transforms and calculates the 
-	complex conjugate product used in cross-correlation.
-	The result is scaled by the total power of the two transforms within
-	the resolution limits, yielding the correlation coefficient when
-	the product is backtransformed into the cross-correlation map.
-
-**/
-/*int 		Bimage::combined_complex_product(double hires, double lores)
-{
-	return combined_complex_product(hires, lores, NULL);
-}
-*/
 /**
 @brief 	Calculates the complex conjugate product of a complex image resulting from combining and Fourier transforming two real space images.
 @param 	hires		high resolution limit.
@@ -1242,7 +1221,8 @@ int 		Bimage::combined_complex_product(double hires, double lores, Bimage* pmask
 		}
 		scale = sum1*sum2;
 		if ( scale > 0 ) {
-			scale = 0.5/sqrt(scale);
+//			scale = 0.5/sqrt(scale);
+			scale = 1.0/sqrt(scale);
 			multiply(nn, scale);
 /*			statistics();
 			if ( image->maximum() > 1 ) {

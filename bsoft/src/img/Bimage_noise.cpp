@@ -239,6 +239,7 @@ int 		Bimage::noise_uniform_distance(long number)
 {
 	if ( verbose & VERB_PROCESS ) {
 		cout << "Generating a random image with a uniform distance distribution:" << endl;
+		cout << "Number of hits:                 " << number << endl << endl;
 	}
 		
 	long			i;
@@ -250,6 +251,46 @@ int 		Bimage::noise_uniform_distance(long number)
 	for ( i=0; i<number; ++i ) {
 		loc = vector3_random(ori, size());
 		add(index(loc, 0), 1);
+	}
+	
+	statistics();
+
+	return 0;
+}
+
+/**
+@brief 	Generates an image based on a gaussian random distribution of distances.
+@param	number		number of hits to place
+@param	stdev		standard deviation.
+@return int			0.
+
+	The image is populated with single hits at distances with
+	a uniform random distrubution within the image boundaries.
+	Statistics are calculated before returning.
+
+**/
+int 		Bimage::noise_gaussian_distance(long number, double stdev)
+{
+	long			i(0);
+	Vector3<double>	ori(image->origin());
+	Vector3<long>	loc;
+	
+	if ( verbose & VERB_PROCESS ) {
+		cout << "Generating a random image with a gaussian distance distribution:" << endl;
+		cout << "Number of hits:                 " << number << endl;
+		cout << "Origin:                         " << ori << endl;
+		cout << "Standard deviation:             " << stdev << endl << endl;
+	}
+		
+	random_seed();
+	
+	while ( i<number ) {
+//		loc = vector3_random_gaussian(0, stdev) + ori;
+		loc = vector3_xy_random_gaussian(0, stdev) + ori;
+		if ( within_boundaries(loc) ) {
+			add(index(loc, 0), 1);
+			i++;
+		}
 	}
 	
 	statistics();

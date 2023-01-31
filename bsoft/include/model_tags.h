@@ -1,9 +1,9 @@
 /**
 @file	model_tags.h
 @brief	All STAR and XML file format tags for models
-@author Bernard Heymann
+@author 	Bernard Heymann
 @date	Created: 20000419
-@date	Modified: 20210219
+@date	Modified: 20221123
 **/
 
 // Do not change the constant names because they are referenced in code
@@ -43,6 +43,7 @@
 #define COMPONENT_DENSITY		"component.density"
 #define COMPONENT_FOM			"component.fom"
 #define COMPONENT_SELECT		"component.select"
+#define COMPONENT_DESCRIPTION	"component.description"
 
 // Multi-molecular model component types
 #define COMPTYPE				"component_type"

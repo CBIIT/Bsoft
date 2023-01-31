@@ -711,7 +711,6 @@ void		Bimage::square_root()
 
 /**
 @brief 	Calculates the logarithm of the image data.
-@return int 			0.
 
 	The image is first converted to floating point, or intensities
 	for complex data. The logarithm is calculated to place the minmum at
@@ -753,7 +752,6 @@ void		Bimage::logarithm()
 
 /**
 @brief 	Calculates the exponential of the image data.
-@return int 			0.
 
 	The image is first converted to floating point.
 	The new data replaces the old data.

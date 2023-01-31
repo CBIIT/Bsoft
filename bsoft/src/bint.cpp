@@ -96,8 +96,8 @@ int 		main(int argc, char **argv)
 	Vector3<double>	axis(0.0,0.0,1.0);				// Rotation axis
 	View			view;							// View to rotate to
 	Euler			euler;							// Euler angles
-	UnitCell		uc(0,0,0,M_PI_2,M_PI_2,M_PI_2);
-	int				compression(0);				// Output compression type
+	UnitCell		uc;
+	int				compression(0);					// Output compression type
 	
 	int				i, optind;
 	Boption*		option = get_option_list(use, argc, argv, optind);

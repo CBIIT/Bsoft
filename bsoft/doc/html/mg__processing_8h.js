@@ -15,6 +15,7 @@ var mg__processing_8h =
     [ "APPLY_CTF", "mg__processing_8h.html#ad0c43e5f420b67c107d8438c4133e943", null ],
     [ "CHECK_PPX", "mg__processing_8h.html#a315ca3b720b034606534af8cb26c66f6", null ],
     [ "FULL_ASU", "mg__processing_8h.html#a362a277b8fa83a46fbc7b4581decd0a7", null ],
+    [ "INVERT", "mg__processing_8h.html#a95febca84b9b6b5b9cfd278e44ffc56f", null ],
     [ "MODE", "mg__processing_8h.html#ab8c52c1b4c021ed3e6b6b677bd2ac019", null ],
     [ "MODE_CCC", "mg__processing_8h.html#a9ccbffa539e7ddf4266ed8b7bad27973", null ],
     [ "MODE_PPS", "mg__processing_8h.html#aed7e6e228b7fd67f42ee99ed71c173a6", null ],

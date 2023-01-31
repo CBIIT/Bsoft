@@ -106,7 +106,7 @@ int 		main(int argc, char **argv)
 	int				asu(0);						// Flag to change views to ASU
 	int				nviews(0);					// Number of views
 	int				spacegroup(0);  	    	// Spacegroup
-	UnitCell		uc(0,0,0,M_PI_2,M_PI_2,M_PI_2);
+	UnitCell		uc;
 	int				view_flag(1);				// Flag for projection generation
 	View			theview;					// View to generate symmetry-related projections
 	int				symviews(0);				// Flag to generate symmetry-related projections

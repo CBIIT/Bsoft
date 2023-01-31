@@ -6,7 +6,7 @@
 @date	Modified: 20220713
 **/
 
-#define BVERSION "2.1.4-20221101"
+#define BVERSION "2.1.4-20230131"
 
 #include <stdio.h>
 #include <string.h>

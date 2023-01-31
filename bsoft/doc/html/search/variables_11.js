@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['r_0',['R',['../struct_sphere.html#ae63beb5380ccbbb9ba820c54d03d02ef',1,'Sphere']]],
-  ['r_1',['r',['../struct_p_i_fcolor.html#a1f69baeca0541a68e851fdb5800d22e9',1,'PIFcolor']]],
+  ['r_0',['r',['../struct_p_i_fcolor.html#a1f69baeca0541a68e851fdb5800d22e9',1,'PIFcolor']]],
+  ['r_1',['R',['../struct_sphere.html#ae63beb5380ccbbb9ba820c54d03d02ef',1,'Sphere']]],
   ['rad_5fhi_2',['rad_hi',['../struct_p_i_fimagehead__new.html#a5fe823ec170fab1fee75c6b338bdc613',1,'PIFimagehead_new']]],
   ['rad_5flo_3',['rad_lo',['../struct_p_i_fimagehead__new.html#a091dbf0cf66a0155329a169a448615e6',1,'PIFimagehead_new']]],
   ['radius_4',['radius',['../class_bmodparam.html#a30cea80da5b4e15ec175673cb41822f3',1,'Bmodparam']]],

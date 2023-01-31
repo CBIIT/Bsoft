@@ -72,6 +72,38 @@ Bmodel*		read_model_cif(Bstring& filename, Bstring& paramfile)
 //					if ( verbose & VERB_DEBUG )
 						cout << "DEBUG read_model_cif: Molecule " << model->identifier() << endl;
 				}
+			} else if ( il.find(CHEMICAL_ATOM_ID) >= 0 ) {
+				chain = ib.at(CHEMICAL_ID);
+				if ( model ) model = model->add(chain);
+				else model_list = model = new Bmodel(chain);
+//				if ( verbose & VERB_DEBUG )
+					cout << "DEBUG read_model_cif: Chemical " << model->identifier() << endl;
+				for ( auto ir: il.data() ) {
+					if ( ( i = il.find(CHEMICAL_ATOM_NUMBER) ) >= 0 ) {
+						if ( comp ) comp = comp->add(ir[i]);
+						else comp = model->comp = new Bcomponent(ir[i]);
+						comp->density(1);
+						comp->select(1);
+						natom++;
+					}
+					if ( ( i = il.find(CHEMICAL_ATOM_SYMBOL) ) >= 0 )
+						el = ir[i];
+					if ( ( i = il.find(CHEMICAL_ATOM_ID) ) >= 0 )
+						atomtype = ir[i];
+					if ( ( i = il.find(CHEMICAL_ATOM_RES) ) >= 0 )
+						restype = ir[i];
+					typestr = el + " " + atomtype + " " + restype;
+					comp->type(model->add_type(atomtype));
+					comp->description(typestr);
+					if ( ( i = il.find(CHEMICAL_ATOM_X) ) >= 0 )
+						comp->location()[0] = to_real(ir[i]);
+					if ( ( i = il.find(CHEMICAL_ATOM_Y) ) >= 0 )
+						comp->location()[1] = to_real(ir[i]);
+					if ( ( i = il.find(CHEMICAL_ATOM_Z) ) >= 0 )
+						comp->location()[2] = to_real(ir[i]);
+					if ( ( i = il.find(CHEMICAL_ATOM_CHARGE) ) >= 0 )
+						comp->charge(to_real(ir[i]));
+				}
 			}
 			if ( il.find(HELIX_ID) >= 0 ) {
 //				il.show_tags();

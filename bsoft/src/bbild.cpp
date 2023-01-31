@@ -129,7 +129,7 @@ int 	main(int argc, char **argv)
 			else if ( bild_type[0] == 'n' )	// Neighbor planes
 				model_to_bild_neighbor_planes(outfile, model, color_type);
 			else
-				write_model_bild(outfile, model);
+				write_model_bild(outfile, model, 0);
 		} else {
 				write_model(outfile, model);
 		}

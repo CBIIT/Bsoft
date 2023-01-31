@@ -21,6 +21,7 @@ extern int 	verbose;		// Level of output to the screen
 
 /**
 @brief 	Calculates the histogram froma data array.
+@param	data			vector of data.
 @param 	bins			number of bins in the histogram.
 @param 	&scale			scale.
 @param 	&offset			offset.
@@ -253,85 +254,6 @@ double		histogram_gaussian_R(Bsimplex& simp)
 			
 	return R;
 }
-
-
-/**
-@brief 	Fits a gaussian function to a histogram and plots it.
-@param 	histo			array of counts.
-@param 	scale			maping back to variable.
-@param 	offset			maping back to variable.
-@param 	ngauss			number of gaussians.
-@return Bplot* 			plot of the histogram and the gaussian fit.
-
-	A histogram of an image is calculated with a given number of bins.
-
-**/
-/*Bplot* 		histogram_gauss_plot(vector<long> histo, double scale, double offset, long ngauss)
-{
-	long			bins(histo.size());
-	double			min(-offset/scale);
-	double			max((bins-1)/scale + min);
-	long			i, j, k, m, ncol(ngauss+2);
-	double			v, bin_half = (max - min)/(4*bins);
-
-	vector<double>	gauss;
-	
-	if ( ngauss ) {
-		gauss = histogram_gauss_fit(histo, ngauss);
-
-		for ( i=0; i<ngauss; ++ i ) {
-			gauss[3*i+1] = (gauss[3*i+1] - offset)/scale;	// Position
-			gauss[3*i+2] = gauss[3*i+2]/scale;				// Sigma
-		}
-	}
-
-	Bstring			title("Histogram"), txt;
-	Bplot*			plot = new Bplot(1, bins, ncol);
-	plot->title(title);
-	
-	plot->page(0).title(title);
-	plot->page(0).columns(ncol);
-	for ( i=0; i<ncol; i++ ) plot->page(0).column(i).number(i);
-	plot->page(0).column(0).label("Bin");
-	plot->page(0).column(0).axis(1);
-	for ( i=1; i<ncol; i++ ) {
-		plot->page(0).column(i).type(2);
-		plot->page(0).column(i).axis(3);
-		plot->page(0).column(i).element_size(0.5);
-	}
-	plot->page(0).column(1).label("Count");
-	for ( i=2; i<ncol; i++ )
-		plot->page(0).column(i).label("Gaussian");
-	plot->page(0).column(1).type(1);
-	plot->page(0).column(1).color(0.5,0.5,0.5);
-	if ( ngauss > 0 ) plot->page(0).column(2).color(1,0,0);
-	if ( ngauss > 1 ) plot->page(0).column(3).color(0,1,0);
-	if ( ngauss > 2 ) plot->page(0).column(4).color(0,0,1);
-	plot->page(0).axis(1).min(min - bin_half);
-	plot->page(0).axis(1).max(max + bin_half);
-	
-	if ( ngauss ) {
-		for ( j=0; j<ngauss; j++ ){
-			txt = Bstring(j+1, "Gaussian %d:") + Bstring(gauss[3*j], " a=%g") +
-				Bstring(gauss[3*j+1], " u=%g") + Bstring(gauss[3*j+2], " s=%g");
-			plot->page(0).add_text(txt);
-		}
-		txt = Bstring(gauss[3*ngauss], "R: %g");
-		plot->page(0).add_text(txt);
-	}
-	
-	for ( i=0, j=bins; i<bins; i++, j++ ) {
-		(*plot)[i] = min + i/scale;
-		(*plot)[j] = histo[i];
-		for ( k=0, m=i+2*bins; k<3*ngauss; k+=3, m+=bins ) {
-			v = ((*plot)[i] - gauss[k+1])/gauss[k+2];
-			(*plot)[m] = gauss[k]*exp(-0.5*v*v);
-		}
-	}
-
-	return plot;
-}
-*/
 
 /**
 @brief 	Fits a gaussian function to a histogram of an image.

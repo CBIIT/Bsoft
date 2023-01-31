@@ -9,6 +9,7 @@ var seq__util_8h =
     [ "seq_find_dna", "seq__util_8h.html#abb216e011307a3a5910a636775281c34", null ],
     [ "seq_find_protein", "seq__util_8h.html#a80fdf0bcc3bf2bbad13c328a87eb2fb7", null ],
     [ "seq_find_protein_in_dna", "seq__util_8h.html#af198e989e08420c1c646b7d0a18be328", null ],
+    [ "seq_from_residues", "seq__util_8h.html#a7983be5aa3c06927d0ba10fe76cd2097", null ],
     [ "seq_mass", "seq__util_8h.html#a9c5d1648df23fc068c8c3632ec7a7214", null ],
     [ "seq_show", "seq__util_8h.html#a0131524f8dc6e2893374f91e46e25919", null ],
     [ "seq_translate_all", "seq__util_8h.html#afcc5f0e0d5f455316091e1869931506b", null ],

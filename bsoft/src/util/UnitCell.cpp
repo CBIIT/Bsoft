@@ -3,7 +3,7 @@
 @brief	Unit cell functions
 @author Bernard Heymann
 @date	Created: 20010420
-@date	Modified: 20150111
+@date	Modified: 20221115
 **/
 
 #include "UnitCell.h"
@@ -11,6 +11,18 @@
 
 // Declaration of global variables
 extern int 	verbose;		// Level of output to the screen
+
+ostream& operator<<(ostream& output, UnitCell uc) {
+	output.setf(ios::fixed, ios::floatfield);
+	output << uc.a() << tab;
+	output << uc.b() << tab;
+	output << uc.c() << tab << setw(10);
+	output << uc.alpha()*180.0/M_PI << tab;
+	output << uc.beta()*180.0/M_PI << tab;
+	output << uc.gamma()*180.0/M_PI << endl;
+	return output;
+}
+
 
 /**
 @brief 	Calculates the skew matrix from the unit cell parameters.
@@ -27,12 +39,6 @@ Matrix3		UnitCell::skew_matrix()
 {
 	if ( verbose & VERB_DEBUG )
 		cout << "DEBUG UnitCell::skew_matrix: Calculating the fractionalization matrix" << endl;
-	
-    if ( alpha() < 0 ) alpha(-alpha());
-    if ( beta() < 0 ) beta(-beta());
-    if ( gamma() < 0 ) gamma(-gamma());
-	if ( alpha() > M_PI || beta() > M_PI || gamma() > M_PI )
-		degrees_to_radians();
 	
 	Matrix3		skew;
 	
@@ -52,15 +58,35 @@ Matrix3		UnitCell::skew_matrix()
 	
 	for ( size_t i=0; i<3; i++ )
 		for ( size_t j=0; j<3; j++ )
-			if ( skew[i][j] < 1e-6 ) skew[i][j] = 0;
+			if ( fabs(skew[i][j]) < 1e-10 ) skew[i][j] = 0;
 	
 	if ( verbose & VERB_DEBUG ) {
-		cout << "DEBUG UnitCell::skew_matrix: Fractionalization matrix: " << endl;
+		cout << "DEBUG UnitCell::skew_matrix: matrix: " << endl;
 		cout << skew << endl;
 	}
 	
     return skew;
 }
+
+Matrix3		UnitCell::skew_matrix_inverse()
+{
+	Matrix3		skew = skew_matrix();
+
+	skew[0][0] = 1/skew[0][0];
+	skew[1][1] = 1/skew[1][1];
+	skew[2][2] = 1/skew[2][2];
+	skew[0][1] = -skew[0][1]*skew[0][0]*skew[1][1];
+	skew[1][2] = -skew[1][2]*skew[1][1]*skew[2][2];
+	skew[0][2] = skew[0][1]*skew[1][2]/skew[1][1] - skew[0][0]*skew[2][2]*skew[0][2];
+
+	if ( verbose & VERB_DEBUG ) {
+		cout << "DEBUG UnitCell::skew_matrix_inverse: matrix: " << endl;
+		cout << skew << endl;
+	}
+
+	return skew;
+}
+
 
 Matrix3		UnitCell::skew_rotation(int invert)
 {

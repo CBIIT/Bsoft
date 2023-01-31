@@ -65,6 +65,7 @@ const char* use[] = {
 "-rdf 1.2                 Calculate the radial distribution function with the given sampling (angstrom).",
 "-consolidate 85.4        Consolidate models: components are considered the same if within the given distance.",
 "-translate 12.3,95,-10.5 Shift along a vector (x,y,z).",
+"-trim 200,230,180        Trim to new box size (use with -translate).",
 " ",
 "Parameters:",
 "-verbose 7               Verbosity of output.",
@@ -120,6 +121,7 @@ int 		main(int argc, char **argv)
 	Bstring			associate_type;				// Component type
 	Bstring			associate_file;				// Component type file name
 	Vector3<double>	shift;						// Translate
+	Vector3<double>	trim;						// New enclosing box
 	Bstring			peakmap;					// Map with peaks to generate a new model
 	vector<Vector3<double>>	newloc;				// New component locations
 	double			linklength(0);				// Link length for generating links
@@ -222,6 +224,8 @@ int 		main(int argc, char **argv)
         	if ( shift.length() < 0.1 )
 				cerr << "-translate: Three values must be specified!" << endl;
 		}
+		if ( curropt->tag == "trim" )
+			trim = curropt->size();
 		if ( curropt->tag == "linklength" )
 			if ( ( linklength = curropt->value.real() ) < 0.1 )
 				cerr << "-linklength: A link length must be specified!" << endl;
@@ -385,6 +389,8 @@ int 		main(int argc, char **argv)
 	if ( catname.length() ) model_catenate_maps(model, catname);
 	
 	if ( shift.length() ) models_shift(model, shift);
+
+	if ( trim.volume() ) models_trim(model, trim);
 
 	model_selection_stats(model);
 

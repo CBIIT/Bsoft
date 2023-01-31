@@ -10,6 +10,7 @@ var class_complex =
     [ "imag", "class_complex.html#a0f7a496fd21ef1d352bee2dfaa11380e", null ],
     [ "imag", "class_complex.html#ac2ea878c28de6edc2d332ff2fa4d07cf", null ],
     [ "is_finite", "class_complex.html#a3b13fa75e21510e52a6e9c844a496faa", null ],
+    [ "lut", "class_complex.html#a02845f1c72d9b47b6eb80676dca5efb5", null ],
     [ "operator Complex< T2 >", "class_complex.html#af14b359bff1f042022606738db26f8ab", null ],
     [ "operator*", "class_complex.html#a285ffec972876b32d3bf90d32062b71d", null ],
     [ "operator*", "class_complex.html#a0ca414dee984b4406f6fe964f6cf5ce8", null ],
@@ -29,11 +30,14 @@ var class_complex =
     [ "operator[]", "class_complex.html#a5779833e37c1c279840b7dd2bef1ad07", null ],
     [ "phi", "class_complex.html#ad896bb110e045f2bd0ef9960a049b1e7", null ],
     [ "phi", "class_complex.html#ace600479d486aff5f9980e217ac85617", null ],
+    [ "phi_lut", "class_complex.html#ab67195c2dd0ef3c037a129990a6ba5c7", null ],
+    [ "phi_lut", "class_complex.html#a39181e3746af99526166777c3ea27ee8", null ],
     [ "power", "class_complex.html#af412c150996a6cd8d4fdffb555906a6a", null ],
     [ "real", "class_complex.html#a1655185cccaa93ce2b1587edabd28ccf", null ],
     [ "real", "class_complex.html#a74aa886ea0988b7a075e1655b7981f3b", null ],
     [ "set", "class_complex.html#ab5935d9946b857c1211e40ce2043fce2", null ],
     [ "shift_phi", "class_complex.html#a17af0807d18232874718a346aca42c58", null ],
+    [ "shift_phi_lut", "class_complex.html#a13ce4c4dabb602bc61b23c808697dc28", null ],
     [ "unpack_first", "class_complex.html#a944b5e1976e937f0d204836a344f5b70", null ],
     [ "unpack_second", "class_complex.html#a9beb14c66dcb4cd4c1341aa6199bbfec", null ]
 ];

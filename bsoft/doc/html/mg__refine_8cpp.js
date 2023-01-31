@@ -1,10 +1,10 @@
 var mg__refine_8cpp =
 [
-    [ "img_fit_in_recip_space_grid", "mg__refine_8cpp.html#a4ad44ccbc884097f75e7b1dcaad4b571", null ],
-    [ "img_fit_in_recip_space_monte", "mg__refine_8cpp.html#af90397092d5a8de64119571612f2e4f2", null ],
-    [ "img_recip_space_fom", "mg__refine_8cpp.html#a7e64fddb32060025af5e03021151a146", null ],
-    [ "img_refine_grid", "mg__refine_8cpp.html#a6abefc026ab89fe047e29333bbd6aa87", null ],
-    [ "img_refine_monte", "mg__refine_8cpp.html#ab279a16ea1d3aa11bdc174eba7406956", null ],
+    [ "img_fit_in_recip_space_grid", "mg__refine_8cpp.html#ae8d9185c8a2ec12498ae11a25629ba1b", null ],
+    [ "img_fit_in_recip_space_monte", "mg__refine_8cpp.html#a5106edcf68460d297583a58a01191126", null ],
+    [ "img_recip_space_fom", "mg__refine_8cpp.html#a8d400e6eee998d8738ac3d98547a9cd8", null ],
+    [ "img_refine_grid", "mg__refine_8cpp.html#a3284077e174f93109b5de8ea012e96d0", null ],
+    [ "img_refine_monte", "mg__refine_8cpp.html#a9a12afa07a9b8df1631e6bebb310c6dc", null ],
     [ "mg_refine_orientations", "mg__refine_8cpp.html#ac015a84e19818e434f79916bc2e94d87", null ],
     [ "part_refine_orientation", "mg__refine_8cpp.html#a27009d66ec3e356f7f2e76974606799d", null ],
     [ "project_refine_orientations", "mg__refine_8cpp.html#a1331dbbf289ab81924b877ebbe99d9de", null ],

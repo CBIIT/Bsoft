@@ -109,10 +109,10 @@ double		linear_least_squares(int n1, int n2, vector<double>& x, vector<double>& 
     	sxy += x[i]*y[i];
     }
 
-//	if ( verbose & VERB_DEBUG ) {
+	if ( verbose & VERB_DEBUG ) {
 		cout << "DEBUG linear_least_squares: sx=" << sx << tab << " sx2=" << sx2 << endl;
 		cout << "DEBUG linear_least_squares: sy=" << sy << tab << " sxy=" << sxy << endl;
-//	}
+	}
 	
 	denom = n*sx2 - sx*sx;
 	if ( fabs(denom) < 1e-30 ) return 0;
